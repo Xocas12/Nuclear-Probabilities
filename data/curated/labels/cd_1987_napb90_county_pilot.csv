@@ -1,0 +1,34 @@
+state,county,very_high_gt10psi_population,very_high_gt10psi_area_sqmi,high_5to10psi_population,high_5to10psi_area_sqmi,medium_2to5psi_population,medium_2to5psi_area_sqmi,low_no_0_5to2psi_population,low_no_0_5to2psi_area_sqmi,asterisk_lt_0_5psi,highest_risk_class_derived,pdf_page,printed_page
+Connecticut,Fairfield,818293,632,,,,,,,,very high (>=10 psi),138,A-89
+Connecticut,Hartford,819457,739,,,,,,,,very high (>=10 psi),138,A-89
+Connecticut,Litchfield,,,,,,,160885,922,,low (0.5-2 psi),138,A-89
+Connecticut,Middlesex,,,,,,,133498,373,,low (0.5-2 psi),138,A-89
+Connecticut,New Haven,771603,610,,,,,,,,very high (>=10 psi),138,A-89
+Connecticut,New London,246137,669,,,,,,,,very high (>=10 psi),138,A-89
+Connecticut,Tolland,120464,412,,,,,,,,very high (>=10 psi),138,A-89
+Connecticut,Windham,,,,,,,95124,515,,low (0.5-2 psi),138,A-89
+Georgia,Appling,16441,510,,,,,,,,very high (>=10 psi),173,A-145
+Georgia,Atkinson,,,,,,,6254,344,*,no risk (<0.5 psi),173,A-145
+Georgia,Bacon,,,,,,,9572,286,*,no risk (<0.5 psi),173,A-145
+Georgia,Baker,,,,,,,3541,347,*,no risk (<0.5 psi),173,A-145
+Georgia,Baldwin,,,,,,,38659,258,*,no risk (<0.5 psi),173,A-145
+Georgia,Banks,,,,,,,9940,234,*,no risk (<0.5 psi),173,A-145
+Georgia,Barrow,,,,,,,24768,163,,low (0.5-2 psi),173,A-145
+Georgia,Bartow,44059,456,,,,,,,,very high (>=10 psi),173,A-145
+Georgia,Ben Hill,,,,,,,17067,254,*,no risk (<0.5 psi),173,A-145
+Georgia,Berrien,,,,,,,13842,456,,low (0.5-2 psi),173,A-145
+Georgia,Bibb,158476,253,,,,,,,,very high (>=10 psi),173,A-145
+Georgia,Bleckley,,,,,,,10645,219,,low (0.5-2 psi),173,A-145
+Georgia,Brantley,,,,,,,9430,444,,low (0.5-2 psi),173,A-145
+Georgia,Brooks,,,,,,,15299,491,,low (0.5-2 psi),173,A-145
+Georgia,Bryan,,,,,,,12164,441,,low (0.5-2 psi),173,A-145
+Georgia,Bulloch,,,,,,,37271,678,*,no risk (<0.5 psi),173,A-145
+Georgia,Burke,,,20728,833,,,,,,high (5-10 psi),173,A-145
+Georgia,Butts,,,,,,,15169,187,,low (0.5-2 psi),173,A-145
+Georgia,Calhoun,,,,,,,5527,284,*,no risk (<0.5 psi),173,A-145
+Georgia,Camden,17682,649,,,,,,,,very high (>=10 psi),173,A-145
+Georgia,Candler,,,,,,,7833,248,*,no risk (<0.5 psi),173,A-145
+Georgia,Carroll,63098,502,,,,,,,,very high (>=10 psi),173,A-145
+Georgia,Catoosa,,,,,38746,163,,,,medium (2-5 psi),173,A-145
+Georgia,Charlton,,,,,,,7741,780,,low (0.5-2 psi),173,A-145
+Georgia,Chatham,214908,444,,,,,,,,very high (>=10 psi),173,A-145
