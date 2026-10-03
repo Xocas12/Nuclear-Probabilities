@@ -28,16 +28,24 @@ COMPLEX = re.compile(r"^(?P<prio>\d{1,4}) (?P<ref>\d{4,5}) (?P<name>.+?) (?P<lat
 SUBCOMPLEX = re.compile(r"^(?P<name>[A-Z][^\d].*?) (?P<lat>\d{4})-(?P<lon>\d{5})$")
 DGZ = re.compile(r"^(?P<lat>\d{4})-(?P<lon>\d{4,5})(?P<hem>[EW]) (?P<label>[A-Z]{1,2})$")
 INSTALL = re.compile(r"^(?P<cat>\d{3}) (?P<wac>\d{4})-(?P<num>\d{4})?$")
-AIRFIELD = re.compile(
-    r"^(?P<prio>\d{1,4}) (?P<ref>\d{4,5}) (?P<name>.+?) (?P<wac>\d{4})-(?P<num>\d{4}) "
+AIRFIELD = re.compile(  # matched against light() text: spacing after a blank BE number survives
+    r"^(?P<prio>\d{1,4}) (?P<ref>\d{4,5}) (?P<name>.+?) (?P<wac>\d{4})-(?P<num>\d{4})? ?"
     r"(?P<lat>\d{4})-(?P<lon>\d{5})(?P<hem>[EW]?) (?P<code>[A-Z])$"
 )
+# Rows with no priority and an "M-n" designation, e.g. "0237 ANDREYKOVO M-1 5557-03625 QA".
+MSITE = re.compile(r"^(?P<ref>\d{4}) (?P<name>.+?) M-(?P<mnum>\d{1,3}) (?P<lat>\d{4})-(?P<lon>\d{5}) (?P<label>[A-Z]{1,2})$")
+
+
+def light(text: str) -> str:
+    """Unify hyphen characters, collapse repeated hyphens and spaces; keep spacing otherwise."""
+    text = text.replace("\u2010", "-").replace("\u2013", "-").replace("\u2014", "-").upper()
+    text = re.sub(r"-{2,}", "-", text)
+    return re.sub(r"\s+", " ", text).strip()
 
 
 def norm(text: str) -> str:
-    text = text.replace("‐", "-").replace("–", "-").replace("—", "-").upper()
-    text = re.sub(r"\s*-\s*", "-", text)
-    return re.sub(r"\s+", " ", text).strip()
+    """Comparison form: also drop spaces next to hyphens (DGZ lines print '5545- 3737E')."""
+    return re.sub(r"\s*-\s*", "-", light(text))
 
 
 def load(pass_name: str) -> dict[str, tuple[str, str, str]]:
@@ -60,18 +68,20 @@ def coords_ok(lat: str, lon: str) -> list[str]:
     return problems
 
 
-def classify(page: str, text: str) -> tuple[str, dict, list[str]]:
-    """Return (line type, fields, rule problems) for one normalised data line."""
+def classify(page: str, text: str, raw: str = "") -> tuple[str, dict, list[str]]:
+    """Return (line type, fields, rule problems) for one normalised data line.
+
+    raw is the light()-normalised text, used where spacing matters (airfield rows)."""
     if page.startswith("A"):
-        m = AIRFIELD.match(text)
+        m = (AIRFIELD.match(raw) if raw else None) or AIRFIELD.match(text)
         if not m:
             return "unparsed", {}, ["airfield row does not match the expected format"]
         return "airfield", m.groupdict(), coords_ok(m["lat"], m["lon"])
-    for kind, pattern in (("complex", COMPLEX), ("dgz", DGZ), ("installation", INSTALL), ("subcomplex", SUBCOMPLEX)):
+    for kind, pattern in (("complex", COMPLEX), ("dgz", DGZ), ("installation", INSTALL), ("msite", MSITE), ("subcomplex", SUBCOMPLEX)):
         m = pattern.match(text)
         if m:
             fields, problems = m.groupdict(), []
-            if kind in ("complex", "subcomplex"):
+            if kind in ("complex", "subcomplex", "msite"):
                 problems = coords_ok(fields["lat"], fields["lon"])
             elif kind == "dgz":
                 problems = coords_ok(fields["lat"], fields["lon"].zfill(5))
@@ -121,7 +131,7 @@ def main(pass_a: str, pass_b: str) -> None:
             if "?" in text_a or "?" in text_b:
                 reasons.append("unreadable character")
             if not reasons:
-                line_type, _, problems = classify(page, text_a)
+                line_type, _, problems = classify(page, text_a, light(ra[1]))
                 if problems:
                     reasons += problems
                     stats["agreed but breaks a rule"] += 1
