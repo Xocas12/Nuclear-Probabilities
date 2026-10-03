@@ -10,6 +10,7 @@ source are in `data/notes/`. Raw downloads are in `data/raw/` (not in git).
 | `cd_1980_square_leg.csv` | 95 | UK (Home Office/MoD exercise) | UK | 1980 | defender | 95 | 0 |
 | `cd_1987_napb90_classes.csv` | 12 | (own schema) |  |  |  |  |  |
 | `cd_1987_napb90_county_pilot.csv` | 33 | (own schema) |  |  |  |  |  |
+| `nato_1962_pl_exercise_mirror.csv` | 76 | Poland (Polish Army command-staff map exercise; simulated NATO 'Zachodni' / Westerners strikes) | GDR, Poland, USSR | 1962 | exercise | 0 | 0 |
 | `nato_1965_hu_wargame_mirror.csv` | 26 | Hungary/USSR war game (simulated NATO 'Westerners' strike against the Warsaw Pact Southwestern Front) | Czechoslovakia, Hungary, USSR | 1965 | exercise | 0 | 0 |
 | `rec_2001_nrdc_classes.csv` | 9 | (own schema) |  |  |  |  |  |
 | `rec_2002_helfand_classes.csv` | 15 | (own schema) |  |  |  |  |  |
@@ -18,8 +19,8 @@ source are in `data/notes/`. Raw downloads are in `data/raw/` (not in git).
 | `sac1956_pilot_urban.csv` | 129 | (own schema) |  |  |  |  |  |
 | `us_1945_target_committee.csv` | 42 | US | Japan | 1945 | plan, study | 2 | 4 |
 | `us_1964_china_nuclear.csv` | 2 | US | PRC | 1964 | study | 0 | 0 |
+| `wp_1959_r5m_operation_atom.csv` | 1 | USSR (R-5M missiles deployed at Vogelsang and Fürstenberg, GDR, 1959) | UK | 1959 | reconstruction | 1 | 0 |
 | `wp_1961_burza.csv` | 23 | Poland (Front Nadmorski / Maritime Front, exercise 'Burza') | Denmark, FRG, GDR, Netherlands | 1961 | exercise | 0 | 0 |
-| `wp_1962_pl_exercise_westerners_mirror.csv` | 76 | Poland (Polish Army command-staff map exercise; simulated NATO 'Zachodni' / Westerners strikes) | GDR, Poland, USSR | 1962 | exercise | 0 | 0 |
 | `wp_1964_csla_plan.csv` | 21 | Czechoslovakia (ČSLA, Czechoslovak Front; Soviet-approved) | FRG | 1964 | plan | 0 | 0 |
 | `wp_1965_coastal_front_zealand.csv` | 5 | Poland (Coastal Front / Front Nadmorski), landing operation on Zealand | Denmark | 1965 | plan | 5 | 0 |
 | `wp_1965_hu_wargame.csv` | 23 | Hungary/USSR (Southern Group of Forces command-staff war game; 'Easterners' = Warsaw Pact side) | Austria, FRG, Italy | 1965 | exercise | 0 | 0 |
@@ -29,4 +30,4 @@ source are in `data/notes/`. Raw downloads are in `data/raw/` (not in git).
 | `wp_1977_zealand.csv` | 10 | Poland (Coastal Front / Front Nadmorski), landing operation on Zealand | Denmark | 1977 | plan | 10 | 0 |
 | `wp_1979_seven_days.csv` | 9 | Warsaw Pact/USSR (as attributed by Wikipedia) | Austria, Denmark, FRG, Italy | 1979 | reconstruction | 9 | 0 |
 
-Total: 23 files, 857 rows.
+Total: 24 files, 858 rows.

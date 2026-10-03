@@ -264,42 +264,53 @@ book.
 
 **Western planners → the Soviet bloc, China, North Korea, Japan**
 
-| Source | Planner → target, year | Size and detail | Where | Effort | Provenance |
-|---|---|---|---|---|---|
-| **SAC Atomic Weapons Requirements Study** | US → Soviet bloc, China, N. Korea, 1956 | ~1,200 complexes with priorities, DGZs and installations (~13,500 lines); ~1,110 airfields with priorities | Electronic Briefing Book 538 | L (transcription) | Study |
-| **Air Ministry city grading** | UK → USSR, 1957 | 131 cities over 100k, graded on population and administrative, economic and transport importance; 98 in range, 44 selected. **Selected and rejected cities in one list** | UK National Archives, Air Ministry/Bomber Command files (not online; cited by Wynn 1994, Jones 2017) | L | Study |
-| Norstad memo to Groves | US → USSR, Sep 1945 | 66 cities (15 first-priority named), plus 21 Manchurian cities studied and dropped | Scanned memo and map (nuclearsecrecy.com, 2012) | S | Study |
-| JIC 329/1 | US → USSR, Nov 1945 | 20 named cities | *Studies in Intelligence* 44:3 | S | Study |
-| Broiler → Trojan → Offtackle → Dropshot | US → USSR, 1947–49 | 24 → 70 → 104 → ~100 cities; counts online, named annexes possibly in the Ross & Rosenberg facsimiles | Print, 15 volumes | L | Plan |
-| French Air Force staff study | France → USSR, 1959 | 20 named cities, each with air-defence grade and bombers needed | Pelopidas & Philippe, *Cold War History* 2021 (open access) | S | Study |
-| SAC–Bomber Command joint plans | US + UK → USSR, 1958–63 | Counts: e.g. 106 targets (69 cities, 17 bomber bases, 20 air-defence sites) | Jones 2019; UK National Archives AIR/DEFE files for names | L | Plan |
-| Target Committee | US → Japan, 1945 | 4–17 cities, **including rejected ones** (Kyoto) | Briefing book "Atomic Bomb and the End of WWII" | S | Plan |
-| MacArthur's "retardation targets" | US → Korea, Manchuria, China, Soviet Far East, 1950 | ~9 named cities, 26–34 bombs | Dingman, *International Security* 1988 | S | Study |
-| OPS PLAN 25-58 | US → PRC, 1958 | ~10–30 airfields and bases, Amoy to Shanghai | Halperin RM-4900 (released by Ellsberg); Van Staaveren 1962 | M | Plan |
-| Chinese nuclear sites | US → PRC, 1963–64 | 4–6 named facilities | Burr & Richelson, *International Security* 2000 | S | Study |
-| WINTEX-CIMEX 89 | NATO → USSR, GDR, Poland, ČSSR, Hungary, 1989 | 17 scripted weapons | *Der Spiegel*; Bundestag records | S | Exercise |
-| SIOP-62 and the 1960 target list | US → bloc, 1961 | Counts only (3,729 installations, ~1,060 targets, 199/295 cities) | Briefing books 130, 236 | — | Totals to check against |
+| Source | Planner → target, year | Size and detail | Status after the first pass | Provenance |
+|---|---|---|---|---|
+| **SAC Atomic Weapons Requirements Study** | US → Soviet bloc, China, N. Korea, 1956 | ~1,200 complexes with priorities, DGZs and installations (~13,500 lines); ~1,110 airfields with priorities | All PDFs downloaded; category codes transcribed; 4-page pilot done. Full transcription is next | Study |
+| **Air Ministry city grading** | UK → USSR, 1957 | 131 cities over 100k, graded; 98 in range, 44 selected (counts unverified) | Not digitised. Open at Kew: AIR 2/13716, AIR 2/13717, DEFE 5/77/208, DEFE 5/78/224 | Study |
+| Target Committee and orders | US → Japan, 1945 | 17 study areas → 5 reserved targets → 4 in the 25 July directive, with Kyoto and the Emperor's palace rejected | **Extracted: 42 rows**, one per city per decision stage | Plan |
+| Chinese nuclear facilities | US → PRC, 1964 | Baotou plutonium reactor, Lanzhou gaseous diffusion plant | **Extracted: 2 rows** (EBB 488) | Study |
+| SIOP-62 and the 1960 target list | US → bloc, 1961 | ~4,000 targets in the database; 1,043 DGZs, 706 of them in the USSR (China and satellite counts blacked out) | **Validation table: 8 rows** | Totals to check against |
+| Norstad memo to Groves | US → USSR, Sep 1945 | Reportedly 66 cities, 21 Manchurian cities dropped | Not obtained: the blog has a cookie check and web.archive.org is not on the allow-list | Study |
+| JIC 329/1 | US → USSR, Nov 1945 | 20 named cities | Not obtained: the CIA page renders by script; the old copy is on web.archive.org | Study |
+| French Air Force staff study | France → USSR, 1959 | 20 named cities with air-defence grades | Not obtained: the open-access copies sit behind anti-bot challenges | Study |
+| Broiler → Trojan → Offtackle → Dropshot | US → USSR, 1947–49 | 24 → 70 → 104 → ~100 cities | Print only (Ross & Rosenberg facsimiles) | Plan |
+| OPS PLAN 25-58 | US → PRC, 1958 | ~10–30 airfields and bases | Halperin RM-4900 downloaded (237 scanned pages), not yet read | Plan |
+| MacArthur's "retardation targets"; WINTEX-CIMEX 89; SAC–Bomber Command joint plans | US / NATO / US+UK | Small or counts only | Not yet attempted | Study / exercise / plan |
 
 **Warsaw Pact planners → NATO and neutral states**
 
 No Soviet *strategic* target list has ever been declassified. What exists are front-level
-plans and exercises from the Czech, Polish, Hungarian and East German archives, mostly at city
-or installation-name level, without coordinates.
+plans and exercises from the Czech, Polish, Hungarian and East German archives. The PHP
+facsimiles turned out to be reachable through phpisn.ethz.ch, an archived copy of the old PHP
+site.
 
-| Source | Planner → target, year | Size and detail | Where | Effort | Provenance |
-|---|---|---|---|---|---|
-| **Polish plans against Denmark, 1961–89** | Poland → Denmark, Schleswig-Holstein | 1989 plan: 131 first-phase strikes on HQs, airfields and bunkers; full series ~150+ installations | Andersen, *Planerne om at eliminere Danmark* (2026, 702 pp., print) | L | Plan |
-| **ČSLA war plans** | Czechoslovakia → FRG (Bavaria, Baden-Württemberg), 1964 / 1977 / 1989 | 131 / 258 / 546 strikes; 1964 gives target classes only; 1980s name target areas (Grafenwöhr, Regensburg, Erlangen…) | Prague military archive (VÚA); Luňák 2007 (print); dossier at the Parallel History Project (PHP) | L | Plan |
-| "Lato-67" Coastal Front directive | Poland/USSR → FRG, NL, BE, DK, 1967 | 57 strategic strikes on ~45 named junctions, ports, airfields, air-defence sites, a reactor; 46 more army-level strikes | PHP facsimile (Russian) | S–M | Exercise |
-| Coastal Front plan map | Poland → DK, FRG, NL, BE, 1970 | ~170–190 weapons; named cities plus strike symbols | Nielsen et al., *Geoforum Perspektiv* 2016 (open access) | M (georeference) | Plan |
-| Hungarian–Soviet war game | Hungary/USSR → Austria, Italy, FRG, 1965 | 30 weapons with yields: Vienna, Munich, Verona, Vicenza, airfields, depots (plus the mirror: 30 NATO strikes on Hungary) | PHP, "European Cities Targeted for Nuclear Destruction" | S | Exercise |
-| Zealand landing plan | Poland → Denmark, 1977 | 15 weapons near Roskilde, Slagelse, Næstved, Vordingborg | Pałka, *Kwartalnik Historyczny* 2022 (open access) | S | Plan |
-| "Seven Days to the River Rhine" | Warsaw Pact → FRG, Benelux, DK, 1979 | ~12 cities | Map released by Poland, 2005 | S | Exercise |
-| NVA 5th Army plans | GDR → FRG (Schleswig-Holstein, Hamburg), 1983–88 | Up to 32 first-salvo strikes on Lance units, airfields, command posts | Lautsch, BMVg report 2021 | M | Reconstruction |
-| R-5M "Operation Atom" | USSR → UK, France, Benelux, FRG, 1959 | ~10 places: Thor bases, London, Paris, Brussels, Ruhr, Bonn | Uhl & Ivkin | S | Study (scholar's summary) |
-| Burza 1961; Soyuz-75/83, VAL-77, Shchit-88; General Staff Academy 1977 | Warsaw Pact → FRG, Benelux, DK | Mostly counts or target classes (e.g. 680 warheads, northern FRG) | PHP; Wilson Center; CIA reading room | M | Exercise |
-| Swedish government inquiry SOU 2002:108 | — → Sweden | No developed attack plans found | Government report | — | Negative evidence (not used as labels) |
-| Bulgarian plans | Bulgaria/USSR → Greece, Turkey, 1978 | 30 bombs set aside; no names published | Bulgarian military archive | L | Plan |
+| Source | Planner → target, year | What it gives | Status after the first pass | Provenance |
+|---|---|---|---|---|
+| **"Lato-67" directive** | Unified Command, for the Polish Coastal Front → FRG, NL, BE, DK, 1967 | 57 aim points at 49 places: transport hubs, ports, airfields | **Extracted: 57 rows**, from the Russian facsimile | Exercise |
+| **1964 Czechoslovak war plan** | ČSLA → FRG (Bavaria), 1964 | Headquarters, missile units and regions. Nuremberg, Stuttgart and Munich are axes of advance, *not* targets | **Extracted: 21 rows** | Plan |
+| **1965 Hungarian–Soviet war game** | → Austria, Italy, FRG, 1965 | 29 itemised strikes (the document says 30), including Vienna 2×500 kt, Verona, Vicenza, the nuclear-ammunition depot at Oberammergau | **Extracted: 23 rows**, from the Hungarian original plus the English translation | Exercise |
+| "Burza" 1961 | Polish Maritime Front → DK, FRG, NL, 1961 | The directive gives only counts (93 missiles); two companion documents name targets | **Extracted: 23 rows** | Exercise |
+| 1977 General Staff Academy front lesson | USSR → FRG, 1977 | Five FRG control-and-warning sites and real NATO units | **Extracted: 19 rows** (CIA translations, via archive.org) | Exercise (training) |
+| Zealand landing plans | Poland → Denmark, 1965 / 1977 | 5 + 10 strikes near Roskilde, Slagelse, Næstved, Vordingborg | **Extracted: 15 rows**, secondary (Pałka 2022) | Plan |
+| 1970 Coastal Front plan map | Poland → Denmark, 1970 | Only 5 of 17 strikes are named | Partial: 4 rows, secondary (Nielsen et al. 2016) | Plan |
+| R-5M "Operation Atom" | USSR → UK and others, 1959 | — | 1 row (BBC 2012); Uhl's study is lending-only | Study |
+| "Seven Days to the River Rhine" | Warsaw Pact, 1979 | Wikipedia's "known targets" all trace to *other* plans (the 1965 game, the 1964 plan, a 2003 Danish article) | 9 rows kept for audit; **not usable as 1979 labels** | — |
+| Czechoslovak plans 1977 / 1989 | ČSLA → FRG | 258 / 546 warheads | Counts only (csla.cz); named targets need the Prague archive or Luňák 2007 | Plan |
+| Polish plans against Denmark, 1961–89 | Poland → DK | 1989 plan: 131 first-phase strikes | Print only (Andersen 2026) | Plan |
+| Lautsch 2021 (NVA 5th Army) | GDR → FRG | — | Contains no target list; his 2014 article may | Reconstruction |
+| Bulgarian plans | → Greece, Turkey | 30 bombs set aside, no names | Archive only | Plan |
+| Swedish inquiry SOU 2002:108 | — → Sweden | No developed attack plans found | Negative evidence, not used as labels | — |
+
+**Warsaw Pact staffs' simulations of NATO strikes on the East (new find)**
+
+These are the communist side's own expectations of where it would be hit. They mirror the
+Western civil-defence lists below.
+
+| Source | Simulated attacker → target, year | Status | Provenance |
+|---|---|---|---|
+| Polish command-staff map exercise | "Westerners" (NATO) → Poland, USSR, GDR, 1962 | **Extracted: 76 rows** (Poland 70) | Exercise (defender's expectation) |
+| 1965 Hungarian war game, "Westerners'" plan | NATO → Hungary, Czechoslovakia, USSR, 1965 | **Extracted: 26 rows** | Exercise (defender's expectation) |
 
 **Defenders' assumptions and analysts' reconstructions**
 
@@ -341,9 +352,11 @@ would only rediscover the rule.
   - Greece under the 1967–74 junta and Turkey would give a Warsaw Pact planner targets in
     NATO autocracies. They are reachable only through the Bulgarian archive.
   - Austria (neutral) differs from the other targets in alignment, not regime.
-  - A second, partial route is to compare defenders' lists across regimes. Democracies (US,
-    UK, Canada) can be set against China's and Russia's civil-defence city classes, but era
-    is then confounded.
+  - **The best route is to compare defenders' expectations across regimes.** On one side are
+    Warsaw Pact staffs' simulations of NATO strikes on Poland, Hungary and the USSR (1962,
+    1965). On the other are Western civil-defence lists for the US, UK and Canada (1955–87).
+    Both are a defender's expectation, so provenance stays fixed while regime type changes.
+    Era and country still differ.
 - **Across the whole catalogue, regime type mostly tracks provenance.**
   - Communist-state targets come from attacker plans.
   - Democratic-state targets come mostly from defenders' assumptions.
@@ -594,6 +607,12 @@ nuclear-probabilities/
 
 Phases 1 and 2 run side by side. Transcribing the labels is the long pole, so it starts first.
 
+**Progress (3 Oct 2026).** The first pass of M4 is done: 24 lists extracted, every row with a
+page reference and a quote (see `data/INVENTORY.md`). For the 1956 list, everything is
+downloaded and piloted, and the category codes are transcribed. Feature sources are confirmed
+downloadable: pop-stat's 1939/1959 census series, the Dexter–Rodionov guide (v24, July
+2026), GeoNames. The code scaffold (pyproject, tests, CI) is not started.
+
 | # | Milestone | Size | Done when |
 |---|---|---|---|
 | M0 | Scaffold; network access working; ask for the 1,154-target CSV | S | `make setup test lint` green in CI; every source is listed in `data/sources.yaml` |
@@ -636,19 +655,24 @@ early read on how much population alone explains.
 
 ## 11. Decisions needed
 
-1. **Network access.** It is still blocked in this session. The project touches dozens of
-   hosts: archives, census sites, Wikidata, HYDE and GHSL, PHP, the Wilson Center, CIA, DTIC,
-   FAS. A broader access level is simpler than an allow-list. If you prefer an allow-list, see
-   the domain list in the session notes.
-2. **Regime coding.** Proposed: the 4-group scheme of §5.3 as primary, with alignment as a
-   second axis, and the other codings as robustness checks.
-3. **Archive and print sources.** Can anyone fetch them? The items are:
-   - the UK National Archives files (the 1957 grading of 131 cities);
-   - the Ross & Rosenberg facsimiles (the Trojan and Dropshot annexes);
-   - Andersen (2026) on Denmark;
-   - Luňák (2007), or the Prague military archive, for the Czechoslovak plans.
-
-   Without them, levels C and R rest on the 1956 list plus the online lists.
-4. **Fast path.** Will you email Wellerstein or FLI for the 1,154-target CSV?
-5. **Repo initialisation.** Should this plan, plus the M0 scaffold, become the first commit on
-   `main`?
+1. **Access that is still missing:**
+   - **web.archive.org** is not on the allow-list. It holds the Wellerstein 1,154-target
+     map data, the Norstad memo and the JIC 329 article.
+   - **Some hosts block scripts with challenges, which are not bypassed:** HYDE's
+     repositories (Yoda, DANS), hal.science, Sciences Po's repository, the FAS document
+     pages and blog.nuclearsecrecy.com.
+   - **Downloads needed by hand:** the HYDE 3.3 grids for 1950 and 1960, and Pelopidas &
+     Philippe (2021) for the French 1959 list.
+2. **Full transcription of the 1956 list.** About 350 pages and ~14,600 lines, in two
+   independent passes. That is ~25–30 agent-hours, or ~3 hours wall-clock with 10 parallel
+   workers. It needs your go-ahead to run as a multi-agent job.
+3. **Regime coding.** Proposed: the 4-group scheme of §5.3 as primary, alignment as a second
+   axis, and the other codings as robustness checks.
+4. **Archive and print sources.** Can anyone fetch them? The items are:
+   - Kew: AIR 2/13716–13717 and DEFE 5/77–78 (the 1957 UK grading); HO 322 (Hard Rock);
+     DEFE 69/585;
+   - the Ross & Rosenberg facsimiles;
+   - Andersen (2026);
+   - Luňák (2007) or the Prague military archive.
+5. **Default branch.** The repo's only branch is the session branch, which GitHub made the
+   default. Create `main` from it?
