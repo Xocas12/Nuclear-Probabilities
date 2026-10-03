@@ -146,53 +146,68 @@ The primary source is SAC's **Atomic Weapons Requirements Study for 1959**, date
 
 | Part | Contents | Use |
 |---|---|---|
-| Category Code List (5 pp) | Key to the installation category codes (275 = "Population") | Label vocabulary |
-| **Urban-Industrial Target List, Part I, "Abdulino to Zychlin" (306 pp, complete)** | 1,200+ cities ("complexes"), each a group of DGZs over BE-numbered installations | T1–T3 |
-| Part I complex list; cross-reference list (excerpts) | City-level summaries | Fast path and cross-checks |
-| Part II "restricted allocation" (1,209 DGZs) and the airfield list | What survives a cap on fissile material; 1,100+ airfields with priority numbers (Bykhov 1, Orsha 2…) | T4, T5 |
-| The Archive's spreadsheets for Moscow and Beijing | Per-city breakdowns | Validation |
+| Category Code List (5 pp, complete) | 191 installation category codes (275 = "Population"). **Transcribed** | Label vocabulary |
+| **Part I Urban-Industrial (complex) list, "Abdulino to Zychlin" (306 pp, complete)** | ~1,200 complexes, each a priority, reference coordinates, its DGZs and its BE-numbered installations; ~13,500 printed lines | T1–T3 |
+| **Part II airfield list (42 pp, complete)** | ~1,110 airfields, each with a priority number (Bykhov 1, Orsha S.W. 2…) | T5 |
+| Part I airfield list; Part II complex list; cross-reference list | Released only as excerpts | Cross-checks only |
+| The Archive's spreadsheets for Moscow, Leningrad, Beijing and Warsaw | Per-city installation breakdowns | Validation |
 
-**Each row records:**
-- a BE number, whose first four digits identify a World Aeronautical Chart, i.e. a
-  location zone;
-- a category code and a country code;
-- coordinates as degree-minute digits (central Moscow is 55°45′N 37°37′E), so they are
-  accurate to under 2 km;
-- a priority.
+**How a complex is printed** (checked on the scans):
+- **Header:** priority, reference number, name with a country suffix, reference coordinates.
+  For example `1 5150 MOSCOW 5545-03737`. Coordinates are degree-minute digits, so they are
+  accurate to under 2 km.
+- **Aim-point lines:** one per DGZ, with coordinates and a letter label. Moscow has 12 (A, AH,
+  AM … K). Some complexes have none.
+- **Installation lines:** a category code and a BE number, e.g. `227 0167-`. The first four
+  digits of the BE number are the World Aeronautical Chart. The installation number is often
+  blank.
+- **Sub-complexes** are indented and carry their own coordinates.
 
 **What is missing:**
 - **Installation names.** The Bombing Encyclopedia itself is still classified, so
   installations have codes but no names.
 - **Weapons.** Weapon numbers and types are blanked out of the released copy.
 
-**Anchors to validate against:**
-- Moscow is priority 1 with 179 DGZs; Leningrad is priority 2 with 145.
-- East Berlin has 91 DGZs.
-- China and North Korea together have about 146 targets.
-- Reported DGZ totals vary by source (about 3,400 for Part I, 1,209 for Part II), so they
-  are reconciled from the transcription itself.
+**Anchors to validate against.** These correct the press coverage, which counted
+installations as DGZs:
+- **Moscow** is priority 1: 12 DGZs over ~178 installations.
+- **Leningrad**: 7 DGZs over 145 installations.
+- **East Berlin**: 6 DGZs over 91 installations (68 in the city, 23 in six suburbs).
+- **Countries on the list:** USSR, East Germany, Poland, Czechoslovakia, Hungary, Romania,
+  Bulgaria, Albania, China (with Manchuria) and North Korea; North Vietnam is still to be
+  confirmed. Yugoslavia is absent, and Iran appears only in the category codes.
+- **Part II totals** (1,209 DGZs per the table of contents) are reconciled from the
+  transcription itself.
 
 ### 4.2 The labels
 
 | Task | Label | Unit |
 |---|---|---|
-| T1 Targeted? | The place has at least one Part I urban-industrial DGZ within r km | place (main), cell |
-| T2 How hard? | Number of DGZs | targeted places (hurdle model) |
-| T3 Rank | City priority order | targeted places |
-| T4 Kept under scarcity? | The place keeps DGZs under the Part II restricted allocation | targeted places |
-| T5 Airfield priority | Priority number on the Air Power list | the ~1,100 airfields |
+| T1 Targeted? | The place is a Part I complex within r km. A variant requires at least one DGZ line | place (main), cell |
+| T2 How hard? | Two counts: DGZs (aim points) and installations (target richness) | targeted places (hurdle model) |
+| T3 Rank | Complex priority (every complex has one) | targeted places |
+| T4 Kept under scarcity? | Survives into Part II. **Only feasible for airfields**: the Part II complex list was released only as excerpts | airfields |
+| T5 Airfield priority | Priority number on the complete Part II airfield list | the ~1,110 airfields |
 
-According to the Archive, every city on the list includes a "Population" DGZ (category
-275). Population targeting was therefore universal, so it is not a separate label.
+Every complete block checked so far has a "Population" installation line (category 275), as
+the Archive says. Population targeting was therefore universal, so it is not a separate label.
+The check still has to be run over all ~1,200 complexes.
 
 ### 4.3 Getting a table out of the scans
 
-The Archive's OCR is garbled, and Wellerstein described the pages as impossible to OCR.
-So this step comes first.
+The scans are image-only, 1-bit, with no usable text layer. A pilot on 4 pages (129 complex
+lines and 27 airfield rows) found:
+- only 0.1–0.3% of digits illegible;
+- each page takes 1–3 minutes to read visually.
+
+The full job is ~350 pages and ~14,600 lines. Two independent passes plus adjudication take
+about 25–30 agent-hours, or ~3 hours with 10 parallel workers. So this step comes first.
 
 0. **Fast path.**
    - In 2016 Alex Wellerstein and the Future of Life Institute mapped 1,154 targets from this
      list (blog.nuclearsecrecy.com/misc/targets1956/). That is probably one point per city.
+   - **Not yet obtained.** The live blog sits behind a browser cookie check, and
+     web.archive.org is not on this environment's allow-list.
    - Ask them for the CSV, with credit. It gives T1 labels for the first slice at once.
 1. **Get the PDFs.** This needs network access, or an upload; see §11.
 2. **Prepare page images** at 300–400 dpi, deskewed and binarised.
@@ -205,7 +220,13 @@ So this step comes first.
    - coordinates fall inside the 1956 border of the stated country (CShapes);
    - the BE chart prefix agrees with other rows from the same chart;
    - category codes exist in the code list;
-   - city totals match the published anchors;
+   - minutes are under 60;
+   - the BE chart prefix agrees across a complex and with its coordinates;
+   - every block has one population line;
+   - priorities are unique, with no gaps;
+   - reference numbers run in alphabetical order;
+   - airfield reference numbers match their parent complexes;
+   - city totals match the Archive's spreadsheets and the anchors above;
    - the two reads agree.
 5. **Review and measure.**
    - Flagged rows go to a review queue.
@@ -245,7 +266,7 @@ book.
 
 | Source | Planner → target, year | Size and detail | Where | Effort | Provenance |
 |---|---|---|---|---|---|
-| **SAC Atomic Weapons Requirements Study** | US → Soviet bloc, China, N. Korea, 1956 | 1,200+ cities and 1,100+ airfields; installations with coordinates | Electronic Briefing Book 538 | L (transcription) | Study |
+| **SAC Atomic Weapons Requirements Study** | US → Soviet bloc, China, N. Korea, 1956 | ~1,200 complexes with priorities, DGZs and installations (~13,500 lines); ~1,110 airfields with priorities | Electronic Briefing Book 538 | L (transcription) | Study |
 | **Air Ministry city grading** | UK → USSR, 1957 | 131 cities over 100k, graded on population and administrative, economic and transport importance; 98 in range, 44 selected. **Selected and rejected cities in one list** | UK National Archives, Air Ministry/Bomber Command files (not online; cited by Wynn 1994, Jones 2017) | L | Study |
 | Norstad memo to Groves | US → USSR, Sep 1945 | 66 cities (15 first-priority named), plus 21 Manchurian cities studied and dropped | Scanned memo and map (nuclearsecrecy.com, 2012) | S | Study |
 | JIC 329/1 | US → USSR, Nov 1945 | 20 named cities | *Studies in Intelligence* 44:3 | S | Study |
@@ -289,12 +310,12 @@ would only rediscover the rule.
 
 | Source | Producer → target, year | Size and detail | Where | Effort | Provenance |
 |---|---|---|---|---|---|
-| **NAPB-90, *Nuclear Attack Planning Base 1990*** | FEMA, modelled on Soviet doctrine → US, 1987 | ~6,100 aim points in 8 classes (ICBM silos and control centres, other military, military-support industry, ports, refineries, political, power plants, chemical plants). County tables of population and area by blast band (972 counties at 2 psi or more). State maps with blast rings | 510-page scan, **reachable now** through a public GitHub repo (`5usc2302/risk`). The separate "National Aimpoint List" volume would need a FOIA request | M: OCR the county tables, georeference the rings | Defender. No population class, but industrial classes were trimmed by capacity rules |
+| **NAPB-90, *Nuclear Attack Planning Base 1990*** | FEMA, modelled on Soviet doctrine → US, 1987 | An *initial* set of 6,139 targets in 10 classes before editing; the final aim-point count is not printed. County tables of population and area by blast band (Annex A) and fallout (Annex B), ~3,100 counties each. State maps with blast rings | 510-page scan, obtained. The "National Aimpoint List" volume is not on archive.org or OSTI, so it would need FOIA | M: transcribe the county tables (~8–12 h by vision); georeference the rings (lower-bound counts) | Defender. No population class. Editing rules drop refineries under 75,000 bbl/day and hit power plants until 75% of capacity is gone |
 | FEMA-196, *Risks and Hazards* | FEMA → US, 1990 | NAPB-90 blast rings, state by state; maps only | Same GitHub repo | M | Defender |
-| Operation Alert attack patterns | FCDA → US, 1955–61 | 1955: 61 cities with yields, chosen by judgment | FCDA records (1955 widely reported) | S–M | Defender (exercise) |
-| TR-82 high-risk areas; CRP-2B | DCPA → US, 1975–79 | 829 counties; 1,444 weapons | OSTI reports | M | Defender. Its "population over 50,000" class is a rule and is dropped |
-| **"Probable nuclear targets in the United Kingdom"** | Cabinet Office → UK, 1972 (released 2014) | 106 named sites: 38 towns and government centres, 37 UK/US air bases, 25 command, communications and radar sites, 6 naval sites | UK National Archives (file reference to confirm) | S once located | Defender, chosen by judgment |
-| Square Leg / Hard Rock | Home Office → UK, 1980 / 1982 | ~131 weapons, bomb plots published / under 50 Mt | Campbell, *War Plan UK*; Openshaw et al., *Doomsday* (print) | M | Defender (exercise); politically edited |
+| Operation Alert attack patterns | FCDA → US, 1955–61 | 1955: 61 bombs on 60 cities; only 16 are named on the official map (extracted) | FCDA Annual Report 1955; 1956 hearings (full list probably in an appendix) | S–M | Defender (exercise) |
+| TR-82 high-risk areas; CRP-2B | DCPA → US, 1975–79 | CRP-2B: 1,444 weapons, 6,559 Mt; TR-82 itself not obtained | OSTI (ORNL-5041); DTIC | M | Defender. Its "population over 50,000" class is a rule and is dropped |
+| "Probable nuclear targets in the United Kingdom" | Home Office → UK, 1969–72 | Reported as 106 sites; **unverified** | File HO 322/785 is still retained by the department. DEFE 69/585 is open at Kew but not digitised | L | Defender |
+| Square Leg / Hard Rock | Home Office → UK, 1980 / 1982 | Square Leg: 95 targets extracted from the *New Statesman*'s reproduction of the official bomb plot ("125 weapons … around 200 Megatons"). Hard Rock not obtained | *New Statesman* 1980/81 (secondary); Hard Rock files HO 322/985–1020 at Kew, not digitised | S (done) / L | Defender (exercise); politically edited |
 | Canadian target areas | Canada → Canada, 1956–62 | 13 named areas (1956 Hansard); Exercise Tocsin B (1961) | Hansard | S | Defender |
 | China's key civil-air-defence cities | China → China, present | City classes 1–3, compiled from municipal plans | Municipal documents | M | Defender (modern era) |
 | Helfand et al. 2002 | PSR/NRDC → US | 1,249 targets of a 2,000-warhead Russian attack | *Medicine & Global Survival* 7(2); coordinates unpublished | M | Reconstruction |
@@ -314,7 +335,7 @@ would only rediscover the rule.
   - the USSR, China and most satellite states, from the 1956 list (to be confirmed after
     transcription);
   - the US, from NAPB-90 at county level;
-  - probably the UK, from the 1972 list plus Square Leg;
+  - possibly the UK, from Square Leg (95 targets);
   - Denmark and West Germany, if the print and archive sources are obtained.
 - **Regime-type contrasts within one planner are scarce.**
   - Greece under the 1967–74 junta and Turkey would give a Warsaw Pact planner targets in
