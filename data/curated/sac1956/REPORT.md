@@ -1,7 +1,7 @@
 # SAC 1956 list: assembly report
 
 - Lines with a final reading: 16046 (15838 agreed by both passes, 208 adjudicated); lines with no reading yet: 0
-- Complexes: 1216; sub-complexes: 873; DGZs: 1405; installation lines: 10220; M-n rows: 34; airfields: 1128
+- Complexes: 1217; sub-complexes: 873; DGZs: 1405; installation lines: 10220; M-n rows: 34; airfields: 1128
 - Lines still carrying '?' or failing a rule: 6
 
 ## Transcription quality
@@ -27,7 +27,7 @@
 
 | Country | Complexes | DGZs | Installations |
 |---|---|---|---|
-| USSR | 727 | 856 | 5064 |
+| USSR | 728 | 856 | 5064 |
 | Poland | 101 | 123 | 982 |
 | China | 81 | 66 | 595 |
 | East Germany | 68 | 124 | 1159 |
@@ -62,6 +62,7 @@
 
 - Airfields whose reference number is a Part I complex: 856 of 1128
 - Duplicate scans left out of the tables: PDF page 46 (= page 45)
+- Missing from the scan: C065-L04 opens without its header (header not in the scan: PDF page 64 is cut off at the foot); C010-L04 opens without its header (header not in the scan: the printed page after PDF page 9 is missing)
 
 ## External check: NSA city sheets
 
@@ -93,12 +94,11 @@ Lines that the checks still flag after the second look, with its outcome (checks
 | WAC prefix differs from its block | 4 | 4 | 0 |
 | DGZ far from its header | 3 | 3 | 0 |
 | airfield row does not match the expected format | 3 | 3 | 0 |
-| header far from the other headers on its chart | 2 | 2 | 0 |
 | block with more than one population line | 2 | 2 | 0 |
 | duplicate airfield priority | 2 | 2 | 0 |
 | airfield BE number not 8xxx | 2 | 2 | 0 |
 | minutes>=60 | 2 | 2 | 0 |
-| sub-complex far from its complex | 1 | 1 | 0 |
+| header far from the other headers on its chart | 1 | 1 | 0 |
 | reference number not above the previous complex | 1 | 1 | 0 |
 | airfield out of alphabetical order | 1 | 1 | 0 |
 | line does not match any expected format | 1 | 1 | 0 |

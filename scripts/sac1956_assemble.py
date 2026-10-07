@@ -75,12 +75,17 @@ SUFFIXES = [
 # Pages scanned twice: the duplicate's lines stay in lines.csv but do not enter the tables.
 # PDF page 46 repeats page 45 line for line (CHERNIGOV .. CHIA MU SSU); page 47 continues 45.
 DUPLICATE_PAGES = {"C046": "C045"}
-# Lines whose complex header is not in the scan. The scan of PDF page 64 cuts off the foot of the
-# page after SAMBOR; page 65 opens inside a complex (chart 0322, sub-complex GORNA ORYAKHOVITSA
-# BULG) whose header, alphabetically between DROGOBYCH and DUBNICE NAD VAHOM, was on the lost
-# strip. A placeholder complex without name or coordinates holds its lines.
+# Lines whose complex header is not in the scan; a placeholder complex without name or
+# coordinates holds them. The scan of PDF page 64 cuts off the foot of the page after SAMBOR;
+# page 65 opens inside a complex (chart 0322, sub-complex GORNA ORYAKHOVITSA BULG) whose header,
+# alphabetically between DROGOBYCH and DUBNICE NAD VAHOM, was on the lost strip.
 LOST_HEADERS = {
-    "C065-L04": ("Bulgaria", "header not in the scan: PDF page 64 is cut off at the foot")
+    "C065-L04": ("Bulgaria", "header not in the scan: PDF page 64 is cut off at the foot"),
+    # A printed page is missing between PDF pages 9 and 10 (the scan duplicates page 45 in its
+    # place). It held the rest of ARTSIZ and the complexes from ARTSIZ to ATBASAR: the airfield
+    # list names ARZAMAS (0310), ASHKHABAD (0330) and ASTRAKHAN (0340) there. Page 10 opens
+    # inside a complex on chart 0248 with the sub-complex ILINKA, beside Astrakhan.
+    "C010-L04": ("USSR", "header not in the scan: the printed page after PDF page 9 is missing"),
 }
 BARE_COORDS = re.compile(r"^\d{4}-\d{5}[EW]?$")
 DIRECTIONS = {
@@ -1043,6 +1048,13 @@ def report(
         "- Duplicate scans left out of the tables: "
         + ", ".join(
             f"PDF page {int(d[1:])} (= page {int(o[1:])})" for d, o in DUPLICATE_PAGES.items()
+        )
+    ]
+    out += [
+        "- Missing from the scan: "
+        + "; ".join(
+            f"{line_id} opens without its header ({why})"
+            for line_id, (_, why) in LOST_HEADERS.items()
         )
     ]
     out += nsa_check(complexes, installs)

@@ -150,8 +150,15 @@ See REPORT.md for the current numbers. In brief:
 
 ## Known gaps and quirks
 
-- **PDF page 46 is a second scan of page 45.** Its lines are in `lines.csv` (type
-  `duplicate of page C045`) but not in the tables.
+- **A printed page is missing between PDF pages 9 and 10**, and PDF page 46 is a second scan
+  of page 45 in its place (the duplicate's lines are in `lines.csv`, type `duplicate of page
+  C045`, but not in the tables). The missing page held the rest of ARTSIZ's block and the
+  complexes from ARTSIZ to ATBASAR. The airfield list names three of them by reference number:
+  ARZAMAS (0310), ASHKHABAD (0330) and ASTRAKHAN (0340). Page 10 opens inside a complex on
+  chart 0248 with the sub-complex ILINKA beside Astrakhan; its lines sit under a placeholder
+  (`C010-L04-lost`). ASTRAKHAN, ASHKHABAD and ARZAMAS were therefore almost certainly on the
+  list, but their entries are lost. Places whose name falls in this stretch of the alphabet get
+  no label in the models (see the label code in `nucprob/labels/sac1956.py`).
 - **The scan of PDF page 64 is cut off at the foot.** Page 65 opens inside a complex whose
   header was on the lost strip: a Bulgarian complex (chart 0322, sub-complex GORNA
   ORYAKHOVITSA BULG) that sorts between DROGOBYCH and DUBNICE NAD VAHOM. Its lines sit under
@@ -159,8 +166,10 @@ See REPORT.md for the current numbers. In brief:
   label file. It is probably priority 1054, the only number missing from its alphabetical tier
   (between DORONINSKOYE 1053 and DUBOSSARY 1055).
 - **Priority numbers not found** in the complex list: see REPORT.md (after the checks: 97, 303,
-  530, 603, 766, 872, 1220, and 1054 above). Either the complexes are not in Part I or their
-  headers are lost; no page break shows a gap.
+  530, 603, 766, 872, 1220, and 1054 above). Most are likely on the missing page (ASTRAKHAN,
+  ASHKHABAD, ARZAMAS and possibly others in that stretch). A check of every page break (the chart
+  number of the lines that continue a block against the location of its header, and reference
+  numbers that run on) finds no other gap.
 - **Lower-resolution scans.** Nine pages of the complex list (PDF pages 1, 2, 8, 9, 32–34, 112
   and 113) and 11 of the 43 airfield pages (1, 2, 4–6, 20, 23, 24, 27, 29, 30) were scanned at
   about 200 dpi, against 300 dpi or more for the rest. 22 of the 24 airfield lines that ended

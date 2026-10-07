@@ -34,6 +34,13 @@ NAME_OK = 75  # name similarity (0-100) below which a link is listed for review
 # tens of kilometres off (INTA is printed 72 km from Inta).
 NAME_RADIUS_KM = 75.0
 NAME_LINK = 88
+# Stretches of the alphabet whose entries are lost from the scan (data/curated/sac1956/README.md).
+# A settlement that links to no target and whose name falls in one of them has no label: it may
+# have been on the lost page.
+GAPS = [
+    ("ARTSIZ", "ATBASAR", "the printed page after PDF page 9 is missing"),
+    ("DROGOBYCH", "DUBNICE NAD VAHOM", "the foot of PDF page 64 is cut off"),
+]
 COUNTRY = "USSR"
 SCRIPTS = re.compile(r"[A-Za-zÀ-ž\u0400-\u04FF\s\-’'.]+")  # Latin or Cyrillic names only
 
@@ -52,11 +59,27 @@ def load_targets() -> tuple[pd.DataFrame, pd.DataFrame]:
     return cx, dgz
 
 
+def text(value) -> str:
+    return value if isinstance(value, str) else ""
+
+
+def in_gap(place: pd.Series) -> str:
+    """Why the settlement's label is unknown ("" if it is known): one of its names sorts inside
+    a stretch of the alphabet lost from the scan."""
+    names = [place["name_1956"], *variants(place["name_ru"], text(place.get("notes")))]
+    names.append(text(place.get("gn_name")))
+    keys = {simple(to_latin(n)) for n in names if n}
+    for lo, hi, why in GAPS:
+        if any(simple(lo) < k < simple(hi) for k in keys):
+            return why
+    return ""
+
+
 def place_names(place: pd.Series) -> list[str]:
     """Every name of a settlement in the SAC style of Latin letters: its 1956 and current names,
     the names in its parentheses and notes, and GeoNames' Latin and Cyrillic alternate names."""
-    names = [place["name_1956"], *variants(place["name_ru"], place.get("notes") or "")]
-    names += [place.get("gn_name") or ""]
+    names = [place["name_1956"], *variants(place["name_ru"], text(place.get("notes")))]
+    names += [text(place.get("gn_name"))]
     names += [
         n for n in str(place.get("gn_alternatenames") or "").split(",") if SCRIPTS.fullmatch(n)
     ]
@@ -157,7 +180,10 @@ def build(radius_km: float = RADIUS_KM) -> tuple[pd.DataFrame, pd.DataFrame, pd.
     labels["n_subcomplexes"] = g.apply(lambda d: (d["level"] == "subcomplex").sum())
     labels["n_installations"] = g["n_installations"].sum()
     labels["n_population_lines"] = g["n_population"].sum()
-    labels["n_dgz"] = links_dgz[links_dgz["place_id"].notna()].groupby("place_id").size()
+    labels["n_dgz"] = g["n_dgz"].sum()  # the DGZs of the settlement's own complexes (T2)
+    labels["n_dgz_points_near"] = (
+        links_dgz[links_dgz["place_id"].notna()].groupby("place_id").size()
+    )
     labels["best_priority"] = top_prio["p"].min()
     labels["best_tier"] = top_prio["priority_tier"].min()
     labels["parent_priority"] = g["top_priority"].apply(
@@ -173,10 +199,18 @@ def build(radius_km: float = RADIUS_KM) -> tuple[pd.DataFrame, pd.DataFrame, pd.
                 "n_installations",
                 "n_population_lines",
                 "n_dgz",
+                "n_dgz_points_near",
             ]
         }
     )
-    labels["listed"] = (labels["n_complexes"] + labels["n_subcomplexes"]) > 0  # T1, main
+    # T1, main: the settlement has an entry of its own, a complex or a sub-complex. A DGZ of a
+    # big complex that happens to lie nearer a suburb (Zaton by Barnaul) does not make the suburb
+    # a target; it stays with its complex.
+    labels["listed"] = (labels["n_complexes"] + labels["n_subcomplexes"]) > 0
+    labels["label_gap"] = [
+        "" if listed else in_gap(place)
+        for listed, (_, place) in zip(labels["listed"], places.iterrows(), strict=True)
+    ]
     labels["has_dgz"] = labels["n_dgz"] > 0  # T1, variant: given at least one aim point
     labels = labels.reset_index()
 

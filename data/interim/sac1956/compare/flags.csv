@@ -2,13 +2,11 @@ id,page,kind_a,kind_b,text_a,text_b,reasons
 C138-L44,C138,data,data,4212-4343E E,4212-4343E E,"check: DGZ far from its header (0.07 deg lat / 1.02 deg lon from KUTAISI (C138-L42 42.2667, 42.7))"
 C242-L17,C242,data,data,4348-2321E G,4348-2321E G,"check: DGZ far from its header (0.97 deg lat / 0.03 deg lon from KURILO BULG (C242-L16 42.8333, 23.3167))"
 C299-L28,C299,data,data,3942-9750E C,3942-9750E C,"check: DGZ far from its header (0.58 deg lat / 0.63 deg lon from YU MEN CHINA (C299-L27 40.2833, 97.2))"
-C010-L16,C010,data,data,ILINKA 4614-04755,ILINKA 4614-04755,check: sub-complex far from its complex (0.23 deg lat / 18.48 deg lon from ARTSIZ (C009-L47))
 C013-L25,C013,data,data,415 0159-0951,415 0159-0951,check: WAC prefix differs from its block (0159 in a block where 9 of 10 lines use 0169)
 C150-L03,C150,data,data,290 0381-0260 || 275 0289-9953,290 0381-0260 || 275 0289-9953,check: WAC prefix differs from its block (0381 in a block where 4 of 5 lines use 0289)
 C186-L03,C186,data,data,285 0152-0084,285 0152-0084,check: WAC prefix differs from its block (0152 in a block where 40 of 41 lines use 0162)
 C299-L31,C299,data,data,275 0331-9999,275 0331-9999,check: WAC prefix differs from its block (0331 in a block where 2 of 3 lines use 0332)
 C002-L04,C002,data,data,701 0022 ABDULINO 5340-05340,701 0022 ABDULINO 5340-05340,"check: header far from the other headers on its chart (WAC 0169: 53.6667, 53.6667 vs median 53.1167, 14.5667 of 127 headers)"
-C009-L47,C009,data,data,962 0307 ARTSIZ 4600-02926,962 0307 ARTSIZ 4600-02926,"check: header far from the other headers on its chart (WAC 0248: 46.0, 29.4333 vs median 46.2333, 43.15 of 6 headers)"
 C162-L15,C162,data,data,KAZINCBARCIKA HUNG 4815-02037,KAZINCBARCIKA HUNG 4815-02037,check: block with more than one population line (2 lines of category 275 under KAZINCBARCIKA HUNG)
 C173-L42,C173,data,data,TULOMA 6849-03248,TULOMA 6849-03248,check: block with more than one population line (2 lines of category 275 under TULOMA)
 C190-L04,C190,data,data,228 5761 OPPELN POL 5040-01757,228 5761 OPPELN POL 5040-01757,check: reference number not above the previous complex (5761 after 5775 (C189-L42))
