@@ -619,6 +619,17 @@ nuclear-probabilities/
 
 Phases 1 and 2 run side by side. Transcribing the labels is the long pole, so it starts first.
 
+**Progress (7 Oct 2026, later).** M0 and M1 are done. The scaffold (uv, Python 3.12, ruff,
+pytest, Make, CI) and the provenance manifest are in place. The USSR slice runs end to end:
+1,635 towns of 10,000+ in 1959 from pop-stat and Demoscope, 99% given coordinates by a
+gazetteer over GeoNames; the SAC 1956 targets linked to them (coordinates first, names second);
+population and administrative features; the population rule, logistic regression and LightGBM
+under spatial-block CV, with the sealed test blocks set aside; and a map (`runs/m1-slice/`).
+First read, not a result: population alone ranks the towns nearly as well as every slice model
+(PR-AUC 0.79 vs 0.80 for "on the list"), so industry, military and transport must carry what is
+left. Building the slice exposed a page missing from the SAC scan (Astrakhan, Ashgabat, Arzamas;
+see the data card). Next: M2, the full 1956 feature base.
+
 **Progress (7 Oct 2026).** M3 is done for the two complete lists: the Part I complex list and
 the Part II airfield list are transcribed (two passes by different models, every disagreement
 adjudicated on the scan, a second look at every line a consistency check flags), with an error
