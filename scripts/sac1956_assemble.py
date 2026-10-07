@@ -16,7 +16,8 @@ Outputs (data/curated/sac1956/):
   anomalies.csv      lines that still do not parse, or that carry a "?"
   checks.csv         lines that break a consistency check across lines (see checks())
   REPORT.md          counts and validation checks
-and data/curated/labels/us_1956_sac_complexes.csv in the shared label schema.
+and data/curated/labels/us_1956_sac_complexes.csv and us_1956_sac_airfields.csv in the shared
+label schema.
 
 Lines flagged by checks() that no check batch has re-read yet are also written to
 data/interim/sac1956/compare/flags.csv, in the format of disputes.csv, so that
@@ -25,6 +26,7 @@ data/interim/sac1956/compare/flags.csv, in the format of disputes.csv, so that
 
 import csv
 import json
+import math
 import re
 import sys
 from collections import Counter, defaultdict
@@ -37,7 +39,7 @@ ROOT = Path("data/interim/sac1956")
 OUT = Path("data/curated/sac1956")
 SOURCE_URL = {
     "C": "https://nsarchive.gwu.edu/document/15800-09-urban-industrial-target-list-part-i",
-    "A": "https://nsarchive2.gwu.edu/nukevault/ebb538-Cold-War-Nuclear-Target-List-Declassified-First-Ever/",
+    "A": "https://nsarchive2.gwu.edu/nukevault/ebb538-Cold-War-Nuclear-Target-List-Declassified-First-Ever/documents/section6.pdf",
 }
 # Country suffixes as printed after a complex name; no suffix means the USSR.
 SUFFIXES = [
@@ -69,10 +71,23 @@ MAX_WAC_SPREAD = (4.0, 8.0)  # (lat, lon) from the median header of the chart
 MIN_TIER = 6  # consecutive priorities in alphabetical order that make a tier
 
 
-def degrees(dm: str, hem: str | None = None) -> float:
-    """'5545' -> 55.75; '03737' -> 37.6167; W hemisphere -> negative."""
+def degrees(dm: str, hem: str | None = None) -> float | str:
+    """'5545' -> 55.75; '03737' -> 37.6167; W hemisphere -> negative. Blank when a digit is
+    unreadable or the minutes are 60 or more (a slip in the source)."""
+    if "?" in dm or int(dm[-2:]) >= 60:
+        return ""
     value = int(dm[:-2]) + int(dm[-2:]) / 60
     return round(-value if hem == "W" else value, 4)
+
+
+def airfield_with_gaps(text: str) -> dict | None:
+    """An airfield row that keeps a '?': parse it with the gaps read as zeros, then give each
+    field its printed characters back, so the '?' stays where it is (and blanks a coordinate)."""
+    raw = cmp.digits_for_letters(cmp.light(text))
+    m = cmp.AIRFIELD.match(raw.replace("?", "0"))
+    if not m:
+        return None
+    return {k: (raw[m.start(k) : m.end(k)] if m.start(k) >= 0 else None) for k in m.groupdict()}
 
 
 # The name column holds 25 characters, which cuts some suffixes ("CZEC", "CHIN", "E GE"); these
@@ -258,6 +273,8 @@ def main() -> None:
             lines.append({"id": line_id, "page": page, "kind": rec["kind"], "text": text, "source": rec["source"], "type": ""})
             continue
         typ, f, problems = cmp.classify(page, cmp.norm(text), cmp.light(text))
+        if typ == "unparsed" and "?" in text and page.startswith("A") and (parsed := airfield_with_gaps(text)):
+            typ, f = "airfield", parsed
         lines.append({"id": line_id, "page": page, "kind": "data", "text": text, "source": rec["source"], "type": typ})
         if "?" in text or problems:
             anomalies.append({"id": line_id, "text": text, "problem": "; ".join(problems) or "contains ?"})
@@ -282,32 +299,87 @@ def main() -> None:
                        ("anomalies.csv", anomalies)]:
         write(name, rows)
 
-    # Shared-schema label file: one row per top-level complex.
-    label_rows = []
-    for c in complexes:
-        if c["level"] != "complex" or c["lat"] == "":
-            continue
-        label_rows.append({
-            "plan_id": "us_1956_sac_complexes", "planner": "US (SAC)", "target_country": c["country"], "plan_year": 1956,
-            "provenance": "study", "seq": c["priority"], "name_source": c["name_printed"], "name_modern": "",
-            "target_class": "urban-industrial complex", "selected": 1, "priority": c["priority"], "weapons": "",
-            "yield_kt": "", "lat": c["lat"], "lon": c["lon"],
-            "source_doc": "SAC Atomic Weapons Requirements Study for 1959 (June 1956), Part I complex list (NSA EBB 538)",
-            "source_url": SOURCE_URL["C"], "source_page": c["page"], "quote": f"{c['priority']} {c['ref']} {c['name_printed']}",
-            "notes": f"DGZs={c['n_dgz']}; installations={c['n_installations']} (sub-complexes counted separately)",
-        })
-    labels_path = Path("data/curated/labels/us_1956_sac_complexes.csv")
-    if label_rows:
-        with open(labels_path, "w", newline="", encoding="utf-8") as fh:
-            w = csv.DictWriter(fh, fieldnames=list(label_rows[0].keys()))
-            w.writeheader()
-            w.writerows(label_rows)
+    write_labels(complexes, airfields, lines)
 
     flags = checks(complexes, dgzs, installs, msites, airfields)
     flags += [{"check": a["problem"], "id": a["id"], "detail": a["text"]} for a in anomalies]
+    second = {}  # outcome of the second look (check batches) at each flagged line
+    for tsv in sorted((ROOT / "adjudicate" / "decisions").glob("check*.tsv")):
+        for raw in tsv.read_text(encoding="utf-8").splitlines():
+            parts = (raw.split("\t") + [""] * 6)[:6]
+            if raw.strip():
+                second[parts[0].strip()] = ("corrected" if parts[3].strip() == "new" else "confirmed as printed", parts[5].strip())
+    for f in flags:
+        f["second_look"], f["second_look_note"] = second.get(f["id"], ("not re-read", ""))
     write("checks.csv", flags)
     write_flags(flags, final)
     report(complexes, dgzs, installs, msites, airfields, anomalies, lines, gaps, final, flags)
+
+
+# Country names in the shared label schema (the country containing the target in 1956), where
+# they differ from the printed suffix.
+LABEL_COUNTRY = {"East Germany": "GDR", "China": "PRC", "China (Manchuria)": "PRC"}
+# Places whose printed suffix names another state than the one containing them.
+LABEL_COUNTRY_BY_NAME = {"ULAAN BAATAR": "Mongolia"}
+
+
+def write_labels(complexes: list[dict], airfields: list[dict], lines: list[dict]) -> None:
+    """The shared-schema label files (data/curated/labels/SCHEMA.md): one row per top-level
+    complex, and one per airfield. Rows without coordinates (the lost header) are left out."""
+    text = {r["id"]: r["text"] for r in lines}
+    kids = defaultdict(list)
+    for c in complexes:
+        if c["parent_id"]:
+            kids[c["parent_id"]].append(c)
+    doc = "SAC, Atomic Weapons Requirements Study for 1959 (SM 129-56, June 1956)"
+
+    def country(name: str, printed_country: str) -> tuple[str, str]:
+        if name in LABEL_COUNTRY_BY_NAME:
+            return LABEL_COUNTRY_BY_NAME[name], f"printed suffix says {printed_country}; "
+        region = "Manchuria; " if printed_country == "China (Manchuria)" else ""
+        return LABEL_COUNTRY.get(printed_country, printed_country), region
+
+    rows = []
+    for c in complexes:
+        if c["level"] != "complex" or c["lat"] == "":
+            continue
+        n_dgz = c["n_dgz"] + sum(k["n_dgz"] for k in kids[c["id"]])
+        n_inst = c["n_installations"] + sum(k["n_installations"] for k in kids[c["id"]])
+        target_country, note = country(c["name"], c["country"])
+        tier = f"priority tier {c['priority_tier']} of size {c['tier_size']}; " if c["tier_size"] not in ("", 1) else ""
+        rows.append({
+            "plan_id": "us_1956_sac_complexes", "planner": "US (SAC)", "target_country": target_country,
+            "plan_year": 1956, "provenance": "study", "seq": len(rows) + 1, "name_source": c["name_printed"],
+            "name_modern": "", "target_class": "urban-industrial complex", "selected": 1, "priority": c["priority"],
+            "weapons": "", "yield_kt": "", "lat": c["lat"], "lon": c["lon"],
+            "source_doc": f"{doc}, Part I complex list (NSA EBB 538, doc. 09)", "source_url": SOURCE_URL["C"],
+            "source_page": f"PDF p.{int(c['page'][1:])} ({c['id']})", "quote": text[c["id"]][:200],
+            "notes": f"{note}{tier}DGZs={n_dgz}{' (no aim point in this study)' if n_dgz == 0 else ''}; "
+                     f"installation lines={n_inst}; sub-complexes={len(kids[c['id']])}",
+        })
+    write_csv(Path("data/curated/labels/us_1956_sac_complexes.csv"), rows)
+
+    rows = []
+    for a in airfields:
+        target_country, note = country(a["name"], a["country"])
+        rows.append({
+            "plan_id": "us_1956_sac_airfields", "planner": "US (SAC)", "target_country": target_country,
+            "plan_year": 1956, "provenance": "study", "seq": len(rows) + 1, "name_source": a["name_printed"],
+            "name_modern": "", "target_class": "airfield", "selected": 1, "priority": a["priority"], "weapons": "",
+            "yield_kt": "", "lat": a["lat"], "lon": a["lon"],
+            "source_doc": f"{doc}, Part II airfield list (NSA EBB 538, doc. 06)", "source_url": SOURCE_URL["A"],
+            "source_page": f"PDF p.{int(a['page'][1:])} ({a['id']})", "quote": text[a["id"]][:200],
+            "notes": f"{note}reference number {a['ref']}; BE {a['be']}; code {a['code']}"
+                     + ("; coordinate not legible or printed with minutes >= 60" if "" in (a["lat"], a["lon"]) else ""),
+        })
+    write_csv(Path("data/curated/labels/us_1956_sac_airfields.csv"), rows)
+
+
+def write_csv(path: Path, rows: list[dict]) -> None:
+    with open(path, "w", newline="", encoding="utf-8") as fh:
+        w = csv.DictWriter(fh, fieldnames=list(rows[0].keys()))
+        w.writeheader()
+        w.writerows(rows)
 
 
 def add_priority_tiers(complexes: list[dict]) -> None:
@@ -340,6 +412,13 @@ def add_priority_tiers(complexes: list[dict]) -> None:
         c.setdefault("tier_size", "")
 
 
+def lon_gap(lon1: float, lon2: float, lat: float) -> float:
+    """Longitude difference across the date line (Chukotka), in 'equator degrees': a degree of
+    longitude shrinks with latitude, and charts in the far north span more of them."""
+    d = abs(lon1 - lon2) % 360
+    return min(d, 360 - d) * max(math.cos(math.radians(lat)), 0.3)
+
+
 def checks(complexes, dgzs, installs, msites, airfields) -> list[dict]:
     """Consistency checks across lines. Both passes can misread a glyph the same way (3/5/8,
     6/0/9); such a line agrees and parses, but it disagrees with the lines around it."""
@@ -355,14 +434,14 @@ def checks(complexes, dgzs, installs, msites, airfields) -> list[dict]:
     rows += [(m, m["top_complex_id"], MAX_SUB_OFFSET, "M-site") for m in msites if m["top_complex_id"]]
     for row, cid, limit, what in rows:
         c = by_id[cid]
-        if c["lat"] == "":
+        if "" in (c["lat"], c["lon"], row["lat"], row["lon"]):
             continue
         dlat, dlon = abs(row["lat"] - c["lat"]), abs(row["lon"] - c["lon"])
         if dlat > limit or dlon > limit * 2:
             flag(f"{what} far from its header", row["id"],
                  f"{dlat:.2f} deg lat / {dlon:.2f} deg lon from {c['name_printed']} ({c['id']} {c['lat']}, {c['lon']})")
     for c in complexes:
-        if c["parent_id"] and by_id[c["parent_id"]]["lat"] != "":
+        if c["parent_id"] and "" not in (by_id[c["parent_id"]]["lat"], by_id[c["parent_id"]]["lon"], c["lat"], c["lon"]):
             p = by_id[c["parent_id"]]
             dlat, dlon = abs(c["lat"] - p["lat"]), abs(c["lon"] - p["lon"])
             if dlat > MAX_SUB_OFFSET or dlon > MAX_SUB_OFFSET * 2:
@@ -381,7 +460,7 @@ def checks(complexes, dgzs, installs, msites, airfields) -> list[dict]:
             for r in rows:
                 if counts[r["be_wac"]] == 1 and n >= 2:
                     flag("WAC prefix differs from its block", r["id"], f"{r['be_wac']} in a block where {n} of {len(rows)} lines use {modal}")
-        if by_id[cid]["lat"] != "":
+        if "" not in (by_id[cid]["lat"], by_id[cid]["lon"]):
             wac_points[modal].append(by_id[cid])
     # A chart covers a fixed area, so headers whose installations sit on one chart lie close
     # together; a header far from the others on its chart has a misread coordinate or prefix.
@@ -389,11 +468,28 @@ def checks(complexes, dgzs, installs, msites, airfields) -> list[dict]:
         if len(cs) < 3:
             continue
         lat_med = sorted(c["lat"] for c in cs)[len(cs) // 2]
-        lon_med = sorted(c["lon"] for c in cs)[len(cs) // 2]
+        lon_med = sorted(c["lon"] % 360 for c in cs)[len(cs) // 2]
         for c in cs:
-            if abs(c["lat"] - lat_med) > MAX_WAC_SPREAD[0] or abs(c["lon"] - lon_med) > MAX_WAC_SPREAD[1]:
+            if abs(c["lat"] - lat_med) > MAX_WAC_SPREAD[0] or lon_gap(c["lon"], lon_med, lat_med) > MAX_WAC_SPREAD[1]:
                 flag("header far from the other headers on its chart", c["id"],
                      f"WAC {wac}: {c['lat']}, {c['lon']} vs median {lat_med}, {lon_med} of {len(cs)} headers")
+    # Airfields on one chart lie together too; the chart prefix of an airfield's BE number is
+    # printed apart from its coordinates, so a misread coordinate digit shows up as distance
+    # (a 2 that lost its base bar reads as 7: five degrees).
+    af_points = defaultdict(list)
+    for a in airfields:
+        if "" not in (a["lat"], a["lon"]):
+            af_points[a["be"].split("-")[0]].append(a)
+    for wac, group in af_points.items():
+        pts = group + wac_points.get(wac, [])
+        if len(pts) < 3:
+            continue
+        lat_med = sorted(x["lat"] for x in pts)[len(pts) // 2]
+        lon_med = sorted(x["lon"] % 360 for x in pts)[len(pts) // 2]
+        for a in group:
+            if abs(a["lat"] - lat_med) > MAX_WAC_SPREAD[0] or lon_gap(a["lon"], lon_med, lat_med) > MAX_WAC_SPREAD[1]:
+                flag("airfield far from the other targets on its chart", a["id"],
+                     f"chart {wac}: {a['lat']}, {a['lon']} vs median {lat_med}, {lon_med} of {len(pts)}")
     # Population lines carry 9xxx numbers (a rule in the comparison); each block normally has one.
     for c in complexes:
         n = c["n_population"]
@@ -425,7 +521,9 @@ def checks(complexes, dgzs, installs, msites, airfields) -> list[dict]:
         if num and not num.startswith("8"):
             flag("airfield BE number not 8xxx", a["id"], a["be"])
         c = refs.get(a["ref"])  # many airfields name a complex that is not in Part I: not checked
-        if c and (abs(a["lat"] - c["lat"]) > MAX_AIRFIELD_OFFSET or abs(a["lon"] - c["lon"]) > MAX_AIRFIELD_OFFSET * 2):
+        if c and "" not in (a["lat"], a["lon"], c["lat"], c["lon"]) and (
+            abs(a["lat"] - c["lat"]) > MAX_AIRFIELD_OFFSET or abs(a["lon"] - c["lon"]) > MAX_AIRFIELD_OFFSET * 2
+        ):
             flag("airfield far from its reference complex", a["id"],
                  f"{a['lat']}, {a['lon']} vs {c['name_printed']} ({c['id']}) {c['lat']}, {c['lon']}")
     # The same place can be printed twice: as a complex and in an airfield's name, or in both
@@ -438,7 +536,7 @@ def checks(complexes, dgzs, installs, msites, airfields) -> list[dict]:
             places.append((a["id"], sort_keys(part)[4], a["lat"], a["lon"]))
     by_len = defaultdict(list)
     for place in places:
-        if len(place[1]) >= 4:
+        if len(place[1]) >= 4 and "" not in (place[2], place[3]):
             by_len[len(place[1])].append(place)
     seen = set()
     for group in by_len.values():
@@ -582,9 +680,16 @@ def report(complexes, dgzs, installs, msites, airfields, anomalies, lines, gaps,
             f"{sum(a['ref'] in in_part1 for a in airfields)} of {len(airfields)}"]
     out += [f"- Duplicate scans left out of the tables: " + ", ".join(f"PDF page {int(d[1:])} (= page {int(o[1:])})" for d, o in DUPLICATE_PAGES.items())]
     out += nsa_check(complexes, installs)
-    out += ["", "## Consistency checks across lines", "", "Lines listed in checks.csv; each was re-read on the scan "
-            "unless noted below.", "", "| Check | Lines |", "|---|---|"]
-    out += [f"| {check} | {n} |" for check, n in Counter(f["check"] for f in flags).most_common()]
+    out += ["", "## Consistency checks across lines", "",
+            "Lines that the checks still flag after the second look, with its outcome (checks.csv has the notes). "
+            "Lines that the second look corrected no longer break a check and are not listed. In all, "
+            f"{sum(1 for r in final.values() if r.get('choice') == 'new')} lines ended with a reading that neither "
+            "pass had (adjudication or second look, choice `new`).", "",
+            "| Check | Lines | Confirmed as printed | Not re-read |", "|---|---|---|---|"]
+    for check, n in Counter(f["check"] for f in flags).most_common():
+        rows = [f for f in flags if f["check"] == check]
+        out.append(f"| {check} | {n} | {sum(f['second_look'] == 'confirmed as printed' for f in rows)} | "
+                   f"{sum(f['second_look'] == 'not re-read' for f in rows)} |")
     (OUT / "REPORT.md").write_text("\n".join(out) + "\n")
     print("\n".join(out))
 

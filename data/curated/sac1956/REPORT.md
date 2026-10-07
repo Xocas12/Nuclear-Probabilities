@@ -1,13 +1,13 @@
 # SAC 1956 list: assembly report
 
-- Lines with a final reading: 16046 (15866 agreed by both passes, 180 adjudicated); lines with no reading yet: 0
-- Complexes: 1216; sub-complexes: 873; DGZs: 1405; installation lines: 10220; M-n rows: 34; airfields: 1124
-- Lines still carrying '?' or failing a rule: 8
+- Lines with a final reading: 16046 (15838 agreed by both passes, 208 adjudicated); lines with no reading yet: 0
+- Complexes: 1216; sub-complexes: 873; DGZs: 1405; installation lines: 10220; M-n rows: 34; airfields: 1128
+- Lines still carrying '?' or failing a rule: 6
 
 ## Transcription quality
 
-- Data lines: 14904. Pass A differs from the final reading on 145 (0.97%), pass B on 57 (0.38%); both on 27. On 0 of these the two passes wrote the same legible text: errors the comparison cannot see, found by the consistency checks or by an adjudicator looking at the line for another reason ().
-- Adjudicated lines: 180; choice A 30, B 119, both 4, new 27; confidence high 88, low 6, medium 86
+- Data lines: 14904. Pass A differs from the final reading on 149 (1.00%), pass B on 60 (0.40%); both on 32. On 2 of these the two passes wrote the same legible text: errors the comparison cannot see, found by the consistency checks or by an adjudicator looking at the line for another reason (A004-L07, A006-L22).
+- Adjudicated lines: 208; choice A 26, B 109, both 41, new 32; confidence high 114, low 9, medium 85
 
 ## Anchors
 
@@ -20,7 +20,7 @@
 ## Priority numbers
 
 - 1215 complexes carry a priority; highest 1223; duplicates: 0 []; numbers missing from 1..max: 8 [97, 303, 530, 603, 766, 872, 1054, 1220]
-- Airfields: 1124 priorities, highest 1111, 18 with an A suffix (typed in later); duplicates: 4 ['51', '449', '572', '10']; numbers missing from 1..max: 9 [18, 91, 348, 448, 586, 652, 672, 805, 950]
+- Airfields: 1128 priorities, highest 1111, 18 with an A suffix (typed in later); duplicates: 1 ['10']; numbers missing from 1..max: 2 [18, 652]
 - Reference numbers that drop below the previous complex (alphabetical order check): 1
 
 ## Complexes by country
@@ -60,7 +60,7 @@
 
 - Category codes not in the code list: []
 
-- Airfields whose reference number is a Part I complex: 853 of 1124
+- Airfields whose reference number is a Part I complex: 856 of 1128
 - Duplicate scans left out of the tables: PDF page 46 (= page 45)
 
 ## External check: NSA city sheets
@@ -85,21 +85,21 @@ Installation lines by category against the National Security Archive's city shee
 
 ## Consistency checks across lines
 
-Lines listed in checks.csv; each was re-read on the scan unless noted below.
+Lines that the checks still flag after the second look, with its outcome (checks.csv has the notes). Lines that the second look corrected no longer break a check and are not listed. In all, 32 lines ended with a reading that neither pass had (adjudication or second look, choice `new`).
 
-| Check | Lines |
-|---|---|
-| name a letter away from a nearby name | 10 |
-| duplicate airfield priority | 8 |
-| header far from the other headers on its chart | 5 |
-| WAC prefix differs from its block | 4 |
-| airfield row does not match the expected format | 4 |
-| DGZ far from its header | 3 |
-| airfield far from its reference complex | 3 |
-| minutes>=60 | 3 |
-| block with more than one population line | 2 |
-| airfield BE number not 8xxx | 2 |
-| sub-complex far from its complex | 1 |
-| reference number not above the previous complex | 1 |
-| airfield out of alphabetical order | 1 |
-| line does not match any expected format | 1 |
+| Check | Lines | Confirmed as printed | Not re-read |
+|---|---|---|---|
+| name a letter away from a nearby name | 10 | 10 | 0 |
+| WAC prefix differs from its block | 4 | 4 | 0 |
+| DGZ far from its header | 3 | 3 | 0 |
+| airfield row does not match the expected format | 3 | 3 | 0 |
+| header far from the other headers on its chart | 2 | 2 | 0 |
+| airfield far from the other targets on its chart | 2 | 0 | 2 |
+| block with more than one population line | 2 | 2 | 0 |
+| duplicate airfield priority | 2 | 2 | 0 |
+| airfield BE number not 8xxx | 2 | 2 | 0 |
+| minutes>=60 | 2 | 2 | 0 |
+| sub-complex far from its complex | 1 | 1 | 0 |
+| reference number not above the previous complex | 1 | 1 | 0 |
+| airfield out of alphabetical order | 1 | 1 | 0 |
+| line does not match any expected format | 1 | 1 | 0 |

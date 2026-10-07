@@ -1,0 +1,22 @@
+[
+ {
+  "id": "A005-L21",
+  "page": "A005",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "140 0989 BRIESEN, E GER 0165-8299 5202-01345 R",
+  "text_b": "140 0989 BRIESEN, E GER 0165-8299 5202-01345 R",
+  "reasons": "check: airfield far from the other targets on its chart (chart 0165: 52.0333, 13.75 vs median 53.6167, 50.3833 of 43)",
+  "crop": "adjudicate/crops/A005-L21.png"
+ },
+ {
+  "id": "A020-L05",
+  "page": "A020",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "298 4490 LENINGRAD/GORELOVO 0155-8051 5946-03005 S",
+  "text_b": "298 4490 LENINGRAD/GORELOVO 0155-8051 5946-03005 S",
+  "reasons": "check: airfield far from the other targets on its chart (chart 0155: 59.7667, 30.0833 vs median 58.1333, 51.7 of 25)",
+  "crop": "adjudicate/crops/A020-L05.png"
+ }
+]

@@ -1,49 +1,37 @@
-check,id,detail
-DGZ far from its header,C138-L44,"0.07 deg lat / 1.02 deg lon from KUTAISI (C138-L42 42.2667, 42.7)"
-DGZ far from its header,C242-L17,"0.97 deg lat / 0.03 deg lon from KURILO BULG (C242-L16 42.8333, 23.3167)"
-DGZ far from its header,C299-L28,"0.58 deg lat / 0.63 deg lon from YU MEN CHINA (C299-L27 40.2833, 97.2)"
-sub-complex far from its complex,C010-L16,0.23 deg lat / 18.48 deg lon from ARTSIZ (C009-L47)
-WAC prefix differs from its block,C013-L25,0159 in a block where 9 of 10 lines use 0169
-WAC prefix differs from its block,C150-L03,0381 in a block where 4 of 5 lines use 0289
-WAC prefix differs from its block,C186-L03,0152 in a block where 40 of 41 lines use 0162
-WAC prefix differs from its block,C299-L31,0331 in a block where 2 of 3 lines use 0332
-header far from the other headers on its chart,C002-L04,"WAC 0169: 53.6667, 53.6667 vs median 53.1167, 14.5667 of 127 headers"
-header far from the other headers on its chart,C087-L15,"WAC 0155: 56.3667, 44.0667 vs median 58.1333, 52.1833 of 22 headers"
-header far from the other headers on its chart,C006-L13,"WAC 0075: 64.7333, 177.4667 vs median 64.7667, -171.05 of 4 headers"
-header far from the other headers on its chart,C009-L47,"WAC 0248: 46.0, 29.4333 vs median 46.2333, 43.15 of 6 headers"
-header far from the other headers on its chart,C178-L12,"WAC 0093: 67.65, 53.0 vs median 66.4667, 61.5 of 6 headers"
-block with more than one population line,C162-L15,2 lines of category 275 under KAZINCBARCIKA HUNG
-block with more than one population line,C173-L42,2 lines of category 275 under TULOMA
-reference number not above the previous complex,C190-L04,5761 after 5775 (C189-L42)
-duplicate airfield priority,A002-L11,priority 51 also on A024-L25
-duplicate airfield priority,A024-L25,priority 51 also on A002-L11
-duplicate airfield priority,A004-L07,priority 449 also on A038-L15
-duplicate airfield priority,A038-L15,priority 449 also on A004-L07
-duplicate airfield priority,A012-L16,priority 572 also on A035-L22
-duplicate airfield priority,A035-L22,priority 572 also on A012-L16
-duplicate airfield priority,A023-L16,priority 10 also on A027-L20
-duplicate airfield priority,A027-L20,priority 10 also on A023-L16
-airfield out of alphabetical order,A036-L12,SZOLNOK/RAKOCZIFALVA follows SZYMANY (A036-L11)
-airfield far from its reference complex,A002-L17,"51.55, 13.2167 vs TOMASZOW MAZOWIECKI POL (C268-L12) 51.5333, 20.0333"
-airfield far from its reference complex,A004-L07,"52.1333, 46.9667 vs VOLKHOV (C285-L08) 59.9167, 32.35"
-airfield far from its reference complex,A005-L19,"57.0, 23.6667 vs BREST (C029-L09) 52.1, 23.7"
-airfield BE number not 8xxx,A030-L14,0380-0457
-airfield BE number not 8xxx,A030-L27,0250-3704
-name a letter away from a nearby name,C091-L37,GUSTROW vs WUSTROW (C293-L27)
-name a letter away from a nearby name,C293-L27,WUSTROW vs GUSTROW (C091-L37)
-name a letter away from a nearby name,C017-L40,SLAPY vs SLANY (C212-L13)
-name a letter away from a nearby name,C212-L13,SLANY vs SLAPY (C017-L40)
-name a letter away from a nearby name,C003-L06,AKTYUBINSK vs AKTYURINSK (A002-L07)
-name a letter away from a nearby name,A002-L07,AKTYURINSK vs AKTYUBINSK (C003-L06)
-name a letter away from a nearby name,C262-L15,TAO AN vs TAONAN (A037-L07)
-name a letter away from a nearby name,A037-L07,TAONAN vs TAO AN (C262-L15)
-name a letter away from a nearby name,C207-L09,BYLOVO vs BYKOVO (A023-L27)
-name a letter away from a nearby name,A023-L27,BYKOVO vs BYLOVO (C207-L09)
-minutes>=60,A002-L29,893 0270 ARKHANGELSK/BAKARITSA 0092-8002 6478-04035 T
-minutes>=60,A004-L20,"520 0665 BERAT/KUCOVE, ALB 0322-8001 4047-01994 R"
-minutes>=60,A006-L22,897 1202 CHAPLINO 0075-8007 6474-17217W R
-airfield row does not match the expected format,A027-L04,805 57475 OLOVYANNAYA 0202-8614 5101-1152? R
-airfield row does not match the expected format,A027-L06,950 5750 OMSK E. 0163-8?02 5457-07328 S
-airfield row does not match the expected format,A027-L08,586 5770 ONEGA 0102-8016 635?-03808 R
-airfield row does not match the expected format,A027-L29,348 3660 PALANGA 0168-8644 5556-0210? R
-line does not match any expected format,C129-L14,3932 KOSTINO M-70 5533-036120 UA
+check,id,detail,second_look,second_look_note
+DGZ far from its header,C138-L44,"0.07 deg lat / 1.02 deg lon from KUTAISI (C138-L42 42.2667, 42.7)",confirmed as printed,"Printed as read; inconsistent in the source (C line is 4216- 4242E). Both 3s of 4343 are flat-topped 3s, unlike the round-topped 2s of 4242E on the line above; 4212 clear."
+DGZ far from its header,C242-L17,"0.97 deg lat / 0.03 deg lon from KURILO BULG (C242-L16 42.8333, 23.3167)",confirmed as printed,"Printed as read; inconsistent in the source (header 4250-02319). 2nd digit is a flat-topped 3, not a 2. The 2x2-px dot after the hyphen is a speck (smaller than a stroke, off-centre in the blank cell), left out."
+DGZ far from its header,C299-L28,"0.58 deg lat / 0.63 deg lon from YU MEN CHINA (C299-L27 40.2833, 97.2)",confirmed as printed,Printed as read; inconsistent in the source (header 4017-09712). Every digit clear at native resolution; it is the block's only DGZ.
+sub-complex far from its complex,C010-L16,0.23 deg lat / 18.48 deg lon from ARTSIZ (C009-L47),confirmed as printed,"Coordinates clear and agree with its DGZ (4614- 4754E L) and chart 0248; the 18 deg gap comes from the ARTSIZ header (C009-L47, printed 4600-02926). 3rd letter has a 1-px left-leaning top (pass A read 1), but the page's digit 1s have 2-3 px flags and the same shape is the I of MEDGIDIA (C158-L26); read as I."
+WAC prefix differs from its block,C013-L25,0159 in a block where 9 of 10 lines use 0169,confirmed as printed,"Printed as read; inconsistent in the source. 3rd chart digit has the flat top and open lower-left bowl of the 5 in 0951 on the same line, unlike the closed 6s of 0169 above and below; BE 0951 sits in the 0169 sequence (0941, 1143)."
+WAC prefix differs from its block,C150-L03,0381 in a block where 4 of 5 lines use 0289,confirmed as printed,"Band holds two printed lines. 0381 is clear (flat-topped 3, footed 1, unlike 0289 below). Printed as read; inconsistent in the source: the CHIN HUANG TAO CHINA sub-complex that follows (L05-L08) is all on 0381, so this line may belong to that block."
+WAC prefix differs from its block,C186-L03,0152 in a block where 40 of 41 lines use 0162,confirmed as printed,"Printed as read; inconsistent in the source. 3rd chart digit is a 5 (open lower-left bowl like the 5 of 0085 below), unlike the closed 6s of 0162 on L04-L14; BE 0084 continues the 0162 run (0085, 0092...)."
+WAC prefix differs from its block,C299-L31,0331 in a block where 2 of 3 lines use 0332,confirmed as printed,"Printed as read; inconsistent in the source. 4th chart digit is a footed 1, clearly unlike the 2 of 0332 on the line above."
+header far from the other headers on its chart,C002-L04,"WAC 0169: 53.6667, 53.6667 vs median 53.1167, 14.5667 of 127 headers",confirmed as printed,"Printed as read; all characters confirmed (faint 6th letter is I: stem centred in its cell, no E arms); agrees with its DGZ 5340- 5339E B. Chart 0169 comes from C002-L06 (top-closed 9) while C002-L07 reads 0165, so the inconsistency is in the block lines, not this header."
+header far from the other headers on its chart,C009-L47,"WAC 0248: 46.0, 29.4333 vs median 46.2333, 43.15 of 6 headers",confirmed as printed,"Last typed line, lower part overprinted by the DocId stamp; coordinates clear. Priority 2nd digit has the 6's diagonal top and closed bowl (cf. 6 of 0156 on L46; 952 is AGA's); ref 3rd digit a 0 (no middle bar), 4th a 7 (flat top); 3rd letter has a T-width bar. Inconsistent in the source: its block on C010 (chart 0248) and sub-complex ILINKA 4614-04755 lie ~18 deg east; nothing hidden at the page break."
+airfield far from the other targets on its chart,A005-L21,"chart 0165: 52.0333, 13.75 vs median 53.6167, 50.3833 of 43",not re-read,
+airfield far from the other targets on its chart,A020-L05,"chart 0155: 59.7667, 30.0833 vs median 58.1333, 51.7 of 25",not re-read,
+block with more than one population line,C162-L15,2 lines of category 275 under KAZINCBARCIKA HUNG,confirmed as printed,"Line printed as read. Both 275 lines (L20 0232-9950, L21 0232-9663) follow it with no name line between; the DIOSGYOR HUNG sub-complex above (L05-L14) has none. Nothing hidden in the print."
+block with more than one population line,C173-L42,2 lines of category 275 under TULOMA,confirmed as printed,Line printed as read (dots above U and A are specks). Its block holds 275 0051-9981 (L45) and 275 0051-9974 (L47) with 227 0051-0094 between and no name line; nothing hidden in the print.
+reference number not above the previous complex,C190-L04,5761 after 5775 (C189-L42),confirmed as printed,"Printed as read; inconsistent in the source (5761 sits between OPAVA CZECH 5775 and ORADEA RUM 5795). 3rd ref digit is a 6: no right side in its upper half, unlike the 8 of 228 on the same line."
+duplicate airfield priority,A023-L16,priority 10 also on A027-L20,confirmed as printed,"The 0 is clean: one open counter and no waist, like the 0s in 5032 and 1077, so it is not an 8 (18). The dot to the left is a speck. Printed as read; the duplicate priority 10 (also on A027-L20) is in the source."
+duplicate airfield priority,A027-L20,priority 10 also on A023-L16,confirmed as printed,"Second digit is a 0: at native resolution it has one counter and no waist, while the 8s in 58975, 608 and 638 all have a waist. The bottom is heavy and there is a speck above. 18 is not supported by the print. Printed as read; the duplicate 10 is in the source."
+airfield out of alphabetical order,A036-L12,SZOLNOK/RAKOCZIFALVA follows SZYMANY (A036-L11),confirmed as printed,"The line is clear as read. Printed as read: the misplaced entry is SZYMANY (L11, ref 8100), typed above SZOLNOK 8075 and SZOMBATHELY 8085 in the source."
+airfield BE number not 8xxx,A030-L14,0380-0457,confirmed as printed,"The digit after the hyphen is a clean 0 (one counter, no waist; the 8 in 0380 has a waist). Printed as read; the non-8xxx BE number is in the source."
+airfield BE number not 8xxx,A030-L27,0250-3704,confirmed as printed,The digit after the hyphen is a 3. Its left side is open in both halves; the top-left hook and the cusp running left match other 3s on the page. The 8s here have both loops closed. Printed as read; the non-8xxx BE number is in the source.
+name a letter away from a nearby name,C091-L37,GUSTROW vs WUSTROW (C293-L27),confirmed as printed,"The first letter is clearly a G. Printed as read; WUSTROW (C293-L27, 5405-01135) is a different place. The dot inside 2493 is a speck."
+name a letter away from a nearby name,C293-L27,WUSTROW vs GUSTROW (C091-L37),confirmed as printed,The first letter is clearly a W. Printed as read; GUSTROW (C091-L37) has different coordinates.
+name a letter away from a nearby name,C017-L40,SLAPY vs SLANY (C212-L13),confirmed as printed,"The 4th letter is clearly a P. Printed as read; SLANY (C212-L13, 5014-01405) is a separate entry. The tiny dot below the baseline after 01425 is a speck, not a period."
+name a letter away from a nearby name,C212-L13,SLANY vs SLAPY (C017-L40),confirmed as printed,The 4th letter is clearly an N. Printed as read; SLAPY (C017-L40) has different coordinates.
+name a letter away from a nearby name,C003-L06,AKTYUBINSK vs AKTYURINSK (A002-L07),confirmed as printed,The B is clear: two bowls on a stem. Letter spacing shows no space after the K. Printed as read; AKTYURINSK is a reading of A002-L07.
+name a letter away from a nearby name,A002-L07,AKTYURINSK vs AKTYUBINSK (C003-L06),confirmed as printed,"Printed as read; inconsistent in the source (C003-L06 has AKTYUBINSK, same ref 0080). 6th letter has an open bottom and vertical leg like the R of AFRIKANDA/ALAKURTTI, not the closed B of ALTENBURG."
+name a letter away from a nearby name,C262-L15,TAO AN vs TAONAN (A037-L07),confirmed as printed,"TAO AN: the gap between O and A is exactly one character cell, so no N is missing. The 1-px dot in the gap is a speck. Printed as read; it differs from TAO NAN (A037-L07) in the source."
+name a letter away from a nearby name,A037-L07,TAONAN vs TAO AN (C262-L15),confirmed as printed,"TAO NAN, is clear. Printed as read. The small dot after 82562 (9 px of ink, below the baseline) is a speck; this page's periods and commas are about 35-40 px."
+name a letter away from a nearby name,C207-L09,BYLOVO vs BYKOVO (A023-L27),confirmed as printed,The 3rd letter is clearly an L (no upper diagonal). Printed as read; BYKOVO (A023-L27) is a different entry with different coordinates.
+name a letter away from a nearby name,A023-L27,BYKOVO vs BYLOVO (C207-L09),confirmed as printed,The 3rd letter after the slash is clearly a K: a stem with upper and lower diagonals. Printed as read; BYLOVO on C207-L09 is a different entry with different coordinates.
+minutes>=60,A002-L29,893 0270 ARKHANGELSK/BAKARITSA 0092-8002 6478-04035 T,confirmed as printed,"Printed as read; minutes 78 invalid in the source. 3rd latitude digit is a 7: flat top and diagonal with no top-left hook and no bottom bar, unlike the 2 of 6426 on the line above."
+minutes>=60,A004-L20,"520 0665 BERAT/KUCOVE, ALB 0322-8001 4047-01994 R",confirmed as printed,"Printed as read; minutes 94 invalid in the source. 4th longitude digit has a closed upper loop (both sides), so not a 3 or 5; it matches a 9 (an 8 would be invalid too)."
+airfield row does not match the expected format,A027-L04,805 57475 OLOVYANNAYA 0202-8614 5101-1152? R,confirmed as printed,"Last longitude digit stays ?: heavy ink, a tiny closed counter at the top (like a 9), and a full-width bottom bar (like a 3; the 9s on this page have narrow tails). It cannot be decided between 3 and 9 and may be an overstrike. The dotted vertical mark below it is not a character."
+airfield row does not match the expected format,A027-L08,586 5770 ONEGA 0102-8016 635?-03808 R,confirmed as printed,"4th latitude digit stays ?: solid ink in the upper half, then a right stem and a full-width bottom with a small left hook. That is closest to a 3, since the 9s here have narrow tails, the 5s keep a right notch and the 8s a lower-left side. But no 3 on the page has a filled top (possible overstrike), so it stays undecided between 3 and 9. It is not a 4."
+airfield row does not match the expected format,A027-L29,348 3660 PALANGA 0168-8644 5556-0210? R,confirmed as printed,"Last longitude digit stays ?: the top is a solid blob. The right side, the left hook and the bottom bar match this page's 3s; no lower-left side rules out an 8, and the narrow-tailed 9s here do not match. Probably a 3, but the filled top leaves it undecided (3 or 9). The 2 before 10 has lost its base bar but is a 2."
+line does not match any expected format,C129-L14,3932 KOSTINO M-70 5533-036120 UA,confirmed as printed,"Six clear, evenly spaced digits follow the hyphen (0 3 6 1 2 0). Only specks lie left of 3932, so no priority is printed. Printed as read; the nonstandard format is in the source."

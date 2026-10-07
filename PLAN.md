@@ -170,28 +170,40 @@ The primary source is SAC's **Atomic Weapons Requirements Study for 1959**, date
 
 **Anchors to validate against.** These correct the press coverage, which counted
 installations as DGZs:
-- **Moscow** is priority 1: 12 DGZs over ~178 installations.
-- **Leningrad**: 7 DGZs over 145 installations.
+- **Moscow** is priority 1: 12 DGZs over 180 installations (13 and 190 with its three
+  suburbs; the Archive's sheet counts 178 and 190).
+- **Leningrad**: 7 DGZs over 139 installations (the Archive's sheet: 145; the pages are complete,
+  so the difference is unexplained).
 - **East Berlin**: 6 DGZs over 91 installations (68 in the city, 23 in six suburbs).
 - **Countries on the list:** USSR, East Germany, Poland, Czechoslovakia, Hungary, Romania,
-  Bulgaria, Albania, China (with Manchuria) and North Korea; North Vietnam is still to be
-  confirmed. Yugoslavia is absent, and Iran appears only in the category codes.
-- **Part II totals** (1,209 DGZs per the table of contents) are reconciled from the
-  transcription itself.
+  Bulgaria, Albania, China (with Manchuria), North Korea and North Vietnam (8 complexes).
+  Ulaanbaatar is printed with the suffix CHINA. Yugoslavia is absent, and Iran appears only in
+  the category codes.
+- **Part II totals:** the table of contents gives 1,209 DGZs; the Part II airfield list has
+  1,128 rows. The Part II complex list survives only in excerpts, so the two cannot be reconciled.
+
+**Transcribed in full (7 Oct 2026).** Both lists are in `data/curated/sac1956/` with a data card
+(README.md) and a validation report (REPORT.md): 1,216 complexes, 873 sub-complexes, 1,405 DGZs,
+10,220 installation lines, 34 Moscow-area "M-n" sites and 1,128 airfields, every value traced to a
+printed line. Two findings change the label design below:
+- **Half the complexes have no DGZ** (609 of 1,215 with a header), mostly low priorities: 98% of
+  the top 100 have one, 5% of those ranked 901–1223.
+- **Priorities come in tiers from about 321 down**, numbered alphabetically within each tier
+  (`priority_tier` in the tables). Below the top 300 the rank inside a tier is noise.
 
 ### 4.2 The labels
 
 | Task | Label | Unit |
 |---|---|---|
-| T1 Targeted? | The place is a Part I complex within r km. A variant requires at least one DGZ line | place (main), cell |
+| T1 Targeted? | The place is a Part I complex within r km. A variant requires at least one DGZ line; since half the complexes have none, the two variants are reported side by side | place (main), cell |
 | T2 How hard? | Two counts: DGZs (aim points) and installations (target richness) | targeted places (hurdle model) |
-| T3 Rank | Complex priority (every complex has one) | targeted places |
+| T3 Rank | Complex priority (every complex has one), modelled as an ordinal outcome over `priority_tier`: ranks 1–320 are individual, below that each alphabetical tier is one level | targeted places |
 | T4 Kept under scarcity? | Survives into Part II. **Only feasible for airfields**: the Part II complex list was released only as excerpts | airfields |
 | T5 Airfield priority | Priority number on the complete Part II airfield list | the ~1,110 airfields |
 
-Every complete block checked so far has a "Population" installation line (category 275), as
-the Archive says. Population targeting was therefore universal, so it is not a separate label.
-The check still has to be run over all ~1,200 complexes.
+Population targeting is near-universal, so it is not a separate label: 2,081 of the 2,089
+complex and sub-complex blocks have exactly one "Population" line (category 275). The few
+exceptions are printed that way (SMOLENSK, priority 3, has none).
 
 ### 4.3 Getting a table out of the scans
 
@@ -266,7 +278,7 @@ book.
 
 | Source | Planner → target, year | Size and detail | Status after the first pass | Provenance |
 |---|---|---|---|---|
-| **SAC Atomic Weapons Requirements Study** | US → Soviet bloc, China, N. Korea, 1956 | ~1,200 complexes with priorities, DGZs and installations (~13,500 lines); ~1,110 airfields with priorities | All PDFs downloaded; category codes transcribed; 4-page pilot done. Full transcription is next | Study |
+| **SAC Atomic Weapons Requirements Study** | US → Soviet bloc, China, N. Korea, 1956 | ~1,200 complexes with priorities, DGZs and installations (~13,500 lines); ~1,110 airfields with priorities | **Transcribed in full** (Oct 2026): two independent passes, adjudication, cross-line checks; `data/curated/sac1956/` | Study |
 | **Air Ministry city grading** | UK → USSR, 1957 | 131 cities over 100k, graded; 98 in range, 44 selected (counts unverified) | Not digitised. Open at Kew: AIR 2/13716, AIR 2/13717, DEFE 5/77/208, DEFE 5/78/224 | Study |
 | Target Committee and orders | US → Japan, 1945 | 17 study areas → 5 reserved targets → 4 in the 25 July directive, with Kyoto and the Emperor's palace rejected | **Extracted: 42 rows**, one per city per decision stage | Plan |
 | Chinese nuclear facilities | US → PRC, 1964 | Baotou plutonium reactor, Lanzhou gaseous diffusion plant | **Extracted: 2 rows** (EBB 488) | Study |
@@ -606,6 +618,11 @@ nuclear-probabilities/
 ## 9. Order of work
 
 Phases 1 and 2 run side by side. Transcribing the labels is the long pole, so it starts first.
+
+**Progress (7 Oct 2026).** M3 is done for the two complete lists: the Part I complex list and
+the Part II airfield list are transcribed (two passes by different models, every disagreement
+adjudicated on the scan, a second look at every line a consistency check flags), with an error
+rate measured per pass and a data card. Outstanding for M3: the Part II complex excerpts.
 
 **Progress (3 Oct 2026).** The first pass of M4 is done: 24 lists extracted, every row with a
 page reference and a quote (see `data/INVENTORY.md`). For the 1956 list, everything is

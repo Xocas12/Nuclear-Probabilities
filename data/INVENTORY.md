@@ -14,10 +14,12 @@ source are in `data/notes/`. Raw downloads are in `data/raw/` (not in git).
 | `nato_1965_hu_wargame_mirror.csv` | 26 | Hungary/USSR war game (simulated NATO 'Westerners' strike against the Warsaw Pact Southwestern Front) | Czechoslovakia, Hungary, USSR | 1965 | exercise | 0 | 0 |
 | `rec_2001_nrdc_classes.csv` | 9 | (own schema) |  |  |  |  |  |
 | `rec_2002_helfand_classes.csv` | 15 | (own schema) |  |  |  |  |  |
-| `sac1956_category_codes.csv` | 191 | (own schema) |  |  |  |  |  |
+| `sac1956_category_codes.csv` | 192 | (own schema) |  |  |  |  |  |
 | `sac1956_pilot_airfields.csv` | 27 | (own schema) |  |  |  |  |  |
 | `sac1956_pilot_urban.csv` | 129 | (own schema) |  |  |  |  |  |
 | `us_1945_target_committee.csv` | 42 | US | Japan | 1945 | plan, study | 2 | 4 |
+| `us_1956_sac_airfields.csv` | 1128 | US (SAC) | Albania, Bulgaria, Czechoslovakia, GDR, Hungary, North Korea, PRC, Poland, Romania, USSR | 1956 | study | 0 | 0 |
+| `us_1956_sac_complexes.csv` | 1215 | US (SAC) | Albania, Bulgaria, Czechoslovakia, GDR, Hungary, Mongolia, North Korea, North Vietnam, PRC, Poland, Romania, USSR | 1956 | study | 0 | 0 |
 | `us_1964_china_nuclear.csv` | 2 | US | PRC | 1964 | study | 0 | 0 |
 | `wp_1959_r5m_operation_atom.csv` | 1 | USSR (R-5M missiles deployed at Vogelsang and Fürstenberg, GDR, 1959) | UK | 1959 | reconstruction | 1 | 0 |
 | `wp_1961_burza.csv` | 23 | Poland (Front Nadmorski / Maritime Front, exercise 'Burza') | Denmark, FRG, GDR, Netherlands | 1961 | exercise | 0 | 0 |
@@ -30,4 +32,4 @@ source are in `data/notes/`. Raw downloads are in `data/raw/` (not in git).
 | `wp_1977_zealand.csv` | 10 | Poland (Coastal Front / Front Nadmorski), landing operation on Zealand | Denmark | 1977 | plan | 10 | 0 |
 | `wp_1979_seven_days.csv` | 9 | Warsaw Pact/USSR (as attributed by Wikipedia) | Austria, Denmark, FRG, Italy | 1979 | reconstruction | 9 | 0 |
 
-Total: 24 files, 858 rows.
+Total: 26 files, 3202 rows.
