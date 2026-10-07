@@ -33,13 +33,17 @@ DPI = 300
 SCALE = 1.6  # strips are enlarged so small glyphs are easier to read
 MAX_LINES_PER_STRIP = 14
 MARGIN = 170  # white margin on the left of a strip, for the line ids
-PROFILE_LEFT = 300  # table text starts right of x=330; the frame, a fold line and specks lie left of 300
+PROFILE_LEFT = (
+    300  # table text starts right of x=330; the frame, a fold line and specks lie left of 300
+)
 CROP_LEFT = 250  # strips still show from here, in case a page is shifted a little
 FONT = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf", 34)
 
 
 def render(doc: pymupdf.Document, index: int) -> np.ndarray:
-    pix = doc[index].get_pixmap(matrix=pymupdf.Matrix(DPI / 72, DPI / 72), colorspace=pymupdf.csGRAY)
+    pix = doc[index].get_pixmap(
+        matrix=pymupdf.Matrix(DPI / 72, DPI / 72), colorspace=pymupdf.csGRAY
+    )
     return np.frombuffer(pix.samples, dtype=np.uint8).reshape(pix.height, pix.width)
 
 
@@ -89,14 +93,18 @@ def line_bands(chars: np.ndarray) -> list[tuple[int, int]]:
             merged[-1][1] = band[1]
         else:
             merged.append(band)
-    merged = [b for b in merged if b[1] - b[0] >= 6 and profile[b[0] : b[1] + 1].sum() >= 40 and spans_columns(chars, b)]
+    merged = [
+        b
+        for b in merged
+        if b[1] - b[0] >= 6 and profile[b[0] : b[1] + 1].sum() >= 40 and spans_columns(chars, b)
+    ]
     if not merged:
         return []
     typical = float(np.median([b[1] - b[0] for b in merged if 8 <= b[1] - b[0] <= 40] or [15]))
     out = []
     for top, bottom in merged:  # split bands that hold two touching lines
         if bottom - top > 1.75 * typical:
-            pieces = max(2, int(round((bottom - top) / (typical * 1.5))))
+            pieces = max(2, round((bottom - top) / (typical * 1.5)))
             cuts = [top]
             for k in range(1, pieces):
                 guess = top + k * (bottom - top) // pieces
@@ -109,9 +117,13 @@ def line_bands(chars: np.ndarray) -> list[tuple[int, int]]:
     return out
 
 
-def draw_strip(gray: np.ndarray, x0: int, x1: int, lines: list[dict], top: int, bottom: int, path: Path) -> None:
+def draw_strip(
+    gray: np.ndarray, x0: int, x1: int, lines: list[dict], top: int, bottom: int, path: Path
+) -> None:
     crop = Image.fromarray(gray[top:bottom, x0:x1])
-    crop = crop.resize((round(crop.width * SCALE), round(crop.height * SCALE)), Image.LANCZOS).convert("RGB")
+    crop = crop.resize(
+        (round(crop.width * SCALE), round(crop.height * SCALE)), Image.LANCZOS
+    ).convert("RGB")
     canvas = Image.new("RGB", (crop.width + MARGIN, crop.height), "white")
     canvas.paste(crop, (MARGIN, 0))
     pen = ImageDraw.Draw(canvas)
@@ -131,7 +143,10 @@ def process(code: str, index: int, doc: pymupdf.Document) -> dict:
     chars = characters(ink[:, PROFILE_LEFT:right])
     page = index + 1
     bands = line_bands(chars)
-    lines = [{"id": f"{code}{page:03d}-L{n:02d}", "y0": int(t), "y1": int(b)} for n, (t, b) in enumerate(bands, 1)]
+    lines = [
+        {"id": f"{code}{page:03d}-L{n:02d}", "y0": int(t), "y1": int(b)}
+        for n, (t, b) in enumerate(bands, 1)
+    ]
     x0, x1 = CROP_LEFT, right + 10
     strips = []
     for k in range(0, len(lines), MAX_LINES_PER_STRIP):
@@ -139,7 +154,11 @@ def process(code: str, index: int, doc: pymupdf.Document) -> dict:
         before = lines[k - 1] if k else None
         after = lines[k + MAX_LINES_PER_STRIP] if k + MAX_LINES_PER_STRIP < len(lines) else None
         top = (before["y1"] + chunk[0]["y0"]) // 2 if before else max(chunk[0]["y0"] - 14, 0)
-        bottom = (chunk[-1]["y1"] + after["y0"]) // 2 if after else min(chunk[-1]["y1"] + 14, gray.shape[0])
+        bottom = (
+            (chunk[-1]["y1"] + after["y0"]) // 2
+            if after
+            else min(chunk[-1]["y1"] + 14, gray.shape[0])
+        )
         name = f"{code}{page:03d}_s{k // MAX_LINES_PER_STRIP + 1}.png"
         draw_strip(gray, x0, x1, chunk, top, bottom, OUT / "strips" / name)
         strips.append({"file": f"strips/{name}", "lines": [line["id"] for line in chunk]})

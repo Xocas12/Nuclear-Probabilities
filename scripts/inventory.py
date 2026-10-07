@@ -18,7 +18,9 @@ def summarise(path: Path) -> dict:
     row = {"file": path.name, "rows": len(df)}
     if SCHEMA_COLS <= set(df.columns):
         row["planner"] = ", ".join(sorted(df["planner"].dropna().astype(str).unique()))
-        row["target_country"] = ", ".join(sorted(df["target_country"].dropna().astype(str).unique()))
+        row["target_country"] = ", ".join(
+            sorted(df["target_country"].dropna().astype(str).unique())
+        )
         row["year"] = ", ".join(sorted(df["plan_year"].dropna().astype(str).unique()))
         row["provenance"] = ", ".join(sorted(df["provenance"].dropna().astype(str).unique()))
         notes = df.get("notes", pd.Series(dtype=str)).fillna("").astype(str).str.lower()

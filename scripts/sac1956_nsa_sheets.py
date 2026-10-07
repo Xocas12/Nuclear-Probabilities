@@ -23,11 +23,18 @@ OUT = Path("data/curated/validation_sac1956_nsa_city_sheets.csv")
 # Locations on the sheets, and the block of the list each one counts (complex or sub-complex
 # name as printed, without the country suffix).
 LOCATIONS = {
-    "Moscow/Suburbs": "MOSCOW", "Kuchino": "KUCHINO", "Shchylkovo": "SHCHELKOVO", "Tomilino": "TOMILINO",
+    "Moscow/Suburbs": "MOSCOW",
+    "Kuchino": "KUCHINO",
+    "Shchylkovo": "SHCHELKOVO",
+    "Tomilino": "TOMILINO",
     "Mishutkino": "MISHUTKINO",
-    "Leningrad/Suburbs": "LENINGRAD", "Beloostrov": "BELOOSTROV", "Kolpino": "KOLPINO", "Sablino": "SABLINO",
+    "Leningrad/Suburbs": "LENINGRAD",
+    "Beloostrov": "BELOOSTROV",
+    "Kolpino": "KOLPINO",
+    "Sablino": "SABLINO",
     "Sestroretsk": "SESTRORETSK",
-    "Beijing/Suburbs": "PEI PING", "Fengtai": "FENG TAI",
+    "Beijing/Suburbs": "PEI PING",
+    "Fengtai": "FENG TAI",
     "Warsaw": "WARSAW",
 }
 ROW = re.compile(r"^(?P<category>.+?) (?P<code>\d{1,3}) (?P<count>\d+)$")
@@ -46,10 +53,16 @@ def main() -> None:
                     location, line = name, line[len(name) + 1 :]
             m = ROW.match(line)
             if location and m:
-                rows.append({
-                    "sheet": sheet, "location": location, "block": LOCATIONS[location],
-                    "category_name": m["category"], "category_code": m["code"].zfill(3), "count": int(m["count"]),
-                })
+                rows.append(
+                    {
+                        "sheet": sheet,
+                        "location": location,
+                        "block": LOCATIONS[location],
+                        "category_name": m["category"],
+                        "category_code": m["code"].zfill(3),
+                        "count": int(m["count"]),
+                    }
+                )
     with open(OUT, "w", newline="", encoding="utf-8") as fh:
         writer = csv.DictWriter(fh, fieldnames=list(rows[0]))
         writer.writeheader()

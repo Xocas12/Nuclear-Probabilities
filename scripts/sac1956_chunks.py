@@ -31,7 +31,9 @@ def make() -> None:
     for i, pages in enumerate(chunks, start=1):
         (out / f"chunk{i:02d}.json").write_text(json.dumps({"chunk": i, "pages": pages}, indent=1))
         strips = sum(len(p["strips"]) for p in pages)
-        print(f"chunk{i:02d}: {pages[0]['page']}..{pages[-1]['page']}  pages={len(pages)} strips={strips}")
+        print(
+            f"chunk{i:02d}: {pages[0]['page']}..{pages[-1]['page']}  pages={len(pages)} strips={strips}"
+        )
 
 
 def check(pass_name: str) -> None:
@@ -48,7 +50,10 @@ def check(pass_name: str) -> None:
                     if row.strip():
                         have.add(row.split("\t")[0].rstrip("+").strip())
             (done if want <= have else missing).append(p["page"])
-        print(f"{path.stem}: {len(done)}/{len(pages)} pages complete" + (f"; missing {missing}" if missing else ""))
+        print(
+            f"{path.stem}: {len(done)}/{len(pages)} pages complete"
+            + (f"; missing {missing}" if missing else "")
+        )
 
 
 if __name__ == "__main__":

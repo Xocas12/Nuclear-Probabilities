@@ -16,3 +16,6 @@ data/interim/sac1956/*
 data/interim/sac1956/adjudicate/crops/
 .venv/
 __pycache__/
+data/processed/
+.ruff_cache/
+.pytest_cache/

@@ -20,15 +20,21 @@ from pathlib import Path
 ROOT = Path("data/interim/sac1956")
 CODES = {
     row["code"].strip()
-    for row in csv.DictReader(open("data/curated/labels/sac1956_category_codes.csv", encoding="utf-8"))
+    for row in csv.DictReader(
+        open("data/curated/labels/sac1956_category_codes.csv", encoding="utf-8")
+    )
 }
 
 # Line formats (after normalisation: single spaces, no spaces next to hyphens). Longitudes may
 # carry a hemisphere letter (W for Chukotka and the Bering coast).
-COMPLEX = re.compile(r"^(?P<prio>\d{1,4}A?) (?P<ref>\d{4,5}) (?P<name>.+?) (?P<lat>\d{4})-(?P<lon>\d{5})(?P<hem>[EW])?$")
+COMPLEX = re.compile(
+    r"^(?P<prio>\d{1,4}A?) (?P<ref>\d{4,5}) (?P<name>.+?) (?P<lat>\d{4})-(?P<lon>\d{5})(?P<hem>[EW])?$"
+)
 SUBCOMPLEX = re.compile(r"^(?P<name>[A-Z][^\d].*?) (?P<lat>\d{4})-(?P<lon>\d{5})(?P<hem>[EW])?$")
 DGZ = re.compile(r"^(?P<lat>\d{4})-(?P<lon>\d{4,5})(?P<hem>[EW])? (?P<label>[A-Z]{1,2})$")
-INSTALL = re.compile(r"^-?(?P<cat>\d{3}) (?P<wac>\d{4})-(?P<num>\d{4})?$")  # "-208 0323-0183": a stray bar
+INSTALL = re.compile(
+    r"^-?(?P<cat>\d{3}) (?P<wac>\d{4})-(?P<num>\d{4})?$"
+)  # "-208 0323-0183": a stray bar
 AIRFIELD = re.compile(  # matched against light() text: spacing after a blank BE number survives
     r"^(?P<prio>\d{1,4}A?) (?P<ref>\d{4,5}) (?P<name>.+?) (?P<wac>\d{4})-(?P<num>\d{4})? ?"
     r"(?P<lat>\d{4})-(?P<lon>\d{5})(?P<hem>[EW]?) (?P<code>[A-Z]{1,2})$"
@@ -68,7 +74,7 @@ def load(pass_name: str) -> dict[str, tuple[str, str, str]]:
         for raw in tsv.read_text(encoding="utf-8").splitlines():
             if not raw.strip():
                 continue
-            parts = (raw.split("\t") + ["", "", ""])[:4]
+            parts = ([*raw.split("\t"), "", "", ""])[:4]
             rows[parts[0].strip()] = (parts[1].strip().lower(), parts[2].strip(), parts[3].strip())
     return rows
 
@@ -88,7 +94,10 @@ def classify(page: str, text: str, raw: str = "") -> tuple[str, dict, list[str]]
     raw is the light()-normalised text, used where spacing matters (airfield rows). Rows
     that one label covers twice ("a || b") are classified part by part."""
     if "||" in text:
-        parts = [classify(page, t.strip(), r.strip()) for t, r in zip(text.split("||"), (raw or text).split("||"))]
+        parts = [
+            classify(page, t.strip(), r.strip())
+            for t, r in zip(text.split("||"), (raw or text).split("||"), strict=False)
+        ]
         problems = [p for _, _, probs in parts for p in probs]
         return "merged", {"parts": parts}, problems
     text, raw = digits_for_letters(text), digits_for_letters(raw)
@@ -97,7 +106,13 @@ def classify(page: str, text: str, raw: str = "") -> tuple[str, dict, list[str]]
         if not m:
             return "unparsed", {}, ["airfield row does not match the expected format"]
         return "airfield", m.groupdict(), coords_ok(m["lat"], m["lon"])
-    for kind, pattern in (("complex", COMPLEX), ("dgz", DGZ), ("installation", INSTALL), ("msite", MSITE), ("subcomplex", SUBCOMPLEX)):
+    for kind, pattern in (
+        ("complex", COMPLEX),
+        ("dgz", DGZ),
+        ("installation", INSTALL),
+        ("msite", MSITE),
+        ("subcomplex", SUBCOMPLEX),
+    ):
         m = pattern.match(text)
         if m:
             fields, problems = m.groupdict(), []
@@ -122,7 +137,9 @@ def main(pass_a: str, pass_b: str) -> None:
     agreed, disputes, stats = [], [], Counter()
     for page, info in manifest.items():
         ids = [line["id"] for line in info["lines"]]
-        ids += sorted({i for i in list(a) + list(b) if i.startswith(page + "-") and i.endswith("+")})
+        ids += sorted(
+            {i for i in list(a) + list(b) if i.startswith(page + "-") and i.endswith("+")}
+        )
         for line_id in ids:
             ra, rb = a.get(line_id), b.get(line_id)
             if ra is None and rb is None:
@@ -140,7 +157,17 @@ def main(pass_a: str, pass_b: str) -> None:
                 if have[0] != "data":
                     stats["one-sided non-data"] += 1
                 stats["missing in one pass"] += 1
-                disputes.append([line_id, page, (ra or ("",))[0], (rb or ("",))[0], (ra or ("", ""))[1], (rb or ("", ""))[1], "missing in one pass"])
+                disputes.append(
+                    [
+                        line_id,
+                        page,
+                        (ra or ("",))[0],
+                        (rb or ("",))[0],
+                        (ra or ("", ""))[1],
+                        (rb or ("", ""))[1],
+                        "missing in one pass",
+                    ]
+                )
                 continue
             kind_a, kind_b = ra[0], rb[0]
             if kind_a != "data" and kind_b != "data":
@@ -156,7 +183,7 @@ def main(pass_a: str, pass_b: str) -> None:
             if "?" in text_a or "?" in text_b:
                 reasons.append("unreadable character")
             if not reasons:
-                line_type, _, problems = classify(page, text_a, light(ra[1]))
+                _line_type, _, problems = classify(page, text_a, light(ra[1]))
                 if problems:
                     reasons += problems
                     stats["agreed but breaks a rule"] += 1
@@ -175,7 +202,10 @@ def main(pass_a: str, pass_b: str) -> None:
         writer.writerow(["id", "page", "kind_a", "kind_b", "text_a", "text_b", "reasons"])
         writer.writerows(disputes)
     total = sum(stats.values())
-    lines = [f"{k}: {v}" for k, v in stats.most_common()] + [f"total lines: {total}", f"disputes: {len(disputes)}"]
+    lines = [f"{k}: {v}" for k, v in stats.most_common()] + [
+        f"total lines: {total}",
+        f"disputes: {len(disputes)}",
+    ]
     (out / "summary.txt").write_text("\n".join(lines) + "\n")
     print("\n".join(lines))
 
