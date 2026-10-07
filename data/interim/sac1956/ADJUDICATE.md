@@ -40,6 +40,24 @@ Your prompt gives you a **batch file**: `data/interim/sac1956/adjudicate/batchNN
 7. If the line is page furniture (stamps, "TOP SECRET", "DocId", footers) set kind `header`
    or `footer`; if it holds nothing legible, `blank`; otherwise `data`.
 
+## Check batches
+
+Batches named `checkNN` hold lines that both passes read the same way but that disagree with
+other lines of the document: an aim point a degree away from its complex, a header far from the
+others on its chart, a name one letter away from the same place's name in the airfield list.
+Their `reasons` start with `check:` and say what is inconsistent; `text_a` and `text_b` are the
+same.
+
+- Use the inconsistency to know where to look. Re-read every digit or letter it points at.
+- If the print shows the agreed reading, choose `both`, even if it stays inconsistent: the
+  typists made mistakes too. Say so in the note ("printed as read; inconsistent in the source").
+- If a glyph is in fact another character, choose `new` and give the corrected line.
+- The inconsistency may settle a glyph that is genuinely ambiguous on the scan; it never
+  overrides a clear glyph. Say in the note when you relied on it.
+- A flag can also mean the line is in the wrong place (for example a header missing above it,
+  or the line belongs to a different block). If the crop shows something like that, describe it
+  in the note.
+
 ## Output
 
 Write `data/interim/sac1956/adjudicate/decisions/<batch name>.tsv` (create the folder if needed):

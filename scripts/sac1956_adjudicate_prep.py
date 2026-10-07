@@ -1,6 +1,6 @@
 """Make zoomed crops of disputed lines and split the disputes into adjudication batches.
 
-    python scripts/sac1956_adjudicate_prep.py [batch_size]
+    python scripts/sac1956_adjudicate_prep.py [batch_size] [disputes|flags]
 
 Reads data/interim/sac1956/compare/disputes.csv and the manifest. For every disputed line,
 crops the line with one line of context above and below from the 300-dpi render, enlarges it
@@ -11,6 +11,9 @@ data/interim/sac1956/adjudicate/batchNN.json.
 Incremental: pages that either pass has not finished are skipped, lines already in an existing
 batch are skipped, and new batches are numbered after the existing ones. Run it again when the
 passes are complete to batch the rest.
+
+With `flags`, it reads compare/flags.csv instead (lines both passes agree on but that a
+consistency check of sac1956_assemble.py flags) and writes checkNN.json batches.
 """
 
 import csv
@@ -38,11 +41,12 @@ def complete(manifest: dict, pass_name: str, page: str, compared_at: float) -> b
     return {line["id"] for line in manifest[page]["lines"]} <= have
 
 
-def main(batch_size: int) -> None:
+def main(batch_size: int, source: str) -> None:
     manifest = json.loads((ROOT / "manifest.json").read_text())
-    batched = {item["id"] for f in OUT.glob("batch*.json") for item in json.loads(f.read_text())}
-    first = 1 + max((int(f.stem[5:]) for f in OUT.glob("batch*.json")), default=0)
-    disputes_csv = ROOT / "compare" / "disputes.csv"
+    prefix = "batch" if source == "disputes" else "check"
+    batched = {item["id"] for f in OUT.glob(f"{prefix}*.json") for item in json.loads(f.read_text())}
+    first = 1 + max((int(f.stem[len(prefix):]) for f in OUT.glob(f"{prefix}*.json")), default=0)
+    disputes_csv = ROOT / "compare" / f"{source}.csv"
     compared_at = disputes_csv.stat().st_mtime
     disputes = [
         d
@@ -85,9 +89,9 @@ def main(batch_size: int) -> None:
             items.append({**d, "crop": str(path.relative_to(ROOT))})
     for n in range(0, len(items), batch_size):
         batch = items[n : n + batch_size]
-        (OUT / f"batch{first + n // batch_size:02d}.json").write_text(json.dumps(batch, indent=1, ensure_ascii=False))
-    print(f"{len(items)} new crops, {(len(items) + batch_size - 1) // batch_size} new batches from batch{first:02d}")
+        (OUT / f"{prefix}{first + n // batch_size:02d}.json").write_text(json.dumps(batch, indent=1, ensure_ascii=False))
+    print(f"{len(items)} new crops, {(len(items) + batch_size - 1) // batch_size} new batches from {prefix}{first:02d}")
 
 
 if __name__ == "__main__":
-    main(int(sys.argv[1]) if len(sys.argv) > 1 else 40)
+    main(int(sys.argv[1]) if len(sys.argv) > 1 else 40, sys.argv[2] if len(sys.argv) > 2 else "disputes")

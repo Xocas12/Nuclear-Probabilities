@@ -1,0 +1,32 @@
+[
+ {
+  "id": "C238-L06",
+  "page": "C238",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "127 7600 SIMFEROPOL 4458-03407",
+  "text_b": "127 7600 SIMFEROPOL 445B-03407",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C238-L06.png"
+ },
+ {
+  "id": "C283-L14",
+  "page": "C283",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "?4 9127 VLADIMIR VOLYNSKIY 5051-02419",
+  "text_b": "?4 9127 VLADIMIR VOLYNSKIY 5051-02419",
+  "reasons": "unreadable character",
+  "crop": "adjudicate/crops/C283-L14.png"
+ },
+ {
+  "id": "C283-L17",
+  "page": "C283",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "?9 9130 VLADIVOSTOK 4307-13154",
+  "text_b": "?9 9130 VLADIVOSTOK 4307-13154",
+  "reasons": "unreadable character",
+  "crop": "adjudicate/crops/C283-L17.png"
+ }
+]
