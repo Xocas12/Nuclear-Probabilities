@@ -14,8 +14,13 @@ Outputs (data/curated/sac1956/):
   msites.csv         the "M-n" rows
   airfields.csv      the Part II airfield list
   anomalies.csv      lines that still do not parse, or that carry a "?"
+  checks.csv         lines that break a consistency check across lines (see checks())
   REPORT.md          counts and validation checks
 and data/curated/labels/us_1956_sac_complexes.csv in the shared label schema.
+
+Lines flagged by checks() that no check batch has re-read yet are also written to
+data/interim/sac1956/compare/flags.csv, in the format of disputes.csv, so that
+`sac1956_adjudicate_prep.py 40 flags` can batch them for a second look at the scan.
 """
 
 import csv
@@ -38,12 +43,23 @@ SOURCE_URL = {
 SUFFIXES = [
     ("N KOREA", "North Korea"), ("N. KOREA", "North Korea"), ("KOREA", "North Korea"),
     ("N VIETNAM", "North Vietnam"), ("VIETNAM", "North Vietnam"),
-    ("GER SOVZONE", "East Germany"), ("E GER", "East Germany"), ("E. GER", "East Germany"), ("E.GER", "East Germany"),
+    ("GER SOVZONE", "East Germany"), ("E GER", "East Germany"), ("E. GER", "East Germany"), ("E.GER", "East Germany"), ("E GE", "East Germany"),
     ("CZECH", "Czechoslovakia"), ("CZEC", "Czechoslovakia"), ("CZE", "Czechoslovakia"), ("CZ", "Czechoslovakia"),
-    ("POL", "Poland"), ("HUNG", "Hungary"), ("RUM", "Romania"),
+    ("POL", "Poland"), ("HUNG", "Hungary"), ("HUN", "Hungary"), ("RUM", "Romania"),
     ("BULG", "Bulgaria"), ("BUL", "Bulgaria"), ("ALB", "Albania"), ("AL8", "Albania"),
     ("MANCH", "China (Manchuria)"), ("CHINA", "China"), ("CHIN", "China"),
 ]
+
+# Pages scanned twice: the duplicate's lines stay in lines.csv but do not enter the tables.
+# PDF page 46 repeats page 45 line for line (CHERNIGOV .. CHIA MU SSU); page 47 continues 45.
+DUPLICATE_PAGES = {"C046": "C045"}
+DIRECTIONS = {"N", "S", "E", "W", "NE", "NW", "SE", "SW", "NNE", "NNW", "SSE", "SSW", "ENE", "ESE", "WNW", "WSW"}
+
+# Thresholds of the consistency checks, in degrees of latitude (longitude allows twice as much).
+MAX_DGZ_OFFSET = 0.5
+MAX_SUB_OFFSET = 1.0
+MAX_AIRFIELD_OFFSET = 1.5
+MAX_WAC_SPREAD = (4.0, 8.0)  # (lat, lon) from the median header of the chart
 
 
 def degrees(dm: str, hem: str | None = None) -> float:
@@ -52,13 +68,47 @@ def degrees(dm: str, hem: str | None = None) -> float:
     return round(-value if hem == "W" else value, 4)
 
 
+# The name column holds 25 characters, which cuts some suffixes ("CZEC", "CHIN", "E GE"); these
+# are in SUFFIXES. One is cut to a bare letter.
+NAME_OVERRIDES = {"TURCIANSKY SVATY MARTIN C": ("TURCIANSKY SVATY MARTIN", "Czechoslovakia")}
+
+
 def country_of(name: str) -> tuple[str, str]:
+    if name.strip() in NAME_OVERRIDES:
+        return NAME_OVERRIDES[name.strip()]
     clean = re.sub(r"[.,]", " ", name).strip()
     clean = re.sub(r"\s+", " ", clean)
     for suffix, country in SUFFIXES:
         if clean.endswith(" " + suffix) or clean == suffix:
             return clean[: -len(suffix)].strip(" -"), country
     return clean, "USSR"
+
+
+def sort_keys(name: str) -> list[str]:
+    """The lists run alphabetically, but not by one consistent rule: mostly letters only
+    ("AN SHAN" after "ANGREN"), sometimes word by word ("USTI NAD LABEM" after "UST
+    KAMENOGORSK"), with or without the part after '/' and compass points ("MINSK S.")."""
+    name = country_of(name)[0].upper()
+    keys = []
+    for cut in (False, True):
+        base = name.split("/")[0] if cut else name
+        words = re.sub(r"[^A-Z ]", " ", base).split()
+        bare = list(words)
+        while len(bare) > 1 and bare[-1] in DIRECTIONS:
+            bare.pop()
+        keys += ["".join(words), "".join(bare), " ".join(bare)]
+    return keys
+
+
+def out_of_order(name: str, previous: str) -> bool:
+    """Out of order under every plausible key, so probably a misread or a misprint."""
+    return all(k < kp for k, kp in zip(sort_keys(name), sort_keys(previous)))
+
+
+def ref_value(ref: str) -> float:
+    """Reference numbers are four digits; a fifth digit inserts a complex between two numbers
+    ("00255" lies between 0025 and 0030)."""
+    return int(ref[:4]) + (int(ref[4:]) / 10 if len(ref) > 4 else 0)
 
 
 def load_final(manifest: dict) -> tuple[dict, list]:
@@ -105,8 +155,10 @@ def main() -> None:
     def handle(line_id: str, page: str, text: str, typ: str, f: dict) -> None:
         nonlocal current, parent
         if typ == "airfield":
+            name, country = country_of(f["name"])
             airfields.append({
-                "id": line_id, "page": page, "priority": f["prio"], "ref": f["ref"], "name": f["name"],
+                "id": line_id, "page": page, "priority": f["prio"], "ref": f["ref"], "name": name,
+                "name_printed": f["name"], "country": country,
                 "be": f"{f['wac']}-{f['num'] or ''}", "lat": degrees(f["lat"]), "lon": degrees(f["lon"], f.get("hem")),
                 "code": f["code"], "text": text,
             })
@@ -153,6 +205,10 @@ def main() -> None:
             continue
         page = line_id.split("-")[0]
         text = rec["text"]
+        if page in DUPLICATE_PAGES:
+            lines.append({"id": line_id, "page": page, "kind": rec["kind"], "text": text, "source": rec["source"],
+                          "type": f"duplicate of page {DUPLICATE_PAGES[page]}"})
+            continue
         if rec["kind"] != "data":
             lines.append({"id": line_id, "page": page, "kind": rec["kind"], "text": text, "source": rec["source"], "type": ""})
             continue
@@ -200,10 +256,111 @@ def main() -> None:
             w.writeheader()
             w.writerows(label_rows)
 
-    report(complexes, dgzs, installs, msites, airfields, anomalies, lines, gaps, final)
+    flags = checks(complexes, dgzs, installs, msites, airfields)
+    write("checks.csv", flags)
+    write_flags(flags, final)
+    report(complexes, dgzs, installs, msites, airfields, anomalies, lines, gaps, final, flags)
 
 
-def report(complexes, dgzs, installs, msites, airfields, anomalies, lines, gaps, final) -> None:
+def checks(complexes, dgzs, installs, msites, airfields) -> list[dict]:
+    """Consistency checks across lines. Both passes can misread a glyph the same way (3/5/8,
+    6/0/9); such a line agrees and parses, but it disagrees with the lines around it."""
+    flags = []
+
+    def flag(check: str, line_id: str, detail: str) -> None:
+        flags.append({"check": check, "id": line_id, "detail": detail})
+
+    by_id = {c["id"]: c for c in complexes}
+    # Aim points and M-n sites lie near the header they follow; sub-complexes near their complex.
+    for row, what in [(d, "DGZ") for d in dgzs] + [(m, "M-site") for m in msites]:
+        c = by_id[row["complex_id"]]
+        dlat, dlon = abs(row["lat"] - c["lat"]), abs(row["lon"] - c["lon"])
+        if dlat > MAX_DGZ_OFFSET or dlon > MAX_DGZ_OFFSET * 2:
+            flag(f"{what} far from its header", row["id"],
+                 f"{dlat:.2f} deg lat / {dlon:.2f} deg lon from {c['name_printed']} ({c['id']} {c['lat']}, {c['lon']})")
+    for c in complexes:
+        if c["parent_id"]:
+            p = by_id[c["parent_id"]]
+            dlat, dlon = abs(c["lat"] - p["lat"]), abs(c["lon"] - p["lon"])
+            if dlat > MAX_SUB_OFFSET or dlon > MAX_SUB_OFFSET * 2:
+                flag("sub-complex far from its complex", c["id"],
+                     f"{dlat:.2f} deg lat / {dlon:.2f} deg lon from {p['name_printed']} ({p['id']})")
+    # The installations of one block mostly share a chart (WAC) prefix; a lone different prefix
+    # is either a real chart edge or a misread.
+    blocks = defaultdict(list)
+    for r in installs:
+        blocks[r["complex_id"]].append(r)
+    wac_points = defaultdict(list)
+    for cid, rows in blocks.items():
+        counts = Counter(r["be_wac"] for r in rows)
+        modal, n = counts.most_common(1)[0]
+        if len(rows) >= 3:
+            for r in rows:
+                if counts[r["be_wac"]] == 1 and n >= 2:
+                    flag("WAC prefix differs from its block", r["id"], f"{r['be_wac']} in a block where {n} of {len(rows)} lines use {modal}")
+        wac_points[modal].append(by_id[cid])
+    # A chart covers a fixed area, so headers whose installations sit on one chart lie close
+    # together; a header far from the others on its chart has a misread coordinate or prefix.
+    for wac, cs in wac_points.items():
+        if len(cs) < 3:
+            continue
+        lat_med = sorted(c["lat"] for c in cs)[len(cs) // 2]
+        lon_med = sorted(c["lon"] for c in cs)[len(cs) // 2]
+        for c in cs:
+            if abs(c["lat"] - lat_med) > MAX_WAC_SPREAD[0] or abs(c["lon"] - lon_med) > MAX_WAC_SPREAD[1]:
+                flag("header far from the other headers on its chart", c["id"],
+                     f"WAC {wac}: {c['lat']}, {c['lon']} vs median {lat_med}, {lon_med} of {len(cs)} headers")
+    # Population lines carry 9xxx numbers (a rule in the comparison); each block normally has one.
+    for c in complexes:
+        n = c["n_population"]
+        if n > 1:
+            flag("block with more than one population line", c["id"], f"{n} lines of category 275 under {c['name_printed']}")
+    # Top-level complexes run alphabetically, and so do their reference numbers.
+    top = [c for c in complexes if c["level"] == "complex"]
+    for prev, c in zip(top, top[1:]):
+        if out_of_order(c["name"], prev["name"]):
+            flag("complex out of alphabetical order", c["id"], f"{c['name_printed']} follows {prev['name_printed']} ({prev['id']})")
+        if c["ref"].isdigit() and prev["ref"].isdigit() and ref_value(c["ref"]) <= ref_value(prev["ref"]):
+            flag("reference number not above the previous complex", c["id"], f"{c['ref']} after {prev['ref']} ({prev['id']})")
+    # Priority numbers are unique within each list.
+    for rows, what in ((top, "complex"), (airfields, "airfield")):
+        seen = defaultdict(list)
+        for r in rows:
+            seen[r["priority"]].append(r["id"])
+        for prio, ids in seen.items():
+            if len(ids) > 1:
+                for line_id in ids:
+                    flag(f"duplicate {what} priority", line_id, f"priority {prio} also on {', '.join(i for i in ids if i != line_id)}")
+    # Airfields: alphabetical; BE numbers 8xxx; the reference number is the parent complex's.
+    refs = {c["ref"]: c for c in top}
+    for prev, a in zip(airfields, airfields[1:]):
+        if out_of_order(a["name"], prev["name"]):
+            flag("airfield out of alphabetical order", a["id"], f"{a['name']} follows {prev['name']} ({prev['id']})")
+    for a in airfields:
+        num = a["be"].split("-")[1]
+        if num and not num.startswith("8"):
+            flag("airfield BE number not 8xxx", a["id"], a["be"])
+        c = refs.get(a["ref"])  # many airfields name a complex that is not in Part I: not checked
+        if c and (abs(a["lat"] - c["lat"]) > MAX_AIRFIELD_OFFSET or abs(a["lon"] - c["lon"]) > MAX_AIRFIELD_OFFSET * 2):
+            flag("airfield far from its reference complex", a["id"],
+                 f"{a['lat']}, {a['lon']} vs {c['name_printed']} ({c['id']}) {c['lat']}, {c['lon']}")
+    return flags
+
+
+def write_flags(flags: list[dict], final: dict) -> None:
+    """Flagged lines in the disputes.csv format, for a second look at the scan."""
+    reasons = defaultdict(list)
+    for f in flags:
+        reasons[f["id"]].append(f"check: {f['check']} ({f['detail']})")
+    with open(ROOT / "compare" / "flags.csv", "w", newline="", encoding="utf-8") as fh:
+        w = csv.writer(fh)
+        w.writerow(["id", "page", "kind_a", "kind_b", "text_a", "text_b", "reasons"])
+        for line_id, why in reasons.items():
+            rec = final[line_id]
+            w.writerow([line_id, line_id.split("-")[0], rec["kind"], rec["kind"], rec["text"], rec["text"], "; ".join(why)])
+
+
+def report(complexes, dgzs, installs, msites, airfields, anomalies, lines, gaps, final, flags) -> None:
     top = [c for c in complexes if c["level"] == "complex"]
     by_id = {c["id"]: c for c in complexes}
 
@@ -248,6 +405,13 @@ def report(complexes, dgzs, installs, msites, airfields, anomalies, lines, gaps,
     out += [f"- {code} {next((r['category_name'] for r in installs if r['category'] == code), '')}: {n}" for code, n in cats.most_common(15)]
     unknown = sorted({r["category"] for r in installs if not r["category_name"]})
     out += ["", f"- Category codes not in the code list: {unknown}"]
+    in_part1 = {c["ref"] for c in top}
+    out += ["", f"- Airfields whose reference number is a Part I complex: "
+            f"{sum(a['ref'] in in_part1 for a in airfields)} of {len(airfields)}"]
+    out += [f"- Duplicate scans left out of the tables: " + ", ".join(f"PDF page {int(d[1:])} (= page {int(o[1:])})" for d, o in DUPLICATE_PAGES.items())]
+    out += ["", "## Consistency checks across lines", "", "Lines listed in checks.csv; each was re-read on the scan "
+            "unless noted below.", "", "| Check | Lines |", "|---|---|"]
+    out += [f"| {check} | {n} |" for check, n in Counter(f["check"] for f in flags).most_common()]
     (OUT / "REPORT.md").write_text("\n".join(out) + "\n")
     print("\n".join(out))
 
