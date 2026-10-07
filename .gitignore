@@ -1,4 +1,14 @@
 data/raw/
-data/interim/
+# Interim products are rebuilt by scripts, except the transcription passes and the files
+# that define them, which took many agent-hours and are kept in git.
+data/interim/*
+!data/interim/sac1956/
+data/interim/sac1956/*
+!data/interim/sac1956/passA/
+!data/interim/sac1956/passB/
+!data/interim/sac1956/chunks/
+!data/interim/sac1956/manifest.json
+!data/interim/sac1956/INSTRUCTIONS.md
+!data/interim/sac1956/QUEUE.md
 .venv/
 __pycache__/

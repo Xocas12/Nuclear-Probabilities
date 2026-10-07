@@ -1,0 +1,48 @@
+C009-L01	header	CLASSIFIED	cut; stamp text straddles the L01/L02 rule
+C009-L02	header	27386.	handwritten stamp number below lower half of CLASSIFIED
+C009-L03	header	DGZ BA	struck-through TOP SECRET stamp above, unlabelled
+C009-L04	data	ISAKOGORKA 6426-04039	
+C009-L05	data	6426- 4036E C	
+C009-L06	data	358 0092-0046	
+C009-L07	data	275 0092-9994	
+C009-L08	data	740 0275 ARKHARA 4926-13004	
+C009-L09	data	4926-13004E B	
+C009-L10	data	354 0203-0084	
+C009-L11	data	275 0203-9998	
+C009-L12	data	499 0280 ARMAVIR 4500-04107	unsure: 8 in 0280 is flat-sided (B-like)
+C009-L13	data	4500- 4106E B	
+C009-L14	data	4500- 4105E C	
+C009-L15	data	227 0249-	
+C009-L16	data	246 0249-	
+C009-L17	data	248 0249-	
+C009-L18	data	24? 0249-	unsure: damaged digit, 8 or 0
+C009-L19	data	262 0249-0208	
+C009-L20	data	227 0249-0289	
+C009-L21	data	350 0249-0327	
+C009-L22	data	275 0249-9989	
+C009-L23	data	598 0290 ARTEM 4322-13212	unsure: degraded print; last digit 2 vs 3
+C009-L24	data	023 0291-	
+C009-L25	data	130 0291-0013	
+C009-L26	data	275 0291-9997	
+C009-L27	data	NADEZHDINSKAYA 4322-13159	
+C009-L28	data	4322-13159E E	
+C009-L29	data	227 0291-	
+C009-L30	data	275 0291-	
+C009-L31	data	NOVONEZHINO 4313-13236	unsure: degraded 3s in 4313 and 13236 (could be 8)
+C009-L32	data	246 0291-	
+C009-L33	data	275 0291-	
+C009-L34	data	RAZDOLNOYE 4333-13155	unsure: 3 after hyphen degraded (3 vs 9)
+C009-L35	data	246 0291-	
+C009-L36	data	275 0291-	
+C009-L37	data	248 0291-0163	
+C009-L38	data	UGLOVAYA 4321-13206	
+C009-L39	data	4321-13206E C	
+C009-L40	data	227 0291-0016	
+C009-L41	data	275 0291-9979	
+C009-L42	data	660 0300 ARTEMOVSKIY 5720-06155	
+C009-L43	data	5720- 6154E B	
+C009-L44	data	118 0156-0018	
+C009-L45	data	285 0156-0314	
+C009-L46	data	275 0156-9805	
+C009-L47	data	9?2 03?7 ARISIZ 4600-02926	lower half overprinted by DocId footer; unsure: ARISIZ letters
+C009-L48	footer	DocId:32003765 TOP SECRET - RESTRICT?	cut; TOP SECRET text struck through; overlaps L47

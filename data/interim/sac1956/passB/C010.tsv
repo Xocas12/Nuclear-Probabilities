@@ -1,0 +1,44 @@
+C010-L01	header	LASSIFIED	stamp straddles L01/L02 (upper part); first letter L cut at left edge
+C010-L02	header	LASSIFIED	stamp straddles L01/L02 (lower part); first letter L cut at left edge
+C010-L03	header	DGZ BA	
+C010-L04	data	415 0248-0010	
+C010-L05	data	165 0248-0017	
+C010-L06	data	415 0248-0018	
+C010-L07	data	227 0248-0029	
+C010-L08	data	227 0248-0030	
+C010-L09	data	227 0248-0031	
+C010-L10	data	227 0248-0038	
+C010-L11	data	290 0248-0046	
+C010-L12	data	208 0248-0051	
+C010-L13	data	248 0248-0058	
+C010-L14	data	290 0248-0058	
+C010-L15	data	275 0248-9999	
+C010-L16	data	ILINKA 4614-04755	unsure: 3rd letter I has slanted top, could be 1
+C010-L17	data	4614- 4754E L	
+C010-L18	data	227 0248-0034	
+C010-L19	data	227 0248-0035	
+C010-L20	data	275 0248-9972	
+C010-L21	data	604 03415 ATBASAR 5148-06820	
+C010-L22	data	5148- 6820E B	
+C010-L23	data	372 0237-0008	
+C010-L24	data	275 0237-9998	tiny baseline dot after 275 treated as speck
+C010-L25	data	1099 03418 ATKA 6050-15150	
+C010-L26	data	227 0123-	
+C010-L27	data	275 0123-9999	
+C010-L28	data	531 0342 ATKARSK 5152-04500	
+C010-L29	data	5152- 4500E B	
+C010-L30	data	368 0235-0174	
+C010-L31	data	275 0235-9984	
+C010-L32	data	605 0365 AYAGUZ 4756-08023	
+C010-L33	data	4756- 8023E H	unsure: label glyph has stems and crossbar but no top/bottom bars; looks H, could be damaged B
+C010-L34	data	372 0244-0013	
+C010-L35	data	275 0244-9991	
+C010-L36	data	704 0375 BABAYEVO 5923-03557	
+C010-L37	data	5923- 3558E B	
+C010-L38	data	358 0154-0400	
+C010-L39	data	275 0154-9943	
+C010-L40	data	634 0380 BABUSHKIN 5143-10552	
+C010-L41	data	5143-10552E B	
+C010-L42	data	354 0241-0011	
+C010-L43	data	275 0241-9995	
+C010-L44	footer	DocId:32003765 TOP SECRET - RESTRICT??	cut: bottom half and right end outside strip; struck through

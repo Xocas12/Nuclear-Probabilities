@@ -1,0 +1,55 @@
+C205-L01	header	ASSIFIED	cut
+C205-L02	header	ASSIFIED	cut; lower part of same printed line as L01
+C205-L02+	header	?ND 75573	unlabelled; cut at left: 1st glyph only partly in strip (diagonal + right stem visible, looks like N)
+C205-L02++	header	TOP SECRET	unlabelled; struck through
+C205-L03	header	DGZ BA	
+C205-L04	data	275 0251-9796	
+C205-L05	data	FLORESTI RUM 4503-02547	unsure: 4th letter read R (top bar missing, glyph shortened; horizontal mid-bar reaches right edge, leg detached from stem) - could be K; speck after F ignored
+C205-L06	data	4501- 2548E P	
+C205-L07	data	405 0251-0049	
+C205-L08	data	198 0251-0085	
+C205-L09	data	275 0251-9928	
+C205-L10	data	PLOPENI RUM 4504-02559	
+C205-L11	data	4503- 2557E K	
+C205-L12	data	023 0251-0146	
+C205-L13	data	275 0251-9844	
+C205-L14	data	365 6325 PLOVDIV BULG 4208-02445	
+C205-L15	data	241 0322-	
+C205-L16	data	290 0322-0088	
+C205-L17	data	382 0322-0089	
+C205-L18	data	227 0322-0263	
+C205-L19	data	056 0322-0346	
+C205-L20	data	056 0322-0347	
+C205-L21	data	230 0322-0362	
+C205-L22	data	208 0322-0485	
+C205-L23	data	246 0322-0510	speck before 0322 ignored
+C205-L24	data	245 0322-0570	
+C205-L25	data	275 0322-9999	
+C205-L26	data	ASENOVGRAD BULG 4159-02452	
+C205-L27	data	275 0322-	
+C205-L28	data	060 0322-0428	
+C205-L29	data	KRICHIM BULG 4203-02426	
+C205-L30	data	184 0322-0249	
+C205-L31	data	184 0322-0484	
+C205-L32	data	275 0322-9781	
+C205-L33	data	167 6335 PLZEN CZECH 4945-01322	
+C205-L34	data	4944- 1322E A	
+C205-L35	data	4946- 1324E AB	
+C205-L36	data	4944- 1321E E	
+C205-L37	data	386 0231-0234	
+C205-L38	data	010 0231-0253	
+C205-L39	data	055 0231-0253	
+C205-L40	data	064 0231-0253	
+C205-L41	data	095 0231-0253	
+C205-L42	data	212 0231-0253	
+C205-L43	data	230 0231-0253	
+C205-L44	data	235 0231-0253	
+C205-L45	data	250 0231-0253	
+C205-L46	data	262 0231-0253	
+C205-L47	data	294 0231-0253	
+C205-L48	data	430 0231-0253	
+C205-L49	data	450 0231-0253	
+C205-L50	data	475 0231-0253	
+C205-L51	data	485 0231-0253	
+C205-L52	data	056 0231-0692	
+C205-L53	footer	DocId: 32003765 TOP SECRET - RESTRICT??	cut at right; circle mark overprints a char; last char E/D unclear (cut)
