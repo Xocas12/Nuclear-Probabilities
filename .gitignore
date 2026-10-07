@@ -10,5 +10,9 @@ data/interim/sac1956/*
 !data/interim/sac1956/manifest.json
 !data/interim/sac1956/INSTRUCTIONS.md
 !data/interim/sac1956/QUEUE.md
+!data/interim/sac1956/ADJUDICATE.md
+!data/interim/sac1956/compare/
+!data/interim/sac1956/adjudicate/
+data/interim/sac1956/adjudicate/crops/
 .venv/
 __pycache__/

@@ -13,3 +13,7 @@ Pass B complete chunks: 01 03-19. Remaining B: 02 20 21 22 23 24 25 26 (running)
 Policy: favour pass B (slower). When a slot frees: pass B next of 02,12,13,...; pass A next of 19-29.
 Check progress: .venv/bin/python scripts/sac1956_chunks.py check passA  (and passB)
 Interim agreement (20:50 UTC, pages in both passes): 7045/7127 data lines = 98.85%; airfield chunks 01-02 lowest (89-94%), city chunks 97-100%.
+
+## 2026-10-07 09:15 UTC (after second usage-limit stop)
+Backed up passA/passB in git (6937ccf). Remaining: A chunk28 (9 pp), 29 (7 pp);
+B chunk21 (1), 23 (6), 25 (4), 26 (5), 27 (12), 28 (12), 29 (7). All 9 launched.
