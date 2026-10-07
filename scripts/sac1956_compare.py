@@ -23,17 +23,29 @@ CODES = {
     for row in csv.DictReader(open("data/curated/labels/sac1956_category_codes.csv", encoding="utf-8"))
 }
 
-# Line formats (after normalisation: single spaces, no spaces next to hyphens).
-COMPLEX = re.compile(r"^(?P<prio>\d{1,4}A?) (?P<ref>\d{4,5}) (?P<name>.+?) (?P<lat>\d{4})-(?P<lon>\d{5})$")
-SUBCOMPLEX = re.compile(r"^(?P<name>[A-Z][^\d].*?) (?P<lat>\d{4})-(?P<lon>\d{5})$")
-DGZ = re.compile(r"^(?P<lat>\d{4})-(?P<lon>\d{4,5})(?P<hem>[EW]) (?P<label>[A-Z]{1,2})$")
+# Line formats (after normalisation: single spaces, no spaces next to hyphens). Longitudes may
+# carry a hemisphere letter (W for Chukotka and the Bering coast).
+COMPLEX = re.compile(r"^(?P<prio>\d{1,4}A?) (?P<ref>\d{4,5}) (?P<name>.+?) (?P<lat>\d{4})-(?P<lon>\d{5})(?P<hem>[EW])?$")
+SUBCOMPLEX = re.compile(r"^(?P<name>[A-Z][^\d].*?) (?P<lat>\d{4})-(?P<lon>\d{5})(?P<hem>[EW])?$")
+DGZ = re.compile(r"^(?P<lat>\d{4})-(?P<lon>\d{4,5})(?P<hem>[EW])? (?P<label>[A-Z]{1,2})$")
 INSTALL = re.compile(r"^(?P<cat>\d{3}) (?P<wac>\d{4})-(?P<num>\d{4})?$")
 AIRFIELD = re.compile(  # matched against light() text: spacing after a blank BE number survives
     r"^(?P<prio>\d{1,4}A?) (?P<ref>\d{4,5}) (?P<name>.+?) (?P<wac>\d{4})-(?P<num>\d{4})? ?"
-    r"(?P<lat>\d{4})-(?P<lon>\d{5})(?P<hem>[EW]?) (?P<code>[A-Z])$"
+    r"(?P<lat>\d{4})-(?P<lon>\d{5})(?P<hem>[EW]?) (?P<code>[A-Z]{1,2})$"
 )
-# Rows with no priority and an "M-n" designation, e.g. "0237 ANDREYKOVO M-1 5557-03625 QA".
-MSITE = re.compile(r"^(?P<ref>\d{4}) (?P<name>.+?) M-(?P<mnum>\d{1,3}) (?P<lat>\d{4})-(?P<lon>\d{5}) (?P<label>[A-Z]{1,2})$")
+# Rows with an "M-n" designation, with or without a reference number, e.g.
+# "0237 ANDREYKOVO M-1 5557-03625 QA" or "VERBILKI M-35 5630-03738 QD".
+MSITE = re.compile(
+    r"^(?:(?P<ref>\d{4,5}) )?(?P<name>.+?) M-(?P<mnum>\d{1,3}) (?P<lat>\d{4})-(?P<lon>\d{5}) (?P<label>[A-Z]{1,2})$"
+)
+NUMERIC_TOKEN = re.compile(r"[\dIO-]*\d[\dIO-]*")
+
+
+def digits_for_letters(text: str) -> str:
+    """The typists sometimes struck I for 1 and O for 0 in numbers ("I7", "0194I")."""
+    return " ".join(
+        t.replace("I", "1").replace("O", "0") if NUMERIC_TOKEN.fullmatch(t) else t for t in text.split(" ")
+    )
 
 
 def light(text: str) -> str:
@@ -63,7 +75,7 @@ def coords_ok(lat: str, lon: str) -> list[str]:
     problems = []
     if int(lat[2:]) >= 60 or int(lon[-2:]) >= 60:
         problems.append("minutes>=60")
-    if not 15 <= int(lat[:2]) <= 78:
+    if not 15 <= int(lat[:2]) <= 83:  # Franz Josef Land (Nagurskaya) is at 80 47 N
         problems.append("latitude out of range")
     return problems
 
@@ -71,7 +83,13 @@ def coords_ok(lat: str, lon: str) -> list[str]:
 def classify(page: str, text: str, raw: str = "") -> tuple[str, dict, list[str]]:
     """Return (line type, fields, rule problems) for one normalised data line.
 
-    raw is the light()-normalised text, used where spacing matters (airfield rows)."""
+    raw is the light()-normalised text, used where spacing matters (airfield rows). Rows
+    that one label covers twice ("a || b") are classified part by part."""
+    if "||" in text:
+        parts = [classify(page, t.strip(), r.strip()) for t, r in zip(text.split("||"), (raw or text).split("||"))]
+        problems = [p for _, _, probs in parts for p in probs]
+        return "merged", {"parts": parts}, problems
+    text, raw = digits_for_letters(text), digits_for_letters(raw)
     if page.startswith("A"):
         m = (AIRFIELD.match(raw) if raw else None) or AIRFIELD.match(text)
         if not m:
