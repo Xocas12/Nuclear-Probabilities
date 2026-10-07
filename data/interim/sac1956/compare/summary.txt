@@ -1,0 +1,9 @@
+agreed: 12804
+missing in one pass: 1536
+furniture agreed: 991
+missing in both: 542
+passes differ: 167
+one-sided non-data: 72
+agreed but breaks a rule: 4
+total lines: 16116
+disputes: 2249
