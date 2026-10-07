@@ -53,6 +53,11 @@ SUFFIXES = [
 # Pages scanned twice: the duplicate's lines stay in lines.csv but do not enter the tables.
 # PDF page 46 repeats page 45 line for line (CHERNIGOV .. CHIA MU SSU); page 47 continues 45.
 DUPLICATE_PAGES = {"C046": "C045"}
+# Lines whose complex header is not in the scan. The scan of PDF page 64 cuts off the foot of the
+# page after SAMBOR; page 65 opens inside a complex (chart 0322, sub-complex GORNA ORYAKHOVITSA
+# BULG) whose header, alphabetically between DROGOBYCH and DUBNICE NAD VAHOM, was on the lost
+# strip. A placeholder complex without name or coordinates holds its lines.
+LOST_HEADERS = {"C065-L04": ("Bulgaria", "header not in the scan: PDF page 64 is cut off at the foot")}
 BARE_COORDS = re.compile(r"^\d{4}-\d{5}[EW]?$")
 DIRECTIONS = {"N", "S", "E", "W", "NE", "NW", "SE", "SW", "NNE", "NNW", "SSE", "SSW", "ENE", "ESE", "WNW", "WSW"}
 
@@ -237,6 +242,14 @@ def main() -> None:
             continue
         if line_id in joined:
             text = text + " " + final[joined[line_id]]["text"]
+        if line_id in LOST_HEADERS:
+            country, why = LOST_HEADERS[line_id]
+            current = parent = {
+                "id": f"{line_id}-lost", "page": page, "level": "complex", "priority": "", "ref": "", "name": "",
+                "name_printed": f"({why})", "country": country, "lat": "", "lon": "", "parent_id": "",
+                "n_dgz": 0, "n_installations": 0, "n_population": 0, "n_msites": 0, "last_page": page,
+            }
+            complexes.append(current)
         if page in DUPLICATE_PAGES:
             lines.append({"id": line_id, "page": page, "kind": rec["kind"], "text": text, "source": rec["source"],
                           "type": f"duplicate of page {DUPLICATE_PAGES[page]}"})
@@ -272,7 +285,7 @@ def main() -> None:
     # Shared-schema label file: one row per top-level complex.
     label_rows = []
     for c in complexes:
-        if c["level"] != "complex":
+        if c["level"] != "complex" or c["lat"] == "":
             continue
         label_rows.append({
             "plan_id": "us_1956_sac_complexes", "planner": "US (SAC)", "target_country": c["country"], "plan_year": 1956,
@@ -341,12 +354,14 @@ def checks(complexes, dgzs, installs, msites, airfields) -> list[dict]:
     rows += [(m, m["top_complex_id"], MAX_SUB_OFFSET, "M-site") for m in msites if m["top_complex_id"]]
     for row, cid, limit, what in rows:
         c = by_id[cid]
+        if c["lat"] == "":
+            continue
         dlat, dlon = abs(row["lat"] - c["lat"]), abs(row["lon"] - c["lon"])
         if dlat > limit or dlon > limit * 2:
             flag(f"{what} far from its header", row["id"],
                  f"{dlat:.2f} deg lat / {dlon:.2f} deg lon from {c['name_printed']} ({c['id']} {c['lat']}, {c['lon']})")
     for c in complexes:
-        if c["parent_id"]:
+        if c["parent_id"] and by_id[c["parent_id"]]["lat"] != "":
             p = by_id[c["parent_id"]]
             dlat, dlon = abs(c["lat"] - p["lat"]), abs(c["lon"] - p["lon"])
             if dlat > MAX_SUB_OFFSET or dlon > MAX_SUB_OFFSET * 2:
@@ -365,7 +380,8 @@ def checks(complexes, dgzs, installs, msites, airfields) -> list[dict]:
             for r in rows:
                 if counts[r["be_wac"]] == 1 and n >= 2:
                     flag("WAC prefix differs from its block", r["id"], f"{r['be_wac']} in a block where {n} of {len(rows)} lines use {modal}")
-        wac_points[modal].append(by_id[cid])
+        if by_id[cid]["lat"] != "":
+            wac_points[modal].append(by_id[cid])
     # A chart covers a fixed area, so headers whose installations sit on one chart lie close
     # together; a header far from the others on its chart has a misread coordinate or prefix.
     for wac, cs in wac_points.items():
@@ -383,7 +399,7 @@ def checks(complexes, dgzs, installs, msites, airfields) -> list[dict]:
         if n > 1:
             flag("block with more than one population line", c["id"], f"{n} lines of category 275 under {c['name_printed']}")
     # Top-level complexes run alphabetically, and so do their reference numbers.
-    top = [c for c in complexes if c["level"] == "complex"]
+    top = [c for c in complexes if c["level"] == "complex" and c["name"]]
     for prev, c in zip(top, top[1:]):
         if out_of_order(c["name"], prev["name"]):
             flag("complex out of alphabetical order", c["id"], f"{c['name_printed']} follows {prev['name_printed']} ({prev['id']})")
@@ -512,8 +528,8 @@ def report(complexes, dgzs, installs, msites, airfields, anomalies, lines, gaps,
     out += ["", "## Priority numbers", "",
             f"- {len(prios)} complexes carry a priority; highest {max(nums) if nums else '-'}; "
             f"duplicates: {len(dup)} {dup[:20]}; numbers missing from 1..max: {len(missing)} {missing[:30]}"]
-    refs = [int(c["ref"]) for c in top if c["ref"].isdigit()]
-    drops = sum(1 for x, y in zip(refs, refs[1:]) if y < x)
+    refs = [ref_value(c["ref"]) for c in top if c["ref"].isdigit()]
+    drops = sum(1 for x, y in zip(refs, refs[1:]) if y <= x)
     out += [f"- Reference numbers that drop below the previous complex (alphabetical order check): {drops}"]
     out += ["", "## Complexes by country", "", "| Country | Complexes | DGZs | Installations |", "|---|---|---|---|"]
     agg = defaultdict(lambda: [0, 0, 0])
