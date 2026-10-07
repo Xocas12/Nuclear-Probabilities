@@ -98,7 +98,19 @@ def match(settlements: pd.DataFrame, gn: pd.DataFrame) -> pd.DataFrame:
     ):
         admin1 = regions.get(s["region"])
         pick, method = None, ""
-        if len(cands) == 1:
+        if len(cands) == 1 and admin1 and gn["admin1"].iat[cands[0]] != admin1:
+            # The only place of that name lies outside the settlement's region: a namesake.
+            # Keep it only if no place in the region comes close by name.
+            pool = {p: v for p, v in fuzzy_pool.items() if gn["admin1"].iat[p] == admin1}
+            choices = {(p, i): k for p, ks in pool.items() for i, k in enumerate(ks)}
+            hit = process.extractOne(
+                key(names[0]), choices, scorer=fuzz.ratio, score_cutoff=FUZZY_CUTOFF - 5
+            )
+            if hit:
+                pick, method = hit[2][0], f"fuzzy {hit[1]:.0f}, in region"
+            else:
+                pick, method = cands[0], "exact, unique, other region"
+        elif len(cands) == 1:
             pick, method = cands[0], "exact, unique"
         elif cands:
             pick = choose(cands, gn, admin1, s.get("modern_pop", np.nan))
@@ -141,6 +153,7 @@ def match(settlements: pd.DataFrame, gn: pd.DataFrame) -> pd.DataFrame:
                     "feature_code": g["feature_code"],
                     "gn_name": g["name"],
                     "gn_population": int(g["population"]),
+                    "gn_alternatenames": g["alternatenames"],
                 }
             )
         rows.append(row)

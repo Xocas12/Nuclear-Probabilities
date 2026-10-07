@@ -115,6 +115,7 @@ def apply_links(matched: pd.DataFrame, gn: pd.DataFrame, page: str) -> pd.DataFr
                 "feature_code",
                 "gn_name",
                 "gn_population",
+                "gn_alternatenames",
                 "match_method",
             ],
         ] = [
@@ -125,6 +126,7 @@ def apply_links(matched: pd.DataFrame, gn: pd.DataFrame, page: str) -> pd.DataFr
             g["feature_code"],
             g["name"],
             g["population"],
+            g["alternatenames"],
             "curated link",
         ]
     return matched

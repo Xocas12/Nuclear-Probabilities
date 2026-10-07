@@ -11,10 +11,17 @@ import unicodedata
 DASHES = re.compile(r"[\-‐‑‒–—]")
 NON_WORD = re.compile(r"[^\w\s]")
 SPACES = re.compile(r"\s+")
-# "до 1961 Сталино", "1940-1957 Молотов", "1924-1929 Сталин"; names may hold spaces and
-# hyphens ("Ойрот-Тура", "Нижний Тагил") and end at a comma, a semicolon or the end.
+# Russian notes: "до 1961 Сталино", "1940-1957 Молотов". English notes on the other pages:
+# "Kirov until 1999", "Staliniri in 1934-1961", "Serebrovski 1964-1992", "earlier Frunze",
+# "Soviet name: Panfilov"; a name may be given in two scripts, "სტალინირი / Staliniri".
 SEGMENT = re.compile(
     r"(?:(?P<start>\d{4})\s*[\-–]\s*(?P<end>\d{4})|до\s+(?P<until>\d{4}))\s+(?P<name>[^,;()*]+)"
+)
+EN_UNTIL = re.compile(r"(?P<name>[^,;()]+?)\s+until\s+(?P<until>\d{4})")
+EN_SPAN = re.compile(r"(?P<name>[^,;()]+?)\s+(?:in\s+)?(?P<start>\d{4})\s*[\-–]\s*(?P<end>\d{4})")
+EN_UNDATED = re.compile(r"(?:earlier|Soviet name:)\s+(?P<names>[^;()]+)")
+NOT_A_NAME = re.compile(
+    r"^(?:merged|now|became|partly|destroyed|in\s|город|пгт|посёлок|посел|\d)", re.I
 )
 
 
@@ -92,26 +99,47 @@ def variants(name: str, notes: str = "") -> list[str]:
     return out
 
 
-def former_names(notes: str) -> list[tuple[int | None, int, str]]:
-    """(start year or None, end year, name) for every dated former name in a pop-stat note."""
-    out = []
-    for m in SEGMENT.finditer(notes or ""):
-        name = m["name"].strip()
-        if not name or name[0].isdigit() or name.startswith(("город", "пгт", "посёлок", "посел")):
-            continue
+def split_scripts(name: str) -> list[str]:
+    """'სტალინირი / Staliniri' -> both; 'Nor Bayazet, Kamo' stays one segment per call."""
+    return [p.strip() for p in name.split("/") if p.strip()]
+
+
+def former_names(notes: str) -> list[tuple[int | None, int | None, str]]:
+    """(start year, end year, name) for every former name in a pop-stat note; years are None
+    when the note gives none ("earlier Frunze")."""
+    notes = notes or ""
+    out: list[tuple[int | None, int | None, str]] = []
+
+    def add(start, end, name):
+        for n in split_scripts(name):
+            if n and not NOT_A_NAME.match(n):
+                out.append((start, end, n))
+
+    for m in SEGMENT.finditer(notes):
         if m["until"]:
-            out.append((None, int(m["until"]), name))
+            add(None, int(m["until"]), m["name"])
         else:
-            out.append((int(m["start"]), int(m["end"]), name))
+            add(int(m["start"]), int(m["end"]), m["name"])
+    for part in re.split(r",\s*", notes):
+        if m := EN_UNTIL.fullmatch(part.strip()):
+            add(None, int(m["until"]), m["name"])
+        elif m := EN_SPAN.fullmatch(part.strip()):
+            add(int(m["start"]), int(m["end"]), m["name"])
+    for m in EN_UNDATED.finditer(notes):
+        for n in re.split(r",\s*", m["names"]):
+            add(None, None, n)
     return out
 
 
 def name_on(current: str, notes: str, year: int) -> str:
     """The name in use during `year`: a former name whose span covers the year, else the
-    current name. "1940-1957 X" covers 1940 to 1956; "до 1961 X" covers the years before 1961,
-    and of several such names the one that ends first after `year` applies."""
+    current name. "1940-1957 X" covers 1940 to 1956; "до 1961 X" / "X until 1961" cover the
+    years before 1961, and of several such names the one that ends first after `year` applies.
+    Undated former names ("earlier X") are not used here."""
     until = []
     for start, end, name in former_names(notes):
+        if end is None:
+            continue
         if start is not None and start <= year < end:
             return name
         if start is None and year < end:
