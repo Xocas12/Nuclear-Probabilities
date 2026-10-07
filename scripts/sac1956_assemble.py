@@ -61,6 +61,7 @@ MAX_DGZ_OFFSET = 0.5
 MAX_SUB_OFFSET = 1.0
 MAX_AIRFIELD_OFFSET = 1.5
 MAX_WAC_SPREAD = (4.0, 8.0)  # (lat, lon) from the median header of the chart
+MIN_TIER = 6  # consecutive priorities in alphabetical order that make a tier
 
 
 def degrees(dm: str, hem: str | None = None) -> float:
@@ -253,6 +254,8 @@ def main() -> None:
         elif typ != "unparsed":
             handle(line_id, page, text, typ, f)
 
+    add_priority_tiers(complexes)
+
     def write(name: str, rows: list[dict]) -> None:
         if not rows:
             return
@@ -291,6 +294,36 @@ def main() -> None:
     write("checks.csv", flags)
     write_flags(flags, final)
     report(complexes, dgzs, installs, msites, airfields, anomalies, lines, gaps, final, flags)
+
+
+def add_priority_tiers(complexes: list[dict]) -> None:
+    """Group priority numbers into tiers. From about priority 300 down, the numbers run through
+    the alphabet in long stretches (701 ABDULINO ... 732 YERSHOVO, then 739 APOSTOLOVO ...): the
+    study ranked complexes in tiers and numbered each tier alphabetically. A stretch of at least
+    MIN_TIER consecutive priorities in alphabetical order is one tier (by chance, six names fall
+    in order once in 720 tries); every other complex is a tier of its own.
+
+    Adds priority_tier (1 = most important, numbered in priority order) and tier_size."""
+    top = [c for c in complexes if c["level"] == "complex" and re.fullmatch(r"\d+A?", c["priority"])]
+    top.sort(key=lambda c: (int(c["priority"].rstrip("A")), c["priority"]))
+    runs, start = [], 0
+    for k in range(1, len(top) + 1):
+        if k == len(top) or not (
+            int(top[k]["priority"].rstrip("A")) - int(top[k - 1]["priority"].rstrip("A")) <= 3
+            and sort_keys(top[k]["name"])[0] >= sort_keys(top[k - 1]["name"])[0]
+        ):
+            runs.append((start, k))
+            start = k
+    tier = 0
+    for a, b in runs:
+        groups = [range(a, b)] if b - a >= MIN_TIER else [range(i, i + 1) for i in range(a, b)]
+        for g in groups:
+            tier += 1
+            for i in g:
+                top[i]["priority_tier"], top[i]["tier_size"] = tier, len(g)
+    for c in complexes:
+        c.setdefault("priority_tier", "")
+        c.setdefault("tier_size", "")
 
 
 def checks(complexes, dgzs, installs, msites, airfields) -> list[dict]:
