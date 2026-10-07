@@ -1,0 +1,78 @@
+{
+  "milestone": "M1 vertical slice",
+  "created": "2026-10-07T17:11:17+00:00",
+  "git_commit": "84fd82be106cffb2c0128af45ea9f2e878b2240e",
+  "data": {
+    "dataset_ussr1959.parquet": "ceb86f5b72dddd2a7c63abf6d00fa5bef4e4c117dbd693bd89ab38b48876139c"
+  },
+  "places_in_cv": 1284,
+  "sealed_places_excluded": 326,
+  "unknown_label_places_excluded": 10,
+  "targets": {
+    "listed": "on the list (complex or sub-complex within 10 km)",
+    "has_dgz": "given at least one DGZ"
+  },
+  "models": {
+    "population rule": [
+      "log_pop_1959"
+    ],
+    "logistic, population family": [
+      "log_pop_1959",
+      "log_pop_1939",
+      "pop_1939_missing",
+      "growth_1939_59",
+      "pop_rank_pct",
+      "log_pop_within_25km",
+      "log_pop_within_50km",
+      "log_pop_within_100km",
+      "log_km_to_100k"
+    ],
+    "logistic, all features": [
+      "log_pop_1959",
+      "log_pop_1939",
+      "pop_1939_missing",
+      "growth_1939_59",
+      "pop_rank_pct",
+      "log_pop_within_25km",
+      "log_pop_within_50km",
+      "log_pop_within_100km",
+      "log_km_to_100k",
+      "national_capital",
+      "republic_capital",
+      "regional_seat",
+      "district_seat",
+      "city_status"
+    ],
+    "LightGBM, all features": [
+      "log_pop_1959",
+      "log_pop_1939",
+      "pop_1939_missing",
+      "growth_1939_59",
+      "pop_rank_pct",
+      "log_pop_within_25km",
+      "log_pop_within_50km",
+      "log_pop_within_100km",
+      "log_km_to_100k",
+      "national_capital",
+      "republic_capital",
+      "regional_seat",
+      "district_seat",
+      "city_status"
+    ]
+  },
+  "cv": {
+    "k": 5,
+    "block_km": 300.0,
+    "shifts_km": [
+      0.0,
+      100.0,
+      200.0
+    ],
+    "random_seeds": [
+      0,
+      1,
+      2
+    ]
+  },
+  "note": "slice numbers check the joins end to end; they are not results (PLAN section 9)"
+}
