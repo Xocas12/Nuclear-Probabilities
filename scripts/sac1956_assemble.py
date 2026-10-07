@@ -175,6 +175,21 @@ def main() -> None:
             current = row
             if typ == "complex":
                 parent = row
+        elif typ == "msite":
+            # "M-n" rows (all near Moscow). With a reference number a row stands on its own in the
+            # alphabetical order, like a complex without a priority; without one it is listed
+            # under the complex it follows (e.g. DEDENEVO M-29 under DMITROV).
+            own = bool(f.get("ref")) or current is None
+            msites.append({
+                "id": line_id, "page": page, "complex_id": "" if own else current["id"],
+                "top_complex_id": "" if own else (parent or current)["id"], "ref": f.get("ref") or "",
+                "name": f["name"], "m_number": f["mnum"], "lat": degrees(f["lat"]), "lon": degrees(f["lon"]),
+                "label": f["label"], "text": text,
+            })
+            if own:
+                current = parent = None  # lines after it, before the next header, are anomalies
+            else:
+                current["n_msites"] += 1
         elif current is None:
             anomalies.append({"id": line_id, "text": text, "problem": "line before any complex header"})
         elif typ == "dgz":
@@ -192,12 +207,6 @@ def main() -> None:
             current["n_installations"] += 1
             current["n_population"] += f["cat"] == "275"
             current["last_page"] = page
-        elif typ == "msite":
-            msites.append({
-                "id": line_id, "page": page, "complex_id": current["id"], "ref": f.get("ref") or "", "name": f["name"],
-                "m_number": f["mnum"], "lat": degrees(f["lat"]), "lon": degrees(f["lon"]), "label": f["label"], "text": text,
-            })
-            current["n_msites"] += 1
 
     for line_id in ordered_ids(manifest, final):
         rec = final.get(line_id)
@@ -271,11 +280,14 @@ def checks(complexes, dgzs, installs, msites, airfields) -> list[dict]:
         flags.append({"check": check, "id": line_id, "detail": detail})
 
     by_id = {c["id"]: c for c in complexes}
-    # Aim points and M-n sites lie near the header they follow; sub-complexes near their complex.
-    for row, what in [(d, "DGZ") for d in dgzs] + [(m, "M-site") for m in msites]:
-        c = by_id[row["complex_id"]]
+    # Aim points lie near the header they follow; M-n sites listed under a complex lie around it
+    # (as far as the outer Moscow ring); sub-complexes lie near their complex.
+    rows = [(d, d["complex_id"], MAX_DGZ_OFFSET, "DGZ") for d in dgzs]
+    rows += [(m, m["top_complex_id"], MAX_SUB_OFFSET, "M-site") for m in msites if m["top_complex_id"]]
+    for row, cid, limit, what in rows:
+        c = by_id[cid]
         dlat, dlon = abs(row["lat"] - c["lat"]), abs(row["lon"] - c["lon"])
-        if dlat > MAX_DGZ_OFFSET or dlon > MAX_DGZ_OFFSET * 2:
+        if dlat > limit or dlon > limit * 2:
             flag(f"{what} far from its header", row["id"],
                  f"{dlat:.2f} deg lat / {dlon:.2f} deg lon from {c['name_printed']} ({c['id']} {c['lat']}, {c['lon']})")
     for c in complexes:
@@ -360,6 +372,42 @@ def write_flags(flags: list[dict], final: dict) -> None:
             w.writerow([line_id, line_id.split("-")[0], rec["kind"], rec["kind"], rec["text"], rec["text"], "; ".join(why)])
 
 
+def nsa_check(complexes, installs) -> list[str]:
+    """Compare installation lines by category with the NSA city sheets (an independent count)."""
+    path = Path("data/curated/validation_sac1956_nsa_city_sheets.csv")
+    if not path.exists():
+        return []
+    sheets = list(csv.DictReader(open(path, encoding="utf-8")))
+    main = {r["sheet"]: r["block"] for r in sheets if "/" in r["location"] or r["location"] == r["sheet"]}
+    by_id = {c["id"]: c for c in complexes}
+    cats = defaultdict(Counter)
+    for r in installs:
+        cats[r["complex_id"]][r["category"]] += 1
+    out = ["", "## External check: NSA city sheets", "",
+           "Installation lines by category against the National Security Archive's city sheets "
+           "(validation_sac1956_nsa_city_sheets.csv).", "",
+           "| Sheet | Location | Block in the list | Lines here | Lines on the sheet | Categories that differ (here/sheet) |",
+           "|---|---|---|---|---|---|"]
+    for (sheet, location), group in groupby_keys(sheets, ("sheet", "location")):
+        block = group[0]["block"]
+        top = main[sheet]
+        match = [c for c in complexes if c["name"] == block
+                 and (c["name"] == top or (c["parent_id"] and by_id[c["parent_id"]]["name"] == top))]
+        theirs = Counter({r["category_code"]: int(r["count"]) for r in group})
+        ours = cats[match[0]["id"]] if match else Counter()
+        diff = [f"{code}: {ours[code]}/{theirs[code]}" for code in sorted(set(ours) | set(theirs)) if ours[code] != theirs[code]]
+        out.append(f"| {sheet} | {location} | {match[0]['id'] + ' ' + match[0]['name_printed'] if match else 'not a block'} | "
+                   f"{sum(ours.values())} | {sum(theirs.values())} | {', '.join(diff) or '-'} |")
+    return out
+
+
+def groupby_keys(rows: list[dict], keys: tuple[str, ...]) -> list[tuple[tuple, list[dict]]]:
+    groups: dict[tuple, list[dict]] = {}
+    for r in rows:
+        groups.setdefault(tuple(r[k] for k in keys), []).append(r)
+    return list(groups.items())
+
+
 def report(complexes, dgzs, installs, msites, airfields, anomalies, lines, gaps, final, flags) -> None:
     top = [c for c in complexes if c["level"] == "complex"]
     by_id = {c["id"]: c for c in complexes}
@@ -409,6 +457,7 @@ def report(complexes, dgzs, installs, msites, airfields, anomalies, lines, gaps,
     out += ["", f"- Airfields whose reference number is a Part I complex: "
             f"{sum(a['ref'] in in_part1 for a in airfields)} of {len(airfields)}"]
     out += [f"- Duplicate scans left out of the tables: " + ", ".join(f"PDF page {int(d[1:])} (= page {int(o[1:])})" for d, o in DUPLICATE_PAGES.items())]
+    out += nsa_check(complexes, installs)
     out += ["", "## Consistency checks across lines", "", "Lines listed in checks.csv; each was re-read on the scan "
             "unless noted below.", "", "| Check | Lines |", "|---|---|"]
     out += [f"| {check} | {n} |" for check, n in Counter(f["check"] for f in flags).most_common()]

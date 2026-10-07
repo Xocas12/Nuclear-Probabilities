@@ -1,5 +1,5 @@
-C290-L01	header	NO 75573	cut: upper part of the stamp; same stamp as L02
-C290-L02	header	NO 75573	same stamp as L01 (split by a rule)
+C290-L01	header	NO 75573	stamp shared with L02 band
+C290-L02	header	NO 75573	stamp shared with L01 band
 C290-L03	header	TOP SECRET || DGZ BA	merged
 C290-L04	data	444 9310 VYAZMA 5512-03419	
 C290-L05	data	5512- 3419E B	
@@ -40,5 +40,5 @@ C290-L39	data	248 0232-1235
 C290-L40	data	1139 9340 VYTEGRA 6100-03627	
 C290-L41	data	227 0102-	
 C290-L42	data	275 0102-9938	
-C290-L43	data	146 9365 WALDENBURG POL 5046-01617	
+C290-L43	data	146 9365 WALDENBURG POL 5046-01617	unsure
 C290-L44	footer	DocId: 32003765 TOP SECRET - RESTRICT??	cut

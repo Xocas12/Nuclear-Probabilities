@@ -1,0 +1,176 @@
+sheet,location,block,category_name,category_code,count
+Moscow,Moscow/Suburbs,MOSCOW,"Abrasives, Bonded",005,1
+Moscow,Moscow/Suburbs,MOSCOW,Agricultural Equipment,010,1
+Moscow,Moscow/Suburbs,MOSCOW,Aircraft Engines,015,5
+Moscow,Moscow/Suburbs,MOSCOW,Airframes,016,11
+Moscow,Moscow/Suburbs,MOSCOW,Anti-Friction Bearings,030,2
+Moscow,Moscow/Suburbs,MOSCOW,A/E Research,048,5
+Moscow,Moscow/Suburbs,MOSCOW,Biological Warfare Research,054,2
+Moscow,Moscow/Suburbs,MOSCOW,"Boilers, High Pressure",055,1
+Moscow,Moscow/Suburbs,MOSCOW,Caustic Soda,062,1
+Moscow,Moscow/Suburbs,MOSCOW,Chemical Equipment,064,2
+Moscow,Moscow/Suburbs,MOSCOW,Chemical Warfare Agent Standard,066,1
+Moscow,Moscow/Suburbs,MOSCOW,Chlorine,068,1
+Moscow,Moscow/Suburbs,MOSCOW,Chloromycetin,070,1
+Moscow,Moscow/Suburbs,MOSCOW,Coke Chemicals,075,2
+Moscow,Moscow/Suburbs,MOSCOW,"Copper, Refined",082,1
+Moscow,Moscow/Suburbs,MOSCOW,Cutting Tools,090,3
+Moscow,Moscow/Suburbs,MOSCOW,Earth Moving Equipment,095,1
+Moscow,Moscow/Suburbs,MOSCOW,Electric Power Grid (Gorki Area),112,11
+Moscow,Moscow/Suburbs,MOSCOW,Electric Wire and Cable,200,1
+Moscow,Moscow/Suburbs,MOSCOW,Electric Tubes,202,1
+Moscow,Moscow/Suburbs,MOSCOW,"Generators, Heavy",206,1
+Moscow,Moscow/Suburbs,MOSCOW,Government Control Centers,208,1
+Moscow,Moscow/Suburbs,MOSCOW,Guided Missiles,210,4
+Moscow,Moscow/Suburbs,MOSCOW,"Guns, Major Caliber",212,1
+Moscow,Moscow/Suburbs,MOSCOW,"Liquid Fuel Plants, Crude",224,2
+Moscow,Moscow/Suburbs,MOSCOW,"Liquid Fuels, Storage at Refineries",226,3
+Moscow,Moscow/Suburbs,MOSCOW,"Liquid Fuels, Storage Non-Refinery",227,13
+Moscow,Moscow/Suburbs,MOSCOW,Locks and Dams,228,7
+Moscow,Moscow/Suburbs,MOSCOW,Machine Tools,230,5
+Moscow,Moscow/Suburbs,MOSCOW,"Military Controls, Air Force",240,1
+Moscow,Moscow/Suburbs,MOSCOW,"Military HQs, Army",241,1
+Moscow,Moscow/Suburbs,MOSCOW,Military Schools,243,2
+Moscow,Moscow/Suburbs,MOSCOW,"Military Storage Areas, Air Force",245,4
+Moscow,Moscow/Suburbs,MOSCOW,"Military Storage Areas, Army & Navy",246,10
+Moscow,Moscow/Suburbs,MOSCOW,Mining Machinery,250,1
+Moscow,Moscow/Suburbs,MOSCOW,Motor Vehicles,252,2
+Moscow,Moscow/Suburbs,MOSCOW,Cil Extraction Equipment,262,2
+Moscow,Moscow/Suburbs,MOSCOW,Optical Equipment,264,2
+Moscow,Moscow/Suburbs,MOSCOW,Penicilin,266,3
+Moscow,Moscow/Suburbs,MOSCOW,"Periscopes, Submarine",268,2
+Moscow,Moscow/Suburbs,MOSCOW,Population,275,1
+Moscow,Moscow/Suburbs,MOSCOW,"Ports, Inland",281,4
+Moscow,Moscow/Suburbs,MOSCOW,Radio & Television,285,8
+Moscow,Moscow/Suburbs,MOSCOW,Railroad Passenger Cars,296,2
+Moscow,Moscow/Suburbs,MOSCOW,Railroad Equipment Repair Plants,308,4
+Moscow,Moscow/Suburbs,MOSCOW,Railroad Yards & Shops,356,27
+Moscow,Moscow/Suburbs,MOSCOW,Rubber Tires,405,1
+Moscow,Moscow/Suburbs,MOSCOW,Steel,430,2
+Moscow,Moscow/Suburbs,MOSCOW,Streptomycin,435,1
+Moscow,Moscow/Suburbs,MOSCOW,Sulfuric Acid,445,4
+Moscow,Moscow/Suburbs,MOSCOW,Tanks & S.P. Guns,450,1
+Moscow,Moscow/Suburbs,MOSCOW,"Transformers, Heavy",480,2
+Moscow,Kuchino,KUCHINO,Radio & Television,285,1
+Moscow,Kuchino,KUCHINO,Population,275,1
+Moscow,Shchylkovo,SHCHELKOVO,Caustic Soda,062,1
+Moscow,Shchylkovo,SHCHELKOVO,Chemical Warfare Agent Standard,066,1
+Moscow,Shchylkovo,SHCHELKOVO,Chlorine,068,1
+Moscow,Shchylkovo,SHCHELKOVO,Sulfuric Acid,445,1
+Moscow,Shchylkovo,SHCHELKOVO,Electric Tubes,202,1
+Moscow,Shchylkovo,SHCHELKOVO,Population,275,1
+Moscow,Tomilino,TOMILINO,"Military Storage Areas, Army & Navy",246,1
+Moscow,Tomilino,TOMILINO,Population,275,1
+Moscow,Mishutkino,MISHUTKINO,Railroad Yards & Shops,384,1
+Moscow,Mishutkino,MISHUTKINO,Population,375,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,"Abrasives, Bonded",005,2
+Leningrad,Leningrad/Suburbs,LENINGRAD,"Abrasives, Crude",006,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,Agricultural Equipment,010,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,Aircraft Engines,015,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,Airframes,016,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,Ammunition,023,2
+Leningrad,Leningrad/Suburbs,LENINGRAD,A/E Research,048,2
+Leningrad,Leningrad/Suburbs,LENINGRAD,"Batteries, Lead Acid",050,2
+Leningrad,Leningrad/Suburbs,LENINGRAD,"Boiler, High Pressure",055,3
+Leningrad,Leningrad/Suburbs,LENINGRAD,Calcium Carbide,060,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,Caustic Soda,062,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,Chemical Equipment,064,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,"Chemical Warfare Agent, Standard",066,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,Chlorine,068,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,Coke Chemicals,075,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,"Copper, Refined",082,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,Earth Moving Equipment,095,2
+Leningrad,Leningrad/Suburbs,LENINGRAD,Electric Power Grid,110,13
+Leningrad,Leningrad/Suburbs,LENINGRAD,Electric Wires & Cable,200,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,Electric Tubes,202,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,Ferro-Alloys,204,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,"Generators, Heavy",206,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,Government Control Centers,208,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,Guided Missiles,210,2
+Leningrad,Leningrad/Suburbs,LENINGRAD,"Guns, Major Caliber",212,3
+Leningrad,Leningrad/Suburbs,LENINGRAD,"Liquid Fuels, Storage Non-Refinery",227,3
+Leningrad,Leningrad/Suburbs,LENINGRAD,Machine Tools,230,3
+Leningrad,Leningrad/Suburbs,LENINGRAD,"Military Controls, Air Force",240,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,"Military HQs, Army",241,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,"Military HQs, Navy",242,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,Military Schools,243,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,"Military Storage Areas, Air Force",245,4
+Leningrad,Leningrad/Suburbs,LENINGRAD,"Military Storage Areas, Army & Navy",246,7
+Leningrad,Leningrad/Suburbs,LENINGRAD,Military Troop Installations,248,6
+Leningrad,Leningrad/Suburbs,LENINGRAD,Mining Machinery,250,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,Cil Extraction Equipment,262,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,Optical Equipment,264,3
+Leningrad,Leningrad/Suburbs,LENINGRAD,"Periscopes, Submarine",268,3
+Leningrad,Leningrad/Suburbs,LENINGRAD,Population,275,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,"Ports, Maritme",280,2
+Leningrad,Leningrad/Suburbs,LENINGRAD,"Ports, Inland",281,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,Propellants,282,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,Radio & Television,285,11
+Leningrad,Leningrad/Suburbs,LENINGRAD,Railroad Bridges,290,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,Passenger Rail Cars,296,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,Railroad Equipment Repair,310,2
+Leningrad,Leningrad/Suburbs,LENINGRAD,Railroad Yards & Shops,358,11
+Leningrad,Leningrad/Suburbs,LENINGRAD,Rubber Tires,405,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,Sea Mines,410,2
+Leningrad,Leningrad/Suburbs,LENINGRAD,Shipbuilding,415,5
+Leningrad,Leningrad/Suburbs,LENINGRAD,Ship Repair,420,6
+Leningrad,Leningrad/Suburbs,LENINGRAD,Steel,430,4
+Leningrad,Leningrad/Suburbs,LENINGRAD,Submarine Bases,437,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,Submarine Diesel Engines,440,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,Sulfuric Acid,445,3
+Leningrad,Leningrad/Suburbs,LENINGRAD,Tanks & S.P. Guns,450,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,Torpedoes,470,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,Tractors,475,1
+Leningrad,Leningrad/Suburbs,LENINGRAD,"Transformers, Heavy",480,2
+Leningrad,Leningrad/Suburbs,LENINGRAD,"Turbines, Heavy",485,4
+Leningrad,Beloostrov,BELOOSTROV,Railroad Yards & Shops,358,1
+Leningrad,Beloostrov,BELOOSTROV,Population,275,1
+Leningrad,Kolpino,KOLPINO,"Liquid Fuels, Storage Non-Refinery",227,1
+Leningrad,Kolpino,KOLPINO,Metal Forming Equipment,235,1
+Leningrad,Kolpino,KOLPINO,Steel,430,1
+Leningrad,Kolpino,KOLPINO,Tanks & S.P. Guns,450,1
+Leningrad,Kolpino,KOLPINO,Electric Power Grid,110,1
+Leningrad,Kolpino,KOLPINO,Shipbuilding,415,1
+Leningrad,Kolpino,KOLPINO,Population,275,1
+Leningrad,Sablino,SABLINO,Railroad Yards & Shops,350,1
+Leningrad,Sablino,SABLINO,Population,275,1
+Leningrad,Sestroretsk,SESTRORETSK,Cutting Tools,090,1
+Leningrad,Sestroretsk,SESTRORETSK,Population,275,1
+Beijing,Beijing/Suburbs,PEI PING,Coke Chemicals,075,1
+Beijing,Beijing/Suburbs,PEI PING,Electric Power,186,1
+Beijing,Beijing/Suburbs,PEI PING,Government Control Centers,208,1
+Beijing,Beijing/Suburbs,PEI PING,Machine Tools,230,1
+Beijing,Beijing/Suburbs,PEI PING,Military Controls Air Force,240,2
+Beijing,Beijing/Suburbs,PEI PING,"Military HQs, Army",241,1
+Beijing,Beijing/Suburbs,PEI PING,"Military HQs, Navy",242,1
+Beijing,Beijing/Suburbs,PEI PING,Military Schools,243,1
+Beijing,Beijing/Suburbs,PEI PING,"Military Storage Areas, Air Force",245,2
+Beijing,Beijing/Suburbs,PEI PING,"Military Storage Areas, Army & Navy",246,2
+Beijing,Beijing/Suburbs,PEI PING,Military Troop Installations,248,2
+Beijing,Beijing/Suburbs,PEI PING,Pig Iron,270,1
+Beijing,Beijing/Suburbs,PEI PING,Population,275,1
+Beijing,Beijing/Suburbs,PEI PING,Railroad Yards & Shops,384,1
+Beijing,Fengtai,FENG TAI,Military School,243,1
+Beijing,Fengtai,FENG TAI,"Military Storage Area, Army & Navy",246,1
+Beijing,Fengtai,FENG TAI,Population,275,1
+Beijing,Fengtai,FENG TAI,Railroad Equipment Repair Shop,332,1
+Beijing,Fengtai,FENG TAI,Railroad Yard and Shops,384,1
+Warsaw,Warsaw,WARSAW,Ammunition,023,1
+Warsaw,Warsaw,WARSAW,Electric Power Grid,196,3
+Warsaw,Warsaw,WARSAW,Electric Tubes,202,1
+Warsaw,Warsaw,WARSAW,Government Control Centers,208,1
+Warsaw,Warsaw,WARSAW,"Guns, Small Arms",214,1
+Warsaw,Warsaw,WARSAW,Liquid Fuel Storage,227,1
+Warsaw,Warsaw,WARSAW,"Military Controls, Air Force",240,1
+Warsaw,Warsaw,WARSAW,"Military HQs, Army",241,1
+Warsaw,Warsaw,WARSAW,"Military Storage Areas, Army & Navy",246,8
+Warsaw,Warsaw,WARSAW,Military Installations,248,2
+Warsaw,Warsaw,WARSAW,Motor Vehicles,252,1
+Warsaw,Warsaw,WARSAW,Optical Equipment,264,1
+Warsaw,Warsaw,WARSAW,Penicillin,266,1
+Warsaw,Warsaw,WARSAW,"Periscopes, Submarine",268,1
+Warsaw,Warsaw,WARSAW,Population,275,1
+Warsaw,Warsaw,WARSAW,"Ports, Inland",281,2
+Warsaw,Warsaw,WARSAW,Radio & Television,285,2
+Warsaw,Warsaw,WARSAW,Railroad Equipment Repair Shops,336,2
+Warsaw,Warsaw,WARSAW,Railroad Yards & Shops,392,8
