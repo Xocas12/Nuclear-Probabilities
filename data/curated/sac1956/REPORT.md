@@ -6,8 +6,8 @@
 
 ## Transcription quality
 
-- Data lines: 14904. Pass A differs from the final reading on 149 (1.00%), pass B on 60 (0.40%); both on 32. On 2 of these the two passes wrote the same legible text: errors the comparison cannot see, found by the consistency checks or by an adjudicator looking at the line for another reason (A004-L07, A006-L22).
-- Adjudicated lines: 208; choice A 26, B 109, both 41, new 32; confidence high 114, low 9, medium 85
+- Data lines: 14904. Pass A differs from the final reading on 149 (1.00%), pass B on 62 (0.42%); both on 34. On 2 of these the two passes wrote the same legible text: errors the comparison cannot see, found by the consistency checks or by an adjudicator looking at the line for another reason (A004-L07, A006-L22).
+- Adjudicated lines: 208; choice A 26, B 107, both 41, new 34; confidence high 116, low 9, medium 83
 
 ## Anchors
 
@@ -85,7 +85,7 @@ Installation lines by category against the National Security Archive's city shee
 
 ## Consistency checks across lines
 
-Lines that the checks still flag after the second look, with its outcome (checks.csv has the notes). Lines that the second look corrected no longer break a check and are not listed. In all, 32 lines ended with a reading that neither pass had (adjudication or second look, choice `new`).
+Lines that the checks still flag after the second look, with its outcome (checks.csv has the notes). Lines that the second look corrected no longer break a check and are not listed. In all, 34 lines ended with a reading that neither pass had (adjudication or second look, choice `new`).
 
 | Check | Lines | Confirmed as printed | Not re-read |
 |---|---|---|---|
@@ -94,7 +94,6 @@ Lines that the checks still flag after the second look, with its outcome (checks
 | DGZ far from its header | 3 | 3 | 0 |
 | airfield row does not match the expected format | 3 | 3 | 0 |
 | header far from the other headers on its chart | 2 | 2 | 0 |
-| airfield far from the other targets on its chart | 2 | 0 | 2 |
 | block with more than one population line | 2 | 2 | 0 |
 | duplicate airfield priority | 2 | 2 | 0 |
 | airfield BE number not 8xxx | 2 | 2 | 0 |

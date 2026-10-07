@@ -9,8 +9,6 @@ C186-L03,C186,data,data,285 0152-0084,285 0152-0084,check: WAC prefix differs fr
 C299-L31,C299,data,data,275 0331-9999,275 0331-9999,check: WAC prefix differs from its block (0331 in a block where 2 of 3 lines use 0332)
 C002-L04,C002,data,data,701 0022 ABDULINO 5340-05340,701 0022 ABDULINO 5340-05340,"check: header far from the other headers on its chart (WAC 0169: 53.6667, 53.6667 vs median 53.1167, 14.5667 of 127 headers)"
 C009-L47,C009,data,data,962 0307 ARTSIZ 4600-02926,962 0307 ARTSIZ 4600-02926,"check: header far from the other headers on its chart (WAC 0248: 46.0, 29.4333 vs median 46.2333, 43.15 of 6 headers)"
-A005-L21,A005,data,data,"140 0989 BRIESEN, E GER 0165-8299 5202-01345 R","140 0989 BRIESEN, E GER 0165-8299 5202-01345 R","check: airfield far from the other targets on its chart (chart 0165: 52.0333, 13.75 vs median 53.6167, 50.3833 of 43)"
-A020-L05,A020,data,data,298 4490 LENINGRAD/GORELOVO 0155-8051 5946-03005 S,298 4490 LENINGRAD/GORELOVO 0155-8051 5946-03005 S,"check: airfield far from the other targets on its chart (chart 0155: 59.7667, 30.0833 vs median 58.1333, 51.7 of 25)"
 C162-L15,C162,data,data,KAZINCBARCIKA HUNG 4815-02037,KAZINCBARCIKA HUNG 4815-02037,check: block with more than one population line (2 lines of category 275 under KAZINCBARCIKA HUNG)
 C173-L42,C173,data,data,TULOMA 6849-03248,TULOMA 6849-03248,check: block with more than one population line (2 lines of category 275 under TULOMA)
 C190-L04,C190,data,data,228 5761 OPPELN POL 5040-01757,228 5761 OPPELN POL 5040-01757,check: reference number not above the previous complex (5761 after 5775 (C189-L42))

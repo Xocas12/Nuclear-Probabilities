@@ -33,10 +33,11 @@ classified.
 | `installations.csv` | installation line | `complex_id`, `category`, `category_name`, `category_group`, `be_wac` (chart), `be_number` (blank where the print has none) |
 | `msites.csv` | "M-n" site (Moscow region) | `complex_id` (blank for stand-alone rows), `top_complex_id`, `ref`, `name`, `m_number`, `lat`, `lon`, `label` |
 | `airfields.csv` | Part II airfield | `priority`, `ref` (mostly the reference number of the complex the airfield serves), `name`, `country`, `be`, `lat`, `lon`, `code` (trailing letter, meaning unknown) |
-| `lines.csv` | printed line, in page order | `id`, `page`, `kind` (data / header / footer / blank), `text` exactly as printed, `source` (agreed / adjudicated), `type` |
+| `lines.csv` | printed line, in page order | `id`, `page`, `kind` (data / header / footer / blank), `text` as printed (spacing normalised: single spaces, none around hyphens), `source` (agreed / adjudicated), `type` |
 | `anomalies.csv` | line that keeps a `?` or breaks a format rule | `problem` |
-| `checks.csv` | line flagged by a consistency check | `check`, `detail` |
-| `../labels/us_1956_sac_complexes.csv` | top-level complex, in the shared label schema | see `../labels/SCHEMA.md` |
+| `checks.csv` | line flagged by a consistency check | `check`, `detail`, `second_look` (confirmed as printed / corrected), `second_look_note` |
+| `../labels/us_1956_sac_complexes.csv` | top-level complex, in the shared label schema | see `../labels/SCHEMA.md`; DGZ and installation totals and the priority tier are in `notes` |
+| `../labels/us_1956_sac_airfields.csv` | airfield, in the shared label schema | see `../labels/SCHEMA.md` |
 | `../validation_sac1956_nsa_city_sheets.csv` | category count on the Archive's city sheets | Moscow, Leningrad, Beijing, Warsaw |
 
 Line ids are `<page>-L<nn>`: `C` pages are the complex list (PDF page number), `A` pages the
@@ -56,28 +57,39 @@ is left blank.
 KUCHINO 5545-03759                sub-complex: name and coordinates, then its own lines
 ```
 
-- No country suffix means the USSR. Suffixes are as printed (`POL`, `E GER`, `GER SOVZONE`
-  for Berlin, `CZECH`, `HUNG`, `RUM`, `BULG`, `ALB`, `CHINA`, `MANCH`, `N KOREA`, `VIETNAM`).
-  The name column holds 25 characters, which cuts some suffixes (`CZEC`, `CHIN`, `E GE`);
-  `country` resolves them.
+- No country suffix means the USSR. The suffixes are `POL`, `E GER`, `GER SOVZONE` (Berlin),
+  `CZECH`, `HUNG`, `RUM`, `BULG`, `ALB`, `CHINA`, `MANCH`, `N KOREA` and `N VIETNAM`. The name
+  column holds 25 characters, which cuts some suffixes (`CZEC`, `CHIN`, `E GE`); `country`
+  resolves them. `country` follows the printed suffix, the planners' attribution: ULAAN BAATAR
+  is printed with CHINA (the label file gives Mongolia, the state that contained it).
 - Reference numbers follow the alphabet. A fifth digit inserts a complex between two
   numbers: `00255` lies between `0025` and `0030`.
-- **Half of the complexes have no aim point.** 609 of the 1,216 complexes have no DGZ line,
+- **Half of the complexes have no aim point.** 608 of the 1,215 complexes have no DGZ line,
   neither their own nor in a sub-complex. They are mostly low priorities: 98% of complexes
   ranked 1–100 have a DGZ, 5% of those ranked 901–1223. North Korean, North Vietnamese and
   Albanian complexes have none. Being on the list and being given an aim point are different
   labels; `n_dgz` (with the sub-complexes' DGZs) separates them.
+- **Population lines are near-universal.** 2,081 of the 2,089 complex and sub-complex blocks
+  have exactly one line of category 275. SMOLENSK (priority 3), NIEDER ULLERSDORF POL, VAYENGA
+  and DIOSGYOR HUNG have none; TULOMA and KAZINCBARCIKA HUNG have two (DIOSGYOR's is printed
+  under its neighbour KAZINCBARCIKA); GLIWICE-SOSNOWIEC POL and HALLE-MERSEBURG E GER are
+  umbrella headers whose lines are all in sub-complexes. SMOLENSK, TULOMA and KAZINCBARCIKA were
+  checked on the scan and are printed that way.
 - **Priorities come in tiers below the top 300.** From priority 321 down, the numbers run
   through the alphabet in long stretches (701 ABDULINO … 732 YERSHOVO, then 739 APOSTOLOVO …):
   the study ranked complexes in tiers and numbered each tier alphabetically. `priority_tier`
   groups six or more consecutive priorities in alphabetical order into one tier (by chance six
-  names fall in order once in 720 tries); other complexes are tiers of their own. Within a tier,
-  the number carries no ranking information.
+  names fall in order once in 720 tries); other complexes are tiers of their own. This finds 38
+  tiers holding 692 complexes, the first starting at 321. Within a tier, the number carries no
+  ranking information.
 - **M-n rows** (`DEDENEVO M-29 5615-03732 QB`) are 34 sites, all 44–96 km from Moscow's
-  reference point, in two bands: 16 at 44–64 km and 18 at 72–96 km. That is the pattern of
+  reference point, in two bands: 17 at 44–64 km and 17 at 72–96 km. That is the pattern of
   the two rings of the Moscow surface-to-air missile system, which is probably what they are
   (an interpretation; the document does not say). A row with a reference number stands alone in
-  the alphabetical order; one without belongs to the complex above it.
+  the alphabetical order; one without belongs to the complex above it. A 35th row (KOSTINO
+  M-70) has a six-digit longitude and is in `anomalies.csv`.
+- **Airfield reference numbers** name the complex an airfield belongs to (all Moscow airfields
+  carry 5150, MOSCOW's number); 856 of the 1,128 name a complex in Part I.
 
 ## How it was made
 
@@ -113,18 +125,28 @@ The decisions, with each adjudicator's note and confidence, are in
 See REPORT.md for the current numbers. In brief:
 
 - 16,046 printed lines, of which 14,904 are table rows. The two passes agreed on all but 179
-  lines (1.1%). Measured against the final reading, one pass erred on about 1 line in 100 and
-  the other on 1 in 260, mostly B read as 8 in aim-point labels, scanner specks read as
-  punctuation, and 3/5/6/8/9 in worn digits.
+  lines (1.1%). Measured against the final reading, one pass erred on 1.0% of table rows and
+  the other on 0.4%, mostly B read as 8 in aim-point labels, scanner specks read as
+  punctuation, and 3/5/6/8/9 or a 2 without its base bar in worn digits.
+- 208 lines were decided on the scan: every dispute and the 49 lines the consistency checks
+  flagged (21 lines were both). 34 ended with a reading neither pass had. The checks found 2
+  errors that both passes made identically, an airfield priority and an airfield latitude, both
+  on 200 dpi pages. Errors the two passes share and that break no check cannot be counted; they
+  are the main residual risk, most of all for installation numbers, which nothing cross-checks.
+  Three lines keep an illegible digit, and 2 coordinates are printed with impossible minutes
+  (left blank in the tables).
+- A pilot reading of four pages made before this pipeline (152 lines, a third independent
+  read) agrees with the final reading on every character it could read.
 - Anchors reproduce: Moscow (priority 1) has 12 aim points and 180 installation lines, 13 and
   190 with its three suburbs; East Berlin (`BERLIN GER SOVZONE`, priority 61) has 6 aim points
   and 91 installation lines with its suburbs, the Archive's figure.
-- The Archive's sheets match exactly for Warsaw, Fengtai and every Moscow and Leningrad suburb
-  that is a block in the list. Moscow's own block has 2 lines more than its sheet, Peiping 1
-  fewer, and Leningrad 6 fewer (one each of six categories). Leningrad's pages are complete and
-  their BE numbers run on without a break, so the difference is not a lost page. The sheets have
-  slips of their own (they give Mishutkino, an M-site row without installation lines, a
-  railroad yard and a population line).
+- The Archive's sheets match category by category for Warsaw, Fengtai and every Moscow and
+  Leningrad suburb that is a block in the list, except Sablino, whose railroad yard the sheet
+  codes 350 (Caucasus region) and the list prints as 358 (Northern region). Moscow's own block
+  has 2 lines more than its sheet, Peiping 1 fewer, and Leningrad 6 fewer (one each of six
+  categories). Leningrad's pages are complete and their BE numbers run on without a break, so
+  the difference is not a lost page. The sheets have slips of their own (they give Mishutkino,
+  an M-site row without installation lines, a railroad yard and a population line).
 
 ## Known gaps and quirks
 
@@ -140,8 +162,9 @@ See REPORT.md for the current numbers. In brief:
   530, 603, 766, 872, 1220, and 1054 above). Either the complexes are not in Part I or their
   headers are lost; no page break shows a gap.
 - **Lower-resolution scans.** Nine pages of the complex list (PDF pages 1, 2, 8, 9, 32–34, 112
-  and 113) and 11 of the 43 airfield pages were scanned at about 200 dpi, against 300 dpi or
-  more for the rest; readings there are less certain.
+  and 113) and 11 of the 43 airfield pages (1, 2, 4–6, 20, 23, 24, 27, 29, 30) were scanned at
+  about 200 dpi, against 300 dpi or more for the rest. 22 of the 24 airfield lines that ended
+  with a reading neither pass had, and all three illegible digits, are on those pages.
 - **Strips start 250 px from the left edge of a page.** On pages shifted left this cut the
   first digits of two priorities (VLADIVOSTOK 19, VLADIMIR VOLYNSKIY 1094); both were read in
   full on the source PDF. In the complex list, unique priorities rule out the same problem
