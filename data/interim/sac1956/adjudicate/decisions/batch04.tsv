@@ -1,0 +1,40 @@
+C079-L43	data	430 0232-0051	B	medium	Dot after 430 is a 3x2-px speck (the C-list period in E.GER on C225 is ~12 px); code fields never carry a period in the document; left out.
+C080-L21	data	CHORZOW POL 5018-01857	B	high	Mark after W is a 2x2-px speck lying off the character grid (about 5 px left of the cell centre); not a period.
+C081-L47	data	KAMIEN POL 5022-01859	B	medium	Blob after L sits below the baseline and 4 px left of the cell centre; speck, not a printed period (country abbreviations carry no period elsewhere).
+C090-L15	data	150 0325-0064	B	high	Glyph after hyphen has a rounded top-left, unlike the square-cornered D on this page (L10); numeric BE field; block ascends 0035 < 0064 < 0237.
+C090-L36	data	266 2460 GUBAKHA 5852-05735	B	medium	Thin 2x6-px tick at cap height one blank cell after GUBAKHA; no apostrophe occurs anywhere else in the document; treated as a stray mark.
+C103-L30	data	ROTHENSTEIN E GER 5052-01136	A	high	First letter matches the R of GER on the same line (vertical bowl stroke, pixel overlap 0.71), not the K of KOESEN (diagonal arm, 0.42).
+C104-L28	data	4831- 3834E F	A	high	Second digit has a flat closed top arch and left side like the 8 in 4831 above; this page's 6s start with a narrow diagonal stroke; upper-right side faded.
+C109-L29	data	4834- 4545E B	B	high	Letter-column glyph has square left corners; template match favours letter-column B's over 8's (0.67 vs 0.62), like agreed B's; column only ever holds letters.
+C110-L37	data	1064 3276 KARNOBAT BULG 4240-02658	B	high	Glyph matches the B of BULG on the same line (0.72; straight stem, no waist) rather than the 8 of 02658 (0.58); letter inside a name.
+C112-L04	data	275 0164-9988	new	medium	200-ppi page. 2nd digit: tall upper loop and curled tail like the agreed 9 of 9948 (L09), best same-page match 9; 4th digit: 8 with faded upper-left.
+C112-L05	data	KHOPACHEVO 5500-05800	B	medium	200-ppi page. 2nd letter has straight vertical right strokes above and below the bar like the H in CHEVO; this page's R (YURYUZAN) has an indented slanting leg.
+C112-L10	data	UST KATAV 5456-05811	B	medium	200-ppi page. Last glyph is a thin stem with top-left flag and base like the 1 before it (overlap 0.50 vs <=0.40 for 2s); no top bar or diagonal of a 2.
+C112-L16	data	118 0164-0180	new	medium	200-ppi page. 3rd digit has a wide top and a closed small upper loop like the 8 of 118 on L07; the 6s of 366/246 on this page have a narrow open top stroke.
+C112-L24	data	281 0168-0227	A	high	Third digit shows top arc, leftward diagonal and partial base of a 2 (a 3's middle stroke runs right); BE numbers ascend 0174 < x < 0239 (within-document order).
+C113-L14	data	1028 3350 KAZANKA 4753-03246	new	high	4th digit is an 8 with faded bottom bar (closed upper loop, full middle bar). Target numbers run alphabetically: 1027 KALACH, 1029 KOBRIN; 1028 is otherwise unused.
+C113-L24	data	248 0322-0501	B	high	Third digit is an oval 0 with a gap in its left side and no middle bar (not 3); BE numbers ascend 0227 < x < 0512, leaving only 0 or 1.
+C120-L13	data	5729- 6005E B	B	high	Letter-column glyph: straight stem; template match favours B (0.70 vs 0.62 for 8), as for agreed B's (e.g. L32); column only ever holds letters.
+C124-L51	data	809 3794 KOLOMYYA 4831-02504	new	high	Disputed digit is a closed full-height oval 0; the tail and dots below it are a smudge in the same cell; minutes 00-59 also rule out 6, 8, 9.
+C127-L11	data	711 3865 KONOSHA 6058-04011	A	high	Third digit is a 1 (flag, 6-px base; this page's 4 has no base); the detached diagonal between the 1s is a stray mark. Target numbers alphabetical: 710 KOLOSJOKI, 712 KOSLIN; 714 is KUSHCHEVSKAYA.
+C129-L14	data	3932 KOSTINO M-70 5533-036120 UA	both	high	Print is clear: no target number, six digits after the hyphen (036120), letters UA (U has an open top, not Q/O). Unusual format but as printed (cf. agreed C183-L28).
+C150-L03	data	290 0381-0260 || 275 0289-9953	B	high	The L03 band (y 440-469) holds two printed lines; both given here.
+C150-L03+	blank		B	high	No separate line: 275 0289-9953 lies inside L03's band and is given there with ||; the bar here covers L04 (CHIN HUANG TAO).
+C153-L20	data	384 0202-0028	B	high	Glyph after hyphen is a 0 with a faded top arc (rounded bottom like the neighbouring 0s); numeric field; ascends 0028 < 0032 on the next line.
+C156-L16	data	248 0170-1021	B	high	Glyph is a 1: left flag and 7-px base like the final 1 of the line; capital I in this font is only 4-5 px wide (HILLERSLEBEN, KONIGSBORN).
+C156-L18	data	KONIGSBORN E GER 5208-01146	B	high	Glyph is a B with a faded bottom bar: flat top from the stem, vertical lower-right side; the R's on this page have a slanting leg.
+C156-L40	data	118 0164-0159	new	high	3rd digit has a closed upper loop; best match the 8 of 208 in the same column (0.68 vs 0.57 for the 6 of 366); 8 references 0.69 vs 0.58 for 6.
+C158-L26	data	351 4925 MEDGIDIA RUM 4415-02817	B	high	Glyph after G is 5 px wide with a 4-px base like the I two cells later; the digit 1 on this line has a 7-px base.
+C164-L24	data	388 0232-0200	B	medium	First digit faded to three fragments (top arch, middle junction, bottom arc) as in a 3; a 1 would show a stem; codes ending -88 in the document are only 188 and 388.
+C165-L16	data	BOHUMIN CZECH 4955-01820	B	high	Glyph is a narrow I (5 px, small top and bottom serifs); no J hook.
+C172-L13	data	44 5235 MUKDEN MANCH 4148-12327	B	medium	Blob after 5235 lies wholly below the baseline with nothing at period height; not a printed comma; the code field never carries punctuation. Specks above U ignored.
+C175-L04	data	881 5335 NAGYKANIZSA HUNG 4627-01658	B	medium	Dot before 5335 is a 3x2-px speck (half the size of a printed period); nothing is printed between these two numbers anywhere else. Speck above final A ignored.
+C177-L25	data	2249-I0819E A	B	medium	Glyph after hyphen is an I (5-px symmetric serifs, matches the I of CHINA 0.81), unlike the flagged 7-px-base 1 in the same column on the line above; printed I in a numeric field (cf. agreed C113-L34 0194I).
+C179-L20	data	275 0169-9850	B	high	Dot after 275 is a 7-px speck about 5 px left of the cell centre; not a printed period.
+C182-L42	data	5555- 5959E B	B	high	Letter-column glyph matches B references (0.64 vs 0.55 for 8; nearest 7 all B); column only ever holds letters.
+C183-L14	data	5837- 5949E B	B	high	Letter-column glyph closer to the B's of L06/L24 on this page (0.69/0.71) than to its 8s (0.59-0.69); column only ever holds letters.
+C184-L14	data	883 5600 NOVAYA LYALYA 5903-06038	B	high	First glyph matches 8 (0.72 vs 0.64 for B; 0.75 with the next 8). Target numbers alphabetical: 882 NIZHNIYE SERGI, 884 NOVE MESTO.
+C185-L02	data	4444- 3746E B	B	high	Letter-column glyph matches B references (0.67 vs 0.60 for 8; nearest 7 all B); column only ever holds letters.
+C186-L04	data	285 0162-0085	new	low	Middle digit badly faded (two vertical strokes and a bottom fragment); closest to the 8 of 285 directly above (0.43); codes 205 and 295 never occur in the document, 285 is common.
+C188-L46	data	UNICOV CZECH 4946-01708	A	medium	Dot after CZECH is a 9-px speck about 5 px right of the cell centre; country abbreviations carry no period elsewhere in the document.
+C191-L30	data	5548- 3859E B	B	high	Second digit has a closed upper loop and a lower loop with a faded right side = 8 (a 6 is open top-right, a 9 open bottom-left).

@@ -20,7 +20,7 @@ C286-L19	data	227 0153-
 C286-L20	data	227 0153-0564	
 C286-L21	data	275 0153-9889	
 C286-L22	data	595 9177 VOLOVO 5333-03759	
-C286-L23	data	5333- 3759E B	
+C286-L23	data	5333- 3759E B	unsure: letter glyph is damaged (open top), read as B
 C286-L24	data	362 0167-1009	
 C286-L25	data	275 0167-9600	speck after 275 omitted
 C286-L26	data	MELEVKA 5344-03816	
@@ -32,7 +32,7 @@ C286-L31	data	5336- 3735E D
 C286-L32	data	227 0167-	
 C286-L33	data	275 0167-	
 C286-L34	data	593 9180 VOLSK 5203-04724	
-C286-L35	data	5201- 4722E B	
+C286-L35	data	5201- 4722E B	unsure: letter glyph has a rounded left edge (B/8-like), read as B
 C286-L36	data	5203- 4726E C	
 C286-L37	data	227 0166-	
 C286-L38	data	227 0166-	
@@ -45,4 +45,4 @@ C286-L44	data	227 0166-0222
 C286-L45	data	243 0166-0226	
 C286-L46	data	275 0166-9979	
 C286-L47	data	632 9200 VORKUTA 6730-06403	
-C286-L48	footer	DocId:32003765 TOP SECRET - RESTRICT?	cut: bottom and right end outside strip; circled stamp overprints the E after RESTRICT; rule runs through the text
+C286-L48	footer	DocId:32003765 TOP SECRET - RESTRICT??	cut: strip bottom and right end; circled stamp over the glyph after RESTRICT and a cut-off glyph at the strip edge

@@ -11,7 +11,7 @@ C283-L10	data	208 0154-0428
 C283-L11	data	248 0154-0431	
 C283-L12	data	243 0154-0468	
 C283-L13	data	275 0154-9970	
-C283-L14	data	94 9127 VLADIMIR VOLYNSKIY 5051-02419	cut: left edge of the strip clips the first visible priority glyph; its right half matches 9 (unsure); any digits further left are hidden
+C283-L14	data	?4 9127 VLADIMIR VOLYNSKIY 5051-02419	cut: left edge of the strip clips the first visible priority glyph (right part only, resembles a 9); any digits further left are hidden
 C283-L15	data	376 0232-1517	
 C283-L16	data	275 0232-9978	
 C283-L17	data	?9 9130 VLADIVOSTOK 4307-13154	cut: left edge of the strip clips the first visible priority glyph (only a vertical stem with a foot is visible, perhaps a 1); any digits further left are hidden

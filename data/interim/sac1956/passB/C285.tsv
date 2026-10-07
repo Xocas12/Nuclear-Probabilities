@@ -17,13 +17,13 @@ C285-L16	data	290 0153-0286
 C285-L17	data	281 0153-0574	
 C285-L18	data	228 0153-0575	
 C285-L19	data	275 0153-9984	
-C285-L20	data	SYASSTROY 6008-03234	
+C285-L20	data	SYASSTROY 6008-03234	unsure: 7th letter is R by shape (bowl plus diagonal leg), not K
 C285-L21	data	6007- 3233E C	
 C285-L22	data	062 0102-0002	
 C285-L23	data	068 0102-0002	
 C285-L24	data	275 0102-9995	
 C285-L25	data	730 9162 VOLKOVYSK 5309-02428	
-C285-L26	data	5308- 2425E B	unsure: final glyph in the letter column is B/8-like, read as B
+C285-L26	data	5308- 2425E B	unsure: final glyph in the letter column is B/8-like (rounded left edge), read as B
 C285-L27	data	370 0168-0241	
 C285-L28	data	248 0168-0325	
 C285-L29	data	275 0168-9918	
@@ -38,4 +38,4 @@ C285-L37	data	828 91635 VOLOCHISK 4932-02608
 C285-L38	data	376 0233-0041	
 C285-L39	data	275 0233-9970	
 C285-L40	data	115 9170 VOLOGDA 5914-03953	speck after 115 omitted
-C285-L41	footer	DocId:32003765 TOP SECRET - RESTRICT?	cut: bottom and right end outside strip; circled stamp overprints the E after RESTRICT; rule runs through the text
+C285-L41	footer	DocId:32003765 TOP SECRET - RESTRICT??	cut: strip bottom and right end; circled stamp over the glyph after RESTRICT and a cut-off glyph at the strip edge
