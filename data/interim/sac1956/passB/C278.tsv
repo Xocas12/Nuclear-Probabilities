@@ -19,7 +19,7 @@ C278-L18	data	290 0231-1304
 C278-L19	data	056 0231-1549	
 C278-L20	data	090 0231-1935	
 C278-L21	data	275 0231-9502	
-C278-L22	data	LITOMERICE CZECH 5032-01408	unsure: 7th letter damaged, R rather than K
+C278-L22	data	LITOMERICE CZECH 5032-01408	unsure: 7th letter damaged, read as R (same shape as the R of POVRLY)
 C278-L23	data	056 0231-0811	
 C278-L24	data	290 0231-0812	
 C278-L25	data	248 0231-3461	speck between 3 and 4 omitted
@@ -44,11 +44,11 @@ C278-L43	data	TEPLICE SANOV CZECH 5038-01345
 C278-L44	data	5038- 1349E J	
 C278-L45	data	264 0231-0648	
 C278-L46	data	275 0231-9904	
-C278-L47	data	TE/EZIN CZECH 5030-01408	slash as printed in 3rd letter
+C278-L47	data	TE/EZIN CZECH 5030-01408	slash as printed in the 3rd letter
 C278-L48	data	275 0231-	
 C278-L49	data	248 0231-3487	
 C278-L50	data	VELVETY CZECH 5036-01353	
 C278-L51	data	023 0231-2142	
 C278-L52	data	275 0231-9372	
 C278-L53	data	994 8890 UZHUR 5518-08949	
-C278-L54	footer	? DocId:32003765 TOP SECRET - RESTRICT?	cut: partial glyph (right half of a 5/6/S) left of DocId; right end outside strip; circled stamp overprints the E after RESTRICT
+C278-L54	footer	? DocId:32003765 TOP SECRET - RESTRICT??	cut: partial glyph (right half of a 5/6/S) left of DocId; circled stamp over the glyph after RESTRICT and a cut-off glyph at the strip edge

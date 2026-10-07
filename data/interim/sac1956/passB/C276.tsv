@@ -5,7 +5,7 @@ C276-L04	data	208 0201-0053
 C276-L05	data	246 0201-0055	
 C276-L06	data	246 0201-0056	
 C276-L07	data	246 0201-0058	
-C276-L08	data	275 0201-9999	comma-like speck left of 275 omitted
+C276-L08	data	275 0201-9999	comma-like speck before 275 omitted
 C276-L09	data	124 8810 ULYANOVSK 5419-04825	
 C276-L10	data	5419- 4824E A	
 C276-L11	data	5418- 4820E D	
@@ -28,8 +28,8 @@ C276-L27	data	227 0165-0287
 C276-L28	data	208 0165-0288	
 C276-L29	data	248 0165-0321	
 C276-L30	data	275 0165-9996	
-C276-L31	data	653 88127 UNECHA 5251-03241	5-digit reference as printed
-C276-L32	data	5251- 3241E B	unsure: last glyph looks like 8 but sits in the letter column
+C276-L31	data	653 88127 UNECHA 5251-03241	
+C276-L32	data	5251- 3241E B	unsure: final glyph looks like 8 but is in the letter column, read as B
 C276-L33	data	374 0167-0176	comma-like speck between 3 and 7 omitted
 C276-L34	data	275 0167-9986	
 C276-L35	data	1093 8818 URALNEFT 5809-05706	
@@ -44,4 +44,4 @@ C276-L43	data	410 0235-0049
 C276-L44	data	470 0235-0049	
 C276-L45	data	208 0235-0175	
 C276-L46	data	372 0235-0180	
-C276-L47	footer	DocId:32003765 TOP SECRET - RESTRICT?	cut: right end outside strip; circled stamp overprints the E after RESTRICT; rule runs through the text
+C276-L47	footer	DocId:32003765 TOP SECRET - RESTRICT??	cut: circled stamp over the glyph after RESTRICT and a cut-off glyph at the strip edge
