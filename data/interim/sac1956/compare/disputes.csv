@@ -28,9 +28,7 @@ A011-L13,A011,data,data,902 2410 GRODNO 0168-8618 5338-02345 R,902 2410 GRODNO 0
 A011-L26,A011,data,data,975 24937 GVARDEYSK 0168-8620 5340-02106 R,975 24937 GVARDEYSK 0158-8620 5340-02106 R,text differs
 A017-L04,A017,data,data,"284 38605 KONIGSBERG/NEUMARK, POL 0169-8255 5256-01425 R","284 38605 KONIGSBERG/NEUMARK, POL 0169-8255 5256-01429 R",text differs
 A017-L07,A017,data,data,356 3873 KONOTOR? 0281-8004 4717-14200 R,356 3873 KONOTORO 0281-8004 4717-14200 R,text differs; unreadable character
-A018-L01+,A018,header,,TOP SECRET,,missing in one pass
 A019-L10,A019,data,data,768 4310 KUY8YSHEV 0165-8015 5312-05011 R,768 4310 KUYBYSHEV 0165-8015 5312-05011 R,text differs
-A019-L01+,A019,header,,TOP SECRET,,missing in one pass
 A020-L04,A020,data,data,600 4490 LENINGRAD CIVIL 0153-?048 5948-03018 Y,600 4490 LENINGRAD CIVIL 0153-8048 5948-03018 Y,text differs; unreadable character
 A020-L05,A020,data,data,298 4490 LENINGRAD/GORELOVO 015?-8051 5946-03005 S,298 4490 LENINGRAD/GORELOVO 0155-8051 5946-03005 S,text differs; unreadable character
 A020-L06,A020,data,data,459 4490 LE?INGRAD/GORSKAYA 0103-8602 6002-03001 V,459 4490 LENINGRAD/GORSKAYA 0103-8602 6002-03001 Y,text differs; unreadable character
@@ -44,18 +42,14 @@ A020-L21,A020,data,data,"695 45405 LIANG SHAN, CHINA 0495-8410 304?-10747 R","69
 A020-L25,A020,data,data,374 4560 LIDA 016?-8629 5352-02521 R,374 4560 LIDA 0168-8629 5352-02521 R,text differs; unreadable character
 A020-L26,A020,data,data,"665 4565 LIEGNITZ, P?L 0232-8216 5111-01611 R","665 4565 LIEGNITZ, POL 0232-8216 5111-01611 R",text differs; unreadable character
 A020-L27,A020,data,data,"881A 4570 LIEN CHENG, CHINA 0498-8427 ?532-11637 R","882A 4570 LIEN CHENG, CHINA 0498-8427 7532-11637 R",text differs; unreadable character
-A020-L02+,A020,header,,TOP SECRET,,missing in one pass
-A021-L01+,A021,header,,TOP SECRET,,missing in one pass
 A022-L12,A022,data,data,"263 ?315 MALBORK, POL 0169-8260 5402-01908 R","263 8315 MALBORK, POL 0169-8260 5402-01908 R",text differs; unreadable character
 A022-L19,A022,data,data,63 489? MARKOVO 0074-8001 6441-I7026 R,63 4898 MARKOVO 0074-8001 6441-17026 R,text differs; unreadable character
-A022-L02+,A022,header,,TOP SECRET,,missing in one pass
 A023-L02,A023,data,data,?39 4990 MIASS 0164-8008 5500-06004 R,839 4990 MIASS 0164-8008 5500-06004 R,text differs; unreadable character
 A023-L08,A023,data,data,601 87809 MIKKOLYA 0091-8620 6513-03139 R,601 87805 MIKKOLYA 0091-8620 6513-03139 R,text differs
 A023-L10,A023,data,data,"492 1185 MIMON, CZECH 0231-?114 5037-01444 R","492 1185 MIMON, CZECH 0231-8114 5037-01444 R",text differs; unreadable character
 A023-L12,A023,data,data,922 5030 MINSK/DUBINSKAYA 0168-?635 5341-02737 R,922 5030 MINSK/DUBINSKAYA 0168-8635 5341-02737 R,text differs; unreadable character
 A023-L16,A023,data,data,1? 5032 MIRGOROD 0233-?051 4956-03339 R,10 5032 MIRGOROD 0233-8051 4956-03339 R,text differs; unreadable character
 A023-L22,A023,data,data,923 50?0 MOLOTOV S.E. 0156-8004 5758-05618 S,923 5090 MOLOTOV S.E. 0156-8004 5758-05618 S,text differs; unreadable character
-A023-L01+,A023,header,,TOP SECRET,,missing in one pass
 A024-L04,A024,data,data,998 5150 MOSCOW/CHERTAN?VO 0167-8042 5538-03736 RB,998 5150 MOSCOW/CHERTANOVO 0167-8042 5538-03736 RB,text differs; unreadable character
 A024-L05,A024,data,data,719 5150 MOSCOW/FILI 0167-8044 5545-03729 Y,719 5150 MOSCOW/FILI 0167-8044 5546-03729 Y,text differs
 A024-L10,A024,data,data,1000 5150 MOSCOW/ORLOVO 0167-?05? 5538-03724 RD,1000 5150 MOSCOW/ORLOVO 0167-8055 5538-03724 RD,text differs; unreadable character
@@ -68,9 +62,6 @@ A024-L25,A024,data,data,?1 5240 MURMASHI 0051-8609 6849-0324? S,51 5240 MURMASHI
 A024-L26,A024,data,data,799 5250 M?ROM 0166-8015 5527-0421? R,799 5250 MUROM 0166-8015 5527-04219 R,text differs; unreadable character
 A024-L28,A024,data,data,26 5261 MYS SHMIDTA 0065-8004 685?-17924W R,26 5261 MYS SHMIDTA 0065-8004 6853-17924W R,text differs; unreadable character
 A024-L29,A024,data,data,612 5270 MYS ZHELAN?YA 0014-?000 7656-06?31 R,612 5270 MYS ZHELANIYA 0014-8000 7696-05831 R,text differs; unreadable character
-A024-L03+,A024,header,,TOP SECRET,,missing in one pass
-A025-L01+,A025,header,,TOP SECRET,,missing in one pass
-A026-L01+,A026,header,,TOP SECRET,,missing in one pass
 A027-L03,A027,data,data,99 5747 OLONETS/NURNALITSY 0102-?015 6103-03259 R,99 5747 OLONETS/NURNALITSY 0102-3015 6103-03259 R,text differs; unreadable character
 A027-L04,A027,data,data,805 57475 OLOVYANNAYA 0202-8614 5?01-1152? R,805 57475 OLOVYANNAYA 0202-8614 5101-11529 R,text differs; unreadable character
 A027-L06,A027,data,data,950 5750 OMSK E. 0163-8?02 5457-0732? S,950 5750 OMSK E. 0163-8?02 5457-07328 S,text differs; unreadable character
@@ -88,9 +79,7 @@ A027-L23,A027,data,data,1083 5943 OYMYAKON 0123-8002 632?-14249 R,1083 5943 OYMY
 A027-L26,A027,data,data,618 59615 OZERO TAVAJARVI 0091-?626 6606-03006 R,618 59615 OZERO TAVAJARVI 0091-8626 6606-03006 R,text differs; unreadable character
 A027-L28,A027,data,data,"862A 1437 PAI SHIH I, CHINA 0495-?413 2929-10621 R","?862A 1437 PAI SHIH I, CHINA 0495-8413 2929-10621 R",text differs; unreadable character
 A027-L29,A027,data,data,348 3560 PALANGA 0168-8644 5556-0210? R,348 3660 PALANGA 0168-8644 5556-02103 R,text differs; unreadable character
-A027-L02+,A027,header,,TOP SECRET,,missing in one pass
 A028-L12,A028,data,data,929 606? PAVLODAR 0162-8007 5218-07658 R,929 6068 PAVLODAR 0162-8007 5218-07658 R,text differs; unreadable character
-A028-L01+,A028,header,,TOP SECRET,,missing in one pass
 A029-L05,A029,data,data,"978 2611 PING FANG, MANCH 0283-8011 4536-1263? U","978 2611 PING FANG, MANCH 0283-8011 4536-12638 U",text differs; unreadable character
 A029-L10,A029,data,data,"783 6315 PLOESTI/TARGSORUL NO?, RU 0251-?031 4455-02553 R","783 6315 PLOESTI/TARGSORUL NOL, RU 0251-8031 4455-02553 R",text differs; unreadable character
 A029-L13,A029,data,data,769 6340 POCHIN?K S.E. 0167-8010 5422-03233 S,769 6340 POCHINOK S.E. 0167-8010 5422-03233 S,text differs; unreadable character
@@ -100,7 +89,6 @@ A029-L20,A029,data,data,1?10 91555 POLTSAMAA 0153-80?7 5839-02556 S,1010 91555 P
 A029-L23,A029,data,data,"71 6482 POWIDZ, P?L 0169-8629 5223-01750 R","71 6482 POWIDZ, POL 0169-8629 5223-01750 R",text differs; unreadable character
 A029-L24,A029,data,data,840 6483 POZ?EYEVKA 0203-?628 5035-12858 R,840 6483 POZDEYEVKA 0203-8628 5035-12858 R,text differs; unreadable character
 A029-L26,A029,data,data,"648 64?5 POZNAN/LAWICA, POL 0169-826? 5225-01650 R","648 6485 POZNAN/LAWICA, POL 0169-8268 5225-01650 R",text differs; unreadable character
-A029-L02+,A029,header,,TOP SECRET,,missing in one pass
 A030-L04,A030,data,data,"455 1390 PREUSSISCH FRIEDLAN?, POL 0169-8312 53?2-01716 R","455 1390 PREUSSISCH FRIEDLAND, POL 0169-8312 5332-01716 R",text differs; unreadable character
 A030-L08,A030,data,data,28 6550 PROVIDENIYA/URELIK 0075-?018 6424-17313W R,28 6550 PROVIDENIYA/URELIK 0075-8018 6424-17313W R,text differs; unreadable character
 A030-L11,A030,data,data,"849 14442 PRZASNYSZ, POL 0169-8269 5300-02056 S","949 14442 PRZASNYSZ, POL 0169-8269 5300-02056 S",text differs
@@ -109,9 +97,6 @@ A030-L24,A030,data,data,296 82564 RAKVER? 0153-8091 5922-02621 R,296 82564 RAKVE
 A030-L26,A030,data,data,"720 39205 RASTENBURG, POL 016?-?206 5404-02125 R","720 39205 RASTENBURG, POL 0168-9206 5404-02126 R",text differs; unreadable character
 A030-L28,A030,data,data,"393 1065 RAVNETS, BULG 0323-?030 4232-02716 R","393 1065 RAVNETS, BULG 0323-3030 4232-02716 R",text differs; unreadable character
 A030-L29,A030,data,data,1012 67598 RECHITSA 01?7-8103 5221-03021 R,1012 67598 RECHITSA 0167-8103 5221-03021 R,text differs; unreadable character
-A030-L02+,A030,header,,TOP SECRET,,missing in one pass
-A031-L01+,A031,header,,TOP SECRET,,missing in one pass
-A032-L01+,A032,header,,TOP SECRET,,missing in one pass
 A035-L22,A035,data,data,"572 79465 SUI CHUNG, MANCH 0289-8005 4020-12020 R","672 79465 SUI CHUNG, MANCH 0289-8005 4020-12020 R",text differs
 A043-L15,A043,data,data,"513 4430 ZEWITZ, POL 0169-8625 5426-01745 R","513 4430 ZEWITZ, POL 0169-8626 5426-01745 R",text differs
 C006-L34,C006,data,data,275 0328-9694,275 0328-9894,text differs
@@ -133,33 +118,12 @@ C064-L13,C064,data,data,RADEBEUL E GER 5106-01339,KADEBEUL E GER 5106-01339,text
 C067-L45,C067,data,data,376 0250-C031,376 0250-?031,text differs; unreadable character
 C069-L38,C069,data,data,HETTS?EDT E GER 5138-01131,HETTSTEDT E GER 5138-01131,text differs; unreadable character
 C071-L41,C071,data,data,DOROG- HUNG 4743-01844,DOROG HUNG 4743-01844,text differs
-C075-L01+,C075,header,,TOP SECRET,,missing in one pass
 C076-L29,C076,data,data,248 0250-0336,248 0250-0536,text differs
-C076-L02+,C076,header,,TOP SECRET,,missing in one pass
-C077-L03+,C077,header,,TOP SECRET,,missing in one pass
-C078-L02+,C078,header,,TOP SECRET,,missing in one pass
 C079-L43,C079,data,data,430. 0232-0051,430 0232-0051,text differs
-C079-L02+,C079,header,,TOP SECRET,,missing in one pass
 C080-L21,C080,data,data,CHORZOW. POL 5018-01857,CHORZOW POL 5018-01857,text differs
-C080-L02+,C080,header,,TOP SECRET,,missing in one pass
 C081-L47,C081,data,data,KAMIEN POL. 5022-01859,KAMIEN POL 5022-01859,text differs
-C081-L02+,C081,header,,TOP SECRET,,missing in one pass
-C082-L02+,C082,header,,TOP SECRET,,missing in one pass
-C083-L02+,C083,header,,TOP SECRET,,missing in one pass
-C084-L02+,C084,header,,TOP SECRET,,missing in one pass
-C085-L02+,C085,header,,TOP SECRET,,missing in one pass
-C086-L01+,C086,,header,,TOP SECRET,missing in one pass
-C087-L02+,C087,,header,,TOP SECRET,missing in one pass
-C088-L02+,C088,,header,,TOP SECRET,missing in one pass
-C089-L02+,C089,,header,,TOP SECRET,missing in one pass
 C090-L15,C090,data,data,150 0325-D064,150 0325-0064,text differs
 C090-L36,C090,data,data,266 2460 GUBAKHA ' 5852-05735,266 2460 GUBAKHA 5852-05735,text differs
-C091-L02+,C091,,header,,TOP SECRET,missing in one pass
-C092-L02+,C092,,header,,TOP SECRET,missing in one pass
-C093-L03+,C093,,header,,TOP SECRET,missing in one pass
-C094-L01+,C094,,header,,TOP SECRET,missing in one pass
-C095-L02+,C095,,header,,TOP SECRET,missing in one pass
-C096-L02+,C096,,header,,TOP SECRET,missing in one pass
 C103-L30,C103,data,data,ROTHENSTEIN E GER 5052-01136,?OTHENSTEIN E GER 5052-01136,text differs; unreadable character
 C104-L28,C104,data,data,4831- 3834E F,4?31- 3834E F,text differs; unreadable character
 C109-L29,C109,data,data,4834- 4545E 8,4834- 4545E B,text differs
@@ -196,202 +160,14 @@ C186-L04,C186,data,data,2?5 0162-0085,2?5 0162-0085,unreadable character
 C188-L46,C188,data,data,UNICOV CZECH 4946-01708,UNICOV CZECH. 4946-01708,text differs
 C191-L30,C191,data,data,5548- 3?59E B,5548- 3859E B,text differs; unreadable character
 C192-L43,C192,data,data,4442- 2225E 8,4442- 2225E B,text differs
-C194-L01+,C194,,header,,NNO 75573,missing in one pass
-C194-L01++,C194,,header,,TOP SECRET,missing in one pass
-C195-L01+,C195,,header,,TOP SECRET,missing in one pass
-C197-L02+,C197,,header,,TOP SECRET,missing in one pass
-C201-L03+,C201,,header,,TOP SECRET,missing in one pass
-C204-L02+,C204,,header,,?NO 75573,missing in one pass
-C204-L02++,C204,,header,,TOP SECRET,missing in one pass
-C205-L02+,C205,,header,,?ND 75573,missing in one pass
-C205-L02++,C205,,header,,TOP SECRET,missing in one pass
-C207-L01+,C207,,header,,TOP SECRET,missing in one pass
-C209-L01+,C209,,header,,ND 75573,missing in one pass
-C209-L01++,C209,,header,,TOP SECRET,missing in one pass
-C210-L02+,C210,,header,,TOP SECRET,missing in one pass
-C213-L02+,C213,,header,,TOP SECRET,missing in one pass
-C215-L01,C215,header,,ASSIFIED,,missing in one pass
-C215-L02,C215,header,,?ND 75573,,missing in one pass
-C215-L03,C215,header,,TOP SECRET || DGZ BA,,missing in one pass
-C215-L04,C215,data,,275 0251-9802,,missing in one pass
-C215-L05,C215,data,,912 6600 PYARNU 5824-02430,,missing in one pass
-C215-L06,C215,data,,227 0153-,,missing in one pass
-C215-L07,C215,data,,280 0153-0420,,missing in one pass
-C215-L08,C215,data,,275 0153-9905,,missing in one pass
-C215-L09,C215,data,,441 6610 PYATIGORSK 4403-04301,,missing in one pass
-C215-L10,C215,data,,4402- 4303E B,,missing in one pass
-C215-L11,C215,data,,230 0248-0016,,missing in one pass
-C215-L12,C215,data,,275 0248-9977,,missing in one pass
-C215-L13,C215,data,,MINERALNYYE VODY 4413-04309,,missing in one pass
-C215-L14,C215,data,,4412- 4307E C,,missing in one pass
-C215-L15,C215,data,,227 0248-0049,,missing in one pass
-C215-L16,C215,data,,350 0248-0050,,missing in one pass
-C215-L17,C215,data,,275 0248-9962,,missing in one pass
-C215-L18,C215,data,,432 6612 PYATIKHATKI 4824-03342,,missing in one pass
-C215-L19,C215,data,,4824- 3342E B,,missing in one pass
-C215-L20,C215,data,,376 0233-0040,,missing in one pass
-C215-L21,C215,data,,275 0233-9978,,missing in one pass
-C215-L22,C215,data,,77 6616 PYONGYANG N KOREA 3901-12546,,missing in one pass
-C215-L23,C215,data,,240 0380-,,missing in one pass
-C215-L24,C215,data,,241 0380-,,missing in one pass
-C215-L25,C215,data,,241 0380-,,missing in one pass
-C215-L26,C215,data,,241 0380-,,missing in one pass
-C215-L27,C215,data,,243 0380-,,missing in one pass
-C215-L28,C215,data,,354 0380-,,missing in one pass
-C215-L29,C215,data,,430 0380-0112,,missing in one pass
-C215-L30,C215,data,,290 0380-0216,,missing in one pass
-C215-L31,C215,data,,208 0380-0257,,missing in one pass
-C215-L32,C215,data,,275 0380-9910,,missing in one pass
-C215-L33,C215,data,,SOPORI N KOREA 3905-12544,,missing in one pass
-C215-L34,C215,data,,275 0380-,,missing in one pass
-C215-L35,C215,data,,393 0380-0240,,missing in one pass
-C215-L36,C215,data,,326 6705 RADOM POL 5124-02108,,missing in one pass
-C215-L37,C215,data,,214 0232-0349,,missing in one pass
-C215-L38,C215,data,,230 0232-0349,,missing in one pass
-C215-L39,C215,data,,392 0232-0923,,missing in one pass
-C215-L40,C215,data,,336 0232-0932,,missing in one pass
-C215-L41,C215,data,,275 0232-9890,,missing in one pass
-C215-L42,C215,data,,PIONKI POL 5128-02129,,missing in one pass
-C215-L43,C215,data,,282 0232-0024,,missing in one pass
-C215-L44,C215,data,,275 0232-9891,,missing in one pass
-C215-L45,C215,data,,1086 6710 ?ADOMSKO POL 5104-01928,,missing in one pass
-C215-L46,C215,footer,,DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
+C215-L45,C215,data,data,1086 6710 ?ADOMSKO POL 5104-01928,1086 6710 RADOMSKO POL 5104-01928,text differs; unreadable character
 C217-L36,C217,data,data,4650- 3005E 8,4650- 3005E B,text differs
 C219-L26,C219,data,data,23 6830 RIGA,23 6830 RIGA 5659-02409,text differs
 C219-L27,C219,data,blank,5659-02409,,kind differs (data vs blank); text differs
 C226-L16,C226,data,data,1193 7225 SARANDE AL8 3952-02000,1193 7225 SARANDE ALB 3952-02000,text differs
 C226-L20,C226,data,data,5411- 4511E 8,5411- 4511E B,text differs
 C230-L44,C230,data,data,5?35- 6036E B,5935- 6036E B,text differs; unreadable character
-C235-L01,C235,header,,DGZ BA,,missing in one pass
-C235-L02,C235,data,,821 7478 SHA SHIH CHINA 3019-11214,,missing in one pass
-C235-L03,C235,data,,281 0494-0022,,missing in one pass
-C235-L04,C235,data,,275 0494-9980,,missing in one pass
-C235-L05,C235,data,,239 7480 SHATURA 5534-03934,,missing in one pass
-C235-L06,C235,data,,5534- 3933E B,,missing in one pass
-C235-L07,C235,data,,112 0166-0001,,missing in one pass
-C235-L08,C235,data,,275 0166-9984,,missing in one pass
-C235-L09,C235,data,,ROSHAL 5541-03953,,missing in one pass
-C235-L10,C235,data,,5540- 3953E C,,missing in one pass
-C235-L11,C235,data,,282 0166-0011,,missing in one pass
-C235-L12,C235,data,,445 0166-0011,,missing in one pass
-C235-L13,C235,data,,112 0166-0191,,missing in one pass
-C235-L14,C235,data,,275 0166-9985,,missing in one pass
-C235-L15,C235,data,,29 7500 SHCHERBAKOV 5803-03852,,missing in one pass
-C235-L16,C235,data,,5804- 3849E D,,missing in one pass
-C235-L17,C235,data,,5805- 3842E F,,missing in one pass
-C235-L18,C235,data,,5801- 3857E G,,missing in one pass
-C235-L19,C235,data,,112 0154-0011,,missing in one pass
-C235-L20,C235,data,,015 0154-0076,,missing in one pass
-C235-L21,C235,data,,470 0154-0223,,missing in one pass
-C235-L22,C235,data,,281 0154-0332,,missing in one pass
-C235-L23,C235,data,,228 0154-0333,,missing in one pass
-C235-L24,C235,data,,360 0154-0334,,missing in one pass
-C235-L25,C235,data,,360 0154-0335,,missing in one pass
-C235-L26,C235,data,,112 0154-0347,,missing in one pass
-C235-L27,C235,data,,227 0154-0357,,missing in one pass
-C235-L28,C235,data,,281 0154-0361,,missing in one pass
-C235-L29,C235,data,,281 0154-0362,,missing in one pass
-C235-L30,C235,data,,360 0154-0363,,missing in one pass
-C235-L31,C235,data,,227 0154-0394,,missing in one pass
-C235-L32,C235,data,,228 0154-0423,,missing in one pass
-C235-L33,C235,data,,248 0154-0449,,missing in one pass
-C235-L34,C235,data,,275 0154-9995,,missing in one pass
-C235-L35,C235,data,,781 75015 SHCHUCHINSK 5256-07012,,missing in one pass
-C235-L36,C235,data,,372 0163-0058,,missing in one pass
-C235-L37,C235,data,,275 0163-9962,,missing in one pass
-C235-L38,C235,data,,1196 7505 SHENGJIN ALB 4149-01935,,missing in one pass
-C235-L39,C235,data,,280 0322-0388,,missing in one pass
-C235-L40,C235,data,,275 0322-9830,,missing in one pass
-C235-L41,C235,data,,631 7510 SHEPETOVKA 5012-02706,,missing in one pass
-C235-L42,C235,data,,5009- 2704E B,,missing in one pass
-C235-L43,C235,data,,227 0233-,,missing in one pass
-C235-L44,C235,data,,376 0233-0176,,missing in one pass
-C235-L45,C235,footer,,DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
-C236-L01,C236,header,,DGZ BA,,missing in one pass
-C236-L02,C236,data,,376 0233-0177,,missing in one pass
-C236-L03,C236,data,,246 0233-0264,,missing in one pass
-C236-L04,C236,data,,275 0233-9640,,missing in one pass
-C236-L05,C236,data,,1127 7513 SHEREBKOVO 4751-02952,,missing in one pass
-C236-L06,C236,data,,227 0250-,,missing in one pass
-C236-L07,C236,data,,275 0250-,,missing in one pass
-C236-L08,C236,data,,822 7516 SHIH HUI YAO CHINA 3013-11506,,missing in one pass
-C236-L09,C236,data,,186 0493-0088,,missing in one pass
-C236-L10,C236,data,,270 0493-0096,,missing in one pass
-C236-L11,C236,data,,430 0493-0096,,missing in one pass
-C236-L12,C236,data,,275 0493-9998,,missing in one pass
-C236-L13,C236,data,,TA YEH CHINA 3005-11458,,missing in one pass
-C236-L14,C236,data,,186 0493-0087,,missing in one pass
-C236-L15,C236,data,,275 0493-9973,,missing in one pass
-C236-L16,C236,data,,353 7517 SHIH MEN CHINA 3803-11429,,missing in one pass
-C236-L17,C236,data,,243 0382-,,missing in one pass
-C236-L18,C236,data,,384 0382-0061,,missing in one pass
-C236-L19,C236,data,,275 0382-9969,,missing in one pass
-C236-L20,C236,data,,935 7520 SHIKUKA 4916-14307,,missing in one pass
-C236-L21,C236,data,,130 0205-0019,,missing in one pass
-C236-L22,C236,data,,275 0205-9995,,missing in one pass
-C236-L23,C236,data,,NAIRO 4906-14256,,missing in one pass
-C236-L24,C236,data,,246 0205-0035,,missing in one pass
-C236-L25,C236,data,,275 0205-9984,,missing in one pass
-C236-L26,C236,data,,1128 7523 SHILOVO 5419-04054,,missing in one pass
-C236-L27,C236,data,,227 0166-,,missing in one pass
-C236-L28,C236,data,,275 0166-,,missing in one pass
-C236-L29,C236,data,,688 7525 SHIMANOVSKAYA 5202-12738,,missing in one pass
-C236-L30,C236,data,,5201-12738E B,,missing in one pass
-C236-L31,C236,data,,354 0198-0015,,missing in one pass
-C236-L32,C236,data,,275 0198-9995,,missing in one pass
-C236-L33,C236,data,,983 7530 SHIRUTORU 4838-14248,,missing in one pass
-C236-L34,C236,data,,130 0205-0018,,missing in one pass
-C236-L35,C236,data,,275 0205-9998,,missing in one pass
-C236-L36,C236,data,,1129 7548 SHORSU 4017-07050,,missing in one pass
-C236-L37,C236,data,,227 0328-,,missing in one pass
-C236-L38,C236,data,,275 0328-9915,,missing in one pass
-C236-L39,C236,footer,,6 DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
-C237-L01,C237,header,,ND 75573,,missing in one pass
-C237-L02,C237,blank,,,,missing in one pass
-C237-L03,C237,header,,TOP SECRET || DGZ BA,,missing in one pass
-C237-L04,C237,data,,433 7550 SHOSTKA 5153-03330,,missing in one pass
-C237-L05,C237,data,,5152- 3329E C,,missing in one pass
-C237-L06,C237,data,,062 0233-0112,,missing in one pass
-C237-L07,C237,data,,068 0233-0112,,missing in one pass
-C237-L08,C237,data,,282 0233-0112,,missing in one pass
-C237-L09,C237,data,,445 0233-0112,,missing in one pass
-C237-L10,C237,data,,275 0233-9642,,missing in one pass
-C237-L11,C237,data,,984 75607 SHUMEN BULG 4316-02655,,missing in one pass
-C237-L12,C237,data,,246 0322-0300,,missing in one pass
-C237-L13,C237,data,,382 0322-0740,,missing in one pass
-C237-L14,C237,data,,275 0322-9793,,missing in one pass
-C237-L15,C237,data,,KOLAROVGRAD BULG 4315-02657,,missing in one pass
-C237-L16,C237,data,,275 0322-,,missing in one pass
-C237-L17,C237,data,,382 0322-0406,,missing in one pass
-C237-L18,C237,data,,722 75615 SHUMIKA 5513-06316,,missing in one pass
-C237-L19,C237,data,,5514- 6316E B,,missing in one pass
-C237-L20,C237,data,,372 0164-0186,,missing in one pass
-C237-L21,C237,data,,275 0164-9928,,missing in one pass
-C237-L22,C237,data,,551 7562 SIAULIAI 5556-02319,,missing in one pass
-C237-L23,C237,data,,227 0168-,,missing in one pass
-C237-L24,C237,data,,370 0168-0388,,missing in one pass
-C237-L25,C237,data,,275 0168-9932,,missing in one pass
-C237-L26,C237,data,,RADVILISKIS 5549-02332,,missing in one pass
-C237-L27,C237,data,,5548- 2332E C,,missing in one pass
-C237-L28,C237,data,,227 0168-,,missing in one pass
-C237-L29,C237,data,,370 0168-0215,,missing in one pass
-C237-L30,C237,data,,275 0168-9833,,missing in one pass
-C237-L31,C237,data,,457 7563 SIBIU RUM 4548-02409,,missing in one pass
-C237-L32,C237,data,,4547- 2409E B,,missing in one pass
-C237-L33,C237,data,,394 0251-0139,,missing in one pass
-C237-L34,C237,data,,198 0251-0662,,missing in one pass
-C237-L35,C237,data,,248 0251-0892,,missing in one pass
-C237-L36,C237,data,,243 0251-0962,,missing in one pass
-C237-L37,C237,data,,275 0251-9907,,missing in one pass
-C237-L38,C237,data,,CAINENI RUM 4530-02416,,missing in one pass
-C237-L39,C237,data,,4531- 2416E D,,missing in one pass
-C237-L40,C237,data,,227 0251-0648,,missing in one pass
-C237-L41,C237,data,,290 0251-0822,,missing in one pass
-C237-L42,C237,data,,275 0251-9881,,missing in one pass
-C237-L43,C237,data,,467 7564 SIEDLCE POL 5210-02217,,missing in one pass
-C237-L44,C237,data,,392 0168-0238,,missing in one pass
-C237-L45,C237,data,,275 0168-9869,,missing in one pass
-C237-L46,C237,footer,,DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
+C237-L11,C237,data,data,984 75607 SHUMEN BULG 4316-02655,-984 75607 SHUMEN BULG 4316-02655,text differs
 C238-L01,C238,header,,DGZ BA,,missing in one pass
 C238-L02,C238,data,,723 7580 SIGHET RUM 4755-02354,,missing in one pass
 C238-L03,C238,data,,394 0251-0505,,missing in one pass
@@ -489,605 +265,9 @@ C244-L45,C244,data,data,-208 0323-0183,-208 0323-0183,line does not match any ex
 C249-L42,C249,data,data,"485 ,7870 STAVROPOL 4503-04159",485 7870 STAVROPOL 4503-04159,text differs
 C252-L19,C252,data,data,"275, 0232-",275 0232-,text differs
 C254-L10,C254,data,data,989 79715 SU?YAKVI 6214-03223,989 79715 SUOYAKVI 6214-03223,text differs; unreadable character
-C261-L01,C261,header,,DGZ BA,,missing in one pass
-C261-L02,C261,data,,358 0153-0514,,missing in one pass
-C261-L03,C261,data,,310 0153-0516,,missing in one pass
-C261-L04,C261,data,,227 0153-0531,,missing in one pass
-C261-L05,C261,data,,227 0153-0552,,missing in one pass
-C261-L06,C261,data,,227 0153-0553,,missing in one pass
-C261-L07,C261,data,,208 0153-0556,,missing in one pass
-C261-L08,C261,data,,246 0153-0628,,missing in one pass
-C261-L09,C261,data,,248 0153-0631,,missing in one pass
-C261-L10,C261,data,,248 0153-0632,,missing in one pass
-C261-L11,C261,data,,242 0153-0666,,missing in one pass
-C261-L12,C261,data,,275 0153-9999,,missing in one pass
-C261-L13,C261,data,,754 8225 TALOVAYA 5107-04044,,missing in one pass
-C261-L14,C261,data,,5107- 4044E 8,,missing in one pass
-C261-L15,C261,data,,364 0234-0472,,missing in one pass
-C261-L16,C261,data,,275 0234-9830,,missing in one pass
-C261-L17,C261,data,,1205 8227 TALOVYY 4423-13133,,missing in one pass
-C261-L18,C261,data,,275 0282-,,missing in one pass
-C261-L19,C261,data,,246 0282-0076,,missing in one pass
-C261-L20,C261,data,,179 8230 TAMBOV 5243-04127,,missing in one pass
-C261-L21,C261,data,,5243- 4127E A,,missing in one pass
-C261-L22,C261,data,,227 0166-,,missing in one pass
-C261-L23,C261,data,,243 0166-,,missing in one pass
-C261-L24,C261,data,,364 0166-0029,,missing in one pass
-C261-L25,C261,data,,400 0166-0030,,missing in one pass
-C261-L26,C261,data,,316 0166-0136,,missing in one pass
-C261-L27,C261,data,,064 0166-0169,,missing in one pass
-C261-L28,C261,data,,208 0166-0207,,missing in one pass
-C261-L29,C261,data,,246 0166-0216,,missing in one pass
-C261-L30,C261,data,,243 0166-0225,,missing in one pass
-C261-L31,C261,data,,275 0166-9999,,missing in one pass
-C261-L32,C261,data,,KOTOVSK 5235-04131,,missing in one pass
-C261-L33,C261,data,,5235- 4130E E,,missing in one pass
-C261-L34,C261,data,,062 0166-0005,,missing in one pass
-C261-L35,C261,data,,066 0166-0005,,missing in one pass
-C261-L36,C261,data,,068 0166-0005,,missing in one pass
-C261-L37,C261,data,,282 0166-0005,,missing in one pass
-C261-L38,C261,data,,445 0166-0005,,missing in one pass
-C261-L39,C261,data,,120 0166-0048,,missing in one pass
-C261-L40,C261,data,,275 0166-9670,,missing in one pass
-C261-L41,C261,data,,371 8245 TANG SHAN CHINA 3937-11810,,missing in one pass
-C261-L42,C261,data,,270 0381-0108,,missing in one pass
-C261-L43,C261,data,,430 0381-0108,,missing in one pass
-C261-L44,C261,data,,186 0381-0156,,missing in one pass
-C261-L45,C261,data,,186 0381-0175,,missing in one pass
-C261-L46,C261,data,,292 0381-0301,,missing in one pass
-C261-L47,C261,footer,,DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
-C262-L01,C262,header,,DGZ BA,,missing in one pass
-C262-L02,C262,data,,294 0381-0301,,missing in one pass
-C262-L03,C262,data,,332 0381-0301,,missing in one pass
-C262-L04,C262,data,,275 0381-9995,,missing in one pass
-C262-L05,C262,data,,LIN HSI CHINA 3942-11827,,missing in one pass
-C262-L06,C262,data,,186 0381-0153,,missing in one pass
-C262-L07,C262,data,,275 0381-9963,,missing in one pass
-C262-L08,C262,data,,1017 8255 TANTARENI RUM 4435-02330,,missing in one pass
-C262-L09,C262,data,,4435- 2330E B,,missing in one pass
-C262-L10,C262,data,,227 0251-0647,,missing in one pass
-C262-L11,C262,data,,275 0251-9880,,missing in one pass
-C262-L12,C262,data,,GURA MOTRULUI RUM 4435-02320,,missing in one pass
-C262-L13,C262,data,,275 0251-,,missing in one pass
-C262-L14,C262,data,,246 0251-0893,,missing in one pass
-C262-L15,C262,data,,468 82562 TAO AN MANCH 4537-12252,,missing in one pass
-C262-L16,C262,data,,384 0284-0003,,missing in one pass
-C262-L17,C262,data,,275 0284-9999,,missing in one pass
-C262-L18,C262,data,,895 82564 TAPA 5916-02558,,missing in one pass
-C262-L19,C262,data,,358 0153-0619,,missing in one pass
-C262-L20,C262,data,,275 0153-9819,,missing in one pass
-C262-L21,C262,data,,8257I TARBEYERO M-71 5503-03750 QA,,missing in one pass
-C262-L22,C262,data,,255 82584 TARNOW POL 5000-02059,,missing in one pass
-C262-L23,C262,data,,5000- 2058E 8,,missing in one pass
-C262-L24,C262,data,,392 0232-0919,,missing in one pass
-C262-L25,C262,data,,336 0232-0920,,missing in one pass
-C262-L26,C262,data,,290 0232-1315,,missing in one pass
-C262-L27,C262,data,,275 0232-9559,,missing in one pass
-C262-L28,C262,data,,MOSCICE POL 5001-02055,,missing in one pass
-C262-L29,C262,data,,196 0232-0617,,missing in one pass
-C262-L30,C262,data,,022 0232-0618,,missing in one pass
-C262-L31,C262,data,,062 0232-0618,,missing in one pass
-C262-L32,C262,data,,068 0232-0618,,missing in one pass
-C262-L33,C262,data,,275 0232-9846,,missing in one pass
-C262-L34,C262,data,,843 82588 TARTU 5823-02642,,missing in one pass
-C262-L35,C262,data,,227 0153-,,missing in one pass
-C262-L36,C262,data,,358 0153-0622,,missing in one pass
-C262-L37,C262,data,,275 0153-9989,,missing in one pass
-C262-L38,C262,data,,1092 8259 TASA DO N KOREA 3948-12425,,missing in one pass
-C262-L39,C262,data,,280 0380-0253,,missing in one pass
-C262-L40,C262,data,,275 0380-9887,,missing in one pass
-C262-L41,C262,footer,,DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
-C263-L01,C263,header,,DGZ BA,,missing in one pass
-C263-L02,C263,data,,1206 8260 TASHINO 5452-04347,,missing in one pass
-C263-L03,C263,data,,270 0166-0007,,missing in one pass
-C263-L04,C263,data,,275 0166-9980,,missing in one pass
-C263-L05,C263,data,,14 8270 TASHKENT 4118-06916,,missing in one pass
-C263-L06,C263,data,,4118- 6918E D,,missing in one pass
-C263-L07,C263,data,,4119- 6914E F,,missing in one pass
-C263-L08,C263,data,,240 0328-,,missing in one pass
-C263-L09,C263,data,,241 0328-,,missing in one pass
-C263-L10,C263,data,,243 0328-,,missing in one pass
-C263-L11,C263,data,,016 0328-0002,,missing in one pass
-C263-L12,C263,data,,324 0328-0014,,missing in one pass
-C263-L13,C263,data,,010 0328-0037,,missing in one pass
-C263-L14,C263,data,,200 0328-0069,,missing in one pass
-C263-L15,C263,data,,202 0328-0070,,missing in one pass
-C263-L16,C263,data,,104 0328-0073,,missing in one pass
-C263-L17,C263,data,,104 0328-0076,,missing in one pass
-C263-L18,C263,data,,104 0328-0092,,missing in one pass
-C263-L19,C263,data,,372 0328-0122,,missing in one pass
-C263-L20,C263,data,,010 0328-0136,,missing in one pass
-C263-L21,C263,data,,410 0328-0136,,missing in one pass
-C263-L22,C263,data,,095 0328-0139,,missing in one pass
-C263-L23,C263,data,,104 0328-0142,,missing in one pass
-C263-L24,C263,data,,372 0328-0150,,missing in one pass
-C263-L25,C263,data,,104 0328-0158,,missing in one pass
-C263-L26,C263,data,,005 0328-0169,,missing in one pass
-C263-L27,C263,data,,006 0328-0170,,missing in one pass
-C263-L28,C263,data,,104 0328-0171,,missing in one pass
-C263-L29,C263,data,,104 0328-0187,,missing in one pass
-C263-L30,C263,data,,250 0328-0188,,missing in one pass
-C263-L31,C263,data,,090 0328-0189,,missing in one pass
-C263-L32,C263,data,,016 0328-0191,,missing in one pass
-C263-L33,C263,data,,208 0328-0197,,missing in one pass
-C263-L34,C263,data,,227 0328-0199,,missing in one pass
-C263-L35,C263,data,,246 0328-0206,,missing in one pass
-C263-L36,C263,data,,245 0328-0218,,missing in one pass
-C263-L37,C263,data,,275 0328-9999,,missing in one pass
-C263-L38,C263,data,,990 8280 TASHTAGOL 5246-08754,,missing in one pass
-C263-L39,C263,data,,108 0161-0087,,missing in one pass
-C263-L40,C263,data,,275 0161-9989,,missing in one pass
-C263-L41,C263,data,,480 8290 TATARSK 5514-07600,,missing in one pass
-C263-L42,C263,data,,5513- 7559E B,,missing in one pass
-C263-L43,C263,data,,372 0162-0099,,missing in one pass
-C263-L44,C263,data,,275 0162-9940,,missing in one pass
-C263-L45,C263,data,,783 8295 TA TUNG CHINA 4002-11315,,missing in one pass
-C263-L46,C263,data,,354 0288-,,missing in one pass
-C263-L47,C263,footer,,DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
-C272-L01,C272,header,,DGZ BA,,missing in one pass
-C272-L02,C272,data,,275 0381-9996,,missing in one pass
-C272-L03,C272,data,,261 8601 TSITSIHAR MANCH 4722-12356,,missing in one pass
-C272-L04,C272,data,,4720-12356E A,,missing in one pass
-C272-L05,C272,data,,4720-12359E B,,missing in one pass
-C272-L06,C272,data,,243 0283-,,missing in one pass
-C272-L07,C272,data,,208 0283-0109,,missing in one pass
-C272-L08,C272,data,,246 0283-0117,,missing in one pass
-C272-L09,C272,data,,246 0283-0118,,missing in one pass
-C272-L10,C272,data,,246 0283-0119,,missing in one pass
-C272-L11,C272,data,,246 0283-0120,,missing in one pass
-C272-L12,C272,data,,246 0283-0121,,missing in one pass
-C272-L13,C272,data,,248 0283-0122,,missing in one pass
-C272-L14,C272,data,,248 0283-0123,,missing in one pass
-C272-L15,C272,data,,248 0283-0124,,missing in one pass
-C272-L16,C272,data,,248 0283-0125,,missing in one pass
-C272-L17,C272,data,,248 0283-0126,,missing in one pass
-C272-L18,C272,data,,281 0283-0127,,missing in one pass
-C272-L19,C272,data,,384 0283-0145,,missing in one pass
-C272-L20,C272,data,,275 0283-9998,,missing in one pass
-C272-L21,C272,data,,ANG ANG CHI MANCH 4708-12348,,missing in one pass
-C272-L22,C272,data,,4709-12348E C,,missing in one pass
-C272-L23,C272,data,,384 0283-0072,,missing in one pass
-C272-L24,C272,data,,275 0283-9976,,missing in one pass
-C272-L25,C272,data,,FU LA ERH CHI MANCH 4715-12340,,missing in one pass
-C272-L26,C272,data,,4715-12340E D,,missing in one pass
-C272-L27,C272,data,,186 0283-0133,,missing in one pass
-C272-L28,C272,data,,275 0283-9994,,missing in one pass
-C272-L29,C272,data,,65 86025 TUAPSE 4405-03905,,missing in one pass
-C272-L30,C272,data,,4405- 3904E B,,missing in one pass
-C272-L31,C272,data,,4406- 3906E C,,missing in one pass
-C272-L32,C272,data,,224 0249-0001,,missing in one pass
-C272-L33,C272,data,,226 0249-0001,,missing in one pass
-C272-L34,C272,data,,280 0249-0024,,missing in one pass
-C272-L35,C272,data,,350 0249-0100,,missing in one pass
-C272-L36,C272,data,,290 0249-0102,,missing in one pass
-C272-L37,C272,data,,262 0249-0171,,missing in one pass
-C272-L38,C272,data,,415 0249-0251,,missing in one pass
-C272-L39,C272,data,,227 0249-0356,,missing in one pass
-C272-L40,C272,data,,275 0249-9991,,missing in one pass
-C272-L41,C272,data,,122 8620 TULA 5412-03737,,missing in one pass
-C272-L42,C272,data,,5411- 3736E A,,missing in one pass
-C272-L43,C272,data,,5409- 3743E B,,missing in one pass
-C272-L44,C272,data,,5414- 3734E C,,missing in one pass
-C272-L45,C272,data,,5413- 3741E F,,missing in one pass
-C272-L46,C272,data,,5407- 3733E G,,missing in one pass
-C272-L47,C272,data,,227 0167-,,missing in one pass
-C272-L48,C272,data,,243 0167-,,missing in one pass
-C272-L49,C272,footer,,DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
-C273-L01,C273,header,,DGZ BA,,missing in one pass
-C273-L02,C273,data,,314 0167-0069,,missing in one pass
-C273-L03,C273,data,,204 0167-0134,,missing in one pass
-C273-L04,C273,data,,270 0167-0134,,missing in one pass
-C273-L05,C273,data,,270 0167-0137,,missing in one pass
-C273-L06,C273,data,,362 0167-0145,,missing in one pass
-C273-L07,C273,data,,230 0167-0146,,missing in one pass
-C273-L08,C273,data,,214 0167-0148,,missing in one pass
-C273-L09,C273,data,,362 0167-0152,,missing in one pass
-C273-L10,C273,data,,362 0167-0153,,missing in one pass
-C273-L11,C273,data,,010 0167-0301,,missing in one pass
-C273-L12,C273,data,,214 0167-0688,,missing in one pass
-C273-L13,C273,data,,112 0167-0714,,missing in one pass
-C273-L14,C273,data,,285 0167-0742,,missing in one pass
-C273-L15,C273,data,,362 0167-0770,,missing in one pass
-C273-L16,C273,data,,208 0167-0882,,missing in one pass
-C273-L17,C273,data,,248 0167-0995,,missing in one pass
-C273-L18,C273,data,,275 0167-9996,,missing in one pass
-C273-L19,C273,data,,SHCHEKINO 5400-03731,,missing in one pass
-C273-L20,C273,data,,5356- 3739E J,,missing in one pass
-C273-L21,C273,data,,112 0167-0830,,missing in one pass
-C273-L22,C273,data,,275 0167-9688,,missing in one pass
-C273-L23,C273,data,,622 86305 TULUN 5434-10035,,missing in one pass
-C273-L24,C273,data,,5434-10035E B,,missing in one pass
-C273-L25,C273,data,,354 0160-0013,,missing in one pass
-C273-L26,C273,data,,275 0160-9997,,missing in one pass
-C273-L27,C273,data,,1133 8633 TUNG AN CHINA 4533-13153,,missing in one pass
-C273-L28,C273,data,,245 0282-0083,,missing in one pass
-C273-L29,C273,data,,275 0282-9956,,missing in one pass
-C273-L30,C273,data,,896 8635 TUNG CHING CHENG MANCH 4407-12909,,missing in one pass
-C273-L31,C273,data,,186 0283-0011,,missing in one pass
-C273-L32,C273,data,,275 0283-9978,,missing in one pass
-C273-L33,C273,data,,589 8645 TUNG HUA CHINA 4143-12557,,missing in one pass
-C273-L34,C273,data,,246 0290-,,missing in one pass
-C273-L35,C273,data,,185 0290-0027,,missing in one pass
-C273-L36,C273,data,,270 0290-0122,,missing in one pass
-C273-L37,C273,data,,384 0290-0314,,missing in one pass
-C273-L38,C273,data,,275 0290-9927,,missing in one pass
-C273-L39,C273,data,,302 86455 TUNG SHAN CHINA 3416-11711,,missing in one pass
-C273-L40,C273,data,,246 0386-,,missing in one pass
-C273-L41,C273,data,,384 0386-0139,,missing in one pass
-C273-L42,C273,data,,275 0386-9988,,missing in one pass
-C273-L43,C273,data,,993 86457 TUN HUA MANCH 4321-12812,,missing in one pass
-C273-L44,C273,footer,,DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
-C274-L01,C274,header,,DGZ BA,,missing in one pass
-C274-L02,C274,data,,290 0290-0310,,missing in one pass
-C274-L03,C274,data,,384 0290-0311,,missing in one pass
-C274-L04,C274,data,,275 0290-9908,,missing in one pass
-C274-L05,C274,data,,336 8680 TYUMEN 5710-06531,,missing in one pass
-C274-L06,C274,data,,5709- 6532E A,,missing in one pass
-C274-L07,C274,data,,5709- 6527E B,,missing in one pass
-C274-L08,C274,data,,227 0156-,,missing in one pass
-C274-L09,C274,data,,050 0156-0049,,missing in one pass
-C274-L10,C274,data,,372 0156-0125,,missing in one pass
-C274-L11,C274,data,,281 0156-0379,,missing in one pass
-C274-L12,C274,data,,208 0156-0412,,missing in one pass
-C274-L13,C274,data,,248 0156-0417,,missing in one pass
-C274-L14,C274,data,,245 0156-0437,,missing in one pass
-C274-L15,C274,data,,275 0156-9962,,missing in one pass
-C274-L16,C274,data,,1218 8726 UELEN 6610-16951W,,missing in one pass
-C274-L17,C274,data,,125 0076-,,missing in one pass
-C274-L18,C274,data,,275 0076-,,missing in one pass
-C274-L19,C274,data,,9 8730 UFA 5443-05556,,missing in one pass
-C274-L20,C274,data,,5443- 5556E A,,missing in one pass
-C274-L21,C274,data,,5441- 5550E C,,missing in one pass
-C274-L22,C274,data,,5448- 5606E E,,missing in one pass
-C274-L23,C274,data,,118 0165-0003,,missing in one pass
-C274-L24,C274,data,,015 0165-0021,,missing in one pass
-C274-L25,C274,data,,245 0165-0021,,missing in one pass
-C274-L26,C274,data,,224 0165-0033,,missing in one pass
-C274-L27,C274,data,,226 0165-0033,,missing in one pass
-C274-L28,C274,data,,366 0165-0070,,missing in one pass
-C274-L29,C274,data,,366 0165-0071,,missing in one pass
-C274-L30,C274,data,,200 0165-0079,,missing in one pass
-C274-L31,C274,data,,118 0165-0084,,missing in one pass
-C274-L32,C274,data,,015 0165-0087,,missing in one pass
-C274-L33,C274,data,,245 0165-0087,,missing in one pass
-C274-L34,C274,data,,118 0165-0096,,missing in one pass
-C274-L35,C274,data,,318 0165-0146,,missing in one pass
-C274-L36,C274,data,,227 0165-0209,,missing in one pass
-C274-L37,C274,data,,281 0165-0210,,missing in one pass
-C274-L38,C274,data,,281 0165-0239,,missing in one pass
-C274-L39,C274,data,,281 0165-0244,,missing in one pass
-C274-L40,C274,data,,281 0165-0245,,missing in one pass
-C274-L41,C274,data,,366 0165-0247,,missing in one pass
-C274-L42,C274,data,,208 0165-0285,,missing in one pass
-C274-L43,C274,data,,281 0165-0290,,missing in one pass
-C274-L44,C274,data,,281 0165-0291,,missing in one pass
-C274-L45,C274,data,,224 0165-0301,,missing in one pass
-C274-L46,C274,data,,226 0165-0301,,missing in one pass
-C274-L47,C274,data,,023 0165-0310,,missing in one pass
-C274-L48,C274,data,,118 0165-0322,,missing in one pass
-C274-L49,C274,footer,,DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
-C275-L01,C275,header,,DGZ BA,,missing in one pass
-C275-L02,C275,data,,275 0165-9897,,missing in one pass
-C275-L03,C275,data,,DEMA 5441-05554,,missing in one pass
-C275-L04,C275,data,,227 0165-,,missing in one pass
-C275-L05,C275,data,,275 0165-9987,,missing in one pass
-C275-L06,C275,data,,434 8760 UGLICH 5732-03818,,missing in one pass
-C275-L07,C275,data,,5731- 3818E B,,missing in one pass
-C275-L08,C275,data,,112 0154-0012,,missing in one pass
-C275-L09,C275,data,,228 0154-0328,,missing in one pass
-C275-L10,C275,data,,095 0154-0351,,missing in one pass
-C275-L11,C275,data,,275 0154-9956,,missing in one pass
-C275-L12,C275,data,,1211 8772 UGOLNYY 6258-17917,,missing in one pass
-C275-L13,C275,data,,280 0120-0001,,missing in one pass
-C275-L14,C275,data,,275 0120-9998,,missing in one pass
-C275-L15,C275,data,,MYS BARYKOVA 6303-17928,,missing in one pass
-C275-L16,C275,data,,275 0120-,,missing in one pass
-C275-L17,C275,data,,284 0120-,,missing in one pass
-C275-L18,C275,data,,592 8780 UKHTA 6334-05342,,missing in one pass
-C275-L19,C275,data,,6333- 5342E B,,missing in one pass
-C275-L20,C275,data,,224 0101-0001,,missing in one pass
-C275-L21,C275,data,,226 0101-0001,,missing in one pass
-C275-L22,C275,data,,140 0101-0008,,missing in one pass
-C275-L23,C275,data,,275 0101-9997,,missing in one pass
-C275-L24,C275,data,,IZHMA 6338-05354,,missing in one pass
-C275-L25,C275,data,,275 0101-,,missing in one pass
-C275-L26,C275,data,,290 0101-0019,,missing in one pass
-C275-L27,C275,data,,358 0101-0021,,missing in one pass
-C275-L28,C275,data,,497 8788 ULAAN BAATAR CHINA 4755-10653,,missing in one pass
-C275-L29,C275,data,,4755-10653E A,,missing in one pass
-C275-L30,C275,data,,208 0286-0003,,missing in one pass
-C275-L31,C275,data,,275 0286-9997,,missing in one pass
-C275-L32,C275,data,,105 8790 ULAN UDE 5149-10736,,missing in one pass
-C275-L33,C275,data,,5149-10735E A,,missing in one pass
-C275-L34,C275,data,,5151-10732E B,,missing in one pass
-C275-L35,C275,data,,5150-10736E C,,missing in one pass
-C275-L36,C275,data,,5151-10745E E,,missing in one pass
-C275-L37,C275,data,,294 0201-0009,,missing in one pass
-C275-L38,C275,data,,430 0201-0009,,missing in one pass
-C275-L39,C275,data,,016 0201-0010,,missing in one pass
-C275-L40,C275,data,,125 0201-0011,,missing in one pass
-C275-L41,C275,data,,060 0201-0026,,missing in one pass
-C275-L42,C275,data,,354 0201-0041,,missing in one pass
-C275-L43,C275,data,,227 0201-0047,,missing in one pass
-C275-L44,C275,data,,227 0201-0048,,missing in one pass
-C275-L45,C275,footer,,DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
-C276-L01,C276,header,,DGZ BA,,missing in one pass
-C276-L02,C276,data,,125 0201-0049,,missing in one pass
-C276-L03,C276,data,,281 0201-0051,,missing in one pass
-C276-L04,C276,data,,208 0201-0053,,missing in one pass
-C276-L05,C276,data,,246 0201-0055,,missing in one pass
-C276-L06,C276,data,,246 0201-0056,,missing in one pass
-C276-L07,C276,data,,246 0201-0058,,missing in one pass
-C276-L08,C276,data,,275 0201-9999,,missing in one pass
-C276-L09,C276,data,,124 8810 ULYANOVSK 5419-04825,,missing in one pass
-C276-L10,C276,data,,5419- 4824E A,,missing in one pass
-C276-L11,C276,data,,5418- 4820E D,,missing in one pass
-C276-L12,C276,data,,5420- 4829E E,,missing in one pass
-C276-L13,C276,data,,5416- 4820E G,,missing in one pass
-C276-L14,C276,data,,227 0165-,,missing in one pass
-C276-L15,C276,data,,243 0165-,,missing in one pass
-C276-L16,C276,data,,252 0165-0006,,missing in one pass
-C276-L17,C276,data,,281 0165-0011,,missing in one pass
-C276-L18,C276,data,,281 0165-0028,,missing in one pass
-C276-L19,C276,data,,368 0165-0029,,missing in one pass
-C276-L20,C276,data,,165 0165-0086,,missing in one pass
-C276-L21,C276,data,,290 0165-0118,,missing in one pass
-C276-L22,C276,data,,023 0165-0128,,missing in one pass
-C276-L23,C276,data,,230 0165-0128,,missing in one pass
-C276-L24,C276,data,,165 0165-0143,,missing in one pass
-C276-L25,C276,data,,246 0165-0157,,missing in one pass
-C276-L26,C276,data,,368 0165-0184,,missing in one pass
-C276-L27,C276,data,,227 0165-0287,,missing in one pass
-C276-L28,C276,data,,208 0165-0288,,missing in one pass
-C276-L29,C276,data,,248 0165-0321,,missing in one pass
-C276-L30,C276,data,,275 0165-9996,,missing in one pass
-C276-L31,C276,data,,653 88127 UNECHA 5251-03241,,missing in one pass
-C276-L32,C276,data,,5251- 3241E 8,,missing in one pass
-C276-L33,C276,data,,374 0167-0176,,missing in one pass
-C276-L34,C276,data,,275 0167-9986,,missing in one pass
-C276-L35,C276,data,,1093 8818 URALNEFT 5809-05706,,missing in one pass
-C276-L36,C276,data,,118 0156-0407,,missing in one pass
-C276-L37,C276,data,,275 0156-9787,,missing in one pass
-C276-L38,C276,data,,238 8820 URALSK 5113-05123,,missing in one pass
-C276-L39,C276,data,,5112- 5121E A,,missing in one pass
-C276-L40,C276,data,,227 0235-,,missing in one pass
-C276-L41,C276,data,,227 0235-,,missing in one pass
-C276-L42,C276,data,,212 0235-0047,,missing in one pass
-C276-L43,C276,data,,410 0235-0049,,missing in one pass
-C276-L44,C276,data,,470 0235-0049,,missing in one pass
-C276-L45,C276,data,,208 0235-0175,,missing in one pass
-C276-L46,C276,data,,372 0235-0180,,missing in one pass
-C276-L47,C276,footer,,DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
-C277-L01,C277,header,,DGZ BA,,missing in one pass
-C277-L02,C277,data,,285 0235-0182,,missing in one pass
-C277-L03,C277,data,,275 0235-9988,,missing in one pass
-C277-L04,C277,data,,690 8847 USHUMUN 5247-12633,,missing in one pass
-C277-L05,C277,data,,5247-12633E B,,missing in one pass
-C277-L06,C277,data,,275 0198-,,missing in one pass
-C277-L07,C277,data,,354 0198-0018,,missing in one pass
-C277-L08,C277,data,,50 8850 USOLYE SIBIRSKOYE 5245-10341,,missing in one pass
-C277-L09,C277,data,,5246-10338E B,,missing in one pass
-C277-L10,C277,data,,062 0200-0018,,missing in one pass
-C277-L11,C277,data,,066 0200-0018,,missing in one pass
-C277-L12,C277,data,,068 0200-0018,,missing in one pass
-C277-L13,C277,data,,460 0200-0018,,missing in one pass
-C277-L14,C277,data,,281 0200-0060,,missing in one pass
-C277-L15,C277,data,,102 0200-0062,,missing in one pass
-C277-L16,C277,data,,275 0200-9996,,missing in one pass
-C277-L17,C277,data,,KITOY 5234-10355,,missing in one pass
-C277-L18,C277,data,,5235-10355E C,,missing in one pass
-C277-L19,C277,data,,225 0200-0058,,missing in one pass
-C277-L20,C277,data,,226 0200-0058,,missing in one pass
-C277-L21,C277,data,,102 0200-0078,,missing in one pass
-C277-L22,C277,data,,275 0200-9976,,missing in one pass
-C277-L23,C277,data,,191 8860 UST KAMENOGORSK 4958-08239,,missing in one pass
-C277-L24,C277,data,,4957- 8236E A,,missing in one pass
-C277-L25,C277,data,,4954- 8246E D,,missing in one pass
-C277-L26,C277,data,,100 0239-0016,,missing in one pass
-C277-L27,C277,data,,057 0239-0021,,missing in one pass
-C277-L28,C277,data,,445 0239-0021,,missing in one pass
-C277-L29,C277,data,,490 0239-0021,,missing in one pass
-C277-L30,C277,data,,100 0239-0044,,missing in one pass
-C277-L31,C277,data,,208 0239-0055,,missing in one pass
-C277-L32,C277,data,,281 0239-0061,,missing in one pass
-C277-L33,C277,data,,275 0239-9974,,missing in one pass
-C277-L34,C277,data,,GLUBOKOYE 5006-08219,,missing in one pass
-C277-L35,C277,data,,5008- 8220E C,,missing in one pass
-C277-L36,C277,data,,084 0239-0010,,missing in one pass
-C277-L37,C277,data,,100 0239-0043,,missing in one pass
-C277-L38,C277,data,,275 0239-9995,,missing in one pass
-C277-L39,C277,data,,181 8875 USTI NAD LABEM CZECH 5040-01402,,missing in one pass
-C277-L40,C277,data,,5039- 1401E A,,missing in one pass
-C277-L41,C277,data,,5038- 1359E C,,missing in one pass
-C277-L42,C277,data,,386 0231-0213,,missing in one pass
-C277-L43,C277,data,,022 0231-0214,,missing in one pass
-C277-L44,C277,data,,062 0231-0214,,missing in one pass
-C277-L45,C277,data,,068 0231-0214,,missing in one pass
-C277-L46,C277,data,,445 0231-0214,,missing in one pass
-C277-L47,C277,footer,,DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
-C278-L01,C278,header,,DGZ BA,,missing in one pass
-C278-L02,C278,data,,188 0231-0454,,missing in one pass
-C278-L03,C278,data,,333 0231-0709,,missing in one pass
-C278-L04,C278,data,,188 0231-0754,,missing in one pass
-C278-L05,C278,data,,188 0231-1377,,missing in one pass
-C278-L06,C278,data,,050 0231-1858,,missing in one pass
-C278-L07,C278,data,,228 0231-2309,,missing in one pass
-C278-L08,C278,data,,281 0231-2663,,missing in one pass
-C278-L09,C278,data,,208 0231-3162,,missing in one pass
-C278-L10,C278,data,,275 0231-9903,,missing in one pass
-C278-L11,C278,data,,BOHUSOVICE NAD OHRI CZECH 5029-01411,,missing in one pass
-C278-L12,C278,data,,275 0231-,,missing in one pass
-C278-L13,C278,data,,246 0231-3422,,missing in one pass
-C278-L14,C278,data,,DECIN CZECH 5047-01414,,missing in one pass
-C278-L15,C278,data,,386 0231-0235,,missing in one pass
-C278-L16,C278,data,,386 0231-1266,,missing in one pass
-C278-L17,C278,data,,290 0231-1303,,missing in one pass
-C278-L18,C278,data,,290 0231-1304,,missing in one pass
-C278-L19,C278,data,,056 0231-1549,,missing in one pass
-C278-L20,C278,data,,090 0231-1935,,missing in one pass
-C278-L21,C278,data,,275 0231-9502,,missing in one pass
-C278-L22,C278,data,,LITOMERICE CZECH 5032-01408,,missing in one pass
-C278-L23,C278,data,,056 0231-0811,,missing in one pass
-C278-L24,C278,data,,290 0231-0812,,missing in one pass
-C278-L25,C278,data,,248 0231-3461,,missing in one pass
-C278-L26,C278,data,,248 0231-3784,,missing in one pass
-C278-L27,C278,data,,275 0231-9920,,missing in one pass
-C278-L28,C278,data,,LOVOSICE CZECH 5031-01404,,missing in one pass
-C278-L29,C278,data,,445 0231-2785,,missing in one pass
-C278-L30,C278,data,,275 0231-9423,,missing in one pass
-C278-L31,C278,data,,NESTEMICE CZECH 5040-01407,,missing in one pass
-C278-L32,C278,data,,5040- 1406E E,,missing in one pass
-C278-L33,C278,data,,062 0231-0419,,missing in one pass
-C278-L34,C278,data,,425 0231-0419,,missing in one pass
-C278-L35,C278,data,,275 0231-9757,,missing in one pass
-C278-L36,C278,data,,PODMOKLY CZECH 5046-01412,,missing in one pass
-C278-L37,C278,data,,200 0231-0266,,missing in one pass
-C278-L38,C278,data,,064 0231-3798,,missing in one pass
-C278-L39,C278,data,,275 0231-9914,,missing in one pass
-C278-L40,C278,data,,POVRLY CZECH 5040-01410,,missing in one pass
-C278-L41,C278,data,,082 0231-1840,,missing in one pass
-C278-L42,C278,data,,275 0231-9512,,missing in one pass
-C278-L43,C278,data,,TEPLICE SANOV CZECH 5038-01345,,missing in one pass
-C278-L44,C278,data,,5038- 1349E J,,missing in one pass
-C278-L45,C278,data,,264 0231-0648,,missing in one pass
-C278-L46,C278,data,,275 0231-9904,,missing in one pass
-C278-L47,C278,data,,TE/EZIN CZECH 5030-01408,,missing in one pass
-C278-L48,C278,data,,275 0231-,,missing in one pass
-C278-L49,C278,data,,248 0231-3487,,missing in one pass
-C278-L50,C278,data,,VELVETY CZECH 5036-01353,,missing in one pass
-C278-L51,C278,data,,023 0231-2142,,missing in one pass
-C278-L52,C278,data,,275 0231-9372,,missing in one pass
-C278-L53,C278,data,,994 8890 UZHUR 5518-08949,,missing in one pass
-C278-L54,C278,footer,,? DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
-C279-L01,C279,header,,DGZ BA,,missing in one pass
-C279-L02,C279,data,,354 0161-0101,,missing in one pass
-C279-L03,C279,data,,275 0161-9933,,missing in one pass
-C279-L04,C279,data,,623 8910 VAC HUNG 4745-01908,,missing in one pass
-C279-L05,C279,data,,390 0251-0727,,missing in one pass
-C279-L06,C279,data,,275 0251-9971,,missing in one pass
-C279-L07,C279,data,,NORGRAD HUNG 4753-01901,,missing in one pass
-C279-L08,C279,data,,275 0251-,,missing in one pass
-C279-L09,C279,data,,246 0251-0882,,missing in one pass
-C279-L10,C279,data,,940 8915 VACHA E GER 5049-01002,,missing in one pass
-C279-L11,C279,data,,200 0231-0024,,missing in one pass
-C279-L12,C279,data,,275 0231-9773,,missing in one pass
-C279-L13,C279,data,,756 89155 VAGAY 5627-06719,,missing in one pass
-C279-L14,C279,data,,5627- 6719E B,,missing in one pass
-C279-L15,C279,data,,372 0157-0009,,missing in one pass
-C279-L16,C279,data,,275 0157-9993,,missing in one pass
-C279-L17,C279,data,,897 8917 VALGA 5747-02602,,missing in one pass
-C279-L18,C279,data,,358 0153-0644,,missing in one pass
-C279-L19,C279,data,,275 0153-9963,,missing in one pass
-C279-L20,C279,data,,1134 89173 VALMIYERA 5733-02526,,missing in one pass
-C279-L21,C279,data,,227 0153-,,missing in one pass
-C279-L22,C279,data,,275 0153-9873,,missing in one pass
-C279-L23,C279,data,,528 8920 VALUYKI 5011-03809,,missing in one pass
-C279-L24,C279,data,,5010- 3806E B,,missing in one pass
-C279-L25,C279,data,,227 0234-,,missing in one pass
-C279-L26,C279,data,,362 0234-0102,,missing in one pass
-C279-L27,C279,data,,275 0234-9986,,missing in one pass
-C279-L28,C279,data,,728 8935 VAPANYARKA 4832-02845,,missing in one pass
-C279-L29,C279,data,,4832- 2845E B,,missing in one pass
-C279-L30,C279,data,,376 0233-0037,,missing in one pass
-C279-L31,C279,data,,275 0233-9973,,missing in one pass
-C279-L32,C279,data,,1135 89555 VARPAYEVKA 5216-04550,,missing in one pass
-C279-L33,C279,data,,227 0166-,,missing in one pass
-C279-L34,C279,data,,275 0166-9663,,missing in one pass
-C279-L35,C279,data,,317 8960 VELIKIYE LUKI 5621-03032,,missing in one pass
-C279-L36,C279,data,,5620- 3034E B,,missing in one pass
-C279-L37,C279,footer,,DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
-C280-L01,C280,header,,DGZ BA,,missing in one pass
-C280-L02,C280,data,,326 0153-0042,,missing in one pass
-C280-L03,C280,data,,374 0153-0486,,missing in one pass
-C280-L04,C280,data,,275 0153-9995,,missing in one pass
-C280-L05,C280,data,,NOVOSOKOLNIKI 5620-03009,,missing in one pass
-C280-L06,C280,data,,5620- 3009E C,,missing in one pass
-C280-L07,C280,data,,374 0153-0612,,missing in one pass
-C280-L08,C280,data,,275 0153-9950,,missing in one pass
-C280-L09,C280,data,,1040 8963 VELSK 6105-04208,,missing in one pass
-C280-L10,C280,data,,227 0102-,,missing in one pass
-C280-L11,C280,data,,275 0102-9989,,missing in one pass
-C280-L12,C280,data,,729 8980 VENTSPILS 5723-02135,,missing in one pass
-C280-L13,C280,data,,280 0152-0160,,missing in one pass
-C280-L14,C280,data,,437 0152-0537,,missing in one pass
-C280-L15,C280,data,,275 0152-9998,,missing in one pass
-C280-L16,C280,data,,1136 8985 VERINSKO BULG 4228-02344,,missing in one pass
-C280-L17,C280,data,,275 0322-,,missing in one pass
-C280-L18,C280,data,,227 0322-0301,,missing in one pass
-C280-L19,C280,data,,GARA KOSTENETS BULG 4217-02351,,missing in one pass
-C280-L20,C280,data,,246 0322-0513,,missing in one pass
-C280-L21,C280,data,,275 0322-9743,,missing in one pass
-C280-L22,C280,data,,SEPTEMVRI BULG 4213-02406,,missing in one pass
-C280-L23,C280,data,,275 0322-,,missing in one pass
-C280-L24,C280,data,,382 0322-0419,,missing in one pass
-C280-L25,C280,data,,824 8989 VERKHNIY BASKUNCHAK 4814-04645,,missing in one pass
-C280-L26,C280,data,,368 0235-0178,,missing in one pass
-C280-L27,C280,data,,275 0235-9973,,missing in one pass
-C280-L28,C280,data,,995 9010 VERKHNIYE ACHALUKI 4322-04441,,missing in one pass
-C280-L29,C280,data,,150 0325-0174,,missing in one pass
-C280-L30,C280,data,,275 0325-9819,,missing in one pass
-C280-L31,C280,data,,200 9075 VESZPREM HUNG 4705-01754,,missing in one pass
-C280-L32,C280,data,,4705- 1754E B,,missing in one pass
-C280-L33,C280,data,,023 0252-0653,,missing in one pass
-C280-L34,C280,data,,390 0252-0877,,missing in one pass
-C280-L35,C280,data,,246 0252-1002,,missing in one pass
-C280-L36,C280,data,,248 0252-1003,,missing in one pass
-C280-L37,C280,data,,275 0252-9729,,missing in one pass
-C280-L38,C280,data,,FUZFO HUNG 4704-01802,,missing in one pass
-C280-L39,C280,data,,4704- 1801E H,,missing in one pass
-C280-L40,C280,data,,215 0252-0168,,missing in one pass
-C280-L41,C280,data,,282 0252-0168,,missing in one pass
-C280-L42,C280,data,,192 0252-0453,,missing in one pass
-C280-L43,C280,footer,,DocId:32003765 TOP SECRET ? RESTRICT??,,missing in one pass
-C281-L01,C281,header,,DGZ BA,,missing in one pass
-C281-L02,C281,data,,275 0252-9975,,missing in one pass
-C281-L03,C281,data,,HAJMASKER HUNG 4708-01759,,missing in one pass
-C281-L04,C281,data,,4708- 1801E J,,missing in one pass
-C281-L05,C281,data,,275 0252-,,missing in one pass
-C281-L06,C281,data,,248 0252-0983,,missing in one pass
-C281-L07,C281,data,,INOTA HUNG 4712-01810,,missing in one pass
-C281-L08,C281,data,,4712- 1810E C,,missing in one pass
-C281-L09,C281,data,,275 0252-,,missing in one pass
-C281-L10,C281,data,,021 0252-0610,,missing in one pass
-C281-L11,C281,data,,192 0252-0847,,missing in one pass
-C281-L12,C281,data,,PAPKESZI HUNG 4705-01805,,missing in one pass
-C281-L13,C281,data,,4705- 1805E D,,missing in one pass
-C281-L14,C281,data,,066 0252-0592,,missing in one pass
-C281-L15,C281,data,,282 0252-0592,,missing in one pass
-C281-L16,C281,data,,275 0252-9675,,missing in one pass
-C281-L17,C281,data,,PEREMARTON HUNG 4707-01807,,missing in one pass
-C281-L18,C281,data,,275 0252-,,missing in one pass
-C281-L19,C281,data,,282 0252-0293,,missing in one pass
-C281-L20,C281,data,,445 0252-0293,,missing in one pass
-C281-L21,C281,data,,PETFURDO HUNG 4710-01808,,missing in one pass
-C281-L22,C281,data,,4710- 1807E G,,missing in one pass
-C281-L23,C281,data,,224 0252-0145,,missing in one pass
-C281-L24,C281,data,,226 0252-0145,,missing in one pass
-C281-L25,C281,data,,192 0252-0449,,missing in one pass
-C281-L26,C281,data,,022 0252-0731,,missing in one pass
-C281-L27,C281,data,,062 0252-0731,,missing in one pass
-C281-L28,C281,data,,068 0252-0731,,missing in one pass
-C281-L29,C281,data,,275 0252-9960,,missing in one pass
-C281-L30,C281,data,,TIHANY HUNG 4654-01755,,missing in one pass
-C281-L31,C281,data,,275 0252-,,missing in one pass
-C281-L32,C281,data,,246 0252-1004,,missing in one pass
-C281-L33,C281,data,,VARPALOTA HUNG 4713-01809,,missing in one pass
-C281-L34,C281,data,,192 0252-0448,,missing in one pass
-C281-L35,C281,data,,275 0252-9952,,missing in one pass
-C281-L36,C281,data,,996 9076 VEYMARN 5923-02850,,missing in one pass
-C281-L37,C281,data,,358 0153-0523,,missing in one pass
-C281-L38,C281,data,,275 0153-9911,,missing in one pass
-C281-L39,C281,data,,997 9078 VIDIN BULG 4359-02251,,missing in one pass
-C281-L40,C281,data,,382 0322-0425,,missing in one pass
-C281-L41,C281,data,,275 0322-9970,,missing in one pass
-C281-L42,C281,data,,LOM BULG 4349-02312,,missing in one pass
-C281-L43,C281,data,,281 0322-0062,,missing in one pass
-C281-L44,C281,data,,382 0322-0426,,missing in one pass
-C281-L45,C281,data,,275 0322-9965,,missing in one pass
-C281-L46,C281,data,,51 9080 VILNYUS 5441-02518,,missing in one pass
-C281-L47,C281,data,,5440- 2516E A,,missing in one pass
-C281-L48,C281,data,,240 0168-,,missing in one pass
-C281-L49,C281,footer,,DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
+C261-L14,C261,data,data,5107- 4044E 8,5107- 4044E B,text differs
+C262-L23,C262,data,data,5000- 2058E 8,5000- 2058E B,text differs
+C276-L32,C276,data,data,5251- 3241E 8,5251- 3241E B,text differs
 C282-L01,C282,header,,DGZ BA,,missing in one pass
 C282-L02,C282,data,,285 0168-0104,,missing in one pass
 C282-L03,C282,data,,285 0168-0105,,missing in one pass
@@ -1371,880 +551,266 @@ C287-L46,C287,data,,354 0291-0033,,missing in one pass
 C287-L47,C287,data,,306 0291-0055,,missing in one pass
 C287-L48,C287,data,,246 0291-0105,,missing in one pass
 C287-L49,C287,footer,,6 DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
-C288-L01,C288,header,,DGZ BA,,missing in one pass
-C288-L02,C288,data,,246 0291-0106,,missing in one pass
-C288-L03,C288,data,,227 0291-0109,,missing in one pass
-C288-L04,C288,data,,306 0291-0119,,missing in one pass
-C288-L05,C288,data,,208 0291-0135,,missing in one pass
-C288-L06,C288,data,,246 0291-0153,,missing in one pass
-C288-L07,C288,data,,246 0291-0154,,missing in one pass
-C288-L08,C288,data,,246 0291-0155,,missing in one pass
-C288-L09,C288,data,,246 0291-0156,,missing in one pass
-C288-L10,C288,data,,248 0291-0165,,missing in one pass
-C288-L11,C288,data,,245 0291-0175,,missing in one pass
-C288-L12,C288,data,,245 0291-0176,,missing in one pass
-C288-L13,C288,data,,245 0291-0177,,missing in one pass
-C288-L14,C288,data,,275 0291-9998,,missing in one pass
-C288-L15,C288,data,,GORODECHNOYE 4338-13158,,missing in one pass
-C288-L16,C288,data,,248 0291-,,missing in one pass
-C288-L17,C288,data,,275 0291-,,missing in one pass
-C288-L18,C288,data,,VOZDVIZHENKA 4355-13154,,missing in one pass
-C288-L19,C288,data,,4354-13154E C,,missing in one pass
-C288-L20,C288,data,,240 0291-,,missing in one pass
-C288-L21,C288,data,,275 0291-9974,,missing in one pass
-C288-L22,C288,data,,177 9230 VOROSHILOVGRAD 4834-03920,,missing in one pass
-C288-L23,C288,data,,4834- 3919E B,,missing in one pass
-C288-L24,C288,data,,060 0234-0015,,missing in one pass
-C288-L25,C288,data,,294 0234-0015,,missing in one pass
-C288-L26,C288,data,,430 0234-0015,,missing in one pass
-C288-L27,C288,data,,106 0234-0177,,missing in one pass
-C288-L28,C288,data,,290 0234-0311,,missing in one pass
-C288-L29,C288,data,,352 0234-0320,,missing in one pass
-C288-L30,C288,data,,250 0234-0339,,missing in one pass
-C288-L31,C288,data,,208 0234-0423,,missing in one pass
-C288-L32,C288,data,,248 0234-0467,,missing in one pass
-C288-L33,C288,data,,246 0234-0468,,missing in one pass
-C288-L34,C288,data,,246 0234-0469,,missing in one pass
-C288-L35,C288,data,,275 0234-9990,,missing in one pass
-C288-L36,C288,data,,KONDRASHEVSKAYA 4840-03928,,missing in one pass
-C288-L37,C288,data,,4840- 3928E C,,missing in one pass
-C288-L38,C288,data,,275 0234-,,missing in one pass
-C288-L39,C288,data,,352 0234-0438,,missing in one pass
-C288-L40,C288,data,,352 0234-0439,,missing in one pass
-C288-L41,C288,data,,OLKHOVKA 4823-03908,,missing in one pass
-C288-L42,C288,data,,4824- 3908E F,,missing in one pass
-C288-L43,C288,data,,075 0234-0183,,missing in one pass
-C288-L44,C288,data,,275 0234-9665,,missing in one pass
-C288-L45,C288,data,,RODAKOVO 4833-03902,,missing in one pass
-C288-L46,C288,data,,4833- 3901E D,,missing in one pass
-C288-L47,C288,data,,352 0234-0440,,missing in one pass
-C288-L48,C288,data,,275 0234-9765,,missing in one pass
-C288-L49,C288,data,,696 9253 VOROZHBA 5110-03414,,missing in one pass
-C288-L50,C288,data,,376 0234-0369,,missing in one pass
-C288-L51,C288,footer,,DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
-C289-L01,C289,header,,NO 75573,,missing in one pass
-C289-L02,C289,header,,TOP SECRET || DGZ BA,,missing in one pass
-C289-L03,C289,data,,275 0234-9828,,missing in one pass
-C289-L04,C289,data,,TETKINO 5116-03416,,missing in one pass
-C289-L05,C289,data,,5116- 3416E C,,missing in one pass
-C289-L06,C289,data,,227 0234-,,missing in one pass
-C289-L07,C289,data,,275 0234-9841,,missing in one pass
-C289-L08,C289,data,,435 9260 VOSKRESENSK 5519-03841,,missing in one pass
-C289-L09,C289,data,,5518- 3841E B,,missing in one pass
-C289-L10,C289,data,,445 0167-0002,,missing in one pass
-C289-L11,C289,data,,356 0167-0817,,missing in one pass
-C289-L12,C289,data,,275 0167-9962,,missing in one pass
-C289-L13,C289,data,,STAROYE M-63 5523-03844 QA,,missing in one pass
-C289-L14,C289,data,,ZEVALOVO M-68 5511-03825 QB,,missing in one pass
-C289-L15,C289,data,,204 9270 VOTKINSK 5703-05358,,missing in one pass
-C289-L16,C289,data,,5703- 5357E B,,missing in one pass
-C289-L17,C289,data,,243 0155-,,missing in one pass
-C289-L18,C289,data,,095 0155-0005,,missing in one pass
-C289-L19,C289,data,,212 0155-0005,,missing in one pass
-C289-L20,C289,data,,430 0155-0005,,missing in one pass
-C289-L21,C289,data,,160 0155-0014,,missing in one pass
-C289-L22,C289,data,,160 0155-0023,,missing in one pass
-C289-L23,C289,data,,275 0155-9993,,missing in one pass
-C289-L24,C289,data,,999 9285 VRANOV CZECH 4854-01549,,missing in one pass
-C289-L25,C289,data,,275 0231-,,missing in one pass
-C289-L26,C289,data,,188 0231-0452,,missing in one pass
-C289-L27,C289,data,,149 9290 VSETIN CZECH 4920-01802,,missing in one pass
-C289-L28,C289,data,,4921- 1803E B,,missing in one pass
-C289-L29,C289,data,,4920- 1759E C,,missing in one pass
-C289-L30,C289,data,,023 0232-0359,,missing in one pass
-C289-L31,C289,data,,214 0232-0359,,missing in one pass
-C289-L32,C289,data,,200 0232-1516,,missing in one pass
-C289-L33,C289,data,,275 0232-9669,,missing in one pass
-C289-L34,C289,data,,HALENKOV CZECH 4919-01809,,missing in one pass
-C289-L35,C289,data,,4919- 1810E D,,missing in one pass
-C289-L36,C289,data,,227 0232-0638,,missing in one pass
-C289-L37,C289,data,,275 0232-9709,,missing in one pass
-C289-L38,C289,data,,ROZNOV CZECH 4928-01808,,missing in one pass
-C289-L39,C289,data,,4927- 1807E E,,missing in one pass
-C289-L40,C289,data,,202 0232-0737,,missing in one pass
-C289-L41,C289,data,,275 0232-9677,,missing in one pass
-C289-L42,C289,data,,1095 9300 VYARTSILYA 6211-03042,,missing in one pass
-C289-L43,C289,data,,430 0103-0214,,missing in one pass
-C289-L44,C289,data,,275 0103-9926,,missing in one pass
-C289-L45,C289,footer,,DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
-C290-L01,C290,header,,NO 75573,,missing in one pass
-C290-L02,C290,blank,,,,missing in one pass
-C290-L03,C290,header,,TOP SECRET || DGZ BA,,missing in one pass
-C290-L04,C290,data,,444 9310 VYAZMA 5512-03419,,missing in one pass
-C290-L05,C290,data,,5512- 3419E B,,missing in one pass
-C290-L06,C290,data,,227 0167-,,missing in one pass
-C290-L07,C290,data,,227 0167-,,missing in one pass
-C290-L08,C290,data,,374 0167-0802,,missing in one pass
-C290-L09,C290,data,,275 0167-9612,,missing in one pass
-C290-L10,C290,data,,950 9313 VYAZNIKI 5615-04210,,missing in one pass
-C290-L11,C290,data,,5615- 4210E B,,missing in one pass
-C290-L12,C290,data,,227 0154-,,missing in one pass
-C290-L13,C290,data,,275 0154-9625,,missing in one pass
-C290-L14,C290,data,,698 9320 VYBORG 6042-02845,,missing in one pass
-C290-L15,C290,data,,227 0103-,,missing in one pass
-C290-L16,C290,data,,280 0103-0050,,missing in one pass
-C290-L17,C290,data,,056 0103-0128,,missing in one pass
-C290-L18,C290,data,,290 0103-0128,,missing in one pass
-C290-L19,C290,data,,290 0103-0189,,missing in one pass
-C290-L20,C290,data,,275 0103-9998,,missing in one pass
-C290-L21,C290,data,,KOOVISTO 6022-02846,,missing in one pass
-C290-L22,C290,data,,280 0103-0156,,missing in one pass
-C290-L23,C290,data,,275 0103-9935,,missing in one pass
-C290-L24,C290,data,,URAS 6038-02834,,missing in one pass
-C290-L25,C290,data,,280 0103-0048,,missing in one pass
-C290-L26,C290,data,,275 0103-9934,,missing in one pass
-C290-L27,C290,data,,785 9330 VYKSA 5519-04209,,missing in one pass
-C290-L28,C290,data,,270 0166-0008,,missing in one pass
-C290-L29,C290,data,,430 0166-0008,,missing in one pass
-C290-L30,C290,data,,275 0166-9977,,missing in one pass
-C290-L31,C290,data,,870 9332 VYSHNI VOLOCHEK 5735-03434,,missing in one pass
-C290-L32,C290,data,,227 0154-,,missing in one pass
-C290-L33,C290,data,,275 0154-9741,,missing in one pass
-C290-L34,C290,data,,1212 93325 VYSKOV CZECH 4917-01700,,missing in one pass
-C290-L35,C290,data,,248 0232-1262,,missing in one pass
-C290-L36,C290,data,,275 0232-9532,,missing in one pass
-C290-L37,C290,data,,DEDICE CZECH 4918-01658,,missing in one pass
-C290-L38,C290,data,,275 0232-,,missing in one pass
-C290-L39,C290,data,,248 0232-1235,,missing in one pass
-C290-L40,C290,data,,1139 9340 VYTEGRA 6100-03627,,missing in one pass
-C290-L41,C290,data,,227 0102-,,missing in one pass
-C290-L42,C290,data,,275 0102-9938,,missing in one pass
-C290-L43,C290,data,,146 9365 WALDENBURG POL 5046-01617,,missing in one pass
-C290-L44,C290,footer,,DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
-C291-L01,C291,header,,TOP SECRET || DGZ BA,,missing in one pass
-C291-L02,C291,data,,5045- 1616E B,,missing in one pass
-C291-L03,C291,data,,5048- 1617E F,,missing in one pass
-C291-L04,C291,data,,5045- 1615E L,,missing in one pass
-C291-L05,C291,data,,5045- 1618E M,,missing in one pass
-C291-L06,C291,data,,075 0232-0104,,missing in one pass
-C291-L07,C291,data,,075 0232-0105,,missing in one pass
-C291-L08,C291,data,,075 0232-0106,,missing in one pass
-C291-L09,C291,data,,075 0232-0107,,missing in one pass
-C291-L10,C291,data,,250 0232-0112,,missing in one pass
-C291-L11,C291,data,,196 0232-0389,,missing in one pass
-C291-L12,C291,data,,196 0232-0613,,missing in one pass
-C291-L13,C291,data,,196 0232-0614,,missing in one pass
-C291-L14,C291,data,,392 0232-0934,,missing in one pass
-C291-L15,C291,data,,445 0232-0974,,missing in one pass
-C291-L16,C291,data,,275 0232-9958,,missing in one pass
-C291-L17,C291,data,,LANGENBIELAU POL 5041-01637,,missing in one pass
-C291-L18,C291,data,,5041- 1637E D,,missing in one pass
-C291-L19,C291,data,,285 0232-0565,,missing in one pass
-C291-L20,C291,data,,275 0232-9625,,missing in one pass
-C291-L21,C291,data,,LUDWIGSDORF POL 5038-01630,,missing in one pass
-C291-L22,C291,data,,5037- 1629E E,,missing in one pass
-C291-L23,C291,data,,196 0232-0610,,missing in one pass
-C291-L24,C291,data,,275 0232-9623,,missing in one pass
-C291-L25,C291,data,,REICHENBACH POL 5043-01639,,missing in one pass
-C291-L26,C291,data,,5044- 1638E G,,missing in one pass
-C291-L27,C291,data,,285 0232-0350,,missing in one pass
-C291-L28,C291,data,,275 0232-9646,,missing in one pass
-C291-L29,C291,data,,SAARAU POL 5057-01630,,missing in one pass
-C291-L30,C291,data,,5057- 1630E H,,missing in one pass
-C291-L31,C291,data,,400 0232-0939,,missing in one pass
-C291-L32,C291,data,,445 0232-0939,,missing in one pass
-C291-L33,C291,data,,275 0232-9736,,missing in one pass
-C291-L34,C291,data,,SCHWEIDNITZ POL 5050-01630,,missing in one pass
-C291-L35,C291,data,,5050- 1630E C,,missing in one pass
-C291-L36,C291,data,,5050- 1635E K,,missing in one pass
-C291-L37,C291,data,,240 0232-,,missing in one pass
-C291-L38,C291,data,,264 0232-0475,,missing in one pass
-C291-L39,C291,data,,268 0232-0475,,missing in one pass
-C291-L40,C291,data,,250 0232-0789,,missing in one pass
-C291-L41,C291,data,,248 0232-1301,,missing in one pass
-C291-L42,C291,data,,245 0232-1545,,missing in one pass
-C291-L43,C291,data,,275 0232-9825,,missing in one pass
-C291-L44,C291,data,,482 9367 WAN HSIEN CHINA 3049-10824,,missing in one pass
-C291-L45,C291,data,,3049-10824E B,,missing in one pass
-C291-L46,C291,data,,281 0494-0020,,missing in one pass
-C291-L47,C291,data,,275 0494-9976,,missing in one pass
-C291-L48,C291,data,,1042 9370 WAREN E GER 5331-01241,,missing in one pass
-C291-L49,C291,data,,245 0169-1569,,missing in one pass
-C291-L50,C291,data,,275 0169-9851,,missing in one pass
-C291-L51,C291,footer,,DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
-C292-L01,C292,header,,?SSIFIED || NO 75573,,missing in one pass
-C292-L02,C292,header,,TOP SECRET || DGZ BA,,missing in one pass
-C292-L03,C292,data,,1213 9375 WARKA POL 5147-02112,,missing in one pass
-C292-L04,C292,data,,290 0232-0662,,missing in one pass
-C292-L05,C292,data,,230 0232-1022,,missing in one pass
-C292-L06,C292,data,,275 0232-9590,,missing in one pass
-C292-L07,C292,data,,62 9385 WARSAW POL 5215-02100,,missing in one pass
-C292-L08,C292,data,,5212- 2101E A,,missing in one pass
-C292-L09,C292,data,,5214- 2101E C,,missing in one pass
-C292-L10,C292,data,,5214- 2059E D,,missing in one pass
-C292-L11,C292,data,,5215- 2102E K,,missing in one pass
-C292-L12,C292,data,,5218- 2100E M,,missing in one pass
-C292-L13,C292,data,,240 0169-,,missing in one pass
-C292-L14,C292,data,,392 0168-0112,,missing in one pass
-C292-L15,C292,data,,285 0168-0116,,missing in one pass
-C292-L16,C292,data,,336 0169-0130,,missing in one pass
-C292-L17,C292,data,,392 0169-0132,,missing in one pass
-C292-L18,C292,data,,392 0169-0134,,missing in one pass
-C292-L19,C292,data,,196 0168-0150,,missing in one pass
-C292-L20,C292,data,,392 0168-0156,,missing in one pass
-C292-L21,C292,data,,392 0168-0157,,missing in one pass
-C292-L22,C292,data,,392 0168-0158,,missing in one pass
-C292-L23,C292,data,,392 0168-0159,,missing in one pass
-C292-L24,C292,data,,281 0168-0160,,missing in one pass
-C292-L25,C292,data,,246 0168-0201,,missing in one pass
-C292-L26,C292,data,,266 0168-0221,,missing in one pass
-C292-L27,C292,data,,336 0168-0266,,missing in one pass
-C292-L28,C292,data,,252 0168-0267,,missing in one pass
-C292-L29,C292,data,,264 0168-0268,,missing in one pass
-C292-L30,C292,data,,246 0168-0283,,missing in one pass
-C292-L31,C292,data,,248 0168-0284,,missing in one pass
-C292-L32,C292,data,,246 0168-0285,,missing in one pass
-C292-L33,C292,data,,248 0168-0286,,missing in one pass
-C292-L34,C292,data,,246 0168-0338,,missing in one pass
-C292-L35,C292,data,,246 0168-0339,,missing in one pass
-C292-L36,C292,data,,196 0169-0488,,missing in one pass
-C292-L37,C292,data,,268 0169-0590,,missing in one pass
-C292-L38,C292,data,,208 0169-0592,,missing in one pass
-C292-L39,C292,data,,246 0169-0595,,missing in one pass
-C292-L40,C292,data,,214 0169-0596,,missing in one pass
-C292-L41,C292,data,,392 0169-0603,,missing in one pass
-C292-L42,C292,data,,196 0169-0975,,missing in one pass
-C292-L43,C292,data,,202 0169-1045,,missing in one pass
-C292-L44,C292,data,,285 0169-1046,,missing in one pass
-C292-L45,C292,data,,281 0169-1047,,missing in one pass
-C292-L46,C292,data,,246 0169-1115,,missing in one pass
-C292-L47,C292,data,,246 0169-1116,,missing in one pass
-C292-L48,C292,data,,023 0169-1129,,missing in one pass
-C292-L49,C292,data,,227 0169-1134,,missing in one pass
-C292-L50,C292,data,,241 0169-1239,,missing in one pass
-C292-L51,C292,data,,275 0169-9989,,missing in one pass
-C292-L52,C292,data,,OZAROW POL 5213-02049,,missing in one pass
-C292-L53,C292,data,,5212- 2048E E,,missing in one pass
-C292-L54,C292,footer,,DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
-C293-L01,C293,,,,,missing in both passes
-C293-L02,C293,,,,,missing in both passes
-C293-L03,C293,,,,,missing in both passes
-C293-L04,C293,,,,,missing in both passes
-C293-L05,C293,,,,,missing in both passes
-C293-L06,C293,,,,,missing in both passes
-C293-L07,C293,,,,,missing in both passes
-C293-L08,C293,,,,,missing in both passes
-C293-L09,C293,,,,,missing in both passes
-C293-L10,C293,,,,,missing in both passes
-C293-L11,C293,,,,,missing in both passes
-C293-L12,C293,,,,,missing in both passes
-C293-L13,C293,,,,,missing in both passes
-C293-L14,C293,,,,,missing in both passes
-C293-L15,C293,,,,,missing in both passes
-C293-L16,C293,,,,,missing in both passes
-C293-L17,C293,,,,,missing in both passes
-C293-L18,C293,,,,,missing in both passes
-C293-L19,C293,,,,,missing in both passes
-C293-L20,C293,,,,,missing in both passes
-C293-L21,C293,,,,,missing in both passes
-C293-L22,C293,,,,,missing in both passes
-C293-L23,C293,,,,,missing in both passes
-C293-L24,C293,,,,,missing in both passes
-C293-L25,C293,,,,,missing in both passes
-C293-L26,C293,,,,,missing in both passes
-C293-L27,C293,,,,,missing in both passes
-C293-L28,C293,,,,,missing in both passes
-C293-L29,C293,,,,,missing in both passes
-C293-L30,C293,,,,,missing in both passes
-C293-L31,C293,,,,,missing in both passes
-C293-L32,C293,,,,,missing in both passes
-C293-L33,C293,,,,,missing in both passes
-C293-L34,C293,,,,,missing in both passes
-C293-L35,C293,,,,,missing in both passes
-C293-L36,C293,,,,,missing in both passes
-C293-L37,C293,,,,,missing in both passes
-C293-L38,C293,,,,,missing in both passes
-C293-L39,C293,,,,,missing in both passes
-C293-L40,C293,,,,,missing in both passes
-C293-L41,C293,,,,,missing in both passes
-C293-L42,C293,,,,,missing in both passes
-C293-L43,C293,,,,,missing in both passes
-C293-L44,C293,,,,,missing in both passes
-C293-L45,C293,,,,,missing in both passes
-C293-L46,C293,,,,,missing in both passes
-C293-L47,C293,,,,,missing in both passes
-C294-L01,C294,,,,,missing in both passes
-C294-L02,C294,,,,,missing in both passes
-C294-L03,C294,,,,,missing in both passes
-C294-L04,C294,,,,,missing in both passes
-C294-L05,C294,,,,,missing in both passes
-C294-L06,C294,,,,,missing in both passes
-C294-L07,C294,,,,,missing in both passes
-C294-L08,C294,,,,,missing in both passes
-C294-L09,C294,,,,,missing in both passes
-C294-L10,C294,,,,,missing in both passes
-C294-L11,C294,,,,,missing in both passes
-C294-L12,C294,,,,,missing in both passes
-C294-L13,C294,,,,,missing in both passes
-C294-L14,C294,,,,,missing in both passes
-C294-L15,C294,,,,,missing in both passes
-C294-L16,C294,,,,,missing in both passes
-C294-L17,C294,,,,,missing in both passes
-C294-L18,C294,,,,,missing in both passes
-C294-L19,C294,,,,,missing in both passes
-C294-L20,C294,,,,,missing in both passes
-C294-L21,C294,,,,,missing in both passes
-C294-L22,C294,,,,,missing in both passes
-C294-L23,C294,,,,,missing in both passes
-C294-L24,C294,,,,,missing in both passes
-C294-L25,C294,,,,,missing in both passes
-C294-L26,C294,,,,,missing in both passes
-C294-L27,C294,,,,,missing in both passes
-C294-L28,C294,,,,,missing in both passes
-C294-L29,C294,,,,,missing in both passes
-C294-L30,C294,,,,,missing in both passes
-C294-L31,C294,,,,,missing in both passes
-C294-L32,C294,,,,,missing in both passes
-C294-L33,C294,,,,,missing in both passes
-C294-L34,C294,,,,,missing in both passes
-C294-L35,C294,,,,,missing in both passes
-C294-L36,C294,,,,,missing in both passes
-C294-L37,C294,,,,,missing in both passes
-C294-L38,C294,,,,,missing in both passes
-C294-L39,C294,,,,,missing in both passes
-C294-L40,C294,,,,,missing in both passes
-C294-L41,C294,,,,,missing in both passes
-C294-L42,C294,,,,,missing in both passes
-C294-L43,C294,,,,,missing in both passes
-C295-L01,C295,,,,,missing in both passes
-C295-L02,C295,,,,,missing in both passes
-C295-L03,C295,,,,,missing in both passes
-C295-L04,C295,,,,,missing in both passes
-C295-L05,C295,,,,,missing in both passes
-C295-L06,C295,,,,,missing in both passes
-C295-L07,C295,,,,,missing in both passes
-C295-L08,C295,,,,,missing in both passes
-C295-L09,C295,,,,,missing in both passes
-C295-L10,C295,,,,,missing in both passes
-C295-L11,C295,,,,,missing in both passes
-C295-L12,C295,,,,,missing in both passes
-C295-L13,C295,,,,,missing in both passes
-C295-L14,C295,,,,,missing in both passes
-C295-L15,C295,,,,,missing in both passes
-C295-L16,C295,,,,,missing in both passes
-C295-L17,C295,,,,,missing in both passes
-C295-L18,C295,,,,,missing in both passes
-C295-L19,C295,,,,,missing in both passes
-C295-L20,C295,,,,,missing in both passes
-C295-L21,C295,,,,,missing in both passes
-C295-L22,C295,,,,,missing in both passes
-C295-L23,C295,,,,,missing in both passes
-C295-L24,C295,,,,,missing in both passes
-C295-L25,C295,,,,,missing in both passes
-C295-L26,C295,,,,,missing in both passes
-C295-L27,C295,,,,,missing in both passes
-C295-L28,C295,,,,,missing in both passes
-C295-L29,C295,,,,,missing in both passes
-C295-L30,C295,,,,,missing in both passes
-C295-L31,C295,,,,,missing in both passes
-C295-L32,C295,,,,,missing in both passes
-C295-L33,C295,,,,,missing in both passes
-C295-L34,C295,,,,,missing in both passes
-C295-L35,C295,,,,,missing in both passes
-C295-L36,C295,,,,,missing in both passes
-C295-L37,C295,,,,,missing in both passes
-C295-L38,C295,,,,,missing in both passes
-C295-L39,C295,,,,,missing in both passes
-C295-L40,C295,,,,,missing in both passes
-C295-L41,C295,,,,,missing in both passes
-C295-L42,C295,,,,,missing in both passes
-C296-L01,C296,,,,,missing in both passes
-C296-L02,C296,,,,,missing in both passes
-C296-L03,C296,,,,,missing in both passes
-C296-L04,C296,,,,,missing in both passes
-C296-L05,C296,,,,,missing in both passes
-C296-L06,C296,,,,,missing in both passes
-C296-L07,C296,,,,,missing in both passes
-C296-L08,C296,,,,,missing in both passes
-C296-L09,C296,,,,,missing in both passes
-C296-L10,C296,,,,,missing in both passes
-C296-L11,C296,,,,,missing in both passes
-C296-L12,C296,,,,,missing in both passes
-C296-L13,C296,,,,,missing in both passes
-C296-L14,C296,,,,,missing in both passes
-C296-L15,C296,,,,,missing in both passes
-C296-L16,C296,,,,,missing in both passes
-C296-L17,C296,,,,,missing in both passes
-C296-L18,C296,,,,,missing in both passes
-C296-L19,C296,,,,,missing in both passes
-C296-L20,C296,,,,,missing in both passes
-C296-L21,C296,,,,,missing in both passes
-C296-L22,C296,,,,,missing in both passes
-C296-L23,C296,,,,,missing in both passes
-C296-L24,C296,,,,,missing in both passes
-C296-L25,C296,,,,,missing in both passes
-C296-L26,C296,,,,,missing in both passes
-C296-L27,C296,,,,,missing in both passes
-C296-L28,C296,,,,,missing in both passes
-C296-L29,C296,,,,,missing in both passes
-C296-L30,C296,,,,,missing in both passes
-C296-L31,C296,,,,,missing in both passes
-C296-L32,C296,,,,,missing in both passes
-C296-L33,C296,,,,,missing in both passes
-C296-L34,C296,,,,,missing in both passes
-C296-L35,C296,,,,,missing in both passes
-C296-L36,C296,,,,,missing in both passes
-C296-L37,C296,,,,,missing in both passes
-C296-L38,C296,,,,,missing in both passes
-C296-L39,C296,,,,,missing in both passes
-C296-L40,C296,,,,,missing in both passes
-C296-L41,C296,,,,,missing in both passes
-C296-L42,C296,,,,,missing in both passes
-C296-L43,C296,,,,,missing in both passes
-C296-L44,C296,,,,,missing in both passes
-C296-L45,C296,,,,,missing in both passes
-C296-L46,C296,,,,,missing in both passes
-C296-L47,C296,,,,,missing in both passes
-C296-L48,C296,,,,,missing in both passes
-C297-L01,C297,,,,,missing in both passes
-C297-L02,C297,,,,,missing in both passes
-C297-L03,C297,,,,,missing in both passes
-C297-L04,C297,,,,,missing in both passes
-C297-L05,C297,,,,,missing in both passes
-C297-L06,C297,,,,,missing in both passes
-C297-L07,C297,,,,,missing in both passes
-C297-L08,C297,,,,,missing in both passes
-C297-L09,C297,,,,,missing in both passes
-C297-L10,C297,,,,,missing in both passes
-C297-L11,C297,,,,,missing in both passes
-C297-L12,C297,,,,,missing in both passes
-C297-L13,C297,,,,,missing in both passes
-C297-L14,C297,,,,,missing in both passes
-C297-L15,C297,,,,,missing in both passes
-C297-L16,C297,,,,,missing in both passes
-C297-L17,C297,,,,,missing in both passes
-C297-L18,C297,,,,,missing in both passes
-C297-L19,C297,,,,,missing in both passes
-C297-L20,C297,,,,,missing in both passes
-C297-L21,C297,,,,,missing in both passes
-C297-L22,C297,,,,,missing in both passes
-C297-L23,C297,,,,,missing in both passes
-C297-L24,C297,,,,,missing in both passes
-C297-L25,C297,,,,,missing in both passes
-C297-L26,C297,,,,,missing in both passes
-C297-L27,C297,,,,,missing in both passes
-C297-L28,C297,,,,,missing in both passes
-C297-L29,C297,,,,,missing in both passes
-C297-L30,C297,,,,,missing in both passes
-C297-L31,C297,,,,,missing in both passes
-C297-L32,C297,,,,,missing in both passes
-C297-L33,C297,,,,,missing in both passes
-C297-L34,C297,,,,,missing in both passes
-C297-L35,C297,,,,,missing in both passes
-C297-L36,C297,,,,,missing in both passes
-C297-L37,C297,,,,,missing in both passes
-C297-L38,C297,,,,,missing in both passes
-C297-L39,C297,,,,,missing in both passes
-C297-L40,C297,,,,,missing in both passes
-C297-L41,C297,,,,,missing in both passes
-C297-L42,C297,,,,,missing in both passes
-C297-L43,C297,,,,,missing in both passes
-C297-L44,C297,,,,,missing in both passes
-C297-L45,C297,,,,,missing in both passes
-C298-L01,C298,,,,,missing in both passes
-C298-L02,C298,,,,,missing in both passes
-C298-L03,C298,,,,,missing in both passes
-C298-L04,C298,,,,,missing in both passes
-C298-L05,C298,,,,,missing in both passes
-C298-L06,C298,,,,,missing in both passes
-C298-L07,C298,,,,,missing in both passes
-C298-L08,C298,,,,,missing in both passes
-C298-L09,C298,,,,,missing in both passes
-C298-L10,C298,,,,,missing in both passes
-C298-L11,C298,,,,,missing in both passes
-C298-L12,C298,,,,,missing in both passes
-C298-L13,C298,,,,,missing in both passes
-C298-L14,C298,,,,,missing in both passes
-C298-L15,C298,,,,,missing in both passes
-C298-L16,C298,,,,,missing in both passes
-C298-L17,C298,,,,,missing in both passes
-C298-L18,C298,,,,,missing in both passes
-C298-L19,C298,,,,,missing in both passes
-C298-L20,C298,,,,,missing in both passes
-C298-L21,C298,,,,,missing in both passes
-C298-L22,C298,,,,,missing in both passes
-C298-L23,C298,,,,,missing in both passes
-C298-L24,C298,,,,,missing in both passes
-C298-L25,C298,,,,,missing in both passes
-C298-L26,C298,,,,,missing in both passes
-C298-L27,C298,,,,,missing in both passes
-C298-L28,C298,,,,,missing in both passes
-C298-L29,C298,,,,,missing in both passes
-C298-L30,C298,,,,,missing in both passes
-C298-L31,C298,,,,,missing in both passes
-C298-L32,C298,,,,,missing in both passes
-C298-L33,C298,,,,,missing in both passes
-C298-L34,C298,,,,,missing in both passes
-C298-L35,C298,,,,,missing in both passes
-C298-L36,C298,,,,,missing in both passes
-C298-L37,C298,,,,,missing in both passes
-C298-L38,C298,,,,,missing in both passes
-C298-L39,C298,,,,,missing in both passes
-C298-L40,C298,,,,,missing in both passes
-C298-L41,C298,,,,,missing in both passes
-C298-L42,C298,,,,,missing in both passes
-C298-L43,C298,,,,,missing in both passes
-C298-L44,C298,,,,,missing in both passes
-C299-L01,C299,,,,,missing in both passes
-C299-L02,C299,,,,,missing in both passes
-C299-L03,C299,,,,,missing in both passes
-C299-L04,C299,,,,,missing in both passes
-C299-L05,C299,,,,,missing in both passes
-C299-L06,C299,,,,,missing in both passes
-C299-L07,C299,,,,,missing in both passes
-C299-L08,C299,,,,,missing in both passes
-C299-L09,C299,,,,,missing in both passes
-C299-L10,C299,,,,,missing in both passes
-C299-L11,C299,,,,,missing in both passes
-C299-L12,C299,,,,,missing in both passes
-C299-L13,C299,,,,,missing in both passes
-C299-L14,C299,,,,,missing in both passes
-C299-L15,C299,,,,,missing in both passes
-C299-L16,C299,,,,,missing in both passes
-C299-L17,C299,,,,,missing in both passes
-C299-L18,C299,,,,,missing in both passes
-C299-L19,C299,,,,,missing in both passes
-C299-L20,C299,,,,,missing in both passes
-C299-L21,C299,,,,,missing in both passes
-C299-L22,C299,,,,,missing in both passes
-C299-L23,C299,,,,,missing in both passes
-C299-L24,C299,,,,,missing in both passes
-C299-L25,C299,,,,,missing in both passes
-C299-L26,C299,,,,,missing in both passes
-C299-L27,C299,,,,,missing in both passes
-C299-L28,C299,,,,,missing in both passes
-C299-L29,C299,,,,,missing in both passes
-C299-L30,C299,,,,,missing in both passes
-C299-L31,C299,,,,,missing in both passes
-C299-L32,C299,,,,,missing in both passes
-C299-L33,C299,,,,,missing in both passes
-C299-L34,C299,,,,,missing in both passes
-C299-L35,C299,,,,,missing in both passes
-C299-L36,C299,,,,,missing in both passes
-C299-L37,C299,,,,,missing in both passes
-C299-L38,C299,,,,,missing in both passes
-C299-L39,C299,,,,,missing in both passes
-C299-L40,C299,,,,,missing in both passes
-C299-L41,C299,,,,,missing in both passes
-C300-L01,C300,header,,DGZ BA,,missing in one pass
-C300-L02,C300,data,,227 0154-,,missing in one pass
-C300-L03,C300,data,,275 0154-9743,,missing in one pass
-C300-L04,C300,data,,82 9740 YUZHNO SAKHALINSK 4657-14244,,missing in one pass
-C300-L05,C300,data,,4657-14244E A,,missing in one pass
-C300-L06,C300,data,,240 0281-,,missing in one pass
-C300-L07,C300,data,,241 0281-,,missing in one pass
-C300-L08,C300,data,,208 0281-0026,,missing in one pass
-C300-L09,C300,data,,246 0281-0052,,missing in one pass
-C300-L10,C300,data,,246 0281-0053,,missing in one pass
-C300-L11,C300,data,,246 0281-0054,,missing in one pass
-C300-L12,C300,data,,306 0281-0056,,missing in one pass
-C300-L13,C300,data,,275 0281-9999,,missing in one pass
-C300-L14,C300,data,,273 9780 ZAGORSK 5618-03808,,missing in one pass
-C300-L15,C300,data,,5619- 3809E B,,missing in one pass
-C300-L16,C300,data,,264 0154-0108,,missing in one pass
-C300-L17,C300,data,,268 0154-0108,,missing in one pass
-C300-L18,C300,data,,023 0154-0136,,missing in one pass
-C300-L19,C300,data,,215 0154-0136,,missing in one pass
-C300-L20,C300,data,,356 0154-0404,,missing in one pass
-C300-L21,C300,data,,275 0154-9969,,missing in one pass
-C300-L22,C300,data,,SOSNINO M-48 5623-03751 QA,,missing in one pass
-C300-L23,C300,data,,STAROZHELTIKOVU M-39 5618-03754 QB,,missing in one pass
-C300-L24,C300,data,,864 9788 ZALAEGERSZEG HUNG 4650-01650,,missing in one pass
-C300-L25,C300,data,,4650- 1651E B,,missing in one pass
-C300-L26,C300,data,,248 0252-1001,,missing in one pass
-C300-L27,C300,data,,224 0252-1166,,missing in one pass
-C300-L28,C300,data,,226 0252-1166,,missing in one pass
-C300-L29,C300,data,,275 0252-9535,,missing in one pass
-C300-L30,C300,data,,1141 9795 ZAMBROW POL 5259-02215,,missing in one pass
-C300-L31,C300,data,,227 0168-0092,,missing in one pass
-C300-L32,C300,data,,275 0168-9846,,missing in one pass
-C300-L33,C300,data,,1097 9797 ZAMOSC POL 5043-02315,,missing in one pass
-C300-L34,C300,data,,248 0232-1300,,missing in one pass
-C300-L35,C300,data,,243 0232-1546,,missing in one pass
-C300-L36,C300,data,,275 0232-9817,,missing in one pass
-C300-L37,C300,data,,39 9800 ZAPOROZHYE 4750-03508,,missing in one pass
-C300-L38,C300,data,,4748- 3511E A,,missing in one pass
-C300-L39,C300,data,,4752- 3504E D,,missing in one pass
-C300-L40,C300,data,,4752- 3509E E,,missing in one pass
-C300-L41,C300,data,,227 0249-,,missing in one pass
-C300-L42,C300,data,,020 0249-0002,,missing in one pass
-C300-L43,C300,footer,,DocId:32003765 TOP SECRET - RESTRIC???,,missing in one pass
-C301-L01,C301,header,,DGZ BA,,missing in one pass
-C301-L02,C301,data,,021 0249-0002,,missing in one pass
-C301-L03,C301,data,,232 0249-0002,,missing in one pass
-C301-L04,C301,data,,060 0249-0009,,missing in one pass
-C301-L05,C301,data,,075 0249-0009,,missing in one pass
-C301-L06,C301,data,,204 0249-0009,,missing in one pass
-C301-L07,C301,data,,270 0249-0009,,missing in one pass
-C301-L08,C301,data,,430 0249-0009,,missing in one pass
-C301-L09,C301,data,,304 0249-0018,,missing in one pass
-C301-L10,C301,data,,010 0249-0036,,missing in one pass
-C301-L11,C301,data,,015 0249-0044,,missing in one pass
-C301-L12,C301,data,,106 0249-0056,,missing in one pass
-C301-L13,C301,data,,352 0249-0060,,missing in one pass
-C301-L14,C301,data,,352 0249-0061,,missing in one pass
-C301-L15,C301,data,,005 0249-0118,,missing in one pass
-C301-L16,C301,data,,006 0249-0118,,missing in one pass
-C301-L17,C301,data,,060 0249-0172,,missing in one pass
-C301-L18,C301,data,,290 0249-0182,,missing in one pass
-C301-L19,C301,data,,056 0249-0183,,missing in one pass
-C301-L20,C301,data,,290 0249-0183,,missing in one pass
-C301-L21,C301,data,,281 0249-0190,,missing in one pass
-C301-L22,C301,data,,281 0249-0191,,missing in one pass
-C301-L23,C301,data,,228 0249-0199,,missing in one pass
-C301-L24,C301,data,,304 0249-0207,,missing in one pass
-C301-L25,C301,data,,106 0249-0222,,missing in one pass
-C301-L26,C301,data,,352 0249-0295,,missing in one pass
-C301-L27,C301,data,,208 0249-0306,,missing in one pass
-C301-L28,C301,data,,480 0249-0331,,missing in one pass
-C301-L29,C301,data,,248 0249-0338,,missing in one pass
-C301-L30,C301,data,,246 0249-0339,,missing in one pass
-C301-L31,C301,data,,248 0249-0340,,missing in one pass
-C301-L32,C301,data,,246 0249-0342,,missing in one pass
-C301-L33,C301,data,,285 0249-0353,,missing in one pass
-C301-L34,C301,data,,275 0249-9997,,missing in one pass
-C301-L35,C301,data,,1098 98025 ZAVITAYA 5006-12927,,missing in one pass
-C301-L36,C301,data,,248 0203-0087,,missing in one pass
-C301-L37,C301,data,,246 0203-0088,,missing in one pass
-C301-L38,C301,data,,275 0203-9982,,missing in one pass
-C301-L39,C301,data,,951 9807 ZAYARSK 5615-10258,,missing in one pass
-C301-L40,C301,data,,227 0127-,,missing in one pass
-C301-L41,C301,data,,275 0127-9984,,missing in one pass
-C301-L42,C301,data,,496 9833 ZDUNSKA WOLA POL 5134-01901,,missing in one pass
-C301-L43,C301,data,,392 0232-1100,,missing in one pass
-C301-L44,C301,data,,275 0232-9815,,missing in one pass
-C301-L45,C301,data,,488 9860 ZELENODOLSK 5550-04829,,missing in one pass
-C301-L46,C301,data,,5550- 4830E B,,missing in one pass
-C301-L47,C301,footer,,DocId:32003765 TOP SECRET - RESTRIC???,,missing in one pass
-C302-L01,C302,,,,,missing in both passes
-C302-L02,C302,,,,,missing in both passes
-C302-L03,C302,,,,,missing in both passes
-C302-L04,C302,,,,,missing in both passes
-C302-L05,C302,,,,,missing in both passes
-C302-L06,C302,,,,,missing in both passes
-C302-L07,C302,,,,,missing in both passes
-C302-L08,C302,,,,,missing in both passes
-C302-L09,C302,,,,,missing in both passes
-C302-L10,C302,,,,,missing in both passes
-C302-L11,C302,,,,,missing in both passes
-C302-L12,C302,,,,,missing in both passes
-C302-L13,C302,,,,,missing in both passes
-C302-L14,C302,,,,,missing in both passes
-C302-L15,C302,,,,,missing in both passes
-C302-L16,C302,,,,,missing in both passes
-C302-L17,C302,,,,,missing in both passes
-C302-L18,C302,,,,,missing in both passes
-C302-L19,C302,,,,,missing in both passes
-C302-L20,C302,,,,,missing in both passes
-C302-L21,C302,,,,,missing in both passes
-C302-L22,C302,,,,,missing in both passes
-C302-L23,C302,,,,,missing in both passes
-C302-L24,C302,,,,,missing in both passes
-C302-L25,C302,,,,,missing in both passes
-C302-L26,C302,,,,,missing in both passes
-C302-L27,C302,,,,,missing in both passes
-C302-L28,C302,,,,,missing in both passes
-C302-L29,C302,,,,,missing in both passes
-C302-L30,C302,,,,,missing in both passes
-C302-L31,C302,,,,,missing in both passes
-C302-L32,C302,,,,,missing in both passes
-C302-L33,C302,,,,,missing in both passes
-C302-L34,C302,,,,,missing in both passes
-C302-L35,C302,,,,,missing in both passes
-C302-L36,C302,,,,,missing in both passes
-C302-L37,C302,,,,,missing in both passes
-C302-L38,C302,,,,,missing in both passes
-C302-L39,C302,,,,,missing in both passes
-C302-L40,C302,,,,,missing in both passes
-C302-L41,C302,,,,,missing in both passes
-C302-L42,C302,,,,,missing in both passes
-C302-L43,C302,,,,,missing in both passes
-C302-L44,C302,,,,,missing in both passes
-C302-L45,C302,,,,,missing in both passes
-C302-L46,C302,,,,,missing in both passes
-C302-L47,C302,,,,,missing in both passes
-C302-L48,C302,,,,,missing in both passes
-C302-L49,C302,,,,,missing in both passes
-C303-L01,C303,,,,,missing in both passes
-C303-L02,C303,,,,,missing in both passes
-C303-L03,C303,,,,,missing in both passes
-C303-L04,C303,,,,,missing in both passes
-C303-L05,C303,,,,,missing in both passes
-C303-L06,C303,,,,,missing in both passes
-C303-L07,C303,,,,,missing in both passes
-C303-L08,C303,,,,,missing in both passes
-C303-L09,C303,,,,,missing in both passes
-C303-L10,C303,,,,,missing in both passes
-C303-L11,C303,,,,,missing in both passes
-C303-L12,C303,,,,,missing in both passes
-C303-L13,C303,,,,,missing in both passes
-C303-L14,C303,,,,,missing in both passes
-C303-L15,C303,,,,,missing in both passes
-C303-L16,C303,,,,,missing in both passes
-C303-L17,C303,,,,,missing in both passes
-C303-L18,C303,,,,,missing in both passes
-C303-L19,C303,,,,,missing in both passes
-C303-L20,C303,,,,,missing in both passes
-C303-L21,C303,,,,,missing in both passes
-C303-L22,C303,,,,,missing in both passes
-C303-L23,C303,,,,,missing in both passes
-C303-L24,C303,,,,,missing in both passes
-C303-L25,C303,,,,,missing in both passes
-C303-L26,C303,,,,,missing in both passes
-C303-L27,C303,,,,,missing in both passes
-C303-L28,C303,,,,,missing in both passes
-C303-L29,C303,,,,,missing in both passes
-C303-L30,C303,,,,,missing in both passes
-C303-L31,C303,,,,,missing in both passes
-C303-L32,C303,,,,,missing in both passes
-C303-L33,C303,,,,,missing in both passes
-C303-L34,C303,,,,,missing in both passes
-C303-L35,C303,,,,,missing in both passes
-C303-L36,C303,,,,,missing in both passes
-C303-L37,C303,,,,,missing in both passes
-C303-L38,C303,,,,,missing in both passes
-C303-L39,C303,,,,,missing in both passes
-C303-L40,C303,,,,,missing in both passes
-C303-L41,C303,,,,,missing in both passes
-C303-L42,C303,,,,,missing in both passes
-C304-L01,C304,,,,,missing in both passes
-C304-L02,C304,,,,,missing in both passes
-C304-L03,C304,,,,,missing in both passes
-C304-L04,C304,,,,,missing in both passes
-C304-L05,C304,,,,,missing in both passes
-C304-L06,C304,,,,,missing in both passes
-C304-L07,C304,,,,,missing in both passes
-C304-L08,C304,,,,,missing in both passes
-C304-L09,C304,,,,,missing in both passes
-C304-L10,C304,,,,,missing in both passes
-C304-L11,C304,,,,,missing in both passes
-C304-L12,C304,,,,,missing in both passes
-C304-L13,C304,,,,,missing in both passes
-C304-L14,C304,,,,,missing in both passes
-C304-L15,C304,,,,,missing in both passes
-C304-L16,C304,,,,,missing in both passes
-C304-L17,C304,,,,,missing in both passes
-C304-L18,C304,,,,,missing in both passes
-C304-L19,C304,,,,,missing in both passes
-C304-L20,C304,,,,,missing in both passes
-C304-L21,C304,,,,,missing in both passes
-C304-L22,C304,,,,,missing in both passes
-C304-L23,C304,,,,,missing in both passes
-C304-L24,C304,,,,,missing in both passes
-C304-L25,C304,,,,,missing in both passes
-C304-L26,C304,,,,,missing in both passes
-C304-L27,C304,,,,,missing in both passes
-C304-L28,C304,,,,,missing in both passes
-C304-L29,C304,,,,,missing in both passes
-C304-L30,C304,,,,,missing in both passes
-C304-L31,C304,,,,,missing in both passes
-C304-L32,C304,,,,,missing in both passes
-C304-L33,C304,,,,,missing in both passes
-C304-L34,C304,,,,,missing in both passes
-C304-L35,C304,,,,,missing in both passes
-C304-L36,C304,,,,,missing in both passes
-C304-L37,C304,,,,,missing in both passes
-C304-L38,C304,,,,,missing in both passes
-C304-L39,C304,,,,,missing in both passes
-C304-L40,C304,,,,,missing in both passes
-C304-L41,C304,,,,,missing in both passes
-C304-L42,C304,,,,,missing in both passes
-C304-L43,C304,,,,,missing in both passes
-C305-L01,C305,,,,,missing in both passes
-C305-L02,C305,,,,,missing in both passes
-C305-L03,C305,,,,,missing in both passes
-C305-L04,C305,,,,,missing in both passes
-C305-L05,C305,,,,,missing in both passes
-C305-L06,C305,,,,,missing in both passes
-C305-L07,C305,,,,,missing in both passes
-C305-L08,C305,,,,,missing in both passes
-C305-L09,C305,,,,,missing in both passes
-C305-L10,C305,,,,,missing in both passes
-C305-L11,C305,,,,,missing in both passes
-C305-L12,C305,,,,,missing in both passes
-C305-L13,C305,,,,,missing in both passes
-C305-L14,C305,,,,,missing in both passes
-C305-L15,C305,,,,,missing in both passes
-C305-L16,C305,,,,,missing in both passes
-C305-L17,C305,,,,,missing in both passes
-C305-L18,C305,,,,,missing in both passes
-C305-L19,C305,,,,,missing in both passes
-C305-L20,C305,,,,,missing in both passes
-C305-L21,C305,,,,,missing in both passes
-C305-L22,C305,,,,,missing in both passes
-C305-L23,C305,,,,,missing in both passes
-C305-L24,C305,,,,,missing in both passes
-C305-L25,C305,,,,,missing in both passes
-C305-L26,C305,,,,,missing in both passes
-C305-L27,C305,,,,,missing in both passes
-C305-L28,C305,,,,,missing in both passes
-C305-L29,C305,,,,,missing in both passes
-C305-L30,C305,,,,,missing in both passes
-C305-L31,C305,,,,,missing in both passes
-C305-L32,C305,,,,,missing in both passes
-C305-L33,C305,,,,,missing in both passes
-C305-L34,C305,,,,,missing in both passes
-C305-L35,C305,,,,,missing in both passes
-C305-L36,C305,,,,,missing in both passes
-C305-L37,C305,,,,,missing in both passes
-C305-L38,C305,,,,,missing in both passes
-C305-L39,C305,,,,,missing in both passes
-C305-L40,C305,,,,,missing in both passes
-C305-L41,C305,,,,,missing in both passes
-C305-L42,C305,,,,,missing in both passes
-C305-L43,C305,,,,,missing in both passes
-C305-L44,C305,,,,,missing in both passes
-C305-L45,C305,,,,,missing in both passes
-C305-L46,C305,,,,,missing in both passes
-C305-L47,C305,,,,,missing in both passes
-C306-L01,C306,,,,,missing in both passes
-C306-L02,C306,,,,,missing in both passes
-C306-L03,C306,,,,,missing in both passes
-C306-L04,C306,,,,,missing in both passes
-C306-L05,C306,,,,,missing in both passes
-C306-L06,C306,,,,,missing in both passes
-C306-L07,C306,,,,,missing in both passes
-C306-L08,C306,,,,,missing in both passes
-C306-L09,C306,,,,,missing in both passes
-C306-L10,C306,,,,,missing in both passes
-C306-L11,C306,,,,,missing in both passes
-C306-L12,C306,,,,,missing in both passes
-C306-L13,C306,,,,,missing in both passes
-C306-L14,C306,,,,,missing in both passes
-C306-L15,C306,,,,,missing in both passes
-C306-L16,C306,,,,,missing in both passes
-C306-L17,C306,,,,,missing in both passes
-C306-L18,C306,,,,,missing in both passes
-C306-L19,C306,,,,,missing in both passes
-C306-L20,C306,,,,,missing in both passes
-C306-L21,C306,,,,,missing in both passes
-C306-L22,C306,,,,,missing in both passes
-C306-L23,C306,,,,,missing in both passes
-C306-L24,C306,,,,,missing in both passes
-C306-L25,C306,,,,,missing in both passes
-C306-L26,C306,,,,,missing in both passes
-C306-L27,C306,,,,,missing in both passes
-C306-L28,C306,,,,,missing in both passes
-C306-L29,C306,,,,,missing in both passes
-C306-L30,C306,,,,,missing in both passes
-C306-L31,C306,,,,,missing in both passes
-C306-L32,C306,,,,,missing in both passes
-C306-L33,C306,,,,,missing in both passes
-C306-L34,C306,,,,,missing in both passes
-C306-L35,C306,,,,,missing in both passes
-C306-L36,C306,,,,,missing in both passes
-C306-L37,C306,,,,,missing in both passes
-C306-L38,C306,,,,,missing in both passes
-C306-L39,C306,,,,,missing in both passes
-C306-L40,C306,,,,,missing in both passes
-C306-L41,C306,,,,,missing in both passes
-C306-L42,C306,,,,,missing in both passes
-C306-L43,C306,,,,,missing in both passes
-C306-L44,C306,,,,,missing in both passes
-C306-L45,C306,,,,,missing in both passes
-C306-L46,C306,,,,,missing in both passes
-C306-L47,C306,,,,,missing in both passes
-C306-L48,C306,,,,,missing in both passes
-C306-L49,C306,,,,,missing in both passes
-C306-L50,C306,,,,,missing in both passes
-C306-L51,C306,,,,,missing in both passes
+C294-L01,C294,header,,ASSIFIED,,missing in one pass
+C294-L02,C294,header,,NO 75573,,missing in one pass
+C294-L03,C294,header,,TOP SECRET || DGZ BA,,missing in one pass
+C294-L04,C294,data,,275 0169-9933,,missing in one pass
+C294-L05,C294,data,,425 9510 WONSAN N KOREA 3910-12726,,missing in one pass
+C294-L06,C294,data,,280 0380-0038,,missing in one pass
+C294-L07,C294,data,,354 0380-0239,,missing in one pass
+C294-L08,C294,data,,208 0380-0255,,missing in one pass
+C294-L09,C294,data,,275 0380-9999,,missing in one pass
+C294-L10,C294,data,,MUNPYONG NI N KOREA 3914-12722,,missing in one pass
+C294-L11,C294,data,,246 0380-,,missing in one pass
+C294-L12,C294,data,,216 0380-0271,,missing in one pass
+C294-L13,C294,data,,275 0380-9932,,missing in one pass
+C294-L14,C294,data,,249 9535 WU CHIN CHINA 3144-11956,,missing in one pass
+C294-L15,C294,data,,3147-11956E B,,missing in one pass
+C294-L16,C294,data,,186 0492-0120,,missing in one pass
+C294-L17,C294,data,,292 0492-0141,,missing in one pass
+C294-L18,C294,data,,332 0492-0141,,missing in one pass
+C294-L19,C294,data,,230 0492-0153,,missing in one pass
+C294-L20,C294,data,,275 0492-9996,,missing in one pass
+C294-L21,C294,data,,WU HSI CHINA 3135-12018,,missing in one pass
+C294-L22,C294,data,,3134-12017E A,,missing in one pass
+C294-L23,C294,data,,208 0492-0175,,missing in one pass
+C294-L24,C294,data,,275 0492-9985,,missing in one pass
+C294-L25,C294,data,,861 9537 WU CHOU CHINA 2329-11119,,missing in one pass
+C294-L26,C294,data,,281 0615-0018,,missing in one pass
+C294-L27,C294,data,,275 0615-9985,,missing in one pass
+C294-L28,C294,data,,452 9546 WU HSIEN CHINA 3118-12037,,missing in one pass
+C294-L29,C294,data,,3119-12037E C,,missing in one pass
+C294-L30,C294,data,,243 0492-,,missing in one pass
+C294-L31,C294,data,,186 0492-0178,,missing in one pass
+C294-L32,C294,data,,281 0492-0184,,missing in one pass
+C294-L33,C294,data,,275 0492-9988,,missing in one pass
+C294-L34,C294,data,,731 9547 WU HU CHINA 3120-11822,,missing in one pass
+C294-L35,C294,data,,3121-11821E B,,missing in one pass
+C294-L36,C294,data,,280 0493-0094,,missing in one pass
+C294-L37,C294,data,,275 0493-9981,,missing in one pass
+C294-L38,C294,data,,601 9553 WU MING CHINA 2312-10815,,missing in one pass
+C294-L39,C294,data,,2312-10815E B,,missing in one pass
+C294-L40,C294,data,,275 0615-,,missing in one pass
+C294-L41,C294,data,,245 0615-0030,,missing in one pass
+C294-L42,C294,data,,1214 9570 WU YUN CHINA 4917-12940,,missing in one pass
+C294-L43,C294,footer,,DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
+C295-L01,C295,header,,DGZ BA,,missing in one pass
+C295-L02,C295,data,,275 0203-,,missing in one pass
+C295-L03,C295,data,,281 0203-0093,,missing in one pass
+C295-L04,C295,data,,520 9590 YA AN CHINA 2959-10305,,missing in one pass
+C295-L05,C295,data,,2959-10301E A,,missing in one pass
+C295-L06,C295,data,,208 0495-0016,,missing in one pass
+C295-L07,C295,data,,275 0495-9985,,missing in one pass
+C295-L08,C295,data,,941 9599 YAKUTSK 6203-12943,,missing in one pass
+C295-L09,C295,data,,281 0124-0008,,missing in one pass
+C295-L10,C295,data,,275 0124-9999,,missing in one pass
+C295-L11,C295,data,,957 9600 YALTA 4429-03409,,missing in one pass
+C295-L12,C295,data,,4430- 3409E B,,missing in one pass
+C295-L13,C295,data,,227 0250-0211,,missing in one pass
+C295-L14,C295,data,,280 0250-0306,,missing in one pass
+C295-L15,C295,data,,275 0250-9936,,missing in one pass
+C295-L16,C295,data,,699 9604 YAMBOL BULG 4229-02632,,missing in one pass
+C295-L17,C295,data,,4229- 2630E B,,missing in one pass
+C295-L18,C295,data,,382 0322-,,missing in one pass
+C295-L19,C295,data,,248 0322-0507,,missing in one pass
+C295-L20,C295,data,,245 0322-0574,,missing in one pass
+C295-L21,C295,data,,275 0322-9944,,missing in one pass
+C295-L22,C295,data,,SLIVEN BULG 4239-02623,,missing in one pass
+C295-L23,C295,data,,4240- 2619E D,,missing in one pass
+C295-L24,C295,data,,241 0322-,,missing in one pass
+C295-L25,C295,data,,275 0322-,,missing in one pass
+C295-L26,C295,data,,382 0322-0412,,missing in one pass
+C295-L27,C295,data,,246 0322-0516,,missing in one pass
+C295-L28,C295,data,,ZIMNITSA BULG 4235-02636,,missing in one pass
+C295-L29,C295,data,,4234- 2636E C,,missing in one pass
+C295-L30,C295,data,,382 0322-0413,,missing in one pass
+C295-L31,C295,data,,275 0322-9731,,missing in one pass
+C295-L32,C295,data,,529 9607 YANAUL 5614-05455,,missing in one pass
+C295-L33,C295,data,,5614- 5455E B,,missing in one pass
+C295-L34,C295,data,,227 0155-,,missing in one pass
+C295-L35,C295,data,,366 0155-0124,,missing in one pass
+C295-L36,C295,data,,275 0155-9888,,missing in one pass
+C295-L37,C295,data,,1001 9610 YANGI YUL 4105-06901,,missing in one pass
+C295-L38,C295,data,,104 0328-0159,,missing in one pass
+C295-L39,C295,data,,104 0328-0180,,missing in one pass
+C295-L40,C295,data,,275 0328-9909,,missing in one pass
+C295-L41,C295,data,,942 9620 YANISKOSKI 6858-02847,,missing in one pass
+C295-L42,C295,footer,,DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
+C296-L01,C296,header,,DGZ BA,,missing in one pass
+C296-L02,C296,data,,275 0051-,,missing in one pass
+C296-L03,C296,data,,114 0051-0004,,missing in one pass
+C296-L04,C296,data,,70 9630 YAROSLAVL 5738-03953,,missing in one pass
+C296-L05,C296,data,,5737- 3954E A,,missing in one pass
+C296-L06,C296,data,,5738- 3952E B,,missing in one pass
+C296-L07,C296,data,,5736- 3956E C,,missing in one pass
+C296-L08,C296,data,,5736- 3952E D,,missing in one pass
+C296-L09,C296,data,,5733- 3957E E,,missing in one pass
+C296-L10,C296,data,,243 0154-,,missing in one pass
+C296-L11,C296,data,,252 0154-0004,,missing in one pass
+C296-L12,C296,data,,400 0154-0008,,missing in one pass
+C296-L13,C296,data,,405 0154-0008,,missing in one pass
+C296-L14,C296,data,,112 0154-0010,,missing in one pass
+C296-L15,C296,data,,312 0154-0044,,missing in one pass
+C296-L16,C296,data,,312 0154-0046,,missing in one pass
+C296-L17,C296,data,,227 0154-0074,,missing in one pass
+C296-L18,C296,data,,360 0154-0078,,missing in one pass
+C296-L19,C296,data,,227 0154-0090,,missing in one pass
+C296-L20,C296,data,,360 0154-0143,,missing in one pass
+C296-L21,C296,data,,290 0154-0158,,missing in one pass
+C296-L22,C296,data,,360 0154-0261,,missing in one pass
+C296-L23,C296,data,,281 0154-0270,,missing in one pass
+C296-L24,C296,data,,246 0154-0271,,missing in one pass
+C296-L25,C296,data,,290 0154-0313,,missing in one pass
+C296-L26,C296,data,,112 0154-0331,,missing in one pass
+C296-L27,C296,data,,281 0154-0350,,missing in one pass
+C296-L28,C296,data,,281 0154-0371,,missing in one pass
+C296-L29,C296,data,,208 0154-0390,,missing in one pass
+C296-L30,C296,data,,246 0154-0447,,missing in one pass
+C296-L31,C296,data,,246 0154-0448,,missing in one pass
+C296-L32,C296,data,,275 0154-9994,,missing in one pass
+C296-L33,C296,data,,KONSTANTINOVSKY 5749-03936,,missing in one pass
+C296-L34,C296,data,,5749- 3937E G,,missing in one pass
+C296-L35,C296,data,,224 0154-0037,,missing in one pass
+C296-L36,C296,data,,226 0154-0037,,missing in one pass
+C296-L37,C296,data,,275 0154-9980,,missing in one pass
+C296-L38,C296,data,,1140 9649 YEFIMOVSKIY 5931-03441,,missing in one pass
+C296-L39,C296,data,,227 0154-,,missing in one pass
+C296-L40,C296,data,,275 0154-9694,,missing in one pass
+C296-L41,C296,data,,382 9650 YEFREMOV 5309-03807,,missing in one pass
+C296-L42,C296,data,,5309- 3807E B,,missing in one pass
+C296-L43,C296,data,,120 0167-0068,,missing in one pass
+C296-L44,C296,data,,400 0167-0163,,missing in one pass
+C296-L45,C296,data,,362 0167-0168,,missing in one pass
+C296-L46,C296,data,,275 0167-9988,,missing in one pass
+C296-L47,C296,data,,691 9660 YEGORYEVSK 5523-03903,,missing in one pass
+C296-L48,C296,footer,,DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
+C297-L01,C297,header,,DGZ BA,,missing in one pass
+C297-L02,C297,data,,5523- 3901E B,,missing in one pass
+C297-L03,C297,data,,230 0166-0056,,missing in one pass
+C297-L04,C297,data,,275 0166-9976,,missing in one pass
+C297-L05,C297,data,,495 9670 YELETS 5236-03830,,missing in one pass
+C297-L06,C297,data,,5236- 3832E B,,missing in one pass
+C297-L07,C297,data,,362 0167-0170,,missing in one pass
+C297-L08,C297,data,,275 0167-9989,,missing in one pass
+C297-L09,C297,data,,958 9671 YELGAVA 5638-02342,,missing in one pass
+C297-L10,C297,data,,227 0153-,,missing in one pass
+C297-L11,C297,data,,246 0153-0629,,missing in one pass
+C297-L12,C297,data,,246 0153-0630,,missing in one pass
+C297-L13,C297,data,,275 0153-9913,,missing in one pass
+C297-L14,C297,data,,346 9675 YEN CHI MANCH 4254-12930,,missing in one pass
+C297-L15,C297,data,,4254-12930E D,,missing in one pass
+C297-L16,C297,data,,290 0290-0175,,missing in one pass
+C297-L17,C297,data,,246 0290-0307,,missing in one pass
+C297-L18,C297,data,,275 0290-9928,,missing in one pass
+C297-L19,C297,data,,LUNG CHING TSUN MANCH 4246-12924,,missing in one pass
+C297-L20,C297,data,,4245-12925E B,,missing in one pass
+C297-L21,C297,data,,186 0290-0102,,missing in one pass
+C297-L22,C297,data,,275 0290-9891,,missing in one pass
+C297-L23,C297,data,,TU MEN MANCH 4258-12949,,missing in one pass
+C297-L24,C297,data,,384 0290-0099,,missing in one pass
+C297-L25,C297,data,,056 0290-0157,,missing in one pass
+C297-L26,C297,data,,290 0290-0157,,missing in one pass
+C297-L27,C297,data,,062 0290-0366,,missing in one pass
+C297-L28,C297,data,,068 0290-0366,,missing in one pass
+C297-L29,C297,data,,275 0290-9909,,missing in one pass
+C297-L30,C297,data,,1002 9688 YEREMEN TAU 5135-07310,,missing in one pass
+C297-L31,C297,data,,275 0238-,,missing in one pass
+C297-L32,C297,data,,372 0238-0040,,missing in one pass
+C297-L33,C297,data,,101 9690 YEREVAN 4011-04430,,missing in one pass
+C297-L34,C297,data,,4007- 4429E B,,missing in one pass
+C297-L35,C297,data,,4012- 4430E C,,missing in one pass
+C297-L36,C297,data,,4009- 4430E D,,missing in one pass
+C297-L37,C297,data,,4008- 4428E E,,missing in one pass
+C297-L38,C297,data,,227 0325-,,missing in one pass
+C297-L39,C297,data,,240 0325-,,missing in one pass
+C297-L40,C297,data,,241 0325-,,missing in one pass
+C297-L41,C297,data,,020 0325-0013,,missing in one pass
+C297-L42,C297,data,,021 0325-0013,,missing in one pass
+C297-L43,C297,data,,060 0325-0021,,missing in one pass
+C297-L44,C297,data,,062 0325-0021,,missing in one pass
+C297-L45,C297,footer,,DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
+C298-L01,C298,header,,DGZ BA,,missing in one pass
+C298-L02,C298,data,,068 0325-0021,,missing in one pass
+C298-L03,C298,data,,400 0325-0021,,missing in one pass
+C298-L04,C298,data,,405 0325-0021,,missing in one pass
+C298-L05,C298,data,,200 0325-0030,,missing in one pass
+C298-L06,C298,data,,206 0325-0041,,missing in one pass
+C298-L07,C298,data,,480 0325-0041,,missing in one pass
+C298-L08,C298,data,,116 0325-0143,,missing in one pass
+C298-L09,C298,data,,230 0325-0177,,missing in one pass
+C298-L10,C298,data,,350 0325-0240,,missing in one pass
+C298-L11,C298,data,,227 0325-0282,,missing in one pass
+C298-L12,C298,data,,227 0325-0283,,missing in one pass
+C298-L13,C298,data,,208 0325-0377,,missing in one pass
+C298-L14,C298,data,,248 0325-0406,,missing in one pass
+C298-L15,C298,data,,275 0325-9995,,missing in one pass
+C298-L16,C298,data,,GYUMUSH 4023-04436,,missing in one pass
+C298-L17,C298,data,,4023- 4436E F,,missing in one pass
+C298-L18,C298,data,,275 0325-,,missing in one pass
+C298-L19,C298,data,,116 0325-0222,,missing in one pass
+C298-L20,C298,data,,654 96943 YEROFEY PAVLOVICH 5357-12157,,missing in one pass
+C298-L21,C298,data,,5357-12157E B,,missing in one pass
+C298-L22,C298,data,,354 0198-0014,,missing in one pass
+C298-L23,C298,data,,275 0198-9982,,missing in one pass
+C298-L24,C298,data,,732 96944 YERSHOVO 5121-04816,,missing in one pass
+C298-L25,C298,data,,5120- 4817E B,,missing in one pass
+C298-L26,C298,data,,368 0235-0040,,missing in one pass
+C298-L27,C298,data,,275 0235-9986,,missing in one pass
+C298-L28,C298,data,,943 9700 YEYSK 4642-03817,,missing in one pass
+C298-L29,C298,data,,4643- 3816E B,,missing in one pass
+C298-L30,C298,data,,280 0249-0324,,missing in one pass
+C298-L31,C298,data,,275 0249-9902,,missing in one pass
+C298-L32,C298,data,,596 9705 YING KOU MANCH 4040-12217,,missing in one pass
+C298-L33,C298,data,,4042-12215E C,,missing in one pass
+C298-L34,C298,data,,248 0289-,,missing in one pass
+C298-L35,C298,data,,248 0289-,,missing in one pass
+C298-L36,C298,data,,248 0289-,,missing in one pass
+C298-L37,C298,data,,227 0289-0098,,missing in one pass
+C298-L38,C298,data,,281 0289-0105,,missing in one pass
+C298-L39,C298,data,,275 0289-9997,,missing in one pass
+C298-L40,C298,data,,829 9706 YIN HSIEN CHINA 2953-12133,,missing in one pass
+C298-L41,C298,data,,280 0492-0189,,missing in one pass
+C298-L42,C298,data,,275 0492-9990,,missing in one pass
+C298-L43,C298,data,,844 9707 YOKANGA 6801-03940,,missing in one pass
+C298-L44,C298,footer,,DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass
+C299-L01,C299,header,,DGZ BA,,missing in one pass
+C299-L02,C299,data,,227 0051-,,missing in one pass
+C299-L03,C299,data,,280 0051-0023,,missing in one pass
+C299-L04,C299,data,,254 0051-0054,,missing in one pass
+C299-L05,C299,data,,227 0051-0057,,missing in one pass
+C299-L06,C299,data,,275 0051-9998,,missing in one pass
+C299-L07,C299,data,,1096 97103 YOSHKAR OLA 5638-04755,,missing in one pass
+C299-L08,C299,data,,246 0155-0128,,missing in one pass
+C299-L09,C299,data,,275 0155-9981,,missing in one pass
+C299-L10,C299,data,,MITKINO 5648-04738,,missing in one pass
+C299-L11,C299,data,,275 0155-,,missing in one pass
+C299-L12,C299,data,,246 0155-0126,,missing in one pass
+C299-L13,C299,data,,830 97105 YUGO KAMSKIY 5742-05537,,missing in one pass
+C299-L14,C299,data,,262 0156-0074,,missing in one pass
+C299-L15,C299,data,,430 0156-0074,,missing in one pass
+C299-L16,C299,data,,275 0156-9956,,missing in one pass
+C299-L17,C299,data,,959 9711 YU LIN CHINA 1813-10931,,missing in one pass
+C299-L18,C299,data,,248 0618-,,missing in one pass
+C299-L19,C299,data,,254 0618-0001,,missing in one pass
+C299-L20,C299,data,,227 0618-0019,,missing in one pass
+C299-L21,C299,data,,280 0618-0107,,missing in one pass
+C299-L22,C299,data,,280 0618-0124,,missing in one pass
+C299-L23,C299,data,,275 0618-9999,,missing in one pass
+C299-L24,C299,data,,SAN YA CHINA 1816-10927,,missing in one pass
+C299-L25,C299,data,,246 0618-0002,,missing in one pass
+C299-L26,C299,data,,275 0618-9997,,missing in one pass
+C299-L27,C299,data,,786 9715 YU MEN CHINA 4017-09712,,missing in one pass
+C299-L28,C299,data,,3942- 9750E C,,missing in one pass
+C299-L29,C299,data,,224 0332-0001,,missing in one pass
+C299-L30,C299,data,,226 0332-0001,,missing in one pass
+C299-L31,C299,data,,275 0331-9999,,missing in one pass
+C299-L32,C299,data,,899 9725 YUN FOU CHINA 2256-11202,,missing in one pass
+C299-L33,C299,data,,465 0615-0015,,missing in one pass
+C299-L34,C299,data,,275 0615-9983,,missing in one pass
+C299-L35,C299,data,,411 9730 YURGA 5543-08451,,missing in one pass
+C299-L36,C299,data,,5544- 8453E B,,missing in one pass
+C299-L37,C299,data,,212 0161-0081,,missing in one pass
+C299-L38,C299,data,,430 0161-0081,,missing in one pass
+C299-L39,C299,data,,275 0161-9927,,missing in one pass
+C299-L40,C299,data,,1043 9733 YURYEV POLSKIY 5630-03941,,missing in one pass
+C299-L41,C299,footer,,DocId:32003765 TOP SECRET - RESTRICT??,,missing in one pass

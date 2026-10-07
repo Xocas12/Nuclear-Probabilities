@@ -1,0 +1,402 @@
+[
+ {
+  "id": "C079-L43",
+  "page": "C079",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "430. 0232-0051",
+  "text_b": "430 0232-0051",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C079-L43.png"
+ },
+ {
+  "id": "C080-L21",
+  "page": "C080",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "CHORZOW. POL 5018-01857",
+  "text_b": "CHORZOW POL 5018-01857",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C080-L21.png"
+ },
+ {
+  "id": "C081-L47",
+  "page": "C081",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "KAMIEN POL. 5022-01859",
+  "text_b": "KAMIEN POL 5022-01859",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C081-L47.png"
+ },
+ {
+  "id": "C090-L15",
+  "page": "C090",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "150 0325-D064",
+  "text_b": "150 0325-0064",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C090-L15.png"
+ },
+ {
+  "id": "C090-L36",
+  "page": "C090",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "266 2460 GUBAKHA ' 5852-05735",
+  "text_b": "266 2460 GUBAKHA 5852-05735",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C090-L36.png"
+ },
+ {
+  "id": "C103-L30",
+  "page": "C103",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "ROTHENSTEIN E GER 5052-01136",
+  "text_b": "?OTHENSTEIN E GER 5052-01136",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C103-L30.png"
+ },
+ {
+  "id": "C104-L28",
+  "page": "C104",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "4831- 3834E F",
+  "text_b": "4?31- 3834E F",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C104-L28.png"
+ },
+ {
+  "id": "C109-L29",
+  "page": "C109",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "4834- 4545E 8",
+  "text_b": "4834- 4545E B",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C109-L29.png"
+ },
+ {
+  "id": "C110-L37",
+  "page": "C110",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "1064 3276 KARNO8AT BULG 4240-02658",
+  "text_b": "1064 3276 KARNOBAT BULG 4240-02658",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C110-L37.png"
+ },
+ {
+  "id": "C112-L04",
+  "page": "C112",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "275 0164-9?8?",
+  "text_b": "275 0164-9?88",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C112-L04.png"
+ },
+ {
+  "id": "C112-L05",
+  "page": "C112",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "K?OPACHEVO 5500-05800",
+  "text_b": "KHOPACHEVO 5500-05800",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C112-L05.png"
+ },
+ {
+  "id": "C112-L10",
+  "page": "C112",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "UST KATAV 5456-0581?",
+  "text_b": "UST KATAV 5456-05811",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C112-L10.png"
+ },
+ {
+  "id": "C112-L16",
+  "page": "C112",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "11? 0164-0180",
+  "text_b": "116 0164-0180",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C112-L16.png"
+ },
+ {
+  "id": "C112-L24",
+  "page": "C112",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "281 0168-0227",
+  "text_b": "281 0168-02?7",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C112-L24.png"
+ },
+ {
+  "id": "C113-L14",
+  "page": "C113",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "102? 3350 KAZANKA 4753-03246",
+  "text_b": "102? 3350 KAZANKA 4753-03246",
+  "reasons": "unreadable character",
+  "crop": "adjudicate/crops/C113-L14.png"
+ },
+ {
+  "id": "C113-L24",
+  "page": "C113",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "248 0322-05?1",
+  "text_b": "248 0322-0501",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C113-L24.png"
+ },
+ {
+  "id": "C120-L13",
+  "page": "C120",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "5729- 6005E 8",
+  "text_b": "5729- 6005E B",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C120-L13.png"
+ },
+ {
+  "id": "C124-L51",
+  "page": "C124",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "809 3794 KOLOMYYA 4831-025?4",
+  "text_b": "809 3794 KOLOMYYA 4831-025?4",
+  "reasons": "unreadable character",
+  "crop": "adjudicate/crops/C124-L51.png"
+ },
+ {
+  "id": "C127-L11",
+  "page": "C127",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "711 3865 KONOSHA 6058-04011",
+  "text_b": "714 3865 KONOSHA 6058-04011",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C127-L11.png"
+ },
+ {
+  "id": "C129-L14",
+  "page": "C129",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "3932 KOSTINO M-70 5533-036120 UA",
+  "text_b": "3932 KOSTINO M-70 5533-036120 UA",
+  "reasons": "line does not match any expected format",
+  "crop": "adjudicate/crops/C129-L14.png"
+ },
+ {
+  "id": "C150-L03",
+  "page": "C150",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "290 0381-0260",
+  "text_b": "290 0381-0260 || 275 0289-9953",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C150-L03.png"
+ },
+ {
+  "id": "C150-L03+",
+  "page": "C150",
+  "kind_a": "data",
+  "kind_b": "",
+  "text_a": "275 0289-9953",
+  "text_b": "",
+  "reasons": "missing in one pass",
+  "crop": "adjudicate/crops/C150-L03plus.png"
+ },
+ {
+  "id": "C153-L20",
+  "page": "C153",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "384 0202-?028",
+  "text_b": "384 0202-0028",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C153-L20.png"
+ },
+ {
+  "id": "C156-L16",
+  "page": "C156",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "248 0170-?021",
+  "text_b": "248 0170-1021",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C156-L16.png"
+ },
+ {
+  "id": "C156-L18",
+  "page": "C156",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "KONIGS?ORN E GER 5208-01146",
+  "text_b": "KONIGSBORN E GER 5208-01146",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C156-L18.png"
+ },
+ {
+  "id": "C156-L40",
+  "page": "C156",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "11? 0164-0159",
+  "text_b": "116 0164-0159",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C156-L40.png"
+ },
+ {
+  "id": "C158-L26",
+  "page": "C158",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "351 4925 MEDG1DIA RUM 4415-02817",
+  "text_b": "351 4925 MEDGIDIA RUM 4415-02817",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C158-L26.png"
+ },
+ {
+  "id": "C164-L24",
+  "page": "C164",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "?88 0232-0200",
+  "text_b": "388 0232-0200",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C164-L24.png"
+ },
+ {
+  "id": "C165-L16",
+  "page": "C165",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "BOHUM?N CZECH 4955-01820",
+  "text_b": "BOHUMIN CZECH 4955-01820",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C165-L16.png"
+ },
+ {
+  "id": "C172-L13",
+  "page": "C172",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "44 5235, MUKDEN MANCH 4148-12327",
+  "text_b": "44 5235 MUKDEN MANCH 4148-12327",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C172-L13.png"
+ },
+ {
+  "id": "C175-L04",
+  "page": "C175",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "881 .5335 NAGYKANIZSA HUNG 4627-01658",
+  "text_b": "881 5335 NAGYKANIZSA HUNG 4627-01658",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C175-L04.png"
+ },
+ {
+  "id": "C177-L25",
+  "page": "C177",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "2249-10819E A",
+  "text_b": "2249-I0819E A",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C177-L25.png"
+ },
+ {
+  "id": "C179-L20",
+  "page": "C179",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "275. 0169-9850",
+  "text_b": "275 0169-9850",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C179-L20.png"
+ },
+ {
+  "id": "C182-L42",
+  "page": "C182",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "5555- 5959E 8",
+  "text_b": "5555- 5959E B",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C182-L42.png"
+ },
+ {
+  "id": "C183-L14",
+  "page": "C183",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "5837- 5949E 8",
+  "text_b": "5837- 5949E B",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C183-L14.png"
+ },
+ {
+  "id": "C184-L14",
+  "page": "C184",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "B83 5600 NOVAYA LYALYA 5903-06038",
+  "text_b": "883 5600 NOVAYA LYALYA 5903-06038",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C184-L14.png"
+ },
+ {
+  "id": "C185-L02",
+  "page": "C185",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "4444- 3746E 8",
+  "text_b": "4444- 3746E B",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C185-L02.png"
+ },
+ {
+  "id": "C186-L04",
+  "page": "C186",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "2?5 0162-0085",
+  "text_b": "2?5 0162-0085",
+  "reasons": "unreadable character",
+  "crop": "adjudicate/crops/C186-L04.png"
+ },
+ {
+  "id": "C188-L46",
+  "page": "C188",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "UNICOV CZECH 4946-01708",
+  "text_b": "UNICOV CZECH. 4946-01708",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C188-L46.png"
+ },
+ {
+  "id": "C191-L30",
+  "page": "C191",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "5548- 3?59E B",
+  "text_b": "5548- 3859E B",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C191-L30.png"
+ }
+]

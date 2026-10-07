@@ -1,0 +1,402 @@
+[
+ {
+  "id": "A028-L12",
+  "page": "A028",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "929 606? PAVLODAR 0162-8007 5218-07658 R",
+  "text_b": "929 6068 PAVLODAR 0162-8007 5218-07658 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A028-L12.png"
+ },
+ {
+  "id": "A029-L05",
+  "page": "A029",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "978 2611 PING FANG, MANCH 0283-8011 4536-1263? U",
+  "text_b": "978 2611 PING FANG, MANCH 0283-8011 4536-12638 U",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A029-L05.png"
+ },
+ {
+  "id": "A029-L10",
+  "page": "A029",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "783 6315 PLOESTI/TARGSORUL NO?, RU 0251-?031 4455-02553 R",
+  "text_b": "783 6315 PLOESTI/TARGSORUL NOL, RU 0251-8031 4455-02553 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A029-L10.png"
+ },
+ {
+  "id": "A029-L13",
+  "page": "A029",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "769 6340 POCHIN?K S.E. 0167-8010 5422-03233 S",
+  "text_b": "769 6340 POCHINOK S.E. 0167-8010 5422-03233 S",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A029-L13.png"
+ },
+ {
+  "id": "A029-L14",
+  "page": "A029",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "930 6360 PODOLSK/?UBR?VITSY 0167-8077 5525-03729 S",
+  "text_b": "930 6360 PODOLSK/DUBROVITSY 0167-8077 5525-03729 S",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A029-L14.png"
+ },
+ {
+  "id": "A029-L18",
+  "page": "A029",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "797 6390 POL?TSK 0168-8651 5530-0284? R",
+  "text_b": "797 6390 POLOTSK 0168-8651 5530-02845 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A029-L18.png"
+ },
+ {
+  "id": "A029-L20",
+  "page": "A029",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "1?10 91555 POLTSAMAA 0153-80?7 5839-02556 S",
+  "text_b": "1010 91555 POLTSAMAA 0153-8087 5839-02556 S",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A029-L20.png"
+ },
+ {
+  "id": "A029-L23",
+  "page": "A029",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "71 6482 POWIDZ, P?L 0169-8629 5223-01750 R",
+  "text_b": "71 6482 POWIDZ, POL 0169-8629 5223-01750 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A029-L23.png"
+ },
+ {
+  "id": "A029-L24",
+  "page": "A029",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "840 6483 POZ?EYEVKA 0203-?628 5035-12858 R",
+  "text_b": "840 6483 POZDEYEVKA 0203-8628 5035-12858 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A029-L24.png"
+ },
+ {
+  "id": "A029-L26",
+  "page": "A029",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "648 64?5 POZNAN/LAWICA, POL 0169-826? 5225-01650 R",
+  "text_b": "648 6485 POZNAN/LAWICA, POL 0169-8268 5225-01650 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A029-L26.png"
+ },
+ {
+  "id": "A030-L04",
+  "page": "A030",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "455 1390 PREUSSISCH FRIEDLAN?, POL 0169-8312 53?2-01716 R",
+  "text_b": "455 1390 PREUSSISCH FRIEDLAND, POL 0169-8312 5332-01716 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A030-L04.png"
+ },
+ {
+  "id": "A030-L08",
+  "page": "A030",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "28 6550 PROVIDENIYA/URELIK 0075-?018 6424-17313W R",
+  "text_b": "28 6550 PROVIDENIYA/URELIK 0075-8018 6424-17313W R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A030-L08.png"
+ },
+ {
+  "id": "A030-L11",
+  "page": "A030",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "849 14442 PRZASNYSZ, POL 0169-8269 5300-02056 S",
+  "text_b": "949 14442 PRZASNYSZ, POL 0169-8269 5300-02056 S",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/A030-L11.png"
+ },
+ {
+  "id": "A030-L18",
+  "page": "A030",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "98 4490 PUSHKIN 0153-805? 5941-03021 R",
+  "text_b": "98 4490 PUSHKIN 0153-8058 5941-03021 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A030-L18.png"
+ },
+ {
+  "id": "A030-L24",
+  "page": "A030",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "296 82564 RAKVER? 0153-8091 5922-02621 R",
+  "text_b": "296 82564 RAKVERE 0153-8091 5922-02621 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A030-L24.png"
+ },
+ {
+  "id": "A030-L26",
+  "page": "A030",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "720 39205 RASTENBURG, POL 016?-?206 5404-02125 R",
+  "text_b": "720 39205 RASTENBURG, POL 0168-9206 5404-02126 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A030-L26.png"
+ },
+ {
+  "id": "A030-L28",
+  "page": "A030",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "393 1065 RAVNETS, BULG 0323-?030 4232-02716 R",
+  "text_b": "393 1065 RAVNETS, BULG 0323-3030 4232-02716 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A030-L28.png"
+ },
+ {
+  "id": "A030-L29",
+  "page": "A030",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "1012 67598 RECHITSA 01?7-8103 5221-03021 R",
+  "text_b": "1012 67598 RECHITSA 0167-8103 5221-03021 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A030-L29.png"
+ },
+ {
+  "id": "A035-L22",
+  "page": "A035",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "572 79465 SUI CHUNG, MANCH 0289-8005 4020-12020 R",
+  "text_b": "672 79465 SUI CHUNG, MANCH 0289-8005 4020-12020 R",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/A035-L22.png"
+ },
+ {
+  "id": "A043-L15",
+  "page": "A043",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "513 4430 ZEWITZ, POL 0169-8625 5426-01745 R",
+  "text_b": "513 4430 ZEWITZ, POL 0169-8626 5426-01745 R",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/A043-L15.png"
+ },
+ {
+  "id": "C006-L34",
+  "page": "C006",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "275 0328-9694",
+  "text_b": "275 0328-9894",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C006-L34.png"
+ },
+ {
+  "id": "C007-L30",
+  "page": "C007",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "S1NU1JU N KOREA 4006-12424 -",
+  "text_b": "SINUIJU N KOREA 4006-12424",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C007-L30.png"
+ },
+ {
+  "id": "C008-L11",
+  "page": "C008",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "4420- 3?42E D",
+  "text_b": "4420- 3942E D",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C008-L11.png"
+ },
+ {
+  "id": "C008-L30",
+  "page": "C008",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "?432- 4031E A",
+  "text_b": "6432- 4031E A",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C008-L30.png"
+ },
+ {
+  "id": "C009-L18",
+  "page": "C009",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "24? 0249-",
+  "text_b": "248 0249-",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C009-L18.png"
+ },
+ {
+  "id": "C009-L23",
+  "page": "C009",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "598 0290 ARTEM 4322-13212",
+  "text_b": "598 0290 ARTEM 4322-13213",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C009-L23.png"
+ },
+ {
+  "id": "C009-L47",
+  "page": "C009",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "9?2 03?7 ARISIZ 4600-02926",
+  "text_b": "962 0307 ARTSIZ 4600-02926",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C009-L47.png"
+ },
+ {
+  "id": "C010-L16",
+  "page": "C010",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "IL1NKA 4614-04755",
+  "text_b": "ILINKA 4614-04755",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C010-L16.png"
+ },
+ {
+  "id": "C010-L33",
+  "page": "C010",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "4756- 8023E B",
+  "text_b": "4756- 8023E H",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C010-L33.png"
+ },
+ {
+  "id": "C027-L47",
+  "page": "C027",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "5107- 1706E P",
+  "text_b": "5107- 1706E P?",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C027-L47.png"
+ },
+ {
+  "id": "C029-L10",
+  "page": "C029",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "5205- 2340E 8",
+  "text_b": "5205- 2340E B",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C029-L10.png"
+ },
+ {
+  "id": "C032-L15",
+  "page": "C032",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "1150 1030 BUCKAU E GE? 5213-01218",
+  "text_b": "1150 1030 BUCKAU E GER 5213-01218",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C032-L15.png"
+ },
+ {
+  "id": "C033-L18",
+  "page": "C033",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "230 0251-0361",
+  "text_b": "230 0251-036?",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C033-L18.png"
+ },
+ {
+  "id": "C039-L18",
+  "page": "C039",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "ÁNDELSKA CZECH 5048-01458",
+  "text_b": "ANDELSKA CZECH 5048-01458",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C039-L18.png"
+ },
+ {
+  "id": "C063-L14",
+  "page": "C063",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "264 0231-1863,",
+  "text_b": "264 0231-1863",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C063-L14.png"
+ },
+ {
+  "id": "C064-L13",
+  "page": "C064",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "RADEBEUL E GER 5106-01339",
+  "text_b": "KADEBEUL E GER 5106-01339",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C064-L13.png"
+ },
+ {
+  "id": "C067-L45",
+  "page": "C067",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "376 0250-C031",
+  "text_b": "376 0250-?031",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C067-L45.png"
+ },
+ {
+  "id": "C069-L38",
+  "page": "C069",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "HETTS?EDT E GER 5138-01131",
+  "text_b": "HETTSTEDT E GER 5138-01131",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C069-L38.png"
+ },
+ {
+  "id": "C071-L41",
+  "page": "C071",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "DOROG- HUNG 4743-01844",
+  "text_b": "DOROG HUNG 4743-01844",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C071-L41.png"
+ },
+ {
+  "id": "C076-L29",
+  "page": "C076",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "248 0250-0336",
+  "text_b": "248 0250-0536",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C076-L29.png"
+ }
+]

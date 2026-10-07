@@ -1,0 +1,402 @@
+[
+ {
+  "id": "A002-L05",
+  "page": "A002",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "771 6270 ADLER 0324-8635 4327-03956 R",
+  "text_b": "771 6270 ADLER 0324-8635 4327-09956 R",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/A002-L05.png"
+ },
+ {
+  "id": "A002-L07",
+  "page": "A002",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "727 0080 AKTYUBINSK 0236-8002 501?-05710 R",
+  "text_b": "727 0080 AKTYURINSK 0236-8002 5010-05710 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A002-L07.png"
+ },
+ {
+  "id": "A002-L09",
+  "page": "A002",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "952 0100 ALAPAYEVSK 0156-8024 5752-05145 R",
+  "text_b": "952 0100 ALAPAYEVSK 0156-8024 5752-06145 R",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/A002-L09.png"
+ },
+ {
+  "id": "A002-L11",
+  "page": "A002",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "51 0125 ALEKSEYEVSKOYE 0204-8658 4917-14016 R",
+  "text_b": "91 0125 ALEKSEYEVSKOYE 0204-8658 4917-14016 R",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/A002-L11.png"
+ },
+ {
+  "id": "A002-L15",
+  "page": "A002",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "1044 0160 ALMA ATA N.W. 0329-8603 4321-076?0 T",
+  "text_b": "1044 0160 ALMA ATA N.W. 0329-8603 4321-07690 T",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A002-L15.png"
+ },
+ {
+  "id": "A002-L17",
+  "page": "A002",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "442 8465 ALT LONNEWITZ, E GER 0231-8056 5133-0131? R",
+  "text_b": "442 8465 ALT LONNEWITZ, E GER 0231-8056 5133-01313 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A002-L17.png"
+ },
+ {
+  "id": "A002-L18",
+  "page": "A002",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "857 0189 ALYTUS 0168-8601 ?425-0240? R",
+  "text_b": "857 0189 ALYTUS 0168-8601 5425-02402 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A002-L18.png"
+ },
+ {
+  "id": "A002-L25",
+  "page": "A002",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "291 3776 ANTONOVKA 0282-8602 4423-1342? S",
+  "text_b": "291 3776 ANTONOVKA 0282-8602 4423-13423 S",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A002-L25.png"
+ },
+ {
+  "id": "A002-L27",
+  "page": "A002",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "553 0265 ARAO CEALA, RUM 0251-8006 4611-02116 R",
+  "text_b": "553 0265 ARAD CEALA, RUM 0251-8006 4611-02116 R",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/A002-L27.png"
+ },
+ {
+  "id": "A002-L29",
+  "page": "A002",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "893 0270 ARKHANGELSK/BAKARITSA 0092-8002 6478-04035 T",
+  "text_b": "893 027? ARKHANGELSK/BAKARITSA 0092-8002 6478-04035 T",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A002-L29.png"
+ },
+ {
+  "id": "A004-L04",
+  "page": "A004",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "319 0510 BALTIYSK/NCYTIF 0169-8601 5437-01953 R",
+  "text_b": "319 0510 BALTIYSK/NOYTIF 0169-8601 5437-01953 R",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/A004-L04.png"
+ },
+ {
+  "id": "A004-L16",
+  "page": "A004",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "22 0622 BELAYA TSERKOV 0233-?002 4948-03002 R",
+  "text_b": "22 0622 BELAYA TSERKOV 0233-8002 4948-03002 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A004-L16.png"
+ },
+ {
+  "id": "A004-L20",
+  "page": "A004",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "520 0665 BERAT/KUCOVE, ALB 0322-8001 4047-01994 R",
+  "text_b": "520 0665 BERAT/KUCOVE, ALB 0322-8001 4047-01994 R",
+  "reasons": "minutes>=60",
+  "crop": "adjudicate/crops/A004-L20.png"
+ },
+ {
+  "id": "A004-L23",
+  "page": "A004",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "147 0678 BEREZA/KARTUZKAYA 0168-8692 5233-02453 R",
+  "text_b": "147 0676 BEREZA/KARTUZKAYA 0168-8692 5233-02453 R",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/A004-L23.png"
+ },
+ {
+  "id": "A004-L27",
+  "page": "A004",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "524 0746 BIALA PODLASKA, POL 0168-8201 5201-02309 R",
+  "text_b": "524 0746 BIALA PODLASKA, POL 0165-8201 5201-02309 R",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/A004-L27.png"
+ },
+ {
+  "id": "A004-L28",
+  "page": "A004",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "712 7415 BIRMA 0203-8606 5121-12842 S",
+  "text_b": "712 7415 BIRMA 0203-8606 5171-12842 S",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/A004-L28.png"
+ },
+ {
+  "id": "A004-L29",
+  "page": "A004",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "635 0766 BIROBIDZHAN 0203-8001 4945-1325? S",
+  "text_b": "695 0766 BIROBIDZHAN 0203-8001 4945-13258 S",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A004-L29.png"
+ },
+ {
+  "id": "A005-L10",
+  "page": "A005",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "1051 08905 BORISOGLEBSK 0234-8008 5123-04206 R",
+  "text_b": "1051 08905 BORISOGLEBSK 0234-8006 5123-04206 R",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/A005-L10.png"
+ },
+ {
+  "id": "A005-L19",
+  "page": "A005",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "957 0970 BREST 0158-8610 570?-02340 R",
+  "text_b": "957 0970 BREST 0158-8610 5700-02340 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A005-L19.png"
+ },
+ {
+  "id": "A005-L21",
+  "page": "A005",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "140 0989 BRIESEN, E GER 0169-?299 5202-01345 R",
+  "text_b": "140 0989 BRIESEN, E GER 0165-8299 5202-01345 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A005-L21.png"
+ },
+ {
+  "id": "A006-L05",
+  "page": "A006",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "754 1020 BUCHAREST/PIPERA, RUM 0251-8017 4429-02607 R",
+  "text_b": "794 1020 BUCHAREST/PIPERA, RUM 0251-8017 4429-02607 R",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/A006-L05.png"
+ },
+ {
+  "id": "A006-L16",
+  "page": "A006",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "221 1193 CHANG CHIAO, CHINA 0492-8401 2956-12134 R",
+  "text_b": "221 1193 CHANG CHIAO, CHINA 0492-8401 2956-12134 P",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/A006-L16.png"
+ },
+ {
+  "id": "A006-L17",
+  "page": "A006",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "773 1195 CHANG CHUN N.W. MANCH 0290-8008 435?-12517 S",
+  "text_b": "773 1195 CHANG CHUN N.W. MANCH 0290-8008 4355-12517 S",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A006-L17.png"
+ },
+ {
+  "id": "A006-L20",
+  "page": "A006",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "723 11995 CHAN ?, CHINA 0496-8402 2535-10350 R",
+  "text_b": "723 11995 CHAN I, CHINA 0496-8402 2535-10350 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A006-L20.png"
+ },
+ {
+  "id": "A006-L22",
+  "page": "A006",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "897 1202 CHAPLINO 0075-8007 6474-17217W R",
+  "text_b": "897 1202 CHAPLINO 0075-8007 6474-17217W R",
+  "reasons": "minutes>=60",
+  "crop": "adjudicate/crops/A006-L22.png"
+ },
+ {
+  "id": "A011-L13",
+  "page": "A011",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "902 2410 GRODNO 0168-8618 5338-02345 R",
+  "text_b": "902 2410 GRODNO 0168-8619 5338-02345 R",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/A011-L13.png"
+ },
+ {
+  "id": "A011-L26",
+  "page": "A011",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "975 24937 GVARDEYSK 0168-8620 5340-02106 R",
+  "text_b": "975 24937 GVARDEYSK 0158-8620 5340-02106 R",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/A011-L26.png"
+ },
+ {
+  "id": "A017-L04",
+  "page": "A017",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "284 38605 KONIGSBERG/NEUMARK, POL 0169-8255 5256-01425 R",
+  "text_b": "284 38605 KONIGSBERG/NEUMARK, POL 0169-8255 5256-01429 R",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/A017-L04.png"
+ },
+ {
+  "id": "A017-L07",
+  "page": "A017",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "356 3873 KONOTOR? 0281-8004 4717-14200 R",
+  "text_b": "356 3873 KONOTORO 0281-8004 4717-14200 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A017-L07.png"
+ },
+ {
+  "id": "A019-L10",
+  "page": "A019",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "768 4310 KUY8YSHEV 0165-8015 5312-05011 R",
+  "text_b": "768 4310 KUYBYSHEV 0165-8015 5312-05011 R",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/A019-L10.png"
+ },
+ {
+  "id": "A020-L04",
+  "page": "A020",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "600 4490 LENINGRAD CIVIL 0153-?048 5948-03018 Y",
+  "text_b": "600 4490 LENINGRAD CIVIL 0153-8048 5948-03018 Y",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A020-L04.png"
+ },
+ {
+  "id": "A020-L05",
+  "page": "A020",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "298 4490 LENINGRAD/GORELOVO 015?-8051 5946-03005 S",
+  "text_b": "298 4490 LENINGRAD/GORELOVO 0155-8051 5946-03005 S",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A020-L05.png"
+ },
+ {
+  "id": "A020-L06",
+  "page": "A020",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "459 4490 LE?INGRAD/GORSKAYA 0103-8602 6002-03001 V",
+  "text_b": "459 4490 LENINGRAD/GORSKAYA 0103-8602 6002-03001 Y",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A020-L06.png"
+ },
+ {
+  "id": "A020-L09",
+  "page": "A020",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "488 4490 LENINGRAD/KOLOMYAGI 0103-?623 6000-03017 Z",
+  "text_b": "488 4490 LENINGRAD/KOLOMYAGI 0103-8623 6000-03017 Z",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A020-L09.png"
+ },
+ {
+  "id": "A020-L11",
+  "page": "A020",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "350 4490 LENINGRAD/LESNOY 0103-?634 6003-03021 RB",
+  "text_b": "350 4490 LENINGRAD/LESNOY 0103-8634 6003-03021 RB",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A020-L11.png"
+ },
+ {
+  "id": "A020-L12",
+  "page": "A020",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "321 4490 LENINGRAD/LEVASHOVO 010?-8606 6005-03012 U",
+  "text_b": "321 4490 LENINGRAD/LEVASHOVO 0103-8606 6005-03012 U",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A020-L12.png"
+ },
+ {
+  "id": "A020-L13",
+  "page": "A020",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "554 4490 LENINGRAD/UGLOV? 0103-8609 6004-03042 W",
+  "text_b": "554 4490 LENINGRAD/UGLOVO 0103-8609 6004-03042 W",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A020-L13.png"
+ },
+ {
+  "id": "A020-L18",
+  "page": "A020",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "462 4520 LEPAYA N. 0152-8605 563?-02101 T",
+  "text_b": "462 4520 LEPAYA N. 0152-8605 5637-02101 T",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A020-L18.png"
+ },
+ {
+  "id": "A020-L20",
+  "page": "A020",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "447 4538 LEZNICA WIELKA, P?L 0169-8298 5200-01909 R",
+  "text_b": "447 4538 LEZNICA WIELKA, POL 0169-8298 5200-01909 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A020-L20.png"
+ },
+ {
+  "id": "A020-L21",
+  "page": "A020",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "695 45405 LIANG SHAN, CHINA 0495-8410 304?-10747 R",
+  "text_b": "695 45405 LIANG SHAN, CHINA 0495-8410 3043-10747 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/A020-L21.png"
+ }
+]

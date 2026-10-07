@@ -1,0 +1,172 @@
+[
+ {
+  "id": "C192-L43",
+  "page": "C192",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "4442- 2225E 8",
+  "text_b": "4442- 2225E B",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C192-L43.png"
+ },
+ {
+  "id": "C215-L45",
+  "page": "C215",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "1086 6710 ?ADOMSKO POL 5104-01928",
+  "text_b": "1086 6710 RADOMSKO POL 5104-01928",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C215-L45.png"
+ },
+ {
+  "id": "C217-L36",
+  "page": "C217",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "4650- 3005E 8",
+  "text_b": "4650- 3005E B",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C217-L36.png"
+ },
+ {
+  "id": "C219-L26",
+  "page": "C219",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "23 6830 RIGA",
+  "text_b": "23 6830 RIGA 5659-02409",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C219-L26.png"
+ },
+ {
+  "id": "C219-L27",
+  "page": "C219",
+  "kind_a": "data",
+  "kind_b": "blank",
+  "text_a": "5659-02409",
+  "text_b": "",
+  "reasons": "kind differs (data vs blank); text differs",
+  "crop": "adjudicate/crops/C219-L27.png"
+ },
+ {
+  "id": "C226-L16",
+  "page": "C226",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "1193 7225 SARANDE AL8 3952-02000",
+  "text_b": "1193 7225 SARANDE ALB 3952-02000",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C226-L16.png"
+ },
+ {
+  "id": "C226-L20",
+  "page": "C226",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "5411- 4511E 8",
+  "text_b": "5411- 4511E B",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C226-L20.png"
+ },
+ {
+  "id": "C230-L44",
+  "page": "C230",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "5?35- 6036E B",
+  "text_b": "5935- 6036E B",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C230-L44.png"
+ },
+ {
+  "id": "C237-L11",
+  "page": "C237",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "984 75607 SHUMEN BULG 4316-02655",
+  "text_b": "-984 75607 SHUMEN BULG 4316-02655",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C237-L11.png"
+ },
+ {
+  "id": "C244-L38",
+  "page": "C244",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "184, 0323-0075",
+  "text_b": "184 0323-0075",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C244-L38.png"
+ },
+ {
+  "id": "C244-L45",
+  "page": "C244",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "-208 0323-0183",
+  "text_b": "-208 0323-0183",
+  "reasons": "line does not match any expected format",
+  "crop": "adjudicate/crops/C244-L45.png"
+ },
+ {
+  "id": "C249-L42",
+  "page": "C249",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "485 ,7870 STAVROPOL 4503-04159",
+  "text_b": "485 7870 STAVROPOL 4503-04159",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C249-L42.png"
+ },
+ {
+  "id": "C252-L19",
+  "page": "C252",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "275, 0232-",
+  "text_b": "275 0232-",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C252-L19.png"
+ },
+ {
+  "id": "C254-L10",
+  "page": "C254",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "989 79715 SU?YAKVI 6214-03223",
+  "text_b": "989 79715 SUOYAKVI 6214-03223",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/C254-L10.png"
+ },
+ {
+  "id": "C261-L14",
+  "page": "C261",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "5107- 4044E 8",
+  "text_b": "5107- 4044E B",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C261-L14.png"
+ },
+ {
+  "id": "C262-L23",
+  "page": "C262",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "5000- 2058E 8",
+  "text_b": "5000- 2058E B",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C262-L23.png"
+ },
+ {
+  "id": "C276-L32",
+  "page": "C276",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "5251- 3241E 8",
+  "text_b": "5251- 3241E B",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/C276-L32.png"
+ }
+]

@@ -130,7 +130,12 @@ def main(pass_a: str, pass_b: str) -> None:
                 continue
             if ra is None or rb is None:
                 have = ra or rb
-                if have[0] != "data" and line_id.endswith("+") is False:
+                if have[0] != "data" and line_id.endswith("+"):
+                    # page furniture without a label (stamps) that only one pass recorded
+                    stats["one-sided unlabelled furniture"] += 1
+                    agreed.append([line_id, "furniture", norm(have[1])])
+                    continue
+                if have[0] != "data":
                     stats["one-sided non-data"] += 1
                 stats["missing in one pass"] += 1
                 disputes.append([line_id, page, (ra or ("",))[0], (rb or ("",))[0], (ra or ("", ""))[1], (rb or ("", ""))[1], "missing in one pass"])

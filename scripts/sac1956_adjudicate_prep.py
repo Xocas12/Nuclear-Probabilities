@@ -7,6 +7,10 @@ crops the line with one line of context above and below from the 300-dpi render,
 2.5x, and marks the disputed line with a red bar. Writes crops to
 data/interim/sac1956/adjudicate/crops/<id>.png and batches to
 data/interim/sac1956/adjudicate/batchNN.json.
+
+Incremental: pages that either pass has not finished are skipped, lines already in an existing
+batch are skipped, and new batches are numbered after the existing ones. Run it again when the
+passes are complete to batch the rest.
 """
 
 import csv
@@ -25,9 +29,26 @@ OUT = ROOT / "adjudicate"
 ZOOM = 2.5
 
 
+def complete(manifest: dict, pass_name: str, page: str, compared_at: float) -> bool:
+    """The pass has every line of the page, and has not changed it since the comparison ran."""
+    tsv = ROOT / pass_name / f"{page}.tsv"
+    if not tsv.exists() or tsv.stat().st_mtime > compared_at:
+        return False
+    have = {r.split("\t")[0].rstrip("+") for r in tsv.read_text(encoding="utf-8").splitlines() if r.strip()}
+    return {line["id"] for line in manifest[page]["lines"]} <= have
+
+
 def main(batch_size: int) -> None:
     manifest = json.loads((ROOT / "manifest.json").read_text())
-    disputes = list(csv.DictReader(open(ROOT / "compare" / "disputes.csv", encoding="utf-8")))
+    batched = {item["id"] for f in OUT.glob("batch*.json") for item in json.loads(f.read_text())}
+    first = 1 + max((int(f.stem[5:]) for f in OUT.glob("batch*.json")), default=0)
+    disputes_csv = ROOT / "compare" / "disputes.csv"
+    compared_at = disputes_csv.stat().st_mtime
+    disputes = [
+        d
+        for d in csv.DictReader(open(disputes_csv, encoding="utf-8"))
+        if d["id"] not in batched and all(complete(manifest, p, d["page"], compared_at) for p in ("passA", "passB"))
+    ]
     (OUT / "crops").mkdir(parents=True, exist_ok=True)
     docs = {code: pymupdf.open(path) for code, path in strips.DOCS.items()}
     by_page: dict[str, list[dict]] = {}
@@ -64,8 +85,8 @@ def main(batch_size: int) -> None:
             items.append({**d, "crop": str(path.relative_to(ROOT))})
     for n in range(0, len(items), batch_size):
         batch = items[n : n + batch_size]
-        (OUT / f"batch{n // batch_size + 1:02d}.json").write_text(json.dumps(batch, indent=1, ensure_ascii=False))
-    print(f"{len(items)} crops, {(len(items) + batch_size - 1) // batch_size} batches")
+        (OUT / f"batch{first + n // batch_size:02d}.json").write_text(json.dumps(batch, indent=1, ensure_ascii=False))
+    print(f"{len(items)} new crops, {(len(items) + batch_size - 1) // batch_size} new batches from batch{first:02d}")
 
 
 if __name__ == "__main__":
