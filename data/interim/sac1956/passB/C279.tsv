@@ -1,6 +1,6 @@
 C279-L01	header	DGZ BA	
 C279-L02	data	354 0161-0101	
-C279-L03	data	275 0161-9933	
+C279-L03	data	275 0161-9933	speck before 275 omitted
 C279-L04	data	623 8910 VAC HUNG 4745-01908	
 C279-L05	data	390 0251-0727	
 C279-L06	data	275 0251-9971	
@@ -18,7 +18,7 @@ C279-L17	data	897 8917 VALGA 5747-02602	speck after 897 omitted
 C279-L18	data	358 0153-0644	
 C279-L19	data	275 0153-9963	
 C279-L20	data	1134 89173 VALMIYERA 5733-02526	
-C279-L21	data	227 0153-	stray dash far right of text omitted
+C279-L21	data	227 0153-	stray dash far right of the text omitted
 C279-L22	data	275 0153-9873	
 C279-L23	data	528 8920 VALUYKI 5011-03809	
 C279-L24	data	5010- 3806E B	
@@ -34,4 +34,4 @@ C279-L33	data	227 0166-
 C279-L34	data	275 0166-9663	
 C279-L35	data	317 8960 VELIKIYE LUKI 5621-03032	speck after 8960 omitted
 C279-L36	data	5620- 3034E B	
-C279-L37	footer	DocId:32003765 TOP SECRET - RESTRICT?	cut: bottom and right end outside strip; circled stamp overprints the E after RESTRICT; rule runs through the text
+C279-L37	footer	DocId:32003765 TOP SECRET - RESTRICT??	cut: strip bottom and right end; circled stamp over the glyph after RESTRICT and a cut-off glyph at the strip edge

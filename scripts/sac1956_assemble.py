@@ -53,6 +53,7 @@ SUFFIXES = [
 # Pages scanned twice: the duplicate's lines stay in lines.csv but do not enter the tables.
 # PDF page 46 repeats page 45 line for line (CHERNIGOV .. CHIA MU SSU); page 47 continues 45.
 DUPLICATE_PAGES = {"C046": "C045"}
+BARE_COORDS = re.compile(r"^\d{4}-\d{5}[EW]?$")
 DIRECTIONS = {"N", "S", "E", "W", "NE", "NW", "SE", "SW", "NNE", "NNW", "SSE", "SSW", "ENE", "ESE", "WNW", "WSW"}
 
 # Thresholds of the consistency checks, in degrees of latitude (longitude allows twice as much).
@@ -213,12 +214,28 @@ def main() -> None:
             current["n_population"] += f["cat"] == "275"
             current["last_page"] = page
 
-    for line_id in ordered_ids(manifest, final):
-        rec = final.get(line_id)
-        if rec is None:
-            continue
+    # On skewed pages a header's coordinates can sit in the band of the next line ("23 6830 RIGA"
+    # then "5659-02409"); such pairs are read as one header.
+    seq = [(i, final[i]) for i in ordered_ids(manifest, final) if i in final]
+    joined = {}  # first line id -> second line id
+    for (id1, r1), (id2, r2) in zip(seq, seq[1:]):
+        page = id1.split("-")[0]
+        if r1["kind"] == r2["kind"] == "data" and BARE_COORDS.match(cmp.norm(r2["text"])):
+            both = r1["text"] + " " + r2["text"]
+            if (cmp.classify(page, cmp.norm(r1["text"]), cmp.light(r1["text"]))[0] == "unparsed"
+                    and cmp.classify(page, cmp.norm(both), cmp.light(both))[0] in ("complex", "subcomplex")):
+                joined[id1] = id2
+    continuation = {v: k for k, v in joined.items()}
+
+    for line_id, rec in seq:
         page = line_id.split("-")[0]
         text = rec["text"]
+        if line_id in continuation:
+            lines.append({"id": line_id, "page": page, "kind": "data", "text": text, "source": rec["source"],
+                          "type": f"coordinates of {continuation[line_id]}"})
+            continue
+        if line_id in joined:
+            text = text + " " + final[joined[line_id]]["text"]
         if page in DUPLICATE_PAGES:
             lines.append({"id": line_id, "page": page, "kind": rec["kind"], "text": text, "source": rec["source"],
                           "type": f"duplicate of page {DUPLICATE_PAGES[page]}"})
@@ -361,6 +378,27 @@ def checks(complexes, dgzs, installs, msites, airfields) -> list[dict]:
         if c and (abs(a["lat"] - c["lat"]) > MAX_AIRFIELD_OFFSET or abs(a["lon"] - c["lon"]) > MAX_AIRFIELD_OFFSET * 2):
             flag("airfield far from its reference complex", a["id"],
                  f"{a['lat']}, {a['lon']} vs {c['name_printed']} ({c['id']}) {c['lat']}, {c['lon']}")
+    # The same place can be printed twice: as a complex and in an airfield's name, or in both
+    # lists. Two names a letter apart, a short distance apart, are probably one name, misread
+    # once ("SUOYAKVI" for SUOYARVI).
+    places = [(c["id"], c["name"], c["lat"], c["lon"]) for c in complexes]
+    places += [(m["id"], m["name"], m["lat"], m["lon"]) for m in msites]
+    for a in airfields:
+        for part in re.split(r"/", a["name"]):
+            places.append((a["id"], sort_keys(part)[4], a["lat"], a["lon"]))
+    by_len = defaultdict(list)
+    for place in places:
+        if len(place[1]) >= 4:
+            by_len[len(place[1])].append(place)
+    seen = set()
+    for group in by_len.values():
+        for i, (id1, n1, lat1, lon1) in enumerate(group):
+            for id2, n2, lat2, lon2 in group[i + 1 :]:
+                if (id1 != id2 and n1 != n2 and abs(lat1 - lat2) < 1 and abs(lon1 - lon2) < 2
+                        and sum(x != y for x, y in zip(n1, n2)) == 1 and (n1, n2) not in seen):
+                    seen.add((n1, n2))
+                    flag("name a letter away from a nearby name", id1, f"{n1} vs {n2} ({id2})")
+                    flag("name a letter away from a nearby name", id2, f"{n2} vs {n1} ({id1})")
     return flags
 
 

@@ -14,7 +14,7 @@ C281-L13	data	4705- 1805E D
 C281-L14	data	066 0252-0592	
 C281-L15	data	282 0252-0592	
 C281-L16	data	275 0252-9675	
-C281-L17	data	PEREMARTON HUNG 4707-01807	unsure: 3rd and 7th letters are R with broken bowl (read as R, not K)
+C281-L17	data	PEREMARTON HUNG 4707-01807	unsure: 3rd and 7th letters have a broken bowl and read as R, not K
 C281-L18	data	275 0252-	
 C281-L19	data	282 0252-0293	
 C281-L20	data	445 0252-0293	
@@ -46,4 +46,4 @@ C281-L45	data	275 0322-9965
 C281-L46	data	51 9080 VILNYUS 5441-02518	
 C281-L47	data	5440- 2516E A	
 C281-L48	data	240 0168-	
-C281-L49	footer	DocId:32003765 TOP SECRET - RESTRICT?	cut: right end outside strip; circled stamp overprints the E after RESTRICT; rule runs through the text
+C281-L49	footer	DocId:32003765 TOP SECRET - RESTRICT??	cut: strip right end; circled stamp over the glyph after RESTRICT and a cut-off glyph at the strip edge

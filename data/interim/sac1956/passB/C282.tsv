@@ -8,7 +8,7 @@ C282-L07	data	208 0168-0219
 C282-L08	data	170 0168-0224	
 C282-L09	data	170 0168-0280	heavy scan specks around the numbers omitted
 C282-L10	data	248 0168-0326	
-C282-L11	data	248 0168-0327	specks after 248 and after 0327 omitted
+C282-L11	data	248 0168-0327	specks after 248, between 2 and 7, and after 0327 omitted
 C282-L12	data	275 0168-9998	speck after 9998 omitted
 C282-L13	data	NOVO VILNYA 5442-02525	
 C282-L14	data	5441- 2524E B	
@@ -17,7 +17,7 @@ C282-L16	data	275 0168-9917
 C282-L17	data	998 9088 VINH N VIETNAM 1840-10540	
 C282-L18	data	246 0617-	
 C282-L19	data	275 0617-9996	
-C282-L20	data	4 9090 VINNITSA 4913-02829	speck cluster left of 4 omitted
+C282-L20	data	4 9090 VINNITSA 4913-02829	scan specks left of the 4 omitted; no digit visible before the 4
 C282-L21	data	4913- 2828E A	
 C282-L22	data	4913- 2830E C	
 C282-L23	data	240 0233-	
@@ -42,4 +42,4 @@ C282-L41	data	281 0167-0946
 C282-L42	data	245 0167-1050	
 C282-L43	data	275 0167-9997	
 C282-L44	data	222 9110 VLADIMIR 5608-04025	
-C282-L45	footer	DocId:32003765 TOP SECRET - RESTRICT?	cut: bottom and right end outside strip; circled stamp overprints the E after RESTRICT; rule runs through the text
+C282-L45	footer	DocId:32003765 TOP SECRET - RESTRICT??	cut: strip bottom and right end; circled stamp over the glyph after RESTRICT and a cut-off glyph at the strip edge

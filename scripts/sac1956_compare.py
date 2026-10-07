@@ -28,7 +28,7 @@ CODES = {
 COMPLEX = re.compile(r"^(?P<prio>\d{1,4}A?) (?P<ref>\d{4,5}) (?P<name>.+?) (?P<lat>\d{4})-(?P<lon>\d{5})(?P<hem>[EW])?$")
 SUBCOMPLEX = re.compile(r"^(?P<name>[A-Z][^\d].*?) (?P<lat>\d{4})-(?P<lon>\d{5})(?P<hem>[EW])?$")
 DGZ = re.compile(r"^(?P<lat>\d{4})-(?P<lon>\d{4,5})(?P<hem>[EW])? (?P<label>[A-Z]{1,2})$")
-INSTALL = re.compile(r"^(?P<cat>\d{3}) (?P<wac>\d{4})-(?P<num>\d{4})?$")
+INSTALL = re.compile(r"^-?(?P<cat>\d{3}) (?P<wac>\d{4})-(?P<num>\d{4})?$")  # "-208 0323-0183": a stray bar
 AIRFIELD = re.compile(  # matched against light() text: spacing after a blank BE number survives
     r"^(?P<prio>\d{1,4}A?) (?P<ref>\d{4,5}) (?P<name>.+?) (?P<wac>\d{4})-(?P<num>\d{4})? ?"
     r"(?P<lat>\d{4})-(?P<lon>\d{5})(?P<hem>[EW]?) (?P<code>[A-Z]{1,2})$"
