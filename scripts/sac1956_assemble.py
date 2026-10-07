@@ -304,6 +304,7 @@ def main() -> None:
             w.writerows(label_rows)
 
     flags = checks(complexes, dgzs, installs, msites, airfields)
+    flags += [{"check": a["problem"], "id": a["id"], "detail": a["text"]} for a in anomalies]
     write("checks.csv", flags)
     write_flags(flags, final)
     report(complexes, dgzs, installs, msites, airfields, anomalies, lines, gaps, final, flags)
@@ -464,6 +465,28 @@ def write_flags(flags: list[dict], final: dict) -> None:
             w.writerow([line_id, line_id.split("-")[0], rec["kind"], rec["kind"], rec["text"], rec["text"], "; ".join(why)])
 
 
+def quality(final: dict) -> list[str]:
+    """How often each pass matched the final reading, and what adjudication decided."""
+    passes = {name: cmp.load(name) for name in ("passA", "passB")}
+    data = [i for i, r in final.items() if r["kind"] == "data"]
+    wrong = {name: {i for i in data if i not in rows or cmp.norm(rows[i][1]) != cmp.norm(final[i]["text"])}
+             for name, rows in passes.items()}
+    both = wrong["passA"] & wrong["passB"]
+    same = {i for i in both if i in passes["passA"] and i in passes["passB"] and "?" not in passes["passA"][i][1]
+            and cmp.norm(passes["passA"][i][1]) == cmp.norm(passes["passB"][i][1])}
+    adjudicated = [r for r in final.values() if r["source"] == "adjudicated"]
+    out = ["## Transcription quality", "",
+           f"- Data lines: {len(data)}. Pass A differs from the final reading on {len(wrong['passA'])} "
+           f"({len(wrong['passA']) / len(data):.2%}), pass B on {len(wrong['passB'])} ({len(wrong['passB']) / len(data):.2%}); "
+           f"both on {len(both)}. On {len(same)} of these the two passes wrote the same legible text: errors the "
+           f"comparison cannot see, found by the consistency checks or by an adjudicator looking at the line for "
+           f"another reason ({', '.join(sorted(same))}).",
+           f"- Adjudicated lines: {len(adjudicated)}; choice " +
+           ", ".join(f"{k} {v}" for k, v in sorted(Counter(r['choice'] for r in adjudicated).items())) +
+           "; confidence " + ", ".join(f"{k} {v}" for k, v in sorted(Counter(r['confidence'] for r in adjudicated).items())), ""]
+    return out
+
+
 def nsa_check(complexes, installs) -> list[str]:
     """Compare installation lines by category with the NSA city sheets (an independent count)."""
     path = Path("data/curated/validation_sac1956_nsa_city_sheets.csv")
@@ -515,6 +538,7 @@ def report(complexes, dgzs, installs, msites, airfields, anomalies, lines, gaps,
             f"- Complexes: {len(top)}; sub-complexes: {len(complexes) - len(top)}; DGZs: {len(dgzs)}; "
             f"installation lines: {len(installs)}; M-n rows: {len(msites)}; airfields: {len(airfields)}",
             f"- Lines still carrying '?' or failing a rule: {len(anomalies)}", ""]
+    out += quality(final)
     out += ["## Anchors", "", "| Complex | Priority | DGZs | Installations (with sub-complexes) |", "|---|---|---|---|"]
     for name in ["MOSCOW", "LENINGRAD", "BERLIN"]:
         for c in top:
@@ -528,6 +552,13 @@ def report(complexes, dgzs, installs, msites, airfields, anomalies, lines, gaps,
     out += ["", "## Priority numbers", "",
             f"- {len(prios)} complexes carry a priority; highest {max(nums) if nums else '-'}; "
             f"duplicates: {len(dup)} {dup[:20]}; numbers missing from 1..max: {len(missing)} {missing[:30]}"]
+    aprios = [a["priority"] for a in airfields]
+    anums = sorted(int(x.rstrip("A")) for x in aprios if x.rstrip("A").isdigit())
+    adup = [x for x, n in Counter(aprios).items() if n > 1]
+    amissing = sorted(set(range(1, max(anums) + 1)) - set(anums)) if anums else []
+    out += [f"- Airfields: {len(aprios)} priorities, highest {max(anums) if anums else '-'}, "
+            f"{sum(x.endswith('A') for x in aprios)} with an A suffix (typed in later); duplicates: {len(adup)} {adup}; "
+            f"numbers missing from 1..max: {len(amissing)} {amissing}"]
     refs = [ref_value(c["ref"]) for c in top if c["ref"].isdigit()]
     drops = sum(1 for x, y in zip(refs, refs[1:]) if y <= x)
     out += [f"- Reference numbers that drop below the previous complex (alphabetical order check): {drops}"]

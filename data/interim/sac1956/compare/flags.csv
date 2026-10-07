@@ -1,0 +1,48 @@
+id,page,kind_a,kind_b,text_a,text_b,reasons
+C138-L44,C138,data,data,4212-4343E E,4212-4343E E,"check: DGZ far from its header (0.07 deg lat / 1.02 deg lon from KUTAISI (C138-L42 42.2667, 42.7))"
+C242-L17,C242,data,data,4348-2321E G,4348-2321E G,"check: DGZ far from its header (0.97 deg lat / 0.03 deg lon from KURILO BULG (C242-L16 42.8333, 23.3167))"
+C299-L28,C299,data,data,3942-9750E C,3942-9750E C,"check: DGZ far from its header (0.58 deg lat / 0.63 deg lon from YU MEN CHINA (C299-L27 40.2833, 97.2))"
+C010-L16,C010,data,data,ILINKA 4614-04755,ILINKA 4614-04755,check: sub-complex far from its complex (0.23 deg lat / 18.48 deg lon from ARTSIZ (C009-L47))
+C013-L25,C013,data,data,415 0159-0951,415 0159-0951,check: WAC prefix differs from its block (0159 in a block where 9 of 10 lines use 0169)
+C150-L03,C150,data,data,290 0381-0260 || 275 0289-9953,290 0381-0260 || 275 0289-9953,check: WAC prefix differs from its block (0381 in a block where 4 of 5 lines use 0289)
+C186-L03,C186,data,data,285 0152-0084,285 0152-0084,check: WAC prefix differs from its block (0152 in a block where 40 of 41 lines use 0162)
+C299-L31,C299,data,data,275 0331-9999,275 0331-9999,check: WAC prefix differs from its block (0331 in a block where 2 of 3 lines use 0332)
+C002-L04,C002,data,data,701 0022 ABDULINO 5340-05340,701 0022 ABDULINO 5340-05340,"check: header far from the other headers on its chart (WAC 0169: 53.6667, 53.6667 vs median 53.1167, 14.5667 of 127 headers)"
+C087-L15,C087,data,data,BOR 5622-04404,BOR 5622-04404,"check: header far from the other headers on its chart (WAC 0155: 56.3667, 44.0667 vs median 58.1333, 52.1833 of 22 headers)"
+C006-L13,C006,data,data,1045 0230 ANADYR 6444-17728,1045 0230 ANADYR 6444-17728,"check: header far from the other headers on its chart (WAC 0075: 64.7333, 177.4667 vs median 64.7667, -171.05 of 4 headers)"
+C009-L47,C009,data,data,962 0307 ARTSIZ 4600-02926,962 0307 ARTSIZ 4600-02926,"check: header far from the other headers on its chart (WAC 0248: 46.0, 29.4333 vs median 46.2333, 43.15 of 6 headers)"
+C178-L12,C178,data,data,1074 5370 NARYAN MAR 6739-05300,1074 5370 NARYAN MAR 6739-05300,"check: header far from the other headers on its chart (WAC 0093: 67.65, 53.0 vs median 66.4667, 61.5 of 6 headers)"
+C162-L15,C162,data,data,KAZINCBARCIKA HUNG 4815-02037,KAZINCBARCIKA HUNG 4815-02037,check: block with more than one population line (2 lines of category 275 under KAZINCBARCIKA HUNG)
+C173-L42,C173,data,data,TULOMA 6849-03248,TULOMA 6849-03248,check: block with more than one population line (2 lines of category 275 under TULOMA)
+C190-L04,C190,data,data,228 5761 OPPELN POL 5040-01757,228 5761 OPPELN POL 5040-01757,check: reference number not above the previous complex (5761 after 5775 (C189-L42))
+A002-L11,A002,data,data,51 0125 ALEKSEYEVSKOYE 0204-8658 4917-14016 R,51 0125 ALEKSEYEVSKOYE 0204-8658 4917-14016 R,check: duplicate airfield priority (priority 51 also on A024-L25)
+A024-L25,A024,data,data,51 5240 MURMASHI 0051-8609 6849-03248 S,51 5240 MURMASHI 0051-8609 6849-03248 S,check: duplicate airfield priority (priority 51 also on A002-L11)
+A004-L07,A004,data,data,449 9160 BARANOVKA 0166-8038 5208-04658 S,449 9160 BARANOVKA 0166-8038 5208-04658 S,"check: duplicate airfield priority (priority 449 also on A038-L15); check: airfield far from its reference complex (52.1333, 46.9667 vs VOLKHOV (C285-L08) 59.9167, 32.35)"
+A038-L15,A038,data,data,449 2212 TOFUTSU 0292-8421 4358-14542 S,449 2212 TOFUTSU 0292-8421 4358-14542 S,check: duplicate airfield priority (priority 449 also on A004-L07)
+A012-L16,A012,data,data,"572 7475 HUNG CHIAO, CHINA 0492-8406 3112-12120 R","572 7475 HUNG CHIAO, CHINA 0492-8406 3112-12120 R",check: duplicate airfield priority (priority 572 also on A035-L22)
+A035-L22,A035,data,data,"572 79465 SUI CHUNG, MANCH 0289-8005 4020-12020 R","572 79465 SUI CHUNG, MANCH 0289-8005 4020-12020 R",check: duplicate airfield priority (priority 572 also on A012-L16)
+A023-L16,A023,data,data,10 5032 MIRGOROD 0233-8051 4956-03339 R,10 5032 MIRGOROD 0233-8051 4956-03339 R,check: duplicate airfield priority (priority 10 also on A027-L20)
+A027-L20,A027,data,data,10 58975 OSTROV/GOROKHOVO 0153-8074 5718-02826 R,10 58975 OSTROV/GOROKHOVO 0153-8074 5718-02826 R,check: duplicate airfield priority (priority 10 also on A023-L16)
+A036-L12,A036,data,data,"516 8075 SZOLNOK/RAKOCZIFALVA, HUN 0251-8064 4707-02014 R","516 8075 SZOLNOK/RAKOCZIFALVA, HUN 0251-8064 4707-02014 R",check: airfield out of alphabetical order (SZOLNOK/RAKOCZIFALVA follows SZYMANY (A036-L11))
+A002-L17,A002,data,data,"442 8465 ALT LONNEWITZ, E GER 0231-8056 5133-01313 R","442 8465 ALT LONNEWITZ, E GER 0231-8056 5133-01313 R","check: airfield far from its reference complex (51.55, 13.2167 vs TOMASZOW MAZOWIECKI POL (C268-L12) 51.5333, 20.0333)"
+A005-L19,A005,data,data,957 0970 BREST 0158-8610 5700-02340 R,957 0970 BREST 0158-8610 5700-02340 R,"check: airfield far from its reference complex (57.0, 23.6667 vs BREST (C029-L09) 52.1, 23.7)"
+A030-L14,A030,data,data,"525 6615 PUCK CHANG, N KOREA 0380-0457 3930-12558 S","525 6615 PUCK CHANG, N KOREA 0380-0457 3930-12558 S",check: airfield BE number not 8xxx (0380-0457)
+A030-L27,A030,data,data,877 3798 RAUKHOVKA 0250-3704 4709-03048 R,877 3798 RAUKHOVKA 0250-3704 4709-03048 R,check: airfield BE number not 8xxx (0250-3704)
+C091-L37,C091,data,data,969 2493 GUSTROW E GER 5348-01210,969 2493 GUSTROW E GER 5348-01210,check: name a letter away from a nearby name (GUSTROW vs WUSTROW (C293-L27))
+C293-L27,C293,data,data,WUSTROW E GER 5405-01135,WUSTROW E GER 5405-01135,check: name a letter away from a nearby name (WUSTROW vs GUSTROW (C091-L37))
+C017-L40,C017,data,data,SLAPY CZECH 4949-01425,SLAPY CZECH 4949-01425,check: name a letter away from a nearby name (SLAPY vs SLANY (C212-L13))
+C212-L13,C212,data,data,SLANY CZECH 5014-01405,SLANY CZECH 5014-01405,check: name a letter away from a nearby name (SLANY vs SLAPY (C017-L40))
+C003-L06,C003,data,data,193 0080 AKTYUBINSK 5020-05709,193 0080 AKTYUBINSK 5020-05709,check: name a letter away from a nearby name (AKTYUBINSK vs AKTYURINSK (A002-L07))
+A002-L07,A002,data,data,727 0080 AKTYURINSK 0236-8002 5010-05710 R,727 0080 AKTYURINSK 0236-8002 5010-05710 R,check: name a letter away from a nearby name (AKTYURINSK vs AKTYUBINSK (C003-L06))
+C262-L15,C262,data,data,468 82562 TAO AN MANCH 4537-12252,468 82562 TAO AN MANCH 4537-12252,check: name a letter away from a nearby name (TAO AN vs TAONAN (A037-L07))
+A037-L07,A037,data,data,"703 82562 TAO NAN, MANCH 0284-8004 4516-12252 R","703 82562 TAO NAN, MANCH 0284-8004 4516-12252 R",check: name a letter away from a nearby name (TAONAN vs TAO AN (C262-L15))
+C207-L09,C207,data,data,BYLOVO M-10 5523-03711 QA,BYLOVO M-10 5523-03711 QA,check: name a letter away from a nearby name (BYLOVO vs BYKOVO (A023-L27))
+A023-L27,A023,data,data,871 5150 MOSCOW/BYKOVO 0167-8039 5537-03803 RA,871 5150 MOSCOW/BYKOVO 0167-8039 5537-03803 RA,check: name a letter away from a nearby name (BYKOVO vs BYLOVO (C207-L09))
+A002-L29,A002,data,data,893 0270 ARKHANGELSK/BAKARITSA 0092-8002 6478-04035 T,893 0270 ARKHANGELSK/BAKARITSA 0092-8002 6478-04035 T,check: minutes>=60 (893 0270 ARKHANGELSK/BAKARITSA 0092-8002 6478-04035 T)
+A004-L20,A004,data,data,"520 0665 BERAT/KUCOVE, ALB 0322-8001 4047-01994 R","520 0665 BERAT/KUCOVE, ALB 0322-8001 4047-01994 R","check: minutes>=60 (520 0665 BERAT/KUCOVE, ALB 0322-8001 4047-01994 R)"
+A006-L22,A006,data,data,897 1202 CHAPLINO 0075-8007 6474-17217W R,897 1202 CHAPLINO 0075-8007 6474-17217W R,check: minutes>=60 (897 1202 CHAPLINO 0075-8007 6474-17217W R)
+A027-L04,A027,data,data,805 57475 OLOVYANNAYA 0202-8614 5101-1152? R,805 57475 OLOVYANNAYA 0202-8614 5101-1152? R,check: airfield row does not match the expected format (805 57475 OLOVYANNAYA 0202-8614 5101-1152? R)
+A027-L06,A027,data,data,950 5750 OMSK E. 0163-8?02 5457-07328 S,950 5750 OMSK E. 0163-8?02 5457-07328 S,check: airfield row does not match the expected format (950 5750 OMSK E. 0163-8?02 5457-07328 S)
+A027-L08,A027,data,data,586 5770 ONEGA 0102-8016 635?-03808 R,586 5770 ONEGA 0102-8016 635?-03808 R,check: airfield row does not match the expected format (586 5770 ONEGA 0102-8016 635?-03808 R)
+A027-L29,A027,data,data,348 3660 PALANGA 0168-8644 5556-0210? R,348 3660 PALANGA 0168-8644 5556-0210? R,check: airfield row does not match the expected format (348 3660 PALANGA 0168-8644 5556-0210? R)
+C129-L14,C129,data,data,3932 KOSTINO M-70 5533-036120 UA,3932 KOSTINO M-70 5533-036120 UA,check: line does not match any expected format (3932 KOSTINO M-70 5533-036120 UA)

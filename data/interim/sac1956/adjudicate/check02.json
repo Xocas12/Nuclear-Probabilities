@@ -1,0 +1,232 @@
+[
+ {
+  "id": "A012-L16",
+  "page": "A012",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "572 7475 HUNG CHIAO, CHINA 0492-8406 3112-12120 R",
+  "text_b": "572 7475 HUNG CHIAO, CHINA 0492-8406 3112-12120 R",
+  "reasons": "check: duplicate airfield priority (priority 572 also on A035-L22)",
+  "crop": "adjudicate/crops/A012-L16.png"
+ },
+ {
+  "id": "A035-L22",
+  "page": "A035",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "572 79465 SUI CHUNG, MANCH 0289-8005 4020-12020 R",
+  "text_b": "572 79465 SUI CHUNG, MANCH 0289-8005 4020-12020 R",
+  "reasons": "check: duplicate airfield priority (priority 572 also on A012-L16)",
+  "crop": "adjudicate/crops/A035-L22.png"
+ },
+ {
+  "id": "A023-L16",
+  "page": "A023",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "10 5032 MIRGOROD 0233-8051 4956-03339 R",
+  "text_b": "10 5032 MIRGOROD 0233-8051 4956-03339 R",
+  "reasons": "check: duplicate airfield priority (priority 10 also on A027-L20)",
+  "crop": "adjudicate/crops/A023-L16.png"
+ },
+ {
+  "id": "A023-L27",
+  "page": "A023",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "871 5150 MOSCOW/BYKOVO 0167-8039 5537-03803 RA",
+  "text_b": "871 5150 MOSCOW/BYKOVO 0167-8039 5537-03803 RA",
+  "reasons": "check: name a letter away from a nearby name (BYKOVO vs BYLOVO (C207-L09))",
+  "crop": "adjudicate/crops/A023-L27.png"
+ },
+ {
+  "id": "A027-L20",
+  "page": "A027",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "10 58975 OSTROV/GOROKHOVO 0153-8074 5718-02826 R",
+  "text_b": "10 58975 OSTROV/GOROKHOVO 0153-8074 5718-02826 R",
+  "reasons": "check: duplicate airfield priority (priority 10 also on A023-L16)",
+  "crop": "adjudicate/crops/A027-L20.png"
+ },
+ {
+  "id": "A027-L04",
+  "page": "A027",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "805 57475 OLOVYANNAYA 0202-8614 5101-1152? R",
+  "text_b": "805 57475 OLOVYANNAYA 0202-8614 5101-1152? R",
+  "reasons": "check: airfield row does not match the expected format (805 57475 OLOVYANNAYA 0202-8614 5101-1152? R)",
+  "crop": "adjudicate/crops/A027-L04.png"
+ },
+ {
+  "id": "A027-L06",
+  "page": "A027",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "950 5750 OMSK E. 0163-8?02 5457-07328 S",
+  "text_b": "950 5750 OMSK E. 0163-8?02 5457-07328 S",
+  "reasons": "check: airfield row does not match the expected format (950 5750 OMSK E. 0163-8?02 5457-07328 S)",
+  "crop": "adjudicate/crops/A027-L06.png"
+ },
+ {
+  "id": "A027-L08",
+  "page": "A027",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "586 5770 ONEGA 0102-8016 635?-03808 R",
+  "text_b": "586 5770 ONEGA 0102-8016 635?-03808 R",
+  "reasons": "check: airfield row does not match the expected format (586 5770 ONEGA 0102-8016 635?-03808 R)",
+  "crop": "adjudicate/crops/A027-L08.png"
+ },
+ {
+  "id": "A027-L29",
+  "page": "A027",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "348 3660 PALANGA 0168-8644 5556-0210? R",
+  "text_b": "348 3660 PALANGA 0168-8644 5556-0210? R",
+  "reasons": "check: airfield row does not match the expected format (348 3660 PALANGA 0168-8644 5556-0210? R)",
+  "crop": "adjudicate/crops/A027-L29.png"
+ },
+ {
+  "id": "A036-L12",
+  "page": "A036",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "516 8075 SZOLNOK/RAKOCZIFALVA, HUN 0251-8064 4707-02014 R",
+  "text_b": "516 8075 SZOLNOK/RAKOCZIFALVA, HUN 0251-8064 4707-02014 R",
+  "reasons": "check: airfield out of alphabetical order (SZOLNOK/RAKOCZIFALVA follows SZYMANY (A036-L11))",
+  "crop": "adjudicate/crops/A036-L12.png"
+ },
+ {
+  "id": "A005-L19",
+  "page": "A005",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "957 0970 BREST 0158-8610 5700-02340 R",
+  "text_b": "957 0970 BREST 0158-8610 5700-02340 R",
+  "reasons": "check: airfield far from its reference complex (57.0, 23.6667 vs BREST (C029-L09) 52.1, 23.7)",
+  "crop": "adjudicate/crops/A005-L19.png"
+ },
+ {
+  "id": "A030-L14",
+  "page": "A030",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "525 6615 PUCK CHANG, N KOREA 0380-0457 3930-12558 S",
+  "text_b": "525 6615 PUCK CHANG, N KOREA 0380-0457 3930-12558 S",
+  "reasons": "check: airfield BE number not 8xxx (0380-0457)",
+  "crop": "adjudicate/crops/A030-L14.png"
+ },
+ {
+  "id": "A030-L27",
+  "page": "A030",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "877 3798 RAUKHOVKA 0250-3704 4709-03048 R",
+  "text_b": "877 3798 RAUKHOVKA 0250-3704 4709-03048 R",
+  "reasons": "check: airfield BE number not 8xxx (0250-3704)",
+  "crop": "adjudicate/crops/A030-L27.png"
+ },
+ {
+  "id": "C091-L37",
+  "page": "C091",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "969 2493 GUSTROW E GER 5348-01210",
+  "text_b": "969 2493 GUSTROW E GER 5348-01210",
+  "reasons": "check: name a letter away from a nearby name (GUSTROW vs WUSTROW (C293-L27))",
+  "crop": "adjudicate/crops/C091-L37.png"
+ },
+ {
+  "id": "C293-L27",
+  "page": "C293",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "WUSTROW E GER 5405-01135",
+  "text_b": "WUSTROW E GER 5405-01135",
+  "reasons": "check: name a letter away from a nearby name (WUSTROW vs GUSTROW (C091-L37))",
+  "crop": "adjudicate/crops/C293-L27.png"
+ },
+ {
+  "id": "C017-L40",
+  "page": "C017",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "SLAPY CZECH 4949-01425",
+  "text_b": "SLAPY CZECH 4949-01425",
+  "reasons": "check: name a letter away from a nearby name (SLAPY vs SLANY (C212-L13))",
+  "crop": "adjudicate/crops/C017-L40.png"
+ },
+ {
+  "id": "C212-L13",
+  "page": "C212",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "SLANY CZECH 5014-01405",
+  "text_b": "SLANY CZECH 5014-01405",
+  "reasons": "check: name a letter away from a nearby name (SLANY vs SLAPY (C017-L40))",
+  "crop": "adjudicate/crops/C212-L13.png"
+ },
+ {
+  "id": "C003-L06",
+  "page": "C003",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "193 0080 AKTYUBINSK 5020-05709",
+  "text_b": "193 0080 AKTYUBINSK 5020-05709",
+  "reasons": "check: name a letter away from a nearby name (AKTYUBINSK vs AKTYURINSK (A002-L07))",
+  "crop": "adjudicate/crops/C003-L06.png"
+ },
+ {
+  "id": "C262-L15",
+  "page": "C262",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "468 82562 TAO AN MANCH 4537-12252",
+  "text_b": "468 82562 TAO AN MANCH 4537-12252",
+  "reasons": "check: name a letter away from a nearby name (TAO AN vs TAONAN (A037-L07))",
+  "crop": "adjudicate/crops/C262-L15.png"
+ },
+ {
+  "id": "A037-L07",
+  "page": "A037",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "703 82562 TAO NAN, MANCH 0284-8004 4516-12252 R",
+  "text_b": "703 82562 TAO NAN, MANCH 0284-8004 4516-12252 R",
+  "reasons": "check: name a letter away from a nearby name (TAONAN vs TAO AN (C262-L15))",
+  "crop": "adjudicate/crops/A037-L07.png"
+ },
+ {
+  "id": "C207-L09",
+  "page": "C207",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "BYLOVO M-10 5523-03711 QA",
+  "text_b": "BYLOVO M-10 5523-03711 QA",
+  "reasons": "check: name a letter away from a nearby name (BYLOVO vs BYKOVO (A023-L27))",
+  "crop": "adjudicate/crops/C207-L09.png"
+ },
+ {
+  "id": "A006-L22",
+  "page": "A006",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "897 1202 CHAPLINO 0075-8007 6474-17217W R",
+  "text_b": "897 1202 CHAPLINO 0075-8007 6474-17217W R",
+  "reasons": "check: minutes>=60 (897 1202 CHAPLINO 0075-8007 6474-17217W R)",
+  "crop": "adjudicate/crops/A006-L22.png"
+ },
+ {
+  "id": "C129-L14",
+  "page": "C129",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "3932 KOSTINO M-70 5533-036120 UA",
+  "text_b": "3932 KOSTINO M-70 5533-036120 UA",
+  "reasons": "check: line does not match any expected format (3932 KOSTINO M-70 5533-036120 UA)",
+  "crop": "adjudicate/crops/C129-L14.png"
+ }
+]

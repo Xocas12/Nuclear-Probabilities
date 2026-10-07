@@ -1,0 +1,49 @@
+check,id,detail
+DGZ far from its header,C138-L44,"0.07 deg lat / 1.02 deg lon from KUTAISI (C138-L42 42.2667, 42.7)"
+DGZ far from its header,C242-L17,"0.97 deg lat / 0.03 deg lon from KURILO BULG (C242-L16 42.8333, 23.3167)"
+DGZ far from its header,C299-L28,"0.58 deg lat / 0.63 deg lon from YU MEN CHINA (C299-L27 40.2833, 97.2)"
+sub-complex far from its complex,C010-L16,0.23 deg lat / 18.48 deg lon from ARTSIZ (C009-L47)
+WAC prefix differs from its block,C013-L25,0159 in a block where 9 of 10 lines use 0169
+WAC prefix differs from its block,C150-L03,0381 in a block where 4 of 5 lines use 0289
+WAC prefix differs from its block,C186-L03,0152 in a block where 40 of 41 lines use 0162
+WAC prefix differs from its block,C299-L31,0331 in a block where 2 of 3 lines use 0332
+header far from the other headers on its chart,C002-L04,"WAC 0169: 53.6667, 53.6667 vs median 53.1167, 14.5667 of 127 headers"
+header far from the other headers on its chart,C087-L15,"WAC 0155: 56.3667, 44.0667 vs median 58.1333, 52.1833 of 22 headers"
+header far from the other headers on its chart,C006-L13,"WAC 0075: 64.7333, 177.4667 vs median 64.7667, -171.05 of 4 headers"
+header far from the other headers on its chart,C009-L47,"WAC 0248: 46.0, 29.4333 vs median 46.2333, 43.15 of 6 headers"
+header far from the other headers on its chart,C178-L12,"WAC 0093: 67.65, 53.0 vs median 66.4667, 61.5 of 6 headers"
+block with more than one population line,C162-L15,2 lines of category 275 under KAZINCBARCIKA HUNG
+block with more than one population line,C173-L42,2 lines of category 275 under TULOMA
+reference number not above the previous complex,C190-L04,5761 after 5775 (C189-L42)
+duplicate airfield priority,A002-L11,priority 51 also on A024-L25
+duplicate airfield priority,A024-L25,priority 51 also on A002-L11
+duplicate airfield priority,A004-L07,priority 449 also on A038-L15
+duplicate airfield priority,A038-L15,priority 449 also on A004-L07
+duplicate airfield priority,A012-L16,priority 572 also on A035-L22
+duplicate airfield priority,A035-L22,priority 572 also on A012-L16
+duplicate airfield priority,A023-L16,priority 10 also on A027-L20
+duplicate airfield priority,A027-L20,priority 10 also on A023-L16
+airfield out of alphabetical order,A036-L12,SZOLNOK/RAKOCZIFALVA follows SZYMANY (A036-L11)
+airfield far from its reference complex,A002-L17,"51.55, 13.2167 vs TOMASZOW MAZOWIECKI POL (C268-L12) 51.5333, 20.0333"
+airfield far from its reference complex,A004-L07,"52.1333, 46.9667 vs VOLKHOV (C285-L08) 59.9167, 32.35"
+airfield far from its reference complex,A005-L19,"57.0, 23.6667 vs BREST (C029-L09) 52.1, 23.7"
+airfield BE number not 8xxx,A030-L14,0380-0457
+airfield BE number not 8xxx,A030-L27,0250-3704
+name a letter away from a nearby name,C091-L37,GUSTROW vs WUSTROW (C293-L27)
+name a letter away from a nearby name,C293-L27,WUSTROW vs GUSTROW (C091-L37)
+name a letter away from a nearby name,C017-L40,SLAPY vs SLANY (C212-L13)
+name a letter away from a nearby name,C212-L13,SLANY vs SLAPY (C017-L40)
+name a letter away from a nearby name,C003-L06,AKTYUBINSK vs AKTYURINSK (A002-L07)
+name a letter away from a nearby name,A002-L07,AKTYURINSK vs AKTYUBINSK (C003-L06)
+name a letter away from a nearby name,C262-L15,TAO AN vs TAONAN (A037-L07)
+name a letter away from a nearby name,A037-L07,TAONAN vs TAO AN (C262-L15)
+name a letter away from a nearby name,C207-L09,BYLOVO vs BYKOVO (A023-L27)
+name a letter away from a nearby name,A023-L27,BYKOVO vs BYLOVO (C207-L09)
+minutes>=60,A002-L29,893 0270 ARKHANGELSK/BAKARITSA 0092-8002 6478-04035 T
+minutes>=60,A004-L20,"520 0665 BERAT/KUCOVE, ALB 0322-8001 4047-01994 R"
+minutes>=60,A006-L22,897 1202 CHAPLINO 0075-8007 6474-17217W R
+airfield row does not match the expected format,A027-L04,805 57475 OLOVYANNAYA 0202-8614 5101-1152? R
+airfield row does not match the expected format,A027-L06,950 5750 OMSK E. 0163-8?02 5457-07328 S
+airfield row does not match the expected format,A027-L08,586 5770 ONEGA 0102-8016 635?-03808 R
+airfield row does not match the expected format,A027-L29,348 3660 PALANGA 0168-8644 5556-0210? R
+line does not match any expected format,C129-L14,3932 KOSTINO M-70 5533-036120 UA

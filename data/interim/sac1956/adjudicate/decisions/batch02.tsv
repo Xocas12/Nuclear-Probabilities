@@ -1,0 +1,40 @@
+A020-L25	data	374 4560 LIDA 0168-8629 5352-02521 R	B	high	BE-prefix 4th digit has closed upper loop and full bottom bar = 8 (not 3/5/9); chart 0168 used for nearby coords in-document
+A020-L26	data	665 4565 LIEGNITZ, POL 0232-8216 5111-01611 R	B	high	O right side broken only mid-height (segments under top and above bottom), unlike C in CHINA; ', POL' as elsewhere
+A020-L27	data	881A 4570 LIEN CHENG, CHINA 0498-8427 2532-11637 R	new	medium	typed 3rd char: left flag + centred stem + base bump = typewriter 1 (cf 1036A; typed 2 has hooked arch, right-side descender); lat 1st digit diagonal runs to bottom-left with bottom-bar fragments = 2 (page 7s have near-vertical stems); chart 0498 lines at 24-25 deg in-document
+A022-L12	data	263 8315 MALBORK, POL 0169-8260 5402-01908 R	B	high	full-width top bar, upper-right stub, both lower sides = 8 (6s here have narrow hooked top)
+A022-L19	data	63 4898 MARKOVO 0074-8001 6441-I7026 R	new	medium	ref 4th digit: lower-left side closes lower loop = 8 not 3 (corr 8>3); lon 1st glyph has top serif on both sides of stem = letter-shaped I (1 in 6441 flags left only), as agreed A022-L27 'I7'
+A023-L02	data	839 4990 MIASS 0164-8008 5500-06004 R	B	high	1st digit full top bar and both loops = 8; dash-like mark between 839 and 4990 is a speck (10x5 px vs 17x7 hyphen, off-centre), omitted
+A023-L08	data	601 87805 MIKKOLYA 0091-8620 6513-03139 R	B	high	last ref digit: no upper-right, full bottom bar = 5 (corr with page 5s .83 vs 9s <.56)
+A023-L10	data	492 1185 MIMON, CZECH 0231-8114 5037-01444 R	B	high	closed upper loop, middle bar, bottom with partial lower-left = 8
+A023-L12	data	922 5030 MINSK/DUBINSKAYA 0168-8635 5341-02737 R	B	high	closed top loop + full bottom bar with left upturn = 8, not 9
+A023-L16	data	10 5032 MIRGOROD 0233-8051 4956-03339 R	B	high	priority 2nd digit has no middle bar = 0; BE digit both loops = 8; speck left of priority omitted
+A023-L22	data	923 5090 MOLOTOV S.E. 0156-8004 5758-05618 S	B	high	3rd ref digit: right stem to baseline, no bottom bar = 9 (as in 5090 of MOLOTOV N.; same ref in-document)
+A024-L04	data	998 5150 MOSCOW/CHERTANOVO 0167-8042 5538-03736 RB	B	medium	glyph keeps right-side segments under top (5 rows) and above bottom; the C's in the line have none = O with broken middle
+A024-L05	data	719 5150 MOSCOW/FILI 0167-8044 5546-03729 Y	B	high	4th lat digit starts as narrow slanted stroke from upper right = 6 top; all 5s on page start with flat bar
+A024-L10	data	1000 5150 MOSCOW/ORLOVO 0167-8055 5538-03724 RD	B	medium	1st BE digit square-cornered with faded crossbar, corr with page 8s .71-.83 over 0s; last digit flat top, open upper right = 5 (corr 5 .82-.87)
+A024-L13	data	496 5150 MOSCOW/VNUKOVO 0167-8067 5536-03717 R	B	high	both O's show right/left segments at top and bottom (C's have none); MOSCOW block and alphabetical order require MO-
+A024-L14	data	24 5167 MOZDOK E. 0325- 4343-04454 R	B	high	O's with broken right sides; alphabetical order between MOSCOW/.. and MOZYR requires MO-; MOZDOK ref 5167 also in C171
+A024-L15	data	924 5171 MOZYR 0233-8052 5139-02909 R	A	low	3rd lat digit lost both connecting strokes; narrow top bump, inset middle, square bottom-left, no left leg match this page's 3s not its 5s; 5 still possible
+A024-L17	data	458 5235 MUKDEN N. MANCH 0290-8016 4152-12326 S	B	high	diagonal reaches bottom-left corner with bottom-bar remnant = 2 (7 stems end mid-cell); dot after N. is a speck
+A024-L22	data	604 5240 MURMANSK 0051-8601 6900-03307 R	B	high	closed upper loop, middle, partial lower-left (same gap as 8 on next line) = 8
+A024-L25	data	51 5240 MURMASHI 0051-8609 6849-03248 S	B	medium	heavily inked priority digit: flat top, heavy bottom sweep like 5 of 5240 on same line (corr 5 .78-.84, 9 .65-.69); last lon digit both loops = 8
+A024-L26	data	799 5250 MUROM 0166-8015 5527-04219 R	B	high	U: left side, bottom, right upturn; alphabetical order after MURMASHI excludes L; MUROM ref 5250 in C174; last digit loop+stem, no bottom bar = 9
+A024-L28	data	26 5261 MYS SHMIDTA 0065-8004 6853-17924W R	B	high	peaked top, upper-left hook, inset middle, nothing crossing lower-left = 3 (corr 3 .82-.85 vs 2 <.73)
+A024-L29	data	612 5270 MYS ZHELANIYA 0014-8000 7656-06831 R	new	medium	narrow letter I (8 px base like I in MURMASHI; digit 1 bases 13 px); BE 8 both loops; lat 3rd = 5 (flat top, sweeping tail; corr 5 .75-.86, 9 <.55); lon 2nd = 6 (slanted top), 3rd = 8 (flat top, both loops)
+A027-L03	data	99 5747 OLONETS/NURNALITSY 0102-8015 6103-03259 R	new	medium	glyph between 3 and 8 (lower-left stub plus curl); relied on in-document format: BE suffix starts with 8 in 1019/1021 agreed A lines, all 0102 BEs are 80xx
+A027-L04	data	805 57475 OLOVYANNAYA 0202-8614 5101-1152? R	new	medium	lat 2nd = 1 (flag, stem drifting left, wide base like 4th glyph); last lon digit ink-filled: closed upper part, narrowing stem, heavy foot - 3/5/9 not separable
+A027-L06	data	950 5750 OMSK E. 0163-8?02 5457-07328 S	B	medium	BE 2nd digit lacks left side and middle: 3 or 0 (slight lower bulge suggests 3; OMSK 8001/8003 suggest 0) - kept ?; last lon digit both loops = 8
+A027-L07	data	626 5750 OMSK S.W. 0163-8003 5457-07320 T	B	high	1st priority digit: slanted top stroke, no upper-right, closed bowl = 6, same shape as 3rd digit
+A027-L08	data	586 5770 ONEGA 0102-8016 635?-03808 R	A	medium	4th lat digit is an ink-filled block over a bowl with left upturn; 3 vs 5 not separable (correlations split)
+A027-L11	data	412 9010 ORDZHONIKIDZEVSKAYA 0325-8700 4319-04501 R	B	high	straight left side, square left corners, right side present top and bottom = D (matches D in -KIDZ-)
+A027-L12	data	688 5830 OREL 0167-8073 5300-03602 R	new	medium	3rd chart digit starts as slanted stroke (6 top; 5s here have flat bars), corr 6 .71-.85 vs 5 .57-.66; in-document chart 0167 on 37 lines (BEs 8071, 8077 adjacent), 0157 never
+A027-L13	data	343 5830 OREL S.W. 0167-8075 5256-03600 S	new	medium	as L12: slanted 6 top, corr 6 up to .84; shares chart with OREL; 0157 occurs nowhere in-document
+A027-L14	data	435 16991 ORNETA, POL 0169-8292 5408-02006 R	B	high	last glyph has left flag, stem and base = 1; ref 16991 also used for nearby DOBRE MIASTO POL (C061)
+A027-L17	data	92 0236 OSH 0328-8619 4033-07246 S	B	high	flat top, both loops = 8; chart 0328 BEs are 86xx in-document
+A027-L19	data	632 6360 OSTAFYEVO 0167-8056 5530-03731 R	B	high	peaked top, upper-left hook, inset middle, empty lower-left = 3
+A027-L20	data	10 58975 OSTROV/GOROKHOVO 0153-8074 5718-02826 R	B	high	1st lat digit flat top, heavy sweep = 5 (corr 5 .67-.81, 3 <.66, 9 <.58); 4th has closed upper and lower loops = 8
+A027-L21	data	608 5903 OSTROV VRAN/SOMNITELNAYA 0065-8009 7057-I7934W R	A	medium	1st lon glyph's top serif extends both sides of stem; digit 1s on page flag left only = letter-shaped I, as agreed A022-L27
+A027-L23	data	1083 5943 OYMYAKON 0123-8002 6328-14249 R	B	high	upper right present and lower loop closed on both sides = 8
+A027-L26	data	618 59615 OZERO TAVAJARVI 0091-8626 6606-03006 R	B	high	both loops (left side continues down) = 8; chart 0091 BEs 86xx
+A027-L28	data	862A 1437 PAI SHIH I, CHINA 0495-8413 2929-10621 R	new	medium	marks left of typed 862A are thin pen-like strokes and specks wider than a cell, not a typed character - omitted; BE digit both loops = 8 (0495 BEs 84xx)
+A027-L29	data	348 3660 PALANGA 0168-8644 5556-0210? R	new	medium	ref 2nd digit slanted 6 top and closed bowl = 6 (3660 also ref of nearby KLAYPEDA, PALIEPGIRIAI on 0168); last lon digit ink-filled, 3 vs 5 not separable

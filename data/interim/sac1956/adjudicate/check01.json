@@ -1,0 +1,242 @@
+[
+ {
+  "id": "C138-L44",
+  "page": "C138",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "4212-4343E E",
+  "text_b": "4212-4343E E",
+  "reasons": "check: DGZ far from its header (0.07 deg lat / 1.02 deg lon from KUTAISI (C138-L42 42.2667, 42.7))",
+  "crop": "adjudicate/crops/C138-L44.png"
+ },
+ {
+  "id": "C242-L17",
+  "page": "C242",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "4348-2321E G",
+  "text_b": "4348-2321E G",
+  "reasons": "check: DGZ far from its header (0.97 deg lat / 0.03 deg lon from KURILO BULG (C242-L16 42.8333, 23.3167))",
+  "crop": "adjudicate/crops/C242-L17.png"
+ },
+ {
+  "id": "C299-L28",
+  "page": "C299",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "3942-9750E C",
+  "text_b": "3942-9750E C",
+  "reasons": "check: DGZ far from its header (0.58 deg lat / 0.63 deg lon from YU MEN CHINA (C299-L27 40.2833, 97.2))",
+  "crop": "adjudicate/crops/C299-L28.png"
+ },
+ {
+  "id": "C299-L31",
+  "page": "C299",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "275 0331-9999",
+  "text_b": "275 0331-9999",
+  "reasons": "check: WAC prefix differs from its block (0331 in a block where 2 of 3 lines use 0332)",
+  "crop": "adjudicate/crops/C299-L31.png"
+ },
+ {
+  "id": "C010-L16",
+  "page": "C010",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "ILINKA 4614-04755",
+  "text_b": "ILINKA 4614-04755",
+  "reasons": "check: sub-complex far from its complex (0.23 deg lat / 18.48 deg lon from ARTSIZ (C009-L47))",
+  "crop": "adjudicate/crops/C010-L16.png"
+ },
+ {
+  "id": "C013-L25",
+  "page": "C013",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "415 0159-0951",
+  "text_b": "415 0159-0951",
+  "reasons": "check: WAC prefix differs from its block (0159 in a block where 9 of 10 lines use 0169)",
+  "crop": "adjudicate/crops/C013-L25.png"
+ },
+ {
+  "id": "C150-L03",
+  "page": "C150",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "290 0381-0260 || 275 0289-9953",
+  "text_b": "290 0381-0260 || 275 0289-9953",
+  "reasons": "check: WAC prefix differs from its block (0381 in a block where 4 of 5 lines use 0289)",
+  "crop": "adjudicate/crops/C150-L03.png"
+ },
+ {
+  "id": "C186-L03",
+  "page": "C186",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "285 0152-0084",
+  "text_b": "285 0152-0084",
+  "reasons": "check: WAC prefix differs from its block (0152 in a block where 40 of 41 lines use 0162)",
+  "crop": "adjudicate/crops/C186-L03.png"
+ },
+ {
+  "id": "C002-L04",
+  "page": "C002",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "701 0022 ABDULINO 5340-05340",
+  "text_b": "701 0022 ABDULINO 5340-05340",
+  "reasons": "check: header far from the other headers on its chart (WAC 0169: 53.6667, 53.6667 vs median 53.1167, 14.5667 of 127 headers)",
+  "crop": "adjudicate/crops/C002-L04.png"
+ },
+ {
+  "id": "C087-L15",
+  "page": "C087",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "BOR 5622-04404",
+  "text_b": "BOR 5622-04404",
+  "reasons": "check: header far from the other headers on its chart (WAC 0155: 56.3667, 44.0667 vs median 58.1333, 52.1833 of 22 headers)",
+  "crop": "adjudicate/crops/C087-L15.png"
+ },
+ {
+  "id": "C006-L13",
+  "page": "C006",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "1045 0230 ANADYR 6444-17728",
+  "text_b": "1045 0230 ANADYR 6444-17728",
+  "reasons": "check: header far from the other headers on its chart (WAC 0075: 64.7333, 177.4667 vs median 64.7667, -171.05 of 4 headers)",
+  "crop": "adjudicate/crops/C006-L13.png"
+ },
+ {
+  "id": "C009-L47",
+  "page": "C009",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "962 0307 ARTSIZ 4600-02926",
+  "text_b": "962 0307 ARTSIZ 4600-02926",
+  "reasons": "check: header far from the other headers on its chart (WAC 0248: 46.0, 29.4333 vs median 46.2333, 43.15 of 6 headers)",
+  "crop": "adjudicate/crops/C009-L47.png"
+ },
+ {
+  "id": "C178-L12",
+  "page": "C178",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "1074 5370 NARYAN MAR 6739-05300",
+  "text_b": "1074 5370 NARYAN MAR 6739-05300",
+  "reasons": "check: header far from the other headers on its chart (WAC 0093: 67.65, 53.0 vs median 66.4667, 61.5 of 6 headers)",
+  "crop": "adjudicate/crops/C178-L12.png"
+ },
+ {
+  "id": "C162-L15",
+  "page": "C162",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "KAZINCBARCIKA HUNG 4815-02037",
+  "text_b": "KAZINCBARCIKA HUNG 4815-02037",
+  "reasons": "check: block with more than one population line (2 lines of category 275 under KAZINCBARCIKA HUNG)",
+  "crop": "adjudicate/crops/C162-L15.png"
+ },
+ {
+  "id": "C173-L42",
+  "page": "C173",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "TULOMA 6849-03248",
+  "text_b": "TULOMA 6849-03248",
+  "reasons": "check: block with more than one population line (2 lines of category 275 under TULOMA)",
+  "crop": "adjudicate/crops/C173-L42.png"
+ },
+ {
+  "id": "C190-L04",
+  "page": "C190",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "228 5761 OPPELN POL 5040-01757",
+  "text_b": "228 5761 OPPELN POL 5040-01757",
+  "reasons": "check: reference number not above the previous complex (5761 after 5775 (C189-L42))",
+  "crop": "adjudicate/crops/C190-L04.png"
+ },
+ {
+  "id": "A002-L11",
+  "page": "A002",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "51 0125 ALEKSEYEVSKOYE 0204-8658 4917-14016 R",
+  "text_b": "51 0125 ALEKSEYEVSKOYE 0204-8658 4917-14016 R",
+  "reasons": "check: duplicate airfield priority (priority 51 also on A024-L25)",
+  "crop": "adjudicate/crops/A002-L11.png"
+ },
+ {
+  "id": "A002-L17",
+  "page": "A002",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "442 8465 ALT LONNEWITZ, E GER 0231-8056 5133-01313 R",
+  "text_b": "442 8465 ALT LONNEWITZ, E GER 0231-8056 5133-01313 R",
+  "reasons": "check: airfield far from its reference complex (51.55, 13.2167 vs TOMASZOW MAZOWIECKI POL (C268-L12) 51.5333, 20.0333)",
+  "crop": "adjudicate/crops/A002-L17.png"
+ },
+ {
+  "id": "A002-L07",
+  "page": "A002",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "727 0080 AKTYURINSK 0236-8002 5010-05710 R",
+  "text_b": "727 0080 AKTYURINSK 0236-8002 5010-05710 R",
+  "reasons": "check: name a letter away from a nearby name (AKTYURINSK vs AKTYUBINSK (C003-L06))",
+  "crop": "adjudicate/crops/A002-L07.png"
+ },
+ {
+  "id": "A002-L29",
+  "page": "A002",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "893 0270 ARKHANGELSK/BAKARITSA 0092-8002 6478-04035 T",
+  "text_b": "893 0270 ARKHANGELSK/BAKARITSA 0092-8002 6478-04035 T",
+  "reasons": "check: minutes>=60 (893 0270 ARKHANGELSK/BAKARITSA 0092-8002 6478-04035 T)",
+  "crop": "adjudicate/crops/A002-L29.png"
+ },
+ {
+  "id": "A024-L25",
+  "page": "A024",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "51 5240 MURMASHI 0051-8609 6849-03248 S",
+  "text_b": "51 5240 MURMASHI 0051-8609 6849-03248 S",
+  "reasons": "check: duplicate airfield priority (priority 51 also on A002-L11)",
+  "crop": "adjudicate/crops/A024-L25.png"
+ },
+ {
+  "id": "A004-L07",
+  "page": "A004",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "449 9160 BARANOVKA 0166-8038 5208-04658 S",
+  "text_b": "449 9160 BARANOVKA 0166-8038 5208-04658 S",
+  "reasons": "check: duplicate airfield priority (priority 449 also on A038-L15); check: airfield far from its reference complex (52.1333, 46.9667 vs VOLKHOV (C285-L08) 59.9167, 32.35)",
+  "crop": "adjudicate/crops/A004-L07.png"
+ },
+ {
+  "id": "A004-L20",
+  "page": "A004",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "520 0665 BERAT/KUCOVE, ALB 0322-8001 4047-01994 R",
+  "text_b": "520 0665 BERAT/KUCOVE, ALB 0322-8001 4047-01994 R",
+  "reasons": "check: minutes>=60 (520 0665 BERAT/KUCOVE, ALB 0322-8001 4047-01994 R)",
+  "crop": "adjudicate/crops/A004-L20.png"
+ },
+ {
+  "id": "A038-L15",
+  "page": "A038",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "449 2212 TOFUTSU 0292-8421 4358-14542 S",
+  "text_b": "449 2212 TOFUTSU 0292-8421 4358-14542 S",
+  "reasons": "check: duplicate airfield priority (priority 449 also on A004-L07)",
+  "crop": "adjudicate/crops/A038-L15.png"
+ }
+]

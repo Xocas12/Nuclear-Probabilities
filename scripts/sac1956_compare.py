@@ -38,14 +38,16 @@ AIRFIELD = re.compile(  # matched against light() text: spacing after a blank BE
 MSITE = re.compile(
     r"^(?:(?P<ref>\d{4,5}) )?(?P<name>.+?) M-(?P<mnum>\d{1,3}) (?P<lat>\d{4})-(?P<lon>\d{5}) (?P<label>[A-Z]{1,2})$"
 )
-NUMERIC_TOKEN = re.compile(r"[\dIO-]*\d[\dIO-]*")
+NUMERIC_TOKEN = re.compile(r"(?P<num>[\dIO-]*\d[\dIO-]*)(?P<hem>[EW]?)")
 
 
 def digits_for_letters(text: str) -> str:
-    """The typists sometimes struck I for 1 and O for 0 in numbers ("I7", "0194I")."""
-    return " ".join(
-        t.replace("I", "1").replace("O", "0") if NUMERIC_TOKEN.fullmatch(t) else t for t in text.split(" ")
-    )
+    """The typists sometimes struck I for 1 and O for 0 in numbers ("I7", "0194I", "7057-I7934W")."""
+    out = []
+    for t in text.split(" "):
+        m = NUMERIC_TOKEN.fullmatch(t)
+        out.append(m["num"].replace("I", "1").replace("O", "0") + m["hem"] if m else t)
+    return " ".join(out)
 
 
 def light(text: str) -> str:
