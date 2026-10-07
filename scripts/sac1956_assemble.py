@@ -148,7 +148,11 @@ def main() -> None:
     final, gaps = load_final(manifest)
     OUT.mkdir(parents=True, exist_ok=True)
     lines, complexes, dgzs, installs, msites, airfields, anomalies = [], [], [], [], [], [], []
-    codes = {r["code"]: r["description"] for r in csv.DictReader(open("data/curated/labels/sac1956_category_codes.csv"))}
+    code_rows = list(csv.DictReader(open("data/curated/labels/sac1956_category_codes.csv", encoding="utf-8")))
+    codes = {r["code"]: r["description"] for r in code_rows}
+    # Regional codes (power grids, railroad repair plants and yards) sit under a printed
+    # sub-heading: 392 POLAND is a railroad yard in Poland.
+    groups = {r["code"]: m[1].strip() for r in code_rows if (m := re.search(r"under printed sub-heading: ([^;]+)", r["notes"]))}
     current = None  # the complex or sub-complex that following lines belong to
     parent = None  # the enclosing complex (for sub-complexes)
 
@@ -202,7 +206,8 @@ def main() -> None:
         elif typ == "installation":
             installs.append({
                 "id": line_id, "page": page, "complex_id": current["id"], "category": f["cat"],
-                "category_name": codes.get(f["cat"], ""), "be_wac": f["wac"], "be_number": f["num"] or "", "text": text,
+                "category_name": codes.get(f["cat"], ""), "category_group": groups.get(f["cat"], ""),
+                "be_wac": f["wac"], "be_number": f["num"] or "", "text": text,
             })
             current["n_installations"] += 1
             current["n_population"] += f["cat"] == "275"
@@ -450,7 +455,8 @@ def report(complexes, dgzs, installs, msites, airfields, anomalies, lines, gaps,
         out.append(f"| {country} | {n} | {d} | {i} |")
     cats = Counter(r["category"] for r in installs)
     out += ["", "## Most common installation categories", ""]
-    out += [f"- {code} {next((r['category_name'] for r in installs if r['category'] == code), '')}: {n}" for code, n in cats.most_common(15)]
+    label = {r["category"]: " / ".join(x for x in (r["category_group"], r["category_name"]) if x) for r in installs}
+    out += [f"- {code} {label[code]}: {n}" for code, n in cats.most_common(15)]
     unknown = sorted({r["category"] for r in installs if not r["category_name"]})
     out += ["", f"- Category codes not in the code list: {unknown}"]
     in_part1 = {c["ref"] for c in top}
