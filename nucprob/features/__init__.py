@@ -12,11 +12,12 @@ import pandas as pd
 
 from nucprob.features.administrative import administrative
 from nucprob.features.geography import geography
+from nucprob.features.industry import industry
 from nucprob.features.population import population
 from nucprob.features.registry import FEATURES
 from nucprob.paths import PROCESSED
 
-FAMILIES = [population, administrative, geography]
+FAMILIES = [population, administrative, geography, industry]
 
 
 def build(places: pd.DataFrame | None = None) -> pd.DataFrame:

@@ -18,13 +18,14 @@ Writes to data/processed/:
 """
 
 import argparse
-import re
 
 import numpy as np
 import pandas as pd
 from rapidfuzz import fuzz
 
 from nucprob.bloc import sac_country
+from nucprob.gazetteer.lookup import latin_names as place_names
+from nucprob.gazetteer.lookup import text
 from nucprob.gazetteer.names import variants
 from nucprob.gazetteer.translit import simple, to_latin
 from nucprob.geo import Points, haversine_km
@@ -44,7 +45,6 @@ GAPS = [
     ("ARTSIZ", "ATBASAR", "the printed page after PDF page 9 is missing"),
     ("DROGOBYCH", "DUBNICE NAD VAHOM", "the foot of PDF page 64 is cut off"),
 ]
-SCRIPTS = re.compile(r"[A-Za-zÀ-ž\u0400-\u04FF\s\-’'.]+")  # Latin or Cyrillic names only
 
 
 def load_targets() -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -65,10 +65,6 @@ def load_targets() -> tuple[pd.DataFrame, pd.DataFrame]:
     return cx, dgz
 
 
-def text(value) -> str:
-    return value if isinstance(value, str) else ""
-
-
 def in_gap(place: pd.Series) -> str:
     """Why the settlement's label is unknown ("" if it is known): one of its names sorts inside
     a stretch of the alphabet lost from the scan."""
@@ -79,17 +75,6 @@ def in_gap(place: pd.Series) -> str:
         if any(simple(lo) < k < simple(hi) for k in keys):
             return why
     return ""
-
-
-def place_names(place: pd.Series) -> list[str]:
-    """Every name of a settlement in the SAC style of Latin letters: its 1956 and current names,
-    the names in its parentheses and notes, and GeoNames' Latin and Cyrillic alternate names."""
-    names = [place["name_1956"], *variants(place["name_ru"], text(place.get("notes")))]
-    names += [text(place.get("gn_name"))]
-    names += [
-        n for n in str(place.get("gn_alternatenames") or "").split(",") if SCRIPTS.fullmatch(n)
-    ]
-    return sorted({simple(to_latin(n)) for n in names if n})
 
 
 def name_score(sac_name: str, names: list[str]) -> float:

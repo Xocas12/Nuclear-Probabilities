@@ -12,6 +12,8 @@ from dataclasses import dataclass
 
 CENSUS = ("popstat_*", "demoscope_*", "geonames_*")
 CAPITALS = ("curated:features/capitals_1956.csv",)
+VPK = ("vpk_dexter_rodionov_v24",)
+VPK_NOTE = "establishments of the guide's main series active in 1956, in the town; USSR only"
 
 
 @dataclass(frozen=True)
@@ -125,6 +127,50 @@ FEATURES = {
         "CShapes 2.0 borders on 15 June 1956",
         ("cshapes_2",),
         note="the 48 states",
+    ),
+    # Industry
+    "log_vpk_total": Feature("industry", "Dexter-Rodionov guide", VPK, True, VPK_NOTE),
+    "log_vpk_factories": Feature(
+        "industry", "Dexter-Rodionov guide", VPK, True, "factories (type z); " + VPK_NOTE
+    ),
+    "log_vpk_design": Feature(
+        "industry",
+        "Dexter-Rodionov guide",
+        VPK,
+        True,
+        "design bureaux and research institutes (kb, nii); " + VPK_NOTE,
+    ),
+    "log_vpk_large": Feature(
+        "industry", "Dexter-Rodionov guide", VPK, True, "size class 3 (large); " + VPK_NOTE
+    ),
+    "log_vpk_aero": Feature(
+        "industry", "Dexter-Rodionov guide", VPK, True, "aviation; " + VPK_NOTE
+    ),
+    "log_vpk_armour": Feature("industry", "Dexter-Rodionov guide", VPK, True, "tanks; " + VPK_NOTE),
+    "log_vpk_arms": Feature(
+        "industry", "Dexter-Rodionov guide", VPK, True, "armament and munitions; " + VPK_NOTE
+    ),
+    "log_vpk_ship": Feature(
+        "industry", "Dexter-Rodionov guide", VPK, True, "shipbuilding; " + VPK_NOTE
+    ),
+    "log_vpk_elec": Feature(
+        "industry", "Dexter-Rodionov guide", VPK, True, "radio and electronics; " + VPK_NOTE
+    ),
+    "log_vpk_atom": Feature("industry", "Dexter-Rodionov guide", VPK, True, "nuclear; " + VPK_NOTE),
+    "log_vpk_within_25km": Feature(
+        "industry",
+        "Dexter-Rodionov guide",
+        VPK,
+        True,
+        "all establishments in places within 25 km, the place's own included; USSR only",
+    ),
+    "log_power_mw_25km": Feature(
+        "industry",
+        "WRI Global Power Plant Database",
+        ("wri_gppd",),
+        True,
+        "today's capacity of plants commissioned by 1956 within 25 km (survivors only; "
+        "commissioning years unreliable for Soviet plants)",
     ),
 }
 
