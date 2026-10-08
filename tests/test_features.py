@@ -110,3 +110,43 @@ def test_national_capitals_agree_with_cshapes():
     for _, row in caps[caps["level"] == "national"].iterrows():
         unit = units[COUNTRIES[row["country_1956"]].cshapes]
         assert haversine_km(row["lat"], row["lon"], unit["cap_lat"], unit["cap_lon"]) < 10
+
+
+def test_admin_centres_table():
+    from nucprob.bloc import COUNTRIES
+    from nucprob.features.administrative import admin_centres
+
+    a = admin_centres()
+    assert a["unit"].is_unique
+    assert set(a["country_1956"]) <= set(COUNTRIES)
+    assert (a["centre"] != "").all() and (a["centre_today"] != "").all()
+    ussr = a[a["country_1956"] == "USSR"]
+    assert (ussr["republic"] != "").all()
+    # oblasts of 1954-57 are in; the Izmail oblast (abolished 1954) is not
+    assert {"Арзамасская область", "Каменская область"} <= set(ussr["unit"])
+    assert "Измаильская область" not in set(ussr["unit"])
+
+
+def test_centre_positions_prefer_the_largest_namesake_of_the_republic():
+    from nucprob.features.administrative import centre_positions
+
+    places = pd.DataFrame(
+        {
+            "name_ru": ["Киров", "Киров", "Kirovabad"],
+            "name_1956": ["Киров", "Киров", "Kirovabad"],
+            "republic": ["russia", "russia", "azerbaijan"],
+            "country_1956": "USSR",
+            "pop": [16_647, 252_416, 116_000],
+        }
+    )
+    centres = pd.DataFrame(
+        {
+            "country_1956": ["USSR"],
+            "republic": ["russia"],
+            "unit": ["Кировская область"],
+            "level": ["oblast"],
+            "centre": ["Киров"],
+            "centre_today": ["Киров"],
+        }
+    )
+    assert centre_positions(places, centres) == {"Кировская область": 1}

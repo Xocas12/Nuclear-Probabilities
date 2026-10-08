@@ -146,12 +146,12 @@ USSR,uzbekistan,Ташкентская область,oblast,Ташкент,Та
 USSR,uzbekistan,Ферганская область,oblast,Фергана,Фергана,
 USSR,uzbekistan,Хорезмская область,oblast,Ургенч,Ургенч,
 USSR,uzbekistan,Каракалпакская АССР,ASSR,Нукус,Нукус,
-USSR,kyrgyzstan,Джалал-Абадская область,oblast,Джалал-Абад,Жалал-Абад,1939-1959 (uncertain: check the abolition date)
-USSR,kyrgyzstan,Иссык-Кульская область,oblast,Пржевальск,Каракол,1939-1959 (uncertain)
+USSR,kyrgyzstan,Джалал-Абадская область,oblast,Джалал-Абад,Жалал-Абад,1939-1959
+USSR,kyrgyzstan,Иссык-Кульская область,oblast,Пржевальск,Каракол,1939-1959
 USSR,kyrgyzstan,Ошская область,oblast,Ош,Ош,
-USSR,kyrgyzstan,Таласская область,oblast,Талас,Талас,1944-1956; abolished in September 1956 (uncertain)
+USSR,kyrgyzstan,Таласская область,oblast,Талас,Талас,1944-1956; abolished in 1956 (month not checked)
 USSR,kyrgyzstan,Тянь-Шаньская область,oblast,Нарын,Нарын,1939-1962
-USSR,kyrgyzstan,Фрунзенская область,oblast,Фрунзе,Бишкек,1939-1959 (uncertain)
+USSR,kyrgyzstan,Фрунзенская область,oblast,Фрунзе,Бишкек,1939-1959
 USSR,tajikistan,Ленинабадская область,oblast,Ленинабад,Худжанд,
 USSR,tajikistan,Горно-Бадахшанская АО,autonomous oblast,Хорог,Хорог,
 USSR,turkmenistan,Ашхабадская область,oblast,Ашхабад,Aşgabat,1939-1959
@@ -250,16 +250,14 @@ Romania,,Regiunea Ploiești,region,Ploiești,Ploiești,
 Romania,,Regiunea Stalin,region,Orașul Stalin,Brașov,Brașov was named Orașul Stalin from 1950 to 1960
 Romania,,Regiunea Suceava,region,Suceava,Suceava,
 Romania,,Regiunea Timișoara,region,Timișoara,Timișoara,
-Bulgaria,,Бургаски окръг,okrug,Бургас,Бургас,okrugs of 1949-1959 (list uncertain)
+Bulgaria,,Бургаски окръг,okrug,Бургас,Бургас,the 12 okrugs of 1951-1959 (bg.wikipedia: Административно деление на България)
 Bulgaria,,Сталински окръг,okrug,Сталин,Варна,Varna was named Stalin from 1949 to October 1956
-Bulgaria,,Видински окръг,okrug,Видин,Видин,
 Bulgaria,,Врачански окръг,okrug,Враца,Враца,
 Bulgaria,,Благоевградски окръг,okrug,Благоевград,Благоевград,Gorna Dzhumaya until 1950
 Bulgaria,,Коларовградски окръг,okrug,Коларовград,Шумен,Shumen was named Kolarovgrad from 1950 to 1965
 Bulgaria,,Плевенски окръг,okrug,Плевен,Плевен,
 Bulgaria,,Пловдивски окръг,okrug,Пловдив,Пловдив,
 Bulgaria,,Русенски окръг,okrug,Русе,Русе,
-Bulgaria,,Смолянски окръг,okrug,Смолян,Смолян,
 Bulgaria,,Софийски окръг,okrug,София,София,
 Bulgaria,,Старозагорски окръг,okrug,Стара Загора,Стара Загора,
 Bulgaria,,Търновски окръг,okrug,Търново,Велико Търново,
