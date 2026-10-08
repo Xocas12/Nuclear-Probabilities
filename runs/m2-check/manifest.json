@@ -1,19 +1,26 @@
 {
   "milestone": "M2 check run",
-  "created": "2026-10-08T13:24:18+00:00",
-  "git_commit": "36138ae8cffb7987a6fb5a2b7e29982854de2e0f",
+  "created": "2026-10-08T15:11:16+00:00",
+  "git_commit": "416220cabc688068451f7613dc77674e37caeb86",
   "data": {
-    "dataset_sac1956.parquet": "8e80eec45a2dbbe1e22d695dc405ed8ca5a78b04dd2dbd82ff3b2a40b25ca314"
+    "dataset_sac1956.parquet": "d0abc677ad4811e9dae827a421ed12f11d9772c5aaf0c09bafb62a2de3625648"
   },
-  "places_in_cv": 1463,
+  "places_in_cv": 2099,
   "places_by_country": {
-    "USSR": 1209,
+    "USSR": 1315,
+    "East Germany": 182,
+    "Poland": 135,
+    "Hungary": 120,
+    "China": 118,
     "Romania": 101,
-    "Czechoslovakia": 89,
     "Bulgaria": 56,
-    "Albania": 8
+    "Czechoslovakia": 56,
+    "Albania": 9,
+    "North Korea": 4,
+    "North Vietnam": 2,
+    "Mongolia": 1
   },
-  "sealed_places_excluded": 405,
+  "sealed_places_excluded": 503,
   "unknown_label_places_excluded": 13,
   "targets": {
     "listed": "on the list (complex or sub-complex within 10 km)",
