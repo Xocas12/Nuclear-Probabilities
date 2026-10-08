@@ -258,7 +258,8 @@ def closed_cities(ussr: pd.DataFrame) -> pd.DataFrame:
     figure (`pop_imputed`), union republic and region taken from the nearest listed town.
     They are in because they existed, not because of how they were targeted."""
     c = pd.read_csv(CLOSED)
-    c = c[(c["founded"] <= PLAN_YEAR) & c["lat"].notna()].reset_index(drop=True)
+    keep = (c["founded"] <= PLAN_YEAR) & c["lat"].notna() & (c["pop_estimate"] >= MIN_KEEP)
+    c = c[keep].reset_index(drop=True)
     listed = ussr[ussr["lat"].notna()].reset_index(drop=True)
     dist, idx = Points(listed["lat"].to_numpy(), listed["lon"].to_numpy()).nearest(
         c["lat"].to_numpy(), c["lon"].to_numpy()
@@ -287,6 +288,9 @@ def closed_cities(ussr: pd.DataFrame) -> pd.DataFrame:
             "lon": c["lon"],
             "pop_imputed": True,
             "pop_imputed_year": c["pop_year"],
+            # a stable id, since closed towns have no GeoNames match of their own
+            "place_key": "closed-"
+            + c["name"].str.lower().str.replace(r"\W+", "-", regex=True).str.strip("-"),
         }
     )
 
@@ -321,9 +325,10 @@ def build() -> pd.DataFrame:
     places.loc[dup, "match_method"] = "duplicate of a larger settlement"
     places.loc[dup, ["geonameid", "lat", "lon"]] = np.nan
     prefix = places["country_1956"].map(PREFIX)
+    keys = places["place_key"] if "place_key" in places else pd.Series(None, index=places.index)
     places["place_id"] = [
-        f"{p}-{int(g)}" if pd.notna(g) else f"{p}-x{i}"
-        for i, (p, g) in enumerate(zip(prefix, places["geonameid"], strict=True))
+        f"{p}-{int(g)}" if pd.notna(g) else f"{p}-{k}" if isinstance(k, str) else f"{p}-x{i}"
+        for i, (p, g, k) in enumerate(zip(prefix, places["geonameid"], keys, strict=True))
     ]
     places["in_universe"] = places["pop"] >= UNIVERSE
     places["has_coords"] = places["lat"].notna()

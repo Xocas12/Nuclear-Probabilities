@@ -13,6 +13,7 @@ from dataclasses import dataclass
 CENSUS = ("popstat_*", "demoscope_*", "geonames_*")
 CAPITALS = ("curated:features/capitals_1956.csv",)
 VPK = ("vpk_dexter_rodionov_v24",)
+MILITARY = ("curated:features/military_sites_1956.csv",)
 VPK_NOTE = "establishments of the guide's main series active in 1956, in the town; USSR only"
 
 
@@ -191,6 +192,33 @@ FEATURES = {
     ),
     "log_airfields_50km": Feature(
         "military", "OurAirports", ("ourairports", "cshapes_2"), True, "within 50 km"
+    ),
+    "military_district_hq": Feature(
+        "military",
+        "military sites of June 1956",
+        MILITARY,
+        note="within 15 km of a military district, group-of-forces or army HQ (Soviet, "
+        "satellite or Chinese)",
+    ),
+    "fleet_hq": Feature(
+        "military", "military sites of June 1956", MILITARY, note="within 15 km of a fleet HQ"
+    ),
+    "log_km_to_naval_base": Feature(
+        "military", "military sites of June 1956", MILITARY, note="fleet HQs and naval bases"
+    ),
+    "log_km_to_lra_base": Feature(
+        "military",
+        "military sites of June 1956",
+        MILITARY,
+        note="airfields with Long-Range Aviation Tu-4, Tu-16, M-4 or Tu-95 units in 1956",
+    ),
+    "log_km_to_nuclear_site": Feature(
+        "military",
+        "military sites of June 1956",
+        MILITARY,
+        True,
+        "nuclear-complex plants, mines and test ranges, operating or under construction "
+        "(post-Soviet knowledge of secret sites)",
     ),
     # Transport
     "log_km_to_rail": Feature(

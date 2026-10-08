@@ -619,6 +619,42 @@ nuclear-probabilities/
 
 Phases 1 and 2 run side by side. Transcribing the labels is the long pole, so it starts first.
 
+**Progress (8 Oct 2026).** M2 is done: the full 1956 feature base for the whole bloc.
+- **Universe.** 2,622 towns of 10,000+ near June 1956 with coordinates.
+  - The USSR comes from the 1959 census, plus ten closed towns of the nuclear complex with
+    imputed populations.
+  - East Germany, Poland, Hungary, Czechoslovakia, Romania, Bulgaria and Albania come from
+    their 1950s censuses and yearbooks, interpolated to the study date. Some had to be read from
+    scans: the GDR's 1956 yearbook, Poland's 1957 yearbook and Votrubec (1959) for Slovakia.
+  - China's universe is its 163 cities of the 1953 census. North Korea, North Vietnam and
+    Mongolia have only the UN's estimates for their largest cities.
+  - The SAC targets are linked per country, and the list's two scan gaps apply bloc-wide.
+- **Features: 48 in six families.**
+  - population;
+  - administration: a cited table of the 1956 regional centres, with the oblasts of 1954–57;
+  - geography and reach: terrain; the sea; the capitals; NATO territory, the bloc's frontier
+    and SAC's overseas bases on the study date; the continental US;
+  - industry: the Soviet defence industry active in 1956, from Dexter and Rodionov; WRI power
+    plants;
+  - military: a cited, dated table of 153 sites (district and fleet HQs, naval and Long-Range
+    Aviation bases, the nuclear complex, test ranges) with a decision for June 1956; airfields;
+  - transport.
+- **Provenance.** Every feature names its sources and flags later knowledge
+  (`data/FEATURES.md`). Every source in the manifest has a role. A guard test keeps the label
+  sources out of the features.
+- **Check run** (`runs/m2-check/`). This is a check, not a result. Under spatial CV, "on the
+  list" scores a PR-AUC of 0.75 for the population rule and 0.84 for LightGBM or logistic
+  regression on every feature. Transport and geography add the most over population. The
+  military sites add little once the rest are in. Dropping the anachronistic features costs
+  about 0.02. None of the ten closed towns is on the 1956 list. In several Eastern European
+  countries the population rule alone does as well as the global model, so the per-country
+  models (M7) will matter.
+- **Gaps.**
+  - Slovakia's towns that passed 10,000 after 1953 are missing.
+  - China's towns below city rank are missing.
+  - Ullman's 1958 figures for China need a manual download.
+  - District HQs for Hungary, Albania, North Korea and North Vietnam are unverified.
+
 **Progress (7 Oct 2026, later).** M0 and M1 are done. The scaffold (uv, Python 3.12, ruff,
 pytest, Make, CI) and the provenance manifest are in place. The USSR slice runs end to end:
 1,635 towns of 10,000+ in 1959 from pop-stat and Demoscope, 99% given coordinates by a

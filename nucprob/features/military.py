@@ -13,7 +13,6 @@ inner-German border. SAC's own airfield list is a label (task T5), never a featu
 import numpy as np
 import pandas as pd
 
-from nucprob.bloc import STUDY_DATE
 from nucprob.geo import Points
 from nucprob.paths import CURATED, RAW
 from nucprob.sources import cshapes
@@ -58,12 +57,11 @@ def airfields(places: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
-def military_sites(year: int = STUDY_DATE[0]) -> pd.DataFrame:
-    """The curated sites that held their role in `year`."""
-    sites = pd.read_csv(SITES)
-    until = pd.to_numeric(sites["until_year"], errors="coerce").fillna(9999)
-    start = pd.to_numeric(sites["from_year"], errors="coerce")
-    return sites[(start <= year) & (until >= year) & sites["lat"].notna()]
+def military_sites() -> pd.DataFrame:
+    """The curated sites that held their role in June 1956 (`in_june_1956`: decided row by row
+    where a role began or ended in 1956; `decision` says why a row is out)."""
+    sites = pd.read_csv(SITES, keep_default_na=False, na_values={"lat": [""], "lon": [""]})
+    return sites[(sites["in_june_1956"] == "yes") & sites["lat"].notna()]
 
 
 def sites(places: pd.DataFrame) -> pd.DataFrame:

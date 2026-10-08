@@ -150,3 +150,15 @@ def test_centre_positions_prefer_the_largest_namesake_of_the_republic():
         }
     )
     assert centre_positions(places, centres) == {"Кировская область": 1}
+
+
+def test_military_sites_in_june_1956():
+    from nucprob.features.military import military_sites
+
+    sites = military_sites()
+    assert len(sites) >= 100
+    assert set(sites["category"]) >= {"military_district_hq", "fleet_hq", "lra_base", "naval_base"}
+    assert "Tauride Military District HQ" not in set(sites["site"])  # disbanded spring 1956
+    assert sites["lat"].between(-90, 90).all() and sites["source"].str.len().gt(0).all()
+    # SAC's own lists are never a source of this table (leakage guard)
+    assert not sites["source"].str.contains("ebb538|nukevault|nuclearsecrecy", case=False).any()

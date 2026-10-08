@@ -39,9 +39,19 @@ a source has one, and coordinates from GeoNames. The rule is fixed before lookin
     1958 figures. It is in the public domain but its scans block scripts.
   - North Korea, North Vietnam and Mongolia have only the UN's model estimates, for cities of
     300,000+ today. Their universes are those cities.
-- **Closed towns** of the Soviet nuclear complex are missing from the published 1959 tables.
-  They are added from a curated table with imputed populations, flagged `pop_imputed` (see
-  `closed_cities_1956.csv` once it is in).
+- **Closed towns** of the Soviet nuclear complex and test ranges are missing from the
+  published 1959 tables. They come from `closed_cities_1956.csv`: towns founded by June 1956
+  with 5,000 or more people. Their populations are imputed and flagged `pop_imputed`. The towns
+  are Sarov, Ozersk, Seversk, Zheleznogorsk, Novouralsk, Lesnoy, Snezhinsk, Trekhgorny,
+  Znamensk, Kurchatov and Leninsk (Baikonur).
+  - **Figures.** Most are read off Reissig (2024, *Izvestiya RAN, Ser. Geogr.* 88(5), Fig. 2),
+    to about ±1,000. Kurchatov has only a 1990 figure; Leninsk's is for the end of 1959.
+  - **Membership.** It was checked against the published 1959 urban tables:
+    - Zarechny (Penza-19), Sillamäe, Severomorsk, Chkalovsk, Zhovti Vody and Mailuu-Suu are in
+      those tables, so they are not added twice.
+    - Zelenogorsk, Priozersk, Mirny, Stepnogorsk and Krasnokamensk were founded after June 1956.
+  - **Why they are in.** They are in the universe because they existed, not because of how they
+    were targeted (PLAN section 3.1).
 - **Names.** `name_1956` is the name on the study date, where the sources record renamings
   (Molotov, Stalino, Stalinogród, Karl-Marx-Stadt, Stalinstadt, Orașul Stalin, Kolarovgrad).
 
