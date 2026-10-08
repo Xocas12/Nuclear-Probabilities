@@ -9,10 +9,11 @@ import pandas as pd
 from nucprob.geo import densify
 
 
-def line_points(path: Path, spacing_km: float = 2.0, keep=None):
-    """(lat, lon) of points along every line of a layer, at most `spacing_km` apart.
-    `keep(properties) -> bool` selects features."""
-    lats, lons = [], []
+def line_points(path: Path, spacing_km: float = 2.0, keep=None, ids: bool = False):
+    """(lat, lon) of points along every line of a layer, at most `spacing_km` apart, and with
+    `ids` the number of the line each point lies on. `keep(properties) -> bool` selects
+    features."""
+    lats, lons, nums = [], [], []
     for f in json.loads(path.read_text(encoding="utf-8"))["features"]:
         if keep is not None and not keep(f["properties"]):
             continue
@@ -25,6 +26,9 @@ def line_points(path: Path, spacing_km: float = 2.0, keep=None):
             lon, lat = densify(line[:, 0], line[:, 1], spacing_km)
             lats.append(lat)
             lons.append(lon)
+            nums.append(np.full(len(lat), len(nums)))
+    if ids:
+        return np.concatenate(lats), np.concatenate(lons), np.concatenate(nums)
     return np.concatenate(lats), np.concatenate(lons)
 
 

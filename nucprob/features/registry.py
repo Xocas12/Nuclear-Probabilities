@@ -65,11 +65,17 @@ FEATURES = {
         CAPITALS,
         note="union-republic capitals, Petrozavodsk (Karelo-Finnish SSR until July 1956) and Bratislava",
     ),
-    "regional_seat": Feature(
+    "regional_centre": Feature(
         "administrative",
-        "GeoNames PPLA (today's first-level regions)",
-        ("geonames_*",),
-        anachronism=True,
+        "regional centres as of June 1956",
+        ("curated:features/admin_centres_1956.csv",),
+        note="oblast, krai, ASSR; voivodeship, Bezirk, kraj, county, region, okrug, province",
+    ),
+    "autonomy_centre": Feature(
+        "administrative",
+        "regional centres as of June 1956",
+        ("curated:features/admin_centres_1956.csv",),
+        note="autonomous oblasts and national okrugs of the USSR",
     ),
     "district_seat": Feature(
         "administrative", "GeoNames PPLA2 (today's districts)", ("geonames_*",), anachronism=True
@@ -171,6 +177,40 @@ FEATURES = {
         True,
         "today's capacity of plants commissioned by 1956 within 25 km (survivors only; "
         "commissioning years unreliable for Soviet plants)",
+    ),
+    # Military
+    "log_airfields_10km": Feature(
+        "military",
+        "OurAirports (today's airfields, open and closed)",
+        ("ourairports", "cshapes_2"),
+        True,
+        "airfields within 10 km in the place's 1956 country",
+    ),
+    "log_airfields_25km": Feature(
+        "military", "OurAirports", ("ourairports", "cshapes_2"), True, "within 25 km"
+    ),
+    "log_airfields_50km": Feature(
+        "military", "OurAirports", ("ourairports", "cshapes_2"), True, "within 50 km"
+    ),
+    # Transport
+    "log_km_to_rail": Feature(
+        "transport", "Natural Earth railways (today's)", ("naturalearth_10m_railroads",), True
+    ),
+    "rail_lines_5km": Feature(
+        "transport",
+        "Natural Earth railways (today's)",
+        ("naturalearth_10m_railroads",),
+        True,
+        "distinct line segments within 5 km: a junction proxy",
+    ),
+    "log_km_to_port": Feature(
+        "transport", "Natural Earth ports (today's)", ("naturalearth_10m_ports",), True
+    ),
+    "log_km_to_major_river": Feature(
+        "transport",
+        "Natural Earth rivers",
+        ("naturalearth_10m_rivers",),
+        note="scalerank 6 or less (the Volga, Don, Oka, Dnieper...); reservoirs as centrelines",
     ),
 }
 

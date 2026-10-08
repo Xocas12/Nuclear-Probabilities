@@ -20,6 +20,7 @@ dependencies = [
     # Dexter-Rodionov's guide is an Excel workbook; terrain tiles are PNG.
     "openpyxl>=3.1",
     "pillow>=10.0",
+    "shapely>=2.0",
 ]
 
 [project.optional-dependencies]

@@ -7,8 +7,9 @@ from functools import cache
 from pathlib import Path
 
 import numpy as np
+import shapely
 
-from nucprob.bloc import STUDY_DATE
+from nucprob.bloc import COUNTRIES, STUDY_DATE
 from nucprob.geo import densify
 from nucprob.paths import RAW
 
@@ -56,3 +57,22 @@ def boundary(units: dict[str, dict], names, spacing_km: float = 5.0):
                 lats.append(lat)
                 lons.append(lon)
     return np.concatenate(lats), np.concatenate(lons)
+
+
+def geometry(unit: dict) -> shapely.MultiPolygon:
+    return shapely.MultiPolygon(
+        [shapely.Polygon(poly[0], poly[1:]) for poly in unit["polygons"]]
+    ).buffer(0)
+
+
+def bloc_country(lat, lon, date: tuple[int, int, int] = STUDY_DATE) -> np.ndarray:
+    """The bloc country (as SAC names it) each point lay in on `date`, or "" outside the bloc."""
+    units = units_on(date)
+    lat, lon = np.asarray(lat, float), np.asarray(lon, float)
+    out = np.full(len(lat), "", dtype=object)
+    for name, country in COUNTRIES.items():
+        geom = geometry(units[country.cshapes])
+        shapely.prepare(geom)
+        inside = shapely.contains_xy(geom, lon, lat) & (out == "")
+        out[inside] = name
+    return out
