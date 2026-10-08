@@ -24,7 +24,7 @@ from nucprob.bloc import STUDY_DATE
 from nucprob.gazetteer.lookup import PlaceIndex
 from nucprob.geo import Points, haversine_km
 from nucprob.paths import PROCESSED, RAW
-from nucprob.sources import vpk
+from nucprob.sources import cshapes, vpk
 
 YEAR = STUDY_DATE[0]
 REGION_KM = 400  # a place "in" a named region lies within this distance of the region's centre
@@ -38,23 +38,6 @@ BRANCH_FEATURES = {
     "ship": {"SHIP"},
     "elec": {"ELEC"},
     "atom": {"ATOM"},
-}
-WRI_COUNTRIES = {
-    "USSR": [
-        *("RUS", "UKR", "BLR", "MDA", "LTU", "LVA", "EST", "GEO", "ARM", "AZE"),
-        *("KAZ", "UZB", "TKM", "KGZ", "TJK"),
-    ],
-    "Poland": ["POL"],
-    "East Germany": ["DEU"],
-    "Czechoslovakia": ["CZE", "SVK"],
-    "Hungary": ["HUN"],
-    "Romania": ["ROU"],
-    "Bulgaria": ["BGR"],
-    "Albania": ["ALB"],
-    "China": ["CHN"],
-    "North Korea": ["PRK"],
-    "North Vietnam": ["VNM"],
-    "Mongolia": ["MNG"],
 }
 
 
@@ -158,14 +141,14 @@ def defence_industry(places: pd.DataFrame, year: int = YEAR) -> tuple[pd.DataFra
 
 def power_plants(places: pd.DataFrame, year: int = YEAR, km: float = WITHIN_KM) -> np.ndarray:
     """Capacity (MW, today's) of WRI plants commissioned by `year` within `km` of each place,
-    counting only plants in the place's own country."""
+    counting only plants that lay in the place's own 1956 country (CShapes borders)."""
     w = pd.read_csv(RAW / "wri" / "global_power_plant_database.csv", low_memory=False)
-    w = w[w["commissioning_year"] <= year]
+    w = w[(w["commissioning_year"] <= year) & ((w["longitude"] > 5) | (w["longitude"] < -160))]
+    w = w.assign(country_1956=cshapes.bloc_country(w["latitude"], w["longitude"]))
     out = np.zeros(len(places))
-    for country, codes in WRI_COUNTRIES.items():
+    for country, plants in w[w["country_1956"] != ""].groupby("country_1956"):
         rows = np.flatnonzero(places["country_1956"].to_numpy() == country)
-        plants = w[w["country"].isin(codes)]
-        if len(rows) == 0 or plants.empty:
+        if len(rows) == 0:
             continue
         tree = Points(plants["latitude"].to_numpy(), plants["longitude"].to_numpy())
         near = tree.within(places["lat"].to_numpy()[rows], places["lon"].to_numpy()[rows], km)
