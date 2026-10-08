@@ -2,9 +2,10 @@
 
     python -m nucprob.dataset
 
-Writes data/processed/dataset_ussr1959.parquet: one row per settlement of the universe
-(>= 10,000 people in 1959) with coordinates; place columns, every feature of the registry,
-the labels, the spatial block and the split (sealed test or cross-validation).
+Writes data/processed/dataset_sac1956.parquet: one row per settlement of the universe
+(>= 10,000 people near the study date) with coordinates; place columns, every feature of the
+registry, the SAC 1956 labels, the spatial block and the split (sealed test or
+cross-validation).
 """
 
 import pandas as pd
@@ -15,14 +16,16 @@ from nucprob.paths import PROCESSED
 
 PLACE_COLUMNS = [
     "place_id",
-    "republic",
+    "country_1956",
+    "unit_1956",
     "region",
     "name_ru",
     "name_1956",
     "gn_name",
     "lat",
     "lon",
-    "pop_1959",
+    "pop",
+    "pop_year",
 ]
 LABEL_COLUMNS = [
     "listed",
@@ -41,9 +44,9 @@ LABEL_COLUMNS = [
 
 
 def build() -> pd.DataFrame:
-    places = pd.read_parquet(PROCESSED / "places_ussr1959.parquet")
-    features = pd.read_parquet(PROCESSED / "features_ussr1959.parquet")
-    labels = pd.read_parquet(PROCESSED / "labels_ussr1959.parquet")
+    places = pd.read_parquet(PROCESSED / "places_1956.parquet")
+    features = pd.read_parquet(PROCESSED / "features_1956.parquet")
+    labels = pd.read_parquet(PROCESSED / "labels_sac1956.parquet")
     df = places[places["in_universe"] & places["has_coords"]][PLACE_COLUMNS]
     df = df.merge(features, on="place_id", how="left").merge(
         labels[["place_id", *LABEL_COLUMNS]], on="place_id", how="left"
@@ -63,7 +66,7 @@ def build() -> pd.DataFrame:
 
 def main() -> None:
     df = build()
-    df.to_parquet(PROCESSED / "dataset_ussr1959.parquet", index=False)
+    df.to_parquet(PROCESSED / "dataset_sac1956.parquet", index=False)
     cv = df[~df["sealed"] & df["listed"].notna()]
     print(
         f"label unknown (entry may be on a page lost from the scan): {int(df['listed'].isna().sum())}"

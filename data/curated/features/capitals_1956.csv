@@ -1,0 +1,30 @@
+country_1956,unit,level,capital,name_1956,lat,lon,note
+USSR,USSR,national,Moscow,Москва,55.75204,37.61781,
+USSR,russia,union republic,Moscow,Москва,55.75204,37.61781,RSFSR
+USSR,karelo-finnish,union republic,Petrozavodsk,Петрозаводск,61.78491,34.34691,Karelo-Finnish SSR until 16 July 1956 (then the Karelian ASSR within the RSFSR); its towns are pop-stat's Республика Карелия
+USSR,ukraine,union republic,Kiev,Київ,50.45466,30.52380,Crimea had been Ukrainian since February 1954
+USSR,belarus,union republic,Minsk,Мінск,53.90019,27.56653,
+USSR,moldova,union republic,Kishinev,Chișinău,47.00902,28.85938,
+USSR,lithuania,union republic,Vilnius,Vilnius,54.68916,25.27980,
+USSR,latvia,union republic,Riga,Rīga,56.94600,24.10589,
+USSR,estonia,union republic,Tallinn,Tallinn,59.43696,24.75353,
+USSR,georgia,union republic,Tbilisi,თბილისი,41.69143,44.83412,
+USSR,armenia,union republic,Yerevan,Երևան,40.17765,44.51260,
+USSR,azerbaijan,union republic,Baku,Bakı,40.37767,49.89201,
+USSR,kazakhstan,union republic,Alma-Ata,Алматы,43.25249,76.91150,
+USSR,uzbekistan,union republic,Tashkent,Ташкент,41.26465,69.21627,
+USSR,turkmenistan,union republic,Ashkhabad,Aşgabat,37.95000,58.38333,
+USSR,kyrgyzstan,union republic,Frunze,Бишкек,42.87000,74.59000,
+USSR,tajikistan,union republic,Stalinabad,Душанбе,38.53575,68.77905,
+Poland,Poland,national,Warsaw,Warszawa,52.22977,21.01178,
+East Germany,East Germany,national,East Berlin,Berlin,52.52000,13.41000,the eastern sector (Mitte)
+Czechoslovakia,Czechoslovakia,national,Prague,Praha,50.08804,14.42076,
+Czechoslovakia,slovakia,constituent capital,Bratislava,Bratislava,48.14816,17.10674,seat of the Slovak National Council and the Board of Commissioners
+Hungary,Hungary,national,Budapest,Budapest,47.49801,19.03991,
+Romania,Romania,national,Bucharest,București,44.43225,26.10626,
+Bulgaria,Bulgaria,national,Sofia,София,42.69751,23.32415,
+Albania,Albania,national,Tirana,Tirana,41.32750,19.81889,
+China,China,national,Peking,北京,39.90750,116.39723,
+North Korea,North Korea,national,Pyongyang,평양,39.03385,125.75432,
+North Vietnam,North Vietnam,national,Hanoi,Hà Nội,21.02450,105.84117,
+Mongolia,Mongolia,national,Ulan Bator,Улаанбаатар,47.90771,106.88324,

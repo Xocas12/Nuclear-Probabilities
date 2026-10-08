@@ -1,16 +1,18 @@
-"""Labels from the transcribed SAC 1956 list (PLAN section 4.2), for the USSR place universe.
+"""Labels from the transcribed SAC 1956 list (PLAN section 4.2), for the place universe of
+every bloc country in the place table.
 
     python -m nucprob.labels.sac1956 [--radius-km 10]
 
 Coordinates first, names second (PLAN section 10): every complex and sub-complex header and
-every DGZ is linked to the nearest settlement of the place table (all settlements of at least
-5,000 in 1959) within the radius. A target nearest to a settlement below the universe threshold
-stays with that settlement, so it does not make a larger neighbour look targeted. The SAC name
-is compared with the settlement's names (1956, today's, GeoNames) as a check, not a key.
+every DGZ is linked to the nearest settlement of its own country in the place table (all
+settlements of at least 5,000) within the radius. A target nearest to a settlement below the
+universe threshold stays with that settlement, so it does not make a larger neighbour look
+targeted. The SAC name is compared with the settlement's names (1956, today's, GeoNames) as a
+check, not a key.
 
 Writes to data/processed/:
-  sac1956_links.parquet   one row per complex, sub-complex and DGZ in the USSR, with its place
-  labels_ussr1959.parquet one row per settlement: T1 (listed; given an aim point), T2 (DGZ and
+  sac1956_links.parquet   one row per complex, sub-complex and DGZ, with its place
+  labels_sac1956.parquet  one row per settlement: T1 (listed; given an aim point), T2 (DGZ and
                           installation counts), T3 (best priority and tier)
   sac1956_link_report.csv unlinked targets and links whose names disagree, for review
 """
@@ -22,6 +24,7 @@ import numpy as np
 import pandas as pd
 from rapidfuzz import fuzz
 
+from nucprob.bloc import sac_country
 from nucprob.gazetteer.names import variants
 from nucprob.gazetteer.translit import simple, to_latin
 from nucprob.geo import Points, haversine_km
@@ -35,13 +38,12 @@ NAME_OK = 75  # name similarity (0-100) below which a link is listed for review
 NAME_RADIUS_KM = 75.0
 NAME_LINK = 88
 # Stretches of the alphabet whose entries are lost from the scan (data/curated/sac1956/README.md).
-# A settlement that links to no target and whose name falls in one of them has no label: it may
-# have been on the lost page.
+# The list runs alphabetically across countries, so a settlement of any country that links to no
+# target and whose name falls in one of them has no label: it may have been on the lost page.
 GAPS = [
     ("ARTSIZ", "ATBASAR", "the printed page after PDF page 9 is missing"),
     ("DROGOBYCH", "DUBNICE NAD VAHOM", "the foot of PDF page 64 is cut off"),
 ]
-COUNTRY = "USSR"
 SCRIPTS = re.compile(r"[A-Za-zÀ-ž\u0400-\u04FF\s\-’'.]+")  # Latin or Cyrillic names only
 
 
@@ -53,8 +55,12 @@ def load_targets() -> tuple[pd.DataFrame, pd.DataFrame]:
     cx["top_id"] = np.where(cx["level"] == "complex", cx["id"], cx["parent_id"])
     cx["top_priority"] = cx["top_id"].map(top["priority"])
     cx["top_tier"] = cx["top_id"].map(top["priority_tier"])
+    cx["country_1956"] = cx["country"].map(sac_country)
     dgz = dgz.merge(
-        cx[["id", "top_id", "country"]], left_on="complex_id", right_on="id", suffixes=("", "_cx")
+        cx[["id", "top_id", "country", "country_1956"]],
+        left_on="complex_id",
+        right_on="id",
+        suffixes=("", "_cx"),
     )
     return cx, dgz
 
@@ -132,16 +138,9 @@ def link(
     return out
 
 
-def build(radius_km: float = RADIUS_KM) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    places = pd.read_parquet(PROCESSED / "places_ussr1959.parquet")
-    located = places[places["has_coords"]].reset_index(drop=True)
-    index = Points(located["lat"].to_numpy(), located["lon"].to_numpy())
-    cx, dgz = load_targets()
-    cx = cx[cx["country"] == COUNTRY]
-    dgz = dgz[dgz["country"] == COUNTRY]
-
-    links_cx = link(cx, located, index, radius_km)
-    links_cx["link_method"] = np.where(links_cx["place_id"].notna(), "coordinates", "")
+def link_names(links_cx: pd.DataFrame, located: pd.DataFrame, index: Points) -> None:
+    """Names second: a complex with no settlement within the radius goes to a settlement up to
+    NAME_RADIUS_KM away whose name matches it closely (in place)."""
     unlinked = links_cx.index[links_cx["place_id"].isna()]
     nearby = index.within(
         links_cx.loc[unlinked, "lat"], links_cx.loc[unlinked, "lon"], NAME_RADIUS_KM
@@ -169,7 +168,27 @@ def build(radius_km: float = RADIUS_KM) -> tuple[pd.DataFrame, pd.DataFrame, pd.
                 ),
                 2,
             )
-    links_dgz = link(dgz, located, index, radius_km)
+
+
+def build(radius_km: float = RADIUS_KM) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    places = pd.read_parquet(PROCESSED / "places_1956.parquet")
+    cx_all, dgz_all = load_targets()
+    parts_cx, parts_dgz = [], []
+    for country in places["country_1956"].unique():
+        located = places[places["has_coords"] & (places["country_1956"] == country)]
+        located = located.reset_index(drop=True)
+        index = Points(located["lat"].to_numpy(), located["lon"].to_numpy())
+        cx = cx_all[cx_all["country_1956"] == country]
+        links_cx = link(cx, located, index, radius_km)
+        links_cx["link_method"] = np.where(links_cx["place_id"].notna(), "coordinates", "")
+        link_names(links_cx, located, index)
+        parts_cx.append(links_cx)
+        parts_dgz.append(
+            link(dgz_all[dgz_all["country_1956"] == country], located, index, radius_km)
+        )
+    links_cx = pd.concat(parts_cx)
+    links_dgz = pd.concat(parts_dgz)
+    located = places[places["has_coords"]]
 
     # Labels per settlement.
     g = links_cx[links_cx["place_id"].notna()].groupby("place_id")
@@ -224,13 +243,14 @@ def build(radius_km: float = RADIUS_KM) -> tuple[pd.DataFrame, pd.DataFrame, pd.
         ]
     )
     report = report.merge(
-        located[["place_id", "name_1956", "name_ru", "gn_name", "pop_1959"]],
+        located[["place_id", "name_1956", "name_ru", "gn_name", "pop"]],
         on="place_id",
         how="left",
     )
     cols = [
         "issue",
         "id",
+        "country_1956",
         "level",
         "name_printed",
         "top_priority",
@@ -243,7 +263,7 @@ def build(radius_km: float = RADIUS_KM) -> tuple[pd.DataFrame, pd.DataFrame, pd.
         "place_id",
         "name_1956",
         "gn_name",
-        "pop_1959",
+        "pop",
         "name_score",
     ]
     report = report[cols].sort_values(
@@ -264,20 +284,22 @@ def main(argv: list[str] | None = None) -> None:
     args = parser.parse_args(argv)
     links, labels, report = build(args.radius_km)
     links.to_parquet(PROCESSED / "sac1956_links.parquet", index=False)
-    labels.to_parquet(PROCESSED / "labels_ussr1959.parquet", index=False)
+    labels.to_parquet(PROCESSED / "labels_sac1956.parquet", index=False)
     report.to_csv(PROCESSED / "sac1956_link_report.csv", index=False)
-    places = pd.read_parquet(PROCESSED / "places_ussr1959.parquet")
-    u = labels.merge(places[["place_id", "in_universe"]], on="place_id")
+    places = pd.read_parquet(PROCESSED / "places_1956.parquet")
+    u = labels.merge(places[["place_id", "country_1956", "in_universe"]], on="place_id")
     u = u[u["in_universe"]]
     cx = links[links["kind"].isin(["complex", "subcomplex"])]
-    print(
-        f"USSR targets: {len(cx)} complexes and sub-complexes, {int((links['kind'] == 'dgz').sum())} DGZs; "
-        f"linked within {args.radius_km:g} km: {cx['place_id'].notna().mean():.1%} of complexes, "
-        f"{links.loc[links['kind'] == 'dgz', 'place_id'].notna().mean():.1%} of DGZs"
-    )
-    print(
-        f"universe: {len(u)} settlements; listed {int(u['listed'].sum())}, with a DGZ {int(u['has_dgz'].sum())}"
-    )
+    dgz = links[links["kind"] == "dgz"]
+    for country, c in cx.groupby("country_1956"):
+        uc = u[u["country_1956"] == country]
+        print(
+            f"{country}: {len(c)} complexes and sub-complexes, "
+            f"{(dgz['country_1956'] == country).sum()} DGZs; linked within {args.radius_km:g} km: "
+            f"{c['place_id'].notna().mean():.1%} of complexes, "
+            f"{dgz.loc[dgz['country_1956'] == country, 'place_id'].notna().mean():.1%} of DGZs; "
+            f"universe {len(uc)}, listed {int(uc['listed'].sum())}, with a DGZ {int(uc['has_dgz'].sum())}"
+        )
     print(
         f"review: {(report['issue'] == 'no settlement within the radius').sum()} unlinked, "
         f"{(report['issue'] == 'names disagree').sum()} name disagreements (sac1956_link_report.csv)"

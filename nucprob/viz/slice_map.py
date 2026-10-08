@@ -67,7 +67,7 @@ def latin(name: str) -> str:
 
 def payload() -> dict:
     preds = pd.read_csv(RUN / "oof_predictions.csv", dtype={"label_gap": str})
-    data = pd.read_parquet(PROCESSED / "dataset_ussr1959.parquet")
+    data = pd.read_parquet(PROCESSED / "dataset_sac1956.parquet")
     links = pd.read_parquet(PROCESSED / "sac1956_links.parquet")
     metrics = pd.read_csv(RUN / "metrics.csv")
     models = list(MODELS)
@@ -84,10 +84,10 @@ def payload() -> dict:
                 "name": r["name_1956"],
                 "latin": latin(r["name_1956"]),
                 "now": clean(r["gn_name"]),
-                "rep": r["republic"].title(),
+                "rep": r["unit_1956"].title(),
                 "lon": round(east(r["lon"]), 4),
                 "lat": round(r["lat"], 4),
-                "pop": int(r["pop_1959"]),
+                "pop": int(r["pop"]),
                 "listed": clean(r["listed"]),
                 "has_dgz": clean(r["has_dgz"]),
                 "sealed": bool(r["sealed"]),

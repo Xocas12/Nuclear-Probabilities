@@ -6,7 +6,8 @@ retrieved and when.
 A file that is already present is checked against its recorded sha256 and kept; a
 different hash is reported (the source changed since it was recorded), not overwritten.
 `--refresh` downloads again and records the new hash. Entries with `fetch: false` are
-downloaded by hand and only checked.
+downloaded by hand and only checked; entries with `fetch: <module>` (tile sets) are fetched by
+that module.
 """
 
 import argparse
@@ -80,6 +81,9 @@ def main(argv: list[str] | None = None) -> int:
         if wanted and src["id"] not in wanted:
             continue
         dest = RAW / src["path"]
+        if isinstance(src.get("fetch"), str):
+            print(f"{src['id']}: fetched by {src['fetch']}")
+            continue
         if dest.exists() and not args.refresh:
             digest = sha256(dest)
             if src.get("sha256") and src["sha256"] != digest:

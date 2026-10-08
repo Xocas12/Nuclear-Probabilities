@@ -154,6 +154,7 @@ def match(settlements: pd.DataFrame, gn: pd.DataFrame) -> pd.DataFrame:
                     "gn_name": g["name"],
                     "gn_population": int(g["population"]),
                     "gn_alternatenames": g["alternatenames"],
+                    "gn_dem": g.get("dem"),
                 }
             )
         rows.append(row)

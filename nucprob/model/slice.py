@@ -93,7 +93,7 @@ def git_commit() -> str:
 
 
 def main() -> None:
-    data_path = PROCESSED / "dataset_ussr1959.parquet"
+    data_path = PROCESSED / "dataset_sac1956.parquet"
     full = pd.read_parquet(data_path)
     df = full[~full["sealed"] & full["listed"].notna()].reset_index(drop=True)
     gap = full[~full["sealed"] & full["listed"].isna()].reset_index(drop=True)
@@ -124,7 +124,17 @@ def main() -> None:
         imps.append(importance(df, target))
     table = summarise(rows)
     table.to_csv(OUT / "metrics.csv", index=False, float_format="%.4f")
-    cols = ["place_id", "name_1956", "gn_name", "republic", "lat", "lon", "pop_1959", *TARGETS]
+    cols = [
+        "place_id",
+        "name_1956",
+        "gn_name",
+        "country_1956",
+        "unit_1956",
+        "lat",
+        "lon",
+        "pop",
+        *TARGETS,
+    ]
     preds = pd.concat([df[cols], *oofs], axis=1).assign(label_gap="")
     # Settlements whose label was lost with a page of the scan: predicted by models fitted on
     # every cross-validation place (they are never scored).

@@ -17,6 +17,9 @@ dependencies = [
     "rapidfuzz>=3.6",
     "scikit-learn>=1.4",
     "lightgbm>=4.3",
+    # Dexter-Rodionov's guide is an Excel workbook; terrain tiles are PNG.
+    "openpyxl>=3.1",
+    "pillow>=10.0",
 ]
 
 [project.optional-dependencies]
@@ -24,7 +27,6 @@ dependencies = [
 labels = [
     "pymupdf>=1.24",
     "pdfplumber>=0.11",
-    "pillow>=10.0",
     "scipy>=1.11",
 ]
 

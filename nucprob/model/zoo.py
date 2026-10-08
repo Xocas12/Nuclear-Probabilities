@@ -45,7 +45,7 @@ POPULATION = by_family(ALL)["population"]
 
 # name -> (factory, feature columns)
 MODELS: dict[str, tuple[Callable, list[str]]] = {
-    "population rule": (logistic, ["log_pop_1959"]),
+    "population rule": (logistic, ["log_pop"]),
     "logistic, population family": (logistic, POPULATION),
     "logistic, all features": (logistic, ALL),
     "LightGBM, all features": (lightgbm, ALL),

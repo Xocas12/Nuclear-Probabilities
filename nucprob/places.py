@@ -1,14 +1,18 @@
-"""Build the place universe of the USSR as of the 1959 census (PLAN section 3.1).
+"""Build the place universe as of the study date (PLAN section 3.1).
 
     python -m nucprob.places
 
-Sources: pop-stat's city pages for 14 republics (census populations 1926, 1939, 1959 and
+USSR sources: pop-stat's city pages for 14 republics (census populations 1926, 1939, 1959 and
 renaming notes) and, for Uzbekistan, which pop-stat lacks, Demoscope's 1959 table. Every
 settlement is matched to a GeoNames populated place for its coordinates.
 
-Writes data/processed/places_ussr1959.parquet: every settlement with at least MIN_KEEP people in
-1959 (the universe proper is >= 10,000; 5,000 and 20,000 are the sensitivity thresholds), and
-data/processed/places_ussr1959_unmatched.csv for review.
+Every row carries its country and first-order unit on the study date (`country_1956`,
+`unit_1956`: the union republic in the USSR), `pop` (the census nearest the study date: 1959 in
+the USSR) and `pop_prewar` (the last pre-war census: 1939), each with its year.
+
+Writes data/processed/places_1956.parquet: every settlement with at least MIN_KEEP people (the
+universe proper is >= 10,000; 5,000 and 20,000 are the sensitivity thresholds), and
+data/processed/places_1956_unmatched.csv for review.
 """
 
 import numpy as np
@@ -116,6 +120,7 @@ def apply_links(matched: pd.DataFrame, gn: pd.DataFrame, page: str) -> pd.DataFr
                 "gn_name",
                 "gn_population",
                 "gn_alternatenames",
+                "gn_dem",
                 "match_method",
             ],
         ] = [
@@ -127,6 +132,7 @@ def apply_links(matched: pd.DataFrame, gn: pd.DataFrame, page: str) -> pd.DataFr
             g["name"],
             g["population"],
             g["alternatenames"],
+            g["dem"],
             "curated link",
         ]
     return matched
@@ -154,7 +160,13 @@ def build() -> pd.DataFrame:
     places["place_id"] = [
         f"su-{int(g)}" if pd.notna(g) else f"su-x{i}" for i, g in enumerate(places["geonameid"])
     ]
-    places["in_universe"] = places["pop_1959"] >= UNIVERSE
+    places["country_1956"] = "USSR"
+    # Karelia was the Karelo-Finnish SSR, a union republic, until 16 July 1956.
+    karelia = places["region"].eq("Республика Карелия")
+    places["unit_1956"] = places["republic"].mask(karelia, "karelo-finnish")
+    places["pop"], places["pop_year"] = places["pop_1959"], 1959
+    places["pop_prewar"], places["pop_prewar_year"] = places["pop_1939"], 1939
+    places["in_universe"] = places["pop"] >= UNIVERSE
     places["has_coords"] = places["lat"].notna()
     return places.sort_values(["republic", "region", "name_ru"]).reset_index(drop=True)
 
@@ -162,13 +174,13 @@ def build() -> pd.DataFrame:
 def main() -> None:
     places = build()
     PROCESSED.mkdir(parents=True, exist_ok=True)
-    places.to_parquet(PROCESSED / "places_ussr1959.parquet", index=False)
+    places.to_parquet(PROCESSED / "places_1956.parquet", index=False)
     unmatched = places[~places["has_coords"]]
-    unmatched.to_csv(PROCESSED / "places_ussr1959_unmatched.csv", index=False)
+    unmatched.to_csv(PROCESSED / "places_1956_unmatched.csv", index=False)
     u = places[places["in_universe"]]
     print(
         f"universe (>= {UNIVERSE:,} in 1959): {len(u)} settlements, {u['has_coords'].sum()} with coordinates; "
-        f"unmatched in the universe: {(~u['has_coords']).sum()} (list in places_ussr1959_unmatched.csv)"
+        f"unmatched in the universe: {(~u['has_coords']).sum()} (list in places_1956_unmatched.csv)"
     )
 
 

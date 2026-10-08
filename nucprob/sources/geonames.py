@@ -53,7 +53,8 @@ def load_country(code: str, raw: Path = RAW) -> pd.DataFrame:
     )
     df = df[df["feature_class"] == "P"].copy()
     df["population"] = pd.to_numeric(df["population"], errors="coerce").fillna(0).astype(int)
-    return df.drop(columns=["cc2", "admin3", "admin4", "dem", "timezone", "modified"])
+    df["dem"] = pd.to_numeric(df["dem"], errors="coerce")  # SRTM3 or GTOPO30 mean elevation, m
+    return df.drop(columns=["cc2", "admin3", "admin4", "timezone", "modified"])
 
 
 def load_admin1(raw: Path = RAW) -> pd.DataFrame:

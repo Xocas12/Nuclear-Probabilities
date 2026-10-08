@@ -1,13 +1,14 @@
-# Provenance manifest (PLAN section 2): every data source, where it came from, its licence and
-# what it is used for. `python -m nucprob.sources.fetch` downloads the entries into data/raw/
-# (git-ignored) and records `retrieved` (UTC date) and `sha256`; an entry with `fetch: false`
-# is downloaded by hand. Files in data/raw/ are never committed.
+# Provenance manifest (PLAN section 2): every data source, its URL, licence, use and role (labels,
+# universe, features or map; the leakage guard keeps label sources out of the features).
+# `python -m nucprob.sources.fetch` downloads into data/raw/ (git-ignored, never committed) and records
+# `retrieved` (UTC) and `sha256`. `fetch: false` = by hand; `fetch: <module>` = that module fetches it.
 sources:
 - id: sac1956_part1_complex_list
   url: https://nsarchive2.gwu.edu/nukevault/ebb538-Cold-War-Nuclear-Target-List-Declassified-First-Ever/documents/1st%20city%20list%20complete.pdf
   path: sac1956/1st_city_list_complete.pdf
   licence: US government record, public domain
   use: Part I complex list (306 pp), transcribed in full
+  role: labels
   retrieved: '2026-10-03'
   sha256: b1be3cc3b23433da9087b2c57622ee24ec36ae8beef71516362c6fe006a6478d
 - id: sac1956_section1
@@ -15,6 +16,7 @@ sources:
   path: sac1956/section1.pdf
   licence: US government record, public domain
   use: title page, contents, introduction, list legend
+  role: labels
   retrieved: '2026-10-03'
   sha256: a8e90d5c27d7922fbb52fbcfdb51e421e80122614d94baa3857b5de52dabbca8
 - id: sac1956_section2
@@ -22,6 +24,7 @@ sources:
   path: sac1956/section2.pdf
   licence: US government record, public domain
   use: cross-reference list (excerpts)
+  role: labels
   retrieved: '2026-10-03'
   sha256: ae433d942269b97f7c785dd80cff3d0c1dabe24ce9ea94b70fe51b1fffab8d65
 - id: sac1956_section3
@@ -29,6 +32,7 @@ sources:
   path: sac1956/section3.pdf
   licence: US government record, public domain
   use: category code list, transcribed
+  role: labels
   retrieved: '2026-10-03'
   sha256: 353e6150a79968517008589c288e08b7ee12fa9e985affcde7f53fdf2d863767
 - id: sac1956_section4
@@ -36,6 +40,7 @@ sources:
   path: sac1956/section4.pdf
   licence: US government record, public domain
   use: Part I airfield list (excerpts)
+  role: labels
   retrieved: '2026-10-03'
   sha256: 9970afb866e636f6d645fad5adfda67192867bc08f499d4932a6a02b4b4d7db1
 - id: sac1956_section5
@@ -43,6 +48,7 @@ sources:
   path: sac1956/section5.pdf
   licence: US government record, public domain
   use: Part I complex list (2015 excerpt; superseded)
+  role: labels
   retrieved: '2026-10-03'
   sha256: dc6a45f02459067d9c80856be0b235e97e4dbf3ec3c5ad36d84185ab5ac74af9
 - id: sac1956_section6
@@ -50,6 +56,7 @@ sources:
   path: sac1956/section6.pdf
   licence: US government record, public domain
   use: Part II airfield list (43 pp), transcribed in full
+  role: labels
   retrieved: '2026-10-03'
   sha256: 6acc6167f46bdc5ee4642b1a798ba823d43898a231bd4f08948509ed668ad932
 - id: sac1956_section7
@@ -57,6 +64,7 @@ sources:
   path: sac1956/section7.pdf
   licence: US government record, public domain
   use: complex list excerpts, probably Part II
+  role: labels
   retrieved: '2026-10-03'
   sha256: 66ca2971fa57bafa527631a9663039e057de0982b2ced5ff8e092db546191a46
 - id: sac1956_section8
@@ -64,6 +72,7 @@ sources:
   path: sac1956/section8.pdf
   licence: US government record, public domain
   use: tabular presentation (Annex C)
+  role: labels
   retrieved: '2026-10-03'
   sha256: 1e4e2d0193769199eee33e8de0da0985e7e3d000f9361d3e77f735f2bf86384b
 - id: nsa_city_sheet_moscow
@@ -71,6 +80,7 @@ sources:
   path: sac1956/city_Moscow.pdf
   licence: National Security Archive spreadsheet; used for validation counts only
   use: external check of the SAC 1956 transcription (validation_sac1956_nsa_city_sheets.csv)
+  role: labels
   retrieved: '2026-10-03'
   sha256: 6d62d7eff243040c82cc6a53ed92cae8251b1f210270fc98b6de43364b6d591b
 - id: nsa_city_sheet_leningrad
@@ -78,6 +88,7 @@ sources:
   path: sac1956/city_Leningrad.pdf
   licence: National Security Archive spreadsheet; used for validation counts only
   use: external check of the SAC 1956 transcription (validation_sac1956_nsa_city_sheets.csv)
+  role: labels
   retrieved: '2026-10-03'
   sha256: 7d698d125a2689e53f6e24d02f11a92a4cb81242de241eb8a0273de9d8315399
 - id: nsa_city_sheet_beijing
@@ -85,6 +96,7 @@ sources:
   path: sac1956/city_Beijing.pdf
   licence: National Security Archive spreadsheet; used for validation counts only
   use: external check of the SAC 1956 transcription (validation_sac1956_nsa_city_sheets.csv)
+  role: labels
   retrieved: '2026-10-03'
   sha256: bc7870bfa2a28c094001c55843628f32e4bacfccda26fa231d5481668c3d3ace
 - id: nsa_city_sheet_warsaw
@@ -92,6 +104,7 @@ sources:
   path: sac1956/city_Warsaw.pdf
   licence: National Security Archive spreadsheet; used for validation counts only
   use: external check of the SAC 1956 transcription (validation_sac1956_nsa_city_sheets.csv)
+  role: labels
   retrieved: '2026-10-03'
   sha256: dcb21f30859bcfe4440ae5edc4b6ca92659ba92409645c4c4e6287685608869e
 - id: popstat_russia
@@ -100,6 +113,7 @@ sources:
   licence: no licence stated (T. Bespyatov); census figures are used, the page is not redistributed
   use: 'USSR place universe: towns and urban-type settlements with census populations (1926, 1939, 1959)
     and renaming notes'
+  role: universe
   retrieved: '2026-10-07'
   sha256: c0840066b91c4c3d7c287f3282bcfbeaaf6bf86373bceab4ef9af284968c0bfe
 - id: popstat_ukraine
@@ -108,6 +122,7 @@ sources:
   licence: no licence stated (T. Bespyatov); census figures are used, the page is not redistributed
   use: 'USSR place universe: towns and urban-type settlements with census populations (1926, 1939, 1959)
     and renaming notes'
+  role: universe
   retrieved: '2026-10-07'
   sha256: 168e5f047dac50e671f0b6bb01e7fd6c3234afd60834de526f72cc5d296c3807
 - id: popstat_belarus
@@ -116,6 +131,7 @@ sources:
   licence: no licence stated (T. Bespyatov); census figures are used, the page is not redistributed
   use: 'USSR place universe: towns and urban-type settlements with census populations (1926, 1939, 1959)
     and renaming notes'
+  role: universe
   retrieved: '2026-10-07'
   sha256: 4e2984853fa44b51a9e5a17e099ca3fb702f255aa635c80f36b9682b76545949
 - id: popstat_moldova
@@ -124,6 +140,7 @@ sources:
   licence: no licence stated (T. Bespyatov); census figures are used, the page is not redistributed
   use: 'USSR place universe: towns and urban-type settlements with census populations (1926, 1939, 1959)
     and renaming notes'
+  role: universe
   retrieved: '2026-10-07'
   sha256: 4c7317d213e7658b0a2e73bf8bdb4e449dc88e9117cea160211394be9f181ea9
 - id: popstat_lithuania
@@ -132,6 +149,7 @@ sources:
   licence: no licence stated (T. Bespyatov); census figures are used, the page is not redistributed
   use: 'USSR place universe: towns and urban-type settlements with census populations (1926, 1939, 1959)
     and renaming notes'
+  role: universe
   retrieved: '2026-10-07'
   sha256: f24dec52cd27c54947081d26ba2c312efb2fbd0bb2f4c35dd7cbc8f4a18b4704
 - id: popstat_latvia
@@ -140,6 +158,7 @@ sources:
   licence: no licence stated (T. Bespyatov); census figures are used, the page is not redistributed
   use: 'USSR place universe: towns and urban-type settlements with census populations (1926, 1939, 1959)
     and renaming notes'
+  role: universe
   retrieved: '2026-10-07'
   sha256: f7ce12378c683c36c52623ad692371fc9a7777778f37cfc1f009b644760f2dc2
 - id: popstat_estonia
@@ -148,6 +167,7 @@ sources:
   licence: no licence stated (T. Bespyatov); census figures are used, the page is not redistributed
   use: 'USSR place universe: towns and urban-type settlements with census populations (1926, 1939, 1959)
     and renaming notes'
+  role: universe
   retrieved: '2026-10-07'
   sha256: 60d908619fc1c83490180628a908967d4a5d208fe5c7934d36825eeeca9ee34a
 - id: popstat_georgia
@@ -156,6 +176,7 @@ sources:
   licence: no licence stated (T. Bespyatov); census figures are used, the page is not redistributed
   use: 'USSR place universe: towns and urban-type settlements with census populations (1926, 1939, 1959)
     and renaming notes'
+  role: universe
   retrieved: '2026-10-07'
   sha256: d4a728be09c939256e38a901b546ed813d360fdc74d1ce811c60363ffc4a65d5
 - id: popstat_armenia
@@ -164,6 +185,7 @@ sources:
   licence: no licence stated (T. Bespyatov); census figures are used, the page is not redistributed
   use: 'USSR place universe: towns and urban-type settlements with census populations (1926, 1939, 1959)
     and renaming notes'
+  role: universe
   retrieved: '2026-10-07'
   sha256: c22ad3ac3bea182d847816846e22aadfd2efcc569ce0f0b812e43565bb090ce4
 - id: popstat_azerbaijan
@@ -172,6 +194,7 @@ sources:
   licence: no licence stated (T. Bespyatov); census figures are used, the page is not redistributed
   use: 'USSR place universe: towns and urban-type settlements with census populations (1926, 1939, 1959)
     and renaming notes'
+  role: universe
   retrieved: '2026-10-07'
   sha256: 4216aa8343213582beae91dbdccfe1801e998de26c67c177ae44abf12f371f8f
 - id: popstat_kazakhstan
@@ -180,6 +203,7 @@ sources:
   licence: no licence stated (T. Bespyatov); census figures are used, the page is not redistributed
   use: 'USSR place universe: towns and urban-type settlements with census populations (1926, 1939, 1959)
     and renaming notes'
+  role: universe
   retrieved: '2026-10-07'
   sha256: 1d839773491c8349a4f4c927fa0f04a1e08d0e666f06945cb106f2c02d47de23
 - id: popstat_kyrgyzstan
@@ -188,6 +212,7 @@ sources:
   licence: no licence stated (T. Bespyatov); census figures are used, the page is not redistributed
   use: 'USSR place universe: towns and urban-type settlements with census populations (1926, 1939, 1959)
     and renaming notes'
+  role: universe
   retrieved: '2026-10-07'
   sha256: 481db202a68e2b377f06da973bedfcac4377c4ac21e1f3e44f1d18215840f9ec
 - id: popstat_tajikistan
@@ -196,6 +221,7 @@ sources:
   licence: no licence stated (T. Bespyatov); census figures are used, the page is not redistributed
   use: 'USSR place universe: towns and urban-type settlements with census populations (1926, 1939, 1959)
     and renaming notes'
+  role: universe
   retrieved: '2026-10-07'
   sha256: 5291118901613f4bf0c06f37bc4e62f44b812824fe0a8ee804e6226ea2c5199e
 - id: popstat_turkmenistan
@@ -204,6 +230,7 @@ sources:
   licence: no licence stated (T. Bespyatov); census figures are used, the page is not redistributed
   use: 'USSR place universe: towns and urban-type settlements with census populations (1926, 1939, 1959)
     and renaming notes'
+  role: universe
   retrieved: '2026-10-07'
   sha256: 442cd77daeabd29e69a9b8110a8d3f888bff1a1dd955d2465bdf868ccaf41b42
 - id: demoscope_ussr59_reg2
@@ -212,6 +239,7 @@ sources:
   licence: Demoscope Weekly reference tables; census figures are used, the page is not redistributed
   use: '1959 census urban settlements of the union republics except the RSFSR: Uzbekistan (absent from
     pop-stat) and a cross-check'
+  role: universe
   retrieved: '2026-10-07'
   sha256: b110ae295e91a5fd03dae74634934fb61d0a8c1412c04e7344897072ab69a7bd
 - id: geonames_ru
@@ -220,6 +248,7 @@ sources:
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
+  role: universe
   retrieved: '2026-10-07'
   sha256: 98dd042648a4aa8f508cf650d6e38805d67013cf066153626fdb36b434ed8fbb
 - id: geonames_ua
@@ -228,6 +257,7 @@ sources:
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
+  role: universe
   retrieved: '2026-10-07'
   sha256: 7ec4a2bbca115ba8fcc9464e8a688b338cd31f95902ecdd89b91be5dd18c01fd
 - id: geonames_by
@@ -236,6 +266,7 @@ sources:
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
+  role: universe
   retrieved: '2026-10-07'
   sha256: b6fb2cfaa8529a9037af2dad70270653c8c750793122097655450c6e9a592666
 - id: geonames_md
@@ -244,6 +275,7 @@ sources:
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
+  role: universe
   retrieved: '2026-10-07'
   sha256: ad739273c31e8bf6dbb3eddac093efb0f0bcac24698631e84065180cc11dd851
 - id: geonames_lt
@@ -252,6 +284,7 @@ sources:
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
+  role: universe
   retrieved: '2026-10-07'
   sha256: 795b776d60e10860c46aa3bdafd206c585e895751537e41e506ffaf9a9a14613
 - id: geonames_lv
@@ -260,6 +293,7 @@ sources:
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
+  role: universe
   retrieved: '2026-10-07'
   sha256: fb97408db7c624ff70fb8e2af9132711aecaf4cfc6c5e99b02826cc8c158b23a
 - id: geonames_ee
@@ -268,6 +302,7 @@ sources:
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
+  role: universe
   retrieved: '2026-10-07'
   sha256: 5ceae2fac6347b8f51f9fffb539cafe66e9ae3b1279e2a6e21b94d10e750ba13
 - id: geonames_ge
@@ -276,6 +311,7 @@ sources:
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
+  role: universe
   retrieved: '2026-10-07'
   sha256: 1c288fd1f469816d7bcc2b178ca530101c3148b0682c9eea5e25d330c15d66be
 - id: geonames_am
@@ -284,6 +320,7 @@ sources:
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
+  role: universe
   retrieved: '2026-10-07'
   sha256: 16f8d7c4faaae92867cc149fd7ecda26f56e0e2f82a4dfeb466807e92fa2d94d
 - id: geonames_az
@@ -292,6 +329,7 @@ sources:
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
+  role: universe
   retrieved: '2026-10-07'
   sha256: ac86941892ff612fc2280a1cda7cd0e9bf4ba2ac36d21bb542a3ceaa167c2f12
 - id: geonames_kz
@@ -300,6 +338,7 @@ sources:
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
+  role: universe
   retrieved: '2026-10-07'
   sha256: 1f3778a848b95e5377c1c5b27dc5e3b36c31be5d28702047c361ee324a731747
 - id: geonames_uz
@@ -308,6 +347,7 @@ sources:
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
+  role: universe
   retrieved: '2026-10-07'
   sha256: 2b6ac0765256ce26b1ce558927b6a7618aa78a59c210a037b05150ead2d43937
 - id: geonames_tm
@@ -316,6 +356,7 @@ sources:
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
+  role: universe
   retrieved: '2026-10-07'
   sha256: 4fa411526b8ce194c4645ff5e7e681b7bd57b4e5abea4ec76d38bc296fd4fbfb
 - id: geonames_kg
@@ -324,6 +365,7 @@ sources:
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
+  role: universe
   retrieved: '2026-10-07'
   sha256: d4bce3fad967ed6ac29cfdb6b574c58b485567781664dab68ce935445b4e4fa3
 - id: geonames_tj
@@ -332,6 +374,7 @@ sources:
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
+  role: universe
   retrieved: '2026-10-07'
   sha256: 25879c630aeae00e890694c824a8885f85afb04149d7466a28cbb99232dc96cb
 - id: geonames_admin1
@@ -339,6 +382,7 @@ sources:
   path: geonames/admin1CodesASCII.txt
   licence: CC BY 4.0 (GeoNames)
   use: names of first-level regions
+  role: universe
   retrieved: '2026-10-07'
   sha256: 1da92a6323a5fec3176f3f743bf4cf4040fd56a876da55e46fbca23c863aa60a
 - id: naturalearth_50m_land
@@ -346,6 +390,7 @@ sources:
   path: naturalearth/ne_50m_land.geojson
   licence: public domain (Natural Earth)
   use: land outline under the slice map (no political borders, so no modern ones)
+  role: map
   retrieved: '2026-10-07'
   sha256: e874b27a51d146452be360cafb3cc50c86001074a67d534113e6534682f9826b
 - id: naturalearth_50m_lakes
@@ -353,5 +398,91 @@ sources:
   path: naturalearth/ne_50m_lakes.geojson
   licence: public domain (Natural Earth)
   use: Caspian, Aral, Baikal and other large lakes on the slice map
+  role: map
   retrieved: '2026-10-07'
   sha256: d350b75978b26fe839b797c2c529b2fb8f47fb3983c03f4964e36d5df9378a52
+- id: vpk_dexter_rodionov_v24
+  url: https://warwick.ac.uk/fac/soc/economics/staff/mharrison/vpk/data/dataset_ver24.xlsx
+  path: vpk/dataset_ver24.xlsx
+  licence: no open licence stated (Keith Dexter and Ivan Rodionov, University of Warwick); only derived
+    counts are committed
+  use: 'industry features: Soviet defence plants, design bureaux and research institutes active in 1956,
+    by branch. Cite: Dexter and Rodionov, The Factories, Research and Design Establishments of the Soviet
+    Defence Industry: a Guide, ver. 24, University of Warwick, July 2026'
+  role: features
+  retrieved: '2026-10-08'
+  sha256: 19affae97fdd43feac8f5e31b88089fa6ff646cd6d903fddec15baebdeaac587
+- id: wri_gppd
+  url: https://raw.githubusercontent.com/wri/global-power-plant-database/master/output_database/global_power_plant_database.csv
+  path: wri/global_power_plant_database.csv
+  licence: CC BY 4.0 (World Resources Institute)
+  use: industry features, power plants commissioned by 1956 (survivors only, so a weak flag)
+  role: features
+  retrieved: '2026-10-08'
+  sha256: 4b1f93e0fd93664f18684d9b05d0a52ed9658c6a8cf0d21ff2520791379ba7fc
+- id: ourairports
+  url: https://davidmegginson.github.io/ourairports-data/airports.csv
+  path: ourairports/airports.csv
+  licence: public domain (OurAirports)
+  use: military features, airfields near a place (today's list, so flagged as anachronistic)
+  role: features
+  retrieved: '2026-10-08'
+  sha256: 06bb430e3929969865065798765beaab4063e4695fbb32d83623b103a613e78f
+- id: naturalearth_10m_railroads
+  url: https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_railroads.geojson
+  path: naturalearth/ne_10m_railroads.geojson
+  licence: public domain (Natural Earth)
+  use: transport features (today's network, flagged)
+  role: features
+  retrieved: '2026-10-08'
+  sha256: a0962d7866060ae3e24df255f6d662389ac9ba7e0df40cf329c2281190b861e6
+- id: naturalearth_10m_ports
+  url: https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_ports.geojson
+  path: naturalearth/ne_10m_ports.geojson
+  licence: public domain (Natural Earth)
+  use: transport features, seaports (today's list, flagged)
+  role: features
+  retrieved: '2026-10-08'
+  sha256: c5a5028f5187a5e1b9fe7f0fab99804a8be7482099a2365d404fb7e9dd6b5457
+- id: naturalearth_10m_coastline
+  url: https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_coastline.geojson
+  path: naturalearth/ne_10m_coastline.geojson
+  licence: public domain (Natural Earth)
+  use: geography features, distance to the sea
+  role: features
+  retrieved: '2026-10-08'
+  sha256: 6f75ae0e0de157b14946e2255eb1f5486d9a13819032e26d4610852d296788f6
+- id: naturalearth_10m_rivers
+  url: https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_rivers_lake_centerlines.geojson
+  path: naturalearth/ne_10m_rivers_lake_centerlines.geojson
+  licence: public domain (Natural Earth)
+  use: transport and geography features, distance to a major river
+  role: features
+  retrieved: '2026-10-08'
+  sha256: bb854a900ecbd3b408df46d5e16e3e0f974ba55993f9d8b5c26e855273c0905a
+- id: naturalearth_10m_admin0
+  url: https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_admin_0_countries.geojson
+  path: naturalearth/ne_10m_admin_0_countries.geojson
+  licence: public domain (Natural Earth)
+  use: reach features, the continental United States
+  role: features
+  retrieved: '2026-10-08'
+  sha256: 239eec57ac17f100a11e2536cffc56752c318b50ae765b0918ff7aab4ce8f255
+- id: cshapes_2
+  url: https://icr.ethz.ch/data/cshapes/CShapes-2.0.geojson
+  path: cshapes/CShapes-2.0.geojson
+  licence: CC BY-NC-SA 4.0 (Schvitz et al. 2022, ETH Zurich); only derived distances are committed
+  use: reach features, borders as of 1956 (NATO territory, the bloc's frontier)
+  role: features
+  retrieved: '2026-10-08'
+  sha256: 384b1ea90b9419f30a858d7ec237c85a22c60d1b35b5f85f215a1204f9989d42
+- id: aws_terrain_tiles
+  url: https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png
+  path: terrain/tiles.csv
+  licence: 'open data (Mapzen/Tilezen terrain tiles on AWS; attribution: SRTM, GMTED2010, ETOPO1 and others,
+    see https://github.com/tilezen/joerd/blob/master/docs/attribution.md)'
+  use: 'geography features: elevation and local relief within 10 km (zoom-7 tiles)'
+  role: features
+  fetch: nucprob.sources.terrain
+  note: tiles are fetched on demand into data/raw/terrain/<z>/<x>/<y>.png; tiles.csv lists each tile and
+    its sha256
