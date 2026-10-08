@@ -69,7 +69,7 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px s
 .card .sub { color: var(--muted); font-size: 13px; }
 .facts { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; font-size: 13px; }
 .facts dt { color: var(--muted); }
-.facts dd { margin: 0; font-variant-numeric: tabular-nums; }
+.facts dd { margin: 0; font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
 .bars { display: grid; gap: 4px; font-size: 12px; }
 .bar { display: grid; grid-template-columns: 1fr 44px; align-items: center; gap: 8px; }
 .bar .track { position: relative; height: 8px; background: var(--rule); border-radius: 4px; }
@@ -359,5 +359,10 @@ new MutationObserver(recolor).observe(document.documentElement, { attributes: tr
 window.addEventListener("resize", () => deckgl.setProps({ width: "100%", height: "100%" }));
 
 legend(); metrics(); ablation(); countries();
-select((DATA.places.find(p => p.latin === "Molotov") || DATA.places[0]).id);
+// Open on a town that has out-of-fold predictions: the first of a few well-known ones, else the largest.
+const scored = DATA.places.filter(p => p.p && !p.sealed);
+const start = ["Molotov", "Plzeň", "Stalino", "Gorkiy", "Kuybyshev"]
+  .map(n => scored.filter(p => p.latin === n).sort((a, b) => b.pop - a.pop)[0]).find(Boolean)
+  || scored.reduce((a, b) => (b.pop > a.pop ? b : a), scored[0] || DATA.places[0]);
+select(start.id);
 </script>
