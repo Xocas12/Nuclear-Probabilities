@@ -25,6 +25,17 @@ def text(value) -> str:
     return value if isinstance(value, str) else ""
 
 
+# Latin letters that Unicode does not decompose into a base letter and a mark.
+SPECIAL = str.maketrans({"ł": "l", "Ł": "L", "ß": "ss", "ø": "o", "Ø": "O", "æ": "ae", "đ": "d"})
+SPECIAL_MORE = str.maketrans({"Đ": "D", "ı": "i", "ə": "a", "Ə": "A", "œ": "oe"})
+
+
+def fold(name: str) -> str:
+    """Diacritics stripped: "Łódź" -> "Lodz", "Nyíregyháza" -> "Nyiregyhaza"."""
+    text = unicodedata.normalize("NFKD", name.translate(SPECIAL).translate(SPECIAL_MORE))
+    return "".join(ch for ch in text if not unicodedata.combining(ch))
+
+
 def latin_names(place) -> list[str]:
     """Every name of a settlement in the SAC style of Latin letters: its 1956 and current
     names, the names in its parentheses and notes, and GeoNames' Latin and Cyrillic alternate
@@ -34,13 +45,12 @@ def latin_names(place) -> list[str]:
     names += [
         n for n in str(place.get("gn_alternatenames") or "").split(",") if SCRIPTS.fullmatch(n)
     ]
-    return sorted({simple(to_latin(n)) for n in names if n})
+    return sorted({simple(fold(to_latin(n))) for n in names if n})
 
 
 def loose(name: str) -> str:
     """A matching key that ignores transliteration conventions and diacritics."""
-    folded = unicodedata.normalize("NFKD", to_latin(name)).encode("ascii", "ignore").decode()
-    out = simple(folded)
+    out = simple(fold(to_latin(name)))
     for a, b in LOOSE:
         out = out.replace(a, b)
     return out

@@ -15,15 +15,15 @@ universe proper is >= 10,000; 5,000 and 20,000 are the sensitivity thresholds), 
 data/processed/places_1956_unmatched.csv for review.
 """
 
-import datetime as dt
-
 import numpy as np
 import pandas as pd
 
+from nucprob import places_bloc
 from nucprob.gazetteer.match import match
 from nucprob.gazetteer.names import name_on
 from nucprob.geo import Points
 from nucprob.paths import CURATED, PROCESSED, RAW
+from nucprob.places_bloc import interpolate
 from nucprob.sources import demoscope, geonames, popstat
 
 MIN_KEEP = 5_000
@@ -76,20 +76,8 @@ PREFIX = {
     "North Vietnam": "vn",
     "Mongolia": "mn",
 }
-STUDY_DAY = dt.date(1956, 6, 15)
 CLOSED = CURATED / "gazetteer" / "closed_cities_1956.csv"
-
-
-def years(date: str) -> float:
-    d = dt.date.fromisoformat(date)
-    return d.year + (d.timetuple().tm_yday - 1) / 365.25
-
-
-def interpolate(a: pd.Series, b: pd.Series, date_a: str, date_b: str) -> pd.Series:
-    """Population on the study date, growing geometrically from census a to census b."""
-    study = years(STUDY_DAY.isoformat())
-    share = (study - years(date_a)) / (years(date_b) - years(date_a))
-    return a * (b / a) ** share
+EAST_GERMAN_LAENDER = {"11", "12", "13", "14", "15", "16"}  # GeoNames admin1 codes, Berlin incl.
 
 
 def census(df: pd.DataFrame, year: str) -> pd.Series:
@@ -135,7 +123,7 @@ def from_popstat_eastern(page: str) -> pd.DataFrame:
         pop, pop_year = df[f"pop_{dates[0]}"], int(dates[0][:4])
     else:
         a, b = df[f"pop_{dates[0]}"], df[f"pop_{dates[1]}"]
-        pop, pop_year = interpolate(a, b, *dates).fillna(a).fillna(b), STUDY_DAY.year
+        pop, pop_year = interpolate(a, b, *dates).set_axis(df.index), PLAN_YEAR
     prewar = df[f"pop_{spec['prewar']}"] if spec["prewar"] else pd.Series(np.nan, index=df.index)
     # Pages of Latin-script countries have no transliteration column (the parser reads the first
     # census figure there instead): the name itself is the Latin name, for fuzzy matching.
@@ -229,8 +217,12 @@ def apply_links(matched: pd.DataFrame, gn: pd.DataFrame, page: str) -> pd.DataFr
     return matched
 
 
-def located(settlements: pd.DataFrame, country: str, page: str) -> pd.DataFrame:
+def located(
+    settlements: pd.DataFrame, country: str, page: str, admin1: set[str] | None = None
+) -> pd.DataFrame:
     gn = geonames.load_country(country)
+    if admin1 is not None:
+        gn = gn[gn["admin1"].isin(admin1)]
     matched = apply_links(match(settlements, gn), gn, page)
     print(
         f"{page:13} {len(settlements):5} settlements >= {MIN_KEEP}; "
@@ -304,11 +296,24 @@ def eastern_europe() -> pd.DataFrame:
         located(from_popstat_eastern(page), spec["geonames"], page)
         for page, spec in EASTERN_PAGES.items()
     ]
+    parts.append(located(places_bloc.east_germany(), "DE", "east germany", EAST_GERMAN_LAENDER))
+    parts.append(located(places_bloc.poland(), "PL", "poland"))
+    parts.append(located(places_bloc.hungary().query("pop >= @MIN_KEEP"), "HU", "hungary"))
+    parts.append(located(places_bloc.slovakia(), "SK", "slovakia"))
     return pd.concat(parts, ignore_index=True)
 
 
+def east_asia() -> pd.DataFrame:
+    """China's 1953 cities, matched to GeoNames; North Korea, North Vietnam and Mongolia from
+    the UN's estimates, which carry their own coordinates."""
+    wup = places_bloc.wup()
+    wup["has_match"] = True
+    return pd.concat([located(places_bloc.china(), "CN", "china"), wup], ignore_index=True)
+
+
 def build() -> pd.DataFrame:
-    places = pd.concat([ussr(), eastern_europe()], ignore_index=True)
+    places = pd.concat([ussr(), eastern_europe(), east_asia()], ignore_index=True)
+    places = places.drop(columns="has_match", errors="ignore")
     places["pop_imputed"] = places["pop_imputed"].astype("boolean").fillna(False).astype(bool)
     # A GeoNames place matched twice keeps the settlement with the larger population.
     places = places.sort_values("pop", ascending=False)

@@ -129,6 +129,8 @@ def link_names(links_cx: pd.DataFrame, located: pd.DataFrame, index: Points) -> 
     """Names second: a complex with no settlement within the radius goes to a settlement up to
     NAME_RADIUS_KM away whose name matches it closely (in place)."""
     unlinked = links_cx.index[links_cx["place_id"].isna()]
+    if len(unlinked) == 0:
+        return
     nearby = index.within(
         links_cx.loc[unlinked, "lat"], links_cx.loc[unlinked, "lon"], NAME_RADIUS_KM
     )

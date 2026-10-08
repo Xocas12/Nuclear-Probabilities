@@ -549,17 +549,18 @@ dependencies = [
     { name = "pandas" },
     { name = "pillow" },
     { name = "pyarrow" },
+    { name = "pymupdf" },
     { name = "pyyaml" },
     { name = "rapidfuzz" },
     { name = "requests" },
     { name = "scikit-learn" },
     { name = "shapely" },
+    { name = "xlrd" },
 ]
 
 [package.optional-dependencies]
 labels = [
     { name = "pdfplumber" },
-    { name = "pymupdf" },
     { name = "scipy" },
 ]
 
@@ -580,13 +581,14 @@ requires-dist = [
     { name = "pdfplumber", marker = "extra == 'labels'", specifier = ">=0.11" },
     { name = "pillow", specifier = ">=10.0" },
     { name = "pyarrow", specifier = ">=15.0" },
-    { name = "pymupdf", marker = "extra == 'labels'", specifier = ">=1.24" },
+    { name = "pymupdf", specifier = ">=1.24" },
     { name = "pyyaml", specifier = ">=6.0" },
     { name = "rapidfuzz", specifier = ">=3.6" },
     { name = "requests", specifier = ">=2.31" },
     { name = "scikit-learn", specifier = ">=1.4" },
     { name = "scipy", marker = "extra == 'labels'", specifier = ">=1.11" },
     { name = "shapely", specifier = ">=2.0" },
+    { name = "xlrd", specifier = ">=2.0" },
 ]
 provides-extras = ["labels"]
 
@@ -1440,4 +1442,13 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/c4/f9/f323b3b6058cff3853b31cf6a49c0425ed797bf9611572ec10d065e08bac/virtualenv-21.14.5.tar.gz", hash = "sha256:c4cb6c13e46b57225a999c7e22a09b163393878facc7ac4c059a57f46faa1647", size = 5467127, upload-time = "2026-10-02T17:42:25.613Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/df/93/084f10ebbecdedf7902ed68fbecc903f0e9c5742155bfffb05eccbc071da/virtualenv-21.14.5-py3-none-any.whl", hash = "sha256:b0651e0174982bba17cc6f0aaa2ef496730cb85a3f35eb5d1119d1c904f7d1da", size = 5487482, upload-time = "2026-10-02T17:42:23.38Z" },
+]
+
+[[package]]
+name = "xlrd"
+version = "2.0.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/07/5a/377161c2d3538d1990d7af382c79f3b2372e880b65de21b01b1a2b78691e/xlrd-2.0.2.tar.gz", hash = "sha256:08b5e25de58f21ce71dc7db3b3b8106c1fa776f3024c54e45b45b374e89234c9", size = 100167, upload-time = "2025-06-14T08:46:39.039Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/1a/62/c8d562e7766786ba6587d09c5a8ba9f718ed3fa8af7f4553e8f91c36f302/xlrd-2.0.2-py2.py3-none-any.whl", hash = "sha256:ea762c3d29f4cca48d82df517b6d89fbce4db3107f9d78713e48cd321d5c9aa9", size = 96555, upload-time = "2025-06-14T08:46:37.766Z" },
 ]

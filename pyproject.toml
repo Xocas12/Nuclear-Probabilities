@@ -17,16 +17,18 @@ dependencies = [
     "rapidfuzz>=3.6",
     "scikit-learn>=1.4",
     "lightgbm>=4.3",
-    # Dexter-Rodionov's guide is an Excel workbook; terrain tiles are PNG.
+    # Dexter-Rodionov's guide is an Excel workbook, KSH's tables old xls; terrain tiles are PNG;
+    # the GDR yearbook pages are PDFs with a text layer.
     "openpyxl>=3.1",
     "pillow>=10.0",
+    "pymupdf>=1.24",
     "shapely>=2.0",
+    "xlrd>=2.0",
 ]
 
 [project.optional-dependencies]
 # The SAC 1956 transcription pipeline (scripts/sac1956_*.py): page rendering, crops.
 labels = [
-    "pymupdf>=1.24",
     "pdfplumber>=0.11",
     "scipy>=1.11",
 ]

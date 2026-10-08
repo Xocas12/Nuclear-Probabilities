@@ -604,6 +604,257 @@ sources:
   role: universe
   retrieved: '2026-10-08'
   sha256: e03e3f8bb9d434f7716081246af82c62d47ba7ac5f3c4711a256ed7d102b47c5
+- id: ddr_jahrbuch_1956_p0041
+  url: https://digi.bib.uni-mannheim.de/fileadmin/statjahrb/514402644_1956/pdf/514402644_0041.pdf
+  path: ddr/514402644_0041.pdf
+  licence: Public Domain Mark 1.0 (Statistisches Jahrbuch der DDR 1956, digitised by UB Mannheim)
+  use: 'East Germany place universe: table I.10, municipalities of 10,000+ on 31 Dec 1956 with their population
+    in 1939, 1946, 1950, 1955 and 1956'
+  role: universe
+  sha256: a583ee368c90fc9d839dab37c51a1265d47a3fed69d66cbc040b81faccf85981
+- id: ddr_jahrbuch_1956_p0042
+  url: https://digi.bib.uni-mannheim.de/fileadmin/statjahrb/514402644_1956/pdf/514402644_0042.pdf
+  path: ddr/514402644_0042.pdf
+  licence: Public Domain Mark 1.0 (Statistisches Jahrbuch der DDR 1956, digitised by UB Mannheim)
+  use: 'East Germany place universe: table I.10, municipalities of 10,000+ on 31 Dec 1956 with their population
+    in 1939, 1946, 1950, 1955 and 1956'
+  role: universe
+  sha256: 7170ab23e6fe567ba2d3e40fdbb5e39593c3770a107ac83d40284351ce7dc455
+- id: ddr_jahrbuch_1956_p0043
+  url: https://digi.bib.uni-mannheim.de/fileadmin/statjahrb/514402644_1956/pdf/514402644_0043.pdf
+  path: ddr/514402644_0043.pdf
+  licence: Public Domain Mark 1.0 (Statistisches Jahrbuch der DDR 1956, digitised by UB Mannheim)
+  use: 'East Germany place universe: table I.10, municipalities of 10,000+ on 31 Dec 1956 with their population
+    in 1939, 1946, 1950, 1955 and 1956'
+  role: universe
+  sha256: 94cc61b5a281f281cadc8e131dba763333a80f3f612998ba4973332f668c5d04
+- id: gus_rocznik_1957_p13
+  url: https://polona.pl/api/download/digital-content/b6990766-8108-49ca-a322-9e04bc70de4e
+  path: gus/rs1957_p13_alto.xml
+  licence: public domain (Rocznik Statystyczny 1957, GUS; scan and OCR by Biblioteka Narodowa, Polona)
+  use: 'Poland place universe: table 7, towns of 10,000+ with the 1950 census and the end-1956 estimate
+    (book p. 13, ALTO OCR)'
+  role: universe
+  sha256: 34e45bbbc630fb053619005ecf41f4aa858436ad46f9a11e82d38114b333e2f0
+- id: gus_rocznik_1957_p14
+  url: https://polona.pl/api/download/digital-content/2dbb1717-a7d5-4758-9982-3e5ee409d0db
+  path: gus/rs1957_p14_alto.xml
+  licence: public domain (Rocznik Statystyczny 1957, GUS; scan and OCR by Biblioteka Narodowa, Polona)
+  use: 'Poland place universe: table 7, towns of 10,000+ with the 1950 census and the end-1956 estimate
+    (book p. 14, ALTO OCR)'
+  role: universe
+  sha256: e0ed4afe0fbf94d90f0fe581de5c1533448eaaa31ff409e1ef5333e046a9ddf1
+- id: gus_rocznik_1957_p15
+  url: https://polona.pl/api/download/digital-content/086fccd8-c653-4cb5-a313-adf48dad5036
+  path: gus/rs1957_p15_alto.xml
+  licence: public domain (Rocznik Statystyczny 1957, GUS; scan and OCR by Biblioteka Narodowa, Polona)
+  use: 'Poland place universe: table 7, towns of 10,000+ with the 1950 census and the end-1956 estimate
+    (book p. 15, ALTO OCR)'
+  role: universe
+  sha256: 07c070f78271e97811efd95633a3334ef15bed0a4f268e37c5d6bede2b091d4a
+- id: ksh_2011_4_1_1_1_01
+  url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/01/01_4_1_1_1.xls
+  path: ksh/01_4_1_1_1.xls
+  licence: no licence stated (KSH, Népszámlálás 2011, Területi adatok); figures are used, the files are
+    not redistributed
+  use: 'Hungary place universe: population of every settlement of Budapest at the censuses 1870-1970 (1941,
+    1949, 1960 used)'
+  role: universe
+  sha256: 88533423705ead57bd473fd5001f18b147ebb8d2f03229769591187266769d80
+- id: ksh_2011_4_1_1_1_02
+  url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/02/02_4_1_1_1.xls
+  path: ksh/02_4_1_1_1.xls
+  licence: no licence stated (KSH, Népszámlálás 2011, Területi adatok); figures are used, the files are
+    not redistributed
+  use: 'Hungary place universe: population of every settlement of Baranya at the censuses 1870-1970 (1941,
+    1949, 1960 used)'
+  role: universe
+  sha256: 3116a2804defe3c8a34f3a5d49d2e625e6a07a2519e0fd9faa9e125d5d233949
+- id: ksh_2011_4_1_1_1_03
+  url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/03/03_4_1_1_1.xls
+  path: ksh/03_4_1_1_1.xls
+  licence: no licence stated (KSH, Népszámlálás 2011, Területi adatok); figures are used, the files are
+    not redistributed
+  use: 'Hungary place universe: population of every settlement of Bács-Kiskun at the censuses 1870-1970
+    (1941, 1949, 1960 used)'
+  role: universe
+  sha256: e438b9236b5d88ec056e43c3eb9766cb91ea37bcc7e994284056c8f1cd82277e
+- id: ksh_2011_4_1_1_1_04
+  url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/04/04_4_1_1_1.xls
+  path: ksh/04_4_1_1_1.xls
+  licence: no licence stated (KSH, Népszámlálás 2011, Területi adatok); figures are used, the files are
+    not redistributed
+  use: 'Hungary place universe: population of every settlement of Békés at the censuses 1870-1970 (1941,
+    1949, 1960 used)'
+  role: universe
+  sha256: 2224c9a4e8c9050c3c0731349919657201fb0d51bfefbdf63461250ae851d900
+- id: ksh_2011_4_1_1_1_05
+  url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/05/05_4_1_1_1.xls
+  path: ksh/05_4_1_1_1.xls
+  licence: no licence stated (KSH, Népszámlálás 2011, Területi adatok); figures are used, the files are
+    not redistributed
+  use: 'Hungary place universe: population of every settlement of Borsod-Abaúj-Zemplén at the censuses
+    1870-1970 (1941, 1949, 1960 used)'
+  role: universe
+  sha256: f2e17fba747b71ed04429c1b2eed466ce788b0b7424e6c7705494d87f6b17677
+- id: ksh_2011_4_1_1_1_06
+  url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/06/06_4_1_1_1.xls
+  path: ksh/06_4_1_1_1.xls
+  licence: no licence stated (KSH, Népszámlálás 2011, Területi adatok); figures are used, the files are
+    not redistributed
+  use: 'Hungary place universe: population of every settlement of Csongrád at the censuses 1870-1970 (1941,
+    1949, 1960 used)'
+  role: universe
+  sha256: aba771e95d5d936d39d8522d15398ae90139d96cdf5130d8c5224ff4d77423cd
+- id: ksh_2011_4_1_1_1_07
+  url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/07/07_4_1_1_1.xls
+  path: ksh/07_4_1_1_1.xls
+  licence: no licence stated (KSH, Népszámlálás 2011, Területi adatok); figures are used, the files are
+    not redistributed
+  use: 'Hungary place universe: population of every settlement of Fejér at the censuses 1870-1970 (1941,
+    1949, 1960 used)'
+  role: universe
+  sha256: bcf5ac44c980617e99206521c277b12b629d5e80f414cf6968231ec1b4400aa0
+- id: ksh_2011_4_1_1_1_08
+  url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/08/08_4_1_1_1.xls
+  path: ksh/08_4_1_1_1.xls
+  licence: no licence stated (KSH, Népszámlálás 2011, Területi adatok); figures are used, the files are
+    not redistributed
+  use: 'Hungary place universe: population of every settlement of Győr-Moson-Sopron at the censuses 1870-1970
+    (1941, 1949, 1960 used)'
+  role: universe
+  sha256: ff9b473a92f67e4b9a8a684d359e0e9715f28873e88f1ecc52fa97a7a402cc12
+- id: ksh_2011_4_1_1_1_09
+  url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/09/09_4_1_1_1.xls
+  path: ksh/09_4_1_1_1.xls
+  licence: no licence stated (KSH, Népszámlálás 2011, Területi adatok); figures are used, the files are
+    not redistributed
+  use: 'Hungary place universe: population of every settlement of Hajdú-Bihar at the censuses 1870-1970
+    (1941, 1949, 1960 used)'
+  role: universe
+  sha256: 6c3c6766eaf7ea850184e3b317181f32343ab6be5192bf5a8b3da07731d89cdd
+- id: ksh_2011_4_1_1_1_10
+  url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/10/10_4_1_1_1.xls
+  path: ksh/10_4_1_1_1.xls
+  licence: no licence stated (KSH, Népszámlálás 2011, Területi adatok); figures are used, the files are
+    not redistributed
+  use: 'Hungary place universe: population of every settlement of Heves at the censuses 1870-1970 (1941,
+    1949, 1960 used)'
+  role: universe
+  sha256: 04ff5c943a0511a81f38ae19167b725bae0e143964c432cfb93446e8a932f4b1
+- id: ksh_2011_4_1_1_1_11
+  url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/11/11_4_1_1_1.xls
+  path: ksh/11_4_1_1_1.xls
+  licence: no licence stated (KSH, Népszámlálás 2011, Területi adatok); figures are used, the files are
+    not redistributed
+  use: 'Hungary place universe: population of every settlement of Komárom-Esztergom at the censuses 1870-1970
+    (1941, 1949, 1960 used)'
+  role: universe
+  sha256: 5f9f4d692f8f0c1154be2c75351a098603142d984116e47a9497032c1b0143fd
+- id: ksh_2011_4_1_1_1_12
+  url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/12/12_4_1_1_1.xls
+  path: ksh/12_4_1_1_1.xls
+  licence: no licence stated (KSH, Népszámlálás 2011, Területi adatok); figures are used, the files are
+    not redistributed
+  use: 'Hungary place universe: population of every settlement of Nógrád at the censuses 1870-1970 (1941,
+    1949, 1960 used)'
+  role: universe
+  sha256: 0510543b3f47e9c8ec20f771d7574429f1ce84676ddc8872a3fab2c885d32452
+- id: ksh_2011_4_1_1_1_13
+  url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/13/13_4_1_1_1.xls
+  path: ksh/13_4_1_1_1.xls
+  licence: no licence stated (KSH, Népszámlálás 2011, Területi adatok); figures are used, the files are
+    not redistributed
+  use: 'Hungary place universe: population of every settlement of Pest at the censuses 1870-1970 (1941,
+    1949, 1960 used)'
+  role: universe
+  sha256: 8887e63a191558c02f687e88b77d4869543b051bf5f11bb82a3b787ab5a09e62
+- id: ksh_2011_4_1_1_1_14
+  url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/14/14_4_1_1_1.xls
+  path: ksh/14_4_1_1_1.xls
+  licence: no licence stated (KSH, Népszámlálás 2011, Területi adatok); figures are used, the files are
+    not redistributed
+  use: 'Hungary place universe: population of every settlement of Somogy at the censuses 1870-1970 (1941,
+    1949, 1960 used)'
+  role: universe
+  sha256: c3f80c74a8f92c90e4e7401aa600ebd6eab259998a5216da8713fb37b5264f2f
+- id: ksh_2011_4_1_1_1_15
+  url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/15/15_4_1_1_1.xls
+  path: ksh/15_4_1_1_1.xls
+  licence: no licence stated (KSH, Népszámlálás 2011, Területi adatok); figures are used, the files are
+    not redistributed
+  use: 'Hungary place universe: population of every settlement of Szabolcs-Szatmár-Bereg at the censuses
+    1870-1970 (1941, 1949, 1960 used)'
+  role: universe
+  sha256: b264d91f25489ee1602aea7534d16046f52cf58190b0a0ffd82e375f925b0e2c
+- id: ksh_2011_4_1_1_1_16
+  url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/16/16_4_1_1_1.xls
+  path: ksh/16_4_1_1_1.xls
+  licence: no licence stated (KSH, Népszámlálás 2011, Területi adatok); figures are used, the files are
+    not redistributed
+  use: 'Hungary place universe: population of every settlement of Jász-Nagykun-Szolnok at the censuses
+    1870-1970 (1941, 1949, 1960 used)'
+  role: universe
+  sha256: faad45ea4ecd6acfb2484b40788fe47eb027cae33e476793fa9213a7705b0c18
+- id: ksh_2011_4_1_1_1_17
+  url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/17/17_4_1_1_1.xls
+  path: ksh/17_4_1_1_1.xls
+  licence: no licence stated (KSH, Népszámlálás 2011, Területi adatok); figures are used, the files are
+    not redistributed
+  use: 'Hungary place universe: population of every settlement of Tolna at the censuses 1870-1970 (1941,
+    1949, 1960 used)'
+  role: universe
+  sha256: 0906612ca5342f36a9d86b0229c667b60a64057cbc8777d53da1dfb1fc78f7de
+- id: ksh_2011_4_1_1_1_18
+  url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/18/18_4_1_1_1.xls
+  path: ksh/18_4_1_1_1.xls
+  licence: no licence stated (KSH, Népszámlálás 2011, Területi adatok); figures are used, the files are
+    not redistributed
+  use: 'Hungary place universe: population of every settlement of Vas at the censuses 1870-1970 (1941,
+    1949, 1960 used)'
+  role: universe
+  sha256: a38929b2431438ae2e72a2f33ff990662885eaa895ef4b1b7a866b0bd8fc3923
+- id: ksh_2011_4_1_1_1_19
+  url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/19/19_4_1_1_1.xls
+  path: ksh/19_4_1_1_1.xls
+  licence: no licence stated (KSH, Népszámlálás 2011, Területi adatok); figures are used, the files are
+    not redistributed
+  use: 'Hungary place universe: population of every settlement of Veszprém at the censuses 1870-1970 (1941,
+    1949, 1960 used)'
+  role: universe
+  sha256: f82735c055866273df02656fa43258b54d1b0adc5cf95b1d3cadd1613ad6dad4
+- id: ksh_2011_4_1_1_1_20
+  url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/20/20_4_1_1_1.xls
+  path: ksh/20_4_1_1_1.xls
+  licence: no licence stated (KSH, Népszámlálás 2011, Területi adatok); figures are used, the files are
+    not redistributed
+  use: 'Hungary place universe: population of every settlement of Zala at the censuses 1870-1970 (1941,
+    1949, 1960 used)'
+  role: universe
+  sha256: 9016b66ed578034313813009bc2dc4f8a02a309d9b2443b99a4e2d64c7e0cd43
+- id: votrubec_1959
+  url: https://www.sav.sk/journals/uploads/04201125GEOG_1959_2_Votrubec.pdf
+  path: votrubec/04201125GEOG_1959_2_Votrubec.pdf
+  licence: no licence stated (Geografický časopis 11(2), 1959); the 25 rows used are transcribed in data/curated/gazetteer/slovakia_towns_1954_1958.csv
+  use: 'Slovakia place universe: Votrubec, ''Vývoj obyvatelstva československých měst 1954-1958'', tables
+    3, 7 and 8 (population on 1 Jan 1958 and change since 1 Jan 1954)'
+  role: universe
+  sha256: d45eb7bcda0f2210f49d27448d9cf466305604134143d3bb00b0561f926f93d2
+- id: wikipedia_1953_chinese_census
+  url: https://en.wikipedia.org/wiki/1953_Chinese_census
+  path: wikipedia/1953_Chinese_census.html
+  licence: CC BY-SA 4.0 (Wikipedia); figures from Shabad (1959), China's Changing Map
+  use: 'China place universe: the 1953 census population of China''s 163 cities'
+  role: universe
+  sha256: 6bc4abff5e6a75acde8d8a1a0aa4f27569da357ce11e92bb3d2d115decb9fbbc
+- id: un_wup2018
+  url: https://population.un.org/wup/assets/Download/Archive/WUP2018-Excel-files.zip
+  path: un/WUP2018-Excel-files.zip
+  licence: CC BY 3.0 IGO (UN DESA, World Urbanization Prospects 2018)
+  use: 'North Korea, North Vietnam and Mongolia place universe: 1956 estimates for cities of 300,000+
+    today (F22, annual)'
+  role: universe
+  sha256: 80eb71bbabb46cb2e1599b51b16133bf28b0a99a541d72de20a1248ec6170a75
 - id: aws_terrain_tiles
   url: https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png
   path: terrain/tiles.csv
