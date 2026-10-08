@@ -23,3 +23,12 @@ def test_outline_shifts_only_rings_wholly_west(tmp_path):
     rings = outline(path)
     xs = sorted(min(p[0] for p in r) for r in rings)
     assert xs == [30, 181]  # Europe kept, Chukotka moved east, America outside the map
+
+
+def test_card_values_undo_the_logs():
+    from nucprob.viz.map import shown
+
+    assert shown(1.0, "count") == 9
+    assert shown(2.0, "km") == 99.0
+    assert shown(1, "flag") is True
+    assert shown(float("nan"), "km") is None
