@@ -88,6 +88,8 @@ def link(
     """Each target to a settlement within `radius_km`: the best-named one if a name matches
     (NAME_OK or better), else the nearest. Targets with names: `name` column; DGZs: none."""
     out = targets.copy()
+    if out.empty:
+        return out.assign(place_id=None, dist_km=np.nan, name_score=np.nan)
     lat, lon = out["lat"].to_numpy(), out["lon"].to_numpy()
     dist, idx = index.nearest(lat, lon)
     nearby = index.within(lat, lon, radius_km)

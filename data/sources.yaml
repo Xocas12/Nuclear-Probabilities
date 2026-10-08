@@ -476,6 +476,134 @@ sources:
   role: features
   retrieved: '2026-10-08'
   sha256: 384b1ea90b9419f30a858d7ec237c85a22c60d1b35b5f85f215a1204f9989d42
+- id: popstat_albania
+  url: https://pop-stat.mashke.org/albania-cities.htm
+  path: popstat/albania-cities.htm
+  licence: no licence stated (T. Bespyatov); census figures are used, the page is not redistributed
+  use: 'Albania place universe: towns with census populations (1955 onwards)'
+  role: universe
+  retrieved: '2026-10-08'
+  sha256: 9a8fa3e3daa647f43669e16c192f3ff0018c7c5605db76ed32b4fc29669f788e
+- id: popstat_bulgaria
+  url: https://pop-stat.mashke.org/bulgaria-cities.htm
+  path: popstat/bulgaria-cities.htm
+  licence: no licence stated (T. Bespyatov); census figures are used, the page is not redistributed
+  use: 'Bulgaria place universe: towns with census populations (1934, 1946, 1956 ...) and renaming notes'
+  role: universe
+  retrieved: '2026-10-08'
+  sha256: cccb3bf60cca49c40d6882551beffa777595545634d39d10cd5fc38a660b768e
+- id: popstat_romania
+  url: https://pop-stat.mashke.org/romania-cities.htm
+  path: popstat/romania-cities.htm
+  licence: no licence stated (T. Bespyatov); census figures are used, the page is not redistributed
+  use: 'Romania place universe: towns with census populations (1930, 1948, 1956 ...)'
+  role: universe
+  retrieved: '2026-10-08'
+  sha256: b98b28010fb3ff625791d6a232ee25bc257bd3e7f2b094374b99d96fa47e9c18
+- id: popstat_czechia
+  url: https://pop-stat.mashke.org/czechia-cities.htm
+  path: popstat/czechia-cities.htm
+  licence: no licence stated (T. Bespyatov); census figures are used, the page is not redistributed
+  use: 'Czechoslovakia place universe (Czech lands): towns with census populations (1930, 1950, 1961 ...)'
+  role: universe
+  retrieved: '2026-10-08'
+  sha256: befc53e127f2aeba955727332904e34197a7f194dbc1400fe37733d2dbe73ed6
+- id: geonames_pl
+  url: https://download.geonames.org/export/dump/PL.zip
+  path: geonames/PL.zip
+  licence: CC BY 4.0 (GeoNames)
+  use: coordinates and alternate names for the place universe of the bloc outside the USSR
+  role: universe
+  retrieved: '2026-10-08'
+  sha256: b2fce11acbaf912a9e0ef34ceb44d0ae30a46b8e731080aac48c3e5045b0795f
+- id: geonames_de
+  url: https://download.geonames.org/export/dump/DE.zip
+  path: geonames/DE.zip
+  licence: CC BY 4.0 (GeoNames)
+  use: coordinates and alternate names for the place universe of the bloc outside the USSR
+  role: universe
+  retrieved: '2026-10-08'
+  sha256: aea7cac6bec5e0073741efa4d82f822d1a8ce3d02634ffaca7644c145c73ccf0
+- id: geonames_cz
+  url: https://download.geonames.org/export/dump/CZ.zip
+  path: geonames/CZ.zip
+  licence: CC BY 4.0 (GeoNames)
+  use: coordinates and alternate names for the place universe of the bloc outside the USSR
+  role: universe
+  retrieved: '2026-10-08'
+  sha256: 982dd00f82665ba98f9454214b580060b232d35b82a77b485194d37c5fbb62f7
+- id: geonames_sk
+  url: https://download.geonames.org/export/dump/SK.zip
+  path: geonames/SK.zip
+  licence: CC BY 4.0 (GeoNames)
+  use: coordinates and alternate names for the place universe of the bloc outside the USSR
+  role: universe
+  retrieved: '2026-10-08'
+  sha256: cc2b5693a7e374e677af768ec2660dddff0af17c7e300e8d6ec58bcef1e800fa
+- id: geonames_hu
+  url: https://download.geonames.org/export/dump/HU.zip
+  path: geonames/HU.zip
+  licence: CC BY 4.0 (GeoNames)
+  use: coordinates and alternate names for the place universe of the bloc outside the USSR
+  role: universe
+  retrieved: '2026-10-08'
+  sha256: be81fd6223b64a5107b7eca2e494c23295e3850511b97e5e5bdf8b11e20659e4
+- id: geonames_ro
+  url: https://download.geonames.org/export/dump/RO.zip
+  path: geonames/RO.zip
+  licence: CC BY 4.0 (GeoNames)
+  use: coordinates and alternate names for the place universe of the bloc outside the USSR
+  role: universe
+  retrieved: '2026-10-08'
+  sha256: c39d7a802578524b6ef256d5bae8b87a5011cd7033113068aed27e8dfd412a39
+- id: geonames_bg
+  url: https://download.geonames.org/export/dump/BG.zip
+  path: geonames/BG.zip
+  licence: CC BY 4.0 (GeoNames)
+  use: coordinates and alternate names for the place universe of the bloc outside the USSR
+  role: universe
+  retrieved: '2026-10-08'
+  sha256: e8bef04b5bff1d8d32ae7ece97aff89aa2a51496fd874758230760c96c5b1a0b
+- id: geonames_al
+  url: https://download.geonames.org/export/dump/AL.zip
+  path: geonames/AL.zip
+  licence: CC BY 4.0 (GeoNames)
+  use: coordinates and alternate names for the place universe of the bloc outside the USSR
+  role: universe
+  retrieved: '2026-10-08'
+  sha256: 66f77a5bdcea20633a5e0d5cc2fea61867b2bd6b2b5f151406db441deb27f09f
+- id: geonames_cn
+  url: https://download.geonames.org/export/dump/CN.zip
+  path: geonames/CN.zip
+  licence: CC BY 4.0 (GeoNames)
+  use: coordinates and alternate names for the place universe of the bloc outside the USSR
+  role: universe
+  retrieved: '2026-10-08'
+  sha256: 0331f909ad8566bc7d04323c95906575b2be8c39fa9fe2e3ae09f44136e0587c
+- id: geonames_kp
+  url: https://download.geonames.org/export/dump/KP.zip
+  path: geonames/KP.zip
+  licence: CC BY 4.0 (GeoNames)
+  use: coordinates and alternate names for the place universe of the bloc outside the USSR
+  role: universe
+  retrieved: '2026-10-08'
+  sha256: f2af9614959029856df35259457efb45ff79e8e24ff92e460ef0c8ee90386167
+- id: geonames_vn
+  url: https://download.geonames.org/export/dump/VN.zip
+  path: geonames/VN.zip
+  licence: CC BY 4.0 (GeoNames)
+  use: coordinates and alternate names for the place universe of the bloc outside the USSR
+  role: universe
+  retrieved: '2026-10-08'
+  sha256: 3c551047ad2bbeda97ee72bc35306d35c5fe9cbeaca3f97867fa89bd1556dbba
+- id: geonames_mn
+  url: https://download.geonames.org/export/dump/MN.zip
+  path: geonames/MN.zip
+  licence: CC BY 4.0 (GeoNames)
+  use: coordinates and alternate names for the place universe of the bloc outside the USSR
+  role: universe
+  retrieved: '2026-10-08'
+  sha256: e03e3f8bb9d434f7716081246af82c62d47ba7ac5f3c4711a256ed7d102b47c5
 - id: aws_terrain_tiles
   url: https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png
   path: terrain/tiles.csv

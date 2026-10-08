@@ -15,6 +15,8 @@ universe proper is >= 10,000; 5,000 and 20,000 are the sensitivity thresholds), 
 data/processed/places_1956_unmatched.csv for review.
 """
 
+import datetime as dt
+
 import numpy as np
 import pandas as pd
 
@@ -42,6 +44,50 @@ REPUBLICS = {  # pop-stat page -> GeoNames country (today's state)
     "tajikistan": "TJ",
     "turkmenistan": "TM",
 }
+
+
+# Eastern Europe from pop-stat (populations within today's municipal borders): the census or
+# censuses nearest the study date (two are interpolated geometrically to it) and the last
+# pre-war census.
+EASTERN_PAGES = {
+    "albania": dict(country="Albania", geonames="AL", pop=("1955-10-02",), prewar=None),
+    "bulgaria": dict(country="Bulgaria", geonames="BG", pop=("1956-12-01",), prewar="1934-12-31"),
+    "romania": dict(country="Romania", geonames="RO", pop=("1956-02-21",), prewar="1930-12-29"),
+    "czechia": dict(
+        country="Czechoslovakia",
+        unit="czech lands",
+        geonames="CZ",
+        pop=("1950-03-01", "1961-03-01"),
+        prewar="1930-12-01",
+    ),
+}
+PREFIX = {
+    "USSR": "su",
+    "Poland": "pl",
+    "East Germany": "dd",
+    "Czechoslovakia": "cs",
+    "Hungary": "hu",
+    "Romania": "ro",
+    "Bulgaria": "bg",
+    "Albania": "al",
+    "China": "cn",
+    "North Korea": "kp",
+    "North Vietnam": "vn",
+    "Mongolia": "mn",
+}
+STUDY_DAY = dt.date(1956, 6, 15)
+
+
+def years(date: str) -> float:
+    d = dt.date.fromisoformat(date)
+    return d.year + (d.timetuple().tm_yday - 1) / 365.25
+
+
+def interpolate(a: pd.Series, b: pd.Series, date_a: str, date_b: str) -> pd.Series:
+    """Population on the study date, growing geometrically from census a to census b."""
+    study = years(STUDY_DAY.isoformat())
+    share = (study - years(date_a)) / (years(date_b) - years(date_a))
+    return a * (b / a) ** share
 
 
 def census(df: pd.DataFrame, year: str) -> pd.Series:
@@ -77,6 +123,45 @@ def from_popstat(page: str) -> pd.DataFrame:
         name_on(n, notes, PLAN_YEAR) for n, notes in zip(out["name_ru"], out["notes"], strict=True)
     ]
     return out[out["pop_1959"] >= MIN_KEEP]
+
+
+def from_popstat_eastern(page: str) -> pd.DataFrame:
+    spec = EASTERN_PAGES[page]
+    df = popstat.parse(RAW / "popstat" / f"{page}-cities.htm", page)
+    dates = spec["pop"]
+    if len(dates) == 1:
+        pop, pop_year = df[f"pop_{dates[0]}"], int(dates[0][:4])
+    else:
+        a, b = df[f"pop_{dates[0]}"], df[f"pop_{dates[1]}"]
+        pop, pop_year = interpolate(a, b, *dates).fillna(a).fillna(b), STUDY_DAY.year
+    prewar = df[f"pop_{spec['prewar']}"] if spec["prewar"] else pd.Series(np.nan, index=df.index)
+    latin = df["name_lat"].where(~df["name_lat"].str.fullmatch(r"[\d,.…\s]*"), "")
+    out = pd.DataFrame(
+        {
+            "republic": page,
+            "country_today": spec["geonames"],
+            "region": df["region"],
+            "name_ru": df["name_ru"],
+            "name_lat": latin,
+            "is_city": df["is_city"],
+            "notes": df["notes"],
+            "pop_1926": np.nan,
+            "pop_1939": np.nan,
+            "pop_1959": np.nan,
+            "modern_pop": latest(df),
+            "source": "pop-stat",
+            "country_1956": spec["country"],
+            "unit_1956": spec.get("unit", page),
+            "pop": pop.round(),
+            "pop_year": pop_year,
+            "pop_prewar": prewar,
+            "pop_prewar_year": int(spec["prewar"][:4]) if spec["prewar"] else np.nan,
+        }
+    )
+    out["name_1956"] = [
+        name_on(n, notes, PLAN_YEAR) for n, notes in zip(out["name_ru"], out["notes"], strict=True)
+    ]
+    return out[out["pop"] >= MIN_KEEP]
 
 
 def from_demoscope(republic_prefix: str, page: str, country: str) -> pd.DataFrame:
@@ -138,37 +223,58 @@ def apply_links(matched: pd.DataFrame, gn: pd.DataFrame, page: str) -> pd.DataFr
     return matched
 
 
-def build() -> pd.DataFrame:
+def located(settlements: pd.DataFrame, country: str, page: str) -> pd.DataFrame:
+    gn = geonames.load_country(country)
+    matched = apply_links(match(settlements, gn), gn, page)
+    print(
+        f"{page:13} {len(settlements):5} settlements >= {MIN_KEEP}; "
+        f"matched {matched['geonameid'].notna().sum():5}; methods {matched['match_method'].str.split(',').str[0].value_counts().to_dict()}"
+    )
+    return matched
+
+
+def ussr() -> pd.DataFrame:
     parts = []
     for page, country in [*REPUBLICS.items(), ("uzbekistan", "UZ")]:
         settlements = (
             from_demoscope("Узбек", page, country) if page == "uzbekistan" else from_popstat(page)
         )
-        gn = geonames.load_country(country)
-        matched = apply_links(match(settlements, gn), gn, page)
-        print(
-            f"{page:13} {len(settlements):5} settlements >= {MIN_KEEP}; "
-            f"matched {matched['geonameid'].notna().sum():5}; methods {matched['match_method'].str.split(',').str[0].value_counts().to_dict()}"
-        )
-        parts.append(matched)
+        parts.append(located(settlements, country, page))
     places = pd.concat(parts, ignore_index=True)
-    # A GeoNames place matched twice keeps the settlement with the larger 1959 population.
-    places = places.sort_values("pop_1959", ascending=False)
-    dup = places["geonameid"].notna() & places.duplicated("geonameid", keep="first")
-    places.loc[dup, "match_method"] = "duplicate of a larger settlement"
-    places.loc[dup, ["geonameid", "lat", "lon"]] = np.nan
-    places["place_id"] = [
-        f"su-{int(g)}" if pd.notna(g) else f"su-x{i}" for i, g in enumerate(places["geonameid"])
-    ]
     places["country_1956"] = "USSR"
     # Karelia was the Karelo-Finnish SSR, a union republic, until 16 July 1956.
     karelia = places["region"].eq("Республика Карелия")
     places["unit_1956"] = places["republic"].mask(karelia, "karelo-finnish")
     places["pop"], places["pop_year"] = places["pop_1959"], 1959
     places["pop_prewar"], places["pop_prewar_year"] = places["pop_1939"], 1939
+    return places
+
+
+def eastern_europe() -> pd.DataFrame:
+    parts = [
+        located(from_popstat_eastern(page), spec["geonames"], page)
+        for page, spec in EASTERN_PAGES.items()
+    ]
+    return pd.concat(parts, ignore_index=True)
+
+
+def build() -> pd.DataFrame:
+    places = pd.concat([ussr(), eastern_europe()], ignore_index=True)
+    # A GeoNames place matched twice keeps the settlement with the larger population.
+    places = places.sort_values("pop", ascending=False)
+    dup = places["geonameid"].notna() & places.duplicated("geonameid", keep="first")
+    places.loc[dup, "match_method"] = "duplicate of a larger settlement"
+    places.loc[dup, ["geonameid", "lat", "lon"]] = np.nan
+    prefix = places["country_1956"].map(PREFIX)
+    places["place_id"] = [
+        f"{p}-{int(g)}" if pd.notna(g) else f"{p}-x{i}"
+        for i, (p, g) in enumerate(zip(prefix, places["geonameid"], strict=True))
+    ]
     places["in_universe"] = places["pop"] >= UNIVERSE
     places["has_coords"] = places["lat"].notna()
-    return places.sort_values(["republic", "region", "name_ru"]).reset_index(drop=True)
+    return places.sort_values(["country_1956", "republic", "region", "name_ru"]).reset_index(
+        drop=True
+    )
 
 
 def main() -> None:
@@ -178,10 +284,12 @@ def main() -> None:
     unmatched = places[~places["has_coords"]]
     unmatched.to_csv(PROCESSED / "places_1956_unmatched.csv", index=False)
     u = places[places["in_universe"]]
-    print(
-        f"universe (>= {UNIVERSE:,} in 1959): {len(u)} settlements, {u['has_coords'].sum()} with coordinates; "
-        f"unmatched in the universe: {(~u['has_coords']).sum()} (list in places_1956_unmatched.csv)"
-    )
+    for country, c in u.groupby("country_1956"):
+        print(
+            f"{country}: universe (>= {UNIVERSE:,}) {len(c)} settlements, "
+            f"{c['has_coords'].sum()} with coordinates"
+        )
+    print(f"unmatched in the universe: {(~u['has_coords']).sum()} (places_1956_unmatched.csv)")
 
 
 if __name__ == "__main__":

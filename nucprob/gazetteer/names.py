@@ -33,7 +33,8 @@ def normalise(name: str) -> str:
 
 
 # Letters of the other Cyrillic alphabets of the USSR folded to their nearest Russian letter,
-# so "Леңгір" (Kazakh) meets "Ленгир" and "Калінкавічы" (Belarusian) meets "Калинкавичы".
+# so "Леңгір" (Kazakh) meets "Ленгир" and "Калінкавічы" (Belarusian) meets "Калинкавичы"; and
+# the two spellings of Romanian ș and ț folded together.
 FOLD = str.maketrans(
     {
         "і": "и",
@@ -66,6 +67,11 @@ FOLD = str.maketrans(
         "ъ": "",
         "'": "",
         "’": "",
+        # Romanian and Moldovan s and t with a comma below (pop-stat) or a cedilla (GeoNames)
+        "ș": "s",
+        "ş": "s",
+        "ț": "t",
+        "ţ": "t",
     }
 )
 
