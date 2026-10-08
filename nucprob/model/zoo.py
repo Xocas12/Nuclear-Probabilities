@@ -1,4 +1,4 @@
-"""Models of the slice (PLAN section 5.4, milestone M1).
+"""Model factories (PLAN section 5.4). MODELS are the four models of the M1 slice.
 
 - population rule: "hit the N biggest", as a logistic regression on log population alone, so
   it also gives probabilities; its ranking is the population ranking.

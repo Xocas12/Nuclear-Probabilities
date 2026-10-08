@@ -1,4 +1,4 @@
-"""Small geometry helpers on the sphere (no GIS stack needed for the slice)."""
+"""Small geometry helpers on the sphere."""
 
 import numpy as np
 from sklearn.neighbors import BallTree

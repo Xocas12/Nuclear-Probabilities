@@ -2,7 +2,7 @@
 UV ?= uv
 PY = $(UV) run python
 
-.PHONY: setup data places labels features dataset train map slice test lint format clean
+.PHONY: setup data places labels features dataset train map check test lint format clean
 
 setup:
 	$(UV) sync --all-extras
@@ -26,14 +26,15 @@ features:
 dataset:
 	$(PY) -m nucprob.dataset
 
+# The M2 check run (runs/m2-check/): every feature family, every bloc country with a universe.
 train:
-	$(PY) -m nucprob.model.slice
+	$(PY) -m nucprob.model.check
 
 map:
-	$(PY) -m nucprob.viz.slice_map
+	$(PY) -m nucprob.viz.map --run m2-check
 
-# Milestone M1, end to end on real data (PLAN section 9).
-slice: places labels features dataset train map
+# Milestone M2, end to end (PLAN section 9). The M1 slice is kept in runs/m1-slice/ as run.
+check: places labels features dataset train map
 
 test:
 	$(UV) run pytest -q

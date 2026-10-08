@@ -1,6 +1,6 @@
 import json
 
-from nucprob.viz.slice_map import east, outline
+from nucprob.viz.map import east, outline
 
 
 def test_east_moves_chukotka_past_180():

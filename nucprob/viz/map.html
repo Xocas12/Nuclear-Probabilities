@@ -103,9 +103,9 @@ tr.on td { font-weight: 600; }
 <div class="app">
   <aside class="panel">
     <header>
-      <div class="eyebrow">Milestone M1 · USSR slice</div>
+      <div class="eyebrow">Milestone M2 · the 1956 feature base</div>
       <h1>Targets of 1956</h1>
-      <p class="lede">Soviet towns of 10,000 or more in 1959, against the complexes of SAC's 1956 target list. Colours show how likely a model trained on population and administrative rank thought each town was a target.</p>
+      <p class="lede">Towns of the Soviet bloc with 10,000 or more people near 1956, against the complexes of SAC's 1956 target list. Colours show how likely a model trained on every feature family (population, administration, geography, industry, military, transport) thought each town was a target.</p>
     </header>
 
     <section class="controls" aria-label="Map controls">
@@ -116,7 +116,7 @@ tr.on td { font-weight: 600; }
       </div>
       <label class="row" for="target">Target <select id="target"></select></label>
       <label class="row" for="model">Model <select id="model"></select></label>
-      <label class="row" for="search">Find <input id="search" type="search" list="names" placeholder="Town, e.g. Molotov or Perm" autocomplete="off"></label>
+      <label class="row" for="search">Find <input id="search" type="search" list="names" placeholder="Town, e.g. Molotov or Plzeň" autocomplete="off"></label>
       <datalist id="names"></datalist>
     </section>
 
@@ -133,15 +133,27 @@ tr.on td { font-weight: 600; }
       <p class="note" style="margin-top:8px">Spatial cross-validation in 300 km blocks (mean over 15 folds, ± spread); the random split alongside shows how little nearby towns leak. Precision@k: share of true targets among the k towns ranked highest, k = the number of targets.</p>
     </section>
 
+    <section aria-label="Feature families">
+      <h2>What each family adds</h2>
+      <div class="table-wrap"><table id="ablation"></table></div>
+      <p class="note" style="margin-top:8px">PR-AUC of LightGBM with the population family plus one other family, and with every family but one. "No anachronisms" drops the features that use later knowledge (the defence-industry guide, today's airfields, railways and ports).</p>
+    </section>
+
+    <section aria-label="By country">
+      <h2>By country</h2>
+      <div class="table-wrap"><table id="countries"></table></div>
+      <p class="note" style="margin-top:8px">Out-of-fold PR-AUC within each country, for countries with at least ten towns on and off the list. Share: the country's share of targets.</p>
+    </section>
+
     <section class="note" aria-label="About the data">
-      <h2>About this slice</h2>
-      <p>The numbers check that the pipeline works end to end; they are not findings. Only two families of features are in: population (1959 and 1939 censuses, growth, neighbours) and administrative rank. Industry, military sites and transport come next.</p>
+      <h2>About this check</h2>
+      <p>The numbers check that every feature family joins end to end; they are not findings, since the protocol is frozen only at milestone M5. The features describe each town as of June 1956; the catalogue (data/FEATURES.md) gives each one's sources and flags the anachronisms.</p>
       <p>A town counts as on the list when a complex or sub-complex of the SAC 1956 study (Part I, transcribed in full) lies within 10 km of it, or matches its name a little further off. Predictions are out of fold: each town was scored by a model that never saw it.</p>
-      <p>A fifth of the towns form a sealed test set, scored once at the end of the project; they carry no prediction here. Twelve towns have no label because their entries may be on a page missing from the scanned study (Astrakhan, Ashgabat, Arzamas among them).</p>
-      <p>Sources: SAC study SM 129-56 (National Security Archive, EBB 538); pop-stat.mashke.org and Demoscope (censuses); GeoNames (coordinates); Natural Earth (outlines).</p>
+      <p>A fifth of the towns form a sealed test set, scored once at the end of the project; they carry no prediction here. A few towns have no label because their entries may be on a page missing from the scanned study (Astrakhan, Ashgabat, Arzamas among them).</p>
+      <p>Sources: SAC study SM 129-56 (National Security Archive, EBB 538); pop-stat.mashke.org and Demoscope (censuses); GeoNames (coordinates); Dexter and Rodionov's guide to the Soviet defence industry; WRI power plants; OurAirports; Natural Earth; CShapes 2.0; AWS terrain tiles.</p>
     </section>
   </aside>
-  <main class="map" id="map" aria-label="Map of Soviet towns and SAC targets">
+  <main class="map" id="map" aria-label="Map of the bloc's towns and SAC targets">
     <div class="map-note">no borders shown · land and lakes only</div>
   </main>
 </div>
@@ -149,7 +161,7 @@ tr.on td { font-weight: 600; }
 <script src="https://cdn.jsdelivr.net/npm/deck.gl@9.1.14/dist.min.js"></script>
 <script>
 const DATA = /*DATA*/null;
-const state = { view: "pred", target: "listed", model: DATA.models.indexOf("logistic, all features"), selected: null };
+const state = { view: "pred", target: "listed", model: DATA.models.indexOf("LightGBM, all features"), selected: null };
 const byId = new Map(DATA.places.map(p => [p.id, p]));
 
 const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
@@ -217,7 +229,7 @@ function layers() {
 const mapEl = document.getElementById("map");
 function fitView() {
   const vp = new deck.WebMercatorViewport({ width: mapEl.clientWidth || 800, height: mapEl.clientHeight || 500 });
-  const { longitude, latitude, zoom } = vp.fitBounds([[22, 37], [188, 71]], { padding: 16 });
+  const { longitude, latitude, zoom } = vp.fitBounds(DATA.bounds, { padding: 16 });
   return { longitude, latitude, zoom, minZoom: 1.2, maxZoom: 10 };
 }
 readColors();
@@ -227,7 +239,7 @@ const deckgl = new deck.Deck({
     if (!object) return null;
     if (layer.id === "unlinked") return { html: `<b>${object.name}</b><br>SAC entry with no town of 5,000+ within 10 km${object.prio ? `<br>priority ${object.prio}` : ""}` };
     const v = prob(object);
-    return { html: `<b>${object.latin}</b>${object.now && object.now !== object.latin ? ` (now ${object.now})` : ""}<br>${object.pop.toLocaleString("en")} in 1959${v != null ? `<br>P = ${v.toFixed(2)}` : ""}` };
+    return { html: `<b>${object.latin}</b>${object.now && object.now !== object.latin ? ` (now ${object.now})` : ""}<br>${object.country} · ${object.pop.toLocaleString("en")} in ${object.year}${v != null ? `<br>P = ${v.toFixed(2)}` : ""}` };
   },
 });
 function redraw() { deckgl.setProps({ layers: layers() }); }
@@ -257,8 +269,35 @@ function metrics() {
   document.getElementById("metrics").innerHTML = `<thead><tr><th>Model</th><th>PR-AUC</th><th>ROC</th><th>P@k</th><th>Random</th></tr></thead><tbody>${
     DATA.models.map((name, i) => {
       const m = rows.find(r => r.model === name);
-      return `<tr class="${i === state.model ? "on" : ""}"><td>${name}</td><td>${m.pr_auc.toFixed(3)} <span style="color:var(--muted)">±${m.pr_auc_sd.toFixed(2)}</span></td><td>${m.roc_auc.toFixed(3)}</td><td>${m.p_at_k.toFixed(3)}</td><td>${m.pr_auc_random.toFixed(3)}</td></tr>`;
+      return `<tr class="${i === state.model ? "on" : ""}"><td>${name}</td><td>${m.pr_auc.toFixed(3)} <span style="color:var(--muted)">±${m.pr_auc_sd.toFixed(2)}</span></td><td>${m.roc_auc.toFixed(3)}</td><td>${m.p_at_k.toFixed(3)}</td><td>${m.pr_auc_random == null ? "" : m.pr_auc_random.toFixed(3)}</td></tr>`;
     }).join("")}<tr><td style="color:var(--muted)">Share of targets (PR-AUC by chance)</td><td>${base.toFixed(3)}</td><td>0.500</td><td>${base.toFixed(3)}</td><td></td></tr></tbody>`;
+}
+
+function ablation() {
+  const rows = DATA.ablation.filter(a => a.target === state.target);
+  const ref = DATA.reference[state.target];
+  document.getElementById("ablation").innerHTML = `<thead><tr><th>Family</th><th>Population + it</th><th>All but it</th></tr></thead><tbody>${
+    rows.map(a => `<tr><td>${a.family}</td><td>${a.added.toFixed(3)}</td><td>${a.dropped.toFixed(3)}</td></tr>`).join("")
+  }<tr><td style="color:var(--muted)">Population family alone · all families</td><td>${ref.population.toFixed(3)}</td><td>${ref.all.toFixed(3)}</td></tr></tbody>`;
+}
+
+function countries() {
+  const rows = DATA.countries.filter(c => c.target === state.target);
+  const names = [...new Set(rows.map(c => c.country))];
+  const head = DATA.models.map(m => `<th>${m.replace(", all features", "").replace("LightGBM, ", "")}</th>`).join("");
+  document.getElementById("countries").innerHTML = `<thead><tr><th>Country</th><th>Towns</th><th>Share</th>${head}</tr></thead><tbody>${
+    names.map(n => {
+      const r = rows.filter(c => c.country === n);
+      return `<tr><td>${n}</td><td>${r[0].n}</td><td>${r[0].base.toFixed(2)}</td>${DATA.models.map(m => { const x = r.find(c => c.model === m); return `<td>${x ? x.pr_auc.toFixed(3) : ""}</td>`; }).join("")}</tr>`;
+    }).join("")}</tbody>`;
+}
+
+function fmt(v, how) {
+  if (v == null) return "–";
+  if (how === "flag") return v ? "yes" : "no";
+  if (how === "km") return `${v.toLocaleString("en")} km`;
+  if (how === "m") return `${v.toLocaleString("en")} m`;
+  return v.toLocaleString("en");
 }
 
 function card() {
@@ -272,13 +311,15 @@ function card() {
   if (p.sealed) tags.push(`<span class="tag sealed">sealed test</span>`);
   const bars = p.p ? DATA.models.map((name, i) => {
     const v = p.p[state.target][i];
+    if (v == null) return "";
     return `<div class="bar"><span class="lab">${name}</span><div class="track"><div class="fill" style="width:${(v * 100).toFixed(1)}%"></div></div><span class="val">${v.toFixed(2)}</span></div>`;
   }).join("") : `<div class="sub">${p.sealed ? "Held out for the final test: no prediction is shown until then." : "No prediction."}</div>`;
   const entries = p.sac.length ? p.sac.map(e => `<div class="e"><span>${e.name}</span><span>${e.level === "complex" ? "complex" : "sub-complex"}</span>${e.prio ? `<span>priority ${e.prio}</span>` : ""}<span>${e.dgz} DGZ</span><span>${e.inst} installations</span><span>${e.how === "name" ? `linked by name, ${e.km} km` : `${e.km} km`}</span></div>`).join("")
     : `<div class="sub">${p.gap ? "Its entry, if any, was on a page missing from the scan (" + p.gap + ")." : "No entry of its own in the 1956 list."}</div>`;
-  el.innerHTML = `<div><div class="name">${p.latin}</div><div class="sub">${p.name}${p.now ? ` · today ${p.now}` : ""} · ${p.rep}</div></div>
+  el.innerHTML = `<div><div class="name">${p.latin}</div><div class="sub">${p.name}${p.now ? ` · today ${p.now}` : ""} · ${p.country}${p.country === "USSR" ? ` (${p.unit})` : ""}</div></div>
     <div>${tags.join(" ")}</div>
-    <dl class="facts"><dt>1959 population</dt><dd>${p.pop.toLocaleString("en")}</dd></dl>
+    <dl class="facts"><dt>Population (${p.year})</dt><dd>${p.pop.toLocaleString("en")}</dd>${
+      DATA.card.map((label, i) => `<dt>${label}</dt><dd>${fmt(p.f[i], DATA.card_how[i])}</dd>`).join("")}</dl>
     <div><h2>P(${DATA.targets[state.target].toLowerCase()})</h2><div class="bars">${bars}</div></div>
     <div><h2>SAC 1956 entries</h2><div class="entries">${entries}</div></div>`;
 }
@@ -295,7 +336,7 @@ const targetSel = document.getElementById("target"), modelSel = document.getElem
 targetSel.innerHTML = Object.entries(DATA.targets).map(([k, v]) => `<option value="${k}">${v}</option>`).join("");
 modelSel.innerHTML = DATA.models.map((m, i) => `<option value="${i}">${m}</option>`).join("");
 modelSel.value = String(state.model);
-targetSel.addEventListener("change", () => { state.target = targetSel.value; legend(); metrics(); card(); redraw(); });
+targetSel.addEventListener("change", () => { state.target = targetSel.value; legend(); metrics(); ablation(); countries(); card(); redraw(); });
 modelSel.addEventListener("change", () => { state.model = Number(modelSel.value); metrics(); redraw(); });
 document.querySelectorAll(".seg button").forEach(b => b.addEventListener("click", () => {
   state.view = b.dataset.view;
@@ -317,6 +358,6 @@ window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", rec
 new MutationObserver(recolor).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 window.addEventListener("resize", () => deckgl.setProps({ width: "100%", height: "100%" }));
 
-legend(); metrics();
+legend(); metrics(); ablation(); countries();
 select((DATA.places.find(p => p.latin === "Molotov") || DATA.places[0]).id);
 </script>
