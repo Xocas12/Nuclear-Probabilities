@@ -1,17 +1,30 @@
-"""Military family (PLAN section 3.2): airfields near a place, from OurAirports.
+"""Military family (PLAN section 3.2): the bloc's military geography in June 1956, from a
+curated, cited table (data/curated/features/military_sites_1956.csv), and airfields near a
+place, from OurAirports.
 
-OurAirports lists today's airfields, open and closed, without dates, so the counts are flagged
-as anachronisms. Only airfields in the place's own 1956 country count (CShapes borders), so
-that a West German airfield does not count for a town on the inner-German border. SAC's own
-airfield list is a label (task T5), never a feature.
+The curated sites are military district and group-of-forces HQs, fleet HQs and naval bases,
+Long-Range Aviation bomber bases, and the nuclear complex and test ranges, each with the years
+it held that role. OurAirports lists today's airfields, open and closed, without dates, so its
+counts are flagged as anachronisms; only airfields in the place's own 1956 country count
+(CShapes borders), so that a West German airfield does not count for a town on the
+inner-German border. SAC's own airfield list is a label (task T5), never a feature.
 """
 
 import numpy as np
 import pandas as pd
 
+from nucprob.bloc import STUDY_DATE
 from nucprob.geo import Points
-from nucprob.paths import RAW
+from nucprob.paths import CURATED, RAW
 from nucprob.sources import cshapes
+
+SITES = CURATED / "features" / "military_sites_1956.csv"
+HQ_KM = 15  # a place hosts an HQ within this distance
+SITE_GROUPS = {
+    "naval_base": ("fleet_hq", "naval_base"),
+    "lra_base": ("lra_base",),
+    "nuclear_site": ("nuclear_complex", "test_site"),
+}
 
 AIRFIELD_TYPES = ("large_airport", "medium_airport", "small_airport", "closed")
 RADII_KM = (10, 25, 50)
@@ -45,5 +58,34 @@ def airfields(places: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
+def military_sites(year: int = STUDY_DATE[0]) -> pd.DataFrame:
+    """The curated sites that held their role in `year`."""
+    sites = pd.read_csv(SITES)
+    until = pd.to_numeric(sites["until_year"], errors="coerce").fillna(9999)
+    start = pd.to_numeric(sites["from_year"], errors="coerce")
+    return sites[(start <= year) & (until >= year) & sites["lat"].notna()]
+
+
+def sites(places: pd.DataFrame) -> pd.DataFrame:
+    s = military_sites()
+    lat, lon = places["lat"].to_numpy(), places["lon"].to_numpy()
+    out = pd.DataFrame(index=places.index)
+    for col, categories in [
+        ("military_district_hq", ("military_district_hq",)),
+        ("fleet_hq", ("fleet_hq",)),
+    ]:
+        hq = s[s["category"].isin(categories)]
+        near = Points(hq["lat"].to_numpy(), hq["lon"].to_numpy()).within(lat, lon, HQ_KM)
+        out[col] = [int(len(idx) > 0) for idx in near]
+    for name, categories in SITE_GROUPS.items():
+        group = s[s["category"].isin(categories)]
+        dist, _ = Points(group["lat"].to_numpy(), group["lon"].to_numpy()).nearest(lat, lon)
+        out[f"log_km_to_{name}"] = np.log10(1 + dist[:, 0])
+    return out
+
+
 def military(places: pd.DataFrame) -> pd.DataFrame:
-    return airfields(places)
+    parts = [airfields(places)]
+    if SITES.exists():
+        parts.append(sites(places))
+    return pd.concat(parts, axis=1)

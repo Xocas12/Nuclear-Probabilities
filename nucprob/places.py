@@ -22,6 +22,7 @@ import pandas as pd
 
 from nucprob.gazetteer.match import match
 from nucprob.gazetteer.names import name_on
+from nucprob.geo import Points
 from nucprob.paths import CURATED, PROCESSED, RAW
 from nucprob.sources import demoscope, geonames, popstat
 
@@ -76,6 +77,7 @@ PREFIX = {
     "Mongolia": "mn",
 }
 STUDY_DAY = dt.date(1956, 6, 15)
+CLOSED = CURATED / "gazetteer" / "closed_cities_1956.csv"
 
 
 def years(date: str) -> float:
@@ -135,7 +137,11 @@ def from_popstat_eastern(page: str) -> pd.DataFrame:
         a, b = df[f"pop_{dates[0]}"], df[f"pop_{dates[1]}"]
         pop, pop_year = interpolate(a, b, *dates).fillna(a).fillna(b), STUDY_DAY.year
     prewar = df[f"pop_{spec['prewar']}"] if spec["prewar"] else pd.Series(np.nan, index=df.index)
+    # Pages of Latin-script countries have no transliteration column (the parser reads the first
+    # census figure there instead): the name itself is the Latin name, for fuzzy matching.
     latin = df["name_lat"].where(~df["name_lat"].str.fullmatch(r"[\d,.…\s]*"), "")
+    is_latin = df["name_ru"].str.contains(r"[A-Za-z]")
+    latin = latin.mask(is_latin & latin.eq(""), df["name_ru"])
     out = pd.DataFrame(
         {
             "republic": page,
@@ -241,6 +247,10 @@ def ussr() -> pd.DataFrame:
         )
         parts.append(located(settlements, country, page))
     places = pd.concat(parts, ignore_index=True)
+    if CLOSED.exists():
+        places = pd.concat([places, closed_cities(places)], ignore_index=True)
+    places["pop_imputed"] = places.get("pop_imputed", pd.Series(False, index=places.index))
+    places["pop_imputed"] = places["pop_imputed"].fillna(False).astype(bool)
     places["country_1956"] = "USSR"
     # Karelia was the Karelo-Finnish SSR, a union republic, until 16 July 1956.
     karelia = places["region"].eq("Республика Карелия")
@@ -248,6 +258,45 @@ def ussr() -> pd.DataFrame:
     places["pop"], places["pop_year"] = places["pop_1959"], 1959
     places["pop_prewar"], places["pop_prewar_year"] = places["pop_1939"], 1939
     return places
+
+
+def closed_cities(ussr: pd.DataFrame) -> pd.DataFrame:
+    """Closed towns founded by the study date and missing from the published 1959 tables
+    (PLAN section 3.1), from the curated table: population imputed from the nearest later
+    figure (`pop_imputed`), union republic and region taken from the nearest listed town.
+    They are in because they existed, not because of how they were targeted."""
+    c = pd.read_csv(CLOSED)
+    c = c[(c["founded"] <= PLAN_YEAR) & c["lat"].notna()].reset_index(drop=True)
+    listed = ussr[ussr["lat"].notna()].reset_index(drop=True)
+    dist, idx = Points(listed["lat"].to_numpy(), listed["lon"].to_numpy()).nearest(
+        c["lat"].to_numpy(), c["lon"].to_numpy()
+    )
+    near = listed.iloc[idx[:, 0]].reset_index(drop=True)
+    # A closed town that the census tables do list (within 5 km, same name) is not added twice.
+    known = (dist[:, 0] < 5) & (near["name_ru"].to_numpy() == c["name_ru"].to_numpy())
+    c, near = c[~known].reset_index(drop=True), near[~known].reset_index(drop=True)
+    return pd.DataFrame(
+        {
+            "republic": near["republic"],
+            "country_today": near["country_today"],
+            "region": near["region"],
+            "name_ru": c["name_ru"],
+            "name_lat": c["name"],
+            "is_city": True,
+            "notes": "closed town; code names " + c["code_names"].fillna(""),
+            "pop_1926": np.nan,
+            "pop_1939": np.nan,
+            "pop_1959": c["pop_estimate"],
+            "modern_pop": np.nan,
+            "source": "curated closed town",
+            "name_1956": c["name_ru"],
+            "match_method": "curated closed town",
+            "lat": c["lat"],
+            "lon": c["lon"],
+            "pop_imputed": True,
+            "pop_imputed_year": c["pop_year"],
+        }
+    )
 
 
 def eastern_europe() -> pd.DataFrame:
@@ -260,6 +309,7 @@ def eastern_europe() -> pd.DataFrame:
 
 def build() -> pd.DataFrame:
     places = pd.concat([ussr(), eastern_europe()], ignore_index=True)
+    places["pop_imputed"] = places["pop_imputed"].astype("boolean").fillna(False).astype(bool)
     # A GeoNames place matched twice keeps the settlement with the larger population.
     places = places.sort_values("pop", ascending=False)
     dup = places["geonameid"].notna() & places.duplicated("geonameid", keep="first")
