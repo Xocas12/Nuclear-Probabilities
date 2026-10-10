@@ -18,7 +18,7 @@ Counts, checks and the comparison with the Archive's own spreadsheets are in
 | Part II airfield list | `section6.pdf` | 43 (42 list pages, study pp. 505–546) | complete |
 | Category code list | `section3.pdf` | 5 | `../labels/sac1956_category_codes.csv` |
 | Part I airfield list (excerpt) | `section4.pdf` | 11 (270 rows, AFRIKANDA to PALANGA in stretches) | `excerpts/` |
-| Part II complex list, with weapons (excerpt) | `section7.pdf` | 25 (41 complexes in stretches: BERDICHEV–BUKACHACHA, LEISNIG–LENINOGORSK, MOROZOVSK–MOSCOW, PEI LI–PEN CHI, POZNAN–PRAGUE, WAN HSIEN–WARSAW, SERPUKHOV–SHAKHUNYA, ULAAN BAATAR–ULYANOVSK) | `excerpts/` |
+| Part II complex list, with weapons (excerpt) | `section7.pdf` | 25 (43 complexes in stretches: BERDICHEV–BUKACHACHA, LEISNIG–LENINOGORSK, MOROZOVSK–MOSCOW, PEI LI–PEN CHI, POZNAN–PRAGUE, WAN HSIEN–WARSAW, SERPUKHOV–SHAKHUNYA, UKH?A (Ukhta)–ULYANOVSK, WISMAR) | `excerpts/` |
 | Cross-reference list (excerpt) | `section2.pdf` | 14 (237 entries in stretches) | `excerpts/` |
 | Atomic weapon requirements and summary | `section8.pdf` | 15 | read, not transcribed: every figure is redacted (b)(3), 42 USC 2168; only weapon types (Mk 6, 15, 27, 28, 36, 39, W-35, W-37) and delivery vehicles (B-47, B-52, RB-47, F-101, TM-61, Crossbow) remain |
 
@@ -220,7 +220,7 @@ are poorer. 12 lines keep a `?` (`excerpts/anomalies.csv`).
 
 | File | One row per |
 |---|---|
-| `part2_complexes.csv`, `part2_dgz.csv`, `part2_installations.csv` | Part II complex or sub-complex, aim point, installation line (same columns as the Part I tables; `part1_owner` names the Part I complex of lines at the top of a page that continue a complex begun on an unpublished page) |
+| `part2_complexes.csv`, `part2_dgz.csv`, `part2_installations.csv` | Part II complex or sub-complex, aim point, installation line (same columns as the Part I tables; `part1_id`: the Part I row it repeats; `part1_owner`: the Part I complex of lines at the top of a page that continue a complex begun on an unpublished page) |
 | `part2_vs_part1.csv` | Part II complex beside the Part I complex of the same reference: `seen_whole`, aim points and installation lines kept, dropped and added |
 | `part1_airfields.csv`, `part1_vs_part2_airfields.csv` | Part I airfield row; beside its Part II row, with the cross-document verdict |
 | `crossref.csv` | cross-reference row: `level` (entry, with a reference number, or listed under one), `airfield` (AF), `see_ref`/`see_name` (SEE: the place is targeted under another complex) |
@@ -230,16 +230,27 @@ What they show:
 
 - **Part II is Part I with fewer aim points.** Every Part II complex in the excerpt is a Part I
   complex with the same reference number and the same priority, in the same order, and its
-  installation lines are nearly the same: 527 of 542 recur in the 31 complexes seen whole
+  installation lines are nearly the same: 554 of 569 recur in the 33 complexes seen whole
   (the others are one-character differences in Part II's blurred print, and 7 lines added to
-  Leningrad). The aim points are not: those 31 complexes have 60 in Part I and 22 in Part II.
-  17 are kept, 43 dropped and 5 are new points (Leningrad M and AM, Ulan Ude D, and new
+  Leningrad). The aim points are not: those 33 complexes have 65 in Part I and 24 in Part II;
+  19 are kept, 46 dropped and 5 are new points (Leningrad M and AM, Ulan Ude D, and new
   coordinates for Shakhty B and Leninakan R). Aim points, Part II against Part I: Leningrad 5
   and 9, Budapest 4 and 11, Berlin 5 and 6, Ulan Ude 1 and 4; among complexes cut by a skipped
-  page (so the Part II count is a floor), Moscow 5 and 13, Prague 7 and 15, Warsaw 2 and 8.
-  Of the 11 whole complexes with a single aim point in Part I, 9 have none in Part II. Part II was the study's "desired stockpile"
-  allocation; Part I's was unconstrained. The Part II aim points of the excerpted complexes are
-  a second, stricter label for the same places.
+  page (so the Part II count is a floor), Moscow 6 and 13, Prague 6 and 15, Warsaw 1 and 8.
+  Of the 11 whole complexes with a single aim point in Part I, 9 have none in Part II.
+- **Who keeps an aim point follows the Part I priority.** All 16 excerpted complexes ranked
+  1 to 236 keep at least one; of the 13 ranked 295 to 834, only Ukhta (592) and Leninakan
+  (738, at a new point) do (`excerpts/REPORT.md` has the table). Part II was the study's
+  "desired stockpile" allocation, Part I's the unconstrained one: with fewer weapons, the
+  plan concentrated them on the top of the priority list and thinned the aim points inside the
+  biggest cities.
+- **The Part II label.** `../labels/us_1956_sac_part2_complexes.csv` has the excerpted
+  complexes in the shared schema (`selected` = 1 if the complex keeps an aim point). In the
+  modelling table (`nucprob.labels.sac1956.part2_labels`), `part2_has_dgz` is 1 for a
+  settlement that keeps an aim point in Part II, 0 for one known to have none (every
+  settlement with no Part I entry, since Part II lists only Part I complexes, and the entries
+  of complexes seen whole), and blank where the excerpt does not show it. In the universe it
+  is known for about 1,400 settlements, 28 of them positive: enough to describe, not to model.
 - **Two Part II aim points carry an X** in the "BA" column (LENINAKAN R, WARSAW T). What it
   marks is not explained in the released pages.
 - **The Part I airfield list** prints the same airfields, with the same priorities and BE

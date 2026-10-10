@@ -23,6 +23,7 @@ Outputs (data/curated/sac1956/excerpts/):
 """
 
 import csv
+import difflib
 import itertools
 import json
 import re
@@ -44,6 +45,10 @@ XREF = re.compile(
 )
 # The Part I page lost from the scan lies between these two complexes (README, "Gaps").
 LOST_AFTER, LOST_BEFORE = "ARTSIZ", "ATBASAR"
+SOURCE_URL = (
+    "https://nsarchive2.gwu.edu/nukevault/ebb538-Cold-War-Nuclear-Target-List-Declassified-"
+    "First-Ever/documents/section7.pdf"
+)
 
 
 def write(name: str, rows: list[dict]) -> None:
@@ -129,6 +134,9 @@ def page_breaks(part2: dict, part1: list[dict], dgz1: list[dict], inst1: list[di
         )
     for d in dgz1:
         owner.setdefault(("d", *coord_key(d)), ref1[top1[d["complex_id"]]])
+    for c in part1:
+        if c["level"] == "subcomplex":
+            owner.setdefault(("s", c["name"]), ref1[top1[c["id"]]])
     tops = [c["ref"] for c in part1 if c["level"] == "complex" and c["ref"]]
     successor = dict(itertools.pairwise(tops))
     items = [("c", c) for c in part2["complexes"]]
@@ -137,20 +145,26 @@ def page_breaks(part2: dict, part1: list[dict], dgz1: list[dict], inst1: list[di
     current, cut, order = None, set(), []
     page, leading = None, []
 
+    def key(kind: str, r: dict) -> tuple:
+        if kind == "i":
+            return ("i", r["category"], r["be_wac"], r["be_number"])
+        return ("d", *coord_key(r)) if kind == "d" else ("s", r["name"])
+
     def settle() -> None:
         nonlocal current
         if not leading:
             return
-        keys = [
-            ("i", r["category"], r["be_wac"], r["be_number"]) if k == "i" else ("d", *coord_key(r))
-            for k, r in leading
-        ]
-        votes = Counter(owner[k] for k in keys if k in owner)
+        votes = Counter(owner[k] for k in (key(*x) for x in leading) if k in owner)
         if votes and current is not None and votes.most_common(1)[0][0] != current["ref"]:
             cut.add(current["id"])
-            for _, r in leading:
-                r["complex_id"] = ""
-                r["part1_owner"] = votes.most_common(1)[0][0]
+            ref = votes.most_common(1)[0][0]
+            subs = {r["id"] for k, r in leading if k == "s"}
+            for k, r in leading:
+                r["part1_owner"] = ref
+                if k == "s":
+                    r["parent_id"] = ""  # a sub-complex of a complex begun on a skipped page
+                elif r["complex_id"] not in subs:
+                    r["complex_id"] = ""
             current = None
         leading.clear()
 
@@ -159,22 +173,20 @@ def page_breaks(part2: dict, part1: list[dict], dgz1: list[dict], inst1: list[di
             settle()
             page = r["page"]
             at_top = True
-        if kind == "c":
+        if kind == "c" and r["level"] == "complex":
             at_top = False
             settle()
-            if r["level"] == "complex":
-                current = r
-                order.append(r)
-            continue
-        if at_top:
-            leading.append((kind, r))
+            current = r
+            order.append(r)
+        elif at_top:
+            leading.append(("s" if kind == "c" else kind, r))
     settle()
     whole = {}
     for a, b in itertools.pairwise([*order, None]):
         whole[a["id"]] = (
             a["id"] not in cut and b is not None and successor.get(a["ref"]) == b["ref"]
         )
-    for r in part2["dgzs"] + part2["installs"]:
+    for r in part2["complexes"] + part2["dgzs"] + part2["installs"]:
         r.setdefault("part1_owner", "")
     return whole
 
@@ -318,6 +330,71 @@ def lost_page(xref: list[dict], part1: list[dict]) -> tuple[list[dict], dict]:
     return rows, span
 
 
+def link_part1_rows(part2: dict, part1: list[dict], whole: dict) -> None:
+    """Give each Part II complex and sub-complex row the id of the Part I row it repeats, and
+    `top_seen_whole` from page_breaks (in place). A complex is matched by its reference; a
+    sub-complex by name among the sub-complexes of the same Part I complex, allowing for a
+    letter read differently in the two printings (BELCOSTROV, BELOOSTROV)."""
+    top1 = {c["ref"]: c["id"] for c in part1 if c["level"] == "complex" and c["ref"]}
+    subs1 = defaultdict(dict)
+    for c in part1:
+        if c["parent_id"]:
+            subs1[c["parent_id"]][c["name"]] = c["id"]
+    tops2 = {c["id"]: c for c in part2["complexes"] if c["level"] == "complex"}
+    for c in part2["complexes"]:
+        top = tops2.get(c["parent_id"] or c["id"])
+        top_id1 = top1.get(c["part1_owner"] or (top["ref"] if top else ""))
+        if c["level"] == "complex":
+            c["part1_id"] = top_id1 or ""
+        else:
+            names = subs1.get(top_id1, {})
+            best = difflib.get_close_matches(c["name"], list(names), n=1, cutoff=0.75)
+            c["part1_id"] = names[best[0]] if best else ""
+        c["top_seen_whole"] = whole.get(top["id"], False) if top else False
+
+
+def write_part2_labels(part2: dict, versus: list[dict], lines: list[dict]) -> None:
+    """The Part II complexes in the shared label schema (data/curated/labels/SCHEMA.md)."""
+    text = {r["id"]: r["text"] for r in lines}
+    by_id = {v["part2_id"]: v for v in versus}
+    doc = "SAC, Atomic Weapons Requirements Study for 1959 (SM 129-56, June 1956)"
+    rows = []
+    for c in part2["complexes"]:
+        if c["level"] != "complex" or c["lat"] == "":
+            continue
+        v = by_id[c["id"]]
+        whole = "" if v["seen_whole"] else " (a floor: the complex runs onto a page not published)"
+        country = asm.LABEL_COUNTRY.get(c["country"], c["country"])
+        rows.append(
+            {
+                "plan_id": "us_1956_sac_part2_complexes",
+                "planner": "US (SAC)",
+                "target_country": asm.LABEL_COUNTRY_BY_NAME.get(c["name"], country),
+                "plan_year": 1956,
+                "provenance": "study",
+                "seq": len(rows) + 1,
+                "name_source": c["name_printed"],
+                "name_modern": "",
+                "target_class": "urban-industrial complex",
+                "selected": 1 if v["part2_dgz"] else 0,
+                "priority": c["priority"],
+                "weapons": "",
+                "yield_kt": "",
+                "lat": c["lat"],
+                "lon": c["lon"],
+                "source_doc": f"{doc}, Part II complex list with weapons, excerpt "
+                "(NSA EBB 538, section 7)",
+                "source_url": SOURCE_URL,
+                "source_page": f"PDF p.{int(c['page'][1:])} ({c['id']})",
+                "quote": text[c["id"]][:200],
+                "notes": f"DGZs={v['part2_dgz']}{whole}; Part I DGZs={v['part1_dgz']}; "
+                f"installation lines={v['part2_installations']}; selected=1 if the complex has an "
+                "aim point in Part II; excerpt only, complexes outside it are unknown",
+            }
+        )
+    asm.write_csv(Path("data/curated/labels/us_1956_sac_part2_complexes.csv"), rows)
+
+
 def main() -> None:
     t = asm.parse(ROOT)
     OUT.mkdir(parents=True, exist_ok=True)
@@ -341,6 +418,7 @@ def main() -> None:
     )
     whole = page_breaks(part2, part1, dgz1, inst1)
     versus = compare_complexes(part2, part1, dgz1, inst1, whole)
+    link_part1_rows(part2, part1, whole)
     af_versus = compare_airfields(part1_af, af2)
     crossdoc_verdicts(af_versus)
     lost, span = lost_page(xref, part1)
@@ -355,6 +433,7 @@ def main() -> None:
     write("part1_vs_part2_airfields.csv", af_versus)
     write("lost_page.csv", lost)
     write("anomalies.csv", t["anomalies"])
+    write_part2_labels(part2, versus, t["lines"])
     report(t, part2, part1_af, xref, versus, af_versus, lost, span, part1)
 
 
@@ -420,6 +499,31 @@ def report(t, part2, part1_af, xref, versus, af_versus, lost, span, part1) -> No
             "- Without a Part I complex of the same reference: "
             + ", ".join(f"{v['ref']} {v['name']}" for v in unmatched)
         )
+    aimed = sorted(
+        (v for v in versus if v["part1_id"] and v["part1_dgz"]),
+        key=lambda v: int(v["part1_priority"].rstrip("A")),
+    )
+    kept = [v["part2_dgz"] > 0 for v in aimed]
+    run = next((i for i, k in enumerate(kept) if not k), len(kept))
+    if aimed:
+        out += [
+            "",
+            "## Aim points kept, by Part I priority",
+            "",
+            f"Of the {len(aimed)} excerpted complexes with an aim point in Part I, the {run} "
+            f"ranked best (priority {aimed[0]['part1_priority']} to "
+            f"{aimed[run - 1]['part1_priority'] if run else '-'}) all keep at least one in Part II; "
+            f"of the {len(aimed) - run} ranked below, {sum(kept[run:])} do. A Part II count for a "
+            "complex not seen whole is a floor.",
+            "",
+            "| Part I priority | complex | seen whole | aim points, Part I | Part II |",
+            "|---|---|---|---|---|",
+            *(
+                f"| {v['part1_priority']} | {v['name']} | {'yes' if v['seen_whole'] else 'no'} | "
+                f"{v['part1_dgz']} | {v['part2_dgz']} |"
+                for v in aimed
+            ),
+        ]
     out += [
         "",
         "## Part I airfields against Part II",

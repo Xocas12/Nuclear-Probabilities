@@ -307,6 +307,9 @@ function card() {
   const tags = [];
   if (p.listed === 1) tags.push(`<span class="tag target">on the list</span>`);
   if (p.has_dgz === 1) tags.push(`<span class="tag target">aim point</span>`);
+  // Part II (the excerpt of the stockpile-limited allocation): shown for listed towns it covers.
+  if (p.listed === 1 && p.p2 === 1) tags.push(`<span class="tag target">Part II aim point</span>`);
+  if (p.listed === 1 && p.p2 === 0) tags.push(`<span class="tag sealed">no Part II aim point</span>`);
   if (p.gap) tags.push(`<span class="tag unknown">label unknown</span>`);
   if (p.sealed) tags.push(`<span class="tag sealed">sealed test</span>`);
   const bars = p.p ? DATA.models.map((name, i) => {

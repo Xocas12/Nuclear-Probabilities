@@ -13,7 +13,8 @@ check, not a key.
 Writes to data/processed/:
   sac1956_links.parquet   one row per complex, sub-complex and DGZ, with its place
   labels_sac1956.parquet  one row per settlement: T1 (listed; given an aim point), T2 (DGZ and
-                          installation counts), T3 (best priority and tier)
+                          installation counts), T3 (best priority and tier), and the Part II
+                          subset where the excerpt shows it (part2_has_dgz, part2_n_dgz)
   sac1956_link_report.csv unlinked targets and links whose names disagree, for review
 """
 
@@ -159,6 +160,43 @@ def link_names(links_cx: pd.DataFrame, located: pd.DataFrame, index: Points) -> 
             )
 
 
+def part2_labels(links_cx: pd.DataFrame, place_ids: pd.Index) -> pd.DataFrame:
+    """The Part II subset (data/curated/sac1956/excerpts/): does the settlement keep an aim point
+    in Part II, the study's stockpile-limited allocation? Part II lists only Part I complexes,
+    in the same order, so a settlement with no Part I entry has none (0). For a Part I entry the
+    answer is known only where the excerpt shows it: its complex is seen whole (an entry missing
+    from Part II then has 0), or the entry's own Part II row shows an aim point. Anything else is
+    unknown (NaN). part2_n_dgz is the count where every entry is known."""
+    ex = CURATED / "sac1956" / "excerpts"
+    rows2 = pd.read_csv(ex / "part2_complexes.csv", dtype=str, keep_default_na=False)
+    versus = pd.read_csv(ex / "part2_vs_part1.csv", dtype=str, keep_default_na=False)
+    whole_tops = set(versus.loc[versus["seen_whole"] == "True", "part1_id"])
+    dgz2 = rows2[rows2["part1_id"] != ""].set_index("part1_id")["n_dgz"].astype(int)
+    own = links_cx[links_cx["place_id"].notna()]
+    entries_of = {}  # place -> [(keeps an aim point?, Part II count)], None where unknown
+    for pid, entries in own.groupby("place_id"):
+        known = []
+        for _, e in entries.iterrows():
+            n2 = int(dgz2[e["id"]]) if e["id"] in dgz2.index else 0
+            if e["top_id"] in whole_tops:
+                known.append((n2 > 0, n2))
+            elif n2 > 0:  # a complex cut by a skipped page: its count is a floor
+                known.append((True, None))
+            else:
+                known.append((None, None))
+        entries_of[pid] = known
+    out = pd.DataFrame(index=place_ids)
+    has, n = [], []
+    for pid in place_ids:
+        known = entries_of.get(pid, [])
+        keeps = [k for k, _ in known]
+        has.append(1.0 if any(keeps) else 0.0 if None not in keeps else np.nan)
+        counts = [c for _, c in known]
+        n.append(float(sum(counts)) if None not in counts else np.nan)
+    out["part2_has_dgz"], out["part2_n_dgz"] = has, n
+    return out
+
+
 def build(radius_km: float = RADIUS_KM) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     places = pd.read_parquet(PROCESSED / "places_1956.parquet")
     cx_all, dgz_all = load_targets()
@@ -220,6 +258,7 @@ def build(radius_km: float = RADIUS_KM) -> tuple[pd.DataFrame, pd.DataFrame, pd.
         for listed, (_, place) in zip(labels["listed"], places.iterrows(), strict=True)
     ]
     labels["has_dgz"] = labels["n_dgz"] > 0  # T1, variant: given at least one aim point
+    labels = labels.join(part2_labels(links_cx, labels.index))
     labels = labels.reset_index()
 
     report = pd.concat(

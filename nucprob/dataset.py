@@ -40,6 +40,8 @@ LABEL_COLUMNS = [
     "parent_priority",
     "sac_names",
     "label_gap",
+    "part2_has_dgz",
+    "part2_n_dgz",
 ]
 
 
@@ -60,6 +62,9 @@ def build() -> pd.DataFrame:
     unknown = df["label_gap"] != ""
     df["listed"] = df["listed"].astype(float).mask(unknown)
     df["has_dgz"] = df["has_dgz"].astype(float).mask(unknown)
+    # Part II: known only where the excerpt shows it (nucprob.labels.sac1956.part2_labels).
+    df["part2_has_dgz"] = df["part2_has_dgz"].mask(unknown)
+    df["part2_n_dgz"] = df["part2_n_dgz"].mask(unknown)
     assert df[list(FEATURES)].columns.size == len(FEATURES)
     return df.reset_index(drop=True)
 
@@ -75,6 +80,12 @@ def main() -> None:
         f"{len(df)} settlements in {df['block'].nunique()} blocks; sealed test: {int(df['sealed'].sum())} "
         f"settlements ({df['sealed'].mean():.0%}); cross-validation: {len(cv)} "
         f"(listed {cv['listed'].mean():.1%}, with a DGZ {cv['has_dgz'].mean():.1%})"
+    )
+    p2 = df["part2_has_dgz"]
+    print(
+        f"Part II aim point known for {int(p2.notna().sum())} settlements: "
+        f"{int((p2 == 1).sum())} keep one, {int((p2 == 0).sum())} have none "
+        f"({int(((p2 == 0) & (df['has_dgz'] == 1)).sum())} of them lost Part I's)"
     )
 
 

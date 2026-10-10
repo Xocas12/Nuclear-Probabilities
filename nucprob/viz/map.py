@@ -136,6 +136,7 @@ def payload(run: Path) -> dict:
                 "year": int(r["pop_year"]),
                 "listed": clean(r["listed"]),
                 "has_dgz": clean(r["has_dgz"]),
+                "p2": clean(r["part2_has_dgz"]),
                 "sealed": bool(r["sealed"]),
                 "gap": r["label_gap"] or None,
                 "p": None

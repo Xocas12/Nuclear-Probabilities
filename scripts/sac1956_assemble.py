@@ -134,6 +134,25 @@ def airfield_with_gaps(text: str) -> dict | None:
     return {k: (raw[m.start(k) : m.end(k)] if m.start(k) >= 0 else None) for k in m.groupdict()}
 
 
+def line_with_gaps(text: str) -> tuple[str, dict] | None:
+    """A complex, sub-complex or DGZ line that keeps a '?', parsed the same way: the gaps read
+    as zeros to find the fields, then each field gets its printed characters back (so a
+    coordinate with a '?' is left blank, and the line still opens its block)."""
+    norm = cmp.digits_for_letters(cmp.norm(text))
+    for kind, pattern in (
+        ("complex", cmp.COMPLEX),
+        ("dgz", cmp.DGZ),
+        ("subcomplex", cmp.SUBCOMPLEX),
+    ):
+        m = pattern.match(norm.replace("?", "0"))
+        if m:
+            fields = {
+                k: (norm[m.start(k) : m.end(k)] if m.start(k) >= 0 else None) for k in m.groupdict()
+            }
+            return kind, fields
+    return None
+
+
 # The name column holds 25 characters, which cuts some suffixes ("CZEC", "CHIN", "E GE"); these
 # are in SUFFIXES. One is cut to a bare letter.
 NAME_OVERRIDES = {"TURCIANSKY SVATY MARTIN C": ("TURCIANSKY SVATY MARTIN", "Czechoslovakia")}
@@ -436,6 +455,8 @@ def parse(root: Path = ROOT) -> dict:
             and (parsed := airfield_with_gaps(text))
         ):
             typ, f = "airfield", parsed
+        elif typ == "unparsed" and "?" in text and (parsed := line_with_gaps(text)):
+            typ, f = parsed
         lines.append(
             {
                 "id": line_id,

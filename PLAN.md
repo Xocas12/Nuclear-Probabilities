@@ -633,8 +633,10 @@ are transcribed through the same pipeline (`data/curated/sac1956/excerpts/`).
 - **Anchors.** Moscow, Leningrad and East Berlin reproduce. The study's own totals (section 8)
   are redacted figure by figure, so there is nothing more to reproduce.
 - **The Part II subset.** Part II keeps every excerpted complex, with its priority and
-  installations, but far fewer aim points: 22 against 60 in the 31 complexes seen whole. This
-  gives a second, stricter label for the 41 excerpted complexes.
+  installations, but far fewer aim points: 24 against 65 in the 33 complexes seen whole. The
+  16 excerpted complexes ranked 1 to 236 all keep one, and 2 of the 13 below that do. This
+  is a second, stricter label (`part2_has_dgz`). It is known for about 1,400 settlements,
+  28 of them positive.
 - **The cross-reference excerpt** does not reach the page lost from the Part I scan.
 
 Data card: `data/curated/sac1956/README.md`.

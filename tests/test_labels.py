@@ -42,3 +42,23 @@ def test_link_leaves_far_targets_unlinked():
     targets = pd.DataFrame({"name": ["NOWHERE"], "lat": [45.0], "lon": [30.0]})
     out = link(targets, p, Points(p["lat"], p["lon"]), radius_km=10)
     assert out["place_id"].iloc[0] is None
+
+
+def test_part2_labels_known_only_where_the_excerpt_shows_it():
+    from nucprob.labels.sac1956 import part2_labels
+
+    links_cx = pd.DataFrame(
+        {
+            "place_id": ["moscow", "bugulma", "abdulino", "praha", "kladno"],
+            "id": ["C166-L18", "C035-L31", "C002-L04", "C209-L41", "C211-L20"],
+            "top_id": ["C166-L18", "C035-L31", "C002-L04", "C209-L41", "C209-L41"],
+        }
+    )
+    ids = pd.Index(["moscow", "bugulma", "abdulino", "praha", "kladno", "unlisted"])
+    out = part2_labels(links_cx, ids)
+    has = out["part2_has_dgz"]
+    assert has["moscow"] == 1 and has["praha"] == 1 and has["kladno"] == 1
+    assert has["bugulma"] == 0 and out.at["bugulma", "part2_n_dgz"] == 0  # whole, aim point dropped
+    assert has["unlisted"] == 0  # Part II lists only Part I complexes
+    assert pd.isna(has["abdulino"])  # not in the excerpt
+    assert pd.isna(out.at["moscow", "part2_n_dgz"])  # cut by a skipped page: a floor only

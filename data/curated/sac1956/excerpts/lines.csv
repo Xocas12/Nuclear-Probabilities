@@ -922,7 +922,7 @@ R013-L10,R013,data,275 0166-9988,agreed,installation
 R013-L11,R013,data,1 5150 MOSCOW 5545-03737,agreed,complex
 R013-L12,R013,data,5545-3737E A,agreed,dgz
 R013-L13,R013,data,5554-3747E AH,agreed,dgz
-R013-L14,R013,data,5557- 38?3E AJ,adjudicated,unparsed
+R013-L14,R013,data,5557- 38?3E AJ,adjudicated,dgz
 R013-L15,R013,data,5538-3748E AM,agreed,dgz
 R013-L16,R013,data,5549-3719E BG,agreed,dgz
 R013-L17,R013,data,5541-3735E BH,agreed,dgz
@@ -1456,7 +1456,7 @@ R023-L02,R023,header,27386,agreed,
 R023-L02+,R023,furniture,TOP SECRET,agreed,
 R023-L03,R023,header,TOP SECRET || DGZ BA,agreed,
 R023-L04,R023,data,275 0250-9992,agreed,installation
-R023-L05,R023,data,1194 7440 SEVERO KURILSK 5041-1560?,adjudicated,unparsed
+R023-L05,R023,data,1194 7440 SEVERO KURILSK 5041-1560?,adjudicated,complex
 R023-L06,R023,data,254 0206-0010,agreed,installation
 R023-L07,R023,data,280 0206-0013,agreed,installation
 R023-L08,R023,data,275 0206-9997,agreed,installation
@@ -1587,7 +1587,7 @@ R025-L38,R025,data,230 0169-0046,agreed,installation
 R025-L39,R025,data,196 0169-0336,agreed,installation
 R025-L40,R025,data,336 0169-0976,agreed,installation
 R025-L41,R025,data,275 0169-9873,agreed,installation
-R025-L42,R025,data,361 9475 WISMAR E GER 5354-0112?,adjudicated,unparsed
+R025-L42,R025,data,361 9475 WISMAR E GER 5354-0112?,adjudicated,complex
 R025-L43,R025,data,227 0170-,agreed,installation
 R025-L44,R025,data,415 0170-0027,agreed,installation
 R025-L45,R025,data,420 0170-0027,agreed,installation

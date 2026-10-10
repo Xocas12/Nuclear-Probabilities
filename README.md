@@ -12,7 +12,8 @@ targeting. The full design is in [PLAN.md](PLAN.md).
   excerpts of its Part I airfield list, Part II complex list and cross-reference list:
   `data/curated/sac1956/`, with a data card.
   - A blind audit of a 5% sample found no errors (95% bound 0.5%).
-  - Part II keeps the same complexes as Part I with about a third of the aim points.
+  - Part II keeps the same complexes as Part I with about a third of the aim points, kept by
+    the top-priority complexes (a second label, `part2_has_dgz`).
   - 24 other target lists are extracted: `data/INVENTORY.md`.
 - **Milestone M1, the vertical slice.** USSR only: 1,635 towns of 10,000+ in 1959 with census
   populations and coordinates, linked to the SAC targets, with population and administrative
