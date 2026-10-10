@@ -249,8 +249,8 @@ def compare_airfields(part1_af: list[dict], part2_af: list[dict]) -> list[dict]:
         by_be[a["be"]].append(a)
     rows = []
     for a in part1_af:
-        match = by_be.get(a["be"], [])
-        if not match:  # fall back on the name and reference
+        match = by_be.get(a["be"], []) if not a["be"].endswith("-") else []
+        if not match:  # fall back on the name and reference (and for BE numbers left blank)
             match = [b for b in part2_af if b["name"] == a["name"] and b["ref"] == a["ref"]]
         b = match[0] if match else None
         rows.append(

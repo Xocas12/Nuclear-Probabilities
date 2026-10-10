@@ -323,6 +323,7 @@ def parse(root: Path = ROOT) -> dict:
                     "page": page,
                     "complex_id": current["id"],
                     "label": f["label"],
+                    "ba": f.get("ba") or "",
                     "lat": degrees(f["lat"]),
                     "lon": degrees(f["lon"].zfill(5), f.get("hem")),
                     "text": text,

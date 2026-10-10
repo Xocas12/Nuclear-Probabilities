@@ -1,2 +1,13 @@
 id,text,problem
+F002-L17,"442 ?485 ALT LONNEWITZ, E GER 0231-8056 5133-01313 R",airfield row does not match the expected format
 R002-L04,275 0322-9912,line before any complex header
+R013-L14,5557- 38?3E AJ,line does not match any expected format
+R019-L54,BER?UN CZECH 4957-01404,contains ?
+R023-L05,1194 7440 SEVERO KURILSK 5041-1560?,line does not match any expected format
+R024-L09,592 8780 UKH?A 6334-05342,contains ?
+R025-L42,361 9475 WISMAR E GER 5354-0112?,line does not match any expected format
+X003-L22,0040 AGUDZERI SEE 7950 SUKHU?I,contains ?
+X009-L44,65155 PREROV CZECH AF SEE 5745 OLOMO?C CZECH,contains ?
+X010-L41,7501 SHCH?CHIN,contains ?
+X013-L15,K?YVISTO,contains ?
+X014-L36,9515 WO??IS E GER SEE 52?5 M?EHLHAUSEN E GER,contains ?
