@@ -13,6 +13,7 @@ official administrative histories).
 | `military_sites_1956.csv` | 153 | The bloc's military geography with each role's years: military district, group-of-forces, army and Chinese military-region HQs (50); fleet HQs (13) and naval bases (25); Long-Range Aviation bomber airfields (27); nuclear-complex plants, mines and towns (28); test ranges (7); air defence (3) | `military_district_hq`, `fleet_hq`, `log_km_to_naval_base`, `log_km_to_lra_base`, `log_km_to_nuclear_site` |
 | `us_capitals_1985.csv` | 51 | The 50 state capitals and Washington, D.C., with the county (FIPS) each lies in, checked against the Census Bureau's county names | `state_capital`, `national_capital`, `log_km_to_state_capital`, `log_km_to_washington` (US) |
 | `us_military_sites_1985.csv` | 196 | US military installations, command centres and nuclear-weapons sites with their years and a decision for mid-1985 (184 in role); card in `us_military_sites_1985.md` | the US military family (`nucprob/us1985/features.py`) |
+| `uk_military_sites_1980.csv` | 148 | UK military installations (RAF, USAF, Royal Navy, Army), nuclear-weapons sites, radars, intelligence sites and government war HQs with their years and a decision for mid-1980 (142 in role); card in `uk_military_sites_1980.md` | `log_km_to_naval_base`, `log_km_to_lra_base` (V-bomber and strike bases), `log_km_to_nuclear_site` for the transfer region uk_1980 (`nucprob/transfer/features.py`) |
 
 ## Conventions
 

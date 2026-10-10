@@ -52,9 +52,29 @@ ISO3 = {
 # match the bloc's military distances by meaning. The bloc's long-range-aviation bases map to
 # bomber and strike bases; its nuclear sites to nuclear storage and weapons sites.
 MILITARY_GROUPS = {
-    "log_km_to_naval_base": ("naval_base", "submarine_base", "fleet_hq"),
-    "log_km_to_lra_base": ("bomber_base", "strike_air_base", "nuclear_strike_air_base"),
-    "log_km_to_nuclear_site": ("nuclear_storage", "nuclear_weapons_site", "missile_site"),
+    "log_km_to_naval_base": (
+        "naval_base",
+        "submarine_base",
+        "fleet_hq",
+        "ssbn_base",
+        "naval_shipyard",
+    ),
+    "log_km_to_lra_base": (
+        "bomber_base",
+        "strike_air_base",
+        "nuclear_strike_air_base",
+        "raf_vbomber",
+        "raf_strike_attack",
+        "usaf_strike",
+    ),
+    "log_km_to_nuclear_site": (
+        "nuclear_storage",
+        "nuclear_weapons_site",
+        "missile_site",
+        "nuclear_weapons_establishment",
+        "nuclear_materials",
+        "nuclear_weapons_store",
+    ),
 }
 COMMON = [
     "log_pop",
@@ -219,8 +239,9 @@ def military(p: pd.DataFrame) -> pd.DataFrame:
         if not region.military or not path.exists() or not len(rows):
             continue
         s = pd.read_csv(path)
-        if "in_role" in s:
-            s = s[s["in_role"].astype(str).str.lower().isin(["true", "1", "yes"])]
+        flag = [c for c in s.columns if c.startswith("in_role")]
+        if flag:
+            s = s[s[flag[0]].astype(str).str.lower().isin(["true", "1", "yes"])]
         s = s[s["lat"].notna() & s["lon"].notna()]
         for name, roles in MILITARY_GROUPS.items():
             pick = s[s["role"].isin(roles)]
