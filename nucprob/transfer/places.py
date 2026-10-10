@@ -127,18 +127,26 @@ class Gazetteer:
         return None, "not found"
 
 
+# Tables whose rows are districts, not towns, with a file giving each district's
+# headquarters town and its point; the seat stands for the district.
+SEATS_FILES = {"UK": "uk_districts_1981_seats.csv"}
+
+
 def manual_links(country: str) -> dict[str, tuple[dict, str]]:
     """Hand-checked coordinates for towns GeoNames does not know by their old name
-    (data/curated/gazetteer/transfer_links.csv)."""
+    (data/curated/gazetteer/transfer_links.csv), and district seats (SEATS_FILES)."""
+    out: dict[str, tuple[dict, str]] = {}
+    seats = GAZ / SEATS_FILES.get(country, "-")
+    if seats.exists():
+        d = pd.read_csv(seats)
+        for _, r in d[d["lat"].notna()].iterrows():
+            out[r["name"]] = ({"lat": r["lat"], "lon": r["lon"], "gn": r["seat"]}, "district seat")
     path = GAZ / "transfer_links.csv"
-    if not path.exists():
-        return {}
-    d = pd.read_csv(path)
-    d = d[d["country"] == country]
-    return {
-        r["name"]: ({"lat": r["lat"], "lon": r["lon"], "gn": r["located_as"]}, "manual")
-        for _, r in d.iterrows()
-    }
+    if path.exists():
+        d = pd.read_csv(path)
+        for _, r in d[d["country"] == country].iterrows():
+            out[r["name"]] = ({"lat": r["lat"], "lon": r["lon"], "gn": r["located_as"]}, "manual")
+    return out
 
 
 def build() -> pd.DataFrame:
@@ -167,7 +175,7 @@ def build() -> pd.DataFrame:
 
             def coord(hit, col, g=g):
                 i, method = hit
-                if method == "manual":
+                if method in ("manual", "district seat"):
                     return i[col]
                 return (
                     g.at[i, {"lat": "lat", "lon": "lon", "gn": "name"}[col]]
