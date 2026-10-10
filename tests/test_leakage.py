@@ -9,13 +9,20 @@ import yaml
 
 from nucprob.features.registry import FEATURES
 from nucprob.paths import CURATED, ROOT, SOURCES
+from nucprob.us1985.features import FEATURES as US_FEATURES
 
 FEATURE_CODE = [
     *sorted((ROOT / "nucprob" / "features").glob("*.py")),
+    ROOT / "nucprob" / "us1985" / "features.py",
+    ROOT / "nucprob" / "us1985" / "places.py",
     *[ROOT / "nucprob" / "sources" / f"{m}.py" for m in ("terrain", "cshapes", "naturalearth")],
 ]
 # What the label code reads or writes: the SAC transcription, its links and labels.
-LABEL_MARKERS = re.compile(r"sac1956|nucprob\.labels|labels_|dgz|complexes\.csv|installations")
+LABEL_MARKERS = re.compile(
+    r"sac1956|nucprob\.labels|labels_|dgz|complexes\.csv|installations|napb|cd_19|band_rank"
+)
+# Curated folders that hold label transcriptions.
+LABEL_FOLDERS = {"sac1956", "napb90", "labels"}
 
 
 def manifest() -> dict[str, dict]:
@@ -30,13 +37,13 @@ def test_every_source_has_a_role():
 
 def test_no_feature_reads_a_label_source():
     sources = manifest()
-    for name, feature in FEATURES.items():
+    for name, feature in [*FEATURES.items(), *US_FEATURES.items()]:
         assert feature.sources, f"{name} names no source"
         for ref in feature.sources:
             if ref.startswith("curated:"):
                 path = CURATED / ref.removeprefix("curated:")
                 assert path.exists(), f"{name}: {path} missing"
-                assert "sac1956" not in path.parts, f"{name} reads the SAC transcription"
+                assert not LABEL_FOLDERS & set(path.parts), f"{name} reads a label transcription"
                 continue
             matched = fnmatch.filter(sources, ref)
             assert matched, f"{name}: source {ref} is not in data/sources.yaml"

@@ -1,4 +1,4 @@
-# Curated feature tables (as of June 1956)
+# Curated feature tables (as of June 1956, and the US as of 1985)
 
 Small hand-built tables that feed the features (`nucprob/features/`). None of them is derived
 from a US target list: the leakage guard (`tests/test_leakage.py`) checks that no feature reads
@@ -11,6 +11,8 @@ official administrative histories).
 | `admin_centres_1956.csv` | ~300 | First-order units and their centres in June 1956: RSFSR krais, oblasts and ASSRs (with the oblasts of 1954–57: Arzamas, Balashov, Velikiye Luki, Kamensk, Grozny), autonomous oblasts and national okrugs; the oblasts of the other republics; Polish voivodeships, East German Bezirke, Czechoslovak kraje, Hungarian counties, Romanian regions, Bulgarian okrugs, Chinese provinces, North Korean provinces | `regional_centre`, `autonomy_centre` |
 | `sac_bases_1956.csv` | 15 | SAC's overseas bomber, tanker and forward bases in service in 1956, with their years (the Spanish bases opened in 1957–59 and are excluded) | `log_km_to_sac_base` |
 | `military_sites_1956.csv` | 153 | The bloc's military geography with each role's years: military district, group-of-forces, army and Chinese military-region HQs (50); fleet HQs (13) and naval bases (25); Long-Range Aviation bomber airfields (27); nuclear-complex plants, mines and towns (28); test ranges (7); air defence (3) | `military_district_hq`, `fleet_hq`, `log_km_to_naval_base`, `log_km_to_lra_base`, `log_km_to_nuclear_site` |
+| `us_capitals_1985.csv` | 51 | The 50 state capitals and Washington, D.C., with the county (FIPS) each lies in, checked against the Census Bureau's county names | `state_capital`, `national_capital`, `log_km_to_state_capital`, `log_km_to_washington` (US) |
+| `us_military_sites_1985.csv` | 196 | US military installations, command centres and nuclear-weapons sites with their years and a decision for mid-1985 (184 in role); card in `us_military_sites_1985.md` | the US military family (`nucprob/us1985/features.py`) |
 
 ## Conventions
 

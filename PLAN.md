@@ -619,6 +619,29 @@ nuclear-probabilities/
 
 Phases 1 and 2 run side by side. Transcribing the labels is the long pole, so it starts first.
 
+**Progress (10 Oct 2026, later).** M4 is done for the cheap lists, the first M list and its
+feature build.
+- **NAPB-90, the US at scale** (`data/curated/napb90/`). FEMA's county table of direct-effects
+  risk is transcribed in full: 3,142 counties with their highest blast band.
+  - Two independent passes agree on every figure.
+  - Counties are matched to FIPS codes and checked against the Census Bureau's 1985 estimates
+    and the 1990 boundaries.
+  - Slips in FEMA's own tables are documented.
+- **US features as of 1985** (`nucprob/us1985/`, `data/FEATURES_US.md`). 29 features in six
+  families for all 3,141 counties, including a curated, dated table of 196 military sites
+  (Wikipedia, no target lists). The leakage guard covers them.
+- **US check run** (`runs/m4-us-check/`), "very high" band (base rate 0.25): PR-AUC 0.65 for the
+  population rule, 0.71 with population plus military, 0.74 for LightGBM on everything.
+  Military is the family whose removal costs most. This is a check, not a result.
+- **Small lists completed:**
+  - Taiwan Strait 1958 (Halperin): 4 named targets. The plans name only target types.
+  - JCS 1963 China vulnerability study: 9 targets.
+  - Operation Alert 1955: 60 cities, 44 of them from the 1955 press.
+- **Data cards.** Every label file has a card and a provenance tag
+  (`data/curated/labels/CATALOGUE.yaml`, rendered in `data/INVENTORY.md`), enforced by a test.
+- **Left for M4's L items:** Annex B (fallout) of NAPB-90, TR-82 and the DTIC appendices
+  (blocked), the UK lists at Kew, and the print books.
+
 **Progress (10 Oct 2026).** M3 is done. The three lists the Archive published only in excerpt
 (the Part I airfield list, the Part II complex list with weapons, and the cross-reference list)
 are transcribed through the same pipeline (`data/curated/sac1956/excerpts/`).

@@ -1,9 +1,9 @@
 {
   "milestone": "M4 US check run",
-  "created": "2026-10-10T17:31:15+00:00",
-  "git_commit": "c7bce579e7545cfc5dfa4474f748388f810383d2",
+  "created": "2026-10-10T18:11:48+00:00",
+  "git_commit": "ff16c2811e333bdfac142cab74ce41db5d4183ab",
   "data": {
-    "dataset_napb90.parquet": "d5baf7bd0823ef47106631590e97bd2f247bf99ba293c86850ce52cc228d6fbe"
+    "dataset_napb90.parquet": "3eca885bf7ea004c578334edc48250fd62703d82e8c6eab2d5c7bffcd5f2f6ac"
   },
   "counties_in_cv": 2464,
   "sealed_excluded": 674,
@@ -28,7 +28,16 @@
     "rail_lines_10km",
     "log_km_to_port",
     "log_km_to_major_river",
-    "log_airports_county"
+    "log_airports_county",
+    "log_km_to_sac_base",
+    "log_km_to_icbm",
+    "log_km_to_ssbn_base",
+    "log_km_to_naval_base",
+    "log_km_to_army_post",
+    "log_km_to_air_base",
+    "log_km_to_nuclear_weapons_site",
+    "log_km_to_command_centre",
+    "military_sites_county"
   ],
   "targets": {
     "very_high": "highest risk very high (>=10 psi)",
@@ -58,7 +67,16 @@
       "rail_lines_10km",
       "log_km_to_port",
       "log_km_to_major_river",
-      "log_airports_county"
+      "log_airports_county",
+      "log_km_to_sac_base",
+      "log_km_to_icbm",
+      "log_km_to_ssbn_base",
+      "log_km_to_naval_base",
+      "log_km_to_army_post",
+      "log_km_to_air_base",
+      "log_km_to_nuclear_weapons_site",
+      "log_km_to_command_centre",
+      "military_sites_county"
     ],
     "LightGBM, all features": [
       "log_pop",
@@ -80,7 +98,16 @@
       "rail_lines_10km",
       "log_km_to_port",
       "log_km_to_major_river",
-      "log_airports_county"
+      "log_airports_county",
+      "log_km_to_sac_base",
+      "log_km_to_icbm",
+      "log_km_to_ssbn_base",
+      "log_km_to_naval_base",
+      "log_km_to_army_post",
+      "log_km_to_air_base",
+      "log_km_to_nuclear_weapons_site",
+      "log_km_to_command_centre",
+      "military_sites_county"
     ],
     "LightGBM, population family": [
       "log_pop",
@@ -101,7 +128,16 @@
       "log_km_to_washington",
       "log_area",
       "log_km_to_coast",
-      "log_km_to_major_river"
+      "log_km_to_major_river",
+      "log_km_to_sac_base",
+      "log_km_to_icbm",
+      "log_km_to_ssbn_base",
+      "log_km_to_naval_base",
+      "log_km_to_army_post",
+      "log_km_to_air_base",
+      "log_km_to_nuclear_weapons_site",
+      "log_km_to_command_centre",
+      "military_sites_county"
     ],
     "LightGBM, population + administrative": [
       "log_pop",
@@ -130,7 +166,16 @@
       "rail_lines_10km",
       "log_km_to_port",
       "log_km_to_major_river",
-      "log_airports_county"
+      "log_airports_county",
+      "log_km_to_sac_base",
+      "log_km_to_icbm",
+      "log_km_to_ssbn_base",
+      "log_km_to_naval_base",
+      "log_km_to_army_post",
+      "log_km_to_air_base",
+      "log_km_to_nuclear_weapons_site",
+      "log_km_to_command_centre",
+      "military_sites_county"
     ],
     "LightGBM, population + geography": [
       "log_pop",
@@ -159,7 +204,16 @@
       "rail_lines_10km",
       "log_km_to_port",
       "log_km_to_major_river",
-      "log_airports_county"
+      "log_airports_county",
+      "log_km_to_sac_base",
+      "log_km_to_icbm",
+      "log_km_to_ssbn_base",
+      "log_km_to_naval_base",
+      "log_km_to_army_post",
+      "log_km_to_air_base",
+      "log_km_to_nuclear_weapons_site",
+      "log_km_to_command_centre",
+      "military_sites_county"
     ],
     "LightGBM, population + industry": [
       "log_pop",
@@ -188,7 +242,16 @@
       "rail_lines_10km",
       "log_km_to_port",
       "log_km_to_major_river",
-      "log_airports_county"
+      "log_airports_county",
+      "log_km_to_sac_base",
+      "log_km_to_icbm",
+      "log_km_to_ssbn_base",
+      "log_km_to_naval_base",
+      "log_km_to_army_post",
+      "log_km_to_air_base",
+      "log_km_to_nuclear_weapons_site",
+      "log_km_to_command_centre",
+      "military_sites_county"
     ],
     "LightGBM, population + transport": [
       "log_pop",
@@ -217,7 +280,54 @@
       "log_relief_10km",
       "log_km_to_coast",
       "log_power_mw_county",
-      "log_power_mw_25km"
+      "log_power_mw_25km",
+      "log_km_to_sac_base",
+      "log_km_to_icbm",
+      "log_km_to_ssbn_base",
+      "log_km_to_naval_base",
+      "log_km_to_army_post",
+      "log_km_to_air_base",
+      "log_km_to_nuclear_weapons_site",
+      "log_km_to_command_centre",
+      "military_sites_county"
+    ],
+    "LightGBM, population + military": [
+      "log_pop",
+      "log_density",
+      "growth_1980_85",
+      "log_pop_within_50km",
+      "log_pop_within_100km",
+      "log_km_to_sac_base",
+      "log_km_to_icbm",
+      "log_km_to_ssbn_base",
+      "log_km_to_naval_base",
+      "log_km_to_army_post",
+      "log_km_to_air_base",
+      "log_km_to_nuclear_weapons_site",
+      "log_km_to_command_centre",
+      "military_sites_county"
+    ],
+    "LightGBM, all but military": [
+      "log_pop",
+      "log_density",
+      "growth_1980_85",
+      "log_pop_within_50km",
+      "log_pop_within_100km",
+      "state_capital",
+      "national_capital",
+      "log_km_to_state_capital",
+      "log_km_to_washington",
+      "log_area",
+      "elevation_m",
+      "log_relief_10km",
+      "log_km_to_coast",
+      "log_power_mw_county",
+      "log_power_mw_25km",
+      "log_km_to_rail",
+      "rail_lines_10km",
+      "log_km_to_port",
+      "log_km_to_major_river",
+      "log_airports_county"
     ]
   },
   "cv": {

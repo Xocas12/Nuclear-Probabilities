@@ -35,14 +35,25 @@ WRI_NOTE = (
 NE_IDS = ("naturalearth_10m_*",)
 # Roles of the curated military table, grouped into distance features.
 MILITARY_ROLES = {
-    "log_km_to_sac_base": ("SAC bomber base", "SAC tanker base", "SAC reconnaissance base"),
-    "log_km_to_icbm": ("ICBM wing", "missile field"),
-    "log_km_to_ssbn_base": ("SSBN base",),
-    "log_km_to_naval_base": ("naval base", "fleet HQ", "SSBN base"),
-    "log_km_to_army_post": ("Army post",),
-    "log_km_to_air_base": ("Air Force base",),
-    "log_km_to_nuclear_weapons_site": ("nuclear weapons site", "national laboratory"),
-    "log_km_to_command_centre": ("command centre",),
+    "log_km_to_sac_base": (
+        "sac_bomber",
+        "sac_bomber_b1b",
+        "sac_tanker",
+        "sac_reconnaissance",
+    ),
+    "log_km_to_icbm": (
+        "icbm_wing",
+        "icbm_wing_titan",
+        "icbm_wing_peacekeeper",
+        "missile_field",
+        "icbm_test_base",
+    ),
+    "log_km_to_ssbn_base": ("ssbn_base",),
+    "log_km_to_naval_base": ("naval_base", "naval_shipyard", "fleet_hq", "ssbn_base"),
+    "log_km_to_army_post": ("army_major_post", "army_corps_division_hq", "marine_corps_base"),
+    "log_km_to_air_base": ("usaf_tac", "usaf_mac", "usaf_other"),
+    "log_km_to_nuclear_weapons_site": ("nuclear_weapons_complex",),
+    "log_km_to_command_centre": ("command_centre",),
 }
 
 
