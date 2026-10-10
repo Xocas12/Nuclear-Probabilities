@@ -63,6 +63,7 @@ MILITARY_GROUPS = {
         "bomber_base",
         "strike_air_base",
         "nuclear_strike_air_base",
+        "air_base_strike",
         "raf_vbomber",
         "raf_strike_attack",
         "usaf_strike",
