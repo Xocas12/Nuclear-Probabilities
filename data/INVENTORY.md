@@ -6,6 +6,7 @@ source are in `data/notes/`. Raw downloads are in `data/raw/` (not in git).
 | File | Rows | Planner | Target country | Year | Provenance | Secondary rows | Rejected rows |
 |---|---|---|---|---|---|---|---|
 | `cd_1955_operation_alert.csv` | 16 | FCDA (defender exercise) | Canada, USA | 1955 | defender | 0 | 0 |
+| `cd_1955_operation_alert_full.csv` | 60 | FCDA (defender exercise) | Canada, Panama Canal Zone (US), USA, USA (Puerto Rico), USA (Territory of Alaska), USA (Territory of Hawaii) | 1955 | defender | 46 | 0 |
 | `cd_1956_canada_target_areas.csv` | 13 | Canada (federal civil defence) | Canada | 1956 | defender | 0 | 0 |
 | `cd_1980_square_leg.csv` | 95 | UK (Home Office/MoD exercise) | UK | 1980 | defender | 95 | 0 |
 | `cd_1987_napb90_classes.csv` | 12 | (own schema) |  |  |  |  |  |
@@ -36,7 +37,7 @@ source are in `data/notes/`. Raw downloads are in `data/raw/` (not in git).
 | `wp_1977_zealand.csv` | 10 | Poland (Coastal Front / Front Nadmorski), landing operation on Zealand | Denmark | 1977 | plan | 10 | 0 |
 | `wp_1979_seven_days.csv` | 9 | Warsaw Pact/USSR (as attributed by Wikipedia) | Austria, Denmark, FRG, Italy | 1979 | reconstruction | 9 | 0 |
 
-Total: 30 files, 6400 rows.
+Total: 31 files, 6460 rows.
 
 ## Data cards
 
@@ -49,6 +50,7 @@ From `data/curated/labels/CATALOGUE.yaml` (checked by `tests/test_catalogue.py`)
 | `cd_1987_napb90_counties.csv` | NAPB-90 highest direct-effects risk by county | FEMA (defender), modelled on Soviet doctrine → USA, 1987 | defender | mixed | training | every county of the 50 states and DC (3,142 rows); two independent passes agree on every figure | a county's band is a derived exposure, not a designation; refinery, power and chemical classes chosen by rule | data/curated/napb90/README.md |
 | `us_1945_target_committee.csv` | Target Committee and orders for the atomic bombing of Japan | US (Target Committee, Groves, War Department) → Japan, 1945 | plan | judgment | transfer-test | every candidate named in the documents read, one row per city per stage | rows repeat across decision stages; the Kyoto rejection rests on a secondary transcription | data/notes/western.md (1) |
 | `cd_1955_operation_alert.csv` | Operation Alert 1955, cities labelled on FCDA's attack-pattern map | FCDA (defender exercise) → USA, Canada, 1955 | defender | judgment | transfer-test | 16 of about 60 cities (the labelled megaton ground bursts) | the other ~45 symbols on the map are unlabelled | data/notes/civil_defence.md (4) |
+| `cd_1955_operation_alert_full.csv` | Operation Alert 1955, the cities "struck" (map labels plus press lists) | FCDA (defender exercise) → USA (with Alaska, Hawaii, Puerto Rico, Canal Zone), Canada, 1955 | defender | judgment | transfer-test | 60 of about 60 cities; 44 names come only from 1955 newspapers; yields for 5 cities | rows 17-60 secondary (AP list of cities told in advance); 2-3 mainland symbols still unnamed | data/notes/operation_alert_1955.md |
 | `cd_1956_canada_target_areas.csv` | Canada's 1956 evacuation (target) areas | Canada (federal civil defence) → Canada, 1956 | defender | judgment | transfer-test | the 13 areas named in the House of Commons | sitting date and page not verified | data/notes/civil_defence.md (5) |
 | `us_1958_taiwan_strait.csv` | Taiwan Strait crisis, nuclear strike options (Halperin, RAND RM-4900) | US (JCS, PACAF, Army) → PRC, 1958 | study | judgment | transfer-test | the 4 places named; the plans name only target types | the atomic target annex is not reproduced | data/notes/halperin_1958.md |
 | `wp_1961_burza.csv` | Exercise "Burza", Polish Maritime Front | Poland (Maritime Front) → Denmark, FRG, Netherlands, GDR, 1961 | exercise | judgment | transfer-test | the targets the companion documents name; the directive gives only counts | 7 rows are unit targets or unidentified places | data/notes/warsaw_pact.md (3) |

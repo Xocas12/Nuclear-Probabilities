@@ -372,3 +372,15 @@ lists:
     completeness: the 9 places the study names (6 nuclear and missile sites, 3 rail transloading points)
     card: data/notes/ebb38_china.md
     caveats: selected is blank (the JCS rejected overt force without ruling on targets); two sites located only by distance from a city
+
+  - file: cd_1955_operation_alert_full.csv
+    title: Operation Alert 1955, the cities "struck" (map labels plus press lists)
+    planner: FCDA (defender exercise)
+    targets: USA (with Alaska, Hawaii, Puerto Rico, Canal Zone), Canada
+    year: 1955
+    provenance: defender
+    selection: judgment
+    use: transfer-test
+    completeness: 60 of about 60 cities; 44 names come only from 1955 newspapers; yields for 5 cities
+    card: data/notes/operation_alert_1955.md
+    caveats: rows 17-60 secondary (AP list of cities told in advance); 2-3 mainland symbols still unnamed
