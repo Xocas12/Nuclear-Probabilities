@@ -154,6 +154,8 @@ def build() -> pd.DataFrame:
             towns = towns[
                 ~towns["name"].str.contains(r"\((?:CMA|metropolitan)", case=False)
                 & ~notes.str.contains("^CMA|census metropolitan area row", case=False)
+                # The US table's territories lie outside the 1955 universe (the 48 states, DC).
+                & ~notes.str.contains("Territory, outside", case=False)
             ]
             towns = towns.reset_index(drop=True)
             gaz = Gazetteer(code)
