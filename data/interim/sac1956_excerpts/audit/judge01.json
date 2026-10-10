@@ -1,0 +1,62 @@
+[
+ {
+  "id": "A029-L08",
+  "X": "329 0188 PIRSAGAT 0339-8611 3951-04921 S",
+  "Y": "329 0188 PI?SAGAT 0339-?611 3951-04921 S",
+  "crop": "data/interim/sac1956_excerpts/audit/crops/A029-L08.png"
+ },
+ {
+  "id": "C112-L04",
+  "X": "275 0164-9988",
+  "Y": "275 0164-9?88",
+  "crop": "data/interim/sac1956_excerpts/audit/crops/C112-L04.png"
+ },
+ {
+  "id": "A023-L16",
+  "X": "10 5032 MIRGOROD 0233-8051 4956-03339 R",
+  "Y": "1? 5032 MIRGOROD 0233-8051 4956-03339 R",
+  "crop": "data/interim/sac1956_excerpts/audit/crops/A023-L16.png"
+ },
+ {
+  "id": "C094-L06",
+  "X": "MERSEBURG E GER 5121-01159 388 0231-1919",
+  "Y": "MERSEBURG E GER 5121-01159 || 388 0231-1919",
+  "crop": "data/interim/sac1956_excerpts/audit/crops/C094-L06.png"
+ },
+ {
+  "id": "C122-L20",
+  "X": "P?BEZOVICE CZECH 4930-01248",
+  "Y": "POBEZOVICE CZECH 4930-01248",
+  "crop": "data/interim/sac1956_excerpts/audit/crops/C122-L20.png"
+ },
+ {
+  "id": "C160-L04",
+  "X": "5258- 402?E C",
+  "Y": "5258-4028E C",
+  "crop": "data/interim/sac1956_excerpts/audit/crops/C160-L04.png"
+ },
+ {
+  "id": "C191-L21",
+  "X": "TIMISUL DE JOS RUM 4535-02536",
+  "Y": "TIMISUL DE J?S RUM 4535-02536",
+  "crop": "data/interim/sac1956_excerpts/audit/crops/C191-L21.png"
+ },
+ {
+  "id": "A004-L29",
+  "X": "635 0766 BIROBIDZHAN 0203-8001 4945-13258 S",
+  "Y": "635 0766 BIROBIDZHAN 0203-8001 4945-1325? S",
+  "crop": "data/interim/sac1956_excerpts/audit/crops/A004-L29.png"
+ },
+ {
+  "id": "C219-L06",
+  "X": "227 0231-2808 || 275 0231-9891",
+  "Y": "227 0231-2808",
+  "crop": "data/interim/sac1956_excerpts/audit/crops/C219-L06.png"
+ },
+ {
+  "id": "C080-L05",
+  "X": "246 0232-1306 || 275 0232-9968",
+  "Y": "246 0232-1306",
+  "crop": "data/interim/sac1956_excerpts/audit/crops/C080-L05.png"
+ }
+]

@@ -2,12 +2,12 @@
 
 - Lines with a final reading: 16046 (15838 agreed by both passes, 208 adjudicated); lines with no reading yet: 0
 - Complexes: 1217; sub-complexes: 873; DGZs: 1405; installation lines: 10220; M-n rows: 34; airfields: 1128
-- Lines still carrying '?' or failing a rule: 6
+- Lines still carrying '?' or failing a rule: 5
 
 ## Transcription quality
 
-- Data lines: 14904. Pass A differs from the final reading on 149 (1.00%), pass B on 62 (0.42%); both on 34. On 2 of these the two passes wrote the same legible text: errors the comparison cannot see, found by the consistency checks or by an adjudicator looking at the line for another reason (A004-L07, A006-L22).
-- Adjudicated lines: 208; choice A 26, B 107, both 41, new 34; confidence high 116, low 9, medium 83
+- Data lines: 14904. Pass A differs from the final reading on 150 (1.01%), pass B on 63 (0.42%); both on 35. On 3 of these the two passes wrote the same legible text: errors the comparison cannot see, found by the consistency checks or by an adjudicator looking at the line for another reason (A004-L07, A004-L20, A006-L22).
+- Adjudicated lines: 208; choice A 25, B 106, both 40, new 37; confidence high 115, low 11, medium 82
 
 ## Anchors
 
@@ -86,7 +86,7 @@ Installation lines by category against the National Security Archive's city shee
 
 ## Consistency checks across lines
 
-Lines that the checks still flag after the second look, with its outcome (checks.csv has the notes). Lines that the second look corrected no longer break a check and are not listed. In all, 34 lines ended with a reading that neither pass had (adjudication or second look, choice `new`).
+Lines that the checks still flag after the second look, with its outcome (checks.csv has the notes). Lines that the second look corrected no longer break a check and are not listed. In all, 37 lines ended with a reading that neither pass had (adjudication or second look, choice `new`).
 
 | Check | Lines | Confirmed as printed | Not re-read |
 |---|---|---|---|
@@ -97,8 +97,8 @@ Lines that the checks still flag after the second look, with its outcome (checks
 | block with more than one population line | 2 | 2 | 0 |
 | duplicate airfield priority | 2 | 2 | 0 |
 | airfield BE number not 8xxx | 2 | 2 | 0 |
-| minutes>=60 | 2 | 2 | 0 |
 | header far from the other headers on its chart | 1 | 1 | 0 |
 | reference number not above the previous complex | 1 | 1 | 0 |
 | airfield out of alphabetical order | 1 | 1 | 0 |
+| minutes>=60 | 1 | 1 | 0 |
 | line does not match any expected format | 1 | 1 | 0 |

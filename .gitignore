@@ -19,3 +19,17 @@ __pycache__/
 data/processed/
 .ruff_cache/
 .pytest_cache/
+!data/interim/sac1956_excerpts/
+data/interim/sac1956_excerpts/*
+!data/interim/sac1956_excerpts/*.md
+!data/interim/sac1956_excerpts/manifest.json
+!data/interim/sac1956_excerpts/passA/
+!data/interim/sac1956_excerpts/passB/
+!data/interim/sac1956_excerpts/chunks/
+!data/interim/sac1956_excerpts/compare/
+!data/interim/sac1956_excerpts/adjudicate/
+data/interim/sac1956_excerpts/adjudicate/crops/
+!data/interim/sac1956_excerpts/audit/
+data/interim/sac1956_excerpts/audit/crops/
+!data/interim/sac1956_excerpts/crossdoc/
+data/interim/sac1956_excerpts/crossdoc/*.png

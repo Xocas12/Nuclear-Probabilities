@@ -1,0 +1,19 @@
+1	47 0034 AFRIKANDA 0091-8601 6728-0324? R	low	47 0034 AFRIKANDA 0091-8601 6728-03248 R	high	unresolved	Part I last glyph is a 5/8 hybrid (5-like top flag on closed 8-like body); Part II clear 8
+2	727 0080 AKTYUBINSK 0236-8002 5018-05710 R	high	727 0080 AKTYU?INSK 0236-8002 5010-05710 R	low	printings differ	Part I clear B-shaped 8 and B; Part II faint open 0 (same mid-left tick as agreed faint 0s) and degraded R/B with split foot
+3	52 0201 AMDERMA 0049-8001 6945-06140 R	high	52 0201 AMDERMA 0049-8001 5945-06140 R	high	printings differ	Part II first glyph has flat top bar and open lower-left = 5, unlike its 6 in 6444
+4	893 0270 ARKHANGELSK/BAKARITSA 0092-8002 6428-04035 T	high	893 0270 ARKHANGELSK/BAKARITSA 0092-8002 6478-04035 T	high	printings differ	Part II third glyph has no base bar = 7; Part I 2 has base bar
+5	520 0665 BERAT/KUCOVE, ALB 0322-8001 4047-01954 R	high	520 0665 BERAT/KUCOVE, ALB 0322-8001 4047-01954 R	low	part2 misread	Part II glyph is flat-topped like the 5 in 05228 in same crop, not the round 9 beside it
+6	635 0766 BIROBIDZHAN 0203-8001 4845-13258 S	high	635 0766 BIROBIDZHAN 0203-8001 4945-13258 S	high	printings differ	Part II second glyph closed top loop with open lower-left = 9; Part I two-loop 8
+7	438 0935 BRATISLAVA/IVANKA, CZECH 0232-8244 4810-01712 R	high	438 0935 BRATISLAVA/IVANKA, CZECH 0232-8244 4910-01712 R	high	printings differ	Part I two-loop 8 vs Part II clear 9 with tail
+8	957 0970 BREST 0168-8610 5208-02340 R	high	957 0970 BREST 0168-8610 5?00-02340 R	low	printings differ	Part II 4th glyph broken faint 0 without waist vs Part I clear 8; Part II 2nd glyph lacks base bar (7-like)
+9	90 0307 BRIYENI 0250-8752 4558-02923 R	high	90 0307 BRIYENI 0250-8752 4550-02923 R	low	printings differ	Part II faint open 0 with mid-left tick like agreed 0 in 4910; Part I clear 8
+10	474 4131 BRODY 0233-8006 5005-02911 S	low	474 4131 BRODY 0233-8006 5005-02511 S	high	printings differ	Part I S-shaped glyph matches the S-like 9 in 4909 of same crop, not its flat-topped 5s; Part II clear 5
+11	959 34737 BUSHTINO 0232-8622 480?-02328 S	low	959 34737 BUSHTINO 0232-8622 4809-02328 S	high	unresolved	Part I S-shaped glyph ambiguous between its 5 and S-like 9; Part II clear 9
+12	823 10748 BUZAU, RUM 0251-8019 4508-02648 S	high	823 10748 BUZAU, RUM 0251-8019 4500-02648 S	low	printings differ	Part II faint open 0 with no waist; Part I clear 8
+13	221 1193 CHANG CHIAO, CHINA 0492-8401 2956-12134 R	high	221 1193 CHANG CHIAO, CHINA 0492-8401 2956-12134 R	low	part2 misread	Part II P-shape has ink speck where R leg ends; likely broken R
+14	359 4512 LENKORAN 0339-8609 3846-04848 R	low	359 4512 LENKORAN 0339-8609 3846-04849 R	high	printings differ	Part II closed top and full right stem = 9 (cf. open 5 in 02105); Part I broken glyph has lower-left stroke = 8
+15	601 87805 MIKKOLYA 0091-8620 6513-03159 R	low	601 87805 MIKKOLYA 0091-8620 6513-03139 R	high	printings differ	Part I glyph has upper-left vertical like its 5; Part II 3 has no left stroke
+16	924 5171 MOZYR 0233-8052 5159-02909 R	high	924 5171 MOZYR 0233-8052 5159-02909 R	low	part2 misread	Part II faint glyph keeps top-left vertical stub = 5, not 3
+17	805 57475 OLOVYANNAYA 0202-8614 5101-11525 R	low	805 57475 OLOVYANNAYA 0202-8614 5101-1152? R	low	unresolved	Part II final glyph blotted/unreadable; Part I 5 with closed top
+18	586 5770 ONEGA. 0102-8016 6355-03808 R	high	586 5770 ONEGA 0102-8016 6355-03808 R	low	printings differ	Part I has period after ONEGA, Part II none; Part II topless 4th glyph is a 5, so digits agree
+19	348 3660 PALANGA 0168-8644 5556-02105 R	high	348 3660 PALANGA 0168-8644 5556-0210? R	low	unresolved	Part II final glyph blotted, unreadable; Part I clear 5

@@ -1,0 +1,30 @@
+X004-L03	data	0103 ALBA IULIA RUM	B	high	R faint but legible
+X004-L05	data	0107 ALEKSANDRIYA SEE 9950 ZNAMENKA	B	high	N broken, legible on zoom
+X004-L25	data	0175 ALMAFUZITO HUNG SEE 3805 KOMARNO CZECH	B	low	second digit 8 with faded side
+X004-L27	data	0176 ALMAZNAYA SEE 3120 KADIYEVKA	B	high	M faint but legible
+X004-L36	data	0186 ALTENGRABOW E GER SEE 9879 ZERBST E GER	A	high	last digit round-topped 9
+X004-L38	data	01875 ALT LONNEWITZ E GER AF SEE 8485 TORGAU E GER	A	low	only T crossbar printed
+X006-L06	data	5075 MOINESTI RUM SEE 1945 DARMANESTI RUM	B	high	9 clear on zoom
+X006-L09	data	5090 MOLOTOV || MOLOTOV N AF	A	high	strip L09 band holds both lines
+X006-L10	data	MOLOTOV S E AF	A	high	strip L10 band holds only S E line
+X006-L29	data	5135 MORSHANSK	B	high	M partly faded
+X006-L41	data	KHIMKI N. AF || KRASNAYA POLYANA AF	A	high	strip L41 band holds both lines
+X007-L16	data	HEGYESHALOM	A	low	last glyph M with broken middle
+X008-L10	data	6050 PARNU AF SEE 6600 PYARNU	B	low	first glyph broken P
+X008-L31	data	6115 PEI PIAO CHINA	B	low	first glyph broken P
+X009-L38	data	ZHELEZNODOPOZHNYY AF	B	low	flat-left D glyph after NO
+X009-L44	data	65155 PREROV CZECH AF SEE 5745 OLOMO?C CZECH	B	low	5745 clear; U/L glyph lacks right stem
+X010-L41	data	7501 SHCH?CHIN	A	low	glyph obscured by DocId overprint
+X011-L33	data	8830 URAS SEE 9320 VYBORG	B	high	138 is page number (footer furniture)
+X012-L07	data	9078 VIDIN BULG || LOM	B	high	strip L07 band holds both lines
+X012-L08	data	90797 VIETZKERSTRAND POL AF SEE 7900 SCHLAWE POL	A	low	second digit has closed 9 loop
+X012-L40	data	9145 VLONE ALB	B	high	142 is page number (footer furniture)
+X012-L07+	blank		B	high	LOM already within L07 label band
+X013-L08	data	9295 VULCAN RUM SEE 6225 PETROSENI RUM	A	low	last digit flat top with left stem: 5
+X013-L13	data	9313 VYAZNIKI	B	low	last digit curved top like 3
+X013-L15	data	K?YVISTO	A	low	2nd glyph between D and O
+X013-L23	data	9335 VYSOKE MYTO CZECH SEE 8015 SVITAVY CZECH	B	low	first digit 8 with faded left middle
+X013-L41	data	BOERNEROWO AF	B	high	145 is page number (footer furniture)
+X014-L09	data	9405 WEIMAR E GER SEE 2005 ERFURT E GER	B	low	only T crossbar printed
+X014-L21	data	BAD KLENINEN	A	high	letters KLENINEN on zoom
+X014-L36	data	9515 WO??IS E GER SEE 52?5 M?EHLHAUSEN E GER	new	low	DocId overprint; 146 page number excluded

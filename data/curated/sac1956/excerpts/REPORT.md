@@ -23,7 +23,8 @@ Written by `scripts/sac1956_excerpts.py`.
 ## Part I airfields against Part II
 
 - 270 of 270 Part I airfield rows have a Part II row of the same BE number (or name and reference).
-- Of those, same coordinates 252, same trailing letter 269
+- Of those, same coordinates 254, same trailing letter 270
+- Rows transcribed differently from the two printings, judged on both scans (`crossdoc/`): printings differ 12, unresolved 4, part2 misread 3
 
 ## Cross-reference list against Part I
 

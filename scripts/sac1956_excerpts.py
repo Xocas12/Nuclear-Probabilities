@@ -24,6 +24,7 @@ Outputs (data/curated/sac1956/excerpts/):
 
 import csv
 import itertools
+import json
 import re
 import sys
 from collections import Counter, defaultdict
@@ -269,6 +270,26 @@ def compare_airfields(part1_af: list[dict], part2_af: list[dict]) -> list[dict]:
     return rows
 
 
+def crossdoc_verdicts(af_versus: list[dict]) -> None:
+    """Attach the verdicts of the cross-document check (crossdoc/decisions.tsv): for each
+    airfield row whose two printings were transcribed differently, whether one transcription
+    was a misread (since corrected) or the printings themselves differ."""
+    pairs_path, decisions_path = (
+        ROOT / "crossdoc" / "pairs.json",
+        ROOT / "crossdoc" / "decisions.tsv",
+    )
+    verdict = {}
+    if pairs_path.exists() and decisions_path.exists():
+        pairs = json.loads(pairs_path.read_text())
+        for pair, raw in zip(
+            pairs, decisions_path.read_text(encoding="utf-8").splitlines(), strict=True
+        ):
+            f = raw.split("\t")
+            verdict[pair["part1_id"]] = (f[5], f[6])
+    for a in af_versus:
+        a["cross_document_verdict"], a["cross_document_note"] = verdict.get(a["part1_id"], ("", ""))
+
+
 def lost_page(xref: list[dict], part1: list[dict]) -> tuple[list[dict], dict]:
     top = [c for c in part1 if c["level"] == "complex" and c["ref"]]
     after = next(c for c in top if c["name"] == LOST_AFTER)
@@ -321,6 +342,7 @@ def main() -> None:
     whole = page_breaks(part2, part1, dgz1, inst1)
     versus = compare_complexes(part2, part1, dgz1, inst1, whole)
     af_versus = compare_airfields(part1_af, af2)
+    crossdoc_verdicts(af_versus)
     lost, span = lost_page(xref, part1)
 
     write("lines.csv", t["lines"])
@@ -407,6 +429,12 @@ def report(t, part2, part1_af, xref, versus, af_versus, lost, span, part1) -> No
         f"- Of those, same coordinates {sum(a['same_coords'] is True for a in af_versus)}, same "
         f"trailing letter {sum(a['same_code'] is True for a in af_versus)}",
     ]
+    judged = Counter(a["cross_document_verdict"] for a in af_versus if a["cross_document_verdict"])
+    if judged:
+        out.append(
+            "- Rows transcribed differently from the two printings, judged on both scans "
+            "(`crossdoc/`): " + ", ".join(f"{k} {v}" for k, v in judged.most_common())
+        )
     missing = [a for a in af_versus if not a["part2_id"]]
     if missing:
         out.append("- Not in Part II: " + ", ".join(f"{a['name']} ({a['be']})" for a in missing))

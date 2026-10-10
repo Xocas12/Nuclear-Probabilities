@@ -1,0 +1,31 @@
+F002-L06	data	47 0034 AFRIKANDA 0091-8601 6728-03245 R	new	low	last glyph has flat top and right flag of 5, not 8
+F002-L07	data	727 0080 AKTYUBINSK 0236-8002 5018-05710 R	A	low	mark before 727 is a thin speck, not a typed hyphen
+F002-L08	data	48 0096 ALAKURTTI 0091-8602 6658-03021 R	B	low	faint glyph shows waist of 8
+F002-L14	data	1043 0160 ALMA ATA N. 0329-8601 4323-07689 S	B	low	4th digit open-left 3; glyph after 6 closed top unlike 5 below
+F002-L17	data	442 ?485 ALT LONNEWITZ, E GER 0231-8056 5133-01313 R	A	low	first glyph smudged, between 0 and 8
+F003-L15	data	1046 03375 ASTARA 0339-8604 3827-04850 R	B	high	S-shaped 5 matches 5 in 03375
+F003-L17	data	851 0340 ASTRAKHAN 0248-8004 4617-04800 S	A	high	second digit open top-right 5
+F004-L03	data	319 0510 BALTIYSK/NOYTIF 0169-8601 5437-01953 R	B	high	flat-top 5 visible at zoom
+F004-L05	data	3 0550 BARANOVICHI, 0168-8602 5306-02603 R	B	high	last digit open-left 3
+F004-L22	data	147 0678 BEREZA/KARTUZKAYA 0168-8692 5233-02453 R	A	low	4th digit closed top with waist, unlike 6 beside it
+F005-L11	data	956 08993 BOROVICHI 0154-8006 5826-03353 R	A	high	last digit open upper-right, closed lower bowl: 6
+F005-L24	data	474 4131 BRODY 0233-8006 5005-02911 S	B	low	small closed upper counter: 9
+F005-L26	data	410 3630 BROVARY 0233-6036 5030-03052 V	new	low	glyph matches 6 at end of group, lacks 8 waist of neighbours
+F006-L12	data	1 1090 BYKHOV 0167-8001 5331-03012 R	B	low	serifed 1 as elsewhere in number column (cf 417)
+F006-L23	data	897 1202 CHAPLINO 0075-8007 6424-17217W R	B	low	faint glyph is oval 0 with weak left side
+F007-L04	data	298 4490 LENINGRAD/GORELOVO 0153-8051 5946-03005 S	B	high	last digit clearly 5 at zoom
+F007-L11	data	321 4490 LENINGRAD/LEVASHOVO 0105-8606 6005-03012 U	A	low	4th digit flat-top 5, unlike 3 above and below
+F007-L22	data	830 4546 LIAO YUAN N. MANCH 0290-8449 4335-12332 R	B	low	speckled print; glyphs read 3 and 1
+F008-L13	data	922 5030 MINSK/DUBINSKAYA 0168-8635 5341-02787 R	new	low	closed top loop plus wide bottom bowl: 8, not 2
+F008-L21	data	457 5060 MOLODECHNO 0168-8640 5415-02653 R	B	high	upper right open: 6
+F009-L25	data	610 5258 MYS CHELYUSKIN 0013-8001 7743-10416 R	B	high	last digit open-left 3
+F009-L28	data	5764 5334 NAGURSKAYA 0011-8002 8047-04733 R	B	low	blotted 4th glyph has stem below crossbar: 4
+F010-L07	data	586 5770 ONEGA. 0102-8016 6355-03808 R	B	low	dot in period position one cell after A
+F010-L20	data	608 5903 OSTROV VRAN/SOMNITELNAYA 0065-8009 7057-17934W R	new	low	3rd digit flat top flag with open upper right: 5
+F010-L24	data	101 5961 OZERO KULPYAVR 0051-8615 6906-03224 R	B	low	serifed 1 in number column
+F010-L27	data	862A 1437 PAI SHIH I, CHINA 0495-8413 2929-10621 R	A	low	mark has downward tail like commas on page
+F011-L11	data	721 9230 VOROSHILOVGRAD S.E. 0234-8088 4832-03923 S	B	high	last digit open-left 3
+F011-L15	data	161 4314 VOZZHAYEVKA 0203-8644 5043-12843 S	B	low	last digit has middle notch of 3
+F011-L22	data	177 9385 WARSAW/OKECIE, POL 0169-8291 5210-02058 T	B	low	clear T with faint stray diagonal
+R002-L36	data	275 0156-9983	B	low	third glyph closed top and waist: 8
+R003-L07	data	227 0169-0256	A	low	no base serif; top bar like 7 above

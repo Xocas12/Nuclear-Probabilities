@@ -1,0 +1,173 @@
+[
+ {
+  "pair": 1,
+  "part1_id": "F002-L06",
+  "part1_reading": "47 0034 AFRIKANDA 0091-8601 6728-03245 R",
+  "part1_crop": "data/interim/sac1956_excerpts/crossdoc/F002-L06.png",
+  "part2_id": "A002-L06",
+  "part2_reading": "47 0034 AFRIKANDA 0091-8601 6728-03248 R",
+  "part2_crop": "data/interim/sac1956_excerpts/crossdoc/A002-L06.png"
+ },
+ {
+  "pair": 2,
+  "part1_id": "F002-L07",
+  "part1_reading": "727 0080 AKTYUBINSK 0236-8002 5018-05710 R",
+  "part1_crop": "data/interim/sac1956_excerpts/crossdoc/F002-L07.png",
+  "part2_id": "A002-L07",
+  "part2_reading": "727 0080 AKTYURINSK 0236-8002 5010-05710 R",
+  "part2_crop": "data/interim/sac1956_excerpts/crossdoc/A002-L07.png"
+ },
+ {
+  "pair": 3,
+  "part1_id": "F002-L19",
+  "part1_reading": "52 0201 AMDERMA 0049-8001 6945-06140 R",
+  "part1_crop": "data/interim/sac1956_excerpts/crossdoc/F002-L19.png",
+  "part2_id": "A002-L19",
+  "part2_reading": "52 0201 AMDERMA 0049-8001 5945-06140 R",
+  "part2_crop": "data/interim/sac1956_excerpts/crossdoc/A002-L19.png"
+ },
+ {
+  "pair": 4,
+  "part1_id": "F002-L29",
+  "part1_reading": "893 0270 ARKHANGELSK/BAKARITSA 0092-8002 6428-04035 T",
+  "part1_crop": "data/interim/sac1956_excerpts/crossdoc/F002-L29.png",
+  "part2_id": "A002-L29",
+  "part2_reading": "893 0270 ARKHANGELSK/BAKARITSA 0092-8002 6478-04035 T",
+  "part2_crop": "data/interim/sac1956_excerpts/crossdoc/A002-L29.png"
+ },
+ {
+  "pair": 5,
+  "part1_id": "F004-L19",
+  "part1_reading": "520 0665 BERAT/KUCOVE, ALB 0322-8001 4047-01954 R",
+  "part1_crop": "data/interim/sac1956_excerpts/crossdoc/F004-L19.png",
+  "part2_id": "A004-L20",
+  "part2_reading": "520 0665 BERAT/KUCOVE, ALB 0322-8001 4047-01994 R",
+  "part2_crop": "data/interim/sac1956_excerpts/crossdoc/A004-L20.png"
+ },
+ {
+  "pair": 6,
+  "part1_id": "F004-L28",
+  "part1_reading": "635 0766 BIROBIDZHAN 0203-8001 4845-13258 S",
+  "part1_crop": "data/interim/sac1956_excerpts/crossdoc/F004-L28.png",
+  "part2_id": "A004-L29",
+  "part2_reading": "635 0766 BIROBIDZHAN 0203-8001 4945-13258 S",
+  "part2_crop": "data/interim/sac1956_excerpts/crossdoc/A004-L29.png"
+ },
+ {
+  "pair": 7,
+  "part1_id": "F005-L16",
+  "part1_reading": "438 0935 BRATISLAVA/IVANKA, CZECH 0232-8244 4810-01712 R",
+  "part1_crop": "data/interim/sac1956_excerpts/crossdoc/F005-L16.png",
+  "part2_id": "A005-L17",
+  "part2_reading": "438 0935 BRATISLAVA/IVANKA, CZECH 0232-8244 4910-01712 R",
+  "part2_crop": "data/interim/sac1956_excerpts/crossdoc/A005-L17.png"
+ },
+ {
+  "pair": 8,
+  "part1_id": "F005-L18",
+  "part1_reading": "957 0970 BREST 0168-8610 5208-02340 R",
+  "part1_crop": "data/interim/sac1956_excerpts/crossdoc/F005-L18.png",
+  "part2_id": "A005-L19",
+  "part2_reading": "957 0970 BREST 0168-8610 5200-02340 R",
+  "part2_crop": "data/interim/sac1956_excerpts/crossdoc/A005-L19.png"
+ },
+ {
+  "pair": 9,
+  "part1_id": "F005-L21",
+  "part1_reading": "90 0307 BRIYENI 0250-8752 4558-02923 R",
+  "part1_crop": "data/interim/sac1956_excerpts/crossdoc/F005-L21.png",
+  "part2_id": "A005-L22",
+  "part2_reading": "90 0307 BRIYENI 0250-8752 4550-02923 R",
+  "part2_crop": "data/interim/sac1956_excerpts/crossdoc/A005-L22.png"
+ },
+ {
+  "pair": 10,
+  "part1_id": "F005-L24",
+  "part1_reading": "474 4131 BRODY 0233-8006 5005-02911 S",
+  "part1_crop": "data/interim/sac1956_excerpts/crossdoc/F005-L24.png",
+  "part2_id": "A005-L25",
+  "part2_reading": "474 4131 BRODY 0233-8006 5005-02511 S",
+  "part2_crop": "data/interim/sac1956_excerpts/crossdoc/A005-L25.png"
+ },
+ {
+  "pair": 11,
+  "part1_id": "F006-L09",
+  "part1_reading": "959 34737 BUSHTINO 0232-8622 4805-02328 S",
+  "part1_crop": "data/interim/sac1956_excerpts/crossdoc/F006-L09.png",
+  "part2_id": "A006-L08",
+  "part2_reading": "959 34737 BUSHTINO 0232-8622 4809-02328 S",
+  "part2_crop": "data/interim/sac1956_excerpts/crossdoc/A006-L08.png"
+ },
+ {
+  "pair": 12,
+  "part1_id": "F006-L10",
+  "part1_reading": "823 10748 BUZAU, RUM 0251-8019 4508-02648 S",
+  "part1_crop": "data/interim/sac1956_excerpts/crossdoc/F006-L10.png",
+  "part2_id": "A006-L09",
+  "part2_reading": "823 10748 BUZAU, RUM 0251-8019 4500-02648 S",
+  "part2_crop": "data/interim/sac1956_excerpts/crossdoc/A006-L09.png"
+ },
+ {
+  "pair": 13,
+  "part1_id": "F006-L17",
+  "part1_reading": "221 1193 CHANG CHIAO, CHINA 0492-8401 2956-12134 R",
+  "part1_crop": "data/interim/sac1956_excerpts/crossdoc/F006-L17.png",
+  "part2_id": "A006-L16",
+  "part2_reading": "221 1193 CHANG CHIAO, CHINA 0492-8401 2956-12134 P",
+  "part2_crop": "data/interim/sac1956_excerpts/crossdoc/A006-L16.png"
+ },
+ {
+  "pair": 14,
+  "part1_id": "F007-L15",
+  "part1_reading": "359 4512 LENKORAN 0339-8609 3846-04848 R",
+  "part1_crop": "data/interim/sac1956_excerpts/crossdoc/F007-L15.png",
+  "part2_id": "A020-L16",
+  "part2_reading": "359 4512 LENKORAN 0339-8609 3846-04849 R",
+  "part2_crop": "data/interim/sac1956_excerpts/crossdoc/A020-L16.png"
+ },
+ {
+  "pair": 15,
+  "part1_id": "F008-L09",
+  "part1_reading": "601 87805 MIKKOLYA 0091-8620 6513-03159 R",
+  "part1_crop": "data/interim/sac1956_excerpts/crossdoc/F008-L09.png",
+  "part2_id": "A023-L08",
+  "part2_reading": "601 87805 MIKKOLYA 0091-8620 6513-03139 R",
+  "part2_crop": "data/interim/sac1956_excerpts/crossdoc/A023-L08.png"
+ },
+ {
+  "pair": 16,
+  "part1_id": "F009-L13",
+  "part1_reading": "924 5171 MOZYR 0233-8052 5159-02909 R",
+  "part1_crop": "data/interim/sac1956_excerpts/crossdoc/F009-L13.png",
+  "part2_id": "A024-L15",
+  "part2_reading": "924 5171 MOZYR 0233-8052 5139-02909 R",
+  "part2_crop": "data/interim/sac1956_excerpts/crossdoc/A024-L15.png"
+ },
+ {
+  "pair": 17,
+  "part1_id": "F010-L03",
+  "part1_reading": "805 57475 OLOVYANNAYA 0202-8614 5101-11525 R",
+  "part1_crop": "data/interim/sac1956_excerpts/crossdoc/F010-L03.png",
+  "part2_id": "A027-L04",
+  "part2_reading": "805 57475 OLOVYANNAYA 0202-8614 5101-1152? R",
+  "part2_crop": "data/interim/sac1956_excerpts/crossdoc/A027-L04.png"
+ },
+ {
+  "pair": 18,
+  "part1_id": "F010-L07",
+  "part1_reading": "586 5770 ONEGA. 0102-8016 6355-03808 R",
+  "part1_crop": "data/interim/sac1956_excerpts/crossdoc/F010-L07.png",
+  "part2_id": "A027-L08",
+  "part2_reading": "586 5770 ONEGA 0102-8016 635?-03808 R",
+  "part2_crop": "data/interim/sac1956_excerpts/crossdoc/A027-L08.png"
+ },
+ {
+  "pair": 19,
+  "part1_id": "F010-L28",
+  "part1_reading": "348 3660 PALANGA 0168-8644 5556-02105 R",
+  "part1_crop": "data/interim/sac1956_excerpts/crossdoc/F010-L28.png",
+  "part2_id": "A027-L29",
+  "part2_reading": "348 3660 PALANGA 0168-8644 5556-0210? R",
+  "part2_crop": "data/interim/sac1956_excerpts/crossdoc/A027-L29.png"
+ }
+]

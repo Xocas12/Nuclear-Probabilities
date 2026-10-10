@@ -1,0 +1,312 @@
+[
+ {
+  "id": "F002-L06",
+  "page": "F002",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "47 0034 AFRIKANDA 0091-8601 6728-0324? R",
+  "text_b": "47 0034 AFRIKANDA 0091-8601 6728-03248 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/F002-L06.png"
+ },
+ {
+  "id": "F002-L07",
+  "page": "F002",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "727 0080 AKTYUBINSK 0236-8002 5018-05710 R",
+  "text_b": "-727 0080 AKTYUBINSK 0236-8002 5018-05710 R",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/F002-L07.png"
+ },
+ {
+  "id": "F002-L08",
+  "page": "F002",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "48 0096 ALAKURTTI 0091-8602 665?-03021 R",
+  "text_b": "48 0096 ALAKURTTI 0091-8602 6658-03021 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/F002-L08.png"
+ },
+ {
+  "id": "F002-L14",
+  "page": "F002",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "1043 0160 ALMA ATA N. 0329-8601 432?-07659 S",
+  "text_b": "1043 0160 ALMA ATA N. 0329-8601 4323-07689 S",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/F002-L14.png"
+ },
+ {
+  "id": "F002-L17",
+  "page": "F002",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "442 ?485 ALT LONNEWITZ, E GER 0231-8056 5133-01313 R",
+  "text_b": "442 0485 ALT LONNEWITZ, E GER 0231-8056 5133-01313 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/F002-L17.png"
+ },
+ {
+  "id": "F003-L15",
+  "page": "F003",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "1046 03375 ASTARA 0339-8604 3827-048?0 R",
+  "text_b": "1046 03375 ASTARA 0339-8604 3827-04850 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/F003-L15.png"
+ },
+ {
+  "id": "F003-L17",
+  "page": "F003",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "851 0340 ASTRAKHAN 0248-8004 4617-04800 S",
+  "text_b": "861 0340 ASTRAKHAN 0248-8004 4617-04800 S",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/F003-L17.png"
+ },
+ {
+  "id": "F004-L03",
+  "page": "F004",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "319 0510 BALTIYSK/NOYTIF 0169-8601 5437-019?3 R",
+  "text_b": "319 0510 BALTIYSK/NOYTIF 0169-8601 5437-01953 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/F004-L03.png"
+ },
+ {
+  "id": "F004-L05",
+  "page": "F004",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "3 0550 BARANOVICHI, 0168-8602 5306-0260? R",
+  "text_b": "3 0550 BARANOVICHI, 0168-8602 5306-02603 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/F004-L05.png"
+ },
+ {
+  "id": "F004-L22",
+  "page": "F004",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "147 0678 BEREZA/KARTUZKAYA 0168-8692 5233-02453 R",
+  "text_b": "147 0678 BEREZA/KARTUZKAYA 0166-8692 5233-02453 R",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/F004-L22.png"
+ },
+ {
+  "id": "F005-L11",
+  "page": "F005",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "956 08993 BOROVICHI 0154-8006 5826-03353 R",
+  "text_b": "956 08993 BOROVICHI 0154-8008 5826-03353 R",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/F005-L11.png"
+ },
+ {
+  "id": "F005-L24",
+  "page": "F005",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "474 4131 BRODY 0233-8006 5005-02511 S",
+  "text_b": "474 4131 BRODY 0233-8006 5005-02911 S",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/F005-L24.png"
+ },
+ {
+  "id": "F005-L26",
+  "page": "F005",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "410 3630 BROVARY 0233-?036 5030-03052 V",
+  "text_b": "410 3630 BROVARY 0233-8036 5030-03052 V",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/F005-L26.png"
+ },
+ {
+  "id": "F006-L12",
+  "page": "F006",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "I 1090 BYKHOV 0167-8001 5331-03012 R",
+  "text_b": "1 1090 BYKHOV 0167-8001 5331-03012 R",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/F006-L12.png"
+ },
+ {
+  "id": "F006-L23",
+  "page": "F006",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "897 12?2 CHAPLINO 0075-8007 6424-17217W R",
+  "text_b": "897 1202 CHAPLINO 0075-8007 6424-17217W R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/F006-L23.png"
+ },
+ {
+  "id": "F007-L04",
+  "page": "F007",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "298 4490 LENINGRAD/GORELOVO 0153-8051 5946-0300? S",
+  "text_b": "298 4490 LENINGRAD/GORELOVO 0153-8051 5946-03005 S",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/F007-L04.png"
+ },
+ {
+  "id": "F007-L11",
+  "page": "F007",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "321 4490 LENINGRAD/LEVASHOVO 0105-8606 6005-03012 U",
+  "text_b": "321 4490 LENINGRAD/LEVASHOVO 0103-8606 6005-03012 U",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/F007-L11.png"
+ },
+ {
+  "id": "F007-L22",
+  "page": "F007",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "830 4546 LIAO YUAN N. MANCH 0290-8449 4?35-?2332 R",
+  "text_b": "830 4546 LIAO YUAN N. MANCH 0290-8449 4335-12332 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/F007-L22.png"
+ },
+ {
+  "id": "F008-L13",
+  "page": "F008",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "922 5030 MINSK/DUBINSKAYA 0168-8635 5341-027?7 R",
+  "text_b": "922 5030 MINSK/DUBINSKAYA 0168-8635 5341-02727 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/F008-L13.png"
+ },
+ {
+  "id": "F008-L21",
+  "page": "F008",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "457 50?0 MOLODECHNO 0168-8640 5415-02653 R",
+  "text_b": "457 5060 MOLODECHNO 0168-8640 5415-02653 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/F008-L21.png"
+ },
+ {
+  "id": "F009-L25",
+  "page": "F009",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "610 5258 MYS CHELYUSKIN 0013-8001 774?-10416 R",
+  "text_b": "610 5258 MYS CHELYUSKIN 0013-8001 7743-10416 R",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/F009-L25.png"
+ },
+ {
+  "id": "F009-L28",
+  "page": "F009",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "576A 5334 NAGURSKAYA 0011-8002 8047-04733 R",
+  "text_b": "5764 5334 NAGURSKAYA 0011-8002 8047-04733 R",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/F009-L28.png"
+ },
+ {
+  "id": "F010-L07",
+  "page": "F010",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "586 5770 ONEGA 0102-8016 6355-03808 R",
+  "text_b": "586 5770 ONEGA. 0102-8016 6355-03808 R",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/F010-L07.png"
+ },
+ {
+  "id": "F010-L20",
+  "page": "F010",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "608 5903 OSTROV VRAN/SOMNITELNAYA 0065-8009 7097-17934W R",
+  "text_b": "608 5903 OSTROV VRAN/SOMNITELNAYA 0065-8009 7097-17934W R",
+  "reasons": "minutes>=60",
+  "crop": "adjudicate/crops/F010-L20.png"
+ },
+ {
+  "id": "F010-L24",
+  "page": "F010",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "10I 5961 OZERO KULPYAVR 0051-8615 6906-03224 R",
+  "text_b": "101 5961 OZERO KULPYAVR 0051-8615 6906-03224 R",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/F010-L24.png"
+ },
+ {
+  "id": "F010-L27",
+  "page": "F010",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "862A 1437 PAI SHIH I, CHINA 0495-8413 2929-10621 R",
+  "text_b": "862A 1437 PAI SHIH I. CHINA 0495-8413 2929-10621 R",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/F010-L27.png"
+ },
+ {
+  "id": "F011-L11",
+  "page": "F011",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "721 9230 VOROSHILOVGRAD S.E. 0234-8088 4832-0392? S",
+  "text_b": "721 9230 VOROSHILOVGRAD S.E. 0234-8088 4832-03923 S",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/F011-L11.png"
+ },
+ {
+  "id": "F011-L15",
+  "page": "F011",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "161 4314 VOZZHAYEVKA 0203-8644 5043-1284? S",
+  "text_b": "161 4314 VOZZHAYEVKA 0203-8644 5043-12843 S",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/F011-L15.png"
+ },
+ {
+  "id": "F011-L22",
+  "page": "F011",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "177 9385 WARSAW/OKECIE, POL 0169-8291 5210-02058 ?",
+  "text_b": "177 9385 WARSAW/OKECIE, POL 0169-8291 5210-02058 T",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/F011-L22.png"
+ },
+ {
+  "id": "R002-L36",
+  "page": "R002",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "275 0156-99?3",
+  "text_b": "275 0156-9983",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/R002-L36.png"
+ },
+ {
+  "id": "R003-L07",
+  "page": "R003",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "227 0169-0256",
+  "text_b": "221 0169-0256",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/R003-L07.png"
+ }
+]

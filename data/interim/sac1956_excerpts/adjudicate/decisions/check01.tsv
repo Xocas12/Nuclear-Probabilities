@@ -1,0 +1,4 @@
+F002-L14	data	1043 0160 ALMA ATA N. 0329-8601 4323-07659 S	new	low	second look: lon 4th digit open at lower left like the 5s of the row, not 8 (07689 would give 89 minutes); Part II airfield list prints 07659
+F008-L13	data	922 5030 MINSK/DUBINSKAYA 0168-8635 5341-02737 R	new	low	second look: lon 4th digit has the flat top and open left side of a 3 (02787 would give 87 minutes); Part II airfield list prints 02737
+R003-L27	data	388 0169-0555	new	low	second look: 3rd glyph a faint-waisted 8 (380 is not a category code; Part I prints 388 0169-0555)
+R017-L10	data	185 0289-0050	new	low	second look: middle glyph reads like 0 but 105 is not a category code; Part I prints 185 0289-0050

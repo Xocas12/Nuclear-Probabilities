@@ -1,0 +1,8 @@
+agreed: 1808
+furniture agreed: 193
+passes differ: 87
+one-sided unlabelled furniture: 16
+agreed but breaks a rule: 4
+missing in one pass: 1
+total lines: 2109
+disputes: 92

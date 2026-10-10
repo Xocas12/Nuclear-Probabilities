@@ -1,6 +1,5 @@
 id,text,problem
 A002-L29,893 0270 ARKHANGELSK/BAKARITSA 0092-8002 6478-04035 T,minutes>=60
-A004-L20,"520 0665 BERAT/KUCOVE, ALB 0322-8001 4047-01994 R",minutes>=60
 A027-L04,805 57475 OLOVYANNAYA 0202-8614 5101-1152? R,airfield row does not match the expected format
 A027-L08,586 5770 ONEGA 0102-8016 635?-03808 R,airfield row does not match the expected format
 A027-L29,348 3660 PALANGA 0168-8644 5556-0210? R,airfield row does not match the expected format

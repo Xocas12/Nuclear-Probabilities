@@ -17,7 +17,10 @@ Counts, checks and the comparison with the Archive's own spreadsheets are in
 | Part I complex list, "Abdulino to Zychlin" (urban-industrial targets) | `1st city list complete.pdf` | 306 (study pp. 200–504) | complete |
 | Part II airfield list | `section6.pdf` | 43 (42 list pages, study pp. 505–546) | complete |
 | Category code list | `section3.pdf` | 5 | `../labels/sac1956_category_codes.csv` |
-| Part I airfield list, Part II complex list, cross-reference list | sections 4, 7, 2 | excerpts only | not transcribed |
+| Part I airfield list (excerpt) | `section4.pdf` | 11 (270 rows, AFRIKANDA to PALANGA in stretches) | `excerpts/` |
+| Part II complex list, with weapons (excerpt) | `section7.pdf` | 25 (41 complexes in stretches: BERDICHEV–BUKACHACHA, LEISNIG–LENINOGORSK, MOROZOVSK–MOSCOW, PEI LI–PEN CHI, POZNAN–PRAGUE, WAN HSIEN–WARSAW, SERPUKHOV–SHAKHUNYA, ULAAN BAATAR–ULYANOVSK) | `excerpts/` |
+| Cross-reference list (excerpt) | `section2.pdf` | 14 (237 entries in stretches) | `excerpts/` |
+| Atomic weapon requirements and summary | `section8.pdf` | 15 | read, not transcribed: every figure is redacted (b)(3), 42 USC 2168; only weapon types (Mk 6, 15, 27, 28, 36, 39, W-35, W-37) and delivery vehicles (B-47, B-52, RB-47, F-101, TM-61, Crossbow) remain |
 
 The weapons columns (numbers and types of weapons, and which command delivers them) are
 redacted in the released copy: the right half of every page is a blank box. Installation names
@@ -29,7 +32,7 @@ classified.
 | File | One row per | Main columns |
 |---|---|---|
 | `complexes.csv` | complex or sub-complex header | `id` (line id of the header, e.g. `C166-L18`), `level` (complex / subcomplex), `priority`, `ref`, `name`, `name_printed`, `country`, `lat`, `lon`, `parent_id` (sub-complexes), `n_dgz`, `n_installations`, `n_population`, `n_msites`, `priority_tier`, `tier_size` |
-| `dgz.csv` | designated ground zero (aim point) | `complex_id`, `label` (A, AH, BM ...), `lat`, `lon` |
+| `dgz.csv` | designated ground zero (aim point) | `complex_id`, `label` (A, AH, BM ...), `ba` (the "BA" column: empty in Part I; Part II marks two aim points `X`), `lat`, `lon` |
 | `installations.csv` | installation line | `complex_id`, `category`, `category_name`, `category_group`, `be_wac` (chart), `be_number` (blank where the print has none) |
 | `msites.csv` | "M-n" site (Moscow region) | `complex_id` (blank for stand-alone rows), `top_complex_id`, `ref`, `name`, `m_number`, `lat`, `lon`, `label` |
 | `airfields.csv` | Part II airfield | `priority`, `ref` (mostly the reference number of the complex the airfield serves), `name`, `country`, `be`, `lat`, `lon`, `code` (trailing letter, meaning unknown) |
@@ -38,6 +41,8 @@ classified.
 | `checks.csv` | line flagged by a consistency check | `check`, `detail`, `second_look` (confirmed as printed / corrected), `second_look_note` |
 | `../labels/us_1956_sac_complexes.csv` | top-level complex, in the shared label schema | see `../labels/SCHEMA.md`; DGZ and installation totals and the priority tier are in `notes` |
 | `../labels/us_1956_sac_airfields.csv` | airfield, in the shared label schema | see `../labels/SCHEMA.md` |
+| `audit.csv` | line of the audit sample | `curated`, `audit` (the independent re-reading), `judged` (blind judgement where they differ), `outcome` |
+| `excerpts/` | the three excerpted lists and their comparison with the full lists | see "The excerpts" below and `excerpts/REPORT.md` |
 | `../validation_sac1956_nsa_city_sheets.csv` | category count on the Archive's city sheets | Moscow, Leningrad, Beijing, Warsaw |
 
 Line ids are `<page>-L<nn>`: `C` pages are the complex list (PDF page number), `A` pages the
@@ -135,9 +140,27 @@ See REPORT.md for the current numbers. In brief:
   are the main residual risk, most of all for installation numbers, which nothing cross-checks.
   Three lines keep an illegible digit, and 2 coordinates are printed with impossible minutes
   (left blank in the tables).
+- **Audit of the final reading.** A random 5% of the table rows (743 lines, seed 1956) was
+  read again by four readers who saw neither the passes nor the final text
+  (`scripts/sac1956_audit.py`, `data/interim/sac1956_excerpts/AUDIT.md`). They differed from
+  the final reading on 10 lines; judged blind on the scan (the two readings shown in random
+  order), the final reading was right on all 10. Residual error rate: 0 of 743, 95% interval
+  0 to 0.51% (Wilson). The auditors' own error rate was 1.3%. `audit.csv` has every line.
+- **Cross-document check of the airfields.** 270 airfield rows are printed twice: in the
+  Part II airfield list (transcribed here in full) and in the excerpt of the Part I airfield
+  list, typed separately. The two transcriptions differ on 19 rows; each pair was judged on
+  both scans. 3 were misreads in the Part II transcription, all on 200-dpi pages, all now
+  corrected (`check04`): BERAT/KUCOVE's longitude (01954, which also removes one of the two
+  "impossible minutes"), CHANG CHIAO's letter (R) and MOZYR's latitude (5159). 12 are real
+  differences between the printings, mostly an 8 in Part I where Part II has a 0 or a 9
+  (AMDERMA 6945 against 5945, BIROBIDZHAN 4845 against 4945): the Part II list carries typing
+  slips of its own, and the tables keep each list as printed. 4 stay unresolved (a blotted
+  digit). So the residual misread rate is higher on the 200-dpi airfield pages, about 1 in 90
+  rows there, than the audit's overall bound suggests.
 - A pilot reading of four pages made before this pipeline (152 lines, a third independent
   read) agrees with the final reading on every character it could read.
-- Anchors reproduce: Moscow (priority 1) has 12 aim points and 180 installation lines, 13 and
+- Anchors reproduce (the study's own totals cannot be checked: its summary pages, section 8,
+  are redacted figure by figure): Moscow (priority 1) has 12 aim points and 180 installation lines, 13 and
   190 with its three suburbs; East Berlin (`BERLIN GER SOVZONE`, priority 61) has 6 aim points
   and 91 installation lines with its suburbs, the Archive's figure.
 - The Archive's sheets match category by category for Warsaw, Fengtai and every Moscow and
@@ -178,10 +201,56 @@ See REPORT.md for the current numbers. In brief:
   first digits of two priorities (VLADIVOSTOK 19, VLADIMIR VOLYNSKIY 1094); both were read in
   full on the source PDF. In the complex list, unique priorities rule out the same problem
   elsewhere: every small number is taken, so a cut number would duplicate another.
+- **The cross-reference excerpt does not reach the lost page**: it covers ABAKAN to ALTENHAIN
+  and then jumps to LEBA, so it cannot restore the complexes from ARTSIZ to ATBASAR.
 - Lines whose print is unclear keep a `?` and are listed in `anomalies.csv`.
 - What the DGZ letter labels mean (A, AH, BM ...; Q-labels for M-sites), what the airfield
   trailing letters mean (R, S, T ...), and why some airfield priorities carry an `A` (typed in
   later, in a different typeface) is not explained in the released pages.
+
+## The excerpts (`excerpts/`)
+
+The Archive published the Part I airfield list, the Part II complex list and the
+cross-reference list only in excerpt. They went through the same pipeline
+(`data/interim/sac1956_excerpts/`: two passes by different models, 92 disputes adjudicated on
+the scan, a second look at the lines that break a rule) and are parsed by the same code
+(`scripts/sac1956_excerpts.py`, which also writes `excerpts/REPORT.md`). Of 1,899 table rows,
+pass A erred on 3.0% and pass B on 2.2%, against 1.0% and 0.4% on the full lists: these scans
+are poorer. 12 lines keep a `?` (`excerpts/anomalies.csv`).
+
+| File | One row per |
+|---|---|
+| `part2_complexes.csv`, `part2_dgz.csv`, `part2_installations.csv` | Part II complex or sub-complex, aim point, installation line (same columns as the Part I tables; `part1_owner` names the Part I complex of lines at the top of a page that continue a complex begun on an unpublished page) |
+| `part2_vs_part1.csv` | Part II complex beside the Part I complex of the same reference: `seen_whole`, aim points and installation lines kept, dropped and added |
+| `part1_airfields.csv`, `part1_vs_part2_airfields.csv` | Part I airfield row; beside its Part II row, with the cross-document verdict |
+| `crossref.csv` | cross-reference row: `level` (entry, with a reference number, or listed under one), `airfield` (AF), `see_ref`/`see_name` (SEE: the place is targeted under another complex) |
+| `lines.csv`, `anomalies.csv` | as for the full lists |
+
+What they show:
+
+- **Part II is Part I with fewer aim points.** Every Part II complex in the excerpt is a Part I
+  complex with the same reference number and the same priority, in the same order, and its
+  installation lines are nearly the same: 527 of 542 recur in the 31 complexes seen whole
+  (the others are one-character differences in Part II's blurred print, and 7 lines added to
+  Leningrad). The aim points are not: those 31 complexes have 60 in Part I and 22 in Part II.
+  17 are kept, 43 dropped and 5 are new points (Leningrad M and AM, Ulan Ude D, and new
+  coordinates for Shakhty B and Leninakan R). Aim points, Part II against Part I: Leningrad 5
+  and 9, Budapest 4 and 11, Berlin 5 and 6, Ulan Ude 1 and 4; among complexes cut by a skipped
+  page (so the Part II count is a floor), Moscow 5 and 13, Prague 7 and 15, Warsaw 2 and 8.
+  Of the 11 whole complexes with a single aim point in Part I, 9 have none in Part II. Part II was the study's "desired stockpile"
+  allocation; Part I's was unconstrained. The Part II aim points of the excerpted complexes are
+  a second, stricter label for the same places.
+- **Two Part II aim points carry an X** in the "BA" column (LENINAKAN R, WARSAW T). What it
+  marks is not explained in the released pages.
+- **The Part I airfield list** prints the same airfields, with the same priorities and BE
+  numbers, as the Part II list for all 270 rows in the excerpt (see the cross-document check
+  under Quality).
+- **The cross-reference list** maps every reference number to a name and lists the places and
+  airfields under it. 99 of its 237 entries are `SEE` rows: a place targeted as part of another
+  complex (MONINO AF SEE 5570 NOGINSK); 95 of those point to a Part I complex. Six entries
+  carry a reference number that is no Part I complex (AFRIKANDA, SHABSKIY, SHCHUCHIN, SHANG
+  JAO, WEI HAI WEI and one with an illegible name); the airfield list uses the first three
+  for its airfields, so these are references that exist for airfields alone.
 
 ## Licence and citation
 

@@ -1,0 +1,31 @@
+R003-L27	data	380 0169-0555	B	low	third digit rounded, no waist, reads 0
+R003-L44	data	388 0169-0620	B	low	two closed counters in 2nd and 3rd digits
+R003-L47	data	389 0169-0654	B	low	third digit lower-left open, 9 shape
+R005-L20	data	275 0251-9999 || CHITILA RUM 4430-02600	A	high	name line printed under same marked row
+R006-L44	data	390 0251-0398	A	low	last digit full left stroke, 8 not 5
+R008-L25	data	TOROKBALINT HUNG 4729-01854	B	high	letter B in name
+R009-L26	data	4045- 4351E R X	A	high	readings agree, matches crop
+R010-L07	data	475 0153-0029	A	high	last digit same as 5 in 485 below
+R011-L29	data	245. 0103-0295	A	high	typed period after 245
+R011-L57	data	358. 0153-0490	A	high	typed period after 358
+R012-L29	data	BELCOSTROV 6008-03001	B	high	fourth letter open C
+R012-L36	data	430 0153-0080	B	low	full-width middle bar, faint 8
+R012-L44	data	SESTRORETSK 6006-02958	B	high	digit matches 5 in 2958E below
+R013-L14	data	5557- 38?3E AJ	B	low	third digit 0 or 6, right side broken
+R013-L31	data	252 0167-0008	A	low	upper counter closed, 8
+R015-L28	data	015 0167-0591	A	high	third digit lower-left open, 9
+R016-L16	data	285 0167-0920	B	low	middle digit closed upper counter, 8
+R016-L50	data	445 0167-0001	A	high	last digit 1 with stray speck
+R017-L10	data	105 0289-0050	A	high	105 clearly printed
+R019-L54	data	BER?UN CZECH 4957-01404	A	low	fourth letter C or G, unclear
+R021-L15	data	SCHWEIONITZ POL 5050-01630	new	low	seventh letter rounded both sides, O
+R021-L35	data	5210- 2057E T X	A	high	readings agree, matches crop
+R022-L23	data	FENINO M-20 5501-03750 QA	B	high	fourth coordinate digit is 5
+R022-L24	data	NIZHNEYE SHAKHLOVO,M-58 5501-03715 QB	A	high	comma in cell directly after O
+R023-L05	data	1194 7440 SEVERO KURILSK 5041-1560?	B	low	last digit 8 or 9, lower-left broken
+R023-L36	data	3115-12132E N	B	high	fourth digit 5
+R024-L09	data	592 8780 UKH?A 6334-05342	A	low	fourth letter T or I, smudged
+R025-L05	data	336- 0168-0266	B	low	short typed dash after 336
+R025-L42	data	361 9475 WISMAR E GER 5354-0112?	A	low	last digit 8 or 9, lower part broken
+R025-L51	data	BAD KLENINEN E GER 5346-01128	new	low	eight letter cells, sixth is broken N
+X003-L22	data	0040 AGUDZERI SEE 7950 SUKHU?I	A	low	sixth letter only faint top strokes

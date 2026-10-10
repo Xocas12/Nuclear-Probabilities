@@ -7,9 +7,13 @@ targeting. The full design is in [PLAN.md](PLAN.md).
 
 ## Where things stand
 
-- **Labels.** The SAC 1956 study's complex list and airfield list are transcribed in full
-  (two independent reads, adjudication, cross-line checks): `data/curated/sac1956/`, with a data
-  card. 24 other target lists are extracted: `data/INVENTORY.md`.
+- **Labels (milestone M3).** The SAC 1956 study's complex list and airfield list are
+  transcribed in full (two independent reads, adjudication, cross-line checks). So are the
+  excerpts of its Part I airfield list, Part II complex list and cross-reference list:
+  `data/curated/sac1956/`, with a data card.
+  - A blind audit of a 5% sample found no errors (95% bound 0.5%).
+  - Part II keeps the same complexes as Part I with about a third of the aim points.
+  - 24 other target lists are extracted: `data/INVENTORY.md`.
 - **Milestone M1, the vertical slice.** USSR only: 1,635 towns of 10,000+ in 1959 with census
   populations and coordinates, linked to the SAC targets, with population and administrative
   features, and three kinds of model under spatial cross-validation (`runs/m1-slice/`). The

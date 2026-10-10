@@ -1,0 +1,312 @@
+[
+ {
+  "id": "R003-L27",
+  "page": "R003",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "38? 0169-0555",
+  "text_b": "380 0169-0555",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/R003-L27.png"
+ },
+ {
+  "id": "R003-L44",
+  "page": "R003",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "3?8 0169-0620",
+  "text_b": "388 0169-0620",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/R003-L44.png"
+ },
+ {
+  "id": "R003-L47",
+  "page": "R003",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "38? 0169-0654",
+  "text_b": "389 0169-0654",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/R003-L47.png"
+ },
+ {
+  "id": "R005-L20",
+  "page": "R005",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "275 0251-9999 || CHITILA RUM 4430-02600",
+  "text_b": "275 0251-9999",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/R005-L20.png"
+ },
+ {
+  "id": "R006-L44",
+  "page": "R006",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "390 0251-0398",
+  "text_b": "390 0251-0395",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/R006-L44.png"
+ },
+ {
+  "id": "R008-L25",
+  "page": "R008",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "TOR?K?ALINT HUNG 4729-01854",
+  "text_b": "TOROKBALINT HUNG 4729-01854",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/R008-L25.png"
+ },
+ {
+  "id": "R009-L26",
+  "page": "R009",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "4045- 4351E R X",
+  "text_b": "4045- 4351E R X",
+  "reasons": "line does not match any expected format",
+  "crop": "adjudicate/crops/R009-L26.png"
+ },
+ {
+  "id": "R010-L07",
+  "page": "R010",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "475 0153-0029",
+  "text_b": "479 0153-0029",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/R010-L07.png"
+ },
+ {
+  "id": "R011-L29",
+  "page": "R011",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "245. 0103-0295",
+  "text_b": "245 0103-0295",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/R011-L29.png"
+ },
+ {
+  "id": "R011-L57",
+  "page": "R011",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "358. 0153-0490",
+  "text_b": "358 0153-0490",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/R011-L57.png"
+ },
+ {
+  "id": "R012-L29",
+  "page": "R012",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "BEL?OSTROV 6008-03001",
+  "text_b": "BELCOSTROV 6008-03001",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/R012-L29.png"
+ },
+ {
+  "id": "R012-L36",
+  "page": "R012",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "430 0153-00?0",
+  "text_b": "430 0153-0080",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/R012-L36.png"
+ },
+ {
+  "id": "R012-L44",
+  "page": "R012",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "SESTRORETSK 6006-029?8",
+  "text_b": "SESTRORETSK 6006-02958",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/R012-L44.png"
+ },
+ {
+  "id": "R013-L14",
+  "page": "R013",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "5557- 3803E AJ",
+  "text_b": "5557- 38?3E AJ",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/R013-L14.png"
+ },
+ {
+  "id": "R013-L31",
+  "page": "R013",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "252 0167-0008",
+  "text_b": "252 0167-0006",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/R013-L31.png"
+ },
+ {
+  "id": "R015-L28",
+  "page": "R015",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "015 0167-0591",
+  "text_b": "015 0167-0581",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/R015-L28.png"
+ },
+ {
+  "id": "R016-L16",
+  "page": "R016",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "2?5 0167-0920",
+  "text_b": "285 0167-0920",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/R016-L16.png"
+ },
+ {
+  "id": "R016-L50",
+  "page": "R016",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "445 0167-0001",
+  "text_b": "445 0167-000?",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/R016-L50.png"
+ },
+ {
+  "id": "R017-L10",
+  "page": "R017",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "105 0289-0050",
+  "text_b": "105 0289-0050",
+  "reasons": "category 105 not in code list",
+  "crop": "adjudicate/crops/R017-L10.png"
+ },
+ {
+  "id": "R019-L54",
+  "page": "R019",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "BER?UN CZECH 4957-01404",
+  "text_b": "BER?UN CZECH 4957-01404",
+  "reasons": "unreadable character",
+  "crop": "adjudicate/crops/R019-L54.png"
+ },
+ {
+  "id": "R021-L15",
+  "page": "R021",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "SCHWEI?NITZ POL 5050-01630",
+  "text_b": "SCHWEIDNITZ POL 5050-01630",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/R021-L15.png"
+ },
+ {
+  "id": "R021-L35",
+  "page": "R021",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "5210- 2057E T X",
+  "text_b": "5210- 2057E T X",
+  "reasons": "line does not match any expected format",
+  "crop": "adjudicate/crops/R021-L35.png"
+ },
+ {
+  "id": "R022-L23",
+  "page": "R022",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "FENINO M-20 5501-03730 QA",
+  "text_b": "FENINO M-20 5501-03750 QA",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/R022-L23.png"
+ },
+ {
+  "id": "R022-L24",
+  "page": "R022",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "NIZHNEYE SHAKHLOVO,M-58 5501-03715 QB",
+  "text_b": "NIZHNEYE SHAKHLOVO ,M-58 5501-03715 QB",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/R022-L24.png"
+ },
+ {
+  "id": "R023-L05",
+  "page": "R023",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "1194 7440 SEVERO KURILSK 5041-15608",
+  "text_b": "1194 7440 SEVERO KURILSK 5041-1560?",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/R023-L05.png"
+ },
+ {
+  "id": "R023-L36",
+  "page": "R023",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "311?-12132E N",
+  "text_b": "3115-12132E N",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/R023-L36.png"
+ },
+ {
+  "id": "R024-L09",
+  "page": "R024",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "592 8780 UKH?A 6334-05342",
+  "text_b": "592 8780 UKHTA 6334-05342",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/R024-L09.png"
+ },
+ {
+  "id": "R025-L05",
+  "page": "R025",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "336 0168-0266",
+  "text_b": "336- 0168-0266",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/R025-L05.png"
+ },
+ {
+  "id": "R025-L42",
+  "page": "R025",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "361 9475 WISMAR E GER 5354-0112?",
+  "text_b": "361 9475 WISMAR E GER 5354-01128",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/R025-L42.png"
+ },
+ {
+  "id": "R025-L51",
+  "page": "R025",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "BAD KLENI?EN E GER 5346-01128",
+  "text_b": "BAD KLEINEN E GER 5346-01128",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/R025-L51.png"
+ },
+ {
+  "id": "X003-L22",
+  "page": "X003",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "0040 AGUDZERI SEE 7950 SUKHU?I",
+  "text_b": "0040 AGUDZERI SEE 7950 SUKHUMI",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/X003-L22.png"
+ }
+]

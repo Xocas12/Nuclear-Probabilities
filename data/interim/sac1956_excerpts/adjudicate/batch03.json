@@ -1,0 +1,302 @@
+[
+ {
+  "id": "X004-L03",
+  "page": "X004",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "0103 ALBA IULIA ?UM",
+  "text_b": "0103 ALBA IULIA RUM",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/X004-L03.png"
+ },
+ {
+  "id": "X004-L05",
+  "page": "X004",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "0107 ALEKSANDRIYA SEE 9950 ZNAME?KA",
+  "text_b": "0107 ALEKSANDRIYA SEE 9950 ZNAMENKA",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/X004-L05.png"
+ },
+ {
+  "id": "X004-L25",
+  "page": "X004",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "0175 ALMAFUZITO HUNG SEE 3?05 KOMARNO CZECH",
+  "text_b": "0175 ALMAFUZITO HUNG SEE 3805 KOMARNO CZECH",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/X004-L25.png"
+ },
+ {
+  "id": "X004-L27",
+  "page": "X004",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "0176 AL?AZNAYA SEE 3120 KADIYEVKA",
+  "text_b": "0176 ALMAZNAYA SEE 3120 KADIYEVKA",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/X004-L27.png"
+ },
+ {
+  "id": "X004-L36",
+  "page": "X004",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "0186 ALTENGRABOW E GER SEE 9879 ZERBST E GER",
+  "text_b": "0186 ALTENGRABOW E GER SEE 9875 ZERBST E GER",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/X004-L36.png"
+ },
+ {
+  "id": "X004-L38",
+  "page": "X004",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "01875 ALT LONNEWITZ E GER AF SEE 8485 TORGAU E GER",
+  "text_b": "01875 AL? LONNEWITZ E GER AF SEE 8485 TORGAU E GER",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/X004-L38.png"
+ },
+ {
+  "id": "X006-L06",
+  "page": "X006",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "5075 MOINESTI RUM SEE 1?45 DARMANESTI RUM",
+  "text_b": "5075 MOINESTI RUM SEE 1945 DARMANESTI RUM",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/X006-L06.png"
+ },
+ {
+  "id": "X006-L09",
+  "page": "X006",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "5090 MOLOTOV || MOLOTOV N AF",
+  "text_b": "5090 MOLOTOV",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/X006-L09.png"
+ },
+ {
+  "id": "X006-L10",
+  "page": "X006",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "MOLOTOV S E AF",
+  "text_b": "MOLOTOV N AF",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/X006-L10.png"
+ },
+ {
+  "id": "X006-L29",
+  "page": "X006",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "5135 ?ORSHANSK",
+  "text_b": "5135 MORSHANSK",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/X006-L29.png"
+ },
+ {
+  "id": "X006-L41",
+  "page": "X006",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "KHIMKI N. AF || KRASNAYA POLYANA AF",
+  "text_b": "KHIMKI N. AF",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/X006-L41.png"
+ },
+ {
+  "id": "X007-L16",
+  "page": "X007",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "HEGYESHALOM",
+  "text_b": "HEGYESHALON",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/X007-L16.png"
+ },
+ {
+  "id": "X008-L10",
+  "page": "X008",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "6050 PARNU AF SEE 6600 ?YARNU",
+  "text_b": "6050 PARNU AF SEE 6600 PYARNU",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/X008-L10.png"
+ },
+ {
+  "id": "X008-L31",
+  "page": "X008",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "6115 PEI ?IAO CHINA",
+  "text_b": "6115 PEI PIAO CHINA",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/X008-L31.png"
+ },
+ {
+  "id": "X009-L38",
+  "page": "X009",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "ZHELEZNO?OPOZHNYY AF",
+  "text_b": "ZHELEZNODOPOZHNYY AF",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/X009-L38.png"
+ },
+ {
+  "id": "X009-L44",
+  "page": "X009",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "65155 PREROV CZECH AF SEE 574? OLOMOUC CZECH",
+  "text_b": "65155 PREROV CZECH AF SEE 5745 OLOMO?C CZECH",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/X009-L44.png"
+ },
+ {
+  "id": "X010-L41",
+  "page": "X010",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "7501 SHCH?CHIN",
+  "text_b": "7501 SHCHI?CHIN",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/X010-L41.png"
+ },
+ {
+  "id": "X011-L33",
+  "page": "X011",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "8830 URAS SEE 9320 VYBORG 138",
+  "text_b": "8830 URAS SEE 9320 VYBORG",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/X011-L33.png"
+ },
+ {
+  "id": "X012-L07",
+  "page": "X012",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "9078 VIDIN BULG",
+  "text_b": "9078 VIDIN BULG || LOM",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/X012-L07.png"
+ },
+ {
+  "id": "X012-L08",
+  "page": "X012",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "90797 VIETZKERSTRAND POL AF SEE 7900 SCHLAWE POL",
+  "text_b": "90797 VIETZKERSTRAND POL AF SEE 7300 SCHLAWE POL",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/X012-L08.png"
+ },
+ {
+  "id": "X012-L40",
+  "page": "X012",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "9145 VLONE ALB 142",
+  "text_b": "9145 VLONE ALB",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/X012-L40.png"
+ },
+ {
+  "id": "X012-L07+",
+  "page": "X012",
+  "kind_a": "data",
+  "kind_b": "",
+  "text_a": "LOM",
+  "text_b": "",
+  "reasons": "missing in one pass",
+  "crop": "adjudicate/crops/X012-L07plus.png"
+ },
+ {
+  "id": "X013-L08",
+  "page": "X013",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "9295 VULCAN RUM SEE 6225 PETROSENI RUM",
+  "text_b": "9293 VULCAN RUM SEE 6225 PETROSENI RUM",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/X013-L08.png"
+ },
+ {
+  "id": "X013-L13",
+  "page": "X013",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "9315 VYAZNIKI",
+  "text_b": "9313 VYAZNIKI",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/X013-L13.png"
+ },
+ {
+  "id": "X013-L15",
+  "page": "X013",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "K?YVISTO",
+  "text_b": "KOYVISTO",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/X013-L15.png"
+ },
+ {
+  "id": "X013-L23",
+  "page": "X013",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "9335 VYSOKE MYTO CZECH SEE ?015 SVITAVY CZECH",
+  "text_b": "9335 VYSOKE MYTO CZECH SEE 8015 SVITAVY CZECH",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/X013-L23.png"
+ },
+ {
+  "id": "X013-L41",
+  "page": "X013",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "BOERNEROWO AF 145",
+  "text_b": "BOERNEROWO AF",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/X013-L41.png"
+ },
+ {
+  "id": "X014-L09",
+  "page": "X014",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "9405 WEIMAR E GER SEE 2005 ERFUR? E GER",
+  "text_b": "9405 WEIMAR E GER SEE 2005 ERFURT E GER",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/X014-L09.png"
+ },
+ {
+  "id": "X014-L21",
+  "page": "X014",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "BAD KLENINEN",
+  "text_b": "BAD KLEININEN",
+  "reasons": "text differs",
+  "crop": "adjudicate/crops/X014-L21.png"
+ },
+ {
+  "id": "X014-L36",
+  "page": "X014",
+  "kind_a": "data",
+  "kind_b": "data",
+  "text_a": "9515 WO??IS E GER SEE 52?5 M??EHLHAUSEN E GER 146",
+  "text_b": "9515 WORRIS E GER SEE 5?1? MUEHLHAUSEN E GER",
+  "reasons": "text differs; unreadable character",
+  "crop": "adjudicate/crops/X014-L36.png"
+ }
+]

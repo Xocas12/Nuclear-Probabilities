@@ -619,6 +619,26 @@ nuclear-probabilities/
 
 Phases 1 and 2 run side by side. Transcribing the labels is the long pole, so it starts first.
 
+**Progress (10 Oct 2026).** M3 is done. The three lists the Archive published only in excerpt
+(the Part I airfield list, the Part II complex list with weapons, and the cross-reference list)
+are transcribed through the same pipeline (`data/curated/sac1956/excerpts/`).
+- **Error rate measured.**
+  - Per pass, as before.
+  - A blind audit of a 5% sample of the full lists found no error in 743 lines (95% bound
+    0.51%).
+  - The 270 airfield rows that both airfield lists print were compared line against line. This
+    found 3 misreads in the Part II transcription, all on 200-dpi pages, and corrected them.
+    The other differences are 12 typing differences between the two printings and 4 blotted
+    digits.
+- **Anchors.** Moscow, Leningrad and East Berlin reproduce. The study's own totals (section 8)
+  are redacted figure by figure, so there is nothing more to reproduce.
+- **The Part II subset.** Part II keeps every excerpted complex, with its priority and
+  installations, but far fewer aim points: 22 against 60 in the 31 complexes seen whole. This
+  gives a second, stricter label for the 41 excerpted complexes.
+- **The cross-reference excerpt** does not reach the page lost from the Part I scan.
+
+Data card: `data/curated/sac1956/README.md`.
+
 **Progress (8 Oct 2026).** M2 is done: the full 1956 feature base for the whole bloc.
 - **Universe.** 2,622 towns of 10,000+ near June 1956 with coordinates.
   - The USSR comes from the 1959 census, plus ten closed towns of the nuclear complex with
