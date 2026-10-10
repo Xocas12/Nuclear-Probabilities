@@ -8,10 +8,11 @@ id, kind, text, note (no header). A page is complete when every line id of the p
 """
 
 import json
+import os
 import sys
 from pathlib import Path
 
-ROOT = Path("data/interim/sac1956")
+ROOT = Path(os.environ.get("SAC_ROOT", "data/interim/sac1956"))
 STRIPS_PER_CHUNK = 45
 
 

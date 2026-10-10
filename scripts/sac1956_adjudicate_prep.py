@@ -18,6 +18,7 @@ consistency check of sac1956_assemble.py flags) and writes checkNN.json batches.
 
 import csv
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -27,7 +28,7 @@ from PIL import Image, ImageDraw
 sys.path.insert(0, str(Path(__file__).parent))
 import sac1956_strips as strips
 
-ROOT = Path("data/interim/sac1956")
+ROOT = Path(os.environ.get("SAC_ROOT", "data/interim/sac1956"))
 OUT = ROOT / "adjudicate"
 ZOOM = 2.5
 

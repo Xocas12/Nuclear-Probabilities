@@ -12,12 +12,13 @@ id, and writes to data/interim/sac1956/compare/:
 
 import csv
 import json
+import os
 import re
 import sys
 from collections import Counter
 from pathlib import Path
 
-ROOT = Path("data/interim/sac1956")
+ROOT = Path(os.environ.get("SAC_ROOT", "data/interim/sac1956"))
 CODES = {
     row["code"].strip()
     for row in csv.DictReader(
@@ -100,8 +101,10 @@ def classify(page: str, text: str, raw: str = "") -> tuple[str, dict, list[str]]
         ]
         problems = [p for _, _, probs in parts for p in probs]
         return "merged", {"parts": parts}, problems
+    if page.startswith(("X", "S")):  # cross-reference and summary pages: free text, no rules
+        return "text", {}, []
     text, raw = digits_for_letters(text), digits_for_letters(raw)
-    if page.startswith("A"):
+    if page.startswith(("A", "F")):
         m = (AIRFIELD.match(raw) if raw else None) or AIRFIELD.match(text)
         if not m:
             return "unparsed", {}, ["airfield row does not match the expected format"]

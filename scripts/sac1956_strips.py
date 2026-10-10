@@ -15,6 +15,7 @@ Writes ``data/interim/sac1956/strips/*.png`` and ``data/interim/sac1956/manifest
 """
 
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -23,12 +24,31 @@ import pymupdf
 from PIL import Image, ImageDraw, ImageFont
 from scipy import ndimage
 
-DOCS = {
-    "C": Path("data/raw/sac1956/1st_city_list_complete.pdf"),  # Part I complex list
-    "A": Path("data/raw/sac1956/section6.pdf"),  # Part II airfield list
+# Two sets of documents, each with its own workspace. SAC_SET=excerpts selects the sections the
+# Archive released only in part: the cross-reference list (X), the Part I airfield list (F),
+# the Part II complex list (R) and the summary of requirements (S).
+SETS = {
+    "main": (
+        {
+            "C": Path("data/raw/sac1956/1st_city_list_complete.pdf"),  # Part I complex list
+            "A": Path("data/raw/sac1956/section6.pdf"),  # Part II airfield list
+        },
+        Path("data/interim/sac1956"),
+    ),
+    "excerpts": (
+        {
+            "X": Path("data/raw/sac1956/section2.pdf"),
+            "F": Path("data/raw/sac1956/section4.pdf"),
+            "R": Path("data/raw/sac1956/section7.pdf"),
+            "S": Path("data/raw/sac1956/section8.pdf"),
+        },
+        Path("data/interim/sac1956_excerpts"),
+    ),
 }
-BOX_FALLBACK = {"C": 1215, "A": 1315}  # usual x of the redaction box's left edge
-OUT = Path("data/interim/sac1956")
+DOCS, OUT = SETS[os.environ.get("SAC_SET", "main")]
+# usual x of the redaction box's left edge; X and S pages have no box, so they run to the frame
+BOX_FALLBACK = {"C": 1215, "A": 1315, "R": 1215, "F": 1315, "X": 2380, "S": 2380}
+NO_BOX = {"X", "S"}
 DPI = 300
 SCALE = 1.6  # strips are enlarged so small glyphs are easier to read
 MAX_LINES_PER_STRIP = 14
@@ -47,8 +67,16 @@ def render(doc: pymupdf.Document, index: int) -> np.ndarray:
     return np.frombuffer(pix.samples, dtype=np.uint8).reshape(pix.height, pix.width)
 
 
-def box_left(ink: np.ndarray, code: str) -> int:
+# Pages where the first long rule is not the box's edge (R006: a rule inside the table).
+BOX_OVERRIDE = {"R006": 1215}
+
+
+def box_left(ink: np.ndarray, code: str, key: str = "") -> int:
     """x of the redaction box's left edge: the first long vertical rule in the middle band."""
+    if key in BOX_OVERRIDE:
+        return BOX_OVERRIDE[key]
+    if code in NO_BOX:
+        return BOX_FALLBACK[code]
     height = ink.shape[0]
     rules = np.where(ink.sum(axis=0) > 0.25 * height)[0]
     candidates = [x for x in rules if 900 <= x <= 1500]
@@ -139,7 +167,7 @@ def draw_strip(
 def process(code: str, index: int, doc: pymupdf.Document) -> dict:
     gray = render(doc, index)
     ink = gray < 128
-    right = box_left(ink, code) - 8
+    right = box_left(ink, code, f"{code}{index + 1:03d}") - 8
     chars = characters(ink[:, PROFILE_LEFT:right])
     page = index + 1
     bands = line_bands(chars)

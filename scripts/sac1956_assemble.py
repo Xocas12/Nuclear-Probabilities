@@ -177,9 +177,9 @@ def ref_value(ref: str) -> float:
     return int(ref[:4]) + (int(ref[4:]) / 10 if len(ref) > 4 else 0)
 
 
-def load_final(manifest: dict) -> tuple[dict, list]:
+def load_final(manifest: dict, root: Path = ROOT) -> tuple[dict, list]:
     final = {}
-    for raw in (ROOT / "compare" / "agreed.tsv").read_text(encoding="utf-8").splitlines():
+    for raw in (root / "compare" / "agreed.tsv").read_text(encoding="utf-8").splitlines():
         if raw.strip():
             line_id, kind, text = ([*raw.split("\t"), "", ""])[:3]
             final[line_id] = {
@@ -189,7 +189,7 @@ def load_final(manifest: dict) -> tuple[dict, list]:
                 "confidence": "high",
                 "note": "",
             }
-    for tsv in sorted((ROOT / "adjudicate" / "decisions").glob("*.tsv")):
+    for tsv in sorted((root / "adjudicate" / "decisions").glob("*.tsv")):
         for raw in tsv.read_text(encoding="utf-8").splitlines():
             if raw.strip():
                 parts = (raw.split("\t") + [""] * 6)[:6]
@@ -224,10 +224,11 @@ def ordered_ids(manifest: dict, final: dict) -> list[str]:
     return ids
 
 
-def main() -> None:
-    manifest = json.loads((ROOT / "manifest.json").read_text())
-    final, gaps = load_final(manifest)
-    OUT.mkdir(parents=True, exist_ok=True)
+def parse(root: Path = ROOT) -> dict:
+    """Read the final text of every line under root and parse it into tables (lists of dicts):
+    lines, complexes, dgzs, installs, msites, airfields, anomalies; plus final and gaps."""
+    manifest = json.loads((root / "manifest.json").read_text())
+    final, gaps = load_final(manifest, root)
     lines, complexes, dgzs, installs, msites, airfields, anomalies = [], [], [], [], [], [], []
     code_rows = list(
         csv.DictReader(open("data/curated/labels/sac1956_category_codes.csv", encoding="utf-8"))
@@ -430,7 +431,7 @@ def main() -> None:
         if (
             typ == "unparsed"
             and "?" in text
-            and page.startswith("A")
+            and page.startswith(("A", "F"))
             and (parsed := airfield_with_gaps(text))
         ):
             typ, f = "airfield", parsed
@@ -455,6 +456,25 @@ def main() -> None:
             handle(line_id, page, text, typ, f)
 
     add_priority_tiers(complexes)
+    return {
+        "lines": lines,
+        "complexes": complexes,
+        "dgzs": dgzs,
+        "installs": installs,
+        "msites": msites,
+        "airfields": airfields,
+        "anomalies": anomalies,
+        "final": final,
+        "gaps": gaps,
+    }
+
+
+def main() -> None:
+    t = parse()
+    OUT.mkdir(parents=True, exist_ok=True)
+    lines, complexes, dgzs, installs = t["lines"], t["complexes"], t["dgzs"], t["installs"]
+    msites, airfields, anomalies = t["msites"], t["airfields"], t["anomalies"]
+    final, gaps = t["final"], t["gaps"]
 
     def write(name: str, rows: list[dict]) -> None:
         if not rows:
