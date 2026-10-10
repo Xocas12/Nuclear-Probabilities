@@ -1,0 +1,362 @@
+# Data cards for every file in data/curated/labels/ (milestone M4: "each list has a data card
+# and provenance tag"). tests/test_catalogue.py checks that every CSV has an entry, that the
+# tags are from the vocabularies below, and that the provenance agrees with the file's own
+# provenance column. scripts/inventory.py renders the cards into data/INVENTORY.md.
+#
+# provenance (PLAN section 4.5): plan | study | exercise | defender | reconstruction, or
+#   reference for files that are not target lists (code lists, pilots, class counts).
+# selection: how the targets were chosen, as far as the source says: judgment | rule | mixed |
+#   unknown | n/a.
+# use: training (enough rows to fit a model: PLAN 5.3) | transfer-test (a small list, used to
+#   check whether a model transfers: PLAN 5.2) | validation (totals or counts to check
+#   against) | audit (kept for checking, not as labels) | reference (codes, pilots) .
+# card: where the full source card is (path, section).
+
+lists:
+  - file: us_1956_sac_complexes.csv
+    title: SAC Atomic Weapons Requirements Study for 1959, Part I complex list
+    planner: US (Strategic Air Command)
+    targets: Soviet bloc, China, North Korea, North Vietnam, Mongolia
+    year: 1956
+    provenance: study
+    selection: judgment
+    use: training
+    completeness: complete transcription of the released list; one printed page lost from the scan
+    card: data/curated/sac1956/README.md
+    caveats: weapons columns redacted; DGZ letters and installation names not explained
+
+  - file: us_1956_sac_airfields.csv
+    title: SAC Atomic Weapons Requirements Study for 1959, Part II airfield list
+    planner: US (Strategic Air Command)
+    targets: Soviet bloc, China, North Korea
+    year: 1956
+    provenance: study
+    selection: judgment
+    use: training
+    completeness: complete; 3 misreads corrected by the cross-document check
+    card: data/curated/sac1956/README.md
+    caveats: the Part II printing has typing slips of its own (cross-document check)
+
+  - file: us_1956_sac_part2_complexes.csv
+    title: SAC 1956 study, Part II complex list with weapons (excerpt)
+    planner: US (Strategic Air Command)
+    targets: USSR, East Germany, Poland, Czechoslovakia, Hungary, China, Mongolia, Romania
+    year: 1956
+    provenance: study
+    selection: judgment
+    use: validation
+    completeness: 43 complexes in the published excerpt; elsewhere unknown
+    card: data/curated/sac1956/README.md (The excerpts)
+    caveats: the stockpile-limited allocation; selected = keeps an aim point
+
+  - file: us_1945_target_committee.csv
+    title: Target Committee and orders for the atomic bombing of Japan
+    planner: US (Target Committee, Groves, War Department)
+    targets: Japan
+    year: 1945
+    provenance: plan
+    selection: judgment
+    use: transfer-test
+    completeness: every candidate named in the documents read, one row per city per stage
+    card: data/notes/western.md (1)
+    caveats: rows repeat across decision stages; the Kyoto rejection rests on a secondary transcription
+
+  - file: us_1958_taiwan_strait.csv
+    title: Taiwan Strait crisis, nuclear strike options (Halperin, RAND RM-4900)
+    planner: US (JCS, PACAF, Army)
+    targets: PRC
+    year: 1958
+    provenance: study
+    selection: judgment
+    use: transfer-test
+    completeness: the 4 places named; the plans name only target types
+    card: data/notes/halperin_1958.md
+    caveats: the atomic target annex is not reproduced
+
+  - file: us_1964_china_nuclear.csv
+    title: Chinese nuclear facilities as targets (R. H. Johnson, 1964)
+    planner: US (State Department Policy Planning)
+    targets: PRC
+    year: 1964
+    provenance: study
+    selection: judgment
+    use: transfer-test
+    completeness: the two facilities named
+    card: data/notes/western.md (6)
+    caveats: the study recommends against action
+
+  - file: wp_1964_csla_plan.csv
+    title: Czechoslovak People's Army war plan, 1964
+    planner: Czechoslovakia (ČSLA, Soviet-approved)
+    targets: FRG
+    year: 1964
+    provenance: plan
+    selection: judgment
+    use: transfer-test
+    completeness: the named targets and target areas of the plan's map and text
+    card: data/notes/warsaw_pact.md (1)
+    caveats: Nuremberg, Stuttgart and Munich are axes of advance, not targets
+
+  - file: wp_1965_hu_wargame.csv
+    title: Hungarian-Soviet command-staff war game, 1965 ("Easterners")
+    planner: Hungary/USSR
+    targets: Austria, Italy, FRG
+    year: 1965
+    provenance: exercise
+    selection: judgment
+    use: transfer-test
+    completeness: 29 itemised strikes (the document's summary says 30)
+    card: data/notes/warsaw_pact.md (2)
+    caveats: yields itemised; summary counts disagree with the items
+
+  - file: wp_1967_lato67.csv
+    title: Exercise "Lato-67", Polish Coastal Front
+    planner: Unified Command, for the Polish Coastal Front
+    targets: FRG, Denmark, Netherlands, Belgium
+    year: 1967
+    provenance: exercise
+    selection: judgment
+    use: transfer-test
+    completeness: 57 aim points at 49 places, from the Russian facsimile
+    card: data/notes/warsaw_pact.md (3)
+    caveats: transport, port and airfield targets of a landing operation
+
+  - file: wp_1961_burza.csv
+    title: Exercise "Burza", Polish Maritime Front
+    planner: Poland (Maritime Front)
+    targets: Denmark, FRG, Netherlands, GDR
+    year: 1961
+    provenance: exercise
+    selection: judgment
+    use: transfer-test
+    completeness: the targets the companion documents name; the directive gives only counts
+    card: data/notes/warsaw_pact.md (3)
+    caveats: 7 rows are unit targets or unidentified places
+
+  - file: wp_1977_gsa_front_lesson.csv
+    title: Soviet General Staff Academy lesson, front offensive, 1977
+    planner: USSR (General Staff Academy)
+    targets: FRG
+    year: 1977
+    provenance: exercise
+    selection: judgment
+    use: transfer-test
+    completeness: the five named sites and the unit targets of the lesson
+    card: data/notes/warsaw_pact.md (9)
+    caveats: a training lesson; 14 rows are units without a place
+
+  - file: wp_1965_coastal_front_zealand.csv
+    title: Polish Coastal Front, landing on Zealand, 1965
+    planner: Poland (Coastal Front)
+    targets: Denmark
+    year: 1965
+    provenance: plan
+    selection: judgment
+    use: transfer-test
+    completeness: 5 strikes, from a secondary study (Pałka 2022)
+    card: data/notes/warsaw_pact.md (4)
+    caveats: secondary
+
+  - file: wp_1977_zealand.csv
+    title: Polish Coastal Front, landing on Zealand, 1977
+    planner: Poland (Coastal Front)
+    targets: Denmark
+    year: 1977
+    provenance: plan
+    selection: judgment
+    use: transfer-test
+    completeness: 10 strikes, from a secondary study (Pałka 2022)
+    card: data/notes/warsaw_pact.md (4)
+    caveats: secondary
+
+  - file: wp_1970_coastal_front_map.csv
+    title: Polish Coastal Front operational map, 1970
+    planner: Poland (Coastal Front)
+    targets: Denmark
+    year: 1970
+    provenance: plan
+    selection: judgment
+    use: transfer-test
+    completeness: 5 of 17 strikes named (secondary, Nielsen et al. 2016)
+    card: data/notes/warsaw_pact.md (5)
+    caveats: secondary; most strikes unnamed
+
+  - file: wp_1959_r5m_operation_atom.csv
+    title: R-5M missiles in the GDR ("Operation Atom"), 1959
+    planner: USSR
+    targets: UK
+    year: 1959
+    provenance: reconstruction
+    selection: unknown
+    use: audit
+    completeness: one target, from press reporting of Uhl's study
+    card: data/notes/warsaw_pact.md (11)
+    caveats: secondary; the study itself is lending-only
+
+  - file: wp_1979_seven_days.csv
+    title: '"Seven Days to the River Rhine" (as attributed by Wikipedia)'
+    planner: Warsaw Pact (attributed)
+    targets: Austria, Denmark, FRG, Italy
+    year: 1979
+    provenance: reconstruction
+    selection: unknown
+    use: audit
+    completeness: Wikipedia's "known targets", which trace to other plans
+    card: data/notes/warsaw_pact.md (8)
+    caveats: not usable as 1979 labels
+
+  - file: nato_1962_pl_exercise_mirror.csv
+    title: Polish command-staff map exercise, simulated NATO strikes, 1962
+    planner: Poland (simulating NATO, the "Westerners")
+    targets: Poland, USSR, GDR
+    year: 1962
+    provenance: exercise
+    selection: judgment
+    use: transfer-test
+    completeness: all 76 strikes of the list
+    card: data/notes/warsaw_pact.md (3)
+    caveats: the defender's expectation of a NATO attack
+
+  - file: nato_1965_hu_wargame_mirror.csv
+    title: Hungarian-Soviet war game, simulated NATO ("Westerners") strikes, 1965
+    planner: Hungary/USSR (simulating NATO)
+    targets: Hungary, Czechoslovakia, USSR
+    year: 1965
+    provenance: exercise
+    selection: judgment
+    use: transfer-test
+    completeness: all 30 plan weapons
+    card: data/notes/warsaw_pact.md (2)
+    caveats: the defender's expectation of a NATO attack
+
+  - file: cd_1987_napb90_counties.csv
+    title: NAPB-90 highest direct-effects risk by county
+    planner: FEMA (defender), modelled on Soviet doctrine
+    targets: USA
+    year: 1987
+    provenance: defender
+    selection: mixed
+    use: training
+    completeness: every county of the 50 states and DC (3,142 rows); two independent passes agree on every figure
+    card: data/curated/napb90/README.md
+    caveats: a county's band is a derived exposure, not a designation; refinery, power and chemical classes chosen by rule
+
+  - file: cd_1987_napb90_county_pilot.csv
+    title: NAPB-90 county table, pilot (Connecticut, Georgia)
+    planner: FEMA (defender)
+    targets: USA
+    year: 1987
+    provenance: reference
+    selection: n/a
+    use: reference
+    completeness: superseded by cd_1987_napb90_counties.csv
+    card: data/notes/civil_defence.md (1b)
+    caveats: kept for the record
+
+  - file: cd_1987_napb90_classes.csv
+    title: NAPB-90 initial target set by class
+    planner: FEMA (defender)
+    targets: USA
+    year: 1987
+    provenance: reference
+    selection: mixed
+    use: validation
+    completeness: the ten classes and 6,139 initial aim points (before editing)
+    card: data/notes/civil_defence.md (1a)
+    caveats: counts only
+
+  - file: cd_1980_square_leg.csv
+    title: Exercise Square Leg bomb plot (as reproduced by the New Statesman)
+    planner: UK (Home Office/MoD exercise)
+    targets: UK
+    year: 1980
+    provenance: defender
+    selection: judgment
+    use: transfer-test
+    completeness: 95 targets of the reproduced plot (England and Wales, Scotland); Northern Ireland never released
+    card: data/notes/civil_defence.md (3)
+    caveats: secondary; politically edited exercise
+
+  - file: cd_1955_operation_alert.csv
+    title: Operation Alert 1955, cities labelled on FCDA's attack-pattern map
+    planner: FCDA (defender exercise)
+    targets: USA, Canada
+    year: 1955
+    provenance: defender
+    selection: judgment
+    use: transfer-test
+    completeness: 16 of about 60 cities (the labelled megaton ground bursts)
+    card: data/notes/civil_defence.md (4)
+    caveats: the other ~45 symbols on the map are unlabelled
+
+  - file: cd_1956_canada_target_areas.csv
+    title: Canada's 1956 evacuation (target) areas
+    planner: Canada (federal civil defence)
+    targets: Canada
+    year: 1956
+    provenance: defender
+    selection: judgment
+    use: transfer-test
+    completeness: the 13 areas named in the House of Commons
+    card: data/notes/civil_defence.md (5)
+    caveats: sitting date and page not verified
+
+  - file: rec_2002_helfand_classes.csv
+    title: Helfand et al. 2002, a 2,000-warhead Russian attack on the US, by target class
+    planner: PSR/NRDC (analysts)
+    targets: USA
+    year: 2002
+    provenance: reference
+    selection: mixed
+    use: validation
+    completeness: class counts only; coordinates unpublished
+    card: data/notes/civil_defence.md (7)
+    caveats: counts only
+
+  - file: rec_2001_nrdc_classes.csv
+    title: NRDC 2001, a counterforce attack on Russia, warheads by category
+    planner: NRDC (analysts)
+    targets: Russia
+    year: 2001
+    provenance: reference
+    selection: mixed
+    use: validation
+    completeness: warhead counts by category
+    card: data/notes/civil_defence.md (7)
+    caveats: warheads, not aim points
+
+  - file: sac1956_category_codes.csv
+    title: SAC 1956 category code list
+    planner: US (Strategic Air Command)
+    targets: n/a
+    year: 1956
+    provenance: reference
+    selection: n/a
+    use: reference
+    completeness: the code list of the study (section 3)
+    card: data/curated/sac1956/README.md
+    caveats: codes, not targets
+
+  - file: sac1956_pilot_urban.csv
+    title: SAC 1956 complex list, pilot reading
+    planner: US (Strategic Air Command)
+    targets: USSR
+    year: 1956
+    provenance: reference
+    selection: n/a
+    use: reference
+    completeness: four pages, superseded by the full transcription
+    card: data/notes/sac1956.md
+    caveats: kept as an independent read (agrees with the final transcription)
+
+  - file: sac1956_pilot_airfields.csv
+    title: SAC 1956 airfield list, pilot reading
+    planner: US (Strategic Air Command)
+    targets: USSR
+    year: 1956
+    provenance: reference
+    selection: n/a
+    use: reference
+    completeness: superseded by the full transcription
+    card: data/notes/sac1956.md
+    caveats: kept for the record

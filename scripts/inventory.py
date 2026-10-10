@@ -7,6 +7,7 @@ from a secondary source. Run from the repository root: python scripts/inventory.
 from pathlib import Path
 
 import pandas as pd
+import yaml
 
 LABELS = Path("data/curated/labels")
 OUT = Path("data/INVENTORY.md")
@@ -51,6 +52,25 @@ def main() -> None:
             f"{r.provenance} | {r.secondary_rows} | {r.selected_0} |"
         )
     lines += ["", f"Total: {len(table)} files, {int(table['rows'].sum())} rows.", ""]
+    cards = yaml.safe_load((LABELS / "CATALOGUE.yaml").read_text(encoding="utf-8"))["lists"]
+    lines += [
+        "## Data cards",
+        "",
+        "From `data/curated/labels/CATALOGUE.yaml` (checked by `tests/test_catalogue.py`). "
+        "Use: training lists are large enough to fit a model; transfer-test lists check whether "
+        "a model transfers; validation files hold totals to check against.",
+        "",
+        "| File | What | Planner → targets, year | Provenance | Selection | Use | Completeness | Caveats | Card |",
+        "|---|---|---|---|---|---|---|---|---|",
+    ]
+    order = {"training": 0, "transfer-test": 1, "validation": 2, "audit": 3, "reference": 4}
+    for c in sorted(cards, key=lambda c: (order[c["use"]], str(c["year"]), c["file"])):
+        lines.append(
+            f"| `{c['file']}` | {c['title']} | {c['planner']} → {c['targets']}, {c['year']} | "
+            f"{c['provenance']} | {c['selection']} | {c['use']} | {c['completeness']} | "
+            f"{c['caveats']} | {c['card']} |"
+        )
+    lines.append("")
     OUT.write_text("\n".join(lines))
     print("\n".join(lines))
 

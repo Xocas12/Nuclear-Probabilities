@@ -1,0 +1,52 @@
+state,capital,county,fips,role,source
+Alabama,Montgomery,Montgomery,01101,state capital,Wikipedia: List of capitals in the United States
+Alaska,Juneau,Juneau,02110,state capital,Wikipedia: List of capitals in the United States
+Arizona,Phoenix,Maricopa,04013,state capital,Wikipedia: List of capitals in the United States
+Arkansas,Little Rock,Pulaski,05119,state capital,Wikipedia: List of capitals in the United States
+California,Sacramento,Sacramento,06067,state capital,Wikipedia: List of capitals in the United States
+Colorado,Denver,Denver,08031,state capital,Wikipedia: List of capitals in the United States
+Connecticut,Hartford,Hartford,09003,state capital,Wikipedia: List of capitals in the United States
+Delaware,Dover,Kent,10001,state capital,Wikipedia: List of capitals in the United States
+Florida,Tallahassee,Leon,12073,state capital,Wikipedia: List of capitals in the United States
+Georgia,Atlanta,Fulton,13121,state capital,Wikipedia: List of capitals in the United States
+Hawaii,Honolulu,Honolulu,15003,state capital,Wikipedia: List of capitals in the United States
+Idaho,Boise,Ada,16001,state capital,Wikipedia: List of capitals in the United States
+Illinois,Springfield,Sangamon,17167,state capital,Wikipedia: List of capitals in the United States
+Indiana,Indianapolis,Marion,18097,state capital,Wikipedia: List of capitals in the United States
+Iowa,Des Moines,Polk,19153,state capital,Wikipedia: List of capitals in the United States
+Kansas,Topeka,Shawnee,20177,state capital,Wikipedia: List of capitals in the United States
+Kentucky,Frankfort,Franklin,21073,state capital,Wikipedia: List of capitals in the United States
+Louisiana,Baton Rouge,East Baton Rouge,22033,state capital,Wikipedia: List of capitals in the United States
+Maine,Augusta,Kennebec,23011,state capital,Wikipedia: List of capitals in the United States
+Maryland,Annapolis,Anne Arundel,24003,state capital,Wikipedia: List of capitals in the United States
+Massachusetts,Boston,Suffolk,25025,state capital,Wikipedia: List of capitals in the United States
+Michigan,Lansing,Ingham,26065,state capital,Wikipedia: List of capitals in the United States
+Minnesota,Saint Paul,Ramsey,27123,state capital,Wikipedia: List of capitals in the United States
+Mississippi,Jackson,Hinds,28049,state capital,Wikipedia: List of capitals in the United States
+Missouri,Jefferson City,Cole,29051,state capital,Wikipedia: List of capitals in the United States
+Montana,Helena,Lewis and Clark,30049,state capital,Wikipedia: List of capitals in the United States
+Nebraska,Lincoln,Lancaster,31109,state capital,Wikipedia: List of capitals in the United States
+Nevada,Carson City,Carson City,32510,state capital,Wikipedia: List of capitals in the United States
+New Hampshire,Concord,Merrimack,33013,state capital,Wikipedia: List of capitals in the United States
+New Jersey,Trenton,Mercer,34021,state capital,Wikipedia: List of capitals in the United States
+New Mexico,Santa Fe,Santa Fe,35049,state capital,Wikipedia: List of capitals in the United States
+New York,Albany,Albany,36001,state capital,Wikipedia: List of capitals in the United States
+North Carolina,Raleigh,Wake,37183,state capital,Wikipedia: List of capitals in the United States
+North Dakota,Bismarck,Burleigh,38015,state capital,Wikipedia: List of capitals in the United States
+Ohio,Columbus,Franklin,39049,state capital,Wikipedia: List of capitals in the United States
+Oklahoma,Oklahoma City,Oklahoma,40109,state capital,Wikipedia: List of capitals in the United States
+Oregon,Salem,Marion,41047,state capital,Wikipedia: List of capitals in the United States
+Pennsylvania,Harrisburg,Dauphin,42043,state capital,Wikipedia: List of capitals in the United States
+Rhode Island,Providence,Providence,44007,state capital,Wikipedia: List of capitals in the United States
+South Carolina,Columbia,Richland,45079,state capital,Wikipedia: List of capitals in the United States
+South Dakota,Pierre,Hughes,46065,state capital,Wikipedia: List of capitals in the United States
+Tennessee,Nashville,Davidson,47037,state capital,Wikipedia: List of capitals in the United States
+Texas,Austin,Travis,48453,state capital,Wikipedia: List of capitals in the United States
+Utah,Salt Lake City,Salt Lake,49035,state capital,Wikipedia: List of capitals in the United States
+Vermont,Montpelier,Washington,50023,state capital,Wikipedia: List of capitals in the United States
+Virginia,Richmond,Richmond (independent city),51760,state capital,Wikipedia: List of capitals in the United States
+Washington,Olympia,Thurston,53067,state capital,Wikipedia: List of capitals in the United States
+West Virginia,Charleston,Kanawha,54039,state capital,Wikipedia: List of capitals in the United States
+Wisconsin,Madison,Dane,55025,state capital,Wikipedia: List of capitals in the United States
+Wyoming,Cheyenne,Laramie,56021,state capital,Wikipedia: List of capitals in the United States
+District of Columbia,Washington,District of Columbia,11001,national capital,"Wikipedia: Washington, D.C."
