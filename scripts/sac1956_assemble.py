@@ -14,7 +14,8 @@ Outputs (data/curated/sac1956/):
   msites.csv         the "M-n" rows
   airfields.csv      the Part II airfield list
   anomalies.csv      lines that still do not parse, or that carry a "?"
-  checks.csv         lines that break a consistency check across lines (see checks())
+  checks.csv         lines that break a consistency check across lines, and lines whose
+                     printed text needed a letter read as a digit (see checks())
   REPORT.md          counts and validation checks
 and data/curated/labels/us_1956_sac_complexes.csv and us_1956_sac_airfields.csv in the shared
 label schema.
@@ -519,7 +520,7 @@ def main() -> None:
 
     write_labels(complexes, airfields, lines)
 
-    flags = checks(complexes, dgzs, installs, msites, airfields)
+    flags = checks(complexes, dgzs, installs, msites, airfields, lines)
     flags += [{"check": a["problem"], "id": a["id"], "detail": a["text"]} for a in anomalies]
     second = {}  # outcome of the second look (check batches) at each flagged line
     for tsv in sorted((ROOT / "adjudicate" / "decisions").glob("check*.tsv")):
@@ -680,7 +681,7 @@ def lon_gap(lon1: float, lon2: float, lat: float) -> float:
     return min(d, 360 - d) * max(math.cos(math.radians(lat)), 0.3)
 
 
-def checks(complexes, dgzs, installs, msites, airfields) -> list[dict]:
+def checks(complexes, dgzs, installs, msites, airfields, lines) -> list[dict]:
     """Consistency checks across lines. Both passes can misread a glyph the same way (3/5/8,
     6/0/9); such a line agrees and parses, but it disagrees with the lines around it."""
     flags = []
@@ -875,6 +876,16 @@ def checks(complexes, dgzs, installs, msites, airfields) -> list[dict]:
                     seen.add((n1, n2))
                     flag("name a letter away from a nearby name", id1, f"{n1} vs {n2} ({id2})")
                     flag("name a letter away from a nearby name", id2, f"{n2} vs {n1} ({id1})")
+    # A letter struck for a digit. digits_for_letters() resolves these so the coordinate parses,
+    # and the printed text keeps the glyph as it stands on the page, which is right -- but then
+    # nothing downstream can tell the two apart. A consumer reading `text` and expecting digits
+    # gets no match and no signal. Surfacing them here is the cheap half: six lines in 16,046.
+    for line in lines:
+        printed = cmp.light(line["text"])
+        resolved = cmp.digits_for_letters(printed)
+        if printed and resolved != printed:
+            flag("letter struck for a digit", line["id"], f"{line['text']}  ->  {resolved}")
+
     return flags
 
 
