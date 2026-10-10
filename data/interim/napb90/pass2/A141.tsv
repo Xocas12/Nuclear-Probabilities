@@ -1,0 +1,15 @@
+#page	state	STATE OF NEW HAMPSHIRE -- DIRECT EFFECTS RISK	A-95
+#header	990437	8992
+county	Belknap							46034	404	1
+county	Carroll							30428	932	1
+county	Cheshire							64644	711	1
+county	Coos							33352	1805	1
+county	Grafton							68735	1719	1
+county	Hillsborough	299744	876							0
+county	Merrimack					103605	936			0
+county	Rockingham	212199	699							0
+county	Strafford					93819	370			0
+county	Sullivan							37877	540	1
+total	TOTAL STATE	311943	1575	---	---	197424	1306	481070	6111	0
+split								---	---	0
+split								481070	6111	1

@@ -1,0 +1,21 @@
+#page	state	STATE OF MAINE -- DIRECT EFFECTS RISK	A-91
+#header	1160878	30995
+county	Androscoggin					100112	477			0
+county	Aroostook	88277	6721							0
+county	Cumberland	225058	876							0
+county	Franklin							29408	1699	1
+county	Hancock							43805	1537	0
+county	Kennebec							112723	876	0
+county	Knos							34496	370	1
+county	Lincoln							27958	458	1
+county	Osford							49771	2053	1
+county	Penobscot	138771	3430							0
+county	Piscataquis			18065	3986					0
+county	Sagadahoc	30689	257							0
+county	Somerset							46806	3931	0
+county	Waldo							26692	730	0
+county	Washington							33858	2586	1
+county	York	154389	1008							0
+total	STATE TOTAL	637184	12292	18065	3986	100112	477	405517	14240	0
+split								230026	7074	0
+split								175491	7166	1

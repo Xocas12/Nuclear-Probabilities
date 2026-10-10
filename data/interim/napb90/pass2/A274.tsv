@@ -1,0 +1,18 @@
+#page	region	FEMA REGION IX -- DIRECT EFFECTS RISK SUMMARY	A-263
+#header	31504342	386970
+row	Arizona	2736846	66420	---	---	123720	6851	278422	40549	1
+split								53418	11211	0
+split								225004	29388	1
+row	California	23833741	87405	---	---	1192975	15170	1079128	53700	1
+split								728659	19776	0
+split								350469	33924	1
+row	Hawaii									0
+row	Nevada	837864	37489	---	---	37553	2751	62774	69691	1
+split								3408	3851	0
+split								59366	65840	1
+row	American Samoa									0
+row	Guam									0
+row	Trust Territory									0
+total	TOTAL REGION IX	27408451	191318	---	---	1354248	24772	1420324	163940	1
+split								785485	34838	0
+split								634839	129102	1

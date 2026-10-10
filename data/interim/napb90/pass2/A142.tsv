@@ -1,0 +1,10 @@
+#page	state	STATE OF RHODE ISLAND -- DIRECT EFFECTS RISK	A-97
+#header	965471	1054
+county	Bristol			46484	26					0
+county	Kent	158247	172							0
+county	Newport	84236	107							0
+county	Providence	578010	416							0
+county	Washington	98494	333							0
+total	TOTAL STATE	918987	1028	46484	26	---	---	---	---	0
+split								---	---	0
+split								---	---	1

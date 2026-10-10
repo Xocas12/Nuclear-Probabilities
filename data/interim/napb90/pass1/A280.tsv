@@ -1,0 +1,22 @@
+#page	state	STATE OF NEVADA -- DIRECT EFFECTS RISK	A-273
+#header	938191	109895
+county	Churchill	14479	4990							0
+county	Clark	554764	7881							0
+county	Douglas					21345	708			0
+county	Elko							21012	17135	1
+county	Esmeralda							1531	3587	0
+county	Eureka							1342	4175	1
+county	Humboldt							11285	9698	1
+county	Lander							4455	5515	1
+county	Lincoln							3493	10635	1
+county	Lyon					16208	2007			0
+county	Mineral							5961	3744	1
+county	Nye	15772	18155							0
+county	Pershing							3587	6036	1
+county	Storey							1877	264	0
+county	Washoe	215966	6317							0
+county	White Pine							8231	8902	1
+county	Carson City (Ind)	36883	146							0
+total	TOTAL STATE	837864	37489	---	---	37553	2715	62774	69691	0
+split								3408	3851	0
+split								59366	65840	1

@@ -1,0 +1,21 @@
+page,row,field,a,b
+A156,county schuykill #1,row,present,absent
+A156,county schuylkill #1,row,absent,present
+A166,row Alabama #1,star,0,1
+A166,row Florida #1,star,0,1
+A166,row Georgia #1,star,0,1
+A166,row Kentucky #1,star,0,1
+A166,row Mississippi #1,star,0,1
+A166,row North Carolina #1,star,0,1
+A166,row South Carolina #1,star,0,1
+A166,row Tennessee #1,star,0,1
+A224,county east carrol #1,row,present,absent
+A224,county east carroll #1,row,absent,present
+A272,total TOTAL STATE #1,star,0,1
+A273,total TOTAL STATE #1,star,0,1
+A274,row Arizona #1,star,0,1
+A274,row California #1,star,0,1
+A274,row Nevada #1,star,0,1
+A274,total TOTAL REGION IX #1,star,0,1
+A275,total TOTAL STATE #1,star,0,1
+A278,total TOTAL STATE #1,star,0,1

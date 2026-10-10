@@ -1,0 +1,23 @@
+#page	region	FEMA REGION III -- DIRECT EFFECTS RISK SUMMARY	A-113
+#header	25107876	120550
+row	Delaware	425022	991	---	---	---	---	105207	942	0
+split								---	000	0
+split								105207	942	1
+row	Dist. of Columbia	618906	63	---	---	---	---	---	---	0
+split								---	---	0
+split								---	---	1
+row	Maryland	3863638	5462	246820	703	46396	871	224889	2802	0
+split								105974	1609	0
+split								118915	1193	1
+row	Pennsylvania	9115680	20270	338141	1033	1186856	6535	1268406	17054	0
+split								960670	10882	0
+split								297736	6172	1
+row	Virginia	3482624	8573	201907	3847	379967	3964	1650843	23316	0
+split								882245	12762	0
+split								768598	10554	1
+row	West Virginia	1100851	7937	38605	533	159255	2151	653545	13503	0
+split								412604	6140	0
+split								240941	7363	1
+total	TOTAL REGION	18606721	43296	825473	6116	1790474	13521	3838890	57614	0
+split								2307493	31393	0
+split								1531397	26224	1

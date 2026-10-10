@@ -1,0 +1,19 @@
+#page	state	STATE OF VERMONT -- DIRECT EFFECTS RISK	A-99
+#header	534485	9272
+county	Addison					31248	773			0
+county	Bennington							34937	676	1
+county	Caledonia							26478	651	1
+county	Chittenden	123194	540							0
+county	Essex							6646	666	1
+county	Franklin					36337	649			0
+county	Grand Isle					5002	89			0
+county	Lamoille							17676	461	1
+county	Orange							24019	690	1
+county	Orleans							23993	697	1
+county	Rutland							59226	932	1
+county	Washington							53831	690	1
+county	Windham							38786	786	1
+county	Windsor							53112	972	1
+total	TOTAL STATE	123194	540	---	---	72587	1511	338704	7221	0
+split								---	---	0
+split								338704	7221	1

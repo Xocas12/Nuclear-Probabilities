@@ -1,0 +1,19 @@
+#page	state	STATE OF MASSACHUSETTS -- DIRECT EFFECTS RISK	A-93
+#header	5503475	6497
+county	Barnstable	147925	400							0
+county	Berkshire	145110	929							0
+county	Bristol	478662	557							0
+county	Dukes							10337	102	0
+county	Essex	648793	495							0
+county	Franklin							64987	702	0
+county	Hampden	442601	618							0
+county	Hampshire			141781	528					0
+county	Middlesex	1369905	822							0
+county	Nantucket							6070	47	1
+county	Norfolk	602837	400							0
+county	Plymouth	420708	655							0
+county	Suffolk	660972	57							0
+county	Worcester					655822	1514			0
+total	TOTAL STATE	4630548	3604	141781	528	655822	1514	75324	851	0
+split								69254	804	0
+split								6070	47	1

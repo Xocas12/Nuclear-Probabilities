@@ -33,3 +33,10 @@ data/interim/sac1956_excerpts/adjudicate/crops/
 data/interim/sac1956_excerpts/audit/crops/
 !data/interim/sac1956_excerpts/crossdoc/
 data/interim/sac1956_excerpts/crossdoc/*.png
+!data/interim/napb90/
+data/interim/napb90/*
+!data/interim/napb90/*.md
+!data/interim/napb90/pass1/
+!data/interim/napb90/pass2/
+!data/interim/napb90/chunks/
+!data/interim/napb90/compare/

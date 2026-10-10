@@ -1,0 +1,23 @@
+#page	region	FEMA REGION I -- DIRECT EFFECTS RISK SUMMARY	A-87
+#header	12320207	61682
+row	Connecticut	2775954	3062	---	---	---	---	389507	1810	0
+split								389507	1810	0
+split								---	---	1
+row	Maine	637184	12292	18065	3986	100112	477	405517	14240	0
+split								230026	7074	0
+split								175491	7166	1
+row	Massachusetts	4630548	3604	141781	528	655822	1514	75324	851	0
+split								69254	804	0
+split								6070	47	1
+row	New Hampshire	311943	1575	---	---	197424	1306	7481070	6111	0
+split								---	---	0
+split								481070	6111	1
+row	Rhode Island	918987	1028	46848	26	---	---	---	---	0
+split								---	---	0
+split								---	---	1
+row	Vermont	123194	540	---	---	72587	1511	338704	7221	0
+split								---	---	0
+split								338704	7221	1
+total	TOTAL REGION I	9397810	22101	206694	4540	1025945	3408	1816758	31633	0
+split								688787	9688	0
+split								1127971	21945	1

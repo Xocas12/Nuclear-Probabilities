@@ -1,0 +1,28 @@
+#page	state	STATE OF WYOMING -- DIRECT EFFECTS RISK	A-261
+#header	521570	97086
+county	Albany							30328	4286	0
+county	Big Horn	12559	3139							0
+county	Campbell							37605	4796	1
+county	Carbon	20407	7878							0
+county	Converse	15207	4271							0
+county	Crook			6058	2856					0
+county	Fremont							36886	9181	1
+county	Goshen	12430	2186							0
+county	Hot Springs							6119	2005	1
+county	Johnson							7107	4166	1
+county	Laramie	73254	2864							0
+county	Lincoln	15176	4070							0
+county	Natrona	75746	5247							0
+county	Niobrara							3358	2685	1
+county	Park	25213	6936							0
+county	Platte	9369	2023							0
+county	Sheridan							27466	2532	1
+county	Sublette					5572	4871			0
+county	Sweetwater	45791	10352							0
+county	Teton							11553	4012	1
+county	Uinta							26235	2085	1
+county	Washakie							10106	2243	1
+county	Weston	8025	2402							0
+total	TOTAL STATE	313177	51368	6058	2856	5572	4871	196763	37991	1
+split								30328	4286	0
+split								166435	33705	1

@@ -1,0 +1,13 @@
+#page	region	FEMA REGION II -- DIRECT EFFECTS RISK SUMMARY	A-101
+#header	28626118	58436
+row	New Jersey	4794644	4986	2316996	769	439521	1713	---	---	0
+split								---	---	0
+split								---	---	1
+row	New York	14730822	13655	3427733	3081	559148	7399	2943560	23242	0
+split								768558	8451	0
+split								175002	14791	1
+row	Puerto Rico									
+row	Virgin Islands									
+total	TOTAL REGION II	19525466	18641	5734729	3850	998669	9112	943560	23242	0
+split								768558	8451	0
+split								175002	14791	1
