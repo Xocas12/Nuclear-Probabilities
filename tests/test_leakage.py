@@ -15,6 +15,8 @@ FEATURE_CODE = [
     *sorted((ROOT / "nucprob" / "features").glob("*.py")),
     ROOT / "nucprob" / "us1985" / "features.py",
     ROOT / "nucprob" / "us1985" / "places.py",
+    ROOT / "nucprob" / "transfer" / "features.py",
+    ROOT / "nucprob" / "transfer" / "places.py",
     *[ROOT / "nucprob" / "sources" / f"{m}.py" for m in ("terrain", "cshapes", "naturalearth")],
 ]
 # What the label code reads or writes: the SAC transcription, its links and labels.

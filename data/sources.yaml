@@ -885,7 +885,88 @@ sources:
   url: https://archive.org/details/nuclearattackplanningbase1990finalreport504pg
   path: civil_defence/FEMA_1990_Nuclear_attack_planning_base_(NAPB-90).pdf
   licence: US government record released under FOIA (27 Apr 2005), public domain
-  use: Annex A county tables of direct-effects risk, transcribed in full (data/curated/napb90/)
+  use: Annex A county tables of direct-effects risk and Annex B county tables of fallout risk,
+    transcribed in full (data/curated/napb90/)
   role: labels
   retrieved: '2026-10-03'
   sha256: 3e884fd89adc43025d2c19f51e52f1a55b52402605ad267588de06113b836bb0
+- id: geonames_dk
+  url: https://download.geonames.org/export/dump/DK.zip
+  path: geonames/DK.zip
+  licence: CC BY 4.0 (GeoNames)
+  use: coordinates of the census towns of Denmark (transfer regions, nucprob/transfer/places.py)
+  role: universe
+  retrieved: '2026-10-10'
+  sha256: 55c350388163a1fea1cdbd870832446765edf287dc6e9054d52a06de0478f283
+- id: geonames_nl
+  url: https://download.geonames.org/export/dump/NL.zip
+  path: geonames/NL.zip
+  licence: CC BY 4.0 (GeoNames)
+  use: coordinates of the census towns of the Netherlands (transfer regions, nucprob/transfer/places.py)
+  role: universe
+  retrieved: '2026-10-10'
+  sha256: cb4933df2c26ba034bf8bd576e5084897bc43ac02c480f036d2d0b900b8b2fb9
+- id: geonames_be
+  url: https://download.geonames.org/export/dump/BE.zip
+  path: geonames/BE.zip
+  licence: CC BY 4.0 (GeoNames)
+  use: coordinates of the census towns of Belgium (transfer regions, nucprob/transfer/places.py)
+  role: universe
+  retrieved: '2026-10-10'
+  sha256: a6f1716316633779093f58a0eb8b8c7ed4f2461d889f8b8e9e00b15a8956dac1
+- id: geonames_at
+  url: https://download.geonames.org/export/dump/AT.zip
+  path: geonames/AT.zip
+  licence: CC BY 4.0 (GeoNames)
+  use: coordinates of the census towns of Austria (transfer regions, nucprob/transfer/places.py)
+  role: universe
+  retrieved: '2026-10-10'
+  sha256: f5279ec6020cb4762dbd7ab149430ef0b9d2ccb6f82c643238d218493916b0d5
+- id: geonames_it
+  url: https://download.geonames.org/export/dump/IT.zip
+  path: geonames/IT.zip
+  licence: CC BY 4.0 (GeoNames)
+  use: coordinates of the census towns of Italy (transfer regions, nucprob/transfer/places.py)
+  role: universe
+  retrieved: '2026-10-10'
+  sha256: 4c241592e0f34f1760982be46042ae9ff39d2af26c2277dc4ad4b9552a814614
+- id: geonames_gb
+  url: https://download.geonames.org/export/dump/GB.zip
+  path: geonames/GB.zip
+  licence: CC BY 4.0 (GeoNames)
+  use: coordinates of the census towns of the United Kingdom (transfer regions, nucprob/transfer/places.py)
+  role: universe
+  retrieved: '2026-10-10'
+  sha256: eefc08df408aa4c3218151b5d9ca73768555fafac676a2ce5d612e2007c1f32a
+- id: geonames_jp
+  url: https://download.geonames.org/export/dump/JP.zip
+  path: geonames/JP.zip
+  licence: CC BY 4.0 (GeoNames)
+  use: coordinates of the census towns of Japan (transfer regions, nucprob/transfer/places.py)
+  role: universe
+  retrieved: '2026-10-10'
+  sha256: f0e39e6f0df79934c69adc9e8ade4ab415f16d3e57840ea8580c3b9d32adfd58
+- id: geonames_ca
+  url: https://download.geonames.org/export/dump/CA.zip
+  path: geonames/CA.zip
+  licence: CC BY 4.0 (GeoNames)
+  use: coordinates of the census towns of Canada (transfer regions, nucprob/transfer/places.py)
+  role: universe
+  retrieved: '2026-10-10'
+  sha256: bb6b148ffe8b2576b7e75b664925411036c3fd85db5a660d1d1bf5622a6d216c
+- id: geonames_us
+  url: https://download.geonames.org/export/dump/US.zip
+  path: geonames/US.zip
+  licence: CC BY 4.0 (GeoNames)
+  use: coordinates of the census towns of the United States (transfer regions, nucprob/transfer/places.py)
+  role: universe
+  retrieved: '2026-10-10'
+  sha256: 06775ef2f48a8e80ced51afb160aedc9aafc6d0fdc7e770506e8e4bae61140b2
+- id: popstat_austria
+  url: https://pop-stat.mashke.org/austria-cities.htm
+  path: popstat/austria-cities.htm
+  licence: no licence stated (T. Bespyatov); census figures are used, the page is not redistributed
+  use: 'Austria in the transfer region wp_west_1965: towns of 10,000+ at the census of 21 March 1961'
+  role: universe
+  retrieved: '2026-10-10'
+  sha256: ea04ababe90d4d97e9e9fa325147a277482cb21970dc1fe601cbc683fdd16836

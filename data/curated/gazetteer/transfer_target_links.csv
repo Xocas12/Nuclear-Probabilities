@@ -1,0 +1,20 @@
+plan_id,seq,lat,lon,located_as,notes
+wp_1967_lato67,46,55.2827,12.3888,3 km S of Store Heddinge,"offset as printed, from GeoNames' point of the town"
+wp_1967_lato67,47,55.53,12.1821,8 km N of Køge,"offset as printed, from GeoNames' point of the town"
+wp_1967_lato67,48,55.3231,12.1821,15 km S of Køge,"offset as printed, from GeoNames' point of the town"
+wp_1967_lato67,49,55.9279,12.3811,5 km E of Hillerød,"offset as printed, from GeoNames' point of the town"
+wp_1967_lato67,50,55.586,12.5655,10 km S of Copenhagen,"offset as printed, from GeoNames' point of the town"
+wp_1967_lato67,56,56.0358,12.3008,12 km N of Hillerød,"offset as printed, from GeoNames' point of the town"
+wp_1967_lato67,36,56.2969,9.1247,Karup air base,Flyvestation Karup (printed: 20 km SW of Viborg)
+wp_1967_lato67,45,51.866,5.1222,25 km S of Utrecht,place name as typed not identified; the printed offset
+wp_1967_lato67,44,51.4501,5.3745,Eindhoven air base,"name partly illegible, probably Eindhoven (list note)"
+wp_1967_lato67,9,51.98,5.91111,Arnhem,"run-together АРНХЕНАМСТЕРДАМ, part 1 (list note: probably Arnhem)"
+wp_1967_lato67,10,52.37403,4.88969,Amsterdam,"run-together АРНХЕНАМСТЕРДАМ, part 2 (list note: probably Amsterdam)"
+wp_1961_burza,21,52.0009,5.1222,10 km S of Utrecht,"troop concentration south of Utrecht; distance not printed, 10 km assumed"
+wp_1961_burza,3,55.6161,12.1254,4 km SE of Roskilde,offset as printed
+wp_1961_burza,5,55.3194,12.45,Stevnsfort,the Cold War fort at Stevns (Boesdal)
+wp_1977_zealand,6,55.3194,12.45,Stevnsfort,the Cold War fort at Stevns (Boesdal)
+wp_1970_coastal_front_map,1,55.3194,12.45,Stevnsfort,the Cold War fort at Stevns (Boesdal)
+wp_1977_zealand,7,55.5639,12.2867,Mosede Fort,"Mosede Fort, Greve"
+wp_1977_zealand,4,55.3096,12.3888,Store Heddinge,town and vicinity
+cd_1956_canada_target_areas,3,45.41117,-75.69812,Ottawa,Ottawa-Hull target area: Ottawa's point (Hull lies across the river)
