@@ -17,6 +17,7 @@ class Region:
     military: str = ""  # curated military table in data/curated/features/, if any
     note: str = ""
     extra: dict = field(default_factory=dict)
+    withheld: tuple[tuple[str, str, str], ...] = ()  # countries with a table not yet complete
 
 
 REGIONS = {
@@ -24,7 +25,8 @@ REGIONS = {
         "Warsaw Pact targets in NATO Europe and Austria, 1961-1977",
         1965,
         (
-            ("FRG", "DE", "towns_frg_1961"),
+            # The FRG table is partial (about 356 of 583 towns; no official 1961 table could
+            # be fetched, see towns_frg_1961.md), so the FRG is withheld from the universe.
             ("Denmark", "DK", "towns_dk_1960"),
             ("Netherlands", "NL", "towns_nl_1960"),
             ("Belgium", "BE", "towns_be_1961"),
@@ -43,6 +45,7 @@ REGIONS = {
         ),
         military="weurope_military_sites_1965.csv",
         note="one universe for the 1960s plans; the 1970s lists use it too",
+        withheld=(("FRG", "DE", "towns_frg_1961"),),
     ),
     "uk_1980": Region(
         "The United Kingdom, 1980",
