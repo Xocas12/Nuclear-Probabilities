@@ -91,6 +91,7 @@ Lines that the checks still flag after the second look, with its outcome (checks
 | Check | Lines | Confirmed as printed | Not re-read |
 |---|---|---|---|
 | name a letter away from a nearby name | 10 | 10 | 0 |
+| letter struck for a digit | 6 | 0 | 6 |
 | WAC prefix differs from its block | 4 | 4 | 0 |
 | DGZ far from its header | 3 | 3 | 0 |
 | airfield row does not match the expected format | 3 | 3 | 0 |
