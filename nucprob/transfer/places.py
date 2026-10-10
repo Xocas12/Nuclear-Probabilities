@@ -120,10 +120,16 @@ class Gazetteer:
         for k in variants(*names):
             if k in self.index:
                 return self.best(self.index[k], admin1), "name"
+        # A fuzzy hit must lie in the town's own first-order unit, where the table gives one.
+        a = key(admin1)
         for k in variants(*names):
-            hit = process.extractOne(k, self.fuzzy_keys, scorer=fuzz.ratio, score_cutoff=90)
-            if hit:
-                return int(self.fuzzy_rows[hit[2]]), "fuzzy"
+            for _, _, j in process.extract(
+                k, self.fuzzy_keys, scorer=fuzz.ratio, score_cutoff=90, limit=10
+            ):
+                i = int(self.fuzzy_rows[j])
+                b = key(self.g.at[i, "admin1_name"])
+                if not a or (b and (a in b or b in a)):
+                    return i, "fuzzy"
         return None, "not found"
 
 
