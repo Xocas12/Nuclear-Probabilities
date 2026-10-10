@@ -23,9 +23,10 @@ Outputs (data/curated/sac1956/excerpts/):
 """
 
 import csv
+import itertools
 import re
 import sys
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -96,10 +97,90 @@ def crossref(lines: list[dict]) -> list[dict]:
 
 
 def coord_key(row: dict) -> tuple:
-    return (round(float(row["lat"]), 3), round(float(row["lon"]), 3)) if row["lat"] != "" else ()
+    try:
+        return (round(float(row["lat"]), 3), round(float(row["lon"]), 3))
+    except (TypeError, ValueError):  # a coordinate with a "?" or none at all
+        return ()
 
 
-def compare_complexes(part2: dict, part1: list[dict], dgz1: list[dict], inst1: list[dict]):
+def line_key(line_id: str) -> tuple:
+    page, label = line_id.split("-")
+    return (page, int(label[1:].rstrip("+")), label.count("+"))
+
+
+def page_breaks(part2: dict, part1: list[dict], dgz1: list[dict], inst1: list[dict]) -> dict:
+    """Find where the excerpt skips pages, and which Part II complexes are seen whole.
+
+    The R pages are a selection, so the lines at the top of a page may continue a complex that
+    began on a page not published, and the last complex of a page may run on into one. Part II
+    lists the same complexes in the same order as Part I, with the same installations, so Part I
+    tells which complex the leading lines of a page belong to (by BE number or aim-point
+    coordinates). Leading lines that belong to another complex than the one open at the end of
+    the previous R page are detached (complex_id empty, `part1_owner` set), and the open
+    complex is cut. A complex counts as whole when it is not cut and the next complex header in
+    the excerpt is its successor in Part I. Returns {complex id: whole?}."""
+    top1 = {c["id"]: (c["parent_id"] or c["id"]) for c in part1}
+    ref1 = {c["id"]: c["ref"] for c in part1}
+    owner = {}
+    for i in inst1:
+        owner.setdefault(
+            ("i", i["category"], i["be_wac"], i["be_number"]), ref1[top1[i["complex_id"]]]
+        )
+    for d in dgz1:
+        owner.setdefault(("d", *coord_key(d)), ref1[top1[d["complex_id"]]])
+    tops = [c["ref"] for c in part1 if c["level"] == "complex" and c["ref"]]
+    successor = dict(itertools.pairwise(tops))
+    items = [("c", c) for c in part2["complexes"]]
+    items += [("d", d) for d in part2["dgzs"]] + [("i", i) for i in part2["installs"]]
+    items.sort(key=lambda x: line_key(x[1]["id"]))
+    current, cut, order = None, set(), []
+    page, leading = None, []
+
+    def settle() -> None:
+        nonlocal current
+        if not leading:
+            return
+        keys = [
+            ("i", r["category"], r["be_wac"], r["be_number"]) if k == "i" else ("d", *coord_key(r))
+            for k, r in leading
+        ]
+        votes = Counter(owner[k] for k in keys if k in owner)
+        if votes and current is not None and votes.most_common(1)[0][0] != current["ref"]:
+            cut.add(current["id"])
+            for _, r in leading:
+                r["complex_id"] = ""
+                r["part1_owner"] = votes.most_common(1)[0][0]
+            current = None
+        leading.clear()
+
+    for kind, r in items:
+        if r["page"] != page:
+            settle()
+            page = r["page"]
+            at_top = True
+        if kind == "c":
+            at_top = False
+            settle()
+            if r["level"] == "complex":
+                current = r
+                order.append(r)
+            continue
+        if at_top:
+            leading.append((kind, r))
+    settle()
+    whole = {}
+    for a, b in itertools.pairwise([*order, None]):
+        whole[a["id"]] = (
+            a["id"] not in cut and b is not None and successor.get(a["ref"]) == b["ref"]
+        )
+    for r in part2["dgzs"] + part2["installs"]:
+        r.setdefault("part1_owner", "")
+    return whole
+
+
+def compare_complexes(
+    part2: dict, part1: list[dict], dgz1: list[dict], inst1: list[dict], whole: dict
+):
     """Each Part II complex (top level) beside the Part I complex with the same reference."""
     by_ref = {c["ref"]: c for c in part1 if c["level"] == "complex" and c["ref"]}
     subs1, aims1, insts1 = defaultdict(list), defaultdict(list), defaultdict(list)
@@ -114,9 +195,11 @@ def compare_complexes(part2: dict, part1: list[dict], dgz1: list[dict], inst1: l
     top2 = {c["id"]: (c["parent_id"] or c["id"]) for c in part2["complexes"]}
     aims2, insts2, subs2 = defaultdict(list), defaultdict(list), defaultdict(list)
     for d in part2["dgzs"]:
-        aims2[top2[d["complex_id"]]].append(d)
+        if d["complex_id"]:
+            aims2[top2[d["complex_id"]]].append(d)
     for i in part2["installs"]:
-        insts2[top2[i["complex_id"]]].append(i)
+        if i["complex_id"]:
+            insts2[top2[i["complex_id"]]].append(i)
     for c in part2["complexes"]:
         if c["parent_id"]:
             subs2[c["parent_id"]].append(c)
@@ -131,6 +214,7 @@ def compare_complexes(part2: dict, part1: list[dict], dgz1: list[dict], inst1: l
             "ref": c["ref"],
             "name": c["name"],
             "part2_priority": c["priority"],
+            "seen_whole": whole.get(c["id"], False),
             "part2_dgz": len(a2),
             "part2_installations": len(i2),
             "part2_subcomplexes": len(subs2[c["id"]]),
@@ -234,7 +318,8 @@ def main() -> None:
     part1, dgz1, inst1, af2 = (
         read(n) for n in ("complexes.csv", "dgz.csv", "installations.csv", "airfields.csv")
     )
-    versus = compare_complexes(part2, part1, dgz1, inst1)
+    whole = page_breaks(part2, part1, dgz1, inst1)
+    versus = compare_complexes(part2, part1, dgz1, inst1, whole)
     af_versus = compare_airfields(part1_af, af2)
     lost, span = lost_page(xref, part1)
 
@@ -257,7 +342,7 @@ def report(t, part2, part1_af, xref, versus, af_versus, lost, span, part1) -> No
     entries = [x for x in xref if x["level"] == "entry"]
     refs1 = {c["ref"] for c in part1 if c["level"] == "complex"}
     names1 = {c["name"] for c in part1}
-    matched = [v for v in versus if v["part1_id"]]
+    matched = [v for v in versus if v["part1_id"] and v["seen_whole"]]
     out = [
         "# SAC 1956 excerpts: report",
         "",
@@ -282,8 +367,13 @@ def report(t, part2, part1_af, xref, versus, af_versus, lost, span, part1) -> No
         "",
         "## Part II complexes against Part I",
         "",
-        f"- {len(matched)} of {len(versus)} Part II complexes carry the reference number of a "
-        "Part I complex.",
+        f"- {sum(bool(v['part1_id']) for v in versus)} of {len(versus)} Part II complexes carry the "
+        "reference number of a Part I complex, and all have the same priority: "
+        f"{all(v['part1_priority'] == v['part2_priority'] for v in versus if v['part1_id'])}.",
+        f"- Seen whole (not cut by a page the excerpt skips): {len(matched)}. The figures below "
+        "are for these.",
+        f"- Lines at the top of a page that belong to a complex begun on an unpublished page: "
+        f"{sum(bool(r['part1_owner']) for r in part2['dgzs'] + part2['installs'])}",
     ]
     if matched:
         same_name = sum(v["name"] == v["part1_name"] for v in matched)
