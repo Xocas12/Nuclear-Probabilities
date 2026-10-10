@@ -970,3 +970,75 @@ sources:
   role: universe
   retrieved: '2026-10-10'
   sha256: ea04ababe90d4d97e9e9fa325147a277482cb21970dc1fe601cbc683fdd16836
+- id: census_ca_1956
+  url: https://archive.org/details/canada-statistics-canada-canada-year-book_1957-1958
+  path: canada/cyb1957/canada-statistics-canada-canada-year-book_1957-1958_djvu.txt
+  licence: Canada Year Book 1957-58 (Dominion Bureau of Statistics), Crown copyright, out of print
+  use: 'Canada 1956 transfer universe: incorporated centres of 10,000+ (towns_ca_1956.csv)'
+  role: universe
+  retrieved: '2026-10-10'
+  sha256: 4ea332714ce0914cf59c27004d7f212442125226e5bb0c01b4b1946e7e700b70
+- id: census_dk_1960
+  url: https://www.dst.dk/pubfile/13352/areal
+  path: denmark/aarbog1961_areal.pdf
+  licence: Statistics Denmark publication, free reuse
+  use: 'Denmark 1960 transfer universe: towns of 10,000+ (towns_dk_1960.csv)'
+  role: universe
+  retrieved: '2026-10-10'
+  sha256: 4c41317ed9cca66024be710504011df62b3d446cfd987c5feb09c282e2151fb3
+- id: census_nl_1960
+  url: https://doi.org/10.17026/DANS-XSC-VKWS
+  path: netherlands/VT_1960_02.pdf
+  licence: CBS census volume via DANS (open access)
+  use: 'Netherlands 1960 transfer universe: municipalities of 10,000+ (towns_nl_1960.csv)'
+  role: universe
+  retrieved: '2026-10-10'
+  sha256: 2ee84898f4050cc9d2bc0763e8af580ac82863105e045b2270731b7af3c5f706
+- id: census_be_1961
+  url: https://doc.statbel.fgov.be/publications/S210.A7/S210.A7F_Recensement_1961_Tome_01.pdf
+  path: belgium/S210.A7F_Recensement_1961_Tome_01.pdf
+  licence: Statbel publication, free reuse
+  use: 'Belgium 1961 transfer universe: communes of 10,000+ (towns_be_1961.csv)'
+  role: universe
+  retrieved: '2026-10-10'
+  sha256: 925eda661e08cba45fa67d1715c8c745e293036430044b103abde42e723a2739
+- id: census_it_1961
+  url: https://ebiblio.istat.it/digibib/Censimenti%20popolazione/censpop1961/IST0005323Vol1_Dati_Riassuntivi_Comunali_e_Provinciali_Popolazione_e_Abitazioni+OCRottimizz.pdf
+  path: italy/IST0005323Vol1_Dati_Riassuntivi_Comunali_e_Provinciali.pdf
+  licence: ISTAT, CC BY
+  use: 'Italy 1961 transfer universe: comuni of 10,000+ (towns_it_1961.csv)'
+  role: universe
+  retrieved: '2026-10-10'
+  sha256: aa2b08afaae1ebcf99b6d03c311cbb0341406efaa122c6344b4757c4f7e6bbb1
+- id: census_uk_1981_nomis
+  url: https://www.nomisweb.co.uk/api/v01/dataset/NM_66_1.data.csv
+  path: uk/nomis_sas81_districts_tot.csv
+  licence: Open Government Licence (ONS/Nomis)
+  use: 'UK 1981 transfer universe: GB local government districts (towns_uk_1981.csv)'
+  role: universe
+  retrieved: '2026-10-10'
+  sha256: f2235286329448085101b255e58ba708e3b74712418e9439b80048df10c9b9d0
+- id: census_ni_1981
+  url: https://www.nisra.gov.uk/files/nisra/publications/1981-Census-towns-villages-booklet.pdf
+  path: uk/nisra_1981-Census-towns-villages-booklet.pdf
+  licence: Open Government Licence (NISRA)
+  use: 'UK 1981 transfer universe: Northern Ireland towns (towns_uk_1981.csv)'
+  role: universe
+  retrieved: '2026-10-10'
+  sha256: 427986aa7b3674907e32b24bddaf7f6f399f5e8359e3b7073a27d9c76abaeec5
+- id: census_jp_1940
+  url: https://www.e-stat.go.jp/stat-search/file-download?statInfId=000007914029&fileKind=2
+  path: japan/s15_7914028.pdf
+  licence: e-Stat (Statistics Bureau of Japan), government terms of use
+  use: 'Japan 1940 transfer universe: cities and towns of 10,000+ (towns_jp_1940.csv); one of the four Table 1 volumes'
+  role: universe
+  retrieved: '2026-10-10'
+  sha256: f7a037a764122525125877c1c38ec13ab35436844bbbaf7c3d5e2176fdbe2d7e
+- id: census_us_1950
+  url: https://www2.census.gov/library/publications/decennial/1950/population-volume-1/vol-01-04.pdf
+  path: united_states/vol-01-04.pdf
+  licence: US government work, public domain
+  use: 'USA 1950 transfer universe: urban places of 10,000+ (towns_us_1950.csv)'
+  role: universe
+  retrieved: '2026-10-10'
+  sha256: 67d94727a10dcc41e81023dc8dcdd5986725d9f907b017be3381c4d0227fdfc9

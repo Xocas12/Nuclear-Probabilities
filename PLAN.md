@@ -619,6 +619,29 @@ nuclear-probabilities/
 
 Phases 1 and 2 run side by side. Transcribing the labels is the long pole, so it starts first.
 
+**Progress (10 Oct 2026, evening).** M4 is done.
+- **NAPB-90 Annex B** (fallout risk by county, `data/curated/napb90/fallout_counties.csv`).
+  It covers 3,139 counties. Every county's population and area matches Annex A except six,
+  each checked on the scan. Massachusetts' printed totals leave out Barnstable and Berkshire
+  in both annexes. Fallout is a consequence, not a target label: it stays out of features.
+- **Transfer universes** (`data/curated/gazetteer/TRANSFER.md`, `nucprob/transfer/`). These
+  are census town tables:
+  - Japan 1940, the US 1950, Canada 1956;
+  - Denmark and the Netherlands 1960; Belgium, Austria and Italy 1961;
+  - the UK 1981, by district.
+  Every place is located, and each table has a card. Two curated military tables were added
+  (Western Europe 1965, the UK 1980). The FRG is withheld: no official 1961 table could be
+  fetched, and the Wikipedia-based table covers only about 60% of the towns.
+- **Transfer check** (`runs/m4-transfer-check/`). The check fits on the bloc's SAC labels
+  with the 20 common features and scores 16 lists; the bloc lists are scored leave-country-out.
+  - City lists (Canada 1956, Operation Alert, the 1945 Target Committee) are ranked by size,
+    and the bloc model adds nothing (ROC 0.92-0.98, population rule 0.96-0.98).
+  - Mixed civil and military lists (Square Leg, Lato-67, the Polish mirror list) gain a
+    little (0.70-0.76 against 0.66-0.74).
+  - This is a check, not a result.
+- **Left for M4's L items:** TR-82 and the DTIC appendices (blocked), the UK lists at Kew, the
+  print books, and an official FRG 1961 table.
+
 **Progress (10 Oct 2026, later).** M4 is done for the cheap lists, the first M list and its
 feature build.
 - **NAPB-90, the US at scale** (`data/curated/napb90/`). FEMA's county table of direct-effects

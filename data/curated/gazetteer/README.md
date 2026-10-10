@@ -73,3 +73,9 @@ a source has one, and coordinates from GeoNames. The rule is fixed before lookin
 Hand-checked GeoNames links for names the matcher cannot resolve. They cover towns renamed
 since the census whose old name GeoNames lacks, and East German names with a suffix that
 GeoNames drops ("Neuenhagen bei Berlin"). The two Oelsnitz are told apart by hand.
+
+## Transfer regions
+
+The place universes of the smaller target lists (census town tables of Japan 1940, the US 1950,
+Canada 1956, Denmark, the Netherlands, Belgium, Austria and Italy around 1961, and the UK 1981)
+are described in [TRANSFER.md](TRANSFER.md).

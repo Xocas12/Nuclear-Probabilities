@@ -15,11 +15,14 @@ targeting. The full design is in [PLAN.md](PLAN.md).
   - Part II keeps the same complexes as Part I with about a third of the aim points, kept by
     the top-priority complexes (a second label, `part2_has_dgz`).
   - Other target lists, each with a data card and provenance tag: `data/INVENTORY.md`.
-- **Milestone M4, more labels.** FEMA's NAPB-90 county table (the US, 1987) is transcribed
-  in full (`data/curated/napb90/`). The US counties are described as of 1985
-  (`nucprob/us1985/`, `data/FEATURES_US.md`), with a check run in `runs/m4-us-check/`.
-  Smaller lists were added for the Taiwan Strait (1958), China (JCS 1963) and Operation
-  Alert (1955).
+- **Milestone M4, more labels (done).** FEMA's NAPB-90 county tables (the US, 1987) are
+  transcribed in full: Annex A (blast) and Annex B (fallout), `data/curated/napb90/`. The US
+  counties are described as of 1985 (`nucprob/us1985/`, `data/FEATURES_US.md`), with a check
+  run in `runs/m4-us-check/`. Smaller lists were added for the Taiwan Strait (1958), China
+  (JCS 1963) and Operation Alert (1955). The smaller lists now have place universes from
+  1940-1981 censuses (Japan, the US, Canada, Denmark, the Netherlands, Belgium, Austria,
+  Italy, the UK), the bloc's features built the same way, and a transfer check
+  (`data/curated/gazetteer/TRANSFER.md`, `runs/m4-transfer-check/`).
 - **Milestone M1, the vertical slice.** USSR only: 1,635 towns of 10,000+ in 1959 with census
   populations and coordinates, linked to the SAC targets, with population and administrative
   features, and three kinds of model under spatial cross-validation (`runs/m1-slice/`). The
