@@ -9,8 +9,7 @@ column sum,NEW YORK,A148,l_pop,2141440,943560,1197880
 column sum,PENNSYLVANIA,A157,vh_pop,9085215,9115680,-30465
 column sum,PENNSYLVANIA,A157,vh_area,21070,20270,800
 column sum,PENNSYLVANIA,A157,h_pop,385141,338141,47000
-column sum,PENNSYLVANIA,A157,m_pop,1339200,1186856,152344
-column sum,PENNSYLVANIA,A157,m_area,7316,6535,781
+column sum,PENNSYLVANIA,A157,m_pop,1180321,1186856,-6535
 column sum,PENNSYLVANIA,A157,l_pop,1258406,1268406,-10000
 column sum,PENNSYLVANIA,A157,l_area,16254,17054,-800
 split lines,PENNSYLVANIA,A157,l_pop,1258406,1268406,-10000
@@ -52,8 +51,7 @@ column sum,WISCONSIN,A219,m_pop,93613,96613,-3000
 column sum,WISCONSIN,A219,l_pop,3003166,3000166,3000
 column sum,WISCONSIN,A219,l_area,47787,48931,-1144
 split lines,WISCONSIN,A219,l_area,49201,48931,270
-column sum,LOUISIANA,A226,l_pop,1420828,1408852,11976
-column sum,LOUISIANA,A226,l_area,25338,24912,426
+column sum,LOUISIANA,A226,l_pop,1409452,1408852,600
 column sum,TEXAS,A240,vh_pop,11956716,11956816,-100
 column sum,TEXAS,A240,l_pop,3344355,3344255,100
 column sum,KANSAS,A249,vh_pop,1240903,1241903,-1000
@@ -94,7 +92,6 @@ census 1985 differs by a third or more,FLORIDA,,Alachua (12001),789260,169515,61
 census 1985 differs by a third or more,KENTUCKY,,Martin (21159),1063,13869,-12806
 census 1985 differs by a third or more,OHIO,,Columbiana (39029),11603,109127,-97524
 census 1985 differs by a third or more,NEW MEXICO,,Valencia (35061),70975,36616,34359
-census 1985 differs by a third or more,MISSOURI,,St Louis (29510),990381,426737,563644
 no census match,TERRITORY OF AMERICAN SAMOA,,Entire Territory,35000,,
 no census match,TERRITORY OF GUAM,,Entire Territory,112900,,
 no census match,U.S. TRUST TERRITORY,,Entire Territory,116149,,

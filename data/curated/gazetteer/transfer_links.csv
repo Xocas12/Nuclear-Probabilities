@@ -1,0 +1,24 @@
+country,name,lat,lon,located_as,notes
+Denmark,Lyngby-Tårbæk,55.77044,12.50378,Kongens Lyngby,municipality: its seat
+Netherlands,Haarlemmermeer,52.3025,4.68889,Hoofddorp,municipality: its seat
+Netherlands,Noordoostelijke Polder,52.71083,5.74861,Emmeloord,municipality: its seat
+Netherlands,Smallingerland,53.11254,6.0989,Drachten,municipality: its seat
+Netherlands,Hoogezand-Sappemeer,53.16167,6.76111,Hoogezand,municipality: its seat
+Netherlands,Weststellingwerf,52.87545,5.99691,Wolvega,municipality: its seat
+Netherlands,Opsterland,53.05914,6.07711,Beetsterzwaag,municipality: its seat
+Netherlands,Tietjerksteradeel,53.19243,5.99009,Burgum,municipality: its seat
+Netherlands,Achtkarspelen,53.25166,6.14483,Buitenpost,municipality: its seat
+Netherlands,Ooststellingwerf,52.99164,6.29096,Oosterwolde,municipality: its seat
+Netherlands,Dantumadeel,53.29046,5.99785,Damwâld,municipality: its seat
+Netherlands,Wonseradeel,53.10452,5.46902,Witmarsum,municipality: its seat
+Netherlands,Zwollerkerspel,52.5125,6.09444,Zwolle,rural municipality around Zwolle (merged 1967); the town's point
+Netherlands,Haskerland,52.9657,5.80301,Joure,municipality: its seat
+Netherlands,Wymbritseradeel,53.01009,5.62312,IJlst,municipality around Sneek and IJlst; IJlst's point
+Netherlands,Texel,53.05417,4.79722,Den Burg,island municipality: its seat
+Netherlands,Menaldumadeel,53.2,5.65,Dronrijp,municipality: its seat
+Canada,Jacques-Cartier,45.53,-73.48,Jacques-Cartier (now Longueuil),former city merged into Longueuil 1969; approximate centre
+Canada,Kénogami,48.42,-71.23,Kénogami (now Jonquière),former town merged into Jonquière 1975; approximate centre
+Canada,Lauzon,46.83,-71.17,Lauzon (now Lévis),former town merged into Lévis 1989; approximate centre
+Canada,Noranda,48.24,-79.02,Rouyn-Noranda,former city merged with Rouyn 1986
+Canada,St. James,49.88,-97.25,St. James (now Winnipeg),former city merged into Winnipeg 1972; approximate centre
+Canada,Jasper Place,53.53,-113.58,Jasper Place (now Edmonton),former town annexed by Edmonton 1964; approximate centre

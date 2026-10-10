@@ -1,0 +1,90 @@
+{
+  "milestone": "M4 transfer check",
+  "created": "2026-10-10T19:44:17+00:00",
+  "git_commit": "72ad9b9799ceac2308eea9741212fc5ff12f660c",
+  "data": {
+    "dataset_sac1956.parquet": "9d237ec9afcf8e007c16e501dcbc3f708088c7ba7e2f0e2d1e9f00b797c7ec8a",
+    "features_transfer.parquet": "2648c456b5a4b22411228e494fed2a2936451509d9420c8691a87ba56ff094ef",
+    "labels_transfer.parquet": "2ae0af23ada3b316526353a0763af8381ee0f2aa88589855e19993ced3f7cf9a"
+  },
+  "train": {
+    "rows": 2127,
+    "positives": 1011
+  },
+  "models": {
+    "population rule": [
+      "log_pop"
+    ],
+    "logistic, common": [
+      "log_pop",
+      "pop_rank_pct",
+      "log_pop_within_25km",
+      "log_pop_within_50km",
+      "log_pop_within_100km",
+      "log_km_to_100k",
+      "national_capital",
+      "regional_centre",
+      "log_km_to_capital",
+      "elevation_m",
+      "log_relief_10km",
+      "log_km_to_coast",
+      "log_power_mw_25km",
+      "log_airfields_10km",
+      "log_airfields_25km",
+      "log_airfields_50km",
+      "log_km_to_rail",
+      "rail_lines_5km",
+      "log_km_to_port",
+      "log_km_to_major_river"
+    ],
+    "LightGBM, common": [
+      "log_pop",
+      "pop_rank_pct",
+      "log_pop_within_25km",
+      "log_pop_within_50km",
+      "log_pop_within_100km",
+      "log_km_to_100k",
+      "national_capital",
+      "regional_centre",
+      "log_km_to_capital",
+      "elevation_m",
+      "log_relief_10km",
+      "log_km_to_coast",
+      "log_power_mw_25km",
+      "log_airfields_10km",
+      "log_airfields_25km",
+      "log_airfields_50km",
+      "log_km_to_rail",
+      "rail_lines_5km",
+      "log_km_to_port",
+      "log_km_to_major_river"
+    ],
+    "LightGBM, common + military": [
+      "log_pop",
+      "pop_rank_pct",
+      "log_pop_within_25km",
+      "log_pop_within_50km",
+      "log_pop_within_100km",
+      "log_km_to_100k",
+      "national_capital",
+      "regional_centre",
+      "log_km_to_capital",
+      "elevation_m",
+      "log_relief_10km",
+      "log_km_to_coast",
+      "log_power_mw_25km",
+      "log_airfields_10km",
+      "log_airfields_25km",
+      "log_airfields_50km",
+      "log_km_to_rail",
+      "rail_lines_5km",
+      "log_km_to_port",
+      "log_km_to_major_river",
+      "log_km_to_naval_base",
+      "log_km_to_lra_base",
+      "log_km_to_nuclear_site"
+    ]
+  },
+  "min_positives": 2,
+  "note": "a check of the transfer pipeline, not results: the protocol is frozen at M5"
+}
