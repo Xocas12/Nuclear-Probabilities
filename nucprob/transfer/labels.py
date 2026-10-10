@@ -11,6 +11,9 @@ Hand-checked points in data/curated/gazetteer/transfer_target_links.csv (plan_id
 located_as) take precedence. A target with no point, or with no town within LINK_KM (an airfield
 or missile site in the country), stays unlinked; the link report lists both.
 
+The other side's lists of targets in the bloc (BLOC_LISTS) are linked the same way to the bloc's
+1956 universe, leaving out the places of the sealed test.
+
 Writes data/processed/transfer_links.csv (one row per target in a region) and
 data/processed/labels_transfer.parquet (one row per place and list: n_targets, listed).
 """
@@ -30,6 +33,22 @@ LABELS = CURATED / "labels"
 PREFIX = re.compile(
     r"^\s*(m\.|g\.|vicinity of|area of|the|fort(ification)?( in)?|headquarters of( the)?)\s+",
     re.I,
+)
+# The other side's lists of targets in the bloc (NATO's mirror lists from Warsaw Pact
+# exercises, US lists for China), scored on the bloc's 1956 universe: list country ->
+# (GeoNames code, country_1956). Only the targets in the named countries are linked.
+BLOC = "bloc_1956"
+BLOC_LISTS_COUNTRIES = {
+    "Poland": ("PL", "Poland"),
+    "Hungary": ("HU", "Hungary"),
+    "PRC": ("CN", "China"),
+}
+BLOC_LISTS = (
+    "nato_1962_pl_exercise_mirror",
+    "nato_1965_hu_wargame_mirror",
+    "us_1958_taiwan_strait",
+    "us_1963_jcs_china_vulnerability",
+    "us_1964_china_nuclear",
 )
 # Target-country spellings of the lists, by the region's country names.
 COUNTRY = {
@@ -59,16 +78,45 @@ def hand_links() -> dict[tuple[str, int], tuple[float, float, str]]:
     }
 
 
-def link() -> pd.DataFrame:
+def bloc_towns() -> pd.DataFrame:
+    """The bloc's 1956 universe (sealed test places included, so that a target links to its
+    true nearest town; labels() drops them), with the list's spelling of each country."""
+    d = pd.read_parquet(PROCESSED / "dataset_sac1956.parquet")
+    names = {v[1]: k for k, v in BLOC_LISTS_COUNTRIES.items()}
+    d = d[d["country_1956"].isin(names)]
+    return pd.DataFrame(
+        {
+            "place_id": d["place_id"],
+            "region": BLOC,
+            "country": d["country_1956"].map(names),
+            "name": d["name_1956"],
+            "name_today": d["gn_name"],
+            "pop": d["pop"],
+            "lat": d["lat"],
+            "lon": d["lon"],
+            "sealed": d["sealed"],
+        }
+    )
+
+
+def universes():
+    """(region id, {list country: GeoNames code}, towns, lists) for every transfer region and
+    for the bloc's mirror lists."""
     places = pd.read_parquet(PROCESSED / "transfer_places.parquet")
-    places = places[places["lat"].notna()]
+    places = places[places["lat"].notna()].assign(sealed=False)
+    for region_id, region in REGIONS.items():
+        codes = {c: g for c, g, _ in region.countries}
+        yield region_id, codes, places[places["region"] == region_id], region.lists
+    codes = {k: v[0] for k, v in BLOC_LISTS_COUNTRIES.items()}
+    yield BLOC, codes, bloc_towns(), tuple(BLOC_LISTS)
+
+
+def link() -> pd.DataFrame:
     hand = hand_links()
     gaz: dict[str, Gazetteer] = {}
     rows = []
-    for region_id, region in REGIONS.items():
-        codes = {c: g for c, g, _ in region.countries}
-        towns = places[places["region"] == region_id]
-        for plan in region.lists:
+    for region_id, codes, towns, plans in universes():
+        for plan in plans:
             lst = pd.read_csv(LABELS / f"{plan}.csv", dtype=str, keep_default_na=False)
             for _, t in lst.iterrows():
                 country = COUNTRY.get(t["target_country"], t["target_country"])
@@ -130,16 +178,13 @@ def link() -> pd.DataFrame:
 
 
 def labels(links: pd.DataFrame) -> pd.DataFrame:
-    places = pd.read_parquet(PROCESSED / "transfer_places.parquet")
-    places = places[places["lat"].notna()]
     out = []
-    for region_id, region in REGIONS.items():
-        for plan in region.lists:
+    for region_id, _, towns, plans in universes():
+        towns = towns[~towns["sealed"]]
+        for plan in plans:
             sub = links[(links["plan_id"] == plan) & (links["place_id"] != "")]
             countries = set(links.loc[links["plan_id"] == plan, "target_country"])
-            own = places.loc[
-                (places["region"] == region_id) & places["country"].isin(countries), "place_id"
-            ]
+            own = towns.loc[towns["country"].isin(countries), "place_id"]
             n = sub["place_id"].value_counts()
             out.append(
                 pd.DataFrame(

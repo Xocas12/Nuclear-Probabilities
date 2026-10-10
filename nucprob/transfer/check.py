@@ -6,7 +6,9 @@ smaller lists?
 Fits on the bloc's SAC 1956 dataset (dataset_sac1956.parquet, sealed test and unknown labels
 excluded, target `listed`) with the common features only (nucprob.transfer.features.COMMON, plus the three
 military distances where a region has them), and scores every list over the towns of the
-countries it names. The population rule is the baseline. Lists with fewer than MIN_POSITIVES
+countries it names. The other side's lists of targets in the bloc (NATO's mirror lists, the US
+lists for China) are scored on the bloc's own 1956 places, by a model fitted without the
+list's country (and without the sealed test). The population rule is the baseline. Lists with fewer than MIN_POSITIVES
 linked towns are reported without metrics. A check that the transfer pipeline joins end to
 end, not results: the lists are small, one-sided (exercises, defender studies) and differ in
 what they count as a target.
@@ -25,6 +27,7 @@ from nucprob.model.zoo import lightgbm, logistic
 from nucprob.paths import PROCESSED, RUNS
 from nucprob.sources.fetch import sha256
 from nucprob.transfer.features import COMMON, MILITARY_GROUPS
+from nucprob.transfer.labels import BLOC
 
 OUT = RUNS / "m4-transfer-check"
 MIN_POSITIVES = 2
@@ -43,13 +46,21 @@ def main() -> None:
         "LightGBM, common": (lightgbm, COMMON),
         "LightGBM, common + military": (lightgbm, COMMON + military),
     }
+    bloc_feats = full[["place_id", "country_1956", *COMMON, *military]].assign(region=BLOC)
+    feats = pd.concat([feats, bloc_feats], ignore_index=True)
     scores = labels.merge(feats, on=["place_id", "region"], how="left")
+    held_out = scores["country_1956"].fillna("")
     for name, (factory, cols) in models.items():
-        m = factory()
-        if factory is lightgbm:
-            m.set_params(n_jobs=1)  # many threads stall on a busy machine
-        m.fit(bloc[cols], bloc["listed"])
-        scores[name] = m.predict_proba(scores[cols])[:, 1]
+        scores[name] = float("nan")
+        # Transfer regions: fit on the whole bloc. Bloc lists: fit without the list's country.
+        for country in held_out.unique():
+            train = bloc[bloc["country_1956"] != country] if country else bloc
+            m = factory()
+            if factory is lightgbm:
+                m.set_params(n_jobs=1)  # many threads stall on a busy machine
+            m.fit(train[cols], train["listed"])
+            rows = held_out == country
+            scores.loc[rows, name] = m.predict_proba(scores.loc[rows, cols])[:, 1]
     rows = []
     for plan, g in scores.groupby("plan_id"):
         base = {
@@ -79,6 +90,7 @@ def main() -> None:
             )
         },
         "train": {"rows": len(bloc), "positives": int(bloc["listed"].sum())},
+        "bloc_lists": "fitted without the list's country (leave-country-out)",
         "models": {k: v[1] for k, v in models.items()},
         "min_positives": MIN_POSITIVES,
         "note": "a check of the transfer pipeline, not results: the protocol is frozen at M5",

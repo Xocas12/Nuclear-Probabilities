@@ -1,16 +1,17 @@
 {
   "milestone": "M4 transfer check",
-  "created": "2026-10-10T19:44:17+00:00",
-  "git_commit": "72ad9b9799ceac2308eea9741212fc5ff12f660c",
+  "created": "2026-10-10T19:50:12+00:00",
+  "git_commit": "e89f4dce3535717cd1edeb924f4896589ee889e9",
   "data": {
     "dataset_sac1956.parquet": "9d237ec9afcf8e007c16e501dcbc3f708088c7ba7e2f0e2d1e9f00b797c7ec8a",
     "features_transfer.parquet": "2648c456b5a4b22411228e494fed2a2936451509d9420c8691a87ba56ff094ef",
-    "labels_transfer.parquet": "2ae0af23ada3b316526353a0763af8381ee0f2aa88589855e19993ced3f7cf9a"
+    "labels_transfer.parquet": "ac58ef97fdec9078859792fb9bff3b76aa23a29e926c6d033746ef98b9c0e042"
   },
   "train": {
     "rows": 2127,
     "positives": 1011
   },
+  "bloc_lists": "fitted without the list's country (leave-country-out)",
   "models": {
     "population rule": [
       "log_pop"
