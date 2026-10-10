@@ -360,3 +360,15 @@ lists:
     completeness: superseded by the full transcription
     card: data/notes/sac1956.md
     caveats: kept for the record
+
+  - file: us_1963_jcs_china_vulnerability.csv
+    title: JCS study "Chinese Communist Vulnerability" (1963)
+    planner: US (Joint Chiefs of Staff)
+    targets: PRC
+    year: 1963
+    provenance: study
+    selection: judgment
+    use: transfer-test
+    completeness: the 9 places the study names (6 nuclear and missile sites, 3 rail transloading points)
+    card: data/notes/ebb38_china.md
+    caveats: selected is blank (the JCS rejected overt force without ruling on targets); two sites located only by distance from a city

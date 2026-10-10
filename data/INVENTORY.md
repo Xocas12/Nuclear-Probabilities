@@ -23,6 +23,7 @@ source are in `data/notes/`. Raw downloads are in `data/raw/` (not in git).
 | `us_1956_sac_complexes.csv` | 1215 | US (SAC) | Albania, Bulgaria, Czechoslovakia, GDR, Hungary, Mongolia, North Korea, North Vietnam, PRC, Poland, Romania, USSR | 1956 | study | 0 | 0 |
 | `us_1956_sac_part2_complexes.csv` | 43 | US (SAC) | Czechoslovakia, GDR, Hungary, Mongolia, PRC, Poland, Romania, USSR | 1956 | study | 0 | 25 |
 | `us_1958_taiwan_strait.csv` | 4 | US (CINCPACAF: Gen. Kuter), US (JCS, answer to Secretary Dulles), US (JCS: Gen. Twining, CJCS) | PRC | 1958 | study | 0 | 0 |
+| `us_1963_jcs_china_vulnerability.csv` | 9 | US (JCS) | PRC | 1963 | study | 0 | 0 |
 | `us_1964_china_nuclear.csv` | 2 | US | PRC | 1964 | study | 0 | 0 |
 | `wp_1959_r5m_operation_atom.csv` | 1 | USSR (R-5M missiles deployed at Vogelsang and Fürstenberg, GDR, 1959) | UK | 1959 | reconstruction | 1 | 0 |
 | `wp_1961_burza.csv` | 23 | Poland (Front Nadmorski / Maritime Front, exercise 'Burza') | Denmark, FRG, GDR, Netherlands | 1961 | exercise | 0 | 0 |
@@ -35,7 +36,7 @@ source are in `data/notes/`. Raw downloads are in `data/raw/` (not in git).
 | `wp_1977_zealand.csv` | 10 | Poland (Coastal Front / Front Nadmorski), landing operation on Zealand | Denmark | 1977 | plan | 10 | 0 |
 | `wp_1979_seven_days.csv` | 9 | Warsaw Pact/USSR (as attributed by Wikipedia) | Austria, Denmark, FRG, Italy | 1979 | reconstruction | 9 | 0 |
 
-Total: 29 files, 6391 rows.
+Total: 30 files, 6400 rows.
 
 ## Data cards
 
@@ -52,6 +53,7 @@ From `data/curated/labels/CATALOGUE.yaml` (checked by `tests/test_catalogue.py`)
 | `us_1958_taiwan_strait.csv` | Taiwan Strait crisis, nuclear strike options (Halperin, RAND RM-4900) | US (JCS, PACAF, Army) → PRC, 1958 | study | judgment | transfer-test | the 4 places named; the plans name only target types | the atomic target annex is not reproduced | data/notes/halperin_1958.md |
 | `wp_1961_burza.csv` | Exercise "Burza", Polish Maritime Front | Poland (Maritime Front) → Denmark, FRG, Netherlands, GDR, 1961 | exercise | judgment | transfer-test | the targets the companion documents name; the directive gives only counts | 7 rows are unit targets or unidentified places | data/notes/warsaw_pact.md (3) |
 | `nato_1962_pl_exercise_mirror.csv` | Polish command-staff map exercise, simulated NATO strikes, 1962 | Poland (simulating NATO, the "Westerners") → Poland, USSR, GDR, 1962 | exercise | judgment | transfer-test | all 76 strikes of the list | the defender's expectation of a NATO attack | data/notes/warsaw_pact.md (3) |
+| `us_1963_jcs_china_vulnerability.csv` | JCS study "Chinese Communist Vulnerability" (1963) | US (Joint Chiefs of Staff) → PRC, 1963 | study | judgment | transfer-test | the 9 places the study names (6 nuclear and missile sites, 3 rail transloading points) | selected is blank (the JCS rejected overt force without ruling on targets); two sites located only by distance from a city | data/notes/ebb38_china.md |
 | `us_1964_china_nuclear.csv` | Chinese nuclear facilities as targets (R. H. Johnson, 1964) | US (State Department Policy Planning) → PRC, 1964 | study | judgment | transfer-test | the two facilities named | the study recommends against action | data/notes/western.md (6) |
 | `wp_1964_csla_plan.csv` | Czechoslovak People's Army war plan, 1964 | Czechoslovakia (ČSLA, Soviet-approved) → FRG, 1964 | plan | judgment | transfer-test | the named targets and target areas of the plan's map and text | Nuremberg, Stuttgart and Munich are axes of advance, not targets | data/notes/warsaw_pact.md (1) |
 | `nato_1965_hu_wargame_mirror.csv` | Hungarian-Soviet war game, simulated NATO ("Westerners") strikes, 1965 | Hungary/USSR (simulating NATO) → Hungary, Czechoslovakia, USSR, 1965 | exercise | judgment | transfer-test | all 30 plan weapons | the defender's expectation of a NATO attack | data/notes/warsaw_pact.md (2) |
