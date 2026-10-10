@@ -1,0 +1,9 @@
+#page	region	FEMA REGION III -- FALLOUT RISK SUMMARY	B-35
+#header	25107876	120550
+row	Delaware	---	---	---	---	---	---	530229	1933	0
+row	Dist.of Columbia	---	---	---	---	---	---	618906	63	0
+row	Maryland	---	---	---	---	---	---	4381743	9838	0
+row	Pennsylvania	---	---	---	---	498309	2487	11410774	42405	0
+row	Virginia	---	---	---	---	---	---	5715659	39700	0
+row	West Virginia	---	---	---	---	---	---	1952256	24124	0
+total	TOTAL REGION III	---	---	---	---	489309	2487	24609567	118063	0

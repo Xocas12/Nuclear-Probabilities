@@ -1,0 +1,7 @@
+#page	region	FEMA REGION X -- FALLOUT RISK SUMMARY	B-231
+#header	8634750	815946
+row	Alaska	---	---	---	---	---	---	534271	570833	0
+row	Idaho	---	---	58634	5839	526307	41482	429340	35093	0
+row	Oregon	---	---	---	---	---	---	2683926	96187	0
+row	Washington	---	---	581999	2548	3045577	30894	774696	33070	0
+total	TOTAL REGION X	---	---	640633	8387	3571884	72376	4422233	735183	0

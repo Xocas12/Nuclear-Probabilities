@@ -1,0 +1,9 @@
+#page	region	FEMA REGION I -- FALLOUT RISK SUMMARY	B-9
+#header	12320207	61682
+row	Connecticut	---	---	---	---	341261	1184	2824200	3688	0
+row	Maine	---	---	---	---	88277	6721	1072601	24274	0
+row	Massachusetts	---	---	---	---	655822	1514	4847653	4983	0
+row	New Hampshire	---	---	---	---	---	---	990437	8992	0
+row	Rhode Island	---	---	---	---	578010	416	387461	638	0
+row	Vermont	---	---	---	---	237450	3209	297035	6063	0
+total	TOTAL REGION I	---	---	---	---	1900820	13044	10419387	48638	0

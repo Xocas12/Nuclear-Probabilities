@@ -40,3 +40,8 @@ data/interim/napb90/*
 !data/interim/napb90/pass2/
 !data/interim/napb90/chunks/
 !data/interim/napb90/compare/
+!data/interim/napb90_b/
+data/interim/napb90_b/*
+!data/interim/napb90_b/*.md
+!data/interim/napb90_b/pass1/
+!data/interim/napb90_b/chunks/

@@ -1,0 +1,37 @@
+check,state,page,field,sum,printed,diff
+column sum,WEST VIRGINIA,B343,l_pop,1952206,1952256,-50
+column sum,FLORIDA,B352,l_area,42340,51340,-9000
+column sum,TENNESSEE,B382,l_pop,1258495,1257955,540
+column sum,ILLINOIS,B388,h_area,41187,41189,-2
+column sum,LOUISIANA,B420,l_pop,3103095,3102495,600
+column sum,MISSOURI,B453,vh_pop,3399896,3339896,60000
+column sum,NEBRASKA,B458,vh_pop,428654,429634,-980
+column sum,COLORADO,B463,h_area,14317,13470,847
+column sum,COLORADO,B463,m_area,31449,32058,-609
+column sum,COLORADO,B463,l_pop,339222,339232,-10
+column sum,MONTANA,B467,vh_pop,521157,521557,-400
+column sum,MONTANA,B467,vh_area,97837,97043,794
+column sum,MONTANA,B467,m_pop,211606,211607,-1
+column sum,NORTH DAKOTA,B470,vh_pop,560026,563779,-3753
+column sum,NORTH DAKOTA,B470,h_pop,133817,133797,20
+column sum,SOUTH DAKOTA,B474,vh_pop,231938,232028,-90
+column sum,SOUTH DAKOTA,B474,vh_area,39486,39459,27
+column sum,UTAH,B477,l_area,66671,67388,-717
+no census match,TERRITORY OF PUERTO RICO,,All Counties,3196520,,
+no census match,TERRITORY OF AMERICAN SAMOA,,Entire Territory,35000,,
+no census match,TERRITORY OF GUAM,,Entire Territory,112900,,
+no census match,U.S. TRUST TERRITORY,,Entire Territory,116149,,
+no census match,ALASKA,,Aleutian Islands,7066,,
+not in Annex A,TERRITORY OF PUERTO RICO,B320,All Counties,3196520,,
+Annex A pop_1985_napb,VIRGINIA,B336,Isle of Wight (51093),23553,25553,-2000
+Annex A pop_1985_napb,VIRGINIA,B336,Louisa (51109),18918,19918,-1000
+Annex A area_sqmi,TENNESSEE,B380,Hancock (47067),,480,
+Annex A area_sqmi,WISCONSIN,B409,Grant (55043),1144,,
+Annex A area_sqmi,MONTANA,B466,Musselshell (30065),2665,1871,794
+Annex A pop_1985_napb,NORTH DAKOTA,B470,Sioux (38085),,3753,
+not in Annex A,TERRITORY OF AMERICAN SAMOA,B492,Entire Territory,35000,,
+not in Annex A,TERRITORY OF GUAM,B494,Entire Territory,112900,,
+not in Annex A,U.S. TRUST TERRITORY,B496,Entire Territory,116149,,
+not in Annex A,ALASKA,B499,Aleutian Islands,7066,,
+Annex A county missing,Massachusetts,,Barnstable (25001),,,
+Annex A county missing,Massachusetts,,Berkshire (25003),,,

@@ -32,9 +32,9 @@ FIELDS = ["vh_pop", "vh_area", "h_pop", "h_area", "m_pop", "m_area", "l_pop", "l
 BANDS = ["vh", "h", "m", "l"]
 
 
-def load(pass_dir: Path) -> dict[str, dict]:
+def load(pass_dir: Path, pattern: str = "A*.tsv") -> dict[str, dict]:
     pages = {}
-    for tsv in sorted(pass_dir.glob("A*.tsv")):
+    for tsv in sorted(pass_dir.glob(pattern)):
         page = {"type": "", "title": "", "printed": "", "header": None, "rows": []}
         for raw in tsv.read_text(encoding="utf-8").splitlines():
             if not raw.strip():
@@ -153,7 +153,7 @@ ALIASES = {
     ("ALASKA", "prince of wales"): "02201",
     ("ALASKA", "se fairbanks"): "02240",
 }
-STATE_NAMES = {"DISTRICT OF COLUMBIA": "D.C."}
+STATE_NAMES = {"DISTRICT OF COLUMBIA": "D.C.", "MASSACHUSETS": "MASSACHUSETTS"}
 
 
 def match_counties(st: str, rows: list[dict], states: dict, counties: dict) -> list:

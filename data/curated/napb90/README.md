@@ -75,11 +75,52 @@ The earlier 33-row pilot (`../labels/cd_1987_napb90_county_pilot.csv`) is supers
 - **Interim data.** The table of contents marks Arkansas, Louisiana, Oklahoma, Texas,
   Mississippi and Kansas as "Interim data; to be corrected" (in Annex B; the same caution may
   apply here).
-- Annex B (fallout risk by county, PDF pp. 293-508) is not transcribed.
+- **Massachusetts' totals leave out two counties.** Barnstable (147,925) and Berkshire (145,110)
+  are printed in Annex A, but the state header and TOTAL STATE (5,503,475) are exactly the sum
+  of the other twelve. Annex B omits both counties from its table too.
+- Grant County, Wisconsin: the area reads `114?` in both passes of Annex A; Annex B prints 1,144.
+
+## Annex B: fallout risk by county
+
+Annex B, "Fallout Risk by County" (PDF pp. 298-508), gives for every county the band of its
+expected fallout dose: very high (>15,000 R), high (6,000-15,000 R), medium (3,000-6,000 R) or low
+(<3,000 R). As in Annex A, the county's whole population and area are printed in one band. The
+fallout comes from the same attack, and the doses come from NAPB-90's wind model.
+
+| File | One row per | Columns |
+|---|---|---|
+| `fallout_counties.csv` | county (3,139 rows) | `state`, `county_printed`, `fips`, `fallout_band`, `fallout_rank` (3 very high to 0 low), `pop_1985_napb`, `area_sqmi` (as printed), `blast_band` and `blast_rank` (from Annex A), `page`, `printed_page` |
+| `fallout_checks.csv` | failed check | column sums against TOTAL STATE, figures that differ from Annex A, rows without a match |
+| `FALLOUT_REPORT.md` | | counts by band, and a cross-table of blast band by fallout band |
+
+**How it was made.** I chose the table pages by ink density, then checked them against the
+county list of Annex A; that check found three pages the filter had missed, and I read those
+by hand (Delaware B-38, West Virginia B-56). Annex B was transcribed once
+(`data/interim/napb90_b/`, nine pages per worker, each worker checking column sums). There is
+no second pass. Every county prints its population and area again, so the check is against
+Annex A, which was read twice. Of 3,134 counties matched by FIPS, all but six agree with Annex A
+on both figures. Each of the six was checked on the scan:
+- Isle of Wight VA (23,553 here, 25,553 in A) and Louisa VA (18,918 vs 19,918) are printed
+  differently in the two annexes.
+- Hancock TN prints no area here.
+- Musselshell MT prints Park County's area (2,665; A has 1,871). This explains Montana's very
+  high area sum (+794).
+- One digit of Sioux ND is overprinted (`3?53`). A has 3,753, which also closes North Dakota's
+  very high column.
+- Grant WI is the reverse case: A's area is unreadable and B prints 1,144.
+
+Every county figure here matches Annex A except the six above. The 18 column sums that do not
+match TOTAL STATE (e.g. Missouri very high +60,000, Florida low area −9,000) are therefore
+slips in FEMA's totals, not misreadings.
+
+**Use.** This is not a label of targets: fallout lies downwind of them. Of the 1,411 counties
+with no blast risk, 178 are in the very high fallout band. Fallout is kept as a reference for
+the civil-defence consequence of the same attack, and stays out of features (the leakage guard
+covers `napb`).
 
 ## Citation
 
 Federal Emergency Management Agency, *Nuclear Attack Planning Base - 1990, Final Project
-Report*, April 1987, Annex A; FOIA release, 27 April 2005. Census Bureau, *Intercensal Estimates
+Report*, April 1987, Annexes A and B; FOIA release, 27 April 2005. Census Bureau, *Intercensal Estimates
 of the Resident Population of States and Counties 1980-1989* (1992); cartographic boundary file
 co99_d90 (1990).
