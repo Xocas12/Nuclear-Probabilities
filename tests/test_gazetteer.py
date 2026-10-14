@@ -57,3 +57,45 @@ def test_match_disambiguates_by_population_and_reads_parentheses():
     assert list(out["geonameid"]) == [2, 3, 4]  # the Gorodok of ~30k, not the village
     assert out.loc[0, "match_method"] == "exact, ranked"
     assert out.loc[1, "match_method"] == "exact, unique"
+
+
+def test_verkh_neyvinsky_is_not_put_on_novouralsk():
+    """GeoNames carries Верх-Нейвинский only as an alternate name of Novouralsk (Sverdlovsk-44),
+    so the matcher puts the 1959 village on the closed town's coordinates; the curated link
+    moves it to its own place, where SAC's VERKHNE NEYVINSKIY header is."""
+    from nucprob.geo import haversine_km
+    from nucprob.places import apply_links
+
+    gn = pd.DataFrame(
+        {
+            "geonameid": [1538636, 1487504],
+            "name": ["Novoural’sk", "Verkh-Neyvinskiy"],
+            "alternatenames": ["Novoural'sk,Sverdlovsk-44,Верх-Нейвинский,Новоуральск", ""],
+            "lat": [57.25483, 57.27013],
+            "lon": [60.09052, 60.13762],
+            "admin1": ["71", "71"],
+            "feature_code": ["PPLA2", "PPL"],
+            "population": [93849, 5156],
+            "dem": [270, 260],
+        }
+    )
+    matched = pd.DataFrame(
+        {
+            "name_ru": ["Верх-Нейвинский"],
+            "geonameid": [1538636.0],
+            "lat": [57.25483],
+            "lon": [60.09052],
+            "admin1": ["71"],
+            "feature_code": ["PPLA2"],
+            "gn_name": ["Novoural’sk"],
+            "gn_population": [93849],
+            "gn_alternatenames": [gn.at[0, "alternatenames"]],
+            "gn_dem": [270],
+            "match_method": ["exact, unique"],
+        }
+    )
+    out = apply_links(matched, gn, "russia")
+    assert out.at[0, "geonameid"] == 1487504
+    assert out.at[0, "match_method"] == "curated link"
+    header = (57.2667, 60.15)  # VERKHNE NEYVINSKIY, C120-L19
+    assert haversine_km(*header, out.at[0, "lat"], out.at[0, "lon"]) < 1

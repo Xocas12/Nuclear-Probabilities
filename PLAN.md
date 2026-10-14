@@ -714,9 +714,17 @@ Data card: `data/curated/sac1956/README.md`.
   list" scores a PR-AUC of 0.75 for the population rule and 0.84 for LightGBM or logistic
   regression on every feature. Transport and geography add the most over population. The
   military sites add little once the rest are in. Dropping the anachronistic features costs
-  about 0.02. None of the ten closed towns is on the 1956 list. In several Eastern European
-  countries the population rule alone does as well as the global model, so the per-country
-  models (M7) will matter.
+  about 0.02. In several Eastern European countries the population rule alone does as well
+  as the global model, so the per-country models (M7) will matter.
+- **Closed towns and cover names.** None of the ten closed towns appears on the 1956 list under
+  its own name, but SAC did list the plants of three of them under the open town next door:
+  Mayak (Ozersk) under KYSHTYM, with a 040 A/E line and an aim point 6 km from Ozersk; the
+  gaseous-diffusion plant (Novouralsk) under the sub-complex VERKHNE NEYVINSKIY, with a 044
+  line; and the Kapustin Yar range (Znamensk) under KAPUSTIN YAR, with a 210 guided-missile
+  line. The labels now credit those entries to the closed town as well as to the open one
+  (`data/curated/sac1956/cover_names.csv`), so Ozersk, Novouralsk and Znamensk count as
+  listed with an aim point. The check run above predates this and still has them as
+  untargeted. Seversk, Snezhinsk, Sarov, Zheleznogorsk and the rest have no such entry nearby.
 - **Gaps.**
   - Slovakia's towns that passed 10,000 after 1953 are missing.
   - China's towns below city rank are missing.
