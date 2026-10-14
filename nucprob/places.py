@@ -6,6 +6,11 @@ USSR sources: pop-stat's city pages for 14 republics (census populations 1926, 1
 renaming notes) and, for Uzbekistan, which pop-stat lacks, Demoscope's 1959 table. Every
 settlement is matched to a GeoNames populated place for its coordinates.
 
+The other countries come from nucprob.places_bloc. MIN_KEEP is a floor only where the
+source goes that low: East Germany's, Poland's and Slovakia's sources stop at 10,000 and
+China's has its cities only, so the table holds nothing below 10,000 there and the 5,000
+sensitivity threshold cannot be run in those countries (data/curated/gazetteer/README.md).
+
 Every row carries its country and first-order unit on the study date (`country_1956`,
 `unit_1956`: the union republic in the USSR), `pop` (the census nearest the study date: 1959 in
 the USSR) and `pop_prewar` (the last pre-war census: 1939), each with its year.
