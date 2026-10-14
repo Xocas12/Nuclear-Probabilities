@@ -42,6 +42,7 @@ classified.
 | `../labels/us_1956_sac_complexes.csv` | top-level complex, in the shared label schema | see `../labels/SCHEMA.md`; DGZ and installation totals and the priority tier are in `notes` |
 | `../labels/us_1956_sac_airfields.csv` | airfield, in the shared label schema | see `../labels/SCHEMA.md` |
 | `audit.csv` | line of the audit sample | `curated`, `audit` (the independent re-reading), `judged` (blind judgement where they differ), `outcome` |
+| `pilot.csv` | row of the pilot reading (`../labels/sac1956_pilot_*.csv`) | `final_id` (the final line it is set against), `differing_fields`, `agrees` |
 | `excerpts/` | the three excerpted lists and their comparison with the full lists | see "The excerpts" below and `excerpts/REPORT.md` |
 | `../validation_sac1956_nsa_city_sheets.csv` | category count on the Archive's city sheets | Moscow, Leningrad, Beijing, Warsaw |
 
@@ -149,16 +150,40 @@ See REPORT.md for the current numbers. In brief:
 - **Cross-document check of the airfields.** 270 airfield rows are printed twice: in the
   Part II airfield list (transcribed here in full) and in the excerpt of the Part I airfield
   list, typed separately. The two transcriptions differ on 19 rows; each pair was judged on
-  both scans. 3 were misreads in the Part II transcription, all on 200-dpi pages, all now
-  corrected (`check04`): BERAT/KUCOVE's longitude (01954, which also removes one of the two
-  "impossible minutes"), CHANG CHIAO's letter (R) and MOZYR's latitude (5159). 12 are real
-  differences between the printings, mostly an 8 in Part I where Part II has a 0 or a 9
-  (AMDERMA 6945 against 5945, BIROBIDZHAN 4845 against 4945): the Part II list carries typing
-  slips of its own, and the tables keep each list as printed. 4 stay unresolved (a blotted
-  digit). So the residual misread rate is higher on the 200-dpi airfield pages, about 1 in 90
-  rows there, than the audit's overall bound suggests.
-- A pilot reading of four pages made before this pipeline (152 lines, a third independent
-  read) agrees with the final reading on every character it could read.
+  both scans (`data/interim/sac1956_excerpts/crossdoc/decisions.tsv`):
+  - 3 were misreads in the Part II transcription, all now corrected (`check04`):
+    BERAT/KUCOVE's longitude (01954, which also removes one of the two "impossible minutes"),
+    CHANG CHIAO's letter (R) and MOZYR's latitude (5159).
+  - 1 was a misread in the Part I excerpt: BRODY's longitude, read 02911 at low confidence,
+    is 02511 (pass A, the pilot and Part II agree; 02911 put it 246 km from its complex).
+    F005-L24 is corrected (excerpts `check02`).
+  - 6 are differences between the printings in the coordinates. In 4 of them the Part II list
+    carries a typing slip: AMDERMA 6945 in Part I against 5945, BIROBIDZHAN 4845 against 4945
+    and BRATISLAVA/IVANKA 4810 against 4910 (the Part II positions lie 106 and 113 km from
+    their complexes, Part I's 6 and 4 km), and ARKHANGELSK/BAKARITSA 6428 against 6478 (78
+    minutes, left blank). LENKORAN and MIKKOLYA differ by one arcminute, and their Part I glyph
+    was read at low confidence. The tables keep each list as printed.
+  - 8 stay unresolved. 4 of them (AKTYUBINSK, printed AKTYURINSK in Part II, BREST, BRIYENI
+    and BUZAU) rest on a faint Part II glyph read 0 at low confidence against a clear 8 in
+    Part I, and Part I puts each airfield nearer its complex (3.9 against 18.6 km, 4.3 against
+    11.4, 5.4 against 18.9, 1.3 against 14.9). They are probably Part II misreads, but the
+    Part II tables keep the reading until the scan settles it. The other 4 have a blotted or
+    ambiguous digit (AFRIKANDA, BUSHTINO, OLOVYANNAYA, PALANGA).
+  - ONEGA differs only by a period after the name, not in its coordinates.
+
+  All 19 differences fall on the ~200-dpi Part II pages (A002, A004-A006, A020, A023, A024,
+  A027), which hold 216 of the 270 rows; the other 54 are on the 300-dpi pages A003 and A041.
+  The confirmed misread rate of the Part II transcription on those pages is 3 in 216, about
+  1 in 72; counting the 4 probable misreads above, 7 in 216, about 1 in 31. That is well above
+  the audit's overall bound. Every label row (`../labels/us_1956_sac_airfields.csv`) touched
+  by the check, or whose line was settled at low confidence on the scan, says so in `notes`.
+- **The pilot reading.** Four pages were read once by hand before this pipeline (156 lines:
+  129 of the complex list, pages C002, C166 and C305, and 27 of the Part I airfield excerpt,
+  page F005). `scripts/sac1956_pilot.py` sets each pilot row against the final line in the
+  same place (`pilot.csv`; the result is in `excerpts/REPORT.md`): every field the pilot could
+  read appears in the final reading on all 156 lines. Before BRODY was corrected it differed
+  on one, BRODY's longitude, where the pilot (02511, `ok`) was right. All four pages are Part
+  I pages, so the pilot says nothing about the Part II airfield scan.
 - Anchors reproduce (the study's own totals cannot be checked: its summary pages, section 8,
   are redacted figure by figure): Moscow (priority 1) has 12 aim points and 180 installation lines, 13 and
   190 with its three suburbs; East Berlin (`BERLIN GER SOVZONE`, priority 61) has 6 aim points

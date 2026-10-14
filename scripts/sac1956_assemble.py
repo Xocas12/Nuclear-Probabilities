@@ -39,6 +39,10 @@ import sac1956_compare as cmp
 
 ROOT = Path("data/interim/sac1956")
 OUT = Path("data/curated/sac1956")
+# The cross-document check of the airfields (both printings of each disputed row, judged).
+CROSSDOC = Path("data/interim/sac1956_excerpts/crossdoc")
+# Latitude-longitude group of an airfield row, as printed ("6945-06140", "4835-13303").
+AIRFIELD_COORDS = re.compile(r"(?<!\w)[\d?]{4}-[\d?]{5}W?(?![\w?])")
 SOURCE_URL = {
     "C": "https://nsarchive.gwu.edu/document/15800-09-urban-industrial-target-list-part-i",
     "A": "https://nsarchive2.gwu.edu/nukevault/ebb538-Cold-War-Nuclear-Target-List-Declassified-First-Ever/documents/section6.pdf",
@@ -517,7 +521,7 @@ def main() -> None:
     ]:
         write(name, rows)
 
-    write_labels(complexes, airfields, lines)
+    write_labels(complexes, airfields, lines, final, crossdoc_notes())
 
     flags = checks(complexes, dgzs, installs, msites, airfields)
     flags += [{"check": a["problem"], "id": a["id"], "detail": a["text"]} for a in anomalies]
@@ -544,7 +548,13 @@ LABEL_COUNTRY = {"East Germany": "GDR", "China": "PRC", "China (Manchuria)": "PR
 LABEL_COUNTRY_BY_NAME = {"ULAAN BAATAR": "Mongolia"}
 
 
-def write_labels(complexes: list[dict], airfields: list[dict], lines: list[dict]) -> None:
+def write_labels(
+    complexes: list[dict],
+    airfields: list[dict],
+    lines: list[dict],
+    final: dict | None = None,
+    crossdoc: dict | None = None,
+) -> None:
     """The shared-schema label files (data/curated/labels/SCHEMA.md): one row per top-level
     complex, and one per airfield. Rows without coordinates (the lost header) are left out."""
     text = {r["id"]: r["text"] for r in lines}
@@ -628,10 +638,50 @@ def write_labels(complexes: list[dict], airfields: list[dict], lines: list[dict]
                     "; coordinate not legible or printed with minutes >= 60"
                     if "" in (a["lat"], a["lon"])
                     else ""
-                ),
+                )
+                + reading_note(a["id"], final or {}, crossdoc or {}),
             }
         )
     write_csv(Path("data/curated/labels/us_1956_sac_airfields.csv"), rows)
+
+
+def crossdoc_notes(root: Path = CROSSDOC) -> dict[str, str]:
+    """The verdicts of the cross-document check of the airfields (crossdoc/pairs.json and
+    decisions.tsv, one decision per pair, in order), keyed by the Part II line id: what the
+    Part I airfield list prints, the verdict and the note."""
+    pairs_path, decisions_path = root / "pairs.json", root / "decisions.tsv"
+    if not (pairs_path.exists() and decisions_path.exists()):
+        return {}
+    pairs = json.loads(pairs_path.read_text(encoding="utf-8"))
+    decisions = [r for r in decisions_path.read_text(encoding="utf-8").splitlines() if r.strip()]
+    notes = {}
+    for pair, raw in zip(pairs, decisions, strict=True):
+        f = raw.split("\t")
+        part1_text, part2_conf, verdict, note = f[1], f[4], f[5], f[6]
+        coords = AIRFIELD_COORDS.search(part1_text)
+        printed = (
+            f"the Part I airfield list prints {coords.group(0)} ({pair['part1_id']}); "
+            if coords and verdict != "part1 misread"
+            else f"Part I line {pair['part1_id']}; "
+        )
+        notes[pair["part2_id"]] = (
+            f"cross-document check: {printed}verdict {verdict}; this line read at "
+            f"{part2_conf} confidence on the cross-check; {note}"
+        )
+    return notes
+
+
+def reading_note(line_id: str, final: dict, crossdoc: dict) -> str:
+    """Row-level warnings for a label row: a line settled on the scan at low confidence, and
+    the outcome of the cross-document check, so that a known slip or a weak reading is visible
+    on the row itself."""
+    out = ""
+    rec = final.get(line_id, {})
+    if rec.get("source") == "adjudicated" and rec.get("confidence") == "low":
+        out += f"; line read at low confidence on the scan ({rec.get('note', '')})"
+    if line_id in crossdoc:
+        out += f"; {crossdoc[line_id]}"
+    return out
 
 
 def write_csv(path: Path, rows: list[dict]) -> None:
