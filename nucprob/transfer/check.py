@@ -13,7 +13,12 @@ linked towns are reported without metrics. A check that the transfer pipeline jo
 end, not results: the lists are small, one-sided (exercises, defender studies) and differ in
 what they count as a target.
 
-Writes runs/m4-transfer-check/: metrics.csv, scores.csv, manifest.json.
+PR-AUC (the primary metric, PLAN section 5.5) is printed first. Each model's difference from
+the population rule, in PR-AUC, ROC-AUC and precision@k, goes to paired.csv with a paired,
+stratified bootstrap interval (nucprob.transfer.paired): a gain is read as one only where that
+interval excludes zero.
+
+Writes runs/m4-transfer-check/: metrics.csv, scores.csv, paired.csv, manifest.json.
 """
 
 import datetime as dt
@@ -28,6 +33,8 @@ from nucprob.paths import PROCESSED, RUNS
 from nucprob.sources.fetch import sha256
 from nucprob.transfer.features import COMMON, MILITARY_GROUPS
 from nucprob.transfer.labels import BLOC
+from nucprob.transfer.paired import N_BOOT, compare
+from nucprob.transfer.paired import write as write_paired
 
 OUT = RUNS / "m4-transfer-check"
 MIN_POSITIVES = 2
@@ -77,6 +84,8 @@ def main() -> None:
     table.to_csv(OUT / "metrics.csv", index=False, float_format="%.4f")
     keep = ["plan_id", "region", "place_id", "country", "n_targets", "listed", *models]
     scores[keep].to_csv(OUT / "scores.csv", index=False, float_format="%.4f")
+    paired = compare(scores, list(models), MIN_POSITIVES)
+    write_paired(paired, OUT)
     manifest = {
         "milestone": "M4 transfer check",
         "created": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
@@ -93,6 +102,7 @@ def main() -> None:
         "bloc_lists": "fitted without the list's country (leave-country-out)",
         "models": {k: v[1] for k, v in models.items()},
         "min_positives": MIN_POSITIVES,
+        "paired_bootstrap": f"{N_BOOT} stratified resamples, model minus population rule",
         "note": "a check of the transfer pipeline, not results: the protocol is frozen at M5",
     }
     (OUT / "manifest.json").write_text(json.dumps(manifest, indent=2))
@@ -100,6 +110,7 @@ def main() -> None:
     print(show.round(3).to_string())
     roc = table.pivot_table(index="plan_id", columns="model", values="roc_auc")
     print(roc.round(3).to_string())
+    print(paired.round(3).to_string(index=False))
 
 
 if __name__ == "__main__":

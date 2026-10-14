@@ -105,22 +105,44 @@ The check fits on the bloc's SAC 1956 labels and scores each list:
 - for the bloc lists, without the list's country;
 - against the population rule as baseline.
 
-ROC-AUC:
+PR-AUC is the primary metric (PLAN section 5.5): the lists' base rates run from 1% to 22%,
+and ROC-AUC barely moves when the top of a ranking goes wrong. Each difference below is
+LightGBM (common) minus the population rule, with a 95% interval from a paired bootstrap:
+2,000 resamples, positives and negatives resampled separately, the same towns scoring both
+models. `runs/m4-transfer-check/paired.csv` has every model and list
+(`python -m nucprob.transfer.paired` rebuilds it from `scores.csv`). Precision@k takes k as
+the number of towns listed.
 
-| List | Population rule | LightGBM, common |
-|---|---|---|
-| Canada target areas 1956 | 0.96 | 0.98 |
-| Operation Alert 1955 (full) | 0.98 | 0.92 |
-| Target Committee 1945 | 0.98 | 0.95 |
-| Square Leg 1980 | 0.66 | 0.70 |
-| Lato-67 | 0.74 | 0.76 |
-| NATO mirror, Poland 1962 | 0.69 | 0.71 |
-| NATO mirror, Hungary 1965 | 0.69 | 0.68 |
+| List | Listed / towns | PR-AUC, rule / LightGBM | PR-AUC difference [95% CI] | Precision@k, rule / LightGBM | Precision@k difference [95% CI] | ROC-AUC, rule / LightGBM | ROC-AUC difference [95% CI] |
+|---|---|---|---|---|---|---|---|
+| Canada target areas 1956 | 13 / 137 | 0.85 / 0.84 | -0.01 [-0.11, +0.12] | 0.77 / 0.69 | -0.08 [-0.15, +0.15] | 0.96 / 0.98 | +0.02 [-0.02, +0.08] |
+| Operation Alert 1955 (full) | 51 / 1,262 | 0.70 / 0.33 | -0.36 [-0.44, -0.25] | 0.59 / 0.41 | -0.18 [-0.27, -0.04] | 0.98 / 0.92 | -0.06 [-0.10, -0.03] |
+| Target Committee 1945 | 17 / 579 | 0.88 / 0.34 | -0.54 [-0.67, -0.30] | 0.76 / 0.41 | -0.35 [-0.65, -0.18] | 0.98 / 0.95 | -0.03 [-0.05, -0.01] |
+| Square Leg 1980 | 75 / 476 | 0.39 / 0.42 | +0.04 [-0.04, +0.13] | 0.39 / 0.40 | +0.01 [-0.07, +0.11] | 0.66 / 0.70 | +0.04 [-0.02, +0.11] |
+| Lato-67 | 23 / 447 | 0.32 / 0.24 | -0.08 [-0.20, +0.08] | 0.30 / 0.43 | +0.13 [-0.13, +0.22] | 0.74 / 0.76 | +0.02 [-0.10, +0.13] |
+| NATO mirror, Poland 1962 | 28 / 126 | 0.47 / 0.54 | +0.07 [-0.01, +0.15] | 0.46 / 0.50 | +0.04 [-0.11, +0.18] | 0.69 / 0.71 | +0.02 [-0.06, +0.09] |
+| NATO mirror, Hungary 1965 | 13 / 120 | 0.41 / 0.31 | -0.11 [-0.20, +0.04] | 0.38 / 0.38 | 0.00 [0.00, +0.15] | 0.69 / 0.68 | -0.02 [-0.10, +0.06] |
+| Hungarian war game 1965 (AT, IT) | 9 / 864 | 0.16 / 0.26 | +0.09 [-0.05, +0.30] | 0.11 / 0.44 | +0.33 [0.00, +0.56] | 0.86 / 0.85 | -0.01 [-0.04, +0.01] |
 
-City lists (civil-defence target areas, Operation Alert, the 1945 cities) are ranked by size,
-and the bloc model adds nothing. Lists that mix cities with military targets (Square Leg,
-Lato-67, the Polish mirror list) are where the bloc model gains a little. This is a check that
-the pipeline joins end to end, not a result: the protocol is frozen at M5.
+- **City lists.** On Operation Alert and the 1945 Target Committee list, the bloc model ranks
+  the top of the list clearly worse than population alone, on every metric. The 14 Operation
+  Alert towns on the map, a subset of the full list, show it most: PR-AUC 0.74 for the rule
+  and 0.12 for LightGBM, -0.62 [-0.78, -0.39]; 9 of the 14 largest US places are listed,
+  against 1 of LightGBM's top 14. Only on Canada's target areas do the two match.
+- **Mixed lists** (Square Leg, Lato-67, the two mirror lists, the Hungarian war game). No
+  gain is detectable: every interval includes zero, on all three metrics. Lato-67 even
+  points different ways on PR-AUC and precision@k.
+- ROC-AUC differences are small on every list, which is why the ROC table alone read the city
+  lists as "adds nothing".
+
+Two other lists have a model interval in `paired.csv` that excludes zero in the model's
+favour, and neither is much to lean on. Burza has 3 linked towns of 275, and both scores sit
+near its 1% base rate (PR-AUC 0.013 for the rule, 0.027 for LightGBM). On the Polish mirror
+list, the model with the military distances added gains in PR-AUC, +0.12 [+0.02, +0.20], but
+its ROC-AUC and precision@k intervals include zero. `paired.csv` holds 144 intervals (16
+lists, three models, three metrics), so at 95% a few will exclude zero by chance.
+
+This is a check that the pipeline joins end to end, not a result: the protocol is frozen at M5.
 
 ## Caveats
 

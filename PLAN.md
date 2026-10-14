@@ -634,10 +634,18 @@ Phases 1 and 2 run side by side. Transcribing the labels is the long pole, so it
   fetched, and the Wikipedia-based table covers only about 60% of the towns.
 - **Transfer check** (`runs/m4-transfer-check/`). The check fits on the bloc's SAC labels
   with the 20 common features and scores 16 lists; the bloc lists are scored leave-country-out.
-  - City lists (Canada 1956, Operation Alert, the 1945 Target Committee) are ranked by size,
-    and the bloc model adds nothing (ROC 0.92-0.98, population rule 0.96-0.98).
-  - Mixed civil and military lists (Square Leg, Lato-67, the Polish mirror list) gain a
-    little (0.70-0.76 against 0.66-0.74).
+  - Read in PR-AUC, the primary metric (§5.5), with paired bootstrap intervals for
+    LightGBM (common) minus the population rule (`runs/m4-transfer-check/paired.csv`).
+  - City lists are ranked by size, and on two of them the bloc model ranks the top of the
+    list clearly worse than population alone. Operation Alert: PR-AUC 0.33 against 0.70,
+    -0.36 [-0.44, -0.25]; precision@k 0.41 against 0.59, -0.18 [-0.27, -0.04]. The 1945
+    Target Committee: PR-AUC 0.34 against 0.88, -0.54 [-0.67, -0.30]; precision@k 0.41
+    against 0.76, -0.35 [-0.65, -0.18]. Canada 1956 matches (PR-AUC -0.01 [-0.11, +0.12]).
+    ROC-AUC (0.92-0.98 against 0.96-0.98) hid most of this.
+  - On the mixed civil and military lists no gain is detectable: Square Leg PR-AUC +0.04
+    [-0.04, +0.13], precision@k +0.01 [-0.07, +0.11]; Lato-67 -0.08 [-0.20, +0.08] and
+    +0.13 [-0.13, +0.22]; the Polish mirror list +0.07 [-0.01, +0.15] and +0.04
+    [-0.11, +0.18]. Every interval includes zero.
   - This is a check, not a result.
 - **Left for M4's L items:** TR-82 and the DTIC appendices (blocked), the UK lists at Kew, the
   print books, and an official FRG 1961 table.
