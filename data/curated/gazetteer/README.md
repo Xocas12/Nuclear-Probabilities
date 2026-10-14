@@ -68,11 +68,55 @@ a source has one, and coordinates from GeoNames. The rule is fixed before lookin
 - **Votrubec's Slovak rows** were transcribed and checked against the scan. The text layer
   misreads Nitra's change (2 030 for 2 630) and Trnava's (1 706 for 1 796).
 
+## Matching to GeoNames
+
+`nucprob/gazetteer/match.py` gives each settlement the GeoNames populated place of its name.
+When several places share the name, it prefers the one in the settlement's region, then the
+one whose GeoNames population is closest to the settlement's own figure, then the higher
+administrative rank.
+- **The figure** is the latest census where pop-stat gives a series (`modern_pop`). The East
+  German, Polish, Hungarian, Slovak and Chinese sources and Demoscope's Uzbek table have no
+  modern figure, so their figure near the study date (`pop`, or `pop_1959`) is used instead,
+  mostly as a floor: towns grew, and GeoNames gives many Chinese cities their whole urban
+  district's population, so a place larger than the figure is marked down a quarter as much
+  as one equally smaller. A GeoNames place with population 0 is marked down, so a town does
+  not land on a same-named hamlet.
+- **The region** is inferred: each census region is mapped to the GeoNames region that most
+  of its unambiguous settlements fall in. Two maps are made by hand instead
+  (`nucprob/places_bloc.py`). With them a settlement is matched only within its own region,
+  or not at all:
+  - `CHINA_ADMIN1`: China's 1953 provinces to the provinces their territory lies in today. A
+    province later split (Liaodong, Liaoxi, Rehe) or trimmed (Sichuan, Guangdong, Hebei,
+    Jiangsu) maps to every province that took part of it. Chinese city names recur across
+    provinces, and few provinces have enough unambiguous cities to be inferred. Population
+    alone would put Suzhou on Jiuquan, in Gansu, which GeoNames also calls Suzhou.
+  - `EAST_GERMANY_ADMIN1`: the GDR's Bezirke to today's Länder. Five Bezirke were divided in
+    1990, and the inferred map sends each to a single Land: it sent Bezirk Leipzig to Saxony,
+    which put Meuselwitz and Schmölln, Thuringian since 1990, on Saxon hamlets.
+- **Before these rules** the bloc sources were matched without any population, and China
+  without its provinces. Rematched on the GeoNames dumps of October 2026, 43 towns of East
+  Germany, Poland and China moved 17 to 2,480 km: Dessau, Sosnowiec and Anshan among them,
+  and Baotou, which had been on Hainan. Shandong's "Zhangzhou" (over 50,000 in 1953) has no
+  place of that name in Shandong and is left unmatched. Hungary's and Slovakia's matches did
+  not change. Uzbekistan's have not been rematched yet.
+- **The population check.** `python -m nucprob.places` writes
+  `data/processed/places_1956_population_check.csv`: every match whose GeoNames place has
+  population 0, or under a tenth of `pop`. A town put on a hamlet shows up there. So do real
+  towns that GeoNames records without a population, and towns since merged into a neighbour.
+  A namesake of about the town's size does not: that is what the region maps are for.
+  `population_check_reviewed.csv` explains the rows already checked, each for the GeoNames
+  place it names; the build prints how many are left. East Germany, Poland, Hungary,
+  Slovakia and China have been checked (12 rows, all real places without a GeoNames
+  population); the other countries have not.
+
 ## `geonames_links.csv`
 
 Hand-checked GeoNames links for names the matcher cannot resolve. They cover towns renamed
 since the census whose old name GeoNames lacks, and East German names with a suffix that
-GeoNames drops ("Neuenhagen bei Berlin"). The two Oelsnitz are told apart by hand.
+GeoNames drops ("Neuenhagen bei Berlin"). Some towns are told apart from namesakes by hand:
+the two Oelsnitz; Ebersbach; Grodziec and Cieplice, now parts of Będzin and Jelenia Góra;
+Jinzhou, which shares Liaoning with a Jinzhou district of Dalian; Tianshui, Qulja and
+Chaozhou, where a namesake or a county seat is nearer the 1953 size or carries the name.
 
 ## Transfer regions
 

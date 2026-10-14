@@ -11,8 +11,9 @@ Every row carries its country and first-order unit on the study date (`country_1
 the USSR) and `pop_prewar` (the last pre-war census: 1939), each with its year.
 
 Writes data/processed/places_1956.parquet: every settlement with at least MIN_KEEP people (the
-universe proper is >= 10,000; 5,000 and 20,000 are the sensitivity thresholds), and
-data/processed/places_1956_unmatched.csv for review.
+universe proper is >= 10,000; 5,000 and 20,000 are the sensitivity thresholds), and for review
+data/processed/places_1956_unmatched.csv and places_1956_population_check.csv (`population_check`:
+matches to a GeoNames place with no population or far fewer people than the settlement had).
 """
 
 import numpy as np
@@ -77,6 +78,7 @@ PREFIX = {
     "Mongolia": "mn",
 }
 CLOSED = CURATED / "gazetteer" / "closed_cities_1956.csv"
+REVIEWED = CURATED / "gazetteer" / "population_check_reviewed.csv"
 EAST_GERMAN_LAENDER = {"11", "12", "13", "14", "15", "16"}  # GeoNames admin1 codes, Berlin incl.
 
 
@@ -218,12 +220,18 @@ def apply_links(matched: pd.DataFrame, gn: pd.DataFrame, page: str) -> pd.DataFr
 
 
 def located(
-    settlements: pd.DataFrame, country: str, page: str, admin1: set[str] | None = None
+    settlements: pd.DataFrame,
+    country: str,
+    page: str,
+    admin1: set[str] | None = None,
+    admin1_of: dict[str, tuple[str, ...]] | None = None,
 ) -> pd.DataFrame:
+    """Match `settlements` to GeoNames places of `country` (only those in `admin1`, if given;
+    `admin1_of` restricts each census region to its own admin1 codes, see `match`)."""
     gn = geonames.load_country(country)
     if admin1 is not None:
         gn = gn[gn["admin1"].isin(admin1)]
-    matched = apply_links(match(settlements, gn), gn, page)
+    matched = apply_links(match(settlements, gn, admin1_of), gn, page)
     print(
         f"{page:13} {len(settlements):5} settlements >= {MIN_KEEP}; "
         f"matched {matched['geonameid'].notna().sum():5}; methods {matched['match_method'].str.split(',').str[0].value_counts().to_dict()}"
@@ -300,7 +308,15 @@ def eastern_europe() -> pd.DataFrame:
         located(from_popstat_eastern(page), spec["geonames"], page)
         for page, spec in EASTERN_PAGES.items()
     ]
-    parts.append(located(places_bloc.east_germany(), "DE", "east germany", EAST_GERMAN_LAENDER))
+    parts.append(
+        located(
+            places_bloc.east_germany(),
+            "DE",
+            "east germany",
+            EAST_GERMAN_LAENDER,
+            admin1_of=places_bloc.EAST_GERMANY_ADMIN1,
+        )
+    )
     parts.append(located(places_bloc.poland(), "PL", "poland"))
     parts.append(located(places_bloc.hungary().query("pop >= @MIN_KEEP"), "HU", "hungary"))
     parts.append(located(places_bloc.slovakia(), "SK", "slovakia"))
@@ -312,7 +328,8 @@ def east_asia() -> pd.DataFrame:
     the UN's estimates, which carry their own coordinates."""
     wup = places_bloc.wup()
     wup["has_match"] = True
-    return pd.concat([located(places_bloc.china(), "CN", "china"), wup], ignore_index=True)
+    china = located(places_bloc.china(), "CN", "china", admin1_of=places_bloc.CHINA_ADMIN1)
+    return pd.concat([china, wup], ignore_index=True)
 
 
 def build() -> pd.DataFrame:
@@ -337,12 +354,68 @@ def build() -> pd.DataFrame:
     )
 
 
+def population_check(places: pd.DataFrame, reviewed: pd.DataFrame | None = None) -> pd.DataFrame:
+    """GeoNames matches to review: the place matched has no population in GeoNames, or fewer
+    than a tenth of the settlement's own figure (`pop`). A town put on a same-named hamlet
+    shows up here; so do towns GeoNames records without a population, and towns that shrank
+    or were absorbed into a neighbour, which are right. Curated links (`apply_links`) are
+    included: they are checked by hand, but not their population.
+
+    `reviewed` (columns republic, name, geonameid, explanation; REVIEWED) explains matches
+    already checked. An explanation holds only for the place it names, so a match that moves
+    comes back unexplained."""
+    matched = places[places["geonameid"].notna() & places["lat"].notna()]
+    gn_pop = matched["gn_population"].fillna(0)
+    flag = gn_pop.le(0) | gn_pop.lt(matched["pop"] / 10)
+    out = matched.loc[
+        flag,
+        [
+            "place_id",
+            "country_1956",
+            "republic",
+            "region",
+            "name_ru",
+            "pop",
+            "pop_year",
+            "geonameid",
+            "gn_name",
+            "gn_population",
+            "feature_code",
+            "admin1",
+            "lat",
+            "lon",
+            "n_candidates",
+            "match_method",
+        ],
+    ].copy()
+    out["check"] = np.where(
+        out["gn_population"].fillna(0) <= 0,
+        "GeoNames population 0",
+        "GeoNames population under a tenth of pop",
+    )
+    out["explanation"] = ""
+    if reviewed is not None and len(reviewed):
+        notes = {
+            (r, n, float(g)): e
+            for r, n, g, e in reviewed[["republic", "name", "geonameid", "explanation"]].itertuples(
+                index=False
+            )
+        }
+        out["explanation"] = [
+            notes.get((r, n, float(g)), "")
+            for r, n, g in zip(out["republic"], out["name_ru"], out["geonameid"], strict=True)
+        ]
+    return out.sort_values(["country_1956", "pop"], ascending=[True, False]).reset_index(drop=True)
+
+
 def main() -> None:
     places = build()
     PROCESSED.mkdir(parents=True, exist_ok=True)
     places.to_parquet(PROCESSED / "places_1956.parquet", index=False)
     unmatched = places[~places["has_coords"]]
     unmatched.to_csv(PROCESSED / "places_1956_unmatched.csv", index=False)
+    check = population_check(places, pd.read_csv(REVIEWED))
+    check.to_csv(PROCESSED / "places_1956_population_check.csv", index=False)
     u = places[places["in_universe"]]
     for country, c in u.groupby("country_1956"):
         print(
@@ -350,6 +423,12 @@ def main() -> None:
             f"{c['has_coords'].sum()} with coordinates"
         )
     print(f"unmatched in the universe: {(~u['has_coords']).sum()} (places_1956_unmatched.csv)")
+    open_rows = check[check["explanation"].eq("")]
+    print(
+        f"population check: {len(check)} matches with a GeoNames population of 0 or under a "
+        f"tenth of pop, {len(open_rows)} not yet explained in {REVIEWED.name} "
+        f"(places_1956_population_check.csv): {open_rows['country_1956'].value_counts().to_dict()}"
+    )
 
 
 if __name__ == "__main__":

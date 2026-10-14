@@ -36,7 +36,11 @@ targeting. The full design is in [PLAN.md](PLAN.md).
   curated military sites) and transport. Every feature names its sources and flags later
   knowledge (`data/FEATURES.md`); a guard test keeps the target list out of the features.
   The check run and its map are in `runs/m2-check/`; its numbers check the joins and are not
-  results.
+  results. It and `runs/m4-transfer-check/` were built before the GeoNames matcher used the
+  1950s populations and hand-made region maps, when 43 East German, Polish and Chinese towns
+  (Dessau, Sosnowiec and Anshan among them) sat on namesakes 17 to 2,480 km away, so their
+  labels and features were computed at the wrong place. Both runs need a rebuild
+  (`data/curated/gazetteer/README.md`, "Matching to GeoNames").
 
 ## Running it
 
