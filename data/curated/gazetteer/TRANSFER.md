@@ -67,8 +67,24 @@ region in the same way (`COMMON`, 20 features):
 
 Three military distances (naval base, strike or bomber base, nuclear site) come from the
 curated tables `../features/weurope_military_sites_1965.csv` and
-`../features/uk_military_sites_1980.csv`. They are blank for the US 1955, Canada and
-Japan. The leakage guard (`tests/test_leakage.py`) covers this code.
+`../features/uk_military_sites_1980.csv`. They are blank wherever no table covers a town:
+- the US 1955, Canada 1956 and Japan 1945, which have no military table;
+- Italy outside the 1965 table's scope. The table covers Italy north of the Po and the
+  Venetian plain only: Lombardy, Veneto, Friuli-Venezia Giulia, Trentino-Alto Adige and the
+  province of Novara (`Region.military_scope`, by 1961 province). The rest of Italy,
+  including Turin, Genoa, La Spezia, Rome, Naples and Taranto, is blank, so 630 of the 814
+  Italian comuni have no military distances.
+
+Denmark, the Netherlands, Belgium, Austria and the UK are covered whole. A covered town near
+the edge of the Italian scope is still measured only to the sites in the table, although an
+uncovered site (La Spezia, say) may be closer. The leakage guard (`tests/test_leakage.py`)
+covers this code.
+
+The check scores "LightGBM, common + military" only on towns with all three distances. The
+bloc never lacks one, so LightGBM learns no direction for a missing value and would score a
+blank town as if it sat 0 km from all three kinds of site. A list with any blank town (the
+US, Canada and Japan lists, and the Hungarian war game of 1965 through its Italian towns)
+gets no metrics for that model.
 
 Differences from the bloc:
 - the tables stop at 10,000, so neighbour sums run a little lower than the bloc's (which

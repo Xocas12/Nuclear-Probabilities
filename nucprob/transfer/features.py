@@ -232,7 +232,11 @@ def transport(p: pd.DataFrame) -> pd.DataFrame:
 
 
 def military(p: pd.DataFrame) -> pd.DataFrame:
-    """Distances to the region's curated military sites, where it has a table; NaN elsewhere."""
+    """Distances to the region's curated military sites, where it has a table; NaN elsewhere.
+
+    NaN too for towns outside the table's documented scope (Region.military_scope): a town
+    in southern Italy measured to the sites north of the Po would get a distance that says
+    nothing about the military sites near it."""
     out = pd.DataFrame(np.nan, index=p.index, columns=list(MILITARY_GROUPS))
     for region_id, region in REGIONS.items():
         path = CURATED / "features" / region.military
@@ -255,6 +259,9 @@ def military(p: pd.DataFrame) -> pd.DataFrame:
                         pick["lon"].to_numpy(),
                     )
                 )
+        for country, units in region.military_scope.items():
+            outside = rows[(p.loc[rows, "country"] == country) & ~p.loc[rows, "admin1"].isin(units)]
+            out.loc[outside, :] = np.nan
     return out
 
 
