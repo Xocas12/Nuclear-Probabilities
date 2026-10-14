@@ -25,7 +25,7 @@ war plan.
 | `wp_west_1965` (feature year 1965) | Warsaw Pact exercises and plans 1961-1977 | Denmark: census 1960 (Statistisk Årbog 1961) | 55 | 55 |
 | | | Netherlands: census 1960 (CBS, municipalities) | 220 | 220 |
 | | | Belgium: census 1961 (INS, communes) | 172 | 172 |
-| | | Austria: census 1961 (pop-stat) | 50 | 50 |
+| | | Austria: census 1961 (pop-stat; the 1961 Land seats from `POPSTAT_SEATS` in `places.py`) | 50 | 50 |
 | | | Italy: census 1961 (ISTAT, comuni) | 814 | 814 |
 | | | FRG: **withheld** (see below) | (356) | |
 | `uk_1980` (1980) | Square Leg 1980 | UK: census 1981 (GB districts from Nomis; NI towns from NISRA) | 476 | 476 |
@@ -51,6 +51,12 @@ town's own first-order unit, then a seat, then the most people today. A fuzzy ma
 - `uk_districts_1981_seats.csv` gives each of Great Britain's 456 districts of 1981 the
   town where its council had its headquarters, checked against Wikipedia (card:
   `uk_districts_1981_seats.md`).
+
+The pop-stat page for Austria has no seat column, and it underlines today's Land capitals
+(St. Pölten, capital of Lower Austria only since 1986, and Dornbirn instead of Bregenz).
+`POPSTAT_SEATS` in `places.py` lists the seats of 1961 instead: Wien (also the seat of Lower
+Austria), Eisenstadt (under 10,000, so outside the universe), Klagenfurt, Linz, Salzburg,
+Graz, Innsbruck and Bregenz. A seat name the page does not print exactly once stops the build.
 
 ## Features
 
