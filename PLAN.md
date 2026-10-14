@@ -23,7 +23,9 @@ target's Bombing Encyclopedia identifier. **SAC**: Strategic Air Command.
    whether SAC put it on its list, and how many DGZs it got? The candidate traits are
    population, administrative rank, industry, military presence, transport and geography.
 2. **Countervalue or counterforce?** How much of the urban-industrial list does population
-   alone explain? How much do industry and nearby military sites add?
+   alone explain? How much do industry and nearby military sites add? Both are measured within
+   countries (population plus a country term), since listing rates at a given size differ by
+   country.
 3. **One logic or several?** Does the pattern differ by target country, and by the target
    state's regime type? This is answered with one global model, one model per country and one
    per regime type, plus a hierarchical model linking them (§5.3).
@@ -482,7 +484,7 @@ cross-validation, a fixed number of trials.
 
 | Model | Why it is in the zoo | What it tells us |
 |---|---|---|
-| Population-rank rule ("hit the N biggest") | Naive baseline | If ML barely beats it, targeting was about population |
+| Population-rank rule ("hit the N biggest"), pooled and with a country term (log population plus one intercept per country) | Naive baseline. Listing rates at a given size differ by country, so the pooled rule alone credits any feature that identifies the country with those base rates | If ML barely beats the rule with a country term, targeting was about population. Family gains are scored over population plus country |
 | Logistic regression, L2 and L1 | Interpretable baseline; L1 also selects features | Odds ratios with confidence intervals |
 | Poisson / negative-binomial GLM, hurdle model | DGZ counts (T2) | How DGZs scale with population and industry |
 | EBM (InterpretML) / GAM | Non-linear but fully inspectable | Shape functions, thresholds, pairwise interactions |
@@ -515,7 +517,14 @@ Population, industry and administrative rank move together, so no single attribu
 method can be trusted alone. Several are run:
 
 1. **Family ablation** (the headline answer). Retrain without each feature family and
-   measure the drop in PR-AUC, with confidence intervals across folds.
+   measure the drop in PR-AUC, with confidence intervals across folds. Each family's gain is
+   also scored over population plus a country term, not over pooled population alone, and
+   every pooled PR-AUC is reported next to a within-country one (PR-AUC per country with
+   enough places of each class, weighted by positives). Distances to fixed anchors (Moscow, a
+   SAC base, the continental US) are also scored over a location-only control (latitude and
+   longitude), so "reach" is not read off what is only location. The M2 check showed why: a
+   country intercept alone closed about two thirds of the pooled gap between the population
+   rule and every feature.
 2. **Grouped permutation importance** on the held-out folds.
 3. **SHAP** (TreeSHAP):
    - a global beeswarm;
@@ -712,11 +721,27 @@ Data card: `data/curated/sac1956/README.md`.
   sources out of the features.
 - **Check run** (`runs/m2-check/`). This is a check, not a result. Under spatial CV, "on the
   list" scores a PR-AUC of 0.75 for the population rule and 0.84 for LightGBM or logistic
-  regression on every feature. Transport and geography add the most over population. The
-  military sites add little once the rest are in. Dropping the anachronistic features costs
-  about 0.02. None of the ten closed towns is on the 1956 list. In several Eastern European
-  countries the population rule alone does as well as the global model, so the per-country
-  models (M7) will matter.
+  regression on every feature. Most of that gap is between countries, not within them. At a
+  given size the share of towns SAC listed differs a lot by country (towns of 20,000-30,000:
+  43% in the USSR, 90% in East Germany), and one pooled curve on population cannot fit that,
+  so any family that tells the countries apart is credited with the difference. On the same
+  splits, the population rule with one intercept per country already scores 0.81 (0.69 for
+  "given a DGZ", against 0.63 pooled), about two thirds of the way to every feature. Scored
+  inside each country (PR-AUC per country with at least ten places of each class, weighted by
+  positives), every feature adds only 0.02 over the rule for "on the list" (0.81 to 0.83) and
+  0.01 for "given a DGZ" (0.71 to 0.72), and population plus geography does no better than the
+  rule. The pooled reading that transport and geography add the most over population does not
+  hold up as stated: geography's anchor distances (km to Moscow, to a SAC base) partly just
+  say where a town is. Inside the USSR there is a real gain (0.77 to 0.82 for every feature);
+  in several Eastern European countries the population rule alone does as well as the global
+  model, so the per-country models (M7) will matter. The military sites add little once the
+  rest are in. Dropping the anachronistic features costs about 0.02. None of the ten closed
+  towns is on the 1956 list. The check now scores each family over population plus a country
+  term, reports a within-country PR-AUC next to every pooled one (`metrics.csv`,
+  `gains.csv`), and scores geography over a location-only control (latitude and longitude).
+  The country-intercept and within-country figures above were computed from the committed
+  out-of-fold predictions; the run itself has not been regenerated with those models yet, so
+  the family gains over population plus country and over location are still to come.
 - **Gaps.**
   - Slovakia's towns that passed 10,000 after 1953 are missing.
   - China's towns below city rank are missing.

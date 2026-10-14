@@ -108,6 +108,13 @@ def shown(value, how: str):
     return round(float(value), 0)
 
 
+def ablated_families(models) -> list[str]:
+    """The families ablated both ways in a run. Read from the "all but" models: the country
+    and location controls also have "population + " in their names, but are not families."""
+    prefix = "LightGBM, all but "
+    return sorted({m.removeprefix(prefix) for m in models if m.startswith(prefix)})
+
+
 def payload(run: Path) -> dict:
     preds = pd.read_csv(run / "oof_predictions.csv")
     data = pd.read_parquet(PROCESSED / "dataset_sac1956.parquet")
@@ -187,13 +194,7 @@ def payload(run: Path) -> dict:
         for t in TARGETS
         for m in MODELS
     ]
-    families = sorted(
-        {
-            m.split("population + ")[1]
-            for m in spatial.index.get_level_values(1)
-            if "population + " in m
-        }
-    )
+    families = ablated_families(spatial.index.get_level_values(1))
     ablation = [
         {
             "target": t,
