@@ -48,7 +48,10 @@ FEATURES = {
         note="annual log10 growth from the pre-war census; 0 where it is missing",
     ),
     "pop_rank_pct": Feature(
-        "population", "census", CENSUS, note="percentile of population within its country"
+        "population",
+        "census",
+        CENSUS,
+        note="percentile of population among its country's settlements of 10,000+ (0 below)",
     ),
     "log_pop_within_25km": Feature(
         "population", "census", CENSUS, note="other settlements of the table within 25 km"

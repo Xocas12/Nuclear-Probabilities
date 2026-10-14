@@ -5,10 +5,11 @@ model fitted on the bloc can score them.
 
 Only features whose source covers every region in the same way are built (the common set,
 COMMON). The definitions are the bloc's (nucprob/features/):
-- population: log_pop, pop_rank_pct (within the country), log_pop_within_{25,50,100}km (the
-  people of the other towns of the table within that distance), log_km_to_100k (to the nearest
-  other town of 100,000+). The bloc counts neighbours down to 5,000 people; the town tables
-  stop at 10,000, so the within-radius sums run a little lower here.
+- population: log_pop, pop_rank_pct (within the country, among towns of 10,000 or more as in
+  the bloc: nucprob.features.population.RANK_FLOOR), log_pop_within_{25,50,100}km (the people
+  of the other towns of the table within that distance), log_km_to_100k (to the nearest other
+  town of 100,000+). The bloc counts neighbours down to 5,000 people in most countries; the
+  town tables stop at 10,000, so the within-radius sums run a little lower here.
 - administrative: national_capital, regional_centre (the seat of a first-order unit, from the
   town table), log_km_to_capital (own country's capital).
 - geography: elevation_m, log_relief_10km, log_km_to_coast.
@@ -27,6 +28,7 @@ import pandas as pd
 
 from nucprob.features.geography import log_km, nearest_km
 from nucprob.features.military import AIRFIELD_TYPES, RADII_KM
+from nucprob.features.population import rank_pct
 from nucprob.features.transport import JUNCTION_KM, MAJOR_RIVER_RANK
 from nucprob.geo import Points, haversine_km
 from nucprob.paths import CURATED, PROCESSED, RAW
@@ -113,7 +115,7 @@ def population(p: pd.DataFrame) -> pd.DataFrame:
     out = pd.DataFrame(index=p.index)
     pop = p["pop"].to_numpy(float)
     out["log_pop"] = np.log10(pop)
-    out["pop_rank_pct"] = p.groupby("country")["pop"].rank(pct=True)
+    out["pop_rank_pct"] = rank_pct(p["pop"], p["country"])
     for r in (25, 50, 100):
         out[f"log_pop_within_{r}km"] = np.nan
     out["log_km_to_100k"] = np.nan

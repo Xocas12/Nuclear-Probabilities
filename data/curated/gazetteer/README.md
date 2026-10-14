@@ -1,25 +1,41 @@
 # The place universe: sources and caveats
 
-`python -m nucprob.places` builds `data/processed/places_1956.parquet`. It holds every settlement
-of 5,000 or more people near the study date (June 1956) in the countries of the SAC 1956
-list. The universe proper is 10,000 or more. Every row has its 1956 country and first-order
+`python -m nucprob.places` builds `data/processed/places_1956.parquet`. It holds the settlements
+of the countries of the SAC 1956 list near the study date (June 1956), down to 5,000 people
+where the source goes that low and to the source's own floor where it does not (the "Table
+floor" column below). The universe proper is 10,000 or more. Every row has its 1956 country and first-order
 unit, a population on or near the study date (`pop`, `pop_year`), a pre-war population where
 a source has one, and coordinates from GeoNames. The rule is fixed before looking at the labels
 (PLAN section 2).
 
-| Country | Source | Figures | `pop` | Universe (10,000+) |
-|---|---|---|---|---|
-| USSR | pop-stat (14 republics), Demoscope (Uzbekistan) | censuses of 1939 and 1959 | 1959 census | 1,620 located of 1,635 |
-| East Germany | *Statistisches Jahrbuch der DDR 1956*, table I.10 | 1939, 1946, 1950, end-1955, end-1956 | interpolated to 15 June 1956 | 214 |
-| Poland | *Rocznik Statystyczny 1957*, table 7 | 1950 census, end-1956 estimate | interpolated | 207 |
-| Czechoslovakia: Czech lands | pop-stat | censuses of 1930, 1950, 1961 | interpolated | 90 |
-| Czechoslovakia: Slovakia | Votrubec (1959), `slovakia_towns_1954_1958.csv` | 1 January 1954 and 1958 | interpolated | 25 |
-| Hungary | KSH, 2011 census historical series | censuses of 1941, 1949, 1960 | interpolated | 120 |
-| Romania | pop-stat | censuses of 1930, 1948, 1956 | 1956 census | 101 |
-| Bulgaria | pop-stat | censuses of 1934, 1946, 1956 | 1956 census | 56 |
-| Albania | pop-stat | census of 1955 | 1955 census | 9 |
-| China | 1953 census, via Wikipedia (from Shabad 1959) | 1953 census | 1953 census | 162 located of 163 |
-| North Korea, North Vietnam, Mongolia | UN World Urbanization Prospects 2018 | annual model estimates | 1956 estimate | 5, 2, 1 |
+| Country | Source | Figures | `pop` | Table floor | Universe (10,000+) |
+|---|---|---|---|---|---|
+| USSR | pop-stat (14 republics), Demoscope (Uzbekistan) | censuses of 1939 and 1959 | 1959 census | 5,000 | 1,620 located of 1,635 |
+| East Germany | *Statistisches Jahrbuch der DDR 1956*, table I.10 | 1939, 1946, 1950, end-1955, end-1956 | interpolated to 15 June 1956 | 10,000 (end of 1956) | 214 |
+| Poland | *Rocznik Statystyczny 1957*, table 7 | 1950 census, end-1956 estimate | interpolated | 10,000 (end of 1956) | 207 |
+| Czechoslovakia: Czech lands | pop-stat | censuses of 1930, 1950, 1961 | interpolated | 5,000 | 90 |
+| Czechoslovakia: Slovakia | Votrubec (1959), `slovakia_towns_1954_1958.csv` | 1 January 1954 and 1958 | interpolated | 10,000 (1953) | 25 |
+| Hungary | KSH, 2011 census historical series | censuses of 1941, 1949, 1960 | interpolated | 5,000 | 120 |
+| Romania | pop-stat | censuses of 1930, 1948, 1956 | 1956 census | 5,000 | 101 |
+| Bulgaria | pop-stat | censuses of 1934, 1946, 1956 | 1956 census | 5,000 | 56 |
+| Albania | pop-stat | census of 1955 | 1955 census | 5,000 | 9 |
+| China | 1953 census, via Wikipedia (from Shabad 1959) | 1953 census | 1953 census | cities (*shi*) only | 162 located of 163 |
+| North Korea, North Vietnam, Mongolia | UN World Urbanization Prospects 2018 | annual model estimates | 1956 estimate | cities of 300,000+ today | 5, 2, 1 |
+
+The floor matters in two places.
+
+- **`pop_rank_pct`** is ranked within each country among its settlements of 10,000 or more
+  only (`RANK_FLOOR` in `nucprob/features/population.py`), a floor that every country's table
+  and every transfer town table reaches. Ranked over the whole table, a town of 10,000 sat near
+  the middle in the USSR and at the bottom in East Germany. Coverage above the floor still
+  differs: China's towns (*zhen*) and Poland's *osiedla* are missing, so their cities rank
+  against fewer places.
+- **Linking SAC targets** (`nucprob/labels/sac1956.py`). A target nearest to a settlement below
+  10,000 stays with it, so it does not make a larger neighbour look targeted. Where the table
+  stops at 10,000 (East Germany, Poland, Slovakia) or at cities (China, North Korea, North
+  Vietnam, Mongolia) there are no such settlements, and a target at a town of 5,000-10,000
+  goes to a larger town within 10 km. No absorbers below 10,000 are added for these countries,
+  and the 5,000 sensitivity threshold cannot be run there.
 
 ## Caveats
 
