@@ -27,3 +27,4 @@ east germany,Neuenhagen bei Berlin,2865716,Neuenhagen,"Neuenhagen bei Berlin, M�
 east germany,Rüdersdorf bei Berlin,2843408,Rüdersdorf,"Rüdersdorf bei Berlin, Märkisch-Oderland"
 east germany,Schöneiche bei Berlin,2836746,Schöneiche,"Schöneiche bei Berlin, Oder-Spree"
 east germany,Lichtenstein in Sachsen,2878037,Lichtenstein,"Lichtenstein/Sachsen, Zwickau district"
+russia,Верх-Нейвинский,1487504,Verkh-Neyvinskiy,"Sverdlovsk region; GeoNames gives the Cyrillic Верх-Нейвинский only as an alternate name of Novouralsk (1538636, the old Sverdlovsk-44 settlement 3.3 km away), so the matcher put the village on the closed town; 1487504 is the village itself"

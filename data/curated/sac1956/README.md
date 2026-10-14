@@ -39,6 +39,7 @@ classified.
 | `lines.csv` | printed line, in page order | `id`, `page`, `kind` (data / header / footer / blank), `text` as printed (spacing normalised: single spaces, none around hyphens), `source` (agreed / adjudicated), `type` |
 | `anomalies.csv` | line that keeps a `?` or breaks a format rule | `problem` |
 | `checks.csv` | line flagged by a consistency check | `check`, `detail`, `second_look` (confirmed as printed / corrected), `second_look_note` |
+| `cover_names.csv` | entry printed under an open town for the plant of the closed town next to it (a link rule, not part of the transcription) | `sac_id` (line id of the header), `name_printed`, `category` (the A/E or guided-missile line), `closed_town`, `closed_place_id`, `basis` |
 | `../labels/us_1956_sac_complexes.csv` | top-level complex, in the shared label schema | see `../labels/SCHEMA.md`; DGZ and installation totals and the priority tier are in `notes` |
 | `../labels/us_1956_sac_airfields.csv` | airfield, in the shared label schema | see `../labels/SCHEMA.md` |
 | `audit.csv` | line of the audit sample | `curated`, `audit` (the independent re-reading), `judged` (blind judgement where they differ), `outcome` |
@@ -203,6 +204,20 @@ See REPORT.md for the current numbers. In brief:
   elsewhere: every small number is taken, so a cut number would duplicate another.
 - **The cross-reference excerpt does not reach the lost page**: it covers ABAKAN to ALTENHAIN
   and then jumps to LEBA, so it cannot restore the complexes from ARTSIZ to ATBASAR.
+- **Closed towns appear under their neighbours' names.** The list never names a closed town;
+  SAC printed the plants it knew of under the open town next door. Three entries are such
+  cover names: KYSHTYM (040 A/E industry) for Mayak at Ozersk, the sub-complex VERKHNE
+  NEYVINSKIY (044 A/E gaseous diffusion) for the plant at Novouralsk, and KAPUSTIN YAR
+  (210 guided missiles) for the range town Znamensk. Their headers lie nearer the open towns,
+  so linking by coordinates gives them to the open town alone. `cover_names.csv` records the
+  three, with distances, and the label code credits each entry to the closed town as well
+  (`nucprob/labels/sac1956.py`). The open town keeps it. NIZHNYAYA TURA by Lesnoy and
+  YURYUZAN by Trekhgorny are not cover names: they carry only 118 (Urals electric grid) and
+  275 (population) lines, and their aim points lie nearer the open towns.
+  The village of Verkh-Neyvinsky itself (8,229 in 1959) used to sit on Novouralsk's
+  coordinates, because GeoNames gives its Cyrillic name only as an alternate name of
+  Novouralsk; a curated GeoNames link (`../gazetteer/geonames_links.csv`) now puts it at its
+  own place, 0.8 km from the VERKHNE NEYVINSKIY header.
 - Lines whose print is unclear keep a `?` and are listed in `anomalies.csv`.
 - What the DGZ letter labels mean (A, AH, BM ...; Q-labels for M-sites), what the airfield
   trailing letters mean (R, S, T ...), and why some airfield priorities carry an `A` (typed in

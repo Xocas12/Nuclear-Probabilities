@@ -10,8 +10,16 @@ universe threshold stays with that settlement, so it does not make a larger neig
 targeted. The SAC name is compared with the settlement's names (1956, today's, GeoNames) as a
 check, not a key.
 
+Cover names: SAC printed the plants of three closed towns under the open town next to them
+(KYSHTYM for Mayak at Ozersk, VERKHNE NEYVINSKIY for the diffusion plant at Novouralsk,
+KAPUSTIN YAR for the range town Znamensk). Closed towns carry no SAC names and their headers
+sit nearer the open towns, so the link rule alone leaves them untargeted. The curated table
+data/curated/sac1956/cover_names.csv credits each of those entries to the closed town as well;
+the open town keeps it for its own lines.
+
 Writes to data/processed/:
-  sac1956_links.parquet   one row per complex, sub-complex and DGZ, with its place
+  sac1956_links.parquet   one row per complex, sub-complex and DGZ, with its place, plus a
+                          copy of each cover-name entry linked to its closed town
   labels_sac1956.parquet  one row per settlement: T1 (listed; given an aim point), T2 (DGZ and
                           installation counts), T3 (best priority and tier), and the Part II
                           subset where the excerpt shows it (part2_has_dgz, part2_n_dgz)
@@ -33,6 +41,7 @@ from nucprob.geo import Points, haversine_km
 from nucprob.paths import CURATED, PROCESSED
 
 RADIUS_KM = 10.0
+COVER_NAMES = CURATED / "sac1956" / "cover_names.csv"
 NAME_OK = 75  # name similarity (0-100) below which a link is listed for review
 # Names second: a target with no settlement within RADIUS_KM is linked to a settlement up to
 # NAME_RADIUS_KM away whose name matches it closely. SAC's coordinates for remote towns can be
@@ -126,6 +135,32 @@ def link(
     return out
 
 
+def cover_links(links_cx: pd.DataFrame, places: pd.DataFrame) -> pd.DataFrame:
+    """The entries of COVER_NAMES, each copied and linked to its closed town (`link_method`
+    "cover name"), for the closed towns present in `places`. The original links are not
+    touched: the open town keeps its entry, the closed town gets it as well."""
+    cover = pd.read_csv(COVER_NAMES, dtype=str)
+    cover = cover[cover["closed_place_id"].isin(places["place_id"])]
+    entries = links_cx.set_index("id")
+    missing = set(cover["sac_id"]) - set(entries.index)
+    assert not missing, f"cover names not in the complex list: {sorted(missing)}"
+    out = entries.loc[cover["sac_id"]].reset_index()
+    town = places.set_index("place_id").loc[cover["closed_place_id"]]
+    out["place_id"] = cover["closed_place_id"].to_numpy()
+    out["dist_km"] = np.round(
+        haversine_km(
+            out["lat"].to_numpy(),
+            out["lon"].to_numpy(),
+            town["lat"].to_numpy(),
+            town["lon"].to_numpy(),
+        ),
+        2,
+    )
+    out["name_score"] = np.nan
+    out["link_method"] = "cover name"
+    return out
+
+
 def link_names(links_cx: pd.DataFrame, located: pd.DataFrame, index: Points) -> None:
     """Names second: a complex with no settlement within the radius goes to a settlement up to
     NAME_RADIUS_KM away whose name matches it closely (in place)."""
@@ -213,13 +248,15 @@ def build(radius_km: float = RADIUS_KM) -> tuple[pd.DataFrame, pd.DataFrame, pd.
         parts_dgz.append(
             link(dgz_all[dgz_all["country_1956"] == country], located, index, radius_km)
         )
-    links_cx = pd.concat(parts_cx)
+    links_cx = pd.concat(parts_cx, ignore_index=True)
     links_dgz = pd.concat(parts_dgz)
     located = places[places["has_coords"]]
+    # Entries SAC printed under an open town's name for the closed town next to it.
+    credited = pd.concat([links_cx, cover_links(links_cx, located)], ignore_index=True)
 
     # Labels per settlement.
-    g = links_cx[links_cx["place_id"].notna()].groupby("place_id")
-    top = links_cx[(links_cx["level"] == "complex") & links_cx["place_id"].notna()]
+    g = credited[credited["place_id"].notna()].groupby("place_id")
+    top = credited[(credited["level"] == "complex") & credited["place_id"].notna()]
     top_prio = top.assign(p=top["priority"].str.rstrip("A").astype(float)).groupby("place_id")
     labels = pd.DataFrame(index=places["place_id"])
     labels["n_complexes"] = g.apply(lambda d: (d["level"] == "complex").sum())
@@ -258,7 +295,7 @@ def build(radius_km: float = RADIUS_KM) -> tuple[pd.DataFrame, pd.DataFrame, pd.
         for listed, (_, place) in zip(labels["listed"], places.iterrows(), strict=True)
     ]
     labels["has_dgz"] = labels["n_dgz"] > 0  # T1, variant: given at least one aim point
-    labels = labels.join(part2_labels(links_cx, labels.index))
+    labels = labels.join(part2_labels(credited, labels.index))
     labels = labels.reset_index()
 
     report = pd.concat(
@@ -301,7 +338,7 @@ def build(radius_km: float = RADIUS_KM) -> tuple[pd.DataFrame, pd.DataFrame, pd.
         ),
     )
     links = pd.concat(
-        [links_cx.assign(kind=links_cx["level"]), links_dgz.assign(kind="dgz")], ignore_index=True
+        [credited.assign(kind=credited["level"]), links_dgz.assign(kind="dgz")], ignore_index=True
     )
     return links, labels, report
 
@@ -317,7 +354,9 @@ def main(argv: list[str] | None = None) -> None:
     places = pd.read_parquet(PROCESSED / "places_1956.parquet")
     u = labels.merge(places[["place_id", "country_1956", "in_universe"]], on="place_id")
     u = u[u["in_universe"]]
-    cx = links[links["kind"].isin(["complex", "subcomplex"])]
+    cx = links[
+        links["kind"].isin(["complex", "subcomplex"]) & (links["link_method"] != "cover name")
+    ]
     dgz = links[links["kind"] == "dgz"]
     for country, c in cx.groupby("country_1956"):
         uc = u[u["country_1956"] == country]
