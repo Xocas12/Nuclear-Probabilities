@@ -79,7 +79,13 @@ FEATURES = {
         note="autonomous oblasts and national okrugs of the USSR",
     ),
     "district_seat": Feature(
-        "administrative", "GeoNames PPLA2 (today's districts)", ("geonames_*",), anachronism=True
+        "administrative",
+        "GeoNames seats of today's district tier",
+        ("geonames_*",),
+        anachronism=True,
+        note="PPLA2 (raion, powiat, járás, obshtina, okres); PPLA3 in Germany (Kreis) and China "
+        "(county); PPLA in Moldova, Azerbaijan, Latvia and Estonia; missing in the Czech lands, "
+        "Romania, Turkmenistan and North Korea, where GeoNames does not code that tier",
     ),
     "city_status": Feature(
         "administrative",
