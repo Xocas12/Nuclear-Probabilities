@@ -112,7 +112,9 @@ def compare(
             "listed": int(y.sum()),
         }
         for name in models:
-            if name == baseline:
+            # A model that left towns unscored (no military distance) has no metrics on this
+            # list in check.metrics_table either; NaN would otherwise sort as a top score.
+            if name == baseline or g[name].isna().any():
                 continue
             res = paired_bootstrap(y, g[baseline], g[name], n_boot=n_boot, seed=seed)
             for metric, r in res.items():

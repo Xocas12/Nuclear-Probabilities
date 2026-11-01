@@ -134,3 +134,20 @@ def test_mixed_lists_show_no_detectable_gain():
     rows = paired[(paired["model"] == MODEL) & paired["plan_id"].isin(mixed)]
     assert len(rows) == 15
     assert not rows["excludes_zero"].any()
+
+
+def test_compare_skips_a_model_that_left_towns_unscored():
+    rng = np.random.default_rng(0)
+    y = np.array([1] * 5 + [0] * 45)
+    scores = pd.DataFrame(
+        {
+            "plan_id": "a",
+            "region": "r",
+            "listed": y,
+            "population rule": rng.random(50),
+            "whole": rng.random(50),
+            "partial": [np.nan] + list(rng.random(49)),
+        }
+    )
+    out = compare(scores, ["population rule", "whole", "partial"], 2, n_boot=20)
+    assert set(out["model"]) == {"whole"}

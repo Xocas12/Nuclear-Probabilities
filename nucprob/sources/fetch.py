@@ -4,7 +4,9 @@ retrieved and when.
     python -m nucprob.sources.fetch [ID ...] [--refresh]
 
 A file that is already present is checked against its recorded sha256 and kept; a
-different hash is reported (the source changed since it was recorded), not overwritten.
+different hash is reported (the source changed since it was recorded), not overwritten, and
+the same goes for a fresh download of a source with a recorded hash. A source that cannot be
+reached is reported and the rest continue.
 `--refresh` downloads again and records the new hash. Entries with `fetch: false` are
 downloaded by hand and only checked; entries with `fetch: <module>` (tile sets) are fetched by
 that module.
@@ -97,10 +99,23 @@ def main(argv: list[str] | None = None) -> int:
             print(f"{src['id']}: missing; download it by hand to data/raw/{src['path']}")
             problems += 1
             continue
-        print(f"{src['id']}: downloading {src['url']}")
-        download(src["url"], dest)
+        print(f"{src['id']}: downloading {src['url']}", flush=True)
+        try:
+            download(src["url"], dest)
+        except requests.RequestException as err:
+            print(f"{src['id']}: FAILED ({type(err).__name__}); not obtained")
+            problems += 1
+            continue
+        digest = sha256(dest)
+        if src.get("sha256") and src["sha256"] != digest and not args.refresh:
+            # The record stays: it says what the committed tables were built from.
+            print(f"{src['id']}: downloaded, but its sha256 differs from the recorded one")
+            problems += 1
+            continue
+        if src.get("sha256") == digest:
+            continue
         src["retrieved"] = dt.datetime.now(dt.UTC).date().isoformat()
-        src["sha256"] = sha256(dest)
+        src["sha256"] = digest
         changed += 1
     if changed:
         save_manifest(manifest)
