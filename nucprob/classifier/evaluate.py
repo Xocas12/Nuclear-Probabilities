@@ -13,7 +13,6 @@ MIN_POSITIVES linked towns, so the SAC list does not hide the others: every list
 import numpy as np
 import pandas as pd
 from sklearn.isotonic import IsotonicRegression
-from sklearn.metrics import average_precision_score
 
 from nucprob.classifier.fit import Spec, fit_bagged
 from nucprob.model.evaluate import metrics

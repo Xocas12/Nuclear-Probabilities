@@ -3,6 +3,7 @@
 import numpy as np
 import pandas as pd
 import pytest
+from sklearn.metrics import average_precision_score
 
 from nucprob.classifier import evaluate as ev
 from nucprob.classifier import features as cf
@@ -173,14 +174,14 @@ def test_the_fast_pr_auc_is_scikit_learns_with_ties():
         y = rng.integers(0, 2, n)
         y[0] = 1
         for s in (rng.uniform(size=n), rng.integers(0, 4, n).astype(float)):
-            assert ev.pr_auc(y, s) == pytest.approx(ev.average_precision_score(y, s), abs=1e-12)
+            assert ev.pr_auc(y, s) == pytest.approx(average_precision_score(y, s), abs=1e-12)
 
 
 def test_weighted_pr_auc_leaves_out_lists_too_small_to_score():
     y = np.array([1, 0, 1, 1, 0, 0])
     s = np.array([0.9, 0.1, 0.1, 0.9, 0.8, 0.2])
     doc = np.array(["small", "small", "big", "big", "big", "big"])
-    assert ev.weighted_pr_auc(y, s, doc) == pytest.approx(ev.average_precision_score(y[2:], s[2:]))
+    assert ev.weighted_pr_auc(y, s, doc) == pytest.approx(average_precision_score(y[2:], s[2:]))
 
 
 def test_calibration_is_cross_fitted_and_preserves_order():
