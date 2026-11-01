@@ -8,13 +8,14 @@ import pytest
 import yaml
 
 from nucprob.classifier import extended as ex
+from nucprob.classifier import state_features as sf
 from nucprob.classifier.features import COW
 from nucprob.paths import PROCESSED, ROOT, RUNS
 from nucprob.sources.fetch import sha256
 
 OUT = RUNS / "classifier" / "extended.csv"
 needs_run = pytest.mark.skipif(not OUT.exists(), reason="no extended run")
-needs_data = pytest.mark.skipif(not ex.REGIME.exists(), reason="no raw data")
+needs_data = pytest.mark.skipif(not sf.REGIME.exists(), reason="no raw data")
 
 
 def series(entity: str, pairs: list[tuple[int, float]], column: str) -> pd.DataFrame:
@@ -23,31 +24,31 @@ def series(entity: str, pairs: list[tuple[int, float]], column: str) -> pd.DataF
 
 def test_a_later_year_is_never_read():
     d = series("A", [(1950, 1.0), (1960, 2.0), (1970, 3.0)], "x")
-    assert ex.last_at_or_before(d, "A", "x", 1965) == 2.0
-    assert ex.last_at_or_before(d, "A", "x", 1960) == 2.0
-    assert np.isnan(ex.last_at_or_before(d, "A", "x", 1949))
+    assert sf.last_at_or_before(d, "A", "x", 1965) == 2.0
+    assert sf.last_at_or_before(d, "A", "x", 1960) == 2.0
+    assert np.isnan(sf.last_at_or_before(d, "A", "x", 1949))
 
 
 def test_a_state_its_source_does_not_hold_stays_missing():
     d = series("Germany", [(1950, 3000.0)], "GDP per capita")
-    assert "East Germany" not in ex.GDP_ENTITY and "North Vietnam" not in ex.GDP_ENTITY
+    assert "East Germany" not in sf.GDP_ENTITY and "North Vietnam" not in sf.GDP_ENTITY
     assert np.isnan(
-        ex.last_at_or_before(d, ex.GDP_ENTITY.get("East Germany"), "GDP per capita", 1956)
+        sf.last_at_or_before(d, sf.GDP_ENTITY.get("East Germany"), "GDP per capita", 1956)
     )
 
 
 def test_every_country_of_the_table_is_named_for_regime():
     for country in COW:
-        assert country in ex.REGIME_ENTITY, country
+        assert country in sf.REGIME_ENTITY, country
 
 
 def test_pacts_count_only_the_documents_year_and_a_superpower_counts_as_its_own_side():
     pacts = pd.DataFrame({"ccode1": [200, 200], "ccode2": [2, 2], "year": [1949, 1950]})
-    uk = ex.pact_columns(pacts, 200, 1949)
+    uk = sf.pact_columns(pacts, 200, 1949)
     assert uk["pol_defence_pact_usa"] == 1 and uk["pol_defence_pact_ussr"] == 0
-    assert ex.pact_columns(pacts, 200, 1948)["pol_defence_pact_usa"] == 0
-    assert ex.pact_columns(pacts, ex.USA, 1940)["pol_defence_pact_usa"] == 1
-    assert ex.pact_columns(pacts, ex.USSR, 1940)["pol_defence_pact_ussr"] == 1
+    assert sf.pact_columns(pacts, 200, 1948)["pol_defence_pact_usa"] == 0
+    assert sf.pact_columns(pacts, sf.USA, 1940)["pol_defence_pact_usa"] == 1
+    assert sf.pact_columns(pacts, sf.USSR, 1940)["pol_defence_pact_ussr"] == 1
 
 
 def test_the_verdict_needs_both_intervals_and_enough_training():
@@ -69,9 +70,9 @@ def test_the_verdict_needs_both_intervals_and_enough_training():
 
 def test_the_amendment_names_every_new_column_and_changes_no_primary_rule():
     a = yaml.safe_load(ex.AMENDMENT.read_text(encoding="utf-8"))
-    for c in ex.POLITICAL:
+    for c in sf.POLITICAL:
         assert c in a["columns"]["political"]
-    for c in ex.ECONOMIC:
+    for c in sf.ECONOMIC:
         assert c in a["columns"]["economic"]
     assert "Primary comparisons" in a["unchanged"]
     protocol = (ROOT / "configs" / "protocol.yaml").read_text(encoding="utf-8")
@@ -81,21 +82,18 @@ def test_the_amendment_names_every_new_column_and_changes_no_primary_rule():
 @needs_data
 def test_known_values_of_the_state_year_table():
     full = pd.read_parquet(PROCESSED / "classifier_table.parquet")
-    table = ex.state_year_table(
+    table = sf.state_year_table(
         full[["country", "year"]].dropna(),
-        pd.read_csv(ex.REGIME),
-        pd.read_csv(ex.GDP),
-        ex.read_pacts(),
-        ex.state_codes(),
+        pd.read_csv(sf.REGIME),
+        pd.read_csv(sf.GDP),
+        sf.read_pacts(),
+        sf.state_codes(),
     ).set_index(["country", "year"])
     poland = table.loc[("Poland", 1962)]
     assert poland["pol_defence_pact_ussr"] == 1 and poland["pol_defence_pact_usa"] == 0
     denmark = table.loc[("Denmark", 1967)]
     assert denmark["pol_defence_pact_usa"] == 1 and denmark["pol_defence_pact_ussr"] == 0
-    assert (
-        table.loc[("East Germany", 1961), "econ_log_gdp_pc"]
-        != table.loc[("East Germany", 1961), "econ_log_gdp_pc"]
-    )
+    assert np.isnan(table.loc[("East Germany", 1956), "econ_log_gdp_pc"])
     assert table.loc[("USSR", 1956), "pol_regime"] == 0
     assert table.loc[("Denmark", 1967), "pol_regime"] >= 2
     assert table["pol_regime"].notna().all()
