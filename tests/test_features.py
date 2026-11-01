@@ -162,3 +162,43 @@ def test_military_sites_in_june_1956():
     assert sites["lat"].between(-90, 90).all() and sites["source"].str.len().gt(0).all()
     # SAC's own lists are never a source of this table (leakage guard)
     assert not sites["source"].str.contains("ebb538|nukevault|nuclearsecrecy", case=False).any()
+
+
+def test_district_seat_is_read_at_each_countrys_district_tier():
+    """#10: GeoNames' admin2 is a different tier in each country. East German Kreis seats are
+    PPLA3 (admin2 is the Regierungsbezirk, absent in the east), so Wismar and Weimar must count;
+    a Chinese prefecture seat (PPLA2) must not; Romania's PPLA2 is the commune and the Czech lands
+    have almost no coded okres seats, so the feature is missing there."""
+    from nucprob.features.administrative import administrative
+
+    # feature codes as GeoNames gives them: Wismar 2807465, Weimar 2812482, Halle 2911522
+    places = pd.DataFrame(
+        {
+            "name_ru": ["Wismar", "Weimar", "Halle", "Тверь", "Кимры", "Baoding", "Xushui", "Cluj"],
+            "country_1956": ["East Germany"] * 3 + ["USSR"] * 2 + ["China"] * 2 + ["Romania"],
+            "country_today": ["DE", "DE", "DE", "RU", "RU", "CN", "CN", "RO"],
+            "feature_code": ["PPLA3", "PPLA3", "PPL", "PPLA", "PPLA2", "PPLA2", "PPLA3", "PPLA2"],
+            "lat": [53.89, 50.98, 51.48, 56.86, 56.87, 38.87, 39.02, 46.77],
+            "lon": [11.47, 11.33, 11.97, 35.90, 37.36, 115.48, 115.66, 23.60],
+            "pop": [30_000, 64_000, 290_000, 240_000, 40_000, 200_000, 30_000, 155_000],
+            "is_city": True,
+        }
+    )
+    places["name_1956"] = places["name_ru"]
+    seat = administrative(places)["district_seat"]
+    assert seat.iloc[:3].tolist() == [1, 1, 0]  # Wismar, Weimar (Kreis seats); Halle
+    assert seat.iloc[3:7].tolist() == [0, 1, 0, 1]  # oblast centre, raion; prefecture, county
+    assert seat.iloc[7:].isna().all()  # Romania: GeoNames has no district tier
+
+
+def test_district_seat_note_names_every_country_off_the_default():
+    from nucprob.features.administrative import DISTRICT_CODE
+    from nucprob.features.registry import FEATURES
+
+    f = FEATURES["district_seat"]
+    assert "PPLA2 (" not in f.source and "PPLA3" in f.note
+    names = {"DE": "Germany", "CN": "China", "MD": "Moldova", "AZ": "Azerbaijan"}
+    names |= {"LV": "Latvia", "EE": "Estonia", "CZ": "Czech", "RO": "Romania"}
+    names |= {"TM": "Turkmenistan", "KP": "North Korea"}
+    assert set(names) == set(DISTRICT_CODE)
+    assert all(n in f.note for n in names.values())

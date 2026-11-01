@@ -3,6 +3,11 @@
 autonomous units as of June 1956 (data/curated/features/admin_centres_1956.csv: oblasts, krais
 and ASSRs, including the oblasts abolished in 1957; voivodeships, Bezirke, kraje, counties,
 regions, okrugs, provinces), and today's district seats from GeoNames.
+
+GeoNames codes the seat of a place's admin2 unit PPLA2, but admin2 is a different tier in each
+country, so a district seat is read at the level of the country's own district tier (the tier
+just above the commune: raion, powiat, járás, Kreis, okres, county). DISTRICT_CODE gives that
+level by GeoNames country.
 """
 
 import numpy as np
@@ -16,6 +21,24 @@ CAPITALS = CURATED / "features" / "capitals_1956.csv"
 CENTRES = CURATED / "features" / "admin_centres_1956.csv"
 MATCH_KM = 15  # a capital is the largest settlement within this distance of its point
 AUTONOMY = ("autonomous oblast", "national okrug")
+
+# GeoNames feature code of a seat of today's district tier, by the GeoNames country of the place
+# (`country_today`). Countries not listed use PPLA2 (admin2 is the district tier there: raion,
+# powiat, járás, obshtina, okres in Slovakia). None: GeoNames does not code that tier's seats,
+# so the feature is missing there rather than 0.
+DISTRICT_CODE: dict[str, str | None] = {
+    "DE": "PPLA3",  # Kreise are admin3; admin2 is the Regierungsbezirk, absent in the east
+    "CN": "PPLA3",  # counties are admin3; admin2 is the prefecture
+    "MD": "PPLA",  # raions are admin1
+    "AZ": "PPLA",  # rayons are admin1
+    "LV": "PPLA",  # novadi are admin1; admin2 is the parish
+    "EE": "PPLA",  # maakonnad (the former raions) are admin1; admin2 is the parish
+    "CZ": None,  # 3 of 98 okres seats are coded
+    "RO": None,  # admin2 is the commune; there is no tier between județ and commune
+    "TM": None,  # 3 of 57 etrap seats are coded
+    "KP": None,  # 3 of about 200 city and county seats are coded
+}
+DEFAULT_DISTRICT_CODE = "PPLA2"
 
 
 def capitals() -> pd.DataFrame:
@@ -54,6 +77,14 @@ def centre_positions(places: pd.DataFrame, centres: pd.DataFrame) -> dict[str, i
     return out
 
 
+def district_seat(places: pd.DataFrame) -> pd.Series:
+    """1 where GeoNames codes the place as a seat of its country's district tier (and not of a
+    higher unit), 0 elsewhere, missing where GeoNames does not code that tier."""
+    level = places["country_today"].map(lambda c: DISTRICT_CODE.get(c, DEFAULT_DISTRICT_CODE))
+    flag = (places["feature_code"] == level).astype(float)
+    return flag.mask(level.isna())
+
+
 def administrative(places: pd.DataFrame) -> pd.DataFrame:
     caps = capitals()
     out = pd.DataFrame(index=places.index)
@@ -73,6 +104,6 @@ def administrative(places: pd.DataFrame) -> pd.DataFrame:
         flag = np.zeros(len(places), dtype=int)
         flag[[found[u] for u in units if found[u] is not None]] = 1
         out[col] = flag
-    out["district_seat"] = places["feature_code"].isin(["PPLA2"]).astype(int)
+    out["district_seat"] = district_seat(places)
     out["city_status"] = places["is_city"].astype(int)
     return out
