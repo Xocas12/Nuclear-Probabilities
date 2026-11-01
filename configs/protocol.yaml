@@ -1,0 +1,85 @@
+# Pre-committed analysis (brief, section C; PLAN section 5.1). Committed before any model named
+# here is fitted and before any held-out set below is scored. A change after this commit goes in
+# `amendments` with its date and reason, and every run records this file's sha256.
+version: 1
+frozen: 2026-11-01
+
+what_was_already_seen:
+  # Disclosed, not hidden: earlier check runs read these scores before this protocol existed.
+  - m1-slice scored 1,294 USSR towns; m2-check scored 2,127 bloc towns by spatial cross-validation.
+  - m4-transfer-check scored every transfer list. Leave-one-plan-out on those lists is therefore not blind.
+  - Issue #3 names three towns of the then sealed set while describing geocoding errors.
+  - The only blind evaluation left is sealed places never scored by any run (`never_scored`).
+
+question: Which traits of a place, as of a document's date, predict that the document names it as a nuclear target?
+
+labels:
+  registry: data/curated/labels/PLANS.yaml
+  positive: a place of the document's universe with a target of the document linked to it
+  unknown_rows: places whose entry may be on a page lost from the SAC scan are dropped (label_gap)
+  war_plan_wording: only doc_type war_plan may be called a war plan. SAC 1956 is a requirements study.
+  positive_unlabeled:
+    # complete: false in the registry means a town off the list is unlabeled, not negative.
+    method: bagged positive-unlabeled learning (Mordelet and Vert 2014), 50 bags, each with all
+      positives and an equal-sized random draw of the unlabeled
+    applies_to: lists with complete false
+    metric_note: PR-AUC against unlabeled towns understates precision on these lists; said wherever it is reported
+
+features:
+  rule: every feature is as of the document's year or earlier; nothing derived from a label document
+  common: nucprob.transfer.features.COMMON
+  national_power: COW National Material Capabilities of the target state, last year at or before the document
+  excluded_from_drivers: latitude, longitude and any feature whose source is a target list
+  anachronisms: flagged in the registry; results are repeated without them
+
+models:
+  baselines:
+    - population rule (logistic regression on log population)
+    - population + country intercept
+  candidates:
+    - logistic regression L2 on all permitted features
+    - LightGBM with the zoo's fixed settings on all permitted features
+  no_tuning: settings are fixed in nucprob/model/zoo.py; nothing is chosen on a held-out set
+
+state_models:
+  # A state gets its own model only if the attacker has all of the following. Counted plans are
+  # independence groups of the registry; exercises, war games and lessons do not count as plans.
+  plan_doc_types: [war_plan, target_selection, requirements_study, policy_study]
+  grades: [A, B, C]
+  min_independent_plans: 2
+  min_positives: 50
+  min_positives_outside_largest: 15
+  refusal: the gate's output (runs/evidence/state_model_gate.csv) is reported with its reason
+  warsaw_pact_exercise_model:
+    # States will probably be refused. One further pooled model may be fitted on all Warsaw Pact
+    # attacker documents including exercises, always labelled exercise-based, never a war-plan model.
+    min_positives: 50
+    min_documents: 3
+
+evaluation:
+  primary_metric: PR-AUC
+  secondary: [ROC-AUC, Brier, log-loss, precision at k, calibration curve in 10 quantile bins]
+  primary_comparison: best candidate against population + country intercept, on the same rows
+  gain_rule: a gain is claimed only if its 95% paired stratified bootstrap interval excludes zero
+  bootstrap: {resamples: 2000, seed: 1956, level: 0.95}
+  holdouts:
+    leave_one_plan_out: fit on every other group, score the left-out group (groups, not lists)
+    spatial_blocks: 5 folds of 300 km blocks on three shifted grids (0, 100, 200 km)
+    temporal: fit on documents dated up to 1956, score those dated after; the reverse is also reported
+    sealed: places in data/curated/splits/sealed_blocks.csv, scored once, after the models are final
+  sealed_primary_population: never_scored places only; the whole sealed set is reported beside it
+  report_failures: every metric of every holdout goes in the report, whichever way it falls
+
+probability_map:
+  unit: admin-1 or a grid of at least 0.5 degrees, never finer
+  scenario: warheads by state and delivery from cited public estimates (FAS Nuclear Notebook, SIPRI)
+  allocation: proportional to the model's score within stated assumptions; never optimised for any outcome
+  intervals: model bootstrap and stockpile range propagated together
+  modern_results: labelled extrapolation, with the domain shift from Cold War data measured beside them
+
+limits:
+  - no ranked lists or coordinates of present-day facilities as targets
+  - no weapon-allocation or attack-optimisation output
+  - no detail beyond what the area map needs; historical labels stay at their documented resolution
+
+amendments: []

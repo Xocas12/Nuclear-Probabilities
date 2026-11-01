@@ -1,0 +1,56 @@
+# Evidence registry: what each target list is, kept apart from what it says. CATALOGUE.yaml holds
+# the card of each file; this file holds the fields models and reports must not blur.
+# tests/test_plans.py checks it against CATALOGUE.yaml and against the rules below.
+#
+# attacker: the state whose weapons the document assigns. Blank when no state's real intent is
+#   recorded: civil-defence lists and mirrors say what a defender expected, not what an attacker
+#   planned. "Warsaw Pact" = fired by the Unified Command, with no one national owner.
+# author: who wrote the document. For a mirror this is not the side it simulates.
+# date: the document's date, as precisely as its card allows.
+# doc_type:
+#   war_plan           approved operational plan of an armed force
+#   target_selection   decisions on what to strike with weapons about to be used
+#   requirements_study staff study of weapons requirements against a target list
+#   policy_study       staff or policy study that names targets; no approval to strike
+#   exercise           command-staff exercise; targets are written for the exercise scenario
+#   wargame            two-sided war game
+#   training           staff-college lesson
+#   mirror             one side's exercise simulating the other side's strikes on itself
+#   civil_defence      a government's assumption of where its own country would be hit
+#   reconstruction     journalists or Wikipedia, attributing targets to a plan they do not quote
+# grade: A a primary document (or its published translation) read here;
+#   B a primary document read here, naming only part of the targets it counts, or a later
+#     classified history quoting the primary;
+#   C a scholar's table or paraphrase of an archive file not read here;
+#   D journalism, or an encyclopedia.
+# group: lists sharing a group come from one document or exercise, and count as one plan when
+#   plans are counted (configs/protocol.yaml).
+# complete: true if the list claims to give all targets within its scope. false = positive-
+#   unlabeled: a town not on the list may still have been a target.
+# role: train (may enter a classifier as attacker evidence) | test-expectation (scored only, as
+#   evidence of another kind) | excluded (no labels taken).
+plans:
+  - {plan_id: us_1956_sac_complexes, attacker: US, author: US Strategic Air Command, date: 1956-06, doc_type: requirements_study, grade: A, group: us_sac_1956, complete: true, role: train}
+  - {plan_id: us_1956_sac_airfields, attacker: US, author: US Strategic Air Command, date: 1956-06, doc_type: requirements_study, grade: A, group: us_sac_1956, complete: true, role: train}
+  - {plan_id: us_1956_sac_part2_complexes, attacker: US, author: US Strategic Air Command, date: 1956-06, doc_type: requirements_study, grade: B, group: us_sac_1956, complete: false, role: excluded}
+  - {plan_id: us_1945_target_committee, attacker: US, author: US Target Committee and War Department, date: 1945-07, doc_type: target_selection, grade: A, group: us_1945, complete: true, role: train}
+  - {plan_id: us_1958_taiwan_strait, attacker: US, author: M. Halperin (RAND RM-4900) on JCS and PACAF options, date: 1958-09, doc_type: policy_study, grade: B, group: us_1958, complete: false, role: train}
+  - {plan_id: us_1963_jcs_china_vulnerability, attacker: US, author: US Joint Chiefs of Staff, date: 1963, doc_type: policy_study, grade: A, group: us_1963, complete: false, role: train}
+  - {plan_id: us_1964_china_nuclear, attacker: US, author: R. H. Johnson (State Department Policy Planning), date: 1964, doc_type: policy_study, grade: A, group: us_1964, complete: false, role: train}
+  - {plan_id: wp_1964_csla_plan, attacker: Czechoslovakia, author: Czechoslovak People's Army (Soviet-approved), date: 1964-10, doc_type: war_plan, grade: A, group: csla_1964, complete: false, role: train}
+  - {plan_id: wp_1965_coastal_front_zealand, attacker: Poland, author: Polish Coastal Front, date: 1965-02, doc_type: war_plan, grade: C, group: pl_coastal_1965, complete: false, role: train}
+  - {plan_id: wp_1970_coastal_front_map, attacker: Poland, author: Polish Coastal Front, date: 1970-02, doc_type: war_plan, grade: C, group: pl_coastal_1970, complete: false, role: train}
+  - {plan_id: wp_1977_zealand, attacker: Poland, author: Polish Coastal Front, date: 1977-09, doc_type: war_plan, grade: C, group: pl_coastal_1977, complete: false, role: train}
+  - {plan_id: wp_1961_burza, attacker: Poland, author: Polish Maritime Front (exercise Burza), date: 1961-10, doc_type: exercise, grade: B, group: pl_burza_1961, complete: false, role: train}
+  - {plan_id: wp_1967_lato67, attacker: Warsaw Pact, author: Polish Coastal Front directive (exercise Lato-67), date: 1967-05, doc_type: exercise, grade: A, group: pl_lato_1967, complete: true, role: train}
+  - {plan_id: wp_1965_hu_wargame, attacker: Warsaw Pact, author: Hungarian Army with the Soviet Southern Group of Forces, date: 1965-06, doc_type: wargame, grade: A, group: hu_wargame_1965, complete: true, role: train}
+  - {plan_id: wp_1977_gsa_front_lesson, attacker: USSR, author: Soviet General Staff Academy, date: 1977, doc_type: training, grade: B, group: su_gsa_1977, complete: false, role: train}
+  - {plan_id: wp_1959_r5m_operation_atom, attacker: USSR, author: S. Evans (BBC News 2012), date: 1959, doc_type: reconstruction, grade: D, group: su_r5m_1959, complete: false, role: excluded}
+  - {plan_id: wp_1979_seven_days, attacker: Warsaw Pact, author: Wikipedia, date: 1979, doc_type: reconstruction, grade: D, group: wiki_seven_days, complete: false, role: excluded}
+  - {plan_id: nato_1962_pl_exercise_mirror, attacker: null, author: Polish Army command-staff exercise, date: 1962-01, doc_type: mirror, grade: A, group: pl_mirror_1962, complete: true, role: test-expectation}
+  - {plan_id: nato_1965_hu_wargame_mirror, attacker: null, author: Hungarian Army with the Soviet Southern Group of Forces, date: 1965-06, doc_type: mirror, grade: A, group: hu_wargame_1965, complete: true, role: test-expectation}
+  - {plan_id: cd_1955_operation_alert, attacker: null, author: US Federal Civil Defense Administration, date: 1955-06, doc_type: civil_defence, grade: A, group: cd_alert_1955, complete: false, role: excluded}
+  - {plan_id: cd_1955_operation_alert_full, attacker: null, author: US Federal Civil Defense Administration, date: 1955-06, doc_type: civil_defence, grade: C, group: cd_alert_1955, complete: true, role: test-expectation}
+  - {plan_id: cd_1956_canada_target_areas, attacker: null, author: Canadian federal civil defence, date: 1956, doc_type: civil_defence, grade: A, group: cd_canada_1956, complete: true, role: test-expectation}
+  - {plan_id: cd_1980_square_leg, attacker: null, author: UK Home Office and MoD exercise (New Statesman reproduction), date: 1980-09, doc_type: civil_defence, grade: C, group: cd_square_leg_1980, complete: false, role: test-expectation}
+  - {plan_id: cd_1987_napb90_counties, attacker: null, author: US Federal Emergency Management Agency, date: 1987, doc_type: civil_defence, grade: A, group: cd_napb90_1987, complete: true, role: test-expectation}
