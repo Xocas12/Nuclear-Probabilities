@@ -374,6 +374,10 @@ def _extended_section() -> str:
     d = pd.read_csv(path) if path.exists() else pd.DataFrame()
     if "verdict" not in d:
         return "The economic and political readings have not been run.\n"
+    # A scope with no SAC rows repeats its "all lists" row under "other than SAC".
+    no_sac = d["scope"].str.startswith("Warsaw")
+    d = d[~(no_sac & d["lists"].eq("other than SAC"))].reset_index(drop=True)
+    vpk = d[d["comparison"] == "defence industry over population"].iloc[0]
     d = d.assign(
         difference=d.apply(interval3, axis=1),
         by_blocks=d.apply(lambda r: f"[{r['block_low']:+.3f}, {r['block_high']:+.3f}]", axis=1),
@@ -419,12 +423,15 @@ counts on Soviet towns. None of them enters the primary model or the map. A gain
 
 Of {len(d)} rows: {int(counts.get("gain", 0))} gain, {int(counts.get("loss", 0))} lose, {int(counts.get("neither", 0))} cannot be told apart, {int(counts.get("not a reading", 0))} are not readings. On a left-out plan, the reading that
 matters here, {lopo_gains} of {len(lopo)} rows gain, and {rest_gains} of the {len(lopo_rest)} on lists other than SAC. **Those gains are over LightGBM on the
-population family, which is itself a weak comparator on a left-out plan.** In the global scope the best of these models
+population family, which is itself a weak comparator on a left-out plan.** In the global scope the highest of these six models, picked after the fact,
 scores {best["all lists"]:.2f} over all lists against {rule["all lists"]:.2f} for the plain population rule, and {best["other than SAC"]:.2f} on lists other than SAC
-against {rule["other than SAC"]:.2f}. The all-lists rows also rest on the fit with SAC left out, which trains on few positives. Each country-level column has one value per country and year, so within one
+against {rule["other than SAC"]:.2f}; no paired interval against the rule was fixed in advance, so the second gap is not a finding. The all-lists rows also rest on the fit with SAC left out, which trains on few positives. Each country-level column has one value per country and year, so within one
 list it can do no more than a country term, and in a pooled list it can identify a document: a gain under spatial blocks
-may be just that. "Model" and "against" are PR-AUC with and without the columns. The defence-industry counts are later
-knowledge of what existed, not what SAC knew.
+may be just that. "Model" and "against" are PR-AUC with and without the columns.
+
+Counts of Soviet defence plants add {interval3(vpk)} (by blocks [{vpk["block_low"]:+.3f}, {vpk["block_high"]:+.3f}]) to population on Soviet towns
+of the SAC list, PR-AUC {vpk["a_pr_auc"]:.2f} against {vpk["b_pr_auc"]:.2f}: no detectable gain. The counts are later knowledge of what existed, not what SAC
+knew, and they are matched to the town by name, so this does not show that SAC ignored industry.
 
 {markdown(table)}
 """

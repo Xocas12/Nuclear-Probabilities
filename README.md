@@ -20,6 +20,10 @@ list. A list's base rate is what no information scores: 0.48 for SAC, 0.06 for t
   pre-committed gate asks for 15. Counting them used to reach 25, until rows the documents reject stopped counting.
   The USSR has 0 positives in a plan document, and 33 towns from staff-academy lessons. A pooled Warsaw Pact model is allowed
   and is always labelled exercise-based. Refusals: `runs/classifier/state_gate.csv`.
+- **Economic and political data** (regime, defence pacts, GDP per capita, Soviet defence plants), read apart under an
+  amendment committed before fitting, add nothing that carries over. On a left-out plan none of the 6 rows on lists other
+  than SAC gains, and the highest model over all lists scores 0.66 against 0.71 for the population rule. Plant counts add
+  0.000 [-0.006, +0.007] on Soviet towns.
 - **The map.** Because of that transfer result the rule chose population as the score, so the map shows where
   people live in towns, given a number of warheads. Stockpile assumptions drive most of its intervals.
   Modern scenarios are extrapolation: a classifier told their towns from the training towns at ROC-AUC 0.97,
@@ -31,7 +35,7 @@ Sealed places have not been scored. They are held for after an independent revie
 
 - `data/curated/labels/`: target lists, the registry `PLANS.yaml` (attacker, date, type, grade), `SECTORS.yaml`.
 - `data/curated/stockpiles/`: cited inventories and assumptions. `data/sources.yaml`: every source's provenance.
-- `configs/protocol.yaml`: pre-committed analysis and its dated amendments. `configs/scenarios.yaml`: scenarios.
+- `configs/protocol.yaml`: pre-committed analysis and its dated amendments, with `configs/protocol_amendment_5.yaml`. `configs/scenarios.yaml`: scenarios.
 - `runs/classifier/`, `runs/probmap/`: committed outputs. `REPORT.md` is generated from them.
 
 ## Running it

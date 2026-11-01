@@ -123,3 +123,22 @@ def test_committed_extended_run_is_of_this_amendment_and_table_and_holds_every_r
     assert d.apply(lambda r: ex.verdict(r) == r["verdict"], axis=1).all()
     if (PROCESSED / "classifier_table.parquet").exists():
         assert m["table_sha256"] == sha256(PROCESSED / "classifier_table.parquet")
+
+
+@needs_run
+def test_the_readme_states_what_the_extended_run_and_the_primary_run_hold():
+    d = pd.read_csv(OUT)
+    glob = d[(d["scope"] == ex.SCOPES[0]) & (d["holdout"] == "leave one plan out")]
+    assert not (glob.loc[glob["lists"] == "other than SAC", "verdict"] == "gain").any()
+    best = glob.loc[glob["lists"] == "all lists", "a_pr_auc"].max()
+    comp = pd.read_csv(RUNS / "classifier" / "comparison.csv")
+    rule = comp[
+        (comp["scope"] == ex.SCOPES[0])
+        & (comp["holdout"] == "leave one plan out")
+        & (comp["against"] == "population rule")
+        & (comp["lists"] == "all lists")
+    ]["b_pr_auc"].iloc[0]
+    plants = d[d["comparison"] == "defence industry over population"].iloc[0]
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    assert f"scores {best:.2f} against {rule:.2f}" in " ".join(readme.split())
+    assert f"[{plants['low']:+.3f}, {plants['high']:+.3f}]" in readme

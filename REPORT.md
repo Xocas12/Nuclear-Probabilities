@@ -193,7 +193,62 @@ largely today's data.
 
 ### Economic and political data
 
-The economic and political readings have not been run.
+The primary model holds almost no economic or political data. `configs/protocol_amendment_5.yaml` fixed, before
+any of these columns was fitted, a separate reading of the target state's regime (Regimes of the World), its defence pacts
+(COW Formal Alliances) and its GDP per capita (Maddison), each as of the document's year, and of the Soviet defence-industry
+counts on Soviet towns. None of them enters the primary model or the map. A gain needs both intervals to exclude zero.
+
+Of 37 rows: 11 gain, 1 lose, 19 cannot be told apart, 6 are not readings. On a left-out plan, the reading that
+matters here, 3 of 12 rows gain, and 0 of the 6 on lists other than SAC. **Those gains are over LightGBM on the
+population family, which is itself a weak comparator on a left-out plan.** In the global scope the highest of these six models, picked after the fact,
+scores 0.66 over all lists against 0.71 for the plain population rule, and 0.28 on lists other than SAC
+against 0.21; no paired interval against the rule was fixed in advance, so the second gap is not a finding. The all-lists rows also rest on the fit with SAC left out, which trains on few positives. Each country-level column has one value per country and year, so within one
+list it can do no more than a country term, and in a pooled list it can identify a document: a gain under spatial blocks
+may be just that. "Model" and "against" are PR-AUC with and without the columns.
+
+Counts of Soviet defence plants add +0.000 [-0.006, +0.007] (by blocks [-0.006, +0.007]) to population on Soviet towns
+of the SAC list, PR-AUC 0.76 against 0.76: no detectable gain. The counts are later knowledge of what existed, not what SAC
+knew, and they are matched to the town by name, so this does not show that SAC ignored industry.
+
+| scope | comparison | holdout | lists | positives | train_positives | model | against | difference | by_blocks | verdict |
+|---|---|---|---|---|---|---|---|---|---|---|
+| global, all attacker documents | political over population | spatial blocks | all lists | 1158 | 926 | 0.75 | 0.71 | +0.043 [+0.032, +0.055] | [+0.016, +0.067] | gain |
+| global, all attacker documents | political over population | spatial blocks | other than SAC | 119 | 926 | 0.26 | 0.23 | +0.025 [-0.011, +0.059] | [-0.011, +0.136] | neither |
+| global, all attacker documents | economic over population | spatial blocks | all lists | 1158 | 926 | 0.76 | 0.71 | +0.053 [+0.041, +0.065] | [+0.029, +0.072] | gain |
+| global, all attacker documents | economic over population | spatial blocks | other than SAC | 119 | 926 | 0.26 | 0.23 | +0.029 [-0.006, +0.065] | [-0.007, +0.135] | neither |
+| global, all attacker documents | national power over population | spatial blocks | all lists | 1158 | 926 | 0.75 | 0.71 | +0.045 [+0.032, +0.056] | [+0.025, +0.065] | gain |
+| global, all attacker documents | national power over population | spatial blocks | other than SAC | 119 | 926 | 0.25 | 0.23 | +0.014 [-0.028, +0.048] | [-0.016, +0.094] | neither |
+| global, all attacker documents | all three over population | spatial blocks | all lists | 1158 | 926 | 0.76 | 0.71 | +0.053 [+0.041, +0.067] | [+0.029, +0.074] | gain |
+| global, all attacker documents | all three over population | spatial blocks | other than SAC | 119 | 926 | 0.27 | 0.23 | +0.040 [+0.004, +0.078] | [+0.007, +0.155] | gain |
+| global, all attacker documents | political over primary | spatial blocks | all lists | 1158 | 926 | 0.79 | 0.79 | +0.005 [+0.002, +0.008] | [+0.002, +0.008] | gain |
+| global, all attacker documents | political over primary | spatial blocks | other than SAC | 119 | 926 | 0.31 | 0.29 | +0.017 [-0.006, +0.041] | [-0.006, +0.052] | neither |
+| global, all attacker documents | economic over primary | spatial blocks | all lists | 1158 | 926 | 0.79 | 0.79 | +0.003 [+0.001, +0.004] | [+0.001, +0.005] | gain |
+| global, all attacker documents | economic over primary | spatial blocks | other than SAC | 119 | 926 | 0.31 | 0.29 | +0.015 [+0.003, +0.030] | [+0.004, +0.027] | gain |
+| global, all attacker documents | political over population | leave one plan out | all lists | 1158 | 118 | 0.66 | 0.63 | +0.032 [+0.013, +0.048] | [+0.005, +0.060] | gain |
+| global, all attacker documents | political over population | leave one plan out | other than SAC | 119 | 1057 | 0.28 | 0.25 | +0.029 [-0.018, +0.059] | [-0.029, +0.136] | neither |
+| global, all attacker documents | economic over population | leave one plan out | all lists | 1158 | 118 | 0.66 | 0.63 | +0.030 [+0.013, +0.046] | [+0.006, +0.057] | gain |
+| global, all attacker documents | economic over population | leave one plan out | other than SAC | 119 | 1057 | 0.26 | 0.25 | +0.011 [-0.028, +0.040] | [-0.035, +0.100] | neither |
+| global, all attacker documents | national power over population | leave one plan out | all lists | 1158 | 118 | 0.57 | 0.63 | -0.062 [-0.086, -0.040] | [-0.095, -0.024] | loss |
+| global, all attacker documents | national power over population | leave one plan out | other than SAC | 119 | 1057 | 0.18 | 0.25 | -0.067 [-0.114, -0.024] | [-0.108, +0.017] | neither |
+| global, all attacker documents | all three over population | leave one plan out | all lists | 1158 | 118 | 0.59 | 0.63 | -0.035 [-0.059, -0.014] | [-0.072, +0.009] | neither |
+| global, all attacker documents | all three over population | leave one plan out | other than SAC | 119 | 1057 | 0.25 | 0.25 | -0.004 [-0.041, +0.028] | [-0.038, +0.056] | neither |
+| global, all attacker documents | political over primary | leave one plan out | all lists | 1158 | 118 | 0.58 | 0.58 | -0.001 [-0.004, +0.002] | [-0.006, +0.002] | neither |
+| global, all attacker documents | political over primary | leave one plan out | other than SAC | 119 | 1057 | 0.24 | 0.25 | -0.007 [-0.034, +0.022] | [-0.047, +0.032] | neither |
+| global, all attacker documents | economic over primary | leave one plan out | all lists | 1158 | 118 | 0.63 | 0.58 | +0.048 [+0.040, +0.055] | [+0.037, +0.059] | gain |
+| global, all attacker documents | economic over primary | leave one plan out | other than SAC | 119 | 1057 | 0.25 | 0.25 | +0.004 [-0.012, +0.019] | [-0.020, +0.019] | neither |
+| Warsaw Pact, pooled, exercise-based | political over population | spatial blocks | all lists | 112 | 62 | 0.23 | 0.23 | +0.003 [-0.013, +0.016] | [-0.015, +0.029] | neither |
+| Warsaw Pact, pooled, exercise-based | economic over population | spatial blocks | all lists | 112 | 62 | 0.22 | 0.23 | -0.009 [-0.040, +0.020] | [-0.060, +0.025] | neither |
+| Warsaw Pact, pooled, exercise-based | national power over population | spatial blocks | all lists | 112 | 62 | 0.23 | 0.23 | +0.002 [-0.027, +0.035] | [-0.064, +0.062] | neither |
+| Warsaw Pact, pooled, exercise-based | all three over population | spatial blocks | all lists | 112 | 62 | 0.23 | 0.23 | +0.001 [-0.033, +0.037] | [-0.074, +0.058] | neither |
+| Warsaw Pact, pooled, exercise-based | political over primary | spatial blocks | all lists | 112 | 62 | 0.28 | 0.28 | +0.001 [-0.001, +0.005] | [-0.000, +0.006] | neither |
+| Warsaw Pact, pooled, exercise-based | economic over primary | spatial blocks | all lists | 112 | 62 | 0.27 | 0.28 | -0.004 [-0.017, +0.012] | [-0.017, +0.014] | neither |
+| Warsaw Pact, pooled, exercise-based | political over population | leave one plan out | all lists | 112 | 11 | 0.22 | 0.21 | +0.002 [-0.010, +0.012] | [-0.004, +0.015] | not a reading |
+| Warsaw Pact, pooled, exercise-based | economic over population | leave one plan out | all lists | 112 | 11 | 0.20 | 0.21 | -0.015 [-0.044, +0.005] | [-0.033, +0.035] | not a reading |
+| Warsaw Pact, pooled, exercise-based | national power over population | leave one plan out | all lists | 112 | 11 | 0.21 | 0.21 | -0.004 [-0.030, +0.026] | [-0.021, +0.045] | not a reading |
+| Warsaw Pact, pooled, exercise-based | all three over population | leave one plan out | all lists | 112 | 11 | 0.21 | 0.21 | -0.008 [-0.036, +0.019] | [-0.027, +0.035] | not a reading |
+| Warsaw Pact, pooled, exercise-based | political over primary | leave one plan out | all lists | 112 | 11 | 0.19 | 0.19 | -0.001 [-0.008, +0.007] | [-0.007, +0.012] | not a reading |
+| Warsaw Pact, pooled, exercise-based | economic over primary | leave one plan out | all lists | 112 | 11 | 0.20 | 0.19 | +0.004 [-0.006, +0.017] | [-0.006, +0.030] | not a reading |
+| SAC 1956, Soviet towns | defence industry over population | spatial blocks | all lists | 565 | 452 | 0.76 | 0.76 | +0.000 [-0.006, +0.007] | [-0.006, +0.007] | neither |
 
 ### Defences
 

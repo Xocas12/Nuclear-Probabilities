@@ -1,0 +1,50 @@
+scope,comparison,holdout,lists,train_positives,constant,positives,a_pr_auc,b_pr_auc,delta,low,high,excludes_zero,block_low,block_high,block_excludes_zero,verdict
+"global, all attacker documents",political over population,spatial blocks,all lists,926,False,1158,0.7487,0.7052,0.0434,0.0317,0.0552,True,0.0164,0.0666,True,gain
+"global, all attacker documents",political over population,spatial blocks,other than SAC,926,False,119,0.2593,0.2348,0.0245,-0.0109,0.0588,False,-0.0108,0.1355,False,neither
+"global, all attacker documents",economic over population,spatial blocks,all lists,926,False,1158,0.7585,0.7052,0.0533,0.0414,0.0654,True,0.0288,0.0724,True,gain
+"global, all attacker documents",economic over population,spatial blocks,other than SAC,926,False,119,0.2634,0.2348,0.0286,-0.0064,0.0647,False,-0.0072,0.1351,False,neither
+"global, all attacker documents",national power over population,spatial blocks,all lists,926,False,1158,0.7498,0.7052,0.0446,0.0322,0.0564,True,0.0245,0.0645,True,gain
+"global, all attacker documents",national power over population,spatial blocks,other than SAC,926,False,119,0.2485,0.2348,0.0137,-0.0282,0.0484,False,-0.0157,0.0937,False,neither
+"global, all attacker documents",all three over population,spatial blocks,all lists,926,False,1158,0.7587,0.7052,0.0534,0.0406,0.0665,True,0.0289,0.0736,True,gain
+"global, all attacker documents",all three over population,spatial blocks,other than SAC,926,False,119,0.2743,0.2348,0.0395,0.0036,0.0778,True,0.0067,0.1550,True,gain
+"global, all attacker documents",political over primary,spatial blocks,all lists,926,False,1158,0.7904,0.7855,0.0049,0.0019,0.0078,True,0.0018,0.0082,True,gain
+"global, all attacker documents",political over primary,spatial blocks,other than SAC,926,False,119,0.3101,0.2929,0.0172,-0.0056,0.0410,False,-0.0061,0.0522,False,neither
+"global, all attacker documents",economic over primary,spatial blocks,all lists,926,False,1158,0.7881,0.7855,0.0026,0.0011,0.0043,True,0.0005,0.0049,True,gain
+"global, all attacker documents",economic over primary,spatial blocks,other than SAC,926,False,119,0.3083,0.2929,0.0154,0.0032,0.0302,True,0.0040,0.0268,True,gain
+"global, all attacker documents",political over population,leave one plan out,all lists,118,False,1158,0.6607,0.6285,0.0323,0.0131,0.0480,True,0.0052,0.0601,True,gain
+"global, all attacker documents",political over population,leave one plan out,other than SAC,1057,False,119,0.2798,0.2512,0.0286,-0.0180,0.0585,False,-0.0295,0.1360,False,neither
+"global, all attacker documents",economic over population,leave one plan out,all lists,118,False,1158,0.6588,0.6285,0.0304,0.0125,0.0457,True,0.0057,0.0566,True,gain
+"global, all attacker documents",economic over population,leave one plan out,other than SAC,1057,False,119,0.2620,0.2512,0.0108,-0.0276,0.0400,False,-0.0355,0.1004,False,neither
+"global, all attacker documents",national power over population,leave one plan out,all lists,118,False,1158,0.5662,0.6285,-0.0622,-0.0857,-0.0403,True,-0.0946,-0.0242,True,loss
+"global, all attacker documents",national power over population,leave one plan out,other than SAC,1057,False,119,0.1846,0.2512,-0.0667,-0.1139,-0.0235,True,-0.1078,0.0165,False,neither
+"global, all attacker documents",all three over population,leave one plan out,all lists,118,False,1158,0.5936,0.6285,-0.0349,-0.0586,-0.0136,True,-0.0719,0.0094,False,neither
+"global, all attacker documents",all three over population,leave one plan out,other than SAC,1057,False,119,0.2478,0.2512,-0.0035,-0.0414,0.0282,False,-0.0381,0.0562,False,neither
+"global, all attacker documents",political over primary,leave one plan out,all lists,118,False,1158,0.5801,0.5809,-0.0008,-0.0037,0.0024,False,-0.0059,0.0024,False,neither
+"global, all attacker documents",political over primary,leave one plan out,other than SAC,1057,False,119,0.2434,0.2509,-0.0074,-0.0338,0.0220,False,-0.0472,0.0317,False,neither
+"global, all attacker documents",economic over primary,leave one plan out,all lists,118,False,1158,0.6285,0.5809,0.0476,0.0400,0.0550,True,0.0369,0.0592,True,gain
+"global, all attacker documents",economic over primary,leave one plan out,other than SAC,1057,False,119,0.2544,0.2509,0.0036,-0.0117,0.0192,False,-0.0196,0.0194,False,neither
+"Warsaw Pact, pooled, exercise-based",political over population,spatial blocks,all lists,62,False,112,0.2304,0.2279,0.0025,-0.0132,0.0156,False,-0.0151,0.0286,False,neither
+"Warsaw Pact, pooled, exercise-based",political over population,spatial blocks,other than SAC,62,False,112,0.2304,0.2279,0.0025,-0.0132,0.0156,False,-0.0151,0.0286,False,neither
+"Warsaw Pact, pooled, exercise-based",economic over population,spatial blocks,all lists,62,False,112,0.2188,0.2279,-0.0090,-0.0396,0.0201,False,-0.0600,0.0245,False,neither
+"Warsaw Pact, pooled, exercise-based",economic over population,spatial blocks,other than SAC,62,False,112,0.2188,0.2279,-0.0090,-0.0396,0.0201,False,-0.0600,0.0245,False,neither
+"Warsaw Pact, pooled, exercise-based",national power over population,spatial blocks,all lists,62,False,112,0.2300,0.2279,0.0021,-0.0274,0.0350,False,-0.0640,0.0618,False,neither
+"Warsaw Pact, pooled, exercise-based",national power over population,spatial blocks,other than SAC,62,False,112,0.2300,0.2279,0.0021,-0.0274,0.0350,False,-0.0640,0.0618,False,neither
+"Warsaw Pact, pooled, exercise-based",all three over population,spatial blocks,all lists,62,False,112,0.2284,0.2279,0.0005,-0.0325,0.0368,False,-0.0737,0.0579,False,neither
+"Warsaw Pact, pooled, exercise-based",all three over population,spatial blocks,other than SAC,62,False,112,0.2284,0.2279,0.0005,-0.0325,0.0368,False,-0.0737,0.0579,False,neither
+"Warsaw Pact, pooled, exercise-based",political over primary,spatial blocks,all lists,62,False,112,0.2802,0.2787,0.0014,-0.0011,0.0055,False,-0.0000,0.0059,False,neither
+"Warsaw Pact, pooled, exercise-based",political over primary,spatial blocks,other than SAC,62,False,112,0.2802,0.2787,0.0014,-0.0011,0.0055,False,-0.0000,0.0059,False,neither
+"Warsaw Pact, pooled, exercise-based",economic over primary,spatial blocks,all lists,62,False,112,0.2747,0.2787,-0.0040,-0.0172,0.0116,False,-0.0169,0.0144,False,neither
+"Warsaw Pact, pooled, exercise-based",economic over primary,spatial blocks,other than SAC,62,False,112,0.2747,0.2787,-0.0040,-0.0172,0.0116,False,-0.0169,0.0144,False,neither
+"Warsaw Pact, pooled, exercise-based",political over population,leave one plan out,all lists,11,False,112,0.2164,0.2142,0.0022,-0.0098,0.0123,False,-0.0043,0.0150,False,not a reading
+"Warsaw Pact, pooled, exercise-based",political over population,leave one plan out,other than SAC,11,False,112,0.2164,0.2142,0.0022,-0.0098,0.0123,False,-0.0043,0.0150,False,not a reading
+"Warsaw Pact, pooled, exercise-based",economic over population,leave one plan out,all lists,11,False,112,0.1991,0.2142,-0.0151,-0.0437,0.0049,False,-0.0332,0.0347,False,not a reading
+"Warsaw Pact, pooled, exercise-based",economic over population,leave one plan out,other than SAC,11,False,112,0.1991,0.2142,-0.0151,-0.0437,0.0049,False,-0.0332,0.0347,False,not a reading
+"Warsaw Pact, pooled, exercise-based",national power over population,leave one plan out,all lists,11,False,112,0.2104,0.2142,-0.0039,-0.0305,0.0263,False,-0.0210,0.0447,False,not a reading
+"Warsaw Pact, pooled, exercise-based",national power over population,leave one plan out,other than SAC,11,False,112,0.2104,0.2142,-0.0039,-0.0305,0.0263,False,-0.0210,0.0447,False,not a reading
+"Warsaw Pact, pooled, exercise-based",all three over population,leave one plan out,all lists,11,False,112,0.2061,0.2142,-0.0082,-0.0357,0.0193,False,-0.0272,0.0351,False,not a reading
+"Warsaw Pact, pooled, exercise-based",all three over population,leave one plan out,other than SAC,11,False,112,0.2061,0.2142,-0.0082,-0.0357,0.0193,False,-0.0272,0.0351,False,not a reading
+"Warsaw Pact, pooled, exercise-based",political over primary,leave one plan out,all lists,11,False,112,0.1933,0.1939,-0.0006,-0.0080,0.0068,False,-0.0070,0.0121,False,not a reading
+"Warsaw Pact, pooled, exercise-based",political over primary,leave one plan out,other than SAC,11,False,112,0.1933,0.1939,-0.0006,-0.0080,0.0068,False,-0.0070,0.0121,False,not a reading
+"Warsaw Pact, pooled, exercise-based",economic over primary,leave one plan out,all lists,11,False,112,0.1974,0.1939,0.0036,-0.0059,0.0166,False,-0.0056,0.0300,False,not a reading
+"Warsaw Pact, pooled, exercise-based",economic over primary,leave one plan out,other than SAC,11,False,112,0.1974,0.1939,0.0036,-0.0059,0.0166,False,-0.0056,0.0300,False,not a reading
+"SAC 1956, Soviet towns",defence industry over population,spatial blocks,all lists,452,False,565,0.7591,0.7588,0.0003,-0.0064,0.0073,False,-0.0060,0.0075,False,neither
