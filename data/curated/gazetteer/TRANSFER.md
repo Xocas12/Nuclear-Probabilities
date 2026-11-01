@@ -27,7 +27,7 @@ war plan.
 | | | Belgium: census 1961 (INS, communes) | 172 | 172 |
 | | | Austria: census 1961 (pop-stat; the 1961 Land seats from `POPSTAT_SEATS` in `places.py`) | 50 | 50 |
 | | | Italy: census 1961 (ISTAT, comuni) | 814 | 814 |
-| | | FRG: **withheld** (see below) | (356) | |
+| | | FRG, 1961 census (`towns_frg_1961.md`) | 583 | |
 | `uk_1980` (1980) | Square Leg 1980 | UK: census 1981 (GB districts from Nomis; NI towns from NISRA) | 476 | 476 |
 | `japan_1945` (1945) | Target Committee 1945 | Japan: census 1940 (cities and towns) | 579 | 579 |
 | `usa_1955` (1955) | Operation Alert 1955 | USA: census 1950 (urban places, 48 states and DC) | 1,262 | 1,262 |
@@ -116,8 +116,11 @@ within 15 km (an air base or Nike site in open country), stay unlinked. The link
 | Operation Alert 1955 (full) | 53 | 53 | 52 | 51 / 1,262 |
 | Square Leg 1980 | 95 | 87 | 78 | 75 / 476 |
 | Target Committee 1945 | 42 | 40 | 40 | 17 / 579 |
-| Lato-67 (DK, NL, BE) | 29 | 29 | 26 | 23 / 447 |
-| Hungarian war game 1965 (AT, IT) | 15 | 9 | 9 | 9 / 864 |
+| Lato-67 (FRG, DK, NL, BE) | 57 | 49 | 46 | 42 / 1,030 |
+| Hungarian war game 1965 (AT, IT, FRG) | 19 | 12 | 12 | 12 / 1,447 |
+| Burza 1961 (FRG, DK, NL) | 15 | 11 | 10 | 9 / 858 |
+| Czechoslovak plan 1964 (FRG) | 21 | 14 | 7 | 6 / 583 |
+| General Staff Academy lesson 1977 (FRG) | 5 | 4 | 3 | 3 / 583 |
 | NATO mirror, Poland 1962 | 70 | 69 | 53 | 27 / 126 |
 | NATO mirror, Hungary 1965 | 23 | 13 | 13 | 13 / 120 |
 
@@ -142,10 +145,10 @@ the number of towns listed.
 | Operation Alert 1955 (full) | 51 / 1,262 | 0.70 / 0.33 | -0.37 [-0.45, -0.26] | 0.59 / 0.37 | -0.22 [-0.33, -0.08] | 0.98 / 0.95 | -0.03 [-0.04, -0.02] |
 | Target Committee 1945 | 17 / 579 | 0.88 / 0.26 | -0.62 [-0.75, -0.40] | 0.76 / 0.24 | -0.53 [-0.82, -0.29] | 0.98 / 0.94 | -0.04 [-0.07, -0.02] |
 | Square Leg 1980 | 75 / 476 | 0.39 / 0.41 | +0.02 [-0.04, +0.11] | 0.39 / 0.39 | 0.00 [-0.07, +0.09] | 0.66 / 0.71 | +0.05 [+0.01, +0.10] |
-| Lato-67 | 23 / 447 | 0.32 / 0.23 | -0.09 [-0.21, +0.09] | 0.30 / 0.30 | 0.00 [-0.17, +0.17] | 0.74 / 0.76 | +0.02 [-0.05, +0.10] |
+| Lato-67 | 42 / 1,030 | 0.13 / 0.12 | -0.01 [-0.08, +0.06] | 0.14 / 0.19 | +0.05 [-0.07, +0.19] | 0.74 / 0.71 | -0.03 [-0.08, +0.02] |
 | NATO mirror, Poland 1962 | 27 / 126 | 0.44 / 0.59 | +0.14 [+0.07, +0.21] | 0.44 / 0.52 | +0.07 [0.00, +0.22] | 0.68 / 0.73 | +0.06 [-0.01, +0.12] |
 | NATO mirror, Hungary 1965 | 13 / 120 | 0.41 / 0.27 | -0.14 [-0.24, +0.02] | 0.38 / 0.38 | 0.00 [-0.08, +0.15] | 0.69 / 0.67 | -0.02 [-0.09, +0.04] |
-| Hungarian war game 1965 (AT, IT) | 9 / 864 | 0.16 / 0.29 | +0.12 [-0.05, +0.36] | 0.11 / 0.44 | +0.33 [0.00, +0.67] | 0.86 / 0.86 | -0.01 [-0.04, +0.01] |
+| Hungarian war game 1965 (AT, IT, FRG) | 12 / 1,447 | 0.09 / 0.19 | +0.09 [-0.04, +0.32] | 0.17 / 0.33 | +0.17 [0.00, +0.50] | 0.79 / 0.83 | +0.04 [-0.01, +0.10] |
 
 - **City lists.** On Operation Alert and the 1945 Target Committee list, the bloc model ranks
   the top of the list clearly worse than population alone, on every metric. The 14 Operation
@@ -171,13 +174,9 @@ This is a check that the pipeline joins end to end, not a result: the protocol i
 
 ## Caveats
 
-- **FRG withheld.** No official 1961 table could be fetched. The Statistische Bibliothek and
-  Mannheim's yearbook scans were unreachable, GDZ has not digitised the yearbooks, and the
-  archive.org copies are lending-only. `towns_frg_1961.csv`, built from de.wikipedia's
-  municipality articles, covers about 356 of some 583 towns and misses some large ones.
-  Until an official table is in, the FRG is out of the universe
-  (`Region.withheld`), and its targets (all of the ČSLA plan, the 1977 GSA lesson, most of
-  Burza and the FRG part of Lato-67) are not scored.
+- **FRG added 1 November 2026.** The official table of all 583 towns of 10,000+ could be fetched
+  (`towns_frg_1961.md`), so the FRG is in the Western European universe and the plans and exercises
+  that aim there are scored. The earlier Wikipedia table is kept as `frg_1961_wikipedia.csv`.
 - **The UK universe is districts.** Official 1981 urban-area tables exist only in print, so a
   "place" is a 1981 district, located at its council's town. Square Leg's targets are linked
   to the district seat within 15 km, not to the district that contains them. Military

@@ -639,8 +639,8 @@ Phases 1 and 2 run side by side. Transcribing the labels is the long pole, so it
   - Denmark and the Netherlands 1960; Belgium, Austria and Italy 1961;
   - the UK 1981, by district.
   Every place is located, and each table has a card. Two curated military tables were added
-  (Western Europe 1965, the UK 1980). The FRG is withheld: no official 1961 table could be
-  fetched, and the Wikipedia-based table covers only about 60% of the towns.
+  (Western Europe 1965, the UK 1980). The FRG was withheld until 1 Nov 2026, when
+  the official table of all 583 towns of 1961 was fetched (`towns_frg_1961.md`).
 - **Transfer check** (`runs/m4-transfer-check/`). The check fits on the bloc's SAC labels
   with the 20 common features and scores 16 lists; the bloc lists are scored leave-country-out.
   - Read in PR-AUC, the primary metric (§5.5), with paired bootstrap intervals for
@@ -652,8 +652,8 @@ Phases 1 and 2 run side by side. Transcribing the labels is the long pole, so it
     against 0.76, -0.53 [-0.82, -0.29]. Canada 1956 matches (PR-AUC -0.03 [-0.13, +0.06]).
     ROC-AUC (0.94-0.97 against 0.96-0.98) hid most of this.
   - On the mixed civil and military lists no gain is detectable: Square Leg PR-AUC +0.02 [-0.04, +0.11],
-    precision@k 0.00 [-0.07, +0.09]; Lato-67 -0.09 [-0.21, +0.09] and
-    0.00 [-0.17, +0.17]. These intervals include zero.
+    precision@k 0.00 [-0.07, +0.09]; Lato-67, with the FRG in its universe since 1 Nov 2026, -0.01 [-0.08, +0.06] and
+    +0.05 [-0.07, +0.19]. These intervals include zero.
   - One exception: the Polish mirror list gains in PR-AUC, +0.14 [+0.07, +0.21], with
     precision@k +0.07 [0.00, +0.22]. It records what Polish staff expected NATO to strike.
   - This is a check, not a result.

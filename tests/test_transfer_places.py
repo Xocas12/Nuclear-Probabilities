@@ -86,3 +86,24 @@ def test_popstat_seats_fail_loudly():
     )
     with pytest.raises(ValueError, match="'Graz', found 0 times"):
         places.popstat_seats(renamed, "austria")
+
+
+def test_the_frg_table_is_the_whole_printed_table():
+    # VZ 1961 Vorbericht 3, Table 1 (p. 6): 582 towns outside Berlin, 29,720.5 thousand people.
+    t = pd.read_csv(places.GAZ / "towns_frg_1961.csv", keep_default_na=False)
+    assert len(t) == 583
+    assert t["name"].is_unique or t["name"].duplicated().sum() == 1  # two Friedbergs
+    outside = t[t["admin1"] != "Berlin"]
+    assert len(outside) == 582
+    assert abs(outside["pop"].sum() - 29_720_500) < 100
+    # Printed in descending order of population, Bonn the capital, 11 Land seats.
+    assert (t["pop"].diff() > 0).sum() == 1  # the volume prints Saarbrücken out of order
+    assert t["capital"].sum() == 1 and t.loc[t["capital"].eq(1), "name"].item() == "Bonn"
+    assert t["admin1_seat"].sum() == 11
+    assert t["pop"].min() >= 10_000
+
+
+def test_the_frg_is_in_the_universe_of_the_western_european_lists():
+    countries = {c for c, _, _ in REGIONS["wp_west_1965"].countries}
+    assert "FRG" in countries
+    assert not REGIONS["wp_west_1965"].withheld

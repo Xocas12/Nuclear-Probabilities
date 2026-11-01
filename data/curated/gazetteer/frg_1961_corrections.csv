@@ -1,0 +1,55 @@
+seq,field,value,page,reason
+488,row,Bad Segeberg|SchH|11677,18,row lost by the OCR; read on the scan
+42,pop61,130705,8,OCR dropped a digit; read on the scan
+474,pop61,11948,18,OCR 1148; read on the scan
+476,pop61,11927,18,OCR 1192; read on the scan
+534,pop61,10781,19,OCR 1081; read on the scan
+557,pop61,10454,19,the percent column ran into the figure; read on the scan
+141,name,Stolberg (Rhld.),,OCR garbled the name; read as printed
+142,name,Bad Homburg v.d.H.,,OCR garbled the name; read as printed
+157,name,Kaufbeuren,,OCR garbled the name; read as printed
+162,name,Neheim-Hüsten,,OCR garbled the name; read as printed
+186,name,Idar-Oberstein,,OCR garbled the name; read as printed
+188,name,Bensberg,,OCR garbled the name; read as printed
+192,name,Helmstedt,,OCR garbled the name; read as printed
+193,name,Rodenkirchen (Bez. Köln),,OCR garbled the name; read as printed
+201,name,Weinheim,,OCR garbled the name; read as printed
+215,name,Gronau (Westf.),,OCR garbled the name; read as printed
+239,name,Schwabach,,OCR garbled the name; read as printed
+240,name,Kulmbach,,OCR garbled the name; read as printed
+241,name,Oer-Erkenschwick,,OCR garbled the name; read as printed
+248,name,Bruchsal,,OCR garbled the name; read as printed
+253,name,Hückelhoven-Ratheim,,OCR garbled the name; read as printed
+321,name,Bad Zwischenahn,,OCR garbled the name; read as printed
+322,name,Emmerich,,OCR garbled the name; read as printed
+331,name,Osterode am Harz,,OCR garbled the name; read as printed
+333,name,Schwandorf i.Bay.,,OCR garbled the name; read as printed
+338,name,Neumarkt i.d.OPf.,,OCR garbled the name; read as printed
+339,name,Ingelheim am Rhein,,OCR garbled the name; read as printed
+349,name,Bad Honnef am Rhein,,OCR garbled the name; read as printed
+396,name,Hofheim a.Ts.,,OCR garbled the name; read as printed
+401,name,Weißenburg i.Bay.,,OCR garbled the name; read as printed
+419,name,Landsberg a.Lech,,OCR garbled the name; read as printed
+438,name,Kempen-Niederrhein,,OCR garbled the name; read as printed
+453,name,Ellwangen (Jagst),,OCR garbled the name; read as printed
+462,name,Bornheim,,OCR garbled the name; read as printed
+469,name,Ginsheim-Gustavsburg,,OCR garbled the name; read as printed
+471,name,Seesen,,OCR garbled the name; read as printed
+480,name,Gräfelfing,,OCR garbled the name; read as printed
+483,name,Eilendorf,,OCR garbled the name; read as printed
+489,name,Bückeburg,,OCR garbled the name; read as printed
+490,name,Bad Tölz,,OCR garbled the name; read as printed
+491,name,Balingen,,OCR garbled the name; read as printed
+513,name,Dillingen a.d.Donau,,OCR garbled the name; read as printed
+514,name,Riegelsberg,,OCR garbled the name; read as printed
+522,name,Neureut (Baden),,OCR garbled the name; read as printed
+534,name,Mühldorf a.Inn,,OCR garbled the name; read as printed
+548,name,Schloß Neuhaus,,OCR garbled the name; read as printed
+559,name,Roth b.Nürnberg,,OCR garbled the name; read as printed
+583,name,Immenstadt i.Allgäu,,OCR garbled the name; read as printed
+33,name,Ludwigshafen am Rhein,,OCR garbled the name; read as printed
+498,name,Gauting,,OCR garbled the name; read on the scan
+523,name,Wasseralfingen,,OCR ran the Land column into the name
+535,name,Lendringsen,,OCR ran the bracket into the name
+484,name,Altlünen,,OCR split the name
+367,name,Hoengen,,OCR split the name

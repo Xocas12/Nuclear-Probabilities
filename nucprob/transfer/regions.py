@@ -59,8 +59,7 @@ REGIONS = {
         "Warsaw Pact targets in NATO Europe and Austria, 1961-1977",
         1965,
         (
-            # The FRG table is partial (about 356 of 583 towns; no official 1961 table could
-            # be fetched, see towns_frg_1961.md), so the FRG is withheld from the universe.
+            ("FRG", "DE", "towns_frg_1961"),
             ("Denmark", "DK", "towns_dk_1960"),
             ("Netherlands", "NL", "towns_nl_1960"),
             ("Belgium", "BE", "towns_be_1961"),
@@ -83,7 +82,6 @@ REGIONS = {
         # (weurope_military_sites_1965.md). These are the 1961 provinces of those regions.
         military_scope={"Italy": ITALY_NORTH_1961},
         note="one universe for the 1960s plans; the 1970s lists use it too",
-        withheld=(("FRG", "DE", "towns_frg_1961"),),
     ),
     "uk_1980": Region(
         "The United Kingdom, 1980",

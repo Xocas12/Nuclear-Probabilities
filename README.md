@@ -15,8 +15,8 @@ targeting. The full design is in [PLAN.md](PLAN.md).
   which gives no labels), and no Soviet war plan. Two Warsaw Pact exercises under joint command
   add 80 rows. No state but the US passes the pre-committed gate for its own model
   (`runs/evidence/state_model_gate.csv`): Poland has 10 linked positives against the 50
-  required, and Czechoslovakia has none because the FRG, where all its targets lie, has no
-  complete town table yet.
+  required, and Czechoslovakia has 6 from one plan now the FRG's 583 towns of 1961 are in the
+  universe.
 - **Protocol (`configs/protocol.yaml`).** Holdouts, metrics, the gate and the positive-unlabeled
   method are committed before any model it names is fitted. The classifier and the probability
   map are not built yet.
