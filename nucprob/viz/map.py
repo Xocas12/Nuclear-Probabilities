@@ -167,7 +167,8 @@ def payload(run: Path) -> dict:
             "lat": round(e["lat"], 4),
             "linked": clean(e["place_id"]),
         }
-        for _, e in entries.iterrows()
+        # one marker per printed entry: a cover-name copy is listed under its closed town only
+        for _, e in entries[entries["link_method"] != "cover name"].iterrows()
     ]
     spatial = metrics[metrics["scheme"] == "spatial blocks"].set_index(["target", "model"])
     random = metrics[metrics["scheme"] == "random"].set_index(["target", "model"])
