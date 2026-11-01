@@ -1,0 +1,8 @@
+scenario,era,evidence,cell_deg,towns,cells,cells_over_half_low,cells_over_half_median,cells_over_half_high,mean_p,mean_interval_width,mean_width_model_only,mean_width_stockpile_only
+us_1956_on_bloc,historical,"Evidence: mostly the SAC 1956 requirements study, not a war plan, and it trained the score.",0.5000,2145,1370,440.7500,592.5000,747.2000,0.4802,0.1402,0.0375,0.1327
+us_1950_stock_on_bloc,historical,"A counterfactual, not a document: same towns and score as 1956, smaller stockpile.",0.5000,2145,1370,1.0000,2.0000,4.0000,0.0626,0.0281,0.0070,0.0260
+ussr_1965_on_west,historical,"Evidence: Warsaw Pact exercises and lessons, none a Soviet war plan. No Soviet strategic target list has been declassified.",0.5000,1843,355,203.0000,291.0000,331.0500,0.7533,0.3098,0.0202,0.3130
+modern_us_russia,modern,"Extrapolation from lists of 1945-1977 to towns of today. An illustration of assumptions, not a statement about any plan.",1.0000,1638,1178,1035.9500,1125.0000,1157.0500,0.8454,0.1543,0.0281,0.1499
+modern_us_russia_half,modern,"Extrapolation from lists of 1945-1977 to towns of today. An illustration of assumptions, not a statement about any plan.",1.0000,1638,1178,687.3500,910.0000,1051.1000,0.6749,0.2154,0.0340,0.2057
+modern_us_china,modern,"Extrapolation from lists of 1945-1977 to towns of today. An illustration of assumptions, not a statement about any plan.",1.0000,1008,715,274.8000,343.0000,454.1500,0.5056,0.3565,0.0266,0.3531
+modern_india_pakistan,modern,"Extrapolation from lists of 1945-1977 to towns of today. An illustration of assumptions, not a statement about any plan.",1.0000,255,182,15.0000,35.0000,68.0000,0.3463,0.3501,0.0161,0.3500

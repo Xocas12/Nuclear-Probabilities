@@ -1,0 +1,17 @@
+scope,model,weighted_pr_auc,selected
+"global, all attacker documents",population rule,0.7037,False
+"global, all attacker documents",population + country,0.7562,False
+"global, all attacker documents","logistic, all permitted",0.7225,False
+"global, all attacker documents","LightGBM, all permitted",0.7855,True
+"global, plan documents only",population rule,0.7547,False
+"global, plan documents only",population + country,0.8147,False
+"global, plan documents only","logistic, all permitted",0.8310,True
+"global, plan documents only","LightGBM, all permitted",0.8292,False
+"Warsaw Pact, pooled, exercise-based",population rule,0.1533,False
+"Warsaw Pact, pooled, exercise-based",population + country,0.1408,False
+"Warsaw Pact, pooled, exercise-based","logistic, all permitted",0.2597,False
+"Warsaw Pact, pooled, exercise-based","LightGBM, all permitted",0.2787,True
+single document: SAC 1956 (not a state model),population rule,0.7622,False
+single document: SAC 1956 (not a state model),population + country,0.8200,False
+single document: SAC 1956 (not a state model),"logistic, all permitted",0.8411,True
+single document: SAC 1956 (not a state model),"LightGBM, all permitted",0.8390,False

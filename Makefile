@@ -56,6 +56,7 @@ classifier:
 	$(PY) -m nucprob.classifier.table
 	$(PY) -m nucprob.classifier.run
 	$(PY) -m nucprob.classifier.sensitivity
+	$(PY) -m nucprob.classifier.defence_targets
 	$(PY) -m nucprob.classifier.report
 
 # P(area struck | stockpile scenario): configs/scenarios.yaml, the protocol's fourth amendment.

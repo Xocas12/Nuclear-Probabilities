@@ -9,7 +9,8 @@ from a CSV here; tests/test_classifier_report.py fails if REPORT.md differs from
 import pandas as pd
 
 from nucprob.classifier.evaluate import MIN_TRAIN_POSITIVES
-from nucprob.paths import ROOT, RUNS
+from nucprob.paths import CURATED, ROOT, RUNS
+from nucprob.plans import protocol
 
 OUT = RUNS / "classifier"
 MAP = RUNS / "probmap"
@@ -246,6 +247,16 @@ def headline_quotes() -> list[str]:
     return [interval(sac), interval(strict), interval(g)]
 
 
+def _population_note(model: str) -> str:
+    if model != "population rule":
+        return ""
+    return (
+        "\nThe population rule won, so **the map's shares follow town population and nothing else**. What a town "
+        "produced, housed or defended plays no part. That is what the evidence supports on a left-out plan: "
+        "nothing richer has been shown to carry over.\n"
+    )
+
+
 def _map_section() -> str:
     if not (MAP / "scenarios.csv").exists():
         return "The probability map has not been run.\n"
@@ -300,12 +311,15 @@ probability equal to the town's share of the scenario's total score, and an area
 facility data: population, administrative rank, distance to a coast. So the map's score holds no defence,
 military or national-power term. It is fitted on all attacker documents, exercises included, and is not one
 state's model, because no state passes the gate with enough outside its largest document.
+{_population_note(best["model"])}
 
 {markdown(choice)}
 
 **Scenarios.** Intervals are the 5th to 95th percentile over {int(pd.read_json(MAP / "manifest.json", typ="series")["draws"])} joint draws of model (block resample, one
 bag) and stockpile. "Mean width" is the mean over cells of that interval; the two columns before it hold the
-stockpile at its median, then the model at its median. Cells over one half are counted within each draw.
+stockpile at its median, then the model at its median. Cells over one half are counted within each draw. Where most
+cells are over one half, the scenario has more warheads than the rule has towns to spread them on, and the map says little
+beyond that. Sealed towns are not scored, so a 1956 cell holding only sealed towns is absent from the map. Stockpile assumptions, not the model, drive most of the width, because the rule has one feature.
 
 {markdown(scen)}
 
@@ -329,6 +343,26 @@ There are no modern labels, so performance on modern towns cannot be measured at
 """
 
 
+def _rule_outside() -> int:
+    return protocol()["state_models"]["min_positives_outside_largest"]
+
+
+def _defence_summary() -> str:
+    t = pd.read_csv(OUT / "defence_targets.csv").set_index("document")
+    radar = t.loc[t.index.str.contains("category 284")].iloc[0]
+    rows = t[t["counted"] == "designated rows"]
+    pact = rows[rows.index.str.startswith("wp_")]
+    return (
+        f"In SAC's study {int(radar['naming_defences'])} of {int(radar['total'])} complexes hold a radar installation. "
+        f"Across the Warsaw Pact lists {int(pact['naming_defences'].sum())} of {int(pact['total'].sum())} designated rows name "
+        f"a defence, {pact['naming_defences'].gt(0).sum()} lists of {len(pact)}."
+    )
+
+
+def _msites() -> int:
+    return sum(1 for _ in open(CURATED / "sac1956" / "msites.csv", encoding="utf-8")) - 1
+
+
 def report() -> str:
     comp = pd.read_csv(OUT / "comparison.csv")
     selection = pd.read_csv(OUT / "selection.csv")
@@ -344,7 +378,6 @@ def report() -> str:
     primary = primary_table(comp, selection)
     v = verdicts(primary)
     pooled = "Warsaw Pact, pooled, exercise-based"
-    plan_scope = "global, plan documents only"
 
     def best(scope):
         return _best(selection, scope)
@@ -452,18 +485,18 @@ The models describe one document's list a little better than population and coun
 modest gain does not reach other documents.
 
 - **Inside SAC's 1956 study**, under spatial cross-validation, {sac_best} scores {sac_sp["a_pr_auc"]:.2f} against {sac_sp["b_pr_auc"]:.2f}
-  for population plus a country term: {both(sac_sp)}. Most of this needs data from after the
-  document. Without the features flagged as today's data the difference is {both(sac_flag)}; also without
-  the defence tables, {both(sac_strict)}.
+  for population plus a country term: {both(sac_sp)}. Without the features flagged as today's data the
+  difference is {both(sac_flag)}; also without the defence tables, {both(sac_strict)}. Those intervals reach zero,
+  so the gain cannot be claimed on data available at the document's date.
 - **On a plan the model has not seen**, fitted on the other documents with that plan's towns removed,
   {g_best} against the rule that ranks towns by population: {both(g_lopo)} over all lists, and
   {both(g_lopo_rest)} on lists other than SAC.
 - **Fitted on documents after 1956 and scoring earlier ones**: {both(g_rev)} against the population rule.
 - **Verdicts in the primary table, against population plus country:** {v.get("gain", 0)} {WORDS["gain"]}, {v.get("loss", 0)} {WORDS["loss"]}, {v.get("neither", 0)} {WORDS["neither"]}, {v.get("not a reading", 0)} {WORDS["not a reading"]}. A gain or a
-  loss needs both intervals to exclude zero. A row with under {MIN_TRAIN_POSITIVES} positives in training, or a
+  loss needs both intervals to exclude zero. Gains come from: {", ".join(sorted(set(primary.loc[primary["Verdict"] == "gain", "Holdout"])))}. Losses come from: {", ".join(sorted(set(primary.loc[primary["Verdict"] == "loss", "Holdout"])))}. A row with under {MIN_TRAIN_POSITIVES} positives in training, or a
   constant score, is not a reading.
 - **No state has its own model**, after rows the documents themselves reject stopped counting as targets.
-  The US has {int(us_gate["linked_positives"])} linked positives, but only {int(us_gate["positives_outside_largest"])} outside the SAC study, and the rule asks {15}.
+  The US has {int(us_gate["linked_positives"])} linked positives, but only {int(us_gate["positives_outside_largest"])} outside the SAC study, and the rule asks {_rule_outside()}.
 
 ## Question
 
@@ -536,12 +569,10 @@ The selected candidate of each scope. "Trained on" is the smallest number of pos
   is {both(g_sp_rest)}.
 - **The pooled Warsaw Pact model** ({int(pool["linked_positives"])} positives across {int(scopes.loc[pooled, "lists"])} lists, mostly exercises and lessons; never a war-plan model):
   under spatial blocks {both(wp_sp)}; on a left-out document {both(wp_lopo)}.
-- **Keeping a left-out plan's towns in training** inflates that reading. For this model it gives {both(wp_kept)}, because
-  a town brings its label from another document into the fit. This was how the earlier run worked.
+- **Keeping a left-out plan's towns in training**, as the earlier run did, lets a town bring its label from another document
+  into the fit. For this model it gives {both(wp_kept)}, against the {both(wp_lopo)} above with them removed.
 - **SAC itself**, left out of the global model: {pr(GLOBAL_ALL, "leave", SAC, g_best)} under {g_best}, {pr(GLOBAL_ALL, "leave", SAC, RULE)} for the rule, on a base rate of {sac_rate:.2f}.
 - **Target Committee of 1945**, its designated cities, left out: {pr(GLOBAL_ALL, "leave", "us_1945_target_committee", g_best)} under {g_best}, {pr(GLOBAL_ALL, "leave", "us_1945_target_committee", RULE)} for the rule.
-
-Selected scope table for plan documents: `{plan_scope}` in `runs/classifier/TABLES.md`.
 
 ### What the gains rest on
 
@@ -582,8 +613,11 @@ feature, controlling log population and an intercept per list and country; inter
   may be absorbed into its complex entry rather than listed by name, and air-defence sites may follow large cities.
   The table is not what SAC knew: Holm's S-25 points carry US designations, while the rest is post-Soviet knowledge.
 - **Warsaw Pact documents, NATO Europe.** Sites within 50 km {odds("Warsaw Pact", "log_air_defence_sites_50km")}, distance to a Nike or HAWK site {odds("Warsaw Pact", "log_km_to_sam")}.
-- **Not tested.** Whether defence sites were targets in themselves cannot be read at town level. The rows of `wp_1964_csla_plan` and
-  `wp_1977_zealand` name such targets; `data/curated/labels/sac1956_category_codes.csv` may speak to it for SAC. That has not been done.
+- **Defences as targets in themselves.** Some documents name them. Counts of rows or complexes, from the documents' own
+  words (`runs/classifier/defence_targets.csv`); the plans' order of strikes is not read here. The Warsaw Pact documents' shares are a finding about
+  those few lists. {_defence_summary()} In SAC's Moscow region {_msites()} rows are numbered "M-n"; the study does not say what M means, so they are not counted.
+
+{markdown(pd.read_csv(OUT / "defence_targets.csv").drop(columns=["counted"]))}
 
 ### Calibration
 

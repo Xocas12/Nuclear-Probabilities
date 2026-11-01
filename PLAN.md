@@ -5,7 +5,10 @@
 > US war plan of 1956. Fit one global model, one model per country and one per regime type.
 > Map which characteristics drive targeting.
 
-The repository is empty, so this plan starts from nothing.
+This is the plan as written at the start of the project, kept as the design record. It predates the
+work: what exists and what was found is in README.md and REPORT.md, and where they differ they are
+right. "The US war plan of 1956" above is the SAC requirements study, not a war plan. Models by regime
+type were not built.
 
 - **Phase order.** The phases follow the order asked for: features, then strike plans, then
   models, then the map.
@@ -649,15 +652,14 @@ section 5.4: two candidates with fixed settings, no tuning. The sealed set waits
   with the 20 common features and scores 16 lists; the bloc lists are scored leave-country-out.
   - Read in PR-AUC, the primary metric (§5.5), with paired bootstrap intervals for
     LightGBM (common) minus the population rule (`runs/m4-transfer-check/paired.csv`).
-  - City lists are ranked by size, and on two of them the bloc model ranks the top of the
-    list clearly worse than population alone. Operation Alert: PR-AUC 0.33 against 0.70,
-    -0.37 [-0.45, -0.26]; precision@k 0.37 against 0.59, -0.22 [-0.33, -0.08]. The 1945
-    Target Committee: PR-AUC 0.26 against 0.88, -0.62 [-0.75, -0.40]; precision@k 0.24
-    against 0.76, -0.53 [-0.82, -0.29]. Canada 1956 matches (PR-AUC -0.03 [-0.13, +0.06]).
-    ROC-AUC (0.94-0.97 against 0.96-0.98) hid most of this.
+  - On Operation Alert the bloc model ranks the top of the list clearly worse than population alone:
+    PR-AUC 0.10 against 0.74,
+    -0.64 [-0.80, -0.43]; precision@k 0.07 against 0.64, -0.57 [-0.86, -0.29]. The 1945
+    Target Committee's 6 designated towns: -0.42 [-0.87, +0.08], precision@k -0.50 [-1.00, +0.17]; the intervals include zero. Canada 1956
+    matches (PR-AUC -0.03 [-0.14, +0.06]). ROC-AUC hid most of this.
   - On the mixed civil and military lists no gain is detectable: Square Leg PR-AUC +0.02 [-0.04, +0.11],
     precision@k 0.00 [-0.07, +0.09]; Lato-67, with the FRG in its universe since 1 Nov 2026, -0.01 [-0.08, +0.06] and
-    +0.05 [-0.07, +0.19]. These intervals include zero.
+    +0.07 [-0.07, +0.19]. These intervals include zero.
   - One exception: the Polish mirror list gains in PR-AUC, +0.14 [+0.07, +0.21], with
     precision@k +0.07 [0.00, +0.22]. It records what Polish staff expected NATO to strike.
   - This is a check, not a result.

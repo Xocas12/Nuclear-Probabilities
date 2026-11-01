@@ -1,0 +1,3 @@
+reading,cells,cells_listed,base_rate,median_delivered_warheads,pr_auc,roc_auc,brier,brier_of_base_rate,mean_p
+spatial blocks held out,1370,794,0.5796,1132.2003,0.8375,0.7922,0.1967,0.2437,0.4812
+SAC list left out,1370,794,0.5796,1132.2003,0.8422,0.7933,0.2052,0.2437,0.4483

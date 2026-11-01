@@ -1,0 +1,11 @@
+bin,n,mean_score,observed,reading
+0,274,0.2355,0.2153,spatial blocks held out
+1,274,0.3143,0.4015,spatial blocks held out
+2,274,0.4517,0.6277,spatial blocks held out
+3,274,0.6046,0.7591,spatial blocks held out
+4,274,0.8000,0.8942,spatial blocks held out
+0,274,0.1865,0.1971,SAC list left out
+1,274,0.2558,0.4161,SAC list left out
+2,274,0.3897,0.6204,SAC list left out
+3,274,0.5696,0.7482,SAC list left out
+4,274,0.8397,0.9161,SAC list left out

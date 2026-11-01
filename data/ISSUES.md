@@ -24,3 +24,6 @@ Found while rebuilding, with no issue of their own:
   keeps the record, reports the difference and carries on. `data/sources.yaml` marks live sources
   `volatile` and keeps their earlier hash in `previous_sha256`.
 - The sealed set depended on the labels (`data/curated/splits/README.md`).
+
+The independent review of e1ed40e (findings 2-22) is answered in `configs/protocol.yaml`, fourth amendment, and in
+`tests/test_label_rules.py`, `tests/test_classifier_report.py`, `tests/test_provenance.py` and `tests/test_probmap.py`.

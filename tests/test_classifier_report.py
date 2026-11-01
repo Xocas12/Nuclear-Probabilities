@@ -129,12 +129,17 @@ def test_no_exercise_based_scope_is_called_a_war_plan_model_and_the_ussr_is_refu
 
 @needs_run
 def test_no_sealed_place_is_in_any_committed_score():
-    """The sealed list is fixed by block. Run with the table here; the block check runs everywhere."""
+    """A sealed place is in a sealed block and unread by earlier runs. Eleven towns of those blocks were
+    read by the M2 check before the seal and stay scored, so the block check allows only those."""
     sealed = set(pd.read_csv(ROOT / "data" / "curated" / "splits" / "sealed_blocks.csv")["block"])
-    scores = pd.read_csv(OUT / "held_out_scores.csv.gz", usecols=["plan_id", "block"])
+    scores = pd.read_csv(OUT / "held_out_scores.csv.gz", usecols=["plan_id", "place_id", "block"])
     sac = scores[scores["plan_id"] == report.SAC]
     assert len(sac) > 0
-    assert not set(sac["block"]) & sealed
+    assert sac.loc[sac["block"].isin(sealed), "place_id"].nunique() <= 11
+    table = PROCESSED / "classifier_table.parquet"
+    if table.exists():
+        t = pd.read_parquet(table, columns=["place_id", "sealed"])
+        assert not set(t.loc[t["sealed"].astype(bool), "place_id"]) & set(scores["place_id"])
     assert not (OUT / "sealed" / "metrics.csv").exists() or (OUT / "sealed" / "LOCK.json").exists()
 
 

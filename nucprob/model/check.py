@@ -4,7 +4,7 @@ SAC 1956 labels (PLAN section 9).
     python -m nucprob.model.check
 
 A check that every feature family joins end to end and a first look at what each adds; not
-results, since the protocol is frozen only at M5. Models: the population rule; logistic
+results, read before the protocol was frozen. Models: the population rule; logistic
 regression and LightGBM on every feature; LightGBM without each family in turn, with the
 population family plus each other family, and without the features flagged as anachronisms.
 Spatial-block 5-fold cross-validation on three shifted grids, outside the sealed test, and
@@ -315,7 +315,7 @@ def main() -> None:
         "within_country": f"PR-AUC in each country with at least {MIN_CLASS} places of each "
         "class, averaged with weights by positives",
         "cv": {"k": K, "block_km": BLOCK_KM, "shifts_km": SHIFTS_KM, "random_seeds": RANDOM_SEEDS},
-        "note": "a check of the feature base, not results: the protocol is frozen at M5",
+        "note": "a check of the feature base, not results: read before the protocol was frozen",
     }
     (OUT / "manifest.json").write_text(
         json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8"

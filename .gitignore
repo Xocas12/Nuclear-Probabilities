@@ -45,3 +45,5 @@ data/interim/napb90_b/*
 !data/interim/napb90_b/*.md
 !data/interim/napb90_b/pass1/
 !data/interim/napb90_b/chunks/
+runs/classifier-quick/
+runs/probmap-quick/
