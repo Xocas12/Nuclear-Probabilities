@@ -59,8 +59,9 @@ Of the 29 excerpted complexes with an aim point in Part I, the 16 ranked best (p
 ## Part I airfields against Part II
 
 - 270 of 270 Part I airfield rows have a Part II row of the same BE number (or name and reference).
-- Of those, same coordinates 254, same trailing letter 270
-- Rows transcribed differently from the two printings, judged on both scans (`crossdoc/`): printings differ 12, unresolved 4, part2 misread 3
+- Of those, same coordinates 255, same trailing letter 270
+- Rows transcribed differently from the two printings, judged on both scans (`crossdoc/`): unresolved 8, printings differ 6, part2 misread 3, part1 misread 1, punctuation only 1
+- On the ~200-dpi Part II pages (A002, A004, A005, A006, A020, A023, A024, A027): 216 of these rows, and 19 of the 19 judged rows. Part II misreads found there: 3 of 216, about 1 in 72
 
 ## Cross-reference list against Part I
 
@@ -73,3 +74,11 @@ Of the 29 excerpted complexes with an aim point in Part I, the 16 ranked best (p
 
 The page between 0307 ARTSIZ and 03415 ATBASAR is missing from the scan. Cross-reference entries in that range of reference numbers: 0.
 
+
+## The pilot reading against the final reading
+
+Written by `scripts/sac1956_pilot.py` (`pilot.csv` has every row).
+
+- Pilot rows: 156 (129 from the complex list, pages C002, C166 and C305; 27 from the Part I airfield list, page F005), each set against the final line in the same place; 2836 characters the pilot could read.
+- Rows where every field the pilot read appears in the final reading: 156 of 156.
+- All four pilot pages are Part I pages, so the pilot is a third read of the Part I scan; it says nothing about the Part II airfield scan.

@@ -19,7 +19,8 @@ Outputs (data/curated/sac1956/excerpts/):
   part2_vs_part1.csv     each Part II complex beside the Part I complex of the same reference
   part1_vs_part2_airfields.csv  each Part I airfield beside the Part II row of the same BE number
   lost_page.csv          cross-reference entries that fall in the gap of the lost Part I page
-  REPORT.md              counts and the comparisons
+  REPORT.md              counts and the comparisons, and the pilot reading against the final
+                         reading (scripts/sac1956_pilot.py, which also writes ../pilot.csv)
 """
 
 import csv
@@ -34,6 +35,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 import sac1956_assemble as asm
 import sac1956_compare as cmp
+import sac1956_pilot as pilot
 
 ROOT = Path("data/interim/sac1956_excerpts")
 OUT = asm.OUT / "excerpts"
@@ -43,6 +45,8 @@ XREF = re.compile(
     r"^(?:(?P<ref>\d{4,5}) )?(?P<name>.+?)(?: (?P<af>AF))?"
     r"(?: SEE (?P<see_ref>\d{4,5}) (?P<see_name>.+))?$"
 )
+# Part II airfield pages scanned at about 200 dpi (README, "Lower-resolution scans").
+LOW_DPI_AIRFIELD_PAGES = {f"A{p:03d}" for p in (1, 2, 4, 5, 6, 20, 23, 24, 27, 29, 30)}
 # The Part I page lost from the scan lies between these two complexes (README, "Gaps").
 LOST_AFTER, LOST_BEFORE = "ARTSIZ", "ATBASAR"
 SOURCE_URL = (
@@ -539,6 +543,17 @@ def report(t, part2, part1_af, xref, versus, af_versus, lost, span, part1) -> No
             "- Rows transcribed differently from the two printings, judged on both scans "
             "(`crossdoc/`): " + ", ".join(f"{k} {v}" for k, v in judged.most_common())
         )
+        low = [a for a in af_versus if a["part2_id"][:4] in LOW_DPI_AIRFIELD_PAGES]
+        low_judged = Counter(
+            a["cross_document_verdict"] for a in low if a["cross_document_verdict"]
+        )
+        misread = low_judged["part2 misread"]
+        out.append(
+            f"- On the ~200-dpi Part II pages ({', '.join(sorted({a['part2_id'][:4] for a in low}))})"
+            f": {len(low)} of these rows, and {sum(low_judged.values())} of the "
+            f"{sum(judged.values())} judged rows. Part II misreads found there: {misread} of "
+            f"{len(low)}" + (f", about 1 in {round(len(low) / misread)}" if misread else "")
+        )
     missing = [a for a in af_versus if not a["part2_id"]]
     if missing:
         out.append("- Not in Part II: " + ", ".join(f"{a['name']} ({a['be']})" for a in missing))
@@ -578,6 +593,16 @@ def report(t, part2, part1_af, xref, versus, af_versus, lost, span, part1) -> No
             f"{r['listed_under']} |"
             for r in lost
         ]
+    final_lines = list(csv.DictReader(open(asm.OUT / "lines.csv", encoding="utf-8")))
+    _, pilot_summary = pilot.run(lines=final_lines + t["lines"])
+    out += [
+        "",
+        "## The pilot reading against the final reading",
+        "",
+        "Written by `scripts/sac1956_pilot.py` (`pilot.csv` has every row).",
+        "",
+        *pilot_summary,
+    ]
     (OUT / "REPORT.md").write_text("\n".join(out) + "\n", encoding="utf-8")
     print("\n".join(out))
 

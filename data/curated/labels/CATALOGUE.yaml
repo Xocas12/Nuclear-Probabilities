@@ -35,7 +35,7 @@ lists:
     use: training
     completeness: complete; 3 misreads corrected by the cross-document check
     card: data/curated/sac1956/README.md
-    caveats: the Part II printing has typing slips of its own (cross-document check)
+    caveats: the Part II printing has typing slips of its own (cross-document check); rows with a known slip or a low-confidence reading say so in notes
 
   - file: us_1956_sac_part2_complexes.csv
     title: SAC 1956 study, Part II complex list with weapons (excerpt)

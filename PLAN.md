@@ -673,9 +673,13 @@ are transcribed through the same pipeline (`data/curated/sac1956/excerpts/`).
   - A blind audit of a 5% sample of the full lists found no error in 743 lines (95% bound
     0.51%).
   - The 270 airfield rows that both airfield lists print were compared line against line. This
-    found 3 misreads in the Part II transcription, all on 200-dpi pages, and corrected them.
-    The other differences are 12 typing differences between the two printings and 4 blotted
-    digits.
+    found 3 misreads in the Part II transcription and 1 in the Part I excerpt (BRODY), and
+    corrected them. Of the other 15, 6 are coordinate differences between the two printings
+    (4 of them Part II typing slips), 8 are unresolved (4 rest on a faint Part II glyph against
+    a clear Part I 8 and are probably Part II misreads: AKTYUBINSK, BREST, BRIYENI, BUZAU),
+    and ONEGA differs only by a period. All 19 fall on the 216 rows of the ~200-dpi pages:
+    3 confirmed misreads in 216 (about 1 in 72), 7 counting the probable ones (1 in 31). The
+    label rows affected say so in `notes`.
 - **Anchors.** Moscow, Leningrad and East Berlin reproduce. The study's own totals (section 8)
   are redacted figure by figure, so there is nothing more to reproduce.
 - **The Part II subset.** Part II keeps every excerpted complex, with its priority and

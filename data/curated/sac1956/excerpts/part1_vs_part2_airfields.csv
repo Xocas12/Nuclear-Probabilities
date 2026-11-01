@@ -3,7 +3,7 @@ F002-L03,ABAKAN,0020,0161-8002,1042,A002-L03,1042,True,True,,
 F002-L04,ACHINSK,0024,0159-8007,814,A002-L04,814,True,True,,
 F002-L05,ADLER,6270,0324-8635,771,A002-L05,771,True,True,,
 F002-L06,AFRIKANDA,0034,0091-8601,47,A002-L06,47,False,True,unresolved,Part I last glyph is a 5/8 hybrid (5-like top flag on closed 8-like body); Part II clear 8
-F002-L07,AKTYUBINSK,0080,0236-8002,727,A002-L07,727,False,True,printings differ,Part I clear B-shaped 8 and B; Part II faint open 0 (same mid-left tick as agreed faint 0s) and degraded R/B with split foot
+F002-L07,AKTYUBINSK,0080,0236-8002,727,A002-L07,727,False,True,unresolved,"re-judged: the Part II reading rests on a low-confidence glyph against a clear Part I 8, so it cannot show that the printings differ; Part I puts the airfield nearer its complex (3.9 km against 18.6 km); kept as printed in the Part II tables and flagged in the label notes. Earlier verdict, printings differ: Part I clear B-shaped 8 and B; Part II faint open 0 (same mid-left tick as agreed faint 0s) and degraded R/B with split foot"
 F002-L08,ALAKURTTI,0096,0091-8602,48,A002-L08,48,True,True,,
 F002-L09,ALAPAYEVSK,0100,0156-8024,952,A002-L09,952,True,True,,
 F002-L10,ALEKSANDROVSK,0120,0205-8001,683,A002-L10,683,True,True,,
@@ -15,7 +15,7 @@ F002-L15,ALMA ATA N W,0160,0329-8603,1044,A002-L15,1044,True,True,,
 F002-L16,ALTENBURG,0185,0231-8055,355,A002-L16,355,True,True,,
 F002-L17,ALT LONNEWITZ,?485,0231-8056,442,A002-L17,442,True,True,,
 F002-L18,ALYTUS,0169,0168-8601,857,A002-L18,857,True,True,,
-F002-L19,AMDERMA,0201,0049-8001,52,A002-L19,52,False,True,printings differ,"Part II first glyph has flat top bar and open lower-left = 5, unlike its 6 in 6444"
+F002-L19,AMDERMA,0201,0049-8001,52,A002-L19,52,False,True,printings differ,"Part II typing slip (Part I's 6945 fits chart 0049, whose neighbours 0046-0051 lie at 68-73 N; 5945 does not): Part II first glyph has flat top bar and open lower-left = 5, unlike its 6 in 6444"
 F002-L20,ANADYR/LENINKA,0230,0075-8001,27,A002-L20,27,True,True,,
 F002-L21,ANADYR/MYS NIZMENNY,0230,0075-8003,64,A002-L21,64,True,True,,
 F002-L22,ANAPA,0231,0249-8093,892,A002-L22,892,True,True,,
@@ -25,7 +25,7 @@ F002-L25,ANTONOVKA,3776,0282-8602,291,A002-L25,291,True,True,,
 F002-L26,AN TUNG,02495,0290-8017,275,A002-L26,275,True,True,,
 F002-L27,ARAD CEALA,0265,0251-8006,553,A002-L27,553,True,True,,
 F002-L28,ARKHANGELSK,0270,0092-8001,53,A002-L28,53,True,True,,
-F002-L29,ARKHANGELSK/BAKARITSA,0270,0092-8002,893,A002-L29,893,False,True,printings differ,Part II third glyph has no base bar = 7; Part I 2 has base bar
+F002-L29,ARKHANGELSK/BAKARITSA,0270,0092-8002,893,A002-L29,893,False,True,printings differ,"Part II typing slip (78 minutes, left blank in the tables): Part II third glyph has no base bar = 7; Part I 2 has base bar"
 F003-L03,ARKHANGELSK/OSTROV KEG,0270,0092-8004,62,A003-L01,62,True,True,,
 F003-L04,ARKHANGELSK/TALAGI,0270,0092-8005,953,A003-L02,953,True,True,,
 F003-L05,ARKHANGELSK/YAGODNIK,0270,0092-8006,49,A003-L03,49,True,True,,
@@ -79,7 +79,7 @@ F004-L24,BEZHETSK,0730,0154-,478,A004-L25,478,True,True,,
 F004-L25,BEZMER,9604,0322-8064,367,A004-L26,367,True,True,,
 F004-L26,BIALA PODLASKA,0746,0168-8201,524,A004-L27,524,True,True,,
 F004-L27,BIRMA,7415,0203-8606,712,A004-L28,712,True,True,,
-F004-L28,BIROBIDZHAN,0766,0203-8001,635,A004-L29,635,False,True,printings differ,Part II second glyph closed top loop with open lower-left = 9; Part I two-loop 8
+F004-L28,BIROBIDZHAN,0766,0203-8001,635,A004-L29,635,False,True,printings differ,"Part II typing slip (Part II puts it 106 km from complex 0766, Part I 6 km): Part II second glyph closed top loop with open lower-left = 9; Part I two-loop 8"
 F005-L02,BIROBIDZHAN S,0766,0203-8002,880,A005-L03,880,True,True,,
 F005-L03,BIROFELD,4442,0203-8003,856,A005-L04,856,True,True,,
 F005-L04,BLAGOVESHCHENSK,0790,0203-8612,1050,A005-L05,1050,True,True,,
@@ -94,15 +94,15 @@ F005-L12,BOROVSK,0900,0167-8102,406,A005-L13,406,True,True,,
 F005-L13,BORZYA,0902,0202-8603,247,A005-L14,247,True,True,,
 F005-L14,BRANDENBURG/BRIEST,0915,0169-8214,483,A005-L15,483,True,True,,
 F005-L15,BRANDIS,4465,0231-8058,484,A005-L16,484,True,True,,
-F005-L16,BRATISLAVA/IVANKA,0935,0232-8244,438,A005-L17,438,False,True,printings differ,Part I two-loop 8 vs Part II clear 9 with tail
+F005-L16,BRATISLAVA/IVANKA,0935,0232-8244,438,A005-L17,438,False,True,printings differ,"Part II typing slip (Part II puts it 113 km from complex 0935, Part I 4 km): Part I two-loop 8 vs Part II clear 9 with tail"
 F005-L17,BRESLAU/SCHONGARTEN,0965,0232-8201,392,A005-L18,392,True,True,,
-F005-L18,BREST,0970,0168-8610,957,A005-L19,957,False,True,printings differ,Part II 4th glyph broken faint 0 without waist vs Part I clear 8; Part II 2nd glyph lacks base bar (7-like)
+F005-L18,BREST,0970,0168-8610,957,A005-L19,957,False,True,unresolved,"re-judged: the Part II reading rests on a low-confidence glyph against a clear Part I 8, so it cannot show that the printings differ; Part I puts the airfield nearer its complex (4.3 km against 11.4 km); kept as printed in the Part II tables and flagged in the label notes. Earlier verdict, printings differ: Part II 4th glyph broken faint 0 without waist vs Part I clear 8; Part II 2nd glyph lacks base bar (7-like)"
 F005-L19,BRIEG,0980,0232-8202,31,A005-L20,31,True,True,,
 F005-L20,BRIESEN,0989,0169-8299,140,A005-L21,140,True,True,,
-F005-L21,BRIYENI,0307,0250-8752,90,A005-L22,90,False,True,printings differ,Part II faint open 0 with mid-left tick like agreed 0 in 4910; Part I clear 8
+F005-L21,BRIYENI,0307,0250-8752,90,A005-L22,90,False,True,unresolved,"re-judged: the Part II reading rests on a low-confidence glyph against a clear Part I 8, so it cannot show that the printings differ; Part I puts the airfield nearer its complex (5.4 km against 18.9 km); kept as printed in the Part II tables and flagged in the label notes. Earlier verdict, printings differ: Part II faint open 0 with mid-left tick like agreed 0 in 4910; Part I clear 8"
 F005-L22,BRNO,0995,0232-8245,890,A005-L23,890,True,True,,
 F005-L23,BRNO/TURANY,0995,0232-8246,441,A005-L24,441,True,True,,
-F005-L24,BRODY,4131,0233-8006,474,A005-L25,474,False,True,printings differ,"Part I S-shaped glyph matches the S-like 9 in 4909 of same crop, not its flat-topped 5s; Part II clear 5"
+F005-L24,BRODY,4131,0233-8006,474,A005-L25,474,True,True,part1 misread,"re-judged: the Part I 9 was read at low confidence; 02911 puts BRODY 246 km from complex 4131 and 02511 39 km, beside BRODY/GAYE (02509) on the next line; pass A and the pilot read of this page (ok) give 02511; F005-L24 corrected (excerpts check02). Earlier verdict, printings differ: Part I S-shaped glyph matches the S-like 9 in 4909 of same crop, not its flat-topped 5s; Part II clear 5"
 F005-L25,BRODY/GAYE,4131,0233-8007,896,A005-L26,896,True,True,,
 F005-L26,BROVARY,3630,0233-6036,410,A005-L27,410,True,True,,
 F005-L27,BRYANSK,0740,0167-8020,407,A005-L28,407,True,True,,
@@ -114,7 +114,7 @@ F006-L06,BUCHAREST/PIPERA,1020,0251-8017,754,A006-L05,754,True,True,,
 F006-L07,BUDAPEST/TOKOL,1045,0252-8045,125,A006-L06,125,True,True,,
 F006-L08,BUGURUSLAN,1050,0165-8001,863,A006-L07,863,True,True,,
 F006-L09,BUSHTINO,34737,0232-8622,959,A006-L08,959,False,True,unresolved,Part I S-shaped glyph ambiguous between its 5 and S-like 9; Part II clear 9
-F006-L10,BUZAU,10748,0251-8019,823,A006-L09,823,False,True,printings differ,Part II faint open 0 with no waist; Part I clear 8
+F006-L10,BUZAU,10748,0251-8019,823,A006-L09,823,False,True,unresolved,"re-judged: the Part II reading rests on a low-confidence glyph against a clear Part I 8, so it cannot show that the printings differ; Part I puts the airfield nearer its complex (1.3 km against 14.9 km); kept as printed in the Part II tables and flagged in the label notes. Earlier verdict, printings differ: Part II faint open 0 with no waist; Part I clear 8"
 F006-L11,BYDGOSZCZ,1085,0169-8242,202,A006-L10,202,True,True,,
 F006-L12,BYKHOV,1090,0167-8001,1,A006-L11,1,True,True,,
 F006-L13,CARACAL NEW,1154,0251-8067,384,A006-L12,384,True,True,,
@@ -220,7 +220,7 @@ F010-L03,OLOVYANNAYA,57475,0202-8614,805,A027-L04,805,False,True,unresolved,Part
 F010-L04,OMSK,5750,0163-8001,1004,A027-L05,1004,True,True,,
 F010-L05,OMSK E,5750,0163-8002,950,A027-L06,950,True,True,,
 F010-L06,OMSK S W,5750,0163-8003,626,A027-L07,626,True,True,,
-F010-L07,ONEGA,5770,0102-8016,586,A027-L08,586,False,True,printings differ,"Part I has period after ONEGA, Part II none; Part II topless 4th glyph is a 5, so digits agree"
+F010-L07,ONEGA,5770,0102-8016,586,A027-L08,586,False,True,punctuation only,"re-judged: the coordinates agree, so this is not a coordinate difference; only the period after the name differs. Earlier verdict, printings differ: Part I has period after ONEGA, Part II none; Part II topless 4th glyph is a 5, so digits agree"
 F010-L08,ORANIENBURG,0685,0169-8224,95,A027-L09,95,True,True,,
 F010-L09,ORASUL STALIN,5807,0251-8011,655,A027-L10,655,True,True,,
 F010-L10,ORDZHONIKIDZEVSKAYA,9010,0325-8700,412,A027-L11,412,True,True,,
