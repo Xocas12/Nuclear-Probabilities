@@ -114,7 +114,8 @@ def test_leave_one_plan_out_never_trains_on_the_group_it_scores():
     d = toy()
     seen: list = []
     spec = cfit.Spec("spy", Spy(seen), ["log_pop", "group"])
-    out = ev.leave_one_plan_out(d, [spec], n_bags=2)
+    out, held = ev.leave_one_plan_out(d, [spec], n_bags=2)
+    assert len(held) == len(d)
     assert {r["holdout"] for r in out} == {f"leave-one-plan-out ({g})" for g in "ABC"}
     trained_on = {frozenset(x["group"]) for x in seen}
     assert trained_on == {frozenset("AB"), frozenset("AC"), frozenset("BC")}
@@ -198,7 +199,7 @@ def test_the_exercise_gate_counts_documents_and_says_what_it_is():
 def test_the_table_keeps_documents_apart_and_never_trains_on_a_mirror():
     t = pd.read_parquet(PROCESSED / "classifier_table.parquet")
     assert t.duplicated(["plan_id", "place_id"]).sum() == 0
-    groups, _ = crun.scopes(crun.usable(t))
+    groups, _ = crun.scopes(crun.usable(t), crun.positives_of(t))
     for name, rows in groups.items():
         assert set(rows["role"]) == {"train"}, name
         assert not rows["doc_type"].isin(["mirror", "civil_defence", "reconstruction"]).any()

@@ -88,8 +88,16 @@ def paired_bootstrap(
     }
 
 
-def leave_one_plan_out(table: pd.DataFrame, models: list[Spec], n_bags: int) -> list[dict]:
-    out = []
+def _scored(rows: pd.DataFrame, scores: dict[str, np.ndarray]) -> pd.DataFrame:
+    keep = rows[["plan_id", "place_id", "listed"]].reset_index(drop=True)
+    return keep.assign(**scores)
+
+
+def leave_one_plan_out(
+    table: pd.DataFrame, models: list[Spec], n_bags: int
+) -> tuple[list[dict], pd.DataFrame]:
+    """Rows of `by_list`, and every held-out score, for the paired comparison."""
+    out, kept = [], []
     for group in sorted(table["group"].unique()):
         test = table["group"] == group
         rows = table[test].reset_index(drop=True)
@@ -98,7 +106,8 @@ def leave_one_plan_out(table: pd.DataFrame, models: list[Spec], n_bags: int) -> 
             continue
         scores = {m.name: fit_bagged(m, train, n_bags).score(rows) for m in models}
         out += by_list(rows, scores, f"leave-one-plan-out ({group})")
-    return out
+        kept.append(_scored(rows, scores))
+    return out, pd.concat(kept, ignore_index=True) if kept else pd.DataFrame()
 
 
 def spatial_scores(table: pd.DataFrame, models: list[Spec], n_bags: int) -> dict[str, np.ndarray]:
@@ -117,8 +126,10 @@ def spatial_scores(table: pd.DataFrame, models: list[Spec], n_bags: int) -> dict
     return total
 
 
-def temporal(table: pd.DataFrame, models: list[Spec], n_bags: int) -> list[dict]:
-    out = []
+def temporal(
+    table: pd.DataFrame, models: list[Spec], n_bags: int
+) -> tuple[list[dict], dict[str, pd.DataFrame]]:
+    out, kept = [], {}
     early = table["year"] <= TEMPORAL_CUT
     for name, train, test in (
         (f"temporal: fit up to {TEMPORAL_CUT}, score later", table[early], table[~early]),
@@ -134,7 +145,8 @@ def temporal(table: pd.DataFrame, models: list[Spec], n_bags: int) -> list[dict]
         train = train.reset_index(drop=True)
         scores = {m.name: fit_bagged(m, train, n_bags).score(rows) for m in models}
         out += by_list(rows, scores, name)
-    return out
+        kept[name] = _scored(rows, scores)
+    return out, kept
 
 
 def calibration_curve(y: np.ndarray, p: np.ndarray, bins: int = 10) -> pd.DataFrame:

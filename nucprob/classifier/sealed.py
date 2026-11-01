@@ -15,7 +15,7 @@ from pathlib import Path
 import pandas as pd
 
 from nucprob.classifier.fit import N_BAGS, fit_bagged, specs
-from nucprob.classifier.run import SAC, scopes, usable
+from nucprob.classifier.run import SAC, positives_of, scopes, usable
 from nucprob.model.cv import git_commit
 from nucprob.model.evaluate import metrics
 from nucprob.paths import PROCESSED, ROOT, RUNS
@@ -49,7 +49,7 @@ def main() -> None:
     )
     full = pd.read_parquet(PROCESSED / "classifier_table.parquet")
     table = usable(full)
-    groups, _ = scopes(table)
+    groups, _ = scopes(table, positives_of(full))
     sealed = full[full["sealed"].astype(bool) & full["plan_id"].eq(SAC)].reset_index(drop=True)
     rows = []
     for scope, train in groups.items():

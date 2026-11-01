@@ -116,3 +116,14 @@ amendments:
       sealed: scored by python -m nucprob.classifier.sealed, which writes a lock and refuses a
         second run. It waits for an independent review of these models, so that a fault found in
         review is not fixed after the sealed set has been read.
+  - date: 2026-11-01
+    # After a code check with 3 bags and 50 resamples (--quick), whose output was read for bugs. It
+    # was not committed. Nothing below changes a feature, a label, a model or a selection rule.
+    reasons: faults and omissions the check exposed
+    changes:
+      gate: counts every linked positive, sealed places too, as runs/evidence does. The check had
+        counted them after removing sealed places.
+      comparison: candidates against both baselines also under leave one plan out and temporal
+        holdouts, and on the lists other than SAC, which otherwise carry nine tenths of the weight.
+      national_power: also read over population alone, because within one list it is one value per
+        country and cannot add to a country term.

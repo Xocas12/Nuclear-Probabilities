@@ -14,6 +14,13 @@ bootstrap), selection.csv, scopes.csv (what each scope holds, or why it was refu
 calibration.csv, family_gain.csv, defence.csv, spatial_scores.csv.gz and manifest.json.
 """
 
+import os
+
+# The machine rule is at most 3 cores: BLAS must not add threads of its own to the 3 bags.
+os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
+os.environ.setdefault("OMP_NUM_THREADS", "1")
+os.environ.setdefault("MKL_NUM_THREADS", "1")
+
 import argparse
 import datetime as dt
 import json
@@ -48,11 +55,14 @@ def positives_of(table: pd.DataFrame) -> dict[str, int]:
     return table.groupby("plan_id")["listed"].sum().astype(int).to_dict()
 
 
-def scopes(table: pd.DataFrame) -> tuple[dict[str, pd.DataFrame], pd.DataFrame]:
-    """Scope name -> rows, and the gate's decisions. Only documents with role train fit a model."""
+def scopes(
+    table: pd.DataFrame, positives: dict[str, int]
+) -> tuple[dict[str, pd.DataFrame], pd.DataFrame]:
+    """Scope name -> rows, and the gate's decisions. Only documents with role train fit a model.
+    `positives` counts every linked positive, sealed places too, as runs/evidence does; models
+    read only the rows of `table`."""
     reg = plans()
     rule = protocol()["state_models"]
-    positives = positives_of(table)
     decisions = gate(positives, reg, rule)
     pooled = exercise_gate(positives, reg, rule["warsaw_pact_exercise_model"])
     decisions = pd.concat([decisions, pd.DataFrame([pooled])], ignore_index=True)
@@ -87,14 +97,23 @@ def describe(name: str, rows: pd.DataFrame) -> dict:
     }
 
 
-def compare(rows: pd.DataFrame, scores: dict[str, np.ndarray], boot: int, scope: str, holdout: str):
-    """Each candidate against each baseline on the same rows."""
-    y, doc = rows["listed"].to_numpy(int), rows["plan_id"].to_numpy()
+def compare(frame: pd.DataFrame, boot: int, scope: str, holdout: str) -> list[dict]:
+    """Each candidate against each baseline on the same rows: all lists, and without the SAC
+    list, which otherwise carries about nine tenths of the weight."""
     out = []
-    for a in CANDIDATES:
-        for b in BASELINES:
-            r = ev.paired_bootstrap(y, scores[a], scores[b], doc, n=boot)
-            out.append({"scope": scope, "holdout": holdout, "model": a, "against": b} | r)
+    for lists, part in (
+        ("all lists", frame),
+        ("lists other than SAC", frame[frame.plan_id != SAC]),
+    ):
+        y, doc = part["listed"].to_numpy(int), part["plan_id"].to_numpy()
+        for a in CANDIDATES:
+            for b in BASELINES:
+                r = ev.paired_bootstrap(y, part[a].to_numpy(), part[b].to_numpy(), doc, n=boot)
+                row = {"scope": scope, "holdout": holdout, "lists": lists, "model": a, "against": b}
+                row["positives"] = int(y.sum())
+                row["a_pr_auc"] = ev.weighted_pr_auc(y, part[a].to_numpy(), doc)
+                row["b_pr_auc"] = ev.weighted_pr_auc(y, part[b].to_numpy(), doc)
+                out.append(row | r)
     return out
 
 
@@ -103,18 +122,25 @@ def analyse_scope(name: str, rows: pd.DataFrame, models: list[Spec], bags: int, 
     lists, comparison = [], []
     spatial = ev.spatial_scores(rows, models, bags)
     lists += [r | {"scope": name} for r in ev.by_list(rows, spatial, "spatial blocks")]
-    comparison += compare(rows, spatial, boot, name, "spatial blocks")
+    frame = rows[["plan_id", "place_id", "listed"]].assign(**spatial)
+    comparison += compare(frame, boot, name, "spatial blocks")
     y, doc = rows["listed"].to_numpy(int), rows["plan_id"].to_numpy()
     weighted = {m: ev.weighted_pr_auc(y, s, doc) for m, s in spatial.items()}
     best = max(CANDIDATES, key=weighted.__getitem__)
-    print(" spatial:", {k: round(v, 3) for k, v in weighted.items()}, "best", best, flush=True)
     selection = [
         {"scope": name, "model": m, "weighted_pr_auc": v, "selected": m == best}
         for m, v in weighted.items()
     ]
-    lists += [r | {"scope": name} for r in ev.leave_one_plan_out(rows, models, bags)]
+    print(" spatial done", flush=True)
+    a, held = ev.leave_one_plan_out(rows, models, bags)
+    lists += [r | {"scope": name} for r in a]
+    if len(held):
+        comparison += compare(held, boot, name, "leave one plan out")
     print(" leave-one-plan-out done", flush=True)
-    lists += [r | {"scope": name} for r in ev.temporal(rows, models, bags)]
+    a, kept = ev.temporal(rows, models, bags)
+    lists += [r | {"scope": name} for r in a]
+    for holdout, frame in kept.items():
+        comparison += compare(frame, boot, name, holdout)
     print(" temporal done", flush=True)
     return lists, comparison, selection, spatial
 
@@ -134,7 +160,7 @@ def with_country(rows: pd.DataFrame) -> tuple[pd.DataFrame, list[str]]:
     return pd.concat([rows, dummies], axis=1), list(dummies.columns)
 
 
-def calibration(rows: pd.DataFrame, models: list[Spec], bags: int, boot: int) -> pd.DataFrame:
+def calibration(rows: pd.DataFrame, models: list[Spec], bags: int) -> pd.DataFrame:
     """The US 1956 complexes, the only large complete list."""
     sac = rows[rows["plan_id"] == SAC].reset_index(drop=True)
     scores = ev.spatial_scores(sac, models, bags)
@@ -154,6 +180,10 @@ def calibration(rows: pd.DataFrame, models: list[Spec], bags: int, boot: int) ->
     return pd.concat(out, ignore_index=True)
 
 
+def three_threads(seed: int = 0):
+    return lightgbm(seed).set_params(n_jobs=3)
+
+
 def family_gain(rows: pd.DataFrame, boot: int) -> pd.DataFrame:
     """Each family over population and country, LightGBM, spatial blocks, US 1956 complexes.
     Repeated for the USSR alone, the only country whose defences the 1956 tables cover in depth."""
@@ -162,24 +192,34 @@ def family_gain(rows: pd.DataFrame, boot: int) -> pd.DataFrame:
     for label, part in (("all countries", sac), ("USSR", sac[sac["country"] == "USSR"])):
         part, country = with_country(part.reset_index(drop=True))
         base_cols = [*FAMILIES["population"], *country]
-        models = [Spec("base", lambda seed=0: lightgbm(seed).set_params(n_jobs=3), base_cols)]
+        models = [
+            Spec("base", three_threads, base_cols),
+            Spec("population only", three_threads, FAMILIES["population"]),
+            Spec(
+                "national_power over population",
+                three_threads,
+                [*FAMILIES["population"], *FAMILIES["national_power"]],
+            ),
+        ]
         for fam, cols in FAMILIES.items():
             if fam == "population":
                 continue
-            models.append(
-                Spec(fam, lambda seed=0: lightgbm(seed).set_params(n_jobs=3), [*base_cols, *cols])
-            )
+            models.append(Spec(fam, three_threads, [*base_cols, *cols]))
         scores = ev.spatial_scores(part, models, 1)
         y, doc = part["listed"].to_numpy(int), part["plan_id"].to_numpy()
         for fam in scores:
-            if fam == "base":
+            if fam in ("base", "population only"):
                 continue
-            r = ev.paired_bootstrap(y, scores[fam], scores["base"], doc, n=boot)
+            # National power is one value per country in one list, so over a country term it can
+            # add nothing; it is also read over population alone.
+            base = "population only" if fam == "national_power over population" else "base"
+            r = ev.paired_bootstrap(y, scores[fam], scores[base], doc, n=boot)
             out.append(
                 {
                     "rows": label,
                     "family": fam,
-                    "base_pr_auc": ev.weighted_pr_auc(y, scores["base"], doc),
+                    "base": base,
+                    "base_pr_auc": ev.weighted_pr_auc(y, scores[base], doc),
                     "with_family_pr_auc": ev.weighted_pr_auc(y, scores[fam], doc),
                 }
                 | r
@@ -253,7 +293,7 @@ def main() -> None:
     path = PROCESSED / "classifier_table.parquet"
     full = pd.read_parquet(path)
     table = usable(full)
-    groups, decisions = scopes(table)
+    groups, decisions = scopes(table, positives_of(full))
     models = specs()
     lists, comparison, selection, described, kept = [], [], [], [], []
     for name, rows in groups.items():
@@ -281,7 +321,7 @@ def main() -> None:
         out_dir / "spatial_scores.csv.gz", index=False, float_format="%.5f"
     )
     print("--- calibration", flush=True)
-    calibration(us, models, bags, boot).to_csv(
+    calibration(us, models, bags).to_csv(
         out_dir / "calibration.csv", index=False, float_format="%.4f"
     )
     print("--- family gain", flush=True)
