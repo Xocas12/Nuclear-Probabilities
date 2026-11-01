@@ -1,0 +1,42 @@
+# Fifth amendment, in its own file so that the reruns recorded against configs/protocol.yaml stay valid:
+# it adds readings and changes no label, feature, model, selection rule or score of the primary analysis.
+# Committed before any column below has been fitted. The results of the primary analysis and of COW's
+# National Material Capabilities were already known; none of these columns has been read against a label.
+date: 2026-11-01
+reasons: The owner's goal names economic and political data. The classifier's only town-level economic
+  column is today's power plants, and it holds no political column. The Soviet defence-industry counts
+  built for the earlier M2 check were never read in the classifier.
+columns:
+  political:
+    pol_regime: Regimes of the World, 0 to 3, owid_political_regime, the state's last year at or before the document
+    pol_defence_pact_usa: 1 if COW Formal Alliances v4.1 has a defence pact with the USA in the document's year; the USA itself is 1
+    pol_defence_pact_ussr: the same with the USSR; the USSR itself is 1
+    pol_log_defence_pacts: log10(1 + the number of the state's defence-pact partners in the document's year)
+  economic:
+    econ_log_gdp_pc: log10 of GDP per capita, owid_maddison_gdp_pc, the state's last year at or before the document
+  defence_industry:
+    log_vpk_total_and_branches: the log_vpk_* columns of data/processed/dataset_sac1956.parquet, USSR rows of SAC 1956 only, flagged as later knowledge
+entities:
+  rule: Each state maps to the entity its source names for that state. Where a source has no entity for it, the
+    value is missing, never borrowed from another state.
+  stand_ins: The USSR is Russia in Regimes of the World, which codes it so. The FRG takes Germany in Maddison.
+readings:
+  scopes: [global, all attacker documents, 'Warsaw Pact, pooled, exercise-based']
+  holdouts: [spatial blocks, leave one plan out with the left-out towns removed]
+  lists: all lists, and lists other than SAC
+  model: LightGBM with the zoo's fixed settings, 50 bags, as for the primary candidates
+  comparisons:
+    - political over population (population family plus the political columns, against the population family)
+    - economic over population
+    - national power over population, for scale
+    - political, economic and national power together over population
+    - political over the primary model (all permitted features plus the columns, against all permitted)
+    - economic over the primary model
+  defence_industry: On Soviet towns of SAC 1956, spatial blocks; the population family plus the log_vpk columns against
+    the population family.
+verdict: A gain or a loss needs both the paired row interval and the block interval to exclude zero (fourth amendment).
+  Under 30 positives in training or a constant score is not a reading.
+what_this_cannot_show: Each new country-level column has one value per country and year. Within one list it can do no more
+  than a country term, and in a pooled scope it can identify a document. A gain under spatial blocks may be just that, so
+  leave one plan out is the reading that matters.
+unchanged: Primary comparisons, model selection, the state gate, the map's score, the sealed set.
