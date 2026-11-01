@@ -9,6 +9,8 @@
 # date: the document's date, as precisely as its card allows.
 # doc_type:
 #   war_plan           approved operational plan of an armed force
+#   disputed_plan_or_exercise  sources disagree whether it is a plan or an exercise; not counted
+#                      as a plan, never called a war plan (data/notes/soviet_search_2026-11.md)
 #   target_selection   decisions on what to strike with weapons about to be used
 #   requirements_study staff study of weapons requirements against a target list
 #   policy_study       staff or policy study that names targets; no approval to strike
@@ -39,7 +41,7 @@ plans:
   - {plan_id: us_1964_china_nuclear, attacker: US, author: R. H. Johnson (State Department Policy Planning), date: 1964, doc_type: policy_study, grade: A, group: us_1964, complete: false, role: train}
   - {plan_id: wp_1964_csla_plan, attacker: Czechoslovakia, author: Czechoslovak People's Army (Soviet-approved), date: 1964-10, doc_type: war_plan, grade: A, group: csla_1964, complete: false, role: train}
   - {plan_id: wp_1965_coastal_front_zealand, attacker: Poland, author: Polish Coastal Front, date: 1965-02, doc_type: war_plan, grade: C, group: pl_coastal_1965, complete: false, role: train}
-  - {plan_id: wp_1970_coastal_front_map, attacker: Poland, author: Polish Coastal Front, date: 1970-02, doc_type: war_plan, grade: C, group: pl_coastal_1970, complete: false, role: train}
+  - {plan_id: wp_1970_coastal_front_map, attacker: Poland, author: Polish Coastal Front, date: 1970-02, doc_type: disputed_plan_or_exercise, grade: C, group: pl_coastal_1970, complete: false, role: train}
   - {plan_id: wp_1977_zealand, attacker: Poland, author: Polish Coastal Front, date: 1977-09, doc_type: war_plan, grade: C, group: pl_coastal_1977, complete: false, role: train}
   - {plan_id: wp_1961_burza, attacker: Poland, author: Polish Maritime Front (exercise Burza), date: 1961-10, doc_type: exercise, grade: B, group: pl_burza_1961, complete: false, role: train}
   - {plan_id: wp_1967_lato67, attacker: Warsaw Pact, author: Polish Coastal Front directive (exercise Lato-67), date: 1967-05, doc_type: exercise, grade: A, group: pl_lato_1967, complete: true, role: train}

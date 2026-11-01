@@ -1,6 +1,8 @@
 """The protocol's holdouts and comparison.
 
-- Leave one plan out: fit on every other group of the scope, score each list of the left-out group.
+- Leave one plan out: fit on every other group of the scope, without the towns of the left-out group,
+  and score each list of that group. A town that stays in training carries its label from the other
+  document into the fit; `keep_places=True` measures what that does.
 - Spatial blocks: 5 folds of 300 km blocks on three shifted grids; a place stays on one side of a
   split in every document that holds it. One score per row: the mean of its three grids.
 - Temporal: fit up to the cut year, score later documents, and the reverse.
@@ -24,6 +26,9 @@ N_FOLDS = 5
 N_BOOT = 2000
 BOOT_SEED = 1956
 TEMPORAL_CUT = 1956
+# Below this many positives in training a row is not a reading: LightGBM's min_child_samples of 20
+# cannot split bags of that size, and logistic regression has fewer events than features.
+MIN_TRAIN_POSITIVES = 30
 
 
 def by_list(rows: pd.DataFrame, scores: dict[str, np.ndarray], holdout: str) -> list[dict]:
@@ -97,25 +102,58 @@ def paired_bootstrap(
     }
 
 
-def _scored(rows: pd.DataFrame, scores: dict[str, np.ndarray]) -> pd.DataFrame:
-    keep = rows[["plan_id", "place_id", "listed"]].reset_index(drop=True)
-    return keep.assign(**scores)
+def block_bootstrap(
+    y: np.ndarray,
+    a: np.ndarray,
+    b: np.ndarray,
+    doc: np.ndarray,
+    block: np.ndarray,
+    n: int = N_BOOT,
+    seed: int = BOOT_SEED,
+) -> dict[str, float]:
+    """The same difference, resampling whole 300 km blocks across all lists: towns of one block
+    are not independent draws. No refit, so model variance is still not in the interval."""
+    rng = np.random.default_rng(seed)
+    members = [np.flatnonzero(block == k) for k in np.unique(block)]
+    deltas = np.full(n, np.nan)
+    for i in range(n):
+        idx = np.concatenate([members[j] for j in rng.integers(len(members), size=len(members))])
+        deltas[i] = weighted_pr_auc(y[idx], a[idx], doc[idx]) - weighted_pr_auc(
+            y[idx], b[idx], doc[idx]
+        )
+    if np.isnan(deltas).all():
+        return {"block_low": np.nan, "block_high": np.nan, "block_excludes_zero": False}
+    low, high = np.nanpercentile(deltas, [2.5, 97.5])
+    return {
+        "block_low": float(low),
+        "block_high": float(high),
+        "block_excludes_zero": bool(low > 0 or high < 0),
+    }
+
+
+def _scored(rows: pd.DataFrame, scores: dict[str, np.ndarray], train: pd.DataFrame) -> pd.DataFrame:
+    keep = rows[["plan_id", "place_id", "listed", "block"]].reset_index(drop=True)
+    return keep.assign(train_positives=int(train["listed"].sum()), **scores)
 
 
 def leave_one_plan_out(
-    table: pd.DataFrame, models: list[Spec], n_bags: int
+    table: pd.DataFrame, models: list[Spec], n_bags: int, keep_places: bool = False
 ) -> tuple[list[dict], pd.DataFrame]:
     """Rows of `by_list`, and every held-out score, for the paired comparison."""
     out, kept = [], []
     for group in sorted(table["group"].unique()):
         test = table["group"] == group
         rows = table[test].reset_index(drop=True)
-        train = table[~test].reset_index(drop=True)
+        train = table[~test]
+        if not keep_places:
+            train = train[~train["place_id"].isin(rows["place_id"])]
+        train = train.reset_index(drop=True)
         if train["listed"].sum() == 0 or rows["listed"].sum() == 0:
             continue
         scores = {m.name: fit_bagged(m, train, n_bags).score(rows) for m in models}
-        out += by_list(rows, scores, f"leave-one-plan-out ({group})")
-        kept.append(_scored(rows, scores))
+        label = "towns kept" if keep_places else "leave-one-plan-out"
+        out += by_list(rows, scores, f"{label} ({group})")
+        kept.append(_scored(rows, scores, train))
     return out, pd.concat(kept, ignore_index=True) if kept else pd.DataFrame()
 
 
@@ -154,7 +192,7 @@ def temporal(
         train = train.reset_index(drop=True)
         scores = {m.name: fit_bagged(m, train, n_bags).score(rows) for m in models}
         out += by_list(rows, scores, name)
-        kept[name] = _scored(rows, scores)
+        kept[name] = _scored(rows, scores, train)
     return out, kept
 
 

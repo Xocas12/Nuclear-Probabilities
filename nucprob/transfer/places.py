@@ -5,13 +5,18 @@
 Every town of a region's tables (data/curated/gazetteer/towns_<country>_<year>.csv, or a pop-stat
 page) is found in its country's GeoNames dump by name: the printed name, today's name and the
 name without its qualifiers ("Frankfurt am Main" -> also "Frankfurt"), against GeoNames' name,
-ASCII name and alternate names. Among several hits the seat or capital wins, then the place
-with the most people today. Names with no exact hit get a close fuzzy match (rapidfuzz ratio
-of at least 90) among the country's places of 5,000 or more today. A town found nowhere keeps
-no coordinates and is listed.
+ASCII name and alternate names. A town is only ever matched inside its own first-order unit:
+data/curated/gazetteer/admin1_crosswalk.csv says which GeoNames units a table's unit may lie in
+today, and a table unit it does not list stops the build. Among several hits in the unit the
+town's own province (where the crosswalk gives one) wins, then a place with at least a fifth of
+the town's census people (one carrying the name as its main name before one holding it as an
+alternate), then a seat or capital, then the place with the most people today. Names with no exact hit get a close fuzzy match (rapidfuzz ratio of at least
+90) among the unit's places of 5,000 or more today. A town found nowhere keeps no coordinates
+and is listed: a same-named place in another unit is a different town.
 
 Writes data/processed/transfer_places.parquet: region, country, name, pop, pop_date, capital,
-admin1_seat, admin1, lat, lon, match_method.
+admin1_seat, admin1, lat, lon, match_method, gn_admin1 (the first-order unit of the GeoNames
+entry used, blank for a hand-placed town).
 """
 
 import re
@@ -27,6 +32,7 @@ from nucprob.transfer.regions import REGIONS
 
 GAZ = CURATED / "gazetteer"
 SEATS = {"PPLC": 0, "PPLA": 1, "PPLA2": 2, "PPL": 3}
+CREDIBLE = 0.2  # a GeoNames place with under this share of a town's census people is not it
 QUALIFIER = re.compile(
     r"\s*(\(.*?\)|,.*$|/.*$|\b(am|an der|a\. ?d\.|i\. ?d\.|im|in|bei|ob der|sur|en|aan|on|upon|"
     r"-on-|-upon-)\b.*$)",
@@ -117,15 +123,24 @@ def load_table(spec: str) -> pd.DataFrame:
     return d[d["pop"].notna()]
 
 
-class Gazetteer:
-    """Name keys of a country's populated places in GeoNames."""
+def admin1_crosswalk(country: str) -> dict[str, tuple[set[str], set[str]]]:
+    """A table's first-order unit -> (the GeoNames admin1 codes, and admin2 codes where given,
+    it may lie in today)."""
+    d = pd.read_csv(GAZ / "admin1_crosswalk.csv", dtype=str, keep_default_na=False)
+    return {
+        r["admin1"]: (set(r["gn_admin1"].split(";")), set(filter(None, r["gn_admin2"].split(";"))))
+        for _, r in d[d["country"] == country].iterrows()
+    }
 
-    def __init__(self, code: str):
+
+class Gazetteer:
+    """Name keys of a country's populated places in GeoNames. With `units` (admin1_crosswalk)
+    a lookup that gives its admin1 is confined to that unit."""
+
+    def __init__(self, code: str, units: dict[str, tuple[set[str], set[str]]] | None = None):
         g = geonames.load_country(code).reset_index(drop=True)
-        a1 = geonames.load_admin1()
-        a1 = a1[a1["country"] == code].set_index("admin1")["asciiname"]
-        g["admin1_name"] = g["admin1"].map(a1).fillna("")
         self.g = g
+        self.units = units
         self.index: dict[str, list[int]] = {}
         for i, (name, ascii_name, alt) in enumerate(
             zip(g["name"], g["asciiname"], g["alternatenames"], strict=True)
@@ -138,38 +153,58 @@ class Gazetteer:
         self.fuzzy_keys = [key(n) for n in big["name"]]
         self.fuzzy_rows = big.index.to_numpy()
 
-    def best(self, rows: list[int], admin1: str = "") -> int:
-        """A hit in the town's own first-order unit first (when today's unit has the same
-        name), then a seat, then the most people today."""
-        g = self.g
-        a = key(admin1)
+    def unit(self, admin1: str) -> tuple[set[str], set[str]] | None:
+        if not admin1 or self.units is None:
+            return None
+        if admin1 not in self.units:
+            raise ValueError(f"table unit {admin1!r} is not in admin1_crosswalk.csv")
+        return self.units[admin1]
 
-        def same_unit(i: int) -> bool:
-            b = key(g.at[i, "admin1_name"])
-            return bool(a and b) and (a in b or b in a)
+    def best(
+        self, rows: list[int], k: str = "", admin2: frozenset | set = frozenset(), pop: float = 0
+    ) -> int:
+        """The town's own province first, where known. Then, when the lookup gives the town's
+        census population, a place big enough to be it: first one with the name as its main name,
+        then one holding it as an alternate (the alternate names hold old and foreign spellings,
+        "Mirano" among Milan's, while "München" is also a hamlet's main name). Then a seat, then
+        the most people today."""
+        g = self.g
+
+        def tier(i: int) -> int:
+            if not pop:
+                return 0
+            if g.at[i, "population"] < CREDIBLE * pop:
+                return 2
+            return int(k not in (key(g.at[i, "name"]), key(g.at[i, "asciiname"])))
 
         return min(
             set(rows),
             key=lambda i: (
-                not same_unit(i),
+                bool(admin2) and g.at[i, "admin2"] not in admin2,
+                tier(i),
                 SEATS.get(g.at[i, "feature_code"], 4) > 1,
                 -g.at[i, "population"],
             ),
         )
 
-    def find(self, *names: str, admin1: str = "") -> tuple[int | None, str]:
+    def find(self, *names: str, admin1: str = "", pop: float = 0) -> tuple[int | None, str]:
+        unit = self.unit(admin1)
+        g = self.g
         for k in variants(*names):
-            if k in self.index:
-                return self.best(self.index[k], admin1), "name"
+            rows = self.index.get(k, [])
+            if unit:
+                rows = [i for i in rows if g.at[i, "admin1"] in unit[0]]
+                if rows:
+                    return self.best(rows, k, unit[1], pop), "name"
+            elif rows:
+                return self.best(rows), "name"
         # A fuzzy hit must lie in the town's own first-order unit, where the table gives one.
-        a = key(admin1)
         for k in variants(*names):
             for _, _, j in process.extract(
                 k, self.fuzzy_keys, scorer=fuzz.ratio, score_cutoff=90, limit=10
             ):
                 i = int(self.fuzzy_rows[j])
-                b = key(self.g.at[i, "admin1_name"])
-                if not a or (b and (a in b or b in a)):
+                if not unit or g.at[i, "admin1"] in unit[0]:
                     return i, "fuzzy"
         return None, "not found"
 
@@ -179,20 +214,27 @@ class Gazetteer:
 SEATS_FILES = {"UK": "uk_districts_1981_seats.csv"}
 
 
-def manual_links(country: str) -> dict[str, tuple[dict, str]]:
+def manual_links(country: str) -> dict[tuple[str, str], tuple[dict, str]]:
     """Hand-checked coordinates for towns GeoNames does not know by their old name
-    (data/curated/gazetteer/transfer_links.csv), and district seats (SEATS_FILES)."""
-    out: dict[str, tuple[dict, str]] = {}
+    (data/curated/gazetteer/transfer_links.csv), and district seats (SEATS_FILES), keyed by
+    (name, admin1); admin1 is blank where the name alone is unique in the country. A row with
+    no lat stays unplaced: the notes say why no point could be fixed."""
+    out: dict[tuple[str, str], tuple[dict, str]] = {}
     seats = GAZ / SEATS_FILES.get(country, "-")
     if seats.exists():
         d = pd.read_csv(seats)
         for _, r in d[d["lat"].notna()].iterrows():
-            out[r["name"]] = ({"lat": r["lat"], "lon": r["lon"], "gn": r["seat"]}, "district seat")
+            hit = {"lat": r["lat"], "lon": r["lon"], "gn": r["seat"]}
+            out[(r["name"], "")] = (hit, "district seat")
     path = GAZ / "transfer_links.csv"
     if path.exists():
-        d = pd.read_csv(path)
+        d = pd.read_csv(path, dtype={"admin1": str}, keep_default_na=False)
+        d["lat"] = pd.to_numeric(d["lat"], errors="coerce")
+        d["lon"] = pd.to_numeric(d["lon"], errors="coerce")
         for _, r in d[d["country"] == country].iterrows():
-            out[r["name"]] = ({"lat": r["lat"], "lon": r["lon"], "gn": r["located_as"]}, "manual")
+            hit = {"lat": r["lat"], "lon": r["lon"], "gn": r["located_as"]}
+            method = "manual" if pd.notna(r["lat"]) else "not found"
+            out[(r["name"], r["admin1"])] = (hit, method)
     return out
 
 
@@ -213,23 +255,33 @@ def build() -> pd.DataFrame:
                 & ~notes.str.contains("Territory, outside", case=False)
             ]
             towns = towns.reset_index(drop=True)
-            gaz = Gazetteer(code)
+            gaz = Gazetteer(code, admin1_crosswalk(country))
             links = manual_links(country)
             found = []
-            for n, t, a in zip(towns["name"], towns["name_today"], towns["admin1"], strict=True):
-                found.append(links[n] if n in links else gaz.find(n, t, admin1=str(a)))
+            for n, t, a, p in zip(
+                towns["name"], towns["name_today"], towns["admin1"], towns["pop"], strict=True
+            ):
+                a = str(a)
+                hit = links.get((n, a)) or links.get((n, ""))
+                found.append(hit if hit else gaz.find(n, t, admin1=a, pop=p))
             g = gaz.g
 
             def coord(hit, col, g=g):
-                i, method = hit
-                if method in ("manual", "district seat"):
-                    return i[col]
-                return (
-                    g.at[i, {"lat": "lat", "lon": "lon", "gn": "name"}[col]]
-                    if i is not None
-                    else (np.nan if col != "gn" else "")
-                )
+                i, _ = hit
+                if isinstance(i, dict):
+                    return i.get(col, "" if col == "a1" else np.nan)
+                blank = "" if col in ("gn", "a1") else np.nan
+                columns = {
+                    "lat": "lat",
+                    "lon": "lon",
+                    "gn": "name",
+                    "a1": "admin1",
+                    "pop": "population",
+                }
+                return g.at[i, columns[col]] if i is not None else blank
 
+            towns["gn_admin1"] = [coord(h, "a1") for h in found]
+            towns["gn_population"] = [coord(h, "pop") for h in found]
             towns["lat"] = [coord(h, "lat") for h in found]
             towns["lon"] = [coord(h, "lon") for h in found]
             towns["gn_name"] = [coord(h, "gn") for h in found]
@@ -266,6 +318,7 @@ def main() -> None:
         "lat",
         "lon",
         "match_method",
+        "gn_admin1",
     ]
     out[cols].to_parquet(PROCESSED / "transfer_places.parquet", index=False)
     summary = out.groupby(["region", "country"]).agg(

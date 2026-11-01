@@ -2,7 +2,7 @@
 UV ?= uv
 PY = $(UV) run python
 
-.PHONY: setup data places labels features dataset train map check transfer evidence qa classifier test lint format clean
+.PHONY: setup data places labels features dataset train map check transfer evidence qa classifier probmap viewer test lint format clean
 
 setup:
 	$(UV) sync --all-extras
@@ -55,6 +55,16 @@ qa:
 classifier:
 	$(PY) -m nucprob.classifier.table
 	$(PY) -m nucprob.classifier.run
+	$(PY) -m nucprob.classifier.sensitivity
+	$(PY) -m nucprob.classifier.report
+
+# P(area struck | stockpile scenario): configs/scenarios.yaml, the protocol's fourth amendment.
+probmap:
+	$(PY) -m nucprob.probmap.run
+
+# The static viewer of the committed map: one self-contained page, runs/probmap/viewer/index.html.
+viewer:
+	$(PY) -m nucprob.probmap.viewer
 
 test:
 	$(UV) run pytest -q

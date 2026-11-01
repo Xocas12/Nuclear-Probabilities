@@ -6,6 +6,11 @@ edit by hand. Sources are ids of `data/sources.yaml` or curated tables under
 3.2). The country columns give the mean over the universe (settlements of 10,000+), or a
 dash where the feature is missing for the whole country.
 
+**Family names differ in the classifier.** This catalogue and the viewer file the airfield counts
+(`log_airfields_*`) under *military*; the classifier's `FAMILIES` in `nucprob/classifier/fit.py` puts
+them in *transport*. The classifier's *industry* family is the single column `log_power_mw_25km`,
+today's power plants; it does not use the `log_vpk_*` columns filed under *industry* here.
+
 Universe: 2621 settlements (USSR 1629, East Germany 214, Poland 207, China 162, Hungary 120, Czechoslovakia 115, Romania 101, Bulgaria 56, Albania 9, North Korea 5, North Vietnam 2, Mongolia 1).
 
 | Feature | Family | Source | Ids | Anachronism | Note | USSR | East Germany | Poland | China | Hungary | Czechoslovakia | Romania | Bulgaria | Albania | North Korea | North Vietnam | Mongolia |

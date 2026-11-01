@@ -136,3 +136,67 @@ amendments:
         training) and wp_1975_soyuz75 (exercise). Neither counts as a plan at the gate.
       defence: one point per site and role; the 1956 reading is repeated without the S-25 points,
         whose coordinates may descend from US intelligence. That column is not a model feature.
+  - date: 2026-11-01
+    # After the independent review of e1ed40e (its findings 2-13, 15, 21), and before any refit under
+    # these rules. The reviewer and the earlier full run read every holdout of the earlier labels, so
+    # nothing below is blind to them; rules were set from what the review showed wrong, not from
+    # results under the new labels. Sealed places remain unread.
+    reasons: rows the documents reject counted as targets; negatives outside a document's sector;
+      held-out towns kept in training; a model that cannot split read as a finding; row-level intervals
+      over spatially clustered towns; a disputed document counted as a war plan
+    changes:
+      labels:
+        positive: a town with a row of the document with selected = 1 (SCHEMA.md). A town named only
+          in a row with selected = 0 stays a negative. A town named only in rows with blank selected
+          (areas "appropriate for study", facilities of a vulnerability table) is dropped from that
+          list, neither positive nor negative.
+        sectors: data/curated/labels/SECTORS.yaml limits a list to the sector its document concerns;
+          towns outside are dropped from that list; each box states whether it is documented or derived
+          from the linked targets.
+        doc_type: wp_1970_coastal_front_map is disputed_plan_or_exercise; it does not count as a plan.
+      state_models: the gate is unchanged. If its thresholds now refuse the US, the refusal stands.
+      scopes:
+        single_document: the SAC 1956 study alone is read under spatial blocks, named as a single
+          document, never as a state model.
+      leave_one_plan_out: the towns of the left-out group leave training too. The earlier form, towns
+        kept, is reported beside it to show what it did.
+      not_estimable: a comparison is not a reading if the model had fewer than 30 positives in training
+        or a constant score on a scored list. It is shown with its training size and left out of the
+        verdict counts.
+      bootstrap:
+        block: every comparison also resamples whole 300 km blocks across lists, same resamples and
+          seed. A gain or a loss is claimed only if both this interval and the protocol's stratified
+          row interval exclude zero. Neither interval includes the variance of refitting.
+      verdicts: read from the unrounded bounds.
+      sensitivity: each scope's selected candidate against population + country with no flagged
+        features; also without defence features (strict as-of); without national power; and without
+        defence, military and national-power columns, whose presence or absence marks a document.
+      ussr_population: the 1959 census is later than a June 1956 document. No Soviet town census
+        exists between 1939 and 1959. The rows keep 1959, flagged, and the population rule and LightGBM
+        are repeated on the 1939 census with a missing flag for towns it does not hold.
+      what_was_seen_correction: m2-check's committed manifest is dated 09:19:12Z, after the protocol
+        commit at 09:13:03Z, and its out-of-fold file has 2,145 rows, not 2,127. SAC's spatial scores had
+        been read in the earlier runs too, so the spatial results are not blind either. Only never_scored
+        places are.
+      probability_map:
+        # Set before any map exists. Model choice looks only at transfer, the map's actual job.
+        features: only nucprob.probmap.modern.PORTABLE, which can be computed in every era without any
+          present-day facility data. Defence, military and national-power features stay in the classifier.
+        training_rows: global, all attacker documents, sealed places excluded. Exercises are in it;
+          the map says so.
+        score: whichever of the population rule, portable logistic and portable LightGBM has the highest
+          positive-weighted PR-AUC under leave one plan out, towns removed. It is one rule for every
+          scenario, so scenarios differ only in towns and warheads.
+        model_uncertainty: 200 draws, each a block resample of the training rows and one bag.
+        stockpile_uncertainty: triangular draws over the cited range of inventory and of each stated
+          assumption in data/curated/stockpiles/assumptions.csv, one draw of each per model draw.
+        allocation: each delivered warhead falls on a town with probability equal to the town's share of
+          the scenario's total score, P(area) = 1 - (1 - share)^warheads. No per-area count of weapons is
+          an output. Nothing is optimised.
+        grid: 0.5 degrees for historical scenarios, 1 degree for modern ones.
+        sealed: sealed places are not scored; warheads are scaled by the population share of unsealed
+          towns, and the output marks cells that hold a sealed town.
+        validation: the 1956 scenario's cell probabilities from models that did not see the cell's block
+          against whether SAC listed a town there, by PR-AUC, ROC-AUC and a reliability table.
+        domain_shift: a cross-validated classifier of historical against modern towns (ROC-AUC, 0.5 = no
+          shift) and the share of modern towns outside the 1st-99th percentile of each training feature.

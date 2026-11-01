@@ -27,9 +27,9 @@ war plan.
 | | | Belgium: census 1961 (INS, communes) | 172 | 172 |
 | | | Austria: census 1961 (pop-stat; the 1961 Land seats from `POPSTAT_SEATS` in `places.py`) | 50 | 50 |
 | | | Italy: census 1961 (ISTAT, comuni) | 814 | 814 |
-| | | FRG, 1961 census (`towns_frg_1961.md`) | 583 | |
+| | | FRG, 1961 census (`towns_frg_1961.md`) | 583 | 582 |
 | `uk_1980` (1980) | Square Leg 1980 | UK: census 1981 (GB districts from Nomis; NI towns from NISRA) | 476 | 476 |
-| `japan_1945` (1945) | Target Committee 1945 | Japan: census 1940 (cities and towns) | 579 | 579 |
+| `japan_1945` (1945) | Target Committee 1945 | Japan: census 1940 (cities and towns) | 579 | 560 |
 | `usa_1955` (1955) | Operation Alert 1955 | USA: census 1950 (urban places, 48 states and DC) | 1,262 | 1,262 |
 | `canada_1956` (1956) | Canadian target areas 1956 | Canada: census 1956 (Canada Year Book) | 137 | 137 |
 
@@ -41,13 +41,18 @@ The other side's lists of targets **in the bloc** are scored on the bloc's own 1
 ## How places get coordinates
 
 `nucprob/transfer/places.py` looks each town up by name in its country's GeoNames dump: the
-printed name, today's name, and the name without qualifiers. Among several hits it prefers the
-town's own first-order unit, then a seat, then the most people today. A fuzzy match (ratio
-90+) must lie in the town's own unit. Hand-checked points take precedence:
-- `transfer_links.csv` covers towns GeoNames does not know by their old name: 16 Dutch
-  rural municipalities placed at their seat, 6 Canadian towns later merged, 4 US
-  unincorporated places, 14 Japanese towns later merged (approximate centres), and one
-  Italian comune.
+printed name, today's name, and the name without qualifiers, and only inside the town's own
+first-order unit: `admin1_crosswalk.csv` lists the GeoNames units each table unit may lie in today
+(Italian provinces also their province codes), and an unlisted unit stops the build. Among several
+hits it prefers the town's province where known, then a place with at least a fifth of the town's
+census people (main name before alternate name), then a seat, then the most people today. A town
+with no hit in its unit stays unplaced, never on a same-named place elsewhere; the build prints
+them. A fuzzy match (ratio 90+) must lie in the town's own unit. Hand-checked points take
+precedence; a row with blank `lat` records why a town could not be placed:
+- `transfer_links.csv` covers towns GeoNames does not know by their old name or places wrongly:
+  Dutch rural municipalities placed at their seat, Canadian towns later merged, US unincorporated
+  places, Japanese towns later merged (approximate centres) and one Italian comune; the
+  `admin1` column tells apart towns of one name.
 - `uk_districts_1981_seats.csv` gives each of Great Britain's 456 districts of 1981 the
   town where its council had its headquarters, checked against Wikipedia (card:
   `uk_districts_1981_seats.md`).
@@ -106,7 +111,8 @@ Differences from the bloc:
 - else by a town of the table with the same name;
 - else by GeoNames.
 
-It then links the target to the nearest town within 15 km. Targets with no point, or no town
+It then links the target to the nearest town within 15 km; on a point shared by several towns,
+to the town the target names, else the town rather than its rural municipality. Targets with no point, or no town
 within 15 km (an air base or Nike site in open country), stay unlinked. The link report is
 `data/processed/transfer_links.csv`.
 
@@ -165,9 +171,9 @@ the number of towns listed.
 - ROC-AUC differences are small on every list, which is why the ROC table alone read the city
   lists as "adds nothing".
 
-Burza also has an interval that excludes zero in the model's favour, and it is not much to
-lean on: 3 linked towns of 275, both scores near its 1% base rate (PR-AUC 0.013 for the rule,
-0.019 for LightGBM). `paired.csv` holds 129 intervals (the military model has no row on a
+Burza shows no gain: 9 linked towns of 858, PR-AUC 0.0965 for the rule and 0.0557 for LightGBM
+on the common features, a difference of -0.0408 [-0.1930, +0.0103], which includes zero. None of
+Burza's intervals excludes zero. `paired.csv` holds 129 intervals (the military model has no row on a
 list with any town outside its table's scope), so at 95% a few will exclude zero by chance.
 
 This is a check that the pipeline joins end to end, not a result: the protocol is frozen at M5.

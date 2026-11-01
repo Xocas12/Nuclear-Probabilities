@@ -153,7 +153,6 @@ Collection page: https://phpisn.ethz.ch/lory1.ethz.ch/collections/colltopic4241.
 - Status: **obtained**.
 - What it is: an annex to a Polish command-staff map exercise ("Organizacja i prowadzenie operacji zaczepnej Frontu z marszu..."). It is a different file and date from Burza, although PHP files it in the same collection.
 - CSV: `nato_1962_pl_exercise_mirror.csv`, 76 rows (one strike each): Poland 70, USSR 3 (Brest, Grodno, Rawa Ruska), GDR 2 (Gartz, Schwedt), illegible 1. Total 5,173 kt; 37 ground bursts (N) and 39 air bursts (P).
-- Naming: I used the `wp_` prefix to stay inside my write permission. It could be renamed `nato_1962_pl_exercise_mirror.csv` to match the 1965 mirror.
 - Uncertain readings: first row (illegible), [D]EBRZNO, [Ł]OMY, KOŻUCHÓW (listed among northern towns).
 
 ### 3d. GitHub othercriteria/the-baltic-approaches

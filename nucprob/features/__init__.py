@@ -68,6 +68,11 @@ def catalogue(feats: pd.DataFrame, places: pd.DataFrame) -> str:
         "3.2). The country columns give the mean over the universe (settlements of 10,000+), or a",
         "dash where the feature is missing for the whole country.",
         "",
+        "**Family names differ in the classifier.** This catalogue and the viewer file the airfield counts",
+        "(`log_airfields_*`) under *military*; the classifier's `FAMILIES` in `nucprob/classifier/fit.py` puts",
+        "them in *transport*. The classifier's *industry* family is the single column `log_power_mw_25km`,",
+        "today's power plants; it does not use the `log_vpk_*` columns filed under *industry* here.",
+        "",
         f"Universe: {len(df)} settlements ("
         + ", ".join(f"{c} {n}" for c, n in df["country_1956"].value_counts().items())
         + ").",

@@ -1,9 +1,0 @@
-scope,model,with_all_pr_auc,none_flagged_pr_auc,removed,delta,low,high,excludes_zero
-state: US,logistic,0.8370,0.8286,"log_power_mw_25km, log_airfields_10km, log_airfields_25km, log_airfields_50km, log_km_to_rail, rail_lines_5km, log_km_to_port, log_km_to_nuclear_site",-0.0084,-0.0141,-0.0021,True
-state: US,LightGBM,0.8407,0.8250,"log_power_mw_25km, log_airfields_10km, log_airfields_25km, log_airfields_50km, log_km_to_rail, rail_lines_5km, log_km_to_port, log_km_to_nuclear_site",-0.0158,-0.0226,-0.0086,True
-"global, plan documents only",logistic,0.8233,0.8147,"log_power_mw_25km, log_airfields_10km, log_airfields_25km, log_airfields_50km, log_km_to_rail, rail_lines_5km, log_km_to_port, log_km_to_nuclear_site",-0.0086,-0.0146,-0.0021,True
-"global, plan documents only",LightGBM,0.8199,0.8064,"log_power_mw_25km, log_airfields_10km, log_airfields_25km, log_airfields_50km, log_km_to_rail, rail_lines_5km, log_km_to_port, log_km_to_nuclear_site",-0.0135,-0.0200,-0.0067,True
-"Warsaw Pact, pooled, exercise-based",logistic,0.1679,0.2051,"log_power_mw_25km, log_airfields_10km, log_airfields_25km, log_airfields_50km, log_km_to_rail, rail_lines_5km, log_km_to_port, log_km_to_nuclear_site",0.0372,0.0137,0.0575,True
-"Warsaw Pact, pooled, exercise-based",LightGBM,0.2012,0.2029,"log_power_mw_25km, log_airfields_10km, log_airfields_25km, log_airfields_50km, log_km_to_rail, rail_lines_5km, log_km_to_port, log_km_to_nuclear_site",0.0016,-0.0244,0.0206,False
-"global, all attacker documents",logistic,0.6890,0.6703,"log_power_mw_25km, log_airfields_10km, log_airfields_25km, log_airfields_50km, log_km_to_rail, rail_lines_5km, log_km_to_port, log_km_to_nuclear_site",-0.0187,-0.0290,-0.0089,True
-"global, all attacker documents",LightGBM,0.7747,0.7634,"log_power_mw_25km, log_airfields_10km, log_airfields_25km, log_airfields_50km, log_km_to_rail, rail_lines_5km, log_km_to_port, log_km_to_nuclear_site",-0.0113,-0.0173,-0.0047,True

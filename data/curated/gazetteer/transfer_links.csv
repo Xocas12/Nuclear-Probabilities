@@ -1,44 +1,60 @@
-country,name,lat,lon,located_as,notes
-Denmark,Lyngby-Tårbæk,55.77044,12.50378,Kongens Lyngby,municipality: its seat
-Netherlands,Haarlemmermeer,52.3025,4.68889,Hoofddorp,municipality: its seat
-Netherlands,Noordoostelijke Polder,52.71083,5.74861,Emmeloord,municipality: its seat
-Netherlands,Smallingerland,53.11254,6.0989,Drachten,municipality: its seat
-Netherlands,Hoogezand-Sappemeer,53.16167,6.76111,Hoogezand,municipality: its seat
-Netherlands,Weststellingwerf,52.87545,5.99691,Wolvega,municipality: its seat
-Netherlands,Opsterland,53.05914,6.07711,Beetsterzwaag,municipality: its seat
-Netherlands,Tietjerksteradeel,53.19243,5.99009,Burgum,municipality: its seat
-Netherlands,Achtkarspelen,53.25166,6.14483,Buitenpost,municipality: its seat
-Netherlands,Ooststellingwerf,52.99164,6.29096,Oosterwolde,municipality: its seat
-Netherlands,Dantumadeel,53.29046,5.99785,Damwâld,municipality: its seat
-Netherlands,Wonseradeel,53.10452,5.46902,Witmarsum,municipality: its seat
-Netherlands,Zwollerkerspel,52.5125,6.09444,Zwolle,rural municipality around Zwolle (merged 1967); the town's point
-Netherlands,Haskerland,52.9657,5.80301,Joure,municipality: its seat
-Netherlands,Wymbritseradeel,53.01009,5.62312,IJlst,municipality around Sneek and IJlst; IJlst's point
-Netherlands,Texel,53.05417,4.79722,Den Burg,island municipality: its seat
-Netherlands,Menaldumadeel,53.2,5.65,Dronrijp,municipality: its seat
-Canada,Jacques-Cartier,45.53,-73.48,Jacques-Cartier (now Longueuil),former city merged into Longueuil 1969; approximate centre
-Canada,Kénogami,48.42,-71.23,Kénogami (now Jonquière),former town merged into Jonquière 1975; approximate centre
-Canada,Lauzon,46.83,-71.17,Lauzon (now Lévis),former town merged into Lévis 1989; approximate centre
-Canada,Noranda,48.24,-79.02,Rouyn-Noranda,former city merged with Rouyn 1986
-Canada,St. James,49.88,-97.25,St. James (now Winnipeg),former city merged into Winnipeg 1972; approximate centre
-Canada,Jasper Place,53.53,-113.58,Jasper Place (now Edmonton),former town annexed by Edmonton 1964; approximate centre
-USA,South Bakersfield,35.33,-119.01,South Bakersfield (CDP south of Bakersfield),unincorporated urban place of 1950; approximate centre
-USA,Brownsville-Brent-Goulding,30.46,-87.24,Brent (Pensacola suburbs),unincorporated urban place of 1950 north of Pensacola; approximate centre
-USA,Springfield Place-Lakeview,42.3,-85.22,Springfield and Lakeview (Battle Creek),unincorporated urban place of 1950 beside Battle Creek; approximate centre
-USA,Brandon-Judson,34.85,-82.43,Judson (Greenville),unincorporated urban place of 1950 beside Greenville; approximate centre
-Italy,Pontecagnano Faiano,40.6436,14.8736,Pontecagnano,comune: its main town
-Japan,Aojima,34.857,138.248,Aojima (now Fujieda),town merged into Fujieda in 1954; approximate centre
-Japan,Hayame,33.04,130.46,Hayame (now Omuta),town merged into Omuta; approximate centre
-Japan,Futase,33.65,130.74,Futase (now Iizuka),town merged into Iizuka; approximate centre
-Japan,Ashigara,35.26,139.15,Ashigara (now Odawara),town merged into Odawara; approximate centre
-Japan,Tomisubara,35.03,136.62,Tomisuhara (now Yokkaichi),town merged into Yokkaichi; approximate centre
-Japan,Kodake,33.69,130.70,Kotake (Fukuoka),town; approximate centre
-Japan,Uozaki,34.72,135.27,Uozaki (now Kobe),town merged into Kobe; approximate centre
-Japan,Daishoji,36.30,136.31,Daishoji (now Kaga),town merged into Kaga; approximate centre
-Japan,Makizono,31.87,130.80,Makizono (now Kirishima),town merged into Kirishima; approximate centre
-Japan,Nakoso,36.89,140.79,Nakoso (now Iwaki),town merged into Iwaki; approximate centre
-Japan,Nishiarie,32.66,130.32,Nishiarie (now Minamishimabara),town merged into Minamishimabara; approximate centre
-Japan,Gunchu,33.76,132.70,Gunchu (now Iyo),town merged into Iyo; approximate centre
-Japan,Akae,31.93,131.42,Akae (now Miyazaki),town merged into Miyazaki city; approximate centre
-Japan,Tsurajima,34.53,133.73,Tsurajima (now Kurashiki),town merged into Kurashiki; approximate centre
-FRG,Schloß Neuhaus,51.74,8.71,Paderborn-Schloß Neuhaus,independent until 1975; absorbed into Paderborn. Point read for the district; not in GeoNames under this name
+country,name,admin1,lat,lon,located_as,notes
+Denmark,Lyngby-Tårbæk,,55.77044,12.50378,Kongens Lyngby,municipality: its seat
+Netherlands,Haarlemmermeer,,52.3025,4.68889,Hoofddorp,municipality: its seat
+Netherlands,Noordoostelijke Polder,,52.71083,5.74861,Emmeloord,municipality: its seat
+Netherlands,Smallingerland,,53.11254,6.0989,Drachten,municipality: its seat
+Netherlands,Hoogezand-Sappemeer,,53.16167,6.76111,Hoogezand,municipality: its seat
+Netherlands,Weststellingwerf,,52.87545,5.99691,Wolvega,municipality: its seat
+Netherlands,Opsterland,,53.05914,6.07711,Beetsterzwaag,municipality: its seat
+Netherlands,Tietjerksteradeel,,53.19243,5.99009,Burgum,municipality: its seat
+Netherlands,Achtkarspelen,,53.25166,6.14483,Buitenpost,municipality: its seat
+Netherlands,Ooststellingwerf,,52.99164,6.29096,Oosterwolde,municipality: its seat
+Netherlands,Dantumadeel,,53.29046,5.99785,Damwâld,municipality: its seat
+Netherlands,Wonseradeel,,53.10452,5.46902,Witmarsum,municipality: its seat
+Netherlands,Zwollerkerspel,,52.5125,6.09444,Zwolle,rural municipality around Zwolle (merged 1967); the town's point
+Netherlands,Haskerland,,52.9657,5.80301,Joure,municipality: its seat
+Netherlands,Wymbritseradeel,,53.01009,5.62312,IJlst,municipality around Sneek and IJlst; IJlst's point
+Netherlands,Texel,,53.05417,4.79722,Den Burg,island municipality: its seat
+Netherlands,Menaldumadeel,,53.2,5.65,Dronrijp,municipality: its seat
+Canada,Jacques-Cartier,,45.53,-73.48,Jacques-Cartier (now Longueuil),former city merged into Longueuil 1969; approximate centre
+Canada,Kénogami,,48.42,-71.23,Kénogami (now Jonquière),former town merged into Jonquière 1975; approximate centre
+Canada,Lauzon,,46.83,-71.17,Lauzon (now Lévis),former town merged into Lévis 1989; approximate centre
+Canada,Noranda,,48.24,-79.02,Rouyn-Noranda,former city merged with Rouyn 1986
+Canada,St. James,,49.88,-97.25,St. James (now Winnipeg),former city merged into Winnipeg 1972; approximate centre
+Canada,Jasper Place,,53.53,-113.58,Jasper Place (now Edmonton),former town annexed by Edmonton 1964; approximate centre
+USA,South Bakersfield,,35.33,-119.01,South Bakersfield (CDP south of Bakersfield),unincorporated urban place of 1950; approximate centre
+USA,Brownsville-Brent-Goulding,,30.46,-87.24,Brent (Pensacola suburbs),unincorporated urban place of 1950 north of Pensacola; approximate centre
+USA,Springfield Place-Lakeview,,42.3,-85.22,Springfield and Lakeview (Battle Creek),unincorporated urban place of 1950 beside Battle Creek; approximate centre
+USA,Brandon-Judson,,34.85,-82.43,Judson (Greenville),unincorporated urban place of 1950 beside Greenville; approximate centre
+Italy,Pontecagnano Faiano,,40.6436,14.8736,Pontecagnano,comune: its main town
+Japan,Aojima,,34.857,138.248,Aojima (now Fujieda),town merged into Fujieda in 1954; approximate centre
+Japan,Hayame,,33.04,130.46,Hayame (now Omuta),town merged into Omuta; approximate centre
+Japan,Futase,,33.65,130.74,Futase (now Iizuka),town merged into Iizuka; approximate centre
+Japan,Ashigara,,35.26,139.15,Ashigara (now Odawara),town merged into Odawara; approximate centre
+Japan,Tomisubara,,35.03,136.62,Tomisuhara (now Yokkaichi),town merged into Yokkaichi; approximate centre
+Japan,Kodake,,33.69,130.70,Kotake (Fukuoka),town; approximate centre
+Japan,Uozaki,,34.72,135.27,Uozaki (now Kobe),town merged into Kobe; approximate centre
+Japan,Daishoji,,36.30,136.31,Daishoji (now Kaga),town merged into Kaga; approximate centre
+Japan,Makizono,,31.87,130.80,Makizono (now Kirishima),town merged into Kirishima; approximate centre
+Japan,Nakoso,,36.89,140.79,Nakoso (now Iwaki),town merged into Iwaki; approximate centre
+Japan,Nishiarie,,32.66,130.32,Nishiarie (now Minamishimabara),town merged into Minamishimabara; approximate centre
+Japan,Gunchu,,33.76,132.70,Gunchu (now Iyo),town merged into Iyo; approximate centre
+Japan,Akae,,31.93,131.42,Akae (now Miyazaki),town merged into Miyazaki city; approximate centre
+Japan,Tsurajima,,34.53,133.73,Tsurajima (now Kurashiki),town merged into Kurashiki; approximate centre
+FRG,Schloß Neuhaus,,51.74,8.71,Paderborn-Schloß Neuhaus,independent until 1975; absorbed into Paderborn. Point read for the district; not in GeoNames under this name
+Netherlands,Woerden,Zuid-Holland,52.085,4.88333,Woerden,in Zuid-Holland at the 1960 census and in another province today; GeoNames' point of the town
+Netherlands,Leerdam,Zuid-Holland,51.89333,5.09167,Leerdam,in Zuid-Holland at the 1960 census and in another province today; GeoNames' point of the town
+FRG,Allendorf,Hesse,50.82261,9.01294,Stadtallendorf,"Allendorf (Kreis Marburg) took town rights and the name Stadtallendorf in 1960 with about 10,000 people (de.wikipedia, Stadtallendorf); not Bad Sooden-Allendorf or the hamlets of that name. GeoNames 2829804"
+FRG,Homberg (Niederrhein),North Rhine-Westphalia,51.45,6.69,Duisburg-Homberg,independent town on the left bank of the Rhine until 1975 (now Duisburg); approximate centre. GeoNames' Homberg in this Land is a hamlet near Bielefeld
+FRG,Senne 1,North Rhine-Westphalia,51.96,8.56,Bielefeld-Senne,municipality south of Bielefeld until 1973; approximate centre. GeoNames matched Stukenbrock-Senne by a shared alternate name
+FRG,Hamm,North Rhine-Westphalia,,,,"second Hamm of the census table (12,935; p. 17), printed apart from Hamm (Westf.) with no district; which place it is could not be fixed"
+Japan,Shinkawa,Aichi,,,,"two machi of this name in Aichi (12,576 and 11,839); the table gives no district to say which is which and GeoNames has one point"
+Japan,Kushira,Kagoshima,31.38333,130.95,Kushira (now Kanoya),"en.wikipedia, Kushira, Kagoshima; dissolved 2006. GeoNames held the name as an alternate of Kushiro, Hokkaido"
+Japan,Takada,Oita,33.5567,131.44506,Bungo-Takada,"machi in Oita, today's Bungotakada (en.wikipedia, Bungotakada, Oita); GeoNames 1851170. The name had resolved to Yamato-Takada in Nara"
+Japan,Maebara,Fukuoka,33.55,130.2,Maebara (Maebaru; now Itoshima),"en.wikipedia, Maebaru, Fukuoka; dissolved 2010. The name had resolved to a place in another prefecture"
+Japan,Hachiman,Shiga,35.12833,136.09806,Omihachiman,"machi Hachiman in Shiga, today's Omihachiman (en.wikipedia, Omihachiman). The name had resolved to Yawata in Ishikawa"
+Japan,Omine,Yamaguchi,34.16306,131.20833,Omine (now Mine),"machi Omine, today in Mine (en.wikipedia, Mine, Yamaguchi: the city's point). The name had resolved to a place in another prefecture"
+Japan,Toyohira,Hokkaido,43.01333,141.39111,Toyohira (now Sapporo),"machi merged into Sapporo, today's Toyohira ward (en.wikipedia, Toyohira-ku, Sapporo). The name had resolved to a place in Aomori"
+Japan,Kawauchi,Kagoshima,31.81333,130.30389,Kawauchi (now Satsumasendai),"city of Kawauchi, today's Satsumasendai (en.wikipedia, Satsumasendai, Kagoshima). GeoNames' Kawauchi in this prefecture is a hamlet in the Amami islands"
+USA,Alisal,California,36.67913,-121.61772,Alisal,"unincorporated urban place of 1950 beside Salinas; GeoNames' Alisal. Pleasanton, which holds the name as an alternate, is 110 km away"
+USA,Washington,Ohio,39.53645,-83.43908,Washington Court House,"the Ohio city of Washington (county seat of Fayette County), named Washington Court House; GeoNames 4527660. Piqua holds the name as an alternate"

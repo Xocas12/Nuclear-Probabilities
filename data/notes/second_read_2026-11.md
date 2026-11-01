@@ -90,3 +90,16 @@ Numbers are the first reader's seq.
 - wp_1975_soyuz75 5: rejected. [DURICH]: named under nuclear strikes, but the bracketed reading is not identified and the document gives no country.
 - wp_1975_soyuz75 6: rejected. EDE: para. 4 says the 31st rbr 'will launch strikes on nuclear-capable aircraft'; the targets are nuclear-capable, but the strike is not stated to be nuclear.
 - wp_1975_soyuz75 7: rejected. ZEIST: same sentence as EDE, strike not stated to be nuclear.
+
+## Hashes
+
+Downloaded again on 2026-11-01, after the reading, into `data/raw/plan_documents/` (git-ignored). The copies that were read were not hashed and are gone, so these hashes do not prove the bytes are the same. Each PDF's page count covers its cited pages, and the quoted Soyuz-75 sentence is in the capture. The hash for Soyuz-75 is of the capture without the Wayback frame (the `id_` address), because the replay page cited in the rows changes with every request. `data/sources.yaml` holds these under `plandoc_cia_*` and `plandoc_soyuz75`.
+
+| Document | sha256 |
+|---|---|
+| 0001197557 (Lesson 1e) | `4d6b8a47e1d84f7a5f583886046151ae8e3cae2e84a232193cd75ba4f745890d` |
+| 0001197532 (Lesson 2) | `49088799426e1f9303e6e39875d5c5465f6062c475e64d7f8a5c30175d7d40f9` |
+| 0001197563 (rocket troops and artillery) | `403d6d9faf46b8495a53107f667333cf39acc8dc94fc0a855fc6e5ee48a8fe67` |
+| 0001197561 (Lesson 26a) | `6e929a5ae0c8774561d6ce21c9ff13a5207313892885c53a11c246fcb6fab0f5` |
+| 0001197576 (Lesson 24a) | `efd5cc020eec4ef4aa7b095d056acab4fd1aac4007760e52bb191a2184564d41` |
+| Soyuz-75 raw Wayback capture | `86b69240706e520b7fa6cd63bba92babc430f0fc2aff8ee8955fb825bb960328` |

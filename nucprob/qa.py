@@ -42,10 +42,14 @@ def check(issue: int, what: str, ok: bool, value: object) -> dict:
 
 def issue_1() -> list[dict]:
     checks = pd.read_csv(CURATED / "sac1956" / "checks.csv", dtype=str, keep_default_na=False)
-    text = checks.apply(lambda r: " ".join(r), axis=1)
-    hits = int(text.str.contains("letter", case=False).sum())
+    hits = int((checks.iloc[:, 0] == "letter struck for a digit").sum())
     return [
-        check(1, "checks.csv flags lines where a letter was struck for a digit", hits >= 4, hits)
+        check(
+            1,
+            "checks.csv flags the six lines where a letter was struck for a digit",
+            hits == 6,
+            hits,
+        )
     ]
 
 

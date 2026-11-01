@@ -1,0 +1,228 @@
+# Scenarios for the probability map (nucprob.probmap). Israel and North Korea hold warheads in the
+# stockpile table and appear in no scenario: no pairing for them was assumed.
+assumptions: {reading: 'Attacker pairs, theatre shares and mid-points are assumptions of this study, not
+    findings or sources. Every number either comes from data/curated/stockpiles/ or is named here as stated.',
+  theatre_share: 'Stated, no source: the share of an attacker''s available warheads assumed aimed into
+    the scenario. [low, mode, high].', inventory_range: 'Low is deployed or loaded forces, high is the
+    military stockpile (FAS 2026; OWID citing FAS and NRDC for history). inventory_low.fraction_of_high
+    = 0.575 is the 1956 ratio of 2,123 loaded to 3,692 total, used for years where no loading was extracted.',
+  reliability_modern: '0.8 to 0.9: sgs_hobson_1991 and nrdc_war_plan_2001 for ICBM and SLBM. No source
+    was found for bombers or for states other than the US; the same range is a stated assumption there.',
+  reliability_historical: '0.65, from 0.2 abort, 0.1 operational loss and 0.1 ineffective bombs (frus_1952_54v02p1_d66):
+    figures about Soviet bombers attacking the US in 1953, standing in for lack of any source on other
+    forces. +/- 0.07 is stated.', losses_historical: '0.07 to 0.27: attrition by US defences of Soviet
+    bombers, mid-1953 to mid-1955 estimates (frus_1952_54v02p1_d66), the same stand-in. Mode is the mid-point.
+    No source was found for US bombers attacking the USSR in 1956.', losses_modern: 'No published fraction
+    was found. Instead interceptors: 44 US GMD (csis_gmd) and 68 Russian A-135 (wiki_a135, weak), each
+    stopping at most one warhead.'}
+scenarios:
+- id: us_1956_on_bloc
+  label: '1956: US stockpile on the Soviet bloc'
+  era: historical
+  year: 1956
+  universe: bloc_1956
+  cell_deg: 0.5
+  evidence: 'Evidence: mostly the SAC 1956 requirements study, not a war plan, and it trained the score.'
+  note: US inventory of 1956, bombers only, all bloc towns of the study.
+  attackers:
+  - state: US
+    stock_year: 1956
+    inventory_low: [strategic_force_loading, nrdc_table_us]
+    inventory_high: [military_stockpile, owid_warhead_stockpiles]
+    theatre_share: [0.75, 0.9, 1.0]
+    reliability: &id001
+      all: [0.58, 0.65, 0.72]
+    fraction_lost_to_defences: [0.07, 0.17, 0.27]
+    targets: &id002 [USSR, China, East Germany, Poland, Czechoslovakia, Hungary, Romania, Bulgaria, Albania,
+      North Korea, North Vietnam, Mongolia]
+- id: us_1950_stock_on_bloc
+  label: 'Counterfactual: the 1950 US stockpile on the 1956 bloc'
+  era: historical
+  year: 1950
+  universe: bloc_1956
+  cell_deg: 0.5
+  compare_with: us_1956_on_bloc
+  evidence: 'A counterfactual, not a document: same towns and score as 1956, smaller stockpile.'
+  note: Only the stockpile differs from the 1956 scenario.
+  attackers:
+  - state: US
+    stock_year: 1950
+    inventory_low: {fraction_of_high: 0.575}
+    inventory_high: [military_stockpile, owid_warhead_stockpiles]
+    theatre_share: [0.75, 0.9, 1.0]
+    reliability: *id001
+    fraction_lost_to_defences: [0.07, 0.17, 0.27]
+    targets: *id002
+- id: ussr_1965_on_west
+  label: '1965: Soviet stockpile on Western European NATO towns'
+  era: historical
+  year: 1965
+  universe: wp_west_1965
+  cell_deg: 0.5
+  evidence: 'Evidence: Warsaw Pact exercises and lessons, none a Soviet war plan. No Soviet strategic
+    target list has been declassified.'
+  note: Soviet inventory of 1965; the share aimed at Western Europe is a stated assumption.
+  attackers:
+  - state: USSR
+    stock_year: 1965
+    inventory_low: [strategic_force_loading, nrdc_table_ussr]
+    inventory_high: [military_stockpile, owid_warhead_stockpiles]
+    theatre_share: [0.25, 0.5, 1.0]
+    reliability: *id001
+    fraction_lost_to_defences: [0.07, 0.17, 0.27]
+    targets: [Denmark, FRG, Netherlands, Belgium, Italy, UK]
+- id: modern_us_russia
+  label: '2026: US, UK and France with Russia and European NATO'
+  era: modern
+  year: 2026
+  universe: modern
+  cell_deg: 1.0
+  evidence: Extrapolation from lists of 1945-1977 to towns of today. An illustration of assumptions, not
+    a statement about any plan.
+  note: Each side's warheads over the other's named towns.
+  attackers:
+  - state: US
+    stock_year: 2026
+    inventory_low: [deployed, fas_status]
+    inventory_high: [military_stockpile, fas_status]
+    theatre_share: [0.5, 0.75, 1.0]
+    reliability: &id003
+      by_delivery:
+        icbm: [0.8, 0.8, 0.9]
+        slbm: [0.8, 0.8, 0.9]
+        bomber: [0.8, 0.8, 0.9]
+      all: [0.8, 0.8, 0.9]
+    fraction_lost_to_defences: &id004 [0, 0, 0]
+    targets: [RUS]
+    interceptors: 68
+  - state: France
+    stock_year: 2026
+    inventory_low: [deployed, fas_status]
+    inventory_high: [military_stockpile, fas_status]
+    theatre_share: [0.5, 0.75, 1.0]
+    reliability: *id003
+    fraction_lost_to_defences: *id004
+    targets: [RUS]
+    interceptors: 68
+  - state: UK
+    stock_year: 2026
+    inventory_low: [deployed, fas_status]
+    inventory_high: [military_stockpile, fas_status]
+    theatre_share: [0.5, 0.75, 1.0]
+    reliability: *id003
+    fraction_lost_to_defences: *id004
+    targets: [RUS]
+    interceptors: 68
+  - state: Russia
+    stock_year: 2026
+    inventory_low: [deployed, fas_status]
+    inventory_high: [military_stockpile, fas_status]
+    theatre_share: [0.5, 0.75, 1.0]
+    reliability: *id003
+    fraction_lost_to_defences: *id004
+    targets: [USA, GBR, FRA, DEU, ITA, POL, NLD, BEL, NOR, DNK, ESP, GRC, TUR, ROU, CZE, HUN, BGR]
+    interceptors: 44
+- id: modern_us_russia_half
+  label: '2026: the same with half the stockpiles'
+  era: modern
+  year: 2026
+  universe: modern
+  cell_deg: 1.0
+  compare_with: modern_us_russia
+  evidence: Extrapolation from lists of 1945-1977 to towns of today. An illustration of assumptions, not
+    a statement about any plan.
+  note: Only the stockpile differs from the scenario above.
+  attackers:
+  - state: US
+    stock_year: 2026
+    inventory_low: [deployed, fas_status]
+    inventory_high: [military_stockpile, fas_status]
+    theatre_share: [0.5, 0.75, 1.0]
+    reliability: *id003
+    fraction_lost_to_defences: *id004
+    targets: [RUS]
+    interceptors: 68
+    stock_multiplier: 0.5
+  - state: France
+    stock_year: 2026
+    inventory_low: [deployed, fas_status]
+    inventory_high: [military_stockpile, fas_status]
+    theatre_share: [0.5, 0.75, 1.0]
+    reliability: *id003
+    fraction_lost_to_defences: *id004
+    targets: [RUS]
+    interceptors: 68
+    stock_multiplier: 0.5
+  - state: UK
+    stock_year: 2026
+    inventory_low: [deployed, fas_status]
+    inventory_high: [military_stockpile, fas_status]
+    theatre_share: [0.5, 0.75, 1.0]
+    reliability: *id003
+    fraction_lost_to_defences: *id004
+    targets: [RUS]
+    interceptors: 68
+    stock_multiplier: 0.5
+  - state: Russia
+    stock_year: 2026
+    inventory_low: [deployed, fas_status]
+    inventory_high: [military_stockpile, fas_status]
+    theatre_share: [0.5, 0.75, 1.0]
+    reliability: *id003
+    fraction_lost_to_defences: *id004
+    targets: [USA, GBR, FRA, DEU, ITA, POL, NLD, BEL, NOR, DNK, ESP, GRC, TUR, ROU, CZE, HUN, BGR]
+    interceptors: 44
+    stock_multiplier: 0.5
+- id: modern_us_china
+  label: '2026: the US and China'
+  era: modern
+  year: 2026
+  universe: modern
+  cell_deg: 1.0
+  evidence: Extrapolation from lists of 1945-1977 to towns of today. An illustration of assumptions, not
+    a statement about any plan.
+  note: A small share of the US force is assumed, since its forces also face Russia.
+  attackers:
+  - state: US
+    stock_year: 2026
+    inventory_low: [deployed, fas_status]
+    inventory_high: [military_stockpile, fas_status]
+    theatre_share: [0.1, 0.25, 0.5]
+    reliability: *id003
+    fraction_lost_to_defences: *id004
+    targets: [CHN]
+  - state: China
+    stock_year: 2026
+    inventory_low: [deployed, fas_status]
+    inventory_high: [military_stockpile, fas_status]
+    theatre_share: [0.5, 0.75, 1.0]
+    reliability: *id003
+    fraction_lost_to_defences: *id004
+    targets: [USA]
+    interceptors: 44
+- id: modern_india_pakistan
+  label: '2026: India and Pakistan'
+  era: modern
+  year: 2026
+  universe: modern
+  cell_deg: 1.0
+  evidence: Extrapolation from lists of 1945-1977 to towns of today. An illustration of assumptions, not
+    a statement about any plan.
+  note: FAS counts neither as having deployed warheads, so the low end of each inventory is zero.
+  attackers:
+  - state: India
+    stock_year: 2026
+    inventory_low: [deployed, fas_status]
+    inventory_high: [military_stockpile, fas_status]
+    theatre_share: [0.5, 0.75, 1.0]
+    reliability: *id003
+    fraction_lost_to_defences: *id004
+    targets: [PAK]
+  - state: Pakistan
+    stock_year: 2026
+    inventory_low: [deployed, fas_status]
+    inventory_high: [military_stockpile, fas_status]
+    theatre_share: [0.5, 0.75, 1.0]
+    reliability: *id003
+    fraction_lost_to_defences: *id004
+    targets: [IND]

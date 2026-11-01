@@ -92,13 +92,12 @@ class Spec:
     name: str
     factory: Callable
     columns: list[str]
-    baseline: bool = False
 
 
 def specs() -> list[Spec]:
     return [
-        Spec("population rule", population_rule, ["log_pop"], True),
-        Spec("population + country", logistic_country, ["log_pop", "country"], True),
+        Spec("population rule", population_rule, ["log_pop"]),
+        Spec("population + country", logistic_country, ["log_pop", "country"]),
         Spec("logistic, all permitted", logistic_all, ALL_FEATURES),
         Spec("LightGBM, all permitted", lightgbm_quiet, ALL_FEATURES),
     ]

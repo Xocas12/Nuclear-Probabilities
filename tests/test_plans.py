@@ -84,6 +84,12 @@ def test_gate_counts_a_document_once_and_refuses_thin_states():
     assert not out.at["C", "allowed"]
 
 
+def test_a_disputed_document_never_counts_as_a_plan():
+    reg = plans().set_index("plan_id")
+    assert reg.at["wp_1970_coastal_front_map", "doc_type"] == "disputed_plan_or_exercise"
+    assert "disputed_plan_or_exercise" not in protocol()["state_models"]["plan_doc_types"]
+
+
 def test_protocol_rule_has_the_declared_fields():
     rule = protocol()["state_models"]
     assert set(RULE) <= set(rule)

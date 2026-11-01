@@ -1,0 +1,10 @@
+state,delivery,share,basis,source_id,notes
+US,bomber,0.2,deployed,sipri_yb2026_ch08,"rounded to 0.05, derived from the source; the source rows are not reproduced here (its terms)"
+US,icbm,0.25,deployed,sipri_yb2026_ch08,"rounded to 0.05, derived from the source; the source rows are not reproduced here (its terms)"
+US,slbm,0.6,deployed,sipri_yb2026_ch08,"rounded to 0.05, derived from the source; the source rows are not reproduced here (its terms)"
+Russia,bomber,0.1,deployed,sipri_yb2026_ch08,"rounded to 0.05, derived from the source; the source rows are not reproduced here (its terms)"
+Russia,icbm,0.5,deployed,sipri_yb2026_ch08,"rounded to 0.05, derived from the source; the source rows are not reproduced here (its terms)"
+Russia,slbm,0.4,deployed,sipri_yb2026_ch08,"rounded to 0.05, derived from the source; the source rows are not reproduced here (its terms)"
+France,bomber,0.15,military_stockpile,sipri_yb2026_ch08,"rounded to 0.05, derived from the source; the source rows are not reproduced here (its terms)"
+France,slbm,0.85,military_stockpile,sipri_yb2026_ch08,"rounded to 0.05, derived from the source; the source rows are not reproduced here (its terms)"
+UK,slbm,1.0,operationally_available,sipri_yb2026_ch08,all UK warheads are submarine-launched in the source

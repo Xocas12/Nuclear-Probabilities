@@ -30,6 +30,7 @@ from nucprob.transfer.regions import REGIONS
 
 LINK_KM = 15.0
 LABELS = CURATED / "labels"
+RURAL = re.compile(r"\bLand\b|kerspel$")
 PREFIX = re.compile(
     r"^\s*(m\.|g\.|vicinity of|area of|the|fort(ification)?( in)?|headquarters of( the)?)\s+",
     re.I,
@@ -121,6 +122,16 @@ def universes():
     yield BLOC, codes, bloc_towns(), tuple(BLOC_LISTS)
 
 
+def main_town(towns: pd.DataFrame) -> pd.Series:
+    """Of several towns of one name or on one point, the town itself rather than the rural
+    municipality around it ("Ibbenbüren, Land"), then the largest. Without this, which of them a
+    target links to depends on how the nearest-point search breaks a tie."""
+    rural = towns["name"].str.contains(RURAL)
+    return (
+        towns.assign(_rural=rural).sort_values(["_rural", "pop"], ascending=[True, False]).iloc[0]
+    )
+
+
 def link() -> pd.DataFrame:
     hand = hand_links()
     skip = unlinked()
@@ -151,6 +162,7 @@ def link() -> pd.DataFrame:
                     "town": "",
                     "dist_km": np.nan,
                 }
+                named = ""
                 key = (plan, int(t["seq"]))
                 if key in skip:
                     out["method"] = "left unlinked"
@@ -165,7 +177,8 @@ def link() -> pd.DataFrame:
                     ]
                     town_hit = own[np.array(hit, dtype=bool)]
                     if len(town_hit):
-                        h = town_hit.sort_values("pop", ascending=False).iloc[0]
+                        h = main_town(town_hit)
+                        named = h["place_id"]
                         out.update(lat=h["lat"], lon=h["lon"], located_as=h["name"])
                         out["method"] = "town name"
                     else:
@@ -184,31 +197,48 @@ def link() -> pd.DataFrame:
                     d, j = float(np.ravel(dist)[0]), int(np.ravel(idx)[0])
                     out["dist_km"] = round(d, 1)
                     if d <= LINK_KM:
-                        out["place_id"] = own["place_id"].iloc[j]
-                        out["town"] = own["name"].iloc[j]
+                        at_point = own[
+                            (own["lat"] == own["lat"].iloc[j]) & (own["lon"] == own["lon"].iloc[j])
+                        ]
+                        if named in set(at_point["place_id"]):
+                            town = at_point[at_point["place_id"] == named].iloc[0]
+                        else:
+                            town = main_town(at_point)
+                        out["place_id"] = town["place_id"]
+                        out["town"] = town["name"]
                 rows.append(out)
     return pd.DataFrame(rows)
 
 
+def selected_of(plan: str) -> dict[int, str]:
+    """`selected` of each row of a list (SCHEMA.md): "1" designated, "0" considered and rejected,
+    "" neither. A list without the column designates every row."""
+    lst = pd.read_csv(LABELS / f"{plan}.csv", dtype=str, keep_default_na=False)
+    flags = lst["selected"] if "selected" in lst else pd.Series("1", index=lst.index)
+    return dict(zip(lst["seq"].astype(int), flags, strict=True))
+
+
 def labels(links: pd.DataFrame) -> pd.DataFrame:
+    """One row per town and list. A positive is a town with a designated row. A town named only in
+    rows that neither designate nor reject it (areas "appropriate for study", a facility in a
+    vulnerability table) is dropped from that list: it is neither positive nor negative. A town
+    named only in rejected rows stays as a negative, and `n_rejected` records it."""
     out = []
     for region_id, _, towns, plans in universes():
         towns = towns[~towns["sealed"]]
         for plan in plans:
             sub = links[(links["plan_id"] == plan) & (links["place_id"] != "")]
+            flag = sub["seq"].astype(int).map(selected_of(plan))
             countries = set(links.loc[links["plan_id"] == plan, "target_country"])
             own = towns.loc[towns["country"].isin(countries), "place_id"]
-            n = sub["place_id"].value_counts()
-            out.append(
-                pd.DataFrame(
-                    {
-                        "place_id": own,
-                        "region": region_id,
-                        "plan_id": plan,
-                        "n_targets": own.map(n).fillna(0).astype(int),
-                    }
-                )
-            )
+            count = {
+                name: sub.loc[flag == value, "place_id"].value_counts()
+                for name, value in (("n_targets", "1"), ("n_rejected", "0"), ("n_neither", ""))
+            }
+            frame = pd.DataFrame({"place_id": own, "region": region_id, "plan_id": plan})
+            for name, n in count.items():
+                frame[name] = own.map(n).fillna(0).astype(int)
+            out.append(frame[(frame["n_neither"] == 0) | (frame["n_targets"] > 0)])
     lab = pd.concat(out, ignore_index=True)
     lab["listed"] = (lab["n_targets"] > 0).astype(int)
     return lab

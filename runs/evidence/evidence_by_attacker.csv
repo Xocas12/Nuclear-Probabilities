@@ -4,8 +4,9 @@ attacker,doc_type,grade,role,documents,lists,rows
 (none: expectation of a defender),civil_defence,C,test-expectation,2,2,155
 (none: expectation of a defender),mirror,A,test-expectation,2,2,102
 Czechoslovakia,war_plan,A,train,1,1,21
+Poland,disputed_plan_or_exercise,C,train,1,1,4
 Poland,exercise,B,train,1,1,23
-Poland,war_plan,C,train,3,3,19
+Poland,war_plan,C,train,2,2,15
 US,policy_study,A,train,2,2,11
 US,policy_study,B,train,1,1,4
 US,requirements_study,A,train,1,2,2343

@@ -22,6 +22,7 @@ PROTOCOL = ROOT / "configs" / "protocol.yaml"
 OUT = RUNS / "evidence"
 DOC_TYPES = {
     "war_plan",
+    "disputed_plan_or_exercise",
     "target_selection",
     "requirements_study",
     "policy_study",

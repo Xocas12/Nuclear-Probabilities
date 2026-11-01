@@ -5,9 +5,11 @@ from pathlib import Path
 
 import pandas as pd
 import pytest
+from rapidfuzz import fuzz
 
 from nucprob.transfer import places
 from nucprob.transfer.features import administrative
+from nucprob.transfer.labels import main_town
 from nucprob.transfer.regions import REGIONS
 
 FIXTURES = Path(__file__).parent / "fixtures"
@@ -107,3 +109,121 @@ def test_the_frg_is_in_the_universe_of_the_western_european_lists():
     countries = {c for c, _, _ in REGIONS["wp_west_1965"].countries}
     assert "FRG" in countries
     assert not REGIONS["wp_west_1965"].withheld
+
+
+# Review finding 12: a town whose coordinates come from a GeoNames entry in another first-order
+# unit is a different town of a similar name.
+
+
+def located_places() -> pd.DataFrame:
+    path = places.PROCESSED / "transfer_places.parquet"
+    if not path.exists():
+        pytest.skip("data/processed/transfer_places.parquet not built")
+    t = pd.read_parquet(path)
+    return t[t["lat"].notna()]
+
+
+def test_no_two_towns_of_a_region_share_a_point_across_first_order_units():
+    # A UK row is a district at its council's seat, and a few seats lay outside the district
+    # (uk_districts_1981_seats.md); those are the only points meant to be shared across units.
+    t = located_places()
+    t = t[t["match_method"] != "district seat"]
+    n = t.groupby(["region", "lat", "lon"])["admin1"].transform("nunique")
+    clash = t.loc[n > 1, ["region", "name", "admin1", "lat", "lon"]]
+    assert clash.empty, clash.to_string()
+
+
+def test_a_matched_towns_geonames_unit_agrees_with_its_table_unit():
+    t = located_places()
+    t = t[t["match_method"].isin(["name", "fuzzy"]) & (t["admin1"] != "")]
+    wrong = []
+    for country, g in t.groupby("country"):
+        units = places.admin1_crosswalk(country)
+        for row in g.itertuples():
+            if row.gn_admin1 not in units[row.admin1][0]:
+                wrong.append((country, row.name, row.admin1, row.gn_name, row.gn_admin1))
+    assert not wrong, wrong
+
+
+def test_towns_on_one_point_of_a_unit_are_one_place_by_name():
+    # The same point in the same unit is fine only for a town and its own rural municipality,
+    # or for parts of one town today. Unrelated names on one point are a false match.
+    t = located_places()
+    t = t[t["match_method"] != "district seat"]
+    n = t.groupby(["region", "lat", "lon"])["name"].transform("size")
+    alien = []
+    for row in t[n > 1].itertuples():
+        own = places.key(row.name)
+        today = places.key(row.name_today)
+        gn = places.key(row.gn_name)
+        if max(fuzz.partial_ratio(own, gn), fuzz.partial_ratio(today, gn) if today else 0) < 85:
+            alien.append((row.region, row.name, row.admin1, row.gn_name))
+    assert not alien, alien
+
+
+@pytest.mark.parametrize(("country", "spec"), table_specs())
+def test_the_crosswalk_covers_every_table_unit(country, spec, popstat_raw):
+    if not spec.startswith("popstat:") and not (places.GAZ / f"{spec}.csv").exists():
+        pytest.skip(f"{spec} missing")
+    units = places.admin1_crosswalk(country)
+    towns = places.load_table(spec)
+    # The build leaves out the US table's territories (the universe is the 48 states and DC).
+    notes = towns.get("notes", pd.Series("", index=towns.index)).astype(str)
+    towns = towns[~notes.str.contains("Territory, outside", case=False)]
+    table = set(towns["admin1"].astype(str)) - {""}
+    assert table <= set(units), sorted(table - set(units))
+
+
+@pytest.fixture
+def toy_gazetteer(monkeypatch):
+    g = pd.DataFrame(
+        [
+            ("Milan", "Milan", "Mirano,Milano", "PPLA", "09", "MI", 1_300_000, 45.46, 9.19),
+            ("Mirano", "Mirano", "", "PPLA3", "20", "VE", 26_000, 45.49, 12.11),
+            ("Munich", "Munich", "Monaco", "PPLA", "02", "M", 1_200_000, 48.14, 11.58),
+            ("Monaco", "Monaco", "", "PPL", "02", "X", 0, 48.70, 13.46),
+            ("Bari", "Bari", "", "PPLA", "13", "BA", 320_000, 41.12, 16.87),
+        ],
+        columns=[
+            "name",
+            "asciiname",
+            "alternatenames",
+            "feature_code",
+            "admin1",
+            "admin2",
+            "population",
+            "lat",
+            "lon",
+        ],
+    )
+    monkeypatch.setattr(places.geonames, "load_country", lambda code: g)
+    units = {
+        "Venezia": ({"20"}, {"VE"}),
+        "Milano": ({"09"}, {"MI"}),
+        "Monaco": ({"02"}, set()),
+        "Bari": ({"13"}, {"BA"}),
+    }
+    return places.Gazetteer("XX", units)
+
+
+def test_a_town_is_matched_only_in_its_own_unit(toy_gazetteer):
+    gaz = toy_gazetteer
+    i, _ = gaz.find("Mirano", admin1="Venezia", pop=18_000)
+    assert gaz.g.at[i, "name"] == "Mirano"
+    assert gaz.find("Mirano", admin1="Bari", pop=18_000) == (None, "not found")
+    with pytest.raises(ValueError, match="admin1_crosswalk"):
+        gaz.find("Mirano", admin1="Atlantis")
+
+
+def test_a_hamlet_of_the_same_name_does_not_beat_the_city(toy_gazetteer):
+    gaz = toy_gazetteer
+    i, _ = gaz.find("Monaco", admin1="Monaco", pop=1_000_000)
+    assert gaz.g.at[i, "name"] == "Munich"
+
+
+def test_a_target_on_a_shared_point_links_to_the_town_not_its_rural_municipality():
+    towns = pd.DataFrame(
+        {"name": ["Ibbenbüren, Land", "Ibbenbüren", "Zwolle"], "pop": [20_098, 15_676, 55_805]}
+    )
+    assert main_town(towns.iloc[:2])["name"] == "Ibbenbüren"
+    assert main_town(towns)["name"] == "Zwolle"

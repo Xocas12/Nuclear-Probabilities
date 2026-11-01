@@ -1,7 +1,7 @@
 # Provenance manifest (PLAN section 2): every data source, its URL, licence, use and role (labels,
 # universe, features or map; the leakage guard keeps label sources out of the features).
 # `python -m nucprob.sources.fetch` downloads into data/raw/ (git-ignored, never committed) and records
-# `retrieved` (UTC) and `sha256`. `fetch: false` = by hand; `fetch: <module>` = that module fetches it.
+# `retrieved` (UTC) and `sha256`. `fetch: false` = by hand; `fetch: <module>` = that module fetches it; `fetch: 'none: <why>'` = nothing to fetch.
 sources:
 - id: sac1956_part1_complex_list
   url: https://nsarchive2.gwu.edu/nukevault/ebb538-Cold-War-Nuclear-Target-List-Declassified-First-Ever/documents/1st%20city%20list%20complete.pdf
@@ -56,6 +56,7 @@ sources:
   path: sac1956/section6.pdf
   licence: US government record, public domain
   use: Part II airfield list (43 pp), transcribed in full
+  title: SAC, Atomic Weapons Requirements Study for 1959 (SM 129-56, June 1956), Part II airfield list
   role: labels
   retrieved: '2026-10-03'
   sha256: 6acc6167f46bdc5ee4642b1a798ba823d43898a231bd4f08948509ed668ad932
@@ -699,6 +700,8 @@ sources:
   use: 'East Germany place universe: table I.10, municipalities of 10,000+ on 31 Dec 1956 with their population
     in 1939, 1946, 1950, 1955 and 1956'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: a583ee368c90fc9d839dab37c51a1265d47a3fed69d66cbc040b81faccf85981
 - id: ddr_jahrbuch_1956_p0042
   url: https://digi.bib.uni-mannheim.de/fileadmin/statjahrb/514402644_1956/pdf/514402644_0042.pdf
@@ -707,6 +710,8 @@ sources:
   use: 'East Germany place universe: table I.10, municipalities of 10,000+ on 31 Dec 1956 with their population
     in 1939, 1946, 1950, 1955 and 1956'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: 7170ab23e6fe567ba2d3e40fdbb5e39593c3770a107ac83d40284351ce7dc455
 - id: ddr_jahrbuch_1956_p0043
   url: https://digi.bib.uni-mannheim.de/fileadmin/statjahrb/514402644_1956/pdf/514402644_0043.pdf
@@ -715,6 +720,8 @@ sources:
   use: 'East Germany place universe: table I.10, municipalities of 10,000+ on 31 Dec 1956 with their population
     in 1939, 1946, 1950, 1955 and 1956'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: 94cc61b5a281f281cadc8e131dba763333a80f3f612998ba4973332f668c5d04
 - id: gus_rocznik_1957_p13
   url: https://polona.pl/api/download/digital-content/b6990766-8108-49ca-a322-9e04bc70de4e
@@ -723,6 +730,8 @@ sources:
   use: 'Poland place universe: table 7, towns of 10,000+ with the 1950 census and the end-1956 estimate
     (book p. 13, ALTO OCR)'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: 34e45bbbc630fb053619005ecf41f4aa858436ad46f9a11e82d38114b333e2f0
 - id: gus_rocznik_1957_p14
   url: https://polona.pl/api/download/digital-content/2dbb1717-a7d5-4758-9982-3e5ee409d0db
@@ -731,6 +740,8 @@ sources:
   use: 'Poland place universe: table 7, towns of 10,000+ with the 1950 census and the end-1956 estimate
     (book p. 14, ALTO OCR)'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: e0ed4afe0fbf94d90f0fe581de5c1533448eaaa31ff409e1ef5333e046a9ddf1
 - id: gus_rocznik_1957_p15
   url: https://polona.pl/api/download/digital-content/086fccd8-c653-4cb5-a313-adf48dad5036
@@ -739,6 +750,8 @@ sources:
   use: 'Poland place universe: table 7, towns of 10,000+ with the 1950 census and the end-1956 estimate
     (book p. 15, ALTO OCR)'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: 07c070f78271e97811efd95633a3334ef15bed0a4f268e37c5d6bede2b091d4a
 - id: ksh_2011_4_1_1_1_01
   url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/01/01_4_1_1_1.xls
@@ -748,6 +761,8 @@ sources:
   use: 'Hungary place universe: population of every settlement of Budapest at the censuses 1870-1970 (1941,
     1949, 1960 used)'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: 88533423705ead57bd473fd5001f18b147ebb8d2f03229769591187266769d80
 - id: ksh_2011_4_1_1_1_02
   url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/02/02_4_1_1_1.xls
@@ -757,6 +772,8 @@ sources:
   use: 'Hungary place universe: population of every settlement of Baranya at the censuses 1870-1970 (1941,
     1949, 1960 used)'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: 3116a2804defe3c8a34f3a5d49d2e625e6a07a2519e0fd9faa9e125d5d233949
 - id: ksh_2011_4_1_1_1_03
   url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/03/03_4_1_1_1.xls
@@ -766,6 +783,8 @@ sources:
   use: 'Hungary place universe: population of every settlement of Bács-Kiskun at the censuses 1870-1970
     (1941, 1949, 1960 used)'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: e438b9236b5d88ec056e43c3eb9766cb91ea37bcc7e994284056c8f1cd82277e
 - id: ksh_2011_4_1_1_1_04
   url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/04/04_4_1_1_1.xls
@@ -775,6 +794,8 @@ sources:
   use: 'Hungary place universe: population of every settlement of Békés at the censuses 1870-1970 (1941,
     1949, 1960 used)'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: 2224c9a4e8c9050c3c0731349919657201fb0d51bfefbdf63461250ae851d900
 - id: ksh_2011_4_1_1_1_05
   url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/05/05_4_1_1_1.xls
@@ -784,6 +805,8 @@ sources:
   use: 'Hungary place universe: population of every settlement of Borsod-Abaúj-Zemplén at the censuses
     1870-1970 (1941, 1949, 1960 used)'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: f2e17fba747b71ed04429c1b2eed466ce788b0b7424e6c7705494d87f6b17677
 - id: ksh_2011_4_1_1_1_06
   url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/06/06_4_1_1_1.xls
@@ -793,6 +816,8 @@ sources:
   use: 'Hungary place universe: population of every settlement of Csongrád at the censuses 1870-1970 (1941,
     1949, 1960 used)'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: aba771e95d5d936d39d8522d15398ae90139d96cdf5130d8c5224ff4d77423cd
 - id: ksh_2011_4_1_1_1_07
   url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/07/07_4_1_1_1.xls
@@ -802,6 +827,8 @@ sources:
   use: 'Hungary place universe: population of every settlement of Fejér at the censuses 1870-1970 (1941,
     1949, 1960 used)'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: bcf5ac44c980617e99206521c277b12b629d5e80f414cf6968231ec1b4400aa0
 - id: ksh_2011_4_1_1_1_08
   url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/08/08_4_1_1_1.xls
@@ -811,6 +838,8 @@ sources:
   use: 'Hungary place universe: population of every settlement of Győr-Moson-Sopron at the censuses 1870-1970
     (1941, 1949, 1960 used)'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: ff9b473a92f67e4b9a8a684d359e0e9715f28873e88f1ecc52fa97a7a402cc12
 - id: ksh_2011_4_1_1_1_09
   url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/09/09_4_1_1_1.xls
@@ -820,6 +849,8 @@ sources:
   use: 'Hungary place universe: population of every settlement of Hajdú-Bihar at the censuses 1870-1970
     (1941, 1949, 1960 used)'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: 6c3c6766eaf7ea850184e3b317181f32343ab6be5192bf5a8b3da07731d89cdd
 - id: ksh_2011_4_1_1_1_10
   url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/10/10_4_1_1_1.xls
@@ -829,6 +860,8 @@ sources:
   use: 'Hungary place universe: population of every settlement of Heves at the censuses 1870-1970 (1941,
     1949, 1960 used)'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: 04ff5c943a0511a81f38ae19167b725bae0e143964c432cfb93446e8a932f4b1
 - id: ksh_2011_4_1_1_1_11
   url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/11/11_4_1_1_1.xls
@@ -838,6 +871,8 @@ sources:
   use: 'Hungary place universe: population of every settlement of Komárom-Esztergom at the censuses 1870-1970
     (1941, 1949, 1960 used)'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: 5f9f4d692f8f0c1154be2c75351a098603142d984116e47a9497032c1b0143fd
 - id: ksh_2011_4_1_1_1_12
   url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/12/12_4_1_1_1.xls
@@ -847,6 +882,8 @@ sources:
   use: 'Hungary place universe: population of every settlement of Nógrád at the censuses 1870-1970 (1941,
     1949, 1960 used)'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: 0510543b3f47e9c8ec20f771d7574429f1ce84676ddc8872a3fab2c885d32452
 - id: ksh_2011_4_1_1_1_13
   url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/13/13_4_1_1_1.xls
@@ -856,6 +893,8 @@ sources:
   use: 'Hungary place universe: population of every settlement of Pest at the censuses 1870-1970 (1941,
     1949, 1960 used)'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: 8887e63a191558c02f687e88b77d4869543b051bf5f11bb82a3b787ab5a09e62
 - id: ksh_2011_4_1_1_1_14
   url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/14/14_4_1_1_1.xls
@@ -865,6 +904,8 @@ sources:
   use: 'Hungary place universe: population of every settlement of Somogy at the censuses 1870-1970 (1941,
     1949, 1960 used)'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: c3f80c74a8f92c90e4e7401aa600ebd6eab259998a5216da8713fb37b5264f2f
 - id: ksh_2011_4_1_1_1_15
   url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/15/15_4_1_1_1.xls
@@ -874,6 +915,8 @@ sources:
   use: 'Hungary place universe: population of every settlement of Szabolcs-Szatmár-Bereg at the censuses
     1870-1970 (1941, 1949, 1960 used)'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: b264d91f25489ee1602aea7534d16046f52cf58190b0a0ffd82e375f925b0e2c
 - id: ksh_2011_4_1_1_1_16
   url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/16/16_4_1_1_1.xls
@@ -883,6 +926,8 @@ sources:
   use: 'Hungary place universe: population of every settlement of Jász-Nagykun-Szolnok at the censuses
     1870-1970 (1941, 1949, 1960 used)'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: faad45ea4ecd6acfb2484b40788fe47eb027cae33e476793fa9213a7705b0c18
 - id: ksh_2011_4_1_1_1_17
   url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/17/17_4_1_1_1.xls
@@ -892,6 +937,8 @@ sources:
   use: 'Hungary place universe: population of every settlement of Tolna at the censuses 1870-1970 (1941,
     1949, 1960 used)'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: 0906612ca5342f36a9d86b0229c667b60a64057cbc8777d53da1dfb1fc78f7de
 - id: ksh_2011_4_1_1_1_18
   url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/18/18_4_1_1_1.xls
@@ -901,6 +948,8 @@ sources:
   use: 'Hungary place universe: population of every settlement of Vas at the censuses 1870-1970 (1941,
     1949, 1960 used)'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: a38929b2431438ae2e72a2f33ff990662885eaa895ef4b1b7a866b0bd8fc3923
 - id: ksh_2011_4_1_1_1_19
   url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/19/19_4_1_1_1.xls
@@ -910,6 +959,8 @@ sources:
   use: 'Hungary place universe: population of every settlement of Veszprém at the censuses 1870-1970 (1941,
     1949, 1960 used)'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: f82735c055866273df02656fa43258b54d1b0adc5cf95b1d3cadd1613ad6dad4
 - id: ksh_2011_4_1_1_1_20
   url: https://www.ksh.hu/nepszamlalas/docs/tablak/teruleti/20/20_4_1_1_1.xls
@@ -919,6 +970,8 @@ sources:
   use: 'Hungary place universe: population of every settlement of Zala at the censuses 1870-1970 (1941,
     1949, 1960 used)'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: 9016b66ed578034313813009bc2dc4f8a02a309d9b2443b99a4e2d64c7e0cd43
 - id: votrubec_1959
   url: https://www.sav.sk/journals/uploads/04201125GEOG_1959_2_Votrubec.pdf
@@ -927,6 +980,8 @@ sources:
   use: 'Slovakia place universe: Votrubec, ''Vývoj obyvatelstva československých měst 1954-1958'', tables
     3, 7 and 8 (population on 1 Jan 1958 and change since 1 Jan 1954)'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: d45eb7bcda0f2210f49d27448d9cf466305604134143d3bb00b0561f926f93d2
 - id: wikipedia_1953_chinese_census
   url: https://en.wikipedia.org/wiki/1953_Chinese_census
@@ -946,6 +1001,8 @@ sources:
   use: 'North Korea, North Vietnam and Mongolia place universe: 1956 estimates for cities of 300,000+
     today (F22, annual)'
   role: universe
+  retrieved: '2026-10-08'
+  retrieved_note: date of commit b2e37f6, which first records this sha256, so fetched on or before it; the copy in data/raw has mtime 2026-11-01 and the same hash
   sha256: 80eb71bbabb46cb2e1599b51b16133bf28b0a99a541d72de20a1248ec6170a75
 - id: aws_terrain_tiles
   url: https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png
@@ -957,6 +1014,14 @@ sources:
   fetch: nucprob.sources.terrain
   note: tiles are fetched on demand into data/raw/terrain/<z>/<x>/<y>.png; tiles.csv lists each tile and
     its sha256
+  retrieved: '2026-11-01'
+  retrieved_note: mtime of the 727 tiles hashed in the manifest; the source was first registered by commit
+    671ead3 on 2026-10-08, and what was fetched then was not hashed
+  sha256: null
+  hash_note: fetched tile by tile, so no one file has a hash. tiles.csv holds a sha256 per tile, except
+    7/66/44.png, which it omits; the manifest has all 727, in sha256sum format, relative to data/raw/terrain
+  manifest: data/curated/features/terrain_tiles_manifest.sha256
+  manifest_sha256: 39bbff29ede760a80ba766f914b4b27e29bd2a9b419d68b5bc149934ed631d27
 - id: census_us_estimates_1980s
   url: https://www2.census.gov/programs-surveys/popest/tables/1980-1990/counties/totals/e8089co.txt
   path: census/e8089co.txt
@@ -1185,3 +1250,660 @@ sources:
   role: features
   retrieved: '2026-11-01'
   sha256: 07b7396cbf0a06a3a57d97dfb56e316c5720b6feeab06db4578bcb6447be51a9
+- id: plandoc_nsa_sac_doc09_page
+  url: https://nsarchive.gwu.edu/document/15800-09-urban-industrial-target-list-part-i
+  title: SAC, Atomic Weapons Requirements Study for 1959 (SM 129-56, June 1956), Part I complex list (NSA
+    EBB 538, doc. 09)
+  path: plan_documents/00/15800-09-urban-industrial-target-list-part-i.html
+  licence: US government record, public domain (National Security Archive copy)
+  use: 'target list us_1956_sac_complexes: the source_url of its rows'
+  role: labels
+  volatile: HTML landing page; same size as, and a different hash from, the copy in data/notes/sac1956.md
+    (6fad9ed1…). The PDF it serves is sac1956_part1_complex_list (byte-identical, data/notes/sac1956.md)
+  retrieved_note: landing page of NSA EBB 538 doc. 09, cited by the list; the bytes transcribed are in
+    sac1956_part1_complex_list
+  retrieved: '2026-11-01'
+  sha256: 73deed41694e91d6718ce5b77aeec90bcad6d1758202eb741910992ddff12805
+- id: plandoc_nsa_ww2_009
+  url: https://nsarchive.gwu.edu/documents/atomic-bomb-end-world-war-ii/009.pdf
+  title: Notes on Initial Meeting of Target Committee [27 April 1945], 2 May 1945, RG 77 MED TS File 5d;
+    NSA 'The Atomic Bomb and the End of World War II', Doc. 9
+  path: plan_documents/01/009.pdf
+  licence: US government record, public domain (National Security Archive copy)
+  use: 'target list us_1945_target_committee: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the sha256 equals the one in data/notes/western.md, so
+    these are the bytes read then
+  retrieved: '2026-11-01'
+  sha256: d5b481060dbfa822750b9d26ea82b1aeddd23e22e520d96ca5288578e3f66755
+- id: plandoc_nsa_ww2_011
+  url: https://nsarchive.gwu.edu/documents/atomic-bomb-end-world-war-ii/011.pdf
+  title: Derry & Ramsey to Groves, 'Summary of Target Committee Meetings on 10 and 11 May 1945', 12 May
+    1945, RG 77 MED TS File 5d; NSA Doc. 11
+  path: plan_documents/02/011.pdf
+  licence: US government record, public domain (National Security Archive copy)
+  use: 'target list us_1945_target_committee: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the sha256 equals the one in data/notes/western.md, so
+    these are the bytes read then
+  retrieved: '2026-11-01'
+  sha256: 07bd94cf39b661a075b68ae99f955a4c899b34bd4ae2bc76c10be4bc4f60ccc3
+- id: plandoc_nsa_ww2_015
+  url: https://nsarchive.gwu.edu/documents/atomic-bomb-end-world-war-ii/015.pdf
+  title: Minutes of Third Target Committee Meeting - Washington, 28 May 1945, RG 77 MED TS File 5d; NSA
+    Doc. 15
+  path: plan_documents/03/015.pdf
+  licence: US government record, public domain (National Security Archive copy)
+  use: 'target list us_1945_target_committee: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the sha256 equals the one in data/notes/western.md, so
+    these are the bytes read then
+  retrieved: '2026-11-01'
+  sha256: d06f000895322de7915a8413e043cdb8fb16cb3a411638ccd06999cbd38785ef
+- id: plandoc_nsa_ww2_016
+  url: https://nsarchive.gwu.edu/documents/atomic-bomb-end-world-war-ii/016.pdf
+  title: Norstad to CG XXI Bomber Command, '509th Composite Group; Special Functions', 29 May 1945, RG
+    77 MED TS File 5g; NSA Doc. 16
+  path: plan_documents/04/016.pdf
+  licence: US government record, public domain (National Security Archive copy)
+  use: 'target list us_1945_target_committee: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the sha256 equals the one in data/notes/western.md, so
+    these are the bytes read then
+  retrieved: '2026-11-01'
+  sha256: 7749d7725177b96505b47581689e69f53e1fd9feb12168d312a2ccea66f6807d
+- id: plandoc_nsa_ww2_046e
+  url: https://nsarchive.gwu.edu/sites/default/files/documents/Doc%2046E%201945-07-24%20%20RG%20319%20JONES%20MANHATTAN%20BX%2016%20MANHATTAN%20BOMB%20ORGANIZATION%20AND%20MATERIALS%20PROCUREMENT-ocr.pdf
+  title: Groves for Chief of Staff, 'Plan of Operations - Atomic Fission Bomb', 24 July 1945 (RG 319,
+    Manhattan Project Background Files, Box 16); NSA 2025 posting Doc. 46E
+  path: plan_documents/05/Doc_46E_1945-07-24_RG_319_JONES_MANHATTAN_BX_16_MANHATTAN_BOMB_ORGANIZATION_AND_MATERIALS_PROCUREMENT-ocr.pdf
+  licence: US government record, public domain (National Security Archive copy)
+  use: 'target list us_1945_target_committee: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the sha256 equals the one in data/notes/western.md, so
+    these are the bytes read then
+  retrieved: '2026-11-01'
+  sha256: cf40e32b6f41f98fd7306a3dffa0f2a9287f03fcd0b2f8ab0bb8344955c330d6
+- id: plandoc_nsa_ww2_060b
+  url: https://nsarchive.gwu.edu/documents/atomic-bomb-end-world-war-ii/060b.pdf
+  title: Col. John Stone to Gen. Arnold, 'Groves Project', 24 July 1945, RG 77 MED TS Files 5b/5e; NSA
+    Doc. 60B
+  path: plan_documents/06/060b.pdf
+  licence: US government record, public domain (National Security Archive copy)
+  use: 'target list us_1945_target_committee: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the sha256 equals the one in data/notes/western.md, so
+    these are the bytes read then
+  retrieved: '2026-11-01'
+  sha256: cccd42e79fced2f747597d56f8552cbb2de3cca26e2dbd049409ba814b9c1b29
+- id: plandoc_nsa_ww2_060e
+  url: https://nsarchive.gwu.edu/documents/atomic-bomb-end-world-war-ii/060e.pdf
+  title: Gen. Thomas T. Handy to Gen. Carl Spaatz, directive dated 25 July 1945 (NSA lists as 26 July),
+    RG 77 MED TS Files 5b/5e; NSA Doc. 60E
+  path: plan_documents/07/060e.pdf
+  licence: US government record, public domain (National Security Archive copy)
+  use: 'target list us_1945_target_committee: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the sha256 equals the one in data/notes/western.md, so
+    these are the bytes read then
+  retrieved: '2026-11-01'
+  sha256: 4c70b1ce5de29fe3d8b88613930b8cc0f5a5d2ea70714336221b32993ad86ce1
+- id: plandoc_nsa_ww2_047
+  url: https://nsarchive.gwu.edu/documents/atomic-bomb-end-world-war-ii/047.pdf
+  title: 'Truman Potsdam diary, entry 25 July 1945, as transcribed in B. J. Bernstein, ''Truman at Potsdam:
+    His Secret Diary'', Foreign Service Journal, July/Aug 1980, p. 34; NSA Doc. 47'
+  path: plan_documents/08/047.pdf
+  licence: US government record, public domain (National Security Archive copy)
+  use: 'target list us_1945_target_committee: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the sha256 equals the one in data/notes/western.md, so
+    these are the bytes read then
+  retrieved: '2026-11-01'
+  sha256: c8ca3ee14508e964ddbe33a0e51b508b825507f1150fb16aa6d28b54af45186a
+- id: plandoc_halperin_rm4900
+  url: https://www.ellsberg.net/wp-content/uploads/2021/05/Quemoy_Study_The_1958_Taiwan_Straits_Crisis_Partial_Plus_Total_Redactions_December_1966.pdf
+  title: 'Morton H. Halperin, "The 1958 Taiwan Straits Crisis: A Documented History", RAND RM-4900-ISA
+    (Dec 1966), unabridged/withheld pages released by Daniel Ellsberg (ellsberg.net, 2021)'
+  path: plan_documents/09/Quemoy_Study_The_1958_Taiwan_Straits_Crisis_Partial_Plus_Total_Redactions_December_1966.pdf
+  licence: RAND study declassified in part; unabridged copy released by Daniel Ellsberg. No licence stated,
+    rows transcribed, file not redistributed
+  use: 'target list us_1958_taiwan_strait: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the sha256 equals the one in data/notes/halperin_1958.md,
+    so these are the bytes read then
+  retrieved: '2026-11-01'
+  sha256: f89b93d7e49e0082aaaae0a2194290c077f125b231c8c256871bc17691170914
+- id: plandoc_nsa_ebb38_doc6
+  url: https://nsarchive2.gwu.edu/NSAEBB/NSAEBB38/document6.pdf
+  title: LeMay (Acting CJCS) to SecDef, JCSM-343-63, 'Study of Chinese Communist Vulnerability', 29 Apr
+    1963, with appendix 'Chinese Communist Vulnerability' (NARA RG 59; declass. NND 989569); NSA EBB 38
+    Doc. 6
+  path: plan_documents/10/document6.pdf
+  licence: US government record, public domain (National Security Archive copy)
+  use: 'target list us_1963_jcs_china_vulnerability: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the sha256 equals the one in data/notes/western.md, so
+    these are the bytes read then
+  retrieved: '2026-11-01'
+  sha256: 11ae79d3ae87072e7bb11ee926a4aab32d8ff1a8b2a56425356692119f6445be
+- id: plandoc_nsa_ebb488_doc16
+  url: https://nsarchive2.gwu.edu/nukevault/ebb488/docs/Doc%2016%204-22-64%20R%20Johnson%20bases%20for%20direct%20action.pdf
+  title: Rostow to Bundy, 22 Apr 1964, enclosing R. H. Johnson (State S/P), 'An Exploration of the Possible
+    Bases for Action Against the Chinese Communist Nuclear Facilities', 14 Apr 1964 (LBJ Library); NSA
+    EBB 488 Doc. 16
+  path: plan_documents/11/Doc_16_4-22-64_R_Johnson_bases_for_direct_action.pdf
+  licence: US government record, public domain (National Security Archive copy)
+  use: 'target list us_1964_china_nuclear: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the sha256 equals the one in data/notes/western.md, so
+    these are the bytes read then
+  retrieved: '2026-11-01'
+  sha256: 79392217174f9af3b62c74c4b8785f191b71d96946138e88372b530a2c333f26
+- id: plandoc_php_warplan_dossier
+  url: https://www.files.ethz.ch/isn/108642/warplan_dossier.pdf
+  title: Plan of Actions of the Czechoslovak People's Army for War Period (Novotný-approved; signed 11-14
+    Oct 1964), English translation from the Russian original by S. Savranskaya & A. Locher, in PHP dossier
+    'Taking Lyon on the Ninth Day?' (Mastny & Luňák eds., 2005)
+  path: plan_documents/12/warplan_dossier.pdf
+  licence: Parallel History Project (ETH Zurich) copy of an archive document; no open licence stated,
+    rows transcribed, file not redistributed
+  use: 'target list wp_1964_csla_plan: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the sha256 equals the one in data/notes/warsaw_pact.md,
+    so these are the bytes read then
+  retrieved: '2026-11-01'
+  sha256: f0241f5423dbcace69a5811f1f1d6f76f3084e9b9ebec6f4a454a336ecaa6ac6
+- id: plandoc_palka_2022
+  url: https://rcin.org.pl/Content/238081/WA303_274302_A52-KH-129-EE-6_Palka.pdf
+  title: J. Pałka, 'Planning for a Landing Operation of the Polish People's Army on the Danish Isles during
+    the Cold War', Kwartalnik Historyczny CXXIX (2022), English edition 6
+  path: plan_documents/13/WA303_274302_A52-KH-129-EE-6_Palka.pdf
+  licence: Article in Kwartalnik Historyczny, hosted by RCIN; licence not checked, the host was down.
+    Rows transcribed, file not redistributed
+  use: 'target list wp_1965_coastal_front_zealand, wp_1977_zealand: the source_url of its rows'
+  role: labels
+  mirror: https://web.archive.org/web/20250412062919id_/https://rcin.org.pl//Content/238081/WA303_274302_A52-KH-129-EE-6_Palka.pdf
+  retrieved_note: the publisher answered 504 and then timed out on 2026-11-01, so these bytes are the
+    Wayback capture named in mirror; the sha256 equals the one data/notes/warsaw_pact.md records for the
+    publisher's file on 2026-10-03
+  retrieved: '2026-11-01'
+  sha256: 040015ff3479aa53c1cf4140bd8466b1e0bf3992ffae05452504aee8793a4991
+- id: plandoc_nielsen_2016
+  url: https://rucforsk.ruc.dk/ws/portalfiles/portal/59080015/1404_5312_1_PB.pdf
+  title: Nielsen, Svenningsen, Tinning & Clemmesen, 'An operational map of the Polish Coastal Front 1970',
+    Geoforum Perspektiv 15(27):48-60 (2016), on 'Plan Operacji Zaczepnej Frontu Nadmorskiego' (25 Feb
+    1970)
+  path: plan_documents/14/1404_5312_1_PB.pdf
+  licence: Article in Geoforum Perspektiv, hosted by Roskilde University; licence not checked. Rows transcribed,
+    file not redistributed
+  use: 'target list wp_1970_coastal_front_map: the source_url of its rows'
+  role: labels
+  volatile: the repository generates the PDF on request (its CreationDate is 2026-11-01), so the hash
+    differs from the 2026-10-03 one
+  previous_sha256: ddef89e8ba8386e7247753144f934d5c3ff8659481c3737a4411e2a8212c4786
+  previous_retrieved: '2026-10-03'
+  retrieved_note: all four quotes of the list were found in the text of this copy, on the cited PDF p.12
+  retrieved: '2026-11-01'
+  sha256: a74032dbd41bb2fa8a40091595cbbd69d313debd0502602ffd43d65cfca76cec
+- id: plandoc_php_report_001061
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/20314/ipublicationdocument_singledocument/83b161b9-8ba1-4603-b32a-a0cfbab3cc73/pl/Report_001061.pdf
+  title: Meldunek dotyczący planowania uderzeń jądrowych wojsk rakietowych według danych na 7.00 7.10
+    [1961] i uzupełnienia dyrektywy (AIC MON Modlin, GISB, spis 18/91/30; PHP 'A Landing Operation in
+    Denmark', 2002)
+  path: plan_documents/15/Report_001061.pdf
+  licence: Parallel History Project (ETH Zurich) copy of an archive document; no open licence stated,
+    rows transcribed, file not redistributed
+  use: 'target list wp_1961_burza: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the sha256 equals the one in data/notes/warsaw_pact.md,
+    so these are the bytes read then
+  retrieved: '2026-11-01'
+  sha256: 2ab2c4403a9c6d7635b23e933320784881f363530bfe81521cd0b23ceed8cb4b
+- id: plandoc_php_situationreport_101061
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/20317/ipublicationdocument_singledocument/a15dc579-3ce6-4fe4-839d-31e14cd92837/pl/SituationReport_101061.pdf
+  title: Meldunek dowódcy Frontu Nadmorskiego według sytuacji na 20.00 10.10.1961 r. (AIC MON Modlin,
+    spis 18/91/30; PHP 'A Landing Operation in Denmark', 2002)
+  path: plan_documents/16/SituationReport_101061.pdf
+  licence: Parallel History Project (ETH Zurich) copy of an archive document; no open licence stated,
+    rows transcribed, file not redistributed
+  use: 'target list wp_1961_burza: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the sha256 equals the one in data/notes/warsaw_pact.md,
+    so these are the bytes read then
+  retrieved: '2026-11-01'
+  sha256: a05e6e950c70a2f73149500ed6d50298db2e7acd2f207691602e817f63501ef7
+- id: plandoc_php_operationaldirective_310567
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/20318/ipublicationdocument_singledocument/61cd99c8-8388-466c-bbd5-f454fda05a53/ru/OperationalDirective_310567.pdf
+  title: Extract of Operational Directive No. 02 of the Coastal Front (Приморский фронт), exercise 'Lato-67',
+    31.05.1967, Russian (AIC MON Modlin, GISB, spis 18/91/227; PHP 'A Landing Operation in Denmark', 2002)
+  path: plan_documents/17/OperationalDirective_310567.pdf
+  licence: Parallel History Project (ETH Zurich) copy of an archive document; no open licence stated,
+    rows transcribed, file not redistributed
+  use: 'target list wp_1967_lato67: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the sha256 equals the one in data/notes/warsaw_pact.md,
+    so these are the bytes read then
+  retrieved: '2026-11-01'
+  sha256: a970ff094f1efc0bb73a3e5b641a87fa7dc3f490709dc058c32b32a43f88a605
+- id: plandoc_php_6506_plan_easterners
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/19632/ipublicationdocument_singledocument/4021f42c-da63-4424-a2c8-1412ec3f02a2/hu/6506_Plan_Easterners.pdf
+  title: Plan of the 'Easterners'' first massive nuclear strike, early morning 23 June [1965]; Supplement
+    No. 8 to K-1/98/1965, HPA 1st Group Directorate, No. 023/Gyak. (Hungarian original; PHP 'European
+    Cities Targeted for Nuclear Destruction', 2001; PHP English translation 6506_Plan_Easterners_E.pdf
+    checked)
+  path: plan_documents/18/6506_Plan_Easterners.pdf
+  licence: Parallel History Project (ETH Zurich) copy of an archive document; no open licence stated,
+    rows transcribed, file not redistributed
+  use: 'target list wp_1965_hu_wargame: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the sha256 equals the one in data/notes/warsaw_pact.md,
+    so these are the bytes read then
+  retrieved: '2026-11-01'
+  sha256: 0e8622a0c07f23e2c5cf057d0f141bc5f4a861d7c06c966d38f9bdb7fd7a2d51
+- id: plandoc_cia_0001197534
+  url: https://archive.org/download/cia-readingroom-document-0001197534/0001197534.pdf
+  title: 'CIA FIRDB-312/00987-80 (1 May 1980), ''USSR General Staff Academy Lessons: Work of the Nuclear
+    Planning Group Using the Calculations Performed on Electronic Computers...'', translation of a 1977
+    TOP SECRET lesson (CIA reading room doc 0001197534, archive.org mirror; quotes from archive.org OCR
+    text)'
+  path: plan_documents/19/0001197534.pdf
+  licence: US government record, public domain (CIA FOIA reading room release; archive.org copy)
+  use: 'target list wp_1977_gsa_front_lesson: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the sha256 equals the one in data/notes/warsaw_pact.md,
+    so these are the bytes read then
+  retrieved: '2026-11-01'
+  sha256: 54eddb0bde648b4ec8732ef383c706fabdd2d2889b906f6a06ffb7ffca416296
+- id: plandoc_cia_0001197557
+  url: https://archive.org/download/cia-readingroom-document-0001197557/0001197557.pdf
+  title: CIA FIRDB-312/02229-80 (19 Sep 1980), USSR General Staff Academy Lessons, Lesson No. 1e, decision-making
+    and critique of the front commander's decision (lesson of 1977)
+  path: plan_documents/20/0001197557.pdf
+  licence: US government record, public domain (CIA FOIA reading room release; archive.org copy)
+  use: 'target list wp_1977_gsa_lessons: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the copy read on 2026-11-01 in /var/tmp/soviet_search/
+    was not hashed and is gone. Same document, page count covers the cited pages; byte identity cannot
+    be shown
+  retrieved: '2026-11-01'
+  sha256: 4d6b8a47e1d84f7a5f583886046151ae8e3cae2e84a232193cd75ba4f745890d
+- id: plandoc_cia_0001197532
+  url: https://archive.org/download/cia-readingroom-document-0001197532/0001197532.pdf
+  title: CIA FIRDB-312/00680-80, USSR General Staff Academy Lessons, Table of Contents and Lesson No.
+    2 (lesson of 1977)
+  path: plan_documents/21/0001197532.pdf
+  licence: US government record, public domain (CIA FOIA reading room release; archive.org copy)
+  use: 'target list wp_1977_gsa_lessons: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the copy read on 2026-11-01 in /var/tmp/soviet_search/
+    was not hashed and is gone. Same document, page count covers the cited pages; byte identity cannot
+    be shown
+  retrieved: '2026-11-01'
+  sha256: 49088799426e1f9303e6e39875d5c5465f6062c475e64d7f8a5c30175d7d40f9
+- id: plandoc_cia_0001197563
+  url: https://archive.org/download/cia-readingroom-document-0001197563/0001197563.pdf
+  title: CIA FIRDB-312/02709-80 (31 Oct 1980), USSR General Staff Academy Lessons, combat employment of
+    rocket troops and artillery (lesson of 1977)
+  path: plan_documents/22/0001197563.pdf
+  licence: US government record, public domain (CIA FOIA reading room release; archive.org copy)
+  use: 'target list wp_1977_gsa_lessons: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the copy read on 2026-11-01 in /var/tmp/soviet_search/
+    was not hashed and is gone. Same document, page count covers the cited pages; byte identity cannot
+    be shown
+  retrieved: '2026-11-01'
+  sha256: 403d6d9faf46b8495a53107f667333cf39acc8dc94fc0a855fc6e5ee48a8fe67
+- id: plandoc_cia_0001197561
+  url: https://archive.org/download/cia-readingroom-document-0001197561/0001197561.pdf
+  title: CIA FIRDB-312/02568-80 (3 Oct 1980), USSR General Staff Academy Lessons, Lesson No. 26a, commitment
+    of the front's second echelon (lesson of 1977)
+  path: plan_documents/23/0001197561.pdf
+  licence: US government record, public domain (CIA FOIA reading room release; archive.org copy)
+  use: 'target list wp_1977_gsa_lessons: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the copy read on 2026-11-01 in /var/tmp/soviet_search/
+    was not hashed and is gone. Same document, page count covers the cited pages; byte identity cannot
+    be shown
+  retrieved: '2026-11-01'
+  sha256: 6e929a5ae0c8774561d6ce21c9ff13a5207313892885c53a11c246fcb6fab0f5
+- id: plandoc_cia_0001197576
+  url: https://archive.org/download/cia-readingroom-document-0001197576/0001197576.pdf
+  title: CIA FIRDB-312/00036-81 (23 Jan 1981), USSR General Staff Academy Lessons, Lesson No. 24a, transition
+    to combat with nuclear weapons (lesson of 1977)
+  path: plan_documents/24/0001197576.pdf
+  licence: US government record, public domain (CIA FOIA reading room release; archive.org copy)
+  use: 'target list wp_1977_gsa_lessons: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the copy read on 2026-11-01 in /var/tmp/soviet_search/
+    was not hashed and is gone. Same document, page count covers the cited pages; byte identity cannot
+    be shown
+  retrieved: '2026-11-01'
+  sha256: efd5cc020eec4ef4aa7b095d056acab4fd1aac4007760e52bb191a2184564d41
+- id: plandoc_soyuz75
+  url: https://web.archive.org/web/20210214174950/https://digitalarchive.wilsoncenter.org/document/114547
+  title: Military Exercise Soyuz-75 Combat Instruction No. 04 of the Maritime Front, 24 Mar 1975 (Molczyk,
+    Antos; IPN; translated for CWIHP by G. Goldberg)
+  path: plan_documents/25/114547.html
+  licence: Wilson Center Digital Archive translation, read through the Wayback Machine; no open licence
+    stated, rows transcribed, file not redistributed
+  use: 'target list wp_1975_soyuz75: the source_url of its rows'
+  role: labels
+  volatile: the Wayback replay page carries its own request time and timings, so two fetches minutes apart
+    differ; raw_capture_sha256 is the stable hash
+  raw_capture_url: https://web.archive.org/web/20210214174950id_/https://digitalarchive.wilsoncenter.org/document/114547
+  raw_capture_path: plan_documents/25/114547_raw_capture.html
+  raw_capture_sha256: 86b69240706e520b7fa6cd63bba92babc430f0fc2aff8ee8955fb825bb960328
+  retrieved_note: downloaded again on this date; the copy read on 2026-11-01 in /var/tmp/soviet_search/
+    was not hashed and is gone. The quoted sentence was found in this copy
+  retrieved: '2026-11-01'
+  sha256: 737dde079919950fbaa850b41cb2799d7ced9aa97eb858d22c66f6140700800b
+- id: plandoc_php_listnuclear_240162
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/20315/ipublicationdocument_singledocument/8aab042c-853a-4c70-8054-7b239ae71b27/pl/ListNuclear_240162.pdf
+  title: Załącznik nr 6 'Wykaz uderzeń jądrowych "Zachodnich"' to the scenario of a command-staff map
+    exercise 'Organizacja i prowadzenie operacji zaczepnej Frontu z marszu...', 24.01.1962 (AIC MON Modlin,
+    GISB, spis 18/91/20; PHP 'A Landing Operation in Denmark', 2002)
+  path: plan_documents/26/ListNuclear_240162.pdf
+  licence: Parallel History Project (ETH Zurich) copy of an archive document; no open licence stated,
+    rows transcribed, file not redistributed
+  use: 'target list nato_1962_pl_exercise_mirror: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the sha256 equals the one in data/notes/warsaw_pact.md,
+    so these are the bytes read then
+  retrieved: '2026-11-01'
+  sha256: 60bd07aaa9799808191f3850e8a95c8e99e46e6ec1232a0d282b4a69f2c81137
+- id: plandoc_php_6506_plan_westerners_e
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/19630/ipublicationdocument_singledocument/25b6323f-c328-4f25-9143-a335a21c354e/en/6506_Plan_Westerners_E.pdf
+  title: Plan of the first massive nuclear strike by the 'Westerners', commencing morning of 23 June [1965];
+    for K-1/98/1965, HPA Staff 1st Group Directorate, No. 0022/Gyak. (PHP English translation; Hungarian
+    original in 6506_Plan_Westerners_E+HU.pdf not transcribed)
+  path: plan_documents/27/6506_Plan_Westerners_E.pdf
+  licence: Parallel History Project (ETH Zurich) copy of an archive document; no open licence stated,
+    rows transcribed, file not redistributed
+  use: 'target list nato_1965_hu_wargame_mirror: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the sha256 equals the one in data/notes/warsaw_pact.md,
+    so these are the bytes read then
+  retrieved: '2026-11-01'
+  sha256: 810f238972fa92fef9086e14d3dfd7e23d4b7488458b163dd2c2d303d700ee69
+- id: plandoc_fcda_1955_report
+  url: https://archive.org/download/fcda1955annualreportfor1955/FCDA%20-%201955%20-%20Annual%20Report%20for%201955.pdf
+  title: 'Federal Civil Defense Administration, Annual Report for 1955 (Washington: GPO, 1956), map ''ATTACK
+    PATTERN OPERATION ALERT - 1955'''
+  path: plan_documents/28/FCDA_-_1955_-_Annual_Report_for_1955.pdf
+  licence: US government record, public domain
+  use: 'target list cd_1955_operation_alert_full: the source_url of its rows'
+  role: labels
+  retrieved_note: 'data/notes/civil_defence.md gives a shortened hash, 06132cd4…fa57930: its start agrees
+    with this sha256 and its end does not, so the same bytes cannot be claimed'
+  retrieved: '2026-11-01'
+  sha256: 06132cd43c1317f7d7a71c36fea883adca3fdbcdea56edb83fd2cea915fcdf59
+- id: plandoc_loc_sn83045462_00280607083_1955061501_1195
+  url: https://tile.loc.gov/text-services/word-coordinates-service?segment=/service/ndnp/dlc/batch_dlc_idomeneo_ver01/data/sn83045462/00280607083/1955061501/1195.xml&format=alto_xml&full_text=1
+  title: The Evening Star (Washington, D.C.), 15 June 1955, p.A-1 (Chronicling America sn83045462, OCR)
+  path: plan_documents/29/dlc_batch_dlc_idomeneo_ver01_data_sn83045462_00280607083_1955061501_1195_xml.json
+  licence: 'Library of Congress, Chronicling America: OCR of a 1955 newspaper page, no known copyright
+    restrictions stated by the Library; only place names transcribed'
+  use: 'target list cd_1955_operation_alert_full: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the sha256 equals the one in data/notes/operation_alert_1955.md,
+    so these are the bytes read then
+  retrieved: '2026-11-01'
+  sha256: cb54151d11483584c2425eaf90b43f34035c4897715d2e53e7333fc3c2df005d
+- id: plandoc_loc_sn83016244_00517170665_1955061501_0438
+  url: https://tile.loc.gov/text-services/word-coordinates-service?segment=/service/ndnp/fu/batch_fu_belleview_ver01/data/sn83016244/00517170665/1955061501/0438.xml&format=alto_xml&full_text=1
+  title: The Key West Citizen (Key West, Fla.), 15 June 1955, p.2, AP story "President Eisenhower, Others
+    'Flee' In Mock Atomic Attack" (Chronicling America sn83016244, OCR)
+  path: plan_documents/30/fu_batch_fu_belleview_ver01_data_sn83016244_00517170665_1955061501_0438_xml.json
+  licence: 'Library of Congress, Chronicling America: OCR of a 1955 newspaper page, no known copyright
+    restrictions stated by the Library; only place names transcribed'
+  use: 'target list cd_1955_operation_alert_full: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the sha256 equals the one in data/notes/operation_alert_1955.md,
+    so these are the bytes read then
+  retrieved: '2026-11-01'
+  sha256: 2128b437e3867c5514f424c51b6545cbaf2544b46c270761774982fc0a78f544
+- id: plandoc_loc_sn83045462_00280607095_1955061601_0004
+  url: https://tile.loc.gov/text-services/word-coordinates-service?segment=/service/ndnp/dlc/batch_dlc_idomeneo_ver01/data/sn83045462/00280607095/1955061601/0004.xml&format=alto_xml&full_text=1
+  title: The Evening Star (Washington, D.C.), 16 June 1955, p.A-4 (Chronicling America sn83045462, OCR)
+  path: plan_documents/31/dlc_batch_dlc_idomeneo_ver01_data_sn83045462_00280607095_1955061601_0004_xml.json
+  licence: 'Library of Congress, Chronicling America: OCR of a 1955 newspaper page, no known copyright
+    restrictions stated by the Library; only place names transcribed'
+  use: 'target list cd_1955_operation_alert_full: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the sha256 equals the one in data/notes/operation_alert_1955.md,
+    so these are the bytes read then
+  retrieved: '2026-11-01'
+  sha256: 5390750fcf906071b20380af137a0c2ce7952837484534dd225c72251677dc8b
+- id: plandoc_loc_sn84020662_00414185277_1955061701_0442
+  url: https://tile.loc.gov/text-services/word-coordinates-service?segment=/service/ndnp/ak/batch_ak_dungenesscrab_ver01/data/sn84020662/00414185277/1955061701/0442.xml&format=alto_xml&full_text=1
+  title: The Nome Nugget (Nome, Alaska), 17 June 1955, p.3, AP story "History Making Disaster Rehearsal
+    Leaves 5,000,000 Americans 'Dead'" (Chronicling America sn84020662, OCR)
+  path: plan_documents/32/ak_batch_ak_dungenesscrab_ver01_data_sn84020662_00414185277_1955061701_0442_xml.json
+  licence: 'Library of Congress, Chronicling America: OCR of a 1955 newspaper page, no known copyright
+    restrictions stated by the Library; only place names transcribed'
+  use: 'target list cd_1955_operation_alert_full: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the sha256 equals the one in data/notes/operation_alert_1955.md,
+    so these are the bytes read then
+  retrieved: '2026-11-01'
+  sha256: 48adb94692a97528b30fa053602cf939335f35cfb5fdf101bca66cd8a941bb88
+- id: plandoc_canada_1956_extract
+  url: text extract supplied in session (scratchpad gh/hans/1956_1.txt, origin not recorded); volume located
+    via https://parl.canadiana.ca/search (oop.debates_CDC2203_07)
+  title: Canada, House of Commons Debates, 22nd Parliament, 3rd Session (1956), Vol. VII, Committee of
+    Supply - Civil Defence, ministerial statement on evacuation planning
+  path: plan_documents/not_held/plandoc_canada_1956_extract
+  licence: Canadian House of Commons Debates 1956, Crown copyright; only area names transcribed
+  use: 'target list cd_1956_canada_target_areas: the source_url of its rows'
+  role: labels
+  fetch: 'none: a text extract, no document was downloaded'
+  retrieved: unknown
+  retrieved_note: text extract supplied in session, origin not recorded; no retrieval took place, and
+    the volume was only located through parl.canadiana.ca (data/notes/civil_defence.md section 5)
+  sha256: null
+  hash_note: no file is held. data/notes/civil_defence.md gives a shortened hash, d036cd97…7fd57930, of
+    a copy of the extract that is gone
+- id: plandoc_campbell_1980
+  url: https://www.duncancampbell.org/menu/journalism/newstatesman/newstatesman-1980/WW3.pdf
+  title: 'Duncan Campbell, ''World War III: an exclusive preview'', New Statesman, 3 October 1980, map
+    ''POST WAR BRITAIN'' (Square Leg bomb plot, England and Wales)'
+  path: plan_documents/34/WW3.pdf
+  licence: Copyright of the author and New Statesman; no licence stated, rows transcribed, file not redistributed
+  use: 'target list cd_1980_square_leg: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the start and end of the sha256 agree with the shortened
+    hash in data/notes/civil_defence.md
+  retrieved: '2026-11-01'
+  sha256: d3c43a636d8a899eff254fcbb510fa5f9f104a43c75bf92d3ee94ae1a8e8c0ea
+- id: plandoc_campbell_1981
+  url: https://www.duncancampbell.org/menu/journalism/newstatesman/newstatesman-1981/Scotland%27s%20nuclear%20targets.pdf
+  title: Duncan Campbell, 'Scotland's nuclear targets', New Statesman, 6 March 1981, map 'POST WAR SCOTLAND'
+    (Square Leg bomb plot, Scotland)
+  path: plan_documents/35/Scotland_s_nuclear_targets.pdf
+  licence: Copyright of the author and New Statesman; no licence stated, rows transcribed, file not redistributed
+  use: 'target list cd_1980_square_leg: the source_url of its rows'
+  role: labels
+  retrieved_note: downloaded again on this date; the start and end of the sha256 agree with the shortened
+    hash in data/notes/civil_defence.md
+  retrieved: '2026-11-01'
+  sha256: a155d3042aad0d705b796f5aeca589953da45e154d7e1d0988be13f41749927e
+- id: fas_status
+  url: https://fas.org/initiative/status-world-nuclear-forces/
+  title: Status of World Nuclear Forces (2026 table).
+  licence: Page states "Federation of American Scientists (c) 2026"; no licence on the page itself. The
+    OWID record for this data gives CC BY 4.0.
+  use: '2026 warhead counts for all nine states; global alert count. Not obtained: Nothing missing from
+    this page. It splits by deployed strategic and nonstrategic, reserve, stockpile and inventory, not
+    by ICBM, SLBM and bomber.'
+  role: map
+  retrieved: '2026-11-01'
+  path: stockpiles/fas_status/page.html
+  sha256: 50e6f6b1b234f0347149228dccd0e4f4426bbfd07c0507110fe0daf966096d96
+- id: sipri_yb2026_ch08
+  url: https://www.sipri.org/sites/default/files/YB26%2008%20World%20Nuclear%20Forces.pdf
+  title: SIPRI Yearbook 2026, chapter 8, World nuclear forces.
+  licence: '(c) SIPRI 2026. SIPRI terms: data may be used for analysis; reproducing more than 10% of a
+    data set needs permission. See sipri_terms.'
+  use: 'January 2026 cross-check and all delivery splits; alert range. Not obtained: Nothing missing.
+    All nine states are covered, but North Korea has no warhead split by delivery.'
+  role: map
+  retrieved: '2026-11-01'
+  path: stockpiles/sipri_yb2026_ch08/ch08.pdf
+  sha256: 026508a1d9c95a76aabb52f422bfc100517a9f07a4e65a43b57e50042c46db52
+- id: sipri_terms
+  url: https://www.sipri.org/about/terms-and-conditions
+  title: Terms and conditions.
+  licence: As stated on the page itself.
+  use: Reuse conditions for SIPRI figures. Nothing further was needed from it.
+  role: map
+  retrieved: '2026-11-01'
+  path: stockpiles/sipri_terms/page.html
+  sha256: 4aaa3846bb516a6718648c380cec1c841e5c8f410fdc464c9c72161b02cd4791
+- id: owid_warhead_stockpiles
+  url: https://ourworldindata.org/grapher/nuclear-warhead-stockpiles.csv
+  title: Estimated number of nuclear warheads, grapher CSV.
+  licence: OWID indicator metadata gives CC BY 4.0 for the FAS origin (retained copy in owid_indicator_meta).
+  use: 'US and USSR stockpile totals 1945-1977. Not obtained: The FAS source chart data was not downloaded
+    directly; this is the OWID processed copy.'
+  role: map
+  retrieved: '2026-11-01'
+  path: stockpiles/owid_warhead_stockpiles/data.csv
+  sha256: 5fa030e5a7e312c74884adf5d9154afef16fd2fc7fe6b33eaa6ee72401dd7a9b
+- id: nrdc_table_us
+  url: https://web.archive.org/web/20140328105437/http://www.nrdc.org/nuclear/nudb/datab1.asp
+  title: Table of US Strategic Offensive Force Loadings, 1945-2002.
+  licence: Page states (c) Natural Resources Defense Council. Figures only are reproduced.
+  use: '1956 US split by delivery. Not obtained: The current nrdc.org address was not tried; the underlying
+    1997 Norris and Cochran databook was not opened.'
+  role: map
+  retrieved: '2026-11-01'
+  path: stockpiles/nrdc_table_us/table.html
+  sha256: 5bc2192355281909dd4c1e999b774fc7e6937b314319cf937bef002e022fed6a
+- id: nrdc_table_ussr
+  url: https://web.archive.org/web/20140328104322/http://www.nrdc.org/nuclear/nudb/datab2.asp
+  title: Table of USSR/Russian Strategic Offensive Force Loadings, 1945-2002.
+  licence: Page states (c) Natural Resources Defense Council. Figures only are reproduced.
+  use: '1965 USSR split by delivery. Not obtained: As for nrdc_table_us. The USSR table starts in 1956.'
+  role: map
+  retrieved: '2026-11-01'
+  path: stockpiles/nrdc_table_ussr/table.html
+  sha256: d119f6f4ed81dd96f11d1670186b9fce1ff75da49ff27919bc4978b377e5e6f3
+- id: nrdc_war_plan_2001
+  url: https://www.nrdc.org/sites/default/files/us-nuclear-war-plan-report.pdf
+  title: 'The U.S. Nuclear War Plan: A Time for Change (2001).'
+  licence: No licence statement checked in the extracted text; figures only are reproduced.
+  use: 'US alert shares by level (Table 3.1); reliability (Table 5.3). Not obtained: The CBO 1986 and
+    CRS 1991 sources it cites for reliability were not opened.'
+  role: map
+  retrieved: '2026-11-01'
+  path: stockpiles/nrdc_war_plan_2001/report.pdf
+  sha256: fe4ede1eb13cc6e9d6f0669a29198f666e6f2ce520d67e2d7b4f5649b40ab9f9
+- id: unidir_alert_2012
+  url: https://unidir.org/wp-content/uploads/2023/05/reducing-alert-rates-of-nuclear-weapons-en-307.pdf
+  title: Reducing Alert Rates of Nuclear Weapons (Kristensen and McKinzie, 2012).
+  licence: Copyright (c) United Nations, 2012. All rights reserved. Figures and short quotes only.
+  use: 'Alert counts and shares by state and delivery. Not obtained: Data are from 2012; no newer openly
+    available split by state was found.'
+  role: map
+  retrieved: '2026-11-01'
+  path: stockpiles/unidir_alert_2012/report.pdf
+  sha256: 5182d4bd94ea1ebf49f6de050149635eff9d21377c5e8481a7b1e52748c3165e
+- id: ucs_hair_trigger_faq
+  url: https://www.ucs.org/sites/default/files/attach/2015/01/Hair-Trigger%20FAQ.pdf
+  title: Frequently Asked Questions about Taking Nuclear Weapons off Hair-Trigger Alert.
+  licence: (c) January 2015 Union of Concerned Scientists.
+  use: Cross-check on alert counts. Nothing further was needed from it.
+  role: map
+  retrieved: '2026-11-01'
+  path: stockpiles/ucs_hair_trigger_faq/faq.pdf
+  sha256: a7d286ac3b14289c7d9e4cc1457e1eb3a0fe30695109a3ef46d7309afb3488d8
+- id: sgs_hobson_1991
+  url: https://scienceandglobalsecurity.org/archive/sgs02hobson.pdf
+  title: The ICBM Basing Question (Hobson, Science & Global Security 2, 1991).
+  licence: (c) 1991 Gordon and Breach; "Photocopying permitted by license only". Scalar with citation
+    only.
+  use: Reliability assumption. Nothing further was needed from it.
+  role: map
+  retrieved: '2026-11-01'
+  path: stockpiles/sgs_hobson_1991/paper.pdf
+  sha256: 971c8799d3872e09537035d9e2654de722d62d5bb41533550a5b56cb55c7eac1
+- id: frus_1952_54v02p1_d66
+  url: https://history.state.gov/historicaldocuments/frus1952-54v02p1/d66
+  title: 'FRUS 1952-1954, vol. II part 1, document 66: Report of the Special Evaluation Subcommittee of
+    the NSC, 18 May 1953.'
+  licence: US government record; no licence statement in the extracted text. Treated as public domain,
+    which you may want to confirm.
+  use: '1953-55 bomber aborts, operational losses, duds, attrition by defences. Not obtained: It covers
+    Soviet bombers attacking the US, not SAC bombers attacking the USSR.'
+  role: map
+  retrieved: '2026-11-01'
+  path: stockpiles/frus_1952_54v02p1_d66/page.html
+  sha256: 151999485c7e0a51fea9b598da7947ef866aa08b171c508da2dd168aca5fe405
+- id: airforcemag_early_war_plans
+  url: https://www.airandspaceforces.com/article/1212war/
+  title: The Early War Plans (1 December 2012).
+  licence: No licence located in the extracted page. Short quote only.
+  use: '1946 plan attrition upper value. Not obtained: It is a secondary account; the 1946 plan itself
+    was not opened.'
+  role: map
+  retrieved: '2026-11-01'
+  path: stockpiles/airforcemag_early_war_plans/page.html
+  sha256: 3d6ff30d8494723be1fbc6ed06bb12234bbf1fa655ddee218aa4a59314a27c3e
+- id: csis_gmd
+  url: https://missilethreat.csis.org/system/gmd/
+  title: Ground-based Midcourse Defense (GMD) System, last updated 17 September 2026.
+  licence: (c) 2026 CSIS. All rights reserved. Count and short quote only.
+  use: GMD interceptor count. Nothing further was needed from it.
+  role: map
+  retrieved: '2026-11-01'
+  path: stockpiles/csis_gmd/page.html
+  sha256: 184ed2ed25cd10735dd45cf85f995046f32d146e3c9acecb7104e4b1e72c0f9d
+- id: cacnp_bmd_factsheet
+  url: https://armscontrolcenter.org/fact-sheet-u-s-ballistic-missile-defense/
+  title: 'Fact sheet: U.S. Ballistic Missile Defense, updated 21 May 2025.'
+  licence: (c) 2026 Center for Arms Control and Non-Proliferation.
+  use: GMD count cross-check. Nothing further was needed from it.
+  role: map
+  retrieved: '2026-11-01'
+  path: stockpiles/cacnp_bmd_factsheet/page.html
+  sha256: b242187a81aabefd72e93dad0dd478e09f40fa30c3a4ea68412021ce42d78db6
+- id: wiki_a135
+  url: https://en.wikipedia.org/wiki/A-135_anti-ballistic_missile_system
+  title: A-135 anti-ballistic missile system.
+  licence: CC BY-SA 4.0, as stated on the page.
+  use: 'A-135 interceptor count, weak. Not obtained: A primary or think-tank count was not obtained. The
+    GlobalSecurity page could not be reached and the CSIS Russian system page was not tried.'
+  role: map
+  retrieved: '2026-11-01'
+  path: stockpiles/wiki_a135/page.html
+  sha256: 5163ec595371fc83553669e2ab5073db9fe9f9189722cd51600fb74ca2cef710
+- id: acp_toon_2007
+  url: https://acp.copernicus.org/articles/7/1973/2007/acp-7-1973-2007.pdf
+  title: Atmospheric effects and societal consequences of regional scale nuclear conflicts (Toon et al.,
+    ACP 7, 2007).
+  licence: '"Under a Creative Commons License", as printed on the first page.'
+  use: 'Searched for a reliability figure; none used. Not obtained: No delivery reliability is stated.'
+  role: map
+  retrieved: '2026-11-01'
+  path: stockpiles/acp_toon_2007/toon.pdf
+  sha256: fc2506b8b4b6b984f1ae0c5288056bd4be34ff51d43264b73ab9900a348efbdc
+- id: sgs_plan_a
+  url: https://sgs.princeton.edu/the-lab/plan
+  title: PLAN A.
+  licence: Copyright (c) The Trustees of Princeton University.
+  use: 'Searched for a reliability figure; none used. Not obtained: No figure on this page or on the Simulating
+    Nuclear War page (sgs_simulating). No separate Glaser et al. 2020 paper was located.'
+  role: map
+  retrieved: '2026-11-01'
+  path: stockpiles/sgs_plan_a/page.html
+  sha256: 1c177d39892cde13b32e1529c318b776ac11907c4e3c19da78db6e139aa88f7e
+- id: naturalearth_10m_populated_places
+  url: https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_populated_places_simple.geojson
+  path: naturalearth/ne_10m_populated_places_simple.geojson
+  licence: public domain (Natural Earth)
+  use: present-day towns of the modern map scenarios, population and administrative rank only; used in
+    memory, never written out
+  role: universe
+  retrieved: '2026-11-01'
+  sha256: fd3fa867a320cbd5c5b6bb5bc550afeec2939fb2cef688e508007282a55ac42f
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from

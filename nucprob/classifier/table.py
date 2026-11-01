@@ -14,16 +14,20 @@ As of the document's date:
   later knowledge. Town populations are the 1961 census for all of them.
 - The 1956 bloc towns serve the US documents of 1956-64 with features of June 1956.
 
+A list complete only within the sector its document concerns (data/curated/labels/SECTORS.yaml)
+keeps its positives and the towns inside the sector. Towns outside say nothing about the document.
+
 Not covered: NAPB-90, whose units are US counties with their own features (nucprob/us1985); the
 SAC airfield list, which is a list of airfields, not towns.
 
 Writes data/processed/classifier_table.parquet.
 """
 
-from collections.abc import Iterable
+from collections.abc import Iterable, Mapping
 
 import numpy as np
 import pandas as pd
+import yaml
 
 from nucprob.classifier.features import (
     BLOC,
@@ -38,12 +42,32 @@ from nucprob.classifier.features import (
     nmc_as_of,
 )
 from nucprob.model.splits import BLOCK_KM, assign_blocks
-from nucprob.paths import PROCESSED
+from nucprob.paths import CURATED, PROCESSED
 from nucprob.plans import plans
 from nucprob.transfer.features import COMMON
 
 SAC = "us_1956_sac_complexes"
 ID_COLUMNS = ["plan_id", "group", "attacker", "doc_type", "grade", "complete", "role", "year"]
+
+
+def sectors() -> dict[str, list[Mapping]]:
+    path = CURATED / "labels" / "SECTORS.yaml"
+    if not path.exists():
+        return {}
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    return {s["plan_id"]: s["include"] for s in data.get("sectors", [])}
+
+
+def in_sector(t: pd.DataFrame, boxes: list[Mapping]) -> pd.Series:
+    """Inside any of the country's boxes, or a positive. A country with no box lies outside."""
+    keep = t["listed"].astype(bool)
+    for b in boxes:
+        keep |= (
+            (t["country"] == b["country"])
+            & t["lat"].between(b.get("lat_min", -90), b.get("lat_max", 90))
+            & t["lon"].between(b.get("lon_min", -180), b.get("lon_max", 180))
+        )
+    return keep
 
 
 def bloc_towns() -> pd.DataFrame:
@@ -58,6 +82,7 @@ def bloc_towns() -> pd.DataFrame:
             "lat",
             "lon",
             "pop",
+            "log_pop_prewar",
             *COMMON,
             *MILITARY,
             "listed",
@@ -82,6 +107,7 @@ def assemble(registry: pd.DataFrame | None = None) -> pd.DataFrame:
     bloc = bloc_towns()
     towns = transfer_towns()
     table_nmc = nmc()
+    boxes = sectors()
     parts = []
     for _, doc in reg.iterrows():
         plan, year = doc["plan_id"], doc["year"]
@@ -106,6 +132,8 @@ def assemble(registry: pd.DataFrame | None = None) -> pd.DataFrame:
                     t = document_year_features(t, year)
                 else:
                     t = add_defence(t, region, year)
+        if plan in boxes:
+            t = t[in_sector(t, boxes[plan])].reset_index(drop=True)
         for c in ID_COLUMNS:
             t[c] = doc[c]
         states = t["country"].map(COW)

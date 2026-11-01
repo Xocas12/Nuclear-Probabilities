@@ -1,6 +1,6 @@
 # Soviet and Warsaw Pact target material: search of November 2026
 
-Search date 2026-11-01, about 10:04 to 10:36 UTC. Only what was actually opened is reported. Nothing here has been entered in `data/curated/labels/`. All candidate rows below still need checking by a second reader. Downloads are outside the repo, in `/var/tmp/soviet_search/`, and that directory is not permanent.
+Search date 2026-11-01, about 10:04 to 10:36 UTC. Only what was actually opened is reported. After a second read (`second_read_2026-11.md`), 44 rows were entered in `data/curated/labels/wp_1977_gsa_lessons.csv` and 2 in `wp_1975_soyuz75.csv`. No other candidate row below has been entered, and those rows still need checking by a second reader. The downloads of this search were in `/var/tmp/soviet_search/`, which no longer exists; hashes of the documents behind the entered rows are under "Hashes" below.
 
 ## Result in brief
 
@@ -193,3 +193,17 @@ Columns follow `data/curated/labels/SCHEMA.md`. `plan_id` values are suggestions
 | wp_1959_r5m_uhl_ivkin | USSR (R-5M brigade in the GDR), as inferred by historians | Italy | 1959 | reconstruction | 9 | Naples |  | NATO headquarters |  |  |  |  |  |  | Uhl & Ivkin, "Operation Atom", CWIHP Bulletin 12/13 (2001), pp.299-306 | https://www.wilsoncenter.org/sites/default/files/media/documents/publication/New_Ev_CWMilHist.pdf | p.303 (PDF p.15) | Rome and NATO’s Southern European Headquarters in Naples could be targeted | SECONDARY. The authors write that the documents are not accessible and "one can only speculate"; n.27 cites Der Spiegel and Bondarenko. Hypothetical: from a proposed base at Vlorë, Albania. |
 | wp_1959_r5m_spiegel | USSR (R-5M brigade in the GDR), as reported | UK | 1959 | reconstruction | 1 | Norfolk |  | Thor missile sites |  |  | 4 |  |  |  | W. Bayer, "Geheimoperation Fürstenberg", Der Spiegel no.3, Jan 2000; unofficial English copy | https://reality.rngend.com/uploads/derspiegl17jan2000 | web page, no pages | four nuclear strikes were to destroy the first British "Thor" missile positions in Norfolk and Lincolnshire | SECONDARY press, third-party copy of a translation; original article not opened. Four strikes shared; disagrees with Uhl & Ivkin on the counties. |
 | wp_1959_r5m_spiegel | USSR (R-5M brigade in the GDR), as reported | UK | 1959 | reconstruction | 2 | Lincolnshire |  | Thor missile sites |  |  | 4 |  |  |  | W. Bayer, "Geheimoperation Fürstenberg", Der Spiegel no.3, Jan 2000; unofficial English copy | https://reality.rngend.com/uploads/derspiegl17jan2000 | web page, no pages | four nuclear strikes were to destroy the first British "Thor" missile positions in Norfolk and Lincolnshire | SECONDARY press, third-party copy of a translation; original article not opened. Four strikes shared; disagrees with Uhl & Ivkin on the counties. |
+
+## Hashes
+
+Downloaded again on 2026-11-01, after the reading, into `data/raw/plan_documents/` (git-ignored). The copies that were read were not hashed and are gone, so these hashes do not prove the bytes are the same. Each PDF's page count covers its cited pages, and the quoted Soyuz-75 sentence is in the capture. The hash for Soyuz-75 is of the capture without the Wayback frame (the `id_` address), because the replay page cited in the rows changes with every request. `data/sources.yaml` holds these under `plandoc_cia_*` and `plandoc_soyuz75`.
+
+| Document | sha256 |
+|---|---|
+| 0001197557 (Lesson 1e) | `4d6b8a47e1d84f7a5f583886046151ae8e3cae2e84a232193cd75ba4f745890d` |
+| 0001197532 (Lesson 2) | `49088799426e1f9303e6e39875d5c5465f6062c475e64d7f8a5c30175d7d40f9` |
+| 0001197563 (rocket troops and artillery) | `403d6d9faf46b8495a53107f667333cf39acc8dc94fc0a855fc6e5ee48a8fe67` |
+| 0001197561 (Lesson 26a) | `6e929a5ae0c8774561d6ce21c9ff13a5207313892885c53a11c246fcb6fab0f5` |
+| 0001197576 (Lesson 24a) | `efd5cc020eec4ef4aa7b095d056acab4fd1aac4007760e52bb191a2184564d41` |
+| Soyuz-75 raw Wayback capture | `86b69240706e520b7fa6cd63bba92babc430f0fc2aff8ee8955fb825bb960328` |
+| 0001197534 (nuclear planning group; `wp_1977_gsa_front_lesson`, already held) | `54eddb0bde648b4ec8732ef383c706fabdd2d2889b906f6a06ffb7ffca416296` |

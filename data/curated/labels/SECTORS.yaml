@@ -1,0 +1,130 @@
+# Where each train list's completeness or target claim actually holds: the operational sector it
+# concerns, per country, as bounding boxes in decimal degrees (bounds inclusive). A town outside
+# its plan's boxes is not a negative of that plan: the document did not look there.
+#
+# basis: documented = a document of the plan states an operational boundary or objective region;
+#          the page and quote are below. A stated line is rendered as boxes stepped by longitude,
+#          each box's lat_min being the line's southern end within that step, so a step can reach
+#          up to about 0.3 degrees (35 km) past the line, never short of it.
+#        derived = no boundary stated: the linked targets' extent plus a fixed margin of 0.5 deg
+#          latitude and 0.75 deg longitude (about 55 km), chosen before any box was drawn.
+# Line vertices are the named towns' GeoNames points. A country missing from `include` has no
+# rows in that plan, or is out of its sector. No box was chosen by looking at a model score.
+sectors:
+  - plan_id: wp_1967_lato67
+    basis: documented
+    include:
+      - {country: Denmark, lat_min: 54.5, lat_max: 57.8, lon_min: 8.0, lon_max: 15.2}
+      - {country: Netherlands, lat_min: 50.7, lat_max: 53.6, lon_min: 3.3, lon_max: 7.3}
+      # Belgium: north-west of Liege-Jeumont; west of Jeumont the line is the French border.
+      - {country: Belgium, lat_min: 49.4, lat_max: 51.6, lon_min: 2.5, lon_max: 4.10}
+      - {country: Belgium, lat_min: 50.29, lat_max: 51.6, lon_min: 4.10, lon_max: 4.84}
+      - {country: Belgium, lat_min: 50.46, lat_max: 51.6, lon_min: 4.84, lon_max: 5.57}
+      - {country: Belgium, lat_min: 50.63, lat_max: 51.6, lon_min: 5.57, lon_max: 6.0}
+      # FRG: north of Liege-Dusseldorf-Paderborn-Magdeburg.
+      - {country: FRG, lat_min: 50.78, lat_max: 55.2, lon_min: 5.8, lon_max: 6.3}
+      - {country: FRG, lat_min: 50.99, lat_max: 55.2, lon_min: 6.3, lon_max: 6.78}
+      - {country: FRG, lat_min: 51.22, lat_max: 55.2, lon_min: 6.78, lon_max: 7.77}
+      - {country: FRG, lat_min: 51.47, lat_max: 55.2, lon_min: 7.77, lon_max: 8.75}
+      - {country: FRG, lat_min: 51.72, lat_max: 55.2, lon_min: 8.75, lon_max: 10.2}
+      - {country: FRG, lat_min: 51.93, lat_max: 55.2, lon_min: 10.2, lon_max: 11.7}
+    source_url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/20318/ipublicationdocument_singledocument/61cd99c8-8388-466c-bbd5-f454fda05a53/ru/OperationalDirective_310567.pdf
+    source_page: PDF p.3 (facsimile p.2) for the boundary; PDF p.4 (facsimile p.3) for the tasks
+    quote: >-
+      "Разграничительная линия: /иск/ ФРАНКФУРТ, /иск/ МИТТЕНВАЛЬДЕ, МАГДЕБУРГ, ПАДЕБОРН,
+      ДЮССЕЛЬДОРФ, ЛИЕЖ, ЖЕМОНЬ и далее вдоль французско-бельгийской границы"; "овладением
+      территорией ГОЛЛАНДИИ, БЕЛЬГИИ и ДАНИИ"
+    notes: >-
+      The 57 strategic strikes are delivered "в пользу Приморского Фронта" and the boundary is the
+      one with the Western Front on its left. ЖЕМОНЬ read as Jeumont, on the French-Belgian border,
+      which is where the sentence continues from; the scan is poor. The line cuts tighter than the
+      review's lat<50.1: Aachen, Cologne, Bonn and Kassel lie south of it. All of the Netherlands
+      and Denmark are objectives of the front (the Netherlands is whole although Dutch Limburg
+      touches the line's latitude).
+  - plan_id: wp_1965_hu_wargame
+    basis: documented
+    include:
+      - {country: Austria, lat_min: 46.3, lat_max: 49.1, lon_min: 9.4, lon_max: 17.2}
+      - {country: FRG, lat_min: 47.2, lat_max: 48.98, lon_min: 8.64, lon_max: 13.9}
+      - {country: Italy, lat_min: 44.29, lat_max: 47.1, lon_min: 10.02, lon_max: 13.92}
+      # Beyond the stated objectives: Piacenza airfield, a listed target, lies west of Brescia.
+      - {country: Italy, lat_min: 44.82, lat_max: 45.22, lon_min: 9.49, lon_max: 10.02}
+    source_url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/19635/ipublicationdocument_singledocument/0e169cd9-75ef-493a-8b64-035b470ae241/en/6505_Plan_E.pdf
+    source_page: PDF pp.3-4 of "Plan for Hungarian Command-Staff War Game" (PHP English)
+    quote: >-
+      "to reach the area of PASSAU, SALZBURG, HERMAGOR on the 5th-6th days of the operation, and to
+      eliminate Austria from the war"; "destroy the enemy's operational reserves in the southern
+      part of the FRG and the eastern part of the Lombard plain, occupy the areas of STUTTGART,
+      SINGEN, BREGENZ, BRESCIA, and BOLOGNA on the 11th-13th days of the operation"
+    notes: >-
+      The list's own scan (6506_Plan_Easterners, HU) states no boundary; this is the plan of the
+      same war game, the Southwestern Front's assignment. It gives objective areas, not a boundary
+      line, so the box edges are those areas' towns plus 0.2 degrees for "area of": FRG north edge
+      Stuttgart, west edge Singen; Italy south edge Bologna, west edge Brescia. The Western Front
+      on the other flank attacks towards Frankfurt and Nuremberg, north of the FRG box. Austria is
+      whole: the task is to eliminate it from the war. The review's cuts (FRG lat>49, Italy
+      lat<44.5) agree within 0.2 degrees. The extra Piacenza box is derived from the row.
+  - plan_id: wp_1964_csla_plan
+    basis: documented
+    include:
+      - {country: FRG, lat_min: 49.60, lat_max: 49.95, lon_min: 9.93, lon_max: 11.0}
+      - {country: FRG, lat_min: 49.29, lat_max: 50.10, lon_min: 11.0, lon_max: 11.55}
+      - {country: FRG, lat_min: 49.01, lat_max: 50.22, lon_min: 11.55, lon_max: 12.10}
+      - {country: FRG, lat_min: 48.20, lat_max: 50.32, lon_min: 12.10, lon_max: 13.84}
+    source_url: https://www.files.ethz.ch/isn/108642/warplan_dossier.pdf
+    source_page: PDF p.18 (printed p.16) for the depth line; PDF p.19 (printed p.17) for the flanks
+    quote: >-
+      "Nuclear strike against the troops of the enemy should be targeted to the depth up to the line
+      Würzburg, Erlangen, Regensburg, Landshut."; "The separation line with the Army is the ČSSR-GDR
+      border as far as Aš, then Bayreuth, Mosbach"
+    notes: >-
+      The box is the first nuclear strike's zone, between that depth line and the Czechoslovak
+      border, under the right-flank line (Aš, Bayreuth; beyond Bayreuth the depth line itself runs
+      north of the Bayreuth-Mosbach line, so the north edge there is Bayreuth's latitude). All the
+      located rows are first-strike or 10th Air Army regions in this zone. The front's whole
+      operation runs on to Lyon; later strikes are counted, not named, so that area is not in the
+      box. PLANS.yaml has this list as complete: false.
+  - plan_id: wp_1977_gsa_lessons
+    basis: documented
+    include:
+      - {country: Netherlands, lat_min: 50.7, lat_max: 53.6, lon_min: 3.3, lon_max: 7.3}
+      # Belgium: north of Duisburg-Dinant; no rows, given for the record.
+      - {country: Belgium, lat_min: 49.4, lat_max: 51.6, lon_min: 2.5, lon_max: 4.91}
+      - {country: Belgium, lat_min: 50.26, lat_max: 51.6, lon_min: 4.91, lon_max: 5.6}
+      - {country: Belgium, lat_min: 50.70, lat_max: 51.6, lon_min: 5.6, lon_max: 6.5}
+      # FRG: north of Dinant-Duisburg-Lunen-Osterwieck.
+      - {country: FRG, lat_min: 50.87, lat_max: 55.2, lon_min: 5.8, lon_max: 6.3}
+      - {country: FRG, lat_min: 51.14, lat_max: 55.2, lon_min: 6.3, lon_max: 6.76}
+      - {country: FRG, lat_min: 51.43, lat_max: 55.2, lon_min: 6.76, lon_max: 7.52}
+      - {country: FRG, lat_min: 51.62, lat_max: 55.2, lon_min: 7.52, lon_max: 8.6}
+      - {country: FRG, lat_min: 51.74, lat_max: 55.2, lon_min: 8.6, lon_max: 9.65}
+      - {country: FRG, lat_min: 51.85, lat_max: 55.2, lon_min: 9.65, lon_max: 11.1}
+      # Beyond the stated boundary: Einbeck, a listed Lance regiment area, about 6 km south of it.
+      - {country: FRG, lat_min: 51.62, lat_max: 51.85, lon_min: 9.67, lon_max: 10.07}
+    source_url: https://archive.org/download/cia-readingroom-document-0001197557/0001197557.pdf
+    source_page: PDF p.9 (Page 9 of 50), FIRDB lesson on the front commander's decision
+    quote: >-
+      "seize the northern part of the Brown territory and the Lilac and Violet territories, and
+      reach the North Sea coast"; "The boundary line with it is: EISENHUTTENSTADT, LUCKENWALDE,
+      OSTERWIECK, LUNEN, (excluding) DUISBERG, and DINANT."
+    notes: >-
+      Read from the archive.org OCR and checked on the page. The other four lessons of this list
+      (0001197532, 561, 563, 576) are the same Coastal Front scenario and state no other outer
+      boundary; their lines of demarcation are between armies inside the zone. Seven rows are
+      left unlinked in transfer_target_unlinked.csv. The Jutland axis is also in the front's task,
+      but the list has no Danish rows, so Denmark is not given. The Einbeck box is derived from
+      the row.
+  - plan_id: wp_1977_gsa_front_lesson
+    basis: derived
+    include:
+      - {country: FRG, lat_min: 51.70, lat_max: 54.71, lon_min: 8.63, lon_max: 10.99}
+    source_url: https://archive.org/download/cia-readingroom-document-0001197534/0001197534.pdf
+    source_page: PDF p.8 (Page 8 of 13) for the targets; no boundary in the 13 pages
+    quote: >-
+      "control and warning centers and posts in the areas of WROHM, EYTIN /?sic for EIGEN/,
+      BADMUNDEN /?sic for BAD-MUNDER/, FALLINGBOSTEL, AHRENSBURG"
+    notes: >-
+      DERIVED, marked as such: this planning lesson states no zone and names neither front nor
+      neighbour, so the box is the located targets' extent plus the fixed margin. It is not
+      evidence about the plan's scope, and with four located points it says little. The rest of
+      the lesson's rows have no place name.

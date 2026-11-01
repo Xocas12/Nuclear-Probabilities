@@ -11,7 +11,8 @@ checking the code; the protocol's numbers come from the full run.
 
 Writes runs/classifier/: lists.csv (every list, model and holdout), comparison.csv (paired
 bootstrap), selection.csv, scopes.csv (what each scope holds, or why it was refused),
-calibration.csv, family_gain.csv, defence.csv, spatial_scores.csv.gz and manifest.json.
+calibration.csv, family_gain.csv, defence.csv, held_out_scores.csv.gz and manifest.json, which holds
+the hashes of every input (tests/test_classifier_report.py compares them).
 """
 
 import os
@@ -37,14 +38,17 @@ from nucprob.classifier.fit import ALL_FEATURES, FAMILIES, N_BAGS, Spec, fit_bag
 from nucprob.model.cv import git_commit
 from nucprob.model.splits import BLOCK_KM, assign_blocks, folds
 from nucprob.model.zoo import lightgbm
-from nucprob.paths import PROCESSED, ROOT, RUNS
+from nucprob.paths import CURATED, PROCESSED, ROOT, RUNS
 from nucprob.plans import exercise_gate, gate, plans, protocol
 from nucprob.sources.fetch import sha256
 
 SAC = "us_1956_sac_complexes"
 BASELINES = ("population rule", "population + country")
 CANDIDATES = ("logistic, all permitted", "LightGBM, all permitted")
-EXERCISE_TYPES = {"exercise", "wargame", "training"}
+EXERCISE_TYPES = {"exercise", "wargame", "training", "disputed_plan_or_exercise"}
+SAC_ONLY = "single document: SAC 1956 (not a state model)"
+LOPO = "leave one plan out"
+LOPO_KEPT = "leave one plan out, towns kept in training"
 
 
 def usable(table: pd.DataFrame) -> pd.DataFrame:
@@ -80,6 +84,8 @@ def scopes(
             out[d["attacker"]] = train[train["plan_id"].str.startswith("wp_")]
         else:
             out[f"state: {d['attacker']}"] = train[plan_docs & (train["attacker"] == d["attacker"])]
+    # The one large list, read alone and named for what it is. It cannot speak to other documents.
+    out[SAC_ONLY] = train[train["plan_id"] == SAC]
     return {k: v.reset_index(drop=True) for k, v in out.items()}, decisions
 
 
@@ -101,19 +107,40 @@ def describe(name: str, rows: pd.DataFrame) -> dict:
 def one_comparison(part: pd.DataFrame, a: str, b: str, boot: int) -> dict:
     y, doc = part["listed"].to_numpy(int), part["plan_id"].to_numpy()
     s, t = part[a].to_numpy(), part[b].to_numpy()
-    return {
-        "model": a,
-        "against": b,
-        "positives": int(y.sum()),
-        "a_pr_auc": ev.weighted_pr_auc(y, s, doc),
-        "b_pr_auc": ev.weighted_pr_auc(y, t, doc),
-    } | ev.paired_bootstrap(y, s, t, doc, n=boot)
+    # A list with a constant score on one model has no ranking to compare.
+    scored = [d for d in np.unique(doc) if ev.MIN_POSITIVES <= y[doc == d].sum() < (doc == d).sum()]
+    constant = any(np.unique(s[doc == d]).size == 1 for d in scored)
+    return (
+        {
+            "model": a,
+            "against": b,
+            "positives": int(y.sum()),
+            "base_rate": _base_rate(y, doc),
+            "train_positives_min": int(part["train_positives"].min()),
+            "constant_score": constant,
+            "a_pr_auc": ev.weighted_pr_auc(y, s, doc),
+            "b_pr_auc": ev.weighted_pr_auc(y, t, doc),
+        }
+        | ev.paired_bootstrap(y, s, t, doc, n=boot)
+        | ev.block_bootstrap(y, s, t, doc, part["block"].to_numpy(), n=boot)
+    )
+
+
+def _base_rate(y: np.ndarray, doc: np.ndarray) -> float:
+    """What a model with no information scores: the positive-weighted mean of each list's rate."""
+    total, weight = 0.0, 0
+    for d in np.unique(doc):
+        n, size = int(y[doc == d].sum()), int((doc == d).sum())
+        if ev.MIN_POSITIVES <= n < size:
+            total, weight = total + n * n / size, weight + n
+    return total / weight if weight else float("nan")
 
 
 def compare(frame: pd.DataFrame, boot: int, scope: str, holdout: str) -> list[dict]:
     """Each candidate against each baseline on the same rows: all lists, and without the SAC
     list, which otherwise carries about nine tenths of the weight."""
     parts = {"all lists": frame, "lists other than SAC": frame[frame["plan_id"] != SAC]}
+    parts = {k: p for k, p in parts.items() if len(p)}
     tasks = [(k, p, a, b) for k, p in parts.items() for a in CANDIDATES for b in BASELINES]
     results = Parallel(n_jobs=3)(delayed(one_comparison)(p, a, b, boot) for _, p, a, b in tasks)
     return [
@@ -127,8 +154,11 @@ def analyse_scope(name: str, rows: pd.DataFrame, models: list[Spec], bags: int, 
     lists, comparison = [], []
     spatial = ev.spatial_scores(rows, models, bags)
     lists += [r | {"scope": name} for r in ev.by_list(rows, spatial, "spatial blocks")]
-    frame = rows[["plan_id", "place_id", "listed"]].assign(**spatial)
+    frame = rows[["plan_id", "place_id", "listed", "block"]].assign(
+        train_positives=int(rows["listed"].sum() * (ev.N_FOLDS - 1) / ev.N_FOLDS), **spatial
+    )
     comparison += compare(frame, boot, name, "spatial blocks")
+    held_scores = {"spatial blocks": frame}
     y, doc = rows["listed"].to_numpy(int), rows["plan_id"].to_numpy()
     weighted = {m: ev.weighted_pr_auc(y, s, doc) for m, s in spatial.items()}
     best = max(CANDIDATES, key=weighted.__getitem__)
@@ -137,17 +167,21 @@ def analyse_scope(name: str, rows: pd.DataFrame, models: list[Spec], bags: int, 
         for m, v in weighted.items()
     ]
     print(" spatial done", flush=True)
-    a, held = ev.leave_one_plan_out(rows, models, bags)
-    lists += [r | {"scope": name} for r in a]
-    if len(held):
-        comparison += compare(held, boot, name, "leave one plan out")
+    for holdout, keep_places in ((LOPO, False), (LOPO_KEPT, True)):
+        a, held = ev.leave_one_plan_out(rows, models, bags, keep_places)
+        lists += [r | {"scope": name} for r in a]
+        if len(held):
+            comparison += compare(held, boot, name, holdout)
+            held_scores[holdout] = held
     print(" leave-one-plan-out done", flush=True)
     a, kept = ev.temporal(rows, models, bags)
     lists += [r | {"scope": name} for r in a]
     for holdout, frame in kept.items():
         comparison += compare(frame, boot, name, holdout)
+        held_scores[holdout] = frame
     print(" temporal done", flush=True)
-    return lists, comparison, selection, spatial
+    frames = [f.assign(scope=name, holdout=h) for h, f in held_scores.items()]
+    return lists, comparison, selection, frames
 
 
 def expectations(
@@ -290,6 +324,13 @@ def defence_reading(rows: pd.DataFrame, boot: int) -> pd.DataFrame:
     return pd.DataFrame(out)
 
 
+def input_hashes() -> dict[str, str]:
+    """Committed files whose change would change the run's labels or what it was allowed to do."""
+    files = [ROOT / "data" / "sources.yaml", *sorted((CURATED / "labels").glob("*"))]
+    files = [f for f in files if f.is_file()]
+    return {str(f.relative_to(ROOT)): sha256(f) for f in files}
+
+
 def main() -> None:
     args = argparse.ArgumentParser()
     args.add_argument("--quick", action="store_true")
@@ -305,27 +346,23 @@ def main() -> None:
     lists, comparison, selection, described, kept = [], [], [], [], []
     for name, rows in groups.items():
         described.append(describe(name, rows))
-        a, b, c, spatial = analyse_scope(name, rows, models, bags, boot)
+        a, b, c, frames = analyse_scope(name, rows, models, bags, boot)
         lists += a
         comparison += b
         selection += c
         lists += expectations(table, rows, models, bags, name)
-        # Keep the scores behind the comparison, so the bootstrap can be redone from the file.
-        kept.append(
-            rows[["plan_id", "place_id", "listed"]].assign(
-                scope=name, **{m: spatial[m] for m in spatial}
-            )
-        )
+        # The scores behind every comparison: tests/test_classifier_report.py recomputes it.
+        kept += frames
         pd.DataFrame(lists).to_csv(out_dir / "lists.csv", index=False, float_format="%.4f")
         pd.DataFrame(comparison).to_csv(
             out_dir / "comparison.csv", index=False, float_format="%.4f"
         )
-    us = groups["state: US"] if "state: US" in groups else groups["global, plan documents only"]
+    us = groups[SAC_ONLY]
     pd.DataFrame(selection).to_csv(out_dir / "selection.csv", index=False, float_format="%.4f")
     pd.DataFrame(described).to_csv(out_dir / "scopes.csv", index=False)
     decisions.to_csv(out_dir / "state_gate.csv", index=False)
     pd.concat(kept, ignore_index=True).to_csv(
-        out_dir / "spatial_scores.csv.gz", index=False, float_format="%.5f"
+        out_dir / "held_out_scores.csv.gz", index=False, float_format="%.6f"
     )
     print("--- calibration", flush=True)
     calibration(us, models, bags).to_csv(
@@ -342,6 +379,7 @@ def main() -> None:
         "git_commit": git_commit(),
         "protocol_sha256": sha256(ROOT / "configs" / "protocol.yaml"),
         "table_sha256": sha256(path),
+        "inputs_sha256": input_hashes(),
         "bags": bags,
         "bootstrap": boot,
         "features": ALL_FEATURES,

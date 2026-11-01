@@ -1,0 +1,346 @@
+country,admin1,gn_admin1,gn_admin2,notes
+Austria,Burgenland,01,,
+Austria,Kärnten,02,,
+Austria,Niederösterreich,03,,
+Austria,Oberösterreich,04,,
+Austria,Salzburg,05,,
+Austria,Steiermark,06,,
+Austria,Tirol,07,,
+Austria,Vorarlberg,08,,
+Austria,Wien,09,,
+Belgium,Antwerp,VLG,,
+Belgium,Brabant,BRU;VLG;WAL,,the province of 1961 was split in 1995
+Belgium,East Flanders,VLG;WAL,,the 1963 language-border changes moved communes between Flanders and Wallonia
+Belgium,Hainaut,WAL;VLG,,the 1963 language-border changes moved communes between Flanders and Wallonia
+Belgium,Limburg,VLG;WAL,,the 1963 language-border changes moved communes between Flanders and Wallonia
+Belgium,Liège,WAL;VLG,,the 1963 language-border changes moved communes between Flanders and Wallonia
+Belgium,Luxembourg,WAL,,
+Belgium,Namur,WAL,,
+Belgium,West Flanders,VLG;WAL,,the 1963 language-border changes moved communes between Flanders and Wallonia
+Canada,Alberta,01,,
+Canada,British Columbia,02,,
+Canada,Manitoba,03,,
+Canada,New Brunswick,04,,
+Canada,Newfoundland,05,,
+Canada,Nova Scotia,07,,
+Canada,Ontario,08,,
+Canada,Prince Edward Island,09,,
+Canada,Quebec,10,,
+Canada,Saskatchewan,11,,
+Denmark,Bornholms amt,17,,
+Denmark,Frederiksborg amt,17,,
+Denmark,Haderslev amt,21,,
+Denmark,Hjørring amt,19,,
+Denmark,Holbæk amt,20,,
+Denmark,Københavns amt,17;20,,"amt of 1960 included Roskilde, Zealand region today"
+Denmark,Københavns kommune (outside any amt),17,,
+Denmark,Maribo amt,20,,
+Denmark,Odense amt,21,,
+Denmark,Præstø amt,20,,
+Denmark,Randers amt,18;19,,split by the 2007 regions
+Denmark,Ribe amt,21;18,,split by the 2007 regions
+Denmark,Ringkøbing amt,18,,
+Denmark,Skanderborg amt,18,,
+Denmark,Sorø amt,20,,
+Denmark,Svendborg amt,21,,
+Denmark,Thisted amt,19,,
+Denmark,Vejle amt,21;18,,split by the 2007 regions
+Denmark,Viborg amt,18;19,,split by the 2007 regions
+Denmark,Åbenrå-Sønderborg amt,21,,
+Denmark,Ålborg amt,19,,
+Denmark,Århus amt,18,,
+FRG,Baden-Wurttemberg,01,,
+FRG,Bavaria,02,,
+FRG,Berlin,16,,
+FRG,Bremen,03,,
+FRG,Hamburg,04,,
+FRG,Hesse,05,,
+FRG,Lower Saxony,06,,
+FRG,North Rhine-Westphalia,07,,
+FRG,Rheinland-Pfalz,08,,
+FRG,Saarland,09,,
+FRG,Schleswig-Holstein,10,,
+Italy,Agrigento,15,AG,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Alessandria,12,AL,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Ancona,10,AN,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Arezzo,16,AR,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Ascoli Piceno,10,AP;FM,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Asti,12,AT,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Avellino,04,AV,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Bari,13,BA;BT,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Belluno,20,BL,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Benevento,04,BN,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Bergamo,09,BG;LC,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Bologna,05,BO,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Bolzano,17,BZ,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Brescia,09,BS,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Brindisi,13,BR,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Cagliari,14,CA;SU;OR,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Caltanissetta,15,CL,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Campobasso,11,CB;IS,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Caserta,04,CE,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Catania,15,CT,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Catanzaro,03,CZ;KR;VV,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Chieti,01,CH,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Como,09,CO;LC,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Cosenza,03,CS,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Cremona,09,CR,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Cuneo,12,CN,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Enna,15,EN,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Ferrara,05,FE,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Firenze,16,FI;PO,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Foggia,13,FG;BT,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Forlì,05,FC;RN,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Frosinone,07,FR,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Genova,08,GE,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Gorizia,06,GO,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Grosseto,16,GR,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Imperia,08,IM,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,L'Aquila,01,AQ,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,La Spezia,08,SP,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Latina,07,LT,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Lecce,13,LE,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Livorno,16,LI,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Lucca,16,LU,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Macerata,10,MC,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Mantova,09,MN,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Massa-Carrara,16,MS,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Matera,02,MT,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Messina,15,ME,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Milano,09,MI;LO;MB,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Modena,05,MO,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Napoli,04,NA,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Novara,12,NO;VB,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Nuoro,14,NU;OR,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Padova,20,PD,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Palermo,15,PA,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Parma,05,PR,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Pavia,09,PV,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Perugia,18,PG,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Pesaro e Urbino,10,PU,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Pescara,01,PE,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Piacenza,05,PC,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Pisa,16,PI,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Pistoia,16,PT,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Potenza,02,PZ,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Ragusa,15,RG,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Ravenna,05,RA,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Reggio di Calabria,03,RC,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Reggio nell'Emilia,05,RE,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Rieti,07,RI,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Roma,07,RM,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Rovigo,20,RO,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Salerno,04,SA,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Sassari,14,SS,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Savona,08,SV,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Siena,16,SI,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Siracusa,15,SR,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Sondrio,09,SO,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Taranto,13,TA,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Teramo,01,TE,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Terni,18,TR,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Torino,12,TO,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Trapani,15,TP,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Trento,17,TN,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Treviso,20,TV,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Trieste,06,TS,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Udine,06,UD;PN,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Valle d'Aosta,19,AO,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Varese,09,VA,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Venezia,20,VE,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Vercelli,12,VC;BI,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Verona,20,VR,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Vicenza,20,VI,admin2: province codes of today covering the 1961 province; a ranking aid only
+Italy,Viterbo,07,VT,admin2: province codes of today covering the 1961 province; a ranking aid only
+Japan,Aichi,01,,
+Japan,Akita,02,,
+Japan,Aomori,03,,
+Japan,Chiba,04,,
+Japan,Ehime,05,,
+Japan,Fukui,06,,
+Japan,Fukuoka,07,,
+Japan,Fukushima,08,,
+Japan,Gifu,09,,
+Japan,Gumma,10,,
+Japan,Hiroshima,11,,
+Japan,Hokkaido,12,,
+Japan,Hyogo,13,,
+Japan,Ibaraki,14,,
+Japan,Ishikawa,15,,
+Japan,Iwate,16,,
+Japan,Kagawa,17,,
+Japan,Kagoshima,18,,
+Japan,Kanagawa,19,,
+Japan,Kochi,20,,
+Japan,Kumamoto,21,,
+Japan,Kyoto,22,,
+Japan,Mie,23,,
+Japan,Miyagi,24,,
+Japan,Miyazaki,25,,
+Japan,Nagano,26,,
+Japan,Nagasaki,27,,
+Japan,Nara,28,,
+Japan,Niigata,29,,
+Japan,Oita,30,,
+Japan,Okayama,31,,
+Japan,Okinawa,47,,
+Japan,Osaka,32,,
+Japan,Saga,33,,
+Japan,Saitama,34,,
+Japan,Shiga,35,,
+Japan,Shimane,36,,
+Japan,Shizuoka,37,,
+Japan,Tochigi,38,,
+Japan,Tokushima,39,,
+Japan,Tokyo,40,,
+Japan,Tottori,41,,
+Japan,Toyama,42,,
+Japan,Wakayama,43,,
+Japan,Yamagata,44,,
+Japan,Yamaguchi,45,,
+Japan,Yamanashi,46,,
+Netherlands,Drenthe,01,,
+Netherlands,Friesland,02,,
+Netherlands,Gelderland,03,,
+Netherlands,Groningen,04,,
+Netherlands,Limburg,05,,
+Netherlands,Noord-Brabant,06,,
+Netherlands,Noord-Holland,07,,
+Netherlands,Overijssel,15;16,,Urk and polder land later in Flevoland
+Netherlands,Utrecht,09,,
+Netherlands,Zeeland,10,,
+Netherlands,Zuid-Holland,11,,
+UK,Antrim District,NIR,,
+UK,Ards District,NIR,,
+UK,Armagh District,NIR,,
+UK,Avon,ENG,,
+UK,Ballymena District,NIR,,
+UK,Banbridge District,NIR,,
+UK,Bedfordshire,ENG,,
+UK,Belfast District,NIR,,
+UK,Berkshire,ENG,,
+UK,Borders,SCT,,
+UK,Buckinghamshire,ENG,,
+UK,Cambridgeshire,ENG,,
+UK,Carrickfergus District,NIR,,
+UK,Castlereagh District,NIR,,
+UK,Central,SCT,,
+UK,Cheshire,ENG,,
+UK,Cleveland,ENG,,
+UK,Clwyd,WLS,,
+UK,Coleraine District,NIR,,
+UK,Cornwall,ENG,,
+UK,Craigavon District,NIR,,
+UK,Cumbria,ENG,,
+UK,Derbyshire,ENG,,
+UK,Derry District,NIR,,
+UK,Devon,ENG,,
+UK,Dorset,ENG,,
+UK,Dumfries and Galloway,SCT,,
+UK,Durham,ENG,,
+UK,Dyfed,WLS,,
+UK,East Sussex,ENG,,
+UK,Essex,ENG,,
+UK,Fermanagh District,NIR,,
+UK,Fife,SCT,,
+UK,Gloucestershire,ENG,,
+UK,Grampian,SCT,,
+UK,Greater London,ENG,,
+UK,Greater Manchester,ENG,,
+UK,Gwent,WLS,,
+UK,Gwynedd,WLS,,
+UK,Hampshire,ENG,,
+UK,Hereford and Worcester,ENG,,
+UK,Hertfordshire,ENG,,
+UK,Highland,SCT,,
+UK,Humberside,ENG,,
+UK,Isle of Wight,ENG,,
+UK,Kent,ENG,,
+UK,Lancashire,ENG,,
+UK,Larne District,NIR,,
+UK,Leicestershire,ENG,,
+UK,Lincolnshire,ENG,,
+UK,Lisburn District,NIR,,
+UK,Lothian,SCT,,
+UK,Merseyside,ENG,,
+UK,Mid Glamorgan,WLS,,
+UK,Newry and Mourne District,NIR,,
+UK,Newtownabbey District,NIR,,
+UK,Norfolk,ENG,,
+UK,North Down District,NIR,,
+UK,North Yorkshire,ENG,,
+UK,Northamptonshire,ENG,,
+UK,Northumberland,ENG,,
+UK,Nottinghamshire,ENG,,
+UK,Omagh District,NIR,,
+UK,Orkney Islands Area,SCT,,
+UK,Oxfordshire,ENG,,
+UK,Powys,WLS,,
+UK,Shetland Islands Area,SCT,,
+UK,Shropshire,ENG,,
+UK,Somerset,ENG,,
+UK,South Glamorgan,WLS,,
+UK,South Yorkshire,ENG,,
+UK,Staffordshire,ENG,,
+UK,Strabane District,NIR,,
+UK,Strathclyde,SCT,,
+UK,Suffolk,ENG,,
+UK,Surrey,ENG,,
+UK,Tayside,SCT,,
+UK,Tyne and Wear,ENG,,
+UK,Warwickshire,ENG,,
+UK,West Glamorgan,WLS,,
+UK,West Midlands,ENG,,
+UK,West Sussex,ENG,,
+UK,West Yorkshire,ENG,,
+UK,Western Isles Islands Area,SCT,,
+UK,Wiltshire,ENG,,
+USA,Alabama,AL,,
+USA,Arizona,AZ,,
+USA,Arkansas,AR,,
+USA,California,CA,,
+USA,Colorado,CO,,
+USA,Connecticut,CT,,
+USA,Delaware,DE,,
+USA,District of Columbia,DC,,
+USA,Florida,FL,,
+USA,Georgia,GA,,
+USA,Idaho,ID,,
+USA,Illinois,IL,,
+USA,Indiana,IN,,
+USA,Iowa,IA,,
+USA,Kansas,KS,,
+USA,Kentucky,KY,,
+USA,Louisiana,LA,,
+USA,Maine,ME,,
+USA,Maryland,MD,,
+USA,Massachusetts,MA,,
+USA,Michigan,MI,,
+USA,Minnesota,MN,,
+USA,Mississippi,MS,,
+USA,Missouri,MO,,
+USA,Montana,MT,,
+USA,Nebraska,NE,,
+USA,Nevada,NV,,
+USA,New Hampshire,NH,,
+USA,New Jersey,NJ,,
+USA,New Mexico,NM,,
+USA,New York,NY,,
+USA,North Carolina,NC,,
+USA,North Dakota,ND,,
+USA,Ohio,OH,,
+USA,Oklahoma,OK,,
+USA,Oregon,OR,,
+USA,Pennsylvania,PA,,
+USA,Rhode Island,RI,,
+USA,South Carolina,SC,,
+USA,South Dakota,SD,,
+USA,Tennessee,TN,,
+USA,Texas,TX,,
+USA,Utah,UT,,
+USA,Vermont,VT,,
+USA,Virginia,VA,,
+USA,Washington,WA,,
+USA,West Virginia,WV,,
+USA,Wisconsin,WI,,
+USA,Wyoming,WY,,
