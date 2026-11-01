@@ -11,8 +11,10 @@ cross-validation).
 import pandas as pd
 
 from nucprob.features.registry import FEATURES
-from nucprob.model.splits import assign_blocks, seal
-from nucprob.paths import PROCESSED
+from nucprob.model.splits import assign_blocks
+from nucprob.paths import CURATED, PROCESSED
+
+SPLITS = CURATED / "splits"
 
 PLACE_COLUMNS = [
     "place_id",
@@ -45,6 +47,26 @@ LABEL_COLUMNS = [
 ]
 
 
+def held_out(df: pd.DataFrame) -> dict[str, pd.Series]:
+    """`sealed`: the place is in a frozen sealed block (scripts/freeze_seal.py) and no check run
+    cross-validated it. `never_scored`: sealed, and the M1 slice did not score it either. The
+    labels play no part, so correcting a label cannot move a place into or out of the held-out
+    set."""
+    read = pd.read_csv(SPLITS / "scored_before_freeze.csv")
+    blocks = set(pd.read_csv(SPLITS / "sealed_blocks.csv")["block"])
+
+    def seen(rows: pd.DataFrame) -> pd.Series:
+        # A corrected match changes a town's id, so a town is also known by name and country.
+        names = set(zip(rows["country_1956"], rows["name_1956"], strict=True))
+        pairs = zip(df["country_1956"], df["name_1956"], strict=True)
+        return df["place_id"].isin(set(rows["place_id"])) | pd.Series(
+            [p in names for p in pairs], index=df.index
+        )
+
+    sealed = df["block"].isin(blocks) & ~seen(read[read["run"].eq("m2-check")])
+    return {"sealed": sealed, "never_scored": sealed & ~seen(read)}
+
+
 def build() -> pd.DataFrame:
     places = pd.read_parquet(PROCESSED / "places_1956.parquet")
     features = pd.read_parquet(PROCESSED / "features_1956.parquet")
@@ -57,7 +79,7 @@ def build() -> pd.DataFrame:
     df["has_dgz"] = df["has_dgz"].fillna(False).astype(int)
     df["label_gap"] = df["label_gap"].fillna("")
     df["block"] = assign_blocks(df["lat"].to_numpy(), df["lon"].to_numpy())
-    df["sealed"] = seal(df["block"], df["listed"])
+    df = df.assign(**held_out(df))
     # A settlement whose entry may be on a page lost from the scan has no label.
     unknown = df["label_gap"] != ""
     df["listed"] = df["listed"].astype(float).mask(unknown)
