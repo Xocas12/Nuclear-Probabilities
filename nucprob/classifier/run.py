@@ -31,7 +31,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 
 from nucprob.classifier import evaluate as ev
-from nucprob.classifier.features import DEFENCE
+from nucprob.classifier.features import DEFENCE, NO_S25
 from nucprob.classifier.fit import ALL_FEATURES, FAMILIES, N_BAGS, Spec, fit_bagged, specs
 from nucprob.model.cv import git_commit
 from nucprob.model.splits import BLOCK_KM, assign_blocks, folds
@@ -273,7 +273,9 @@ def defence_reading(rows: pd.DataFrame, boot: int) -> pd.DataFrame:
     }
     out = []
     for label, part in parts.items():
-        for column in DEFENCE:
+        for column in [*DEFENCE, NO_S25]:
+            if column not in part or part[column].notna().sum() < 50:
+                continue
             if part[column].notna().sum() < 50 or part[column].nunique() < 3:
                 out.append({"rows_described": label, "feature": column, "note": "too few values"})
                 continue

@@ -33,11 +33,13 @@ source are in `data/notes/`. Raw downloads are in `data/raw/` (not in git).
 | `wp_1965_hu_wargame.csv` | 23 | Hungary/USSR (Southern Group of Forces command-staff war game; 'Easterners' = Warsaw Pact side) | Austria, FRG, Italy | 1965 | exercise | 0 | 0 |
 | `wp_1967_lato67.csv` | 57 | Unified Armed Forces Supreme Command (strategic means) in favour of the Polish Coastal Front; exercise 'Lato-67' | Belgium, Denmark, FRG, Netherlands | 1967 | exercise | 0 | 0 |
 | `wp_1970_coastal_front_map.csv` | 4 | Poland (Coastal Front / Front Nadmorski); map plan signed by W. Jaruzelski 25 Feb 1970 | Denmark | 1970 | plan | 4 | 0 |
+| `wp_1975_soyuz75.csv` | 2 | Poland/USSR (Maritime Front, exercise Soyuz-75) | Netherlands | 1975 | exercise | 0 | 0 |
 | `wp_1977_gsa_front_lesson.csv` | 19 | USSR (Soviet General Staff Academy lesson, 1977: front offensive vs NATO Northern Army Group) | FRG | 1977 | exercise | 0 | 0 |
+| `wp_1977_gsa_lessons.csv` | 44 | USSR (General Staff Academy lesson) | FRG, Netherlands | 1977 | exercise | 0 | 0 |
 | `wp_1977_zealand.csv` | 10 | Poland (Coastal Front / Front Nadmorski), landing operation on Zealand | Denmark | 1977 | plan | 10 | 0 |
 | `wp_1979_seven_days.csv` | 9 | Warsaw Pact/USSR (as attributed by Wikipedia) | Austria, Denmark, FRG, Italy | 1979 | reconstruction | 9 | 0 |
 
-Total: 31 files, 6460 rows.
+Total: 33 files, 6506 rows.
 
 ## Data cards
 
@@ -63,7 +65,9 @@ From `data/curated/labels/CATALOGUE.yaml` (checked by `tests/test_catalogue.py`)
 | `wp_1965_hu_wargame.csv` | Hungarian-Soviet command-staff war game, 1965 ("Easterners") | Hungary/USSR → Austria, Italy, FRG, 1965 | exercise | judgment | transfer-test | 29 itemised strikes (the document's summary says 30) | yields itemised; summary counts disagree with the items | data/notes/warsaw_pact.md (2) |
 | `wp_1967_lato67.csv` | Exercise "Lato-67", Polish Coastal Front | Unified Command, for the Polish Coastal Front → FRG, Denmark, Netherlands, Belgium, 1967 | exercise | judgment | transfer-test | 57 aim points at 49 places, from the Russian facsimile | transport, port and airfield targets of a landing operation | data/notes/warsaw_pact.md (3) |
 | `wp_1970_coastal_front_map.csv` | Polish Coastal Front operational map, 1970 | Poland (Coastal Front) → Denmark, 1970 | plan | judgment | transfer-test | 5 of 17 strikes named (secondary, Nielsen et al. 2016) | secondary; most strikes unnamed | data/notes/warsaw_pact.md (5) |
+| `wp_1975_soyuz75.csv` | Exercise Soyuz-75, Maritime Front combat instruction No. 04 | Poland/USSR (Maritime Front) → Netherlands, 1975 | exercise | judgment | transfer-test | 2 of 7 candidate places; the rest unidentified or not stated to be nuclear | English translation only, no scan read; an exercise, not a war plan | data/notes/second_read_2026-11.md |
 | `wp_1977_gsa_front_lesson.csv` | Soviet General Staff Academy lesson, front offensive, 1977 | USSR (General Staff Academy) → FRG, 1977 | exercise | judgment | transfer-test | the five named sites and the unit targets of the lesson | a training lesson; 14 rows are units without a place | data/notes/warsaw_pact.md (9) |
+| `wp_1977_gsa_lessons.csv` | Soviet General Staff Academy lessons, further named nuclear targets, 1977 | USSR (General Staff Academy) → FRG, Netherlands, 1977 | exercise | judgment | transfer-test | named places under stated nuclear strikes in five lessons; not a whole list | training lessons on one fictional scenario, so one source with wp_1977_gsa_front_lesson; 4 places dropped as unidentified | data/notes/second_read_2026-11.md |
 | `wp_1977_zealand.csv` | Polish Coastal Front, landing on Zealand, 1977 | Poland (Coastal Front) → Denmark, 1977 | plan | judgment | transfer-test | 10 strikes, from a secondary study (Pałka 2022) | secondary | data/notes/warsaw_pact.md (4) |
 | `cd_1980_square_leg.csv` | Exercise Square Leg bomb plot (as reproduced by the New Statesman) | UK (Home Office/MoD exercise) → UK, 1980 | defender | judgment | transfer-test | 95 targets of the reproduced plot (England and Wales, Scotland); Northern Ireland never released | secondary; politically edited exercise | data/notes/civil_defence.md (3) |
 | `us_1956_sac_part2_complexes.csv` | SAC 1956 study, Part II complex list with weapons (excerpt) | US (Strategic Air Command) → USSR, East Germany, Poland, Czechoslovakia, Hungary, China, Mongolia, Romania, 1956 | study | judgment | validation | 43 complexes in the published excerpt; elsewhere unknown | the stockpile-limited allocation; selected = keeps an aim point | data/curated/sac1956/README.md (The excerpts) |

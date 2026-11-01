@@ -30,6 +30,9 @@ NMC_FEATURES = [
 ]
 MILITARY = list(MILITARY_GROUPS)
 DEFENCE = ["log_km_to_sam", "log_km_to_air_defence", "log_air_defence_sites_50km"]
+# Not a model feature: the same distance without the S-25 points, whose coordinates carry US
+# designations on their source page and may descend from US intelligence (the table's card).
+NO_S25 = "log_km_to_air_defence_no_s25"
 # COW state abbreviations of the universes' country names.
 COW = {
     "USSR": "RUS",
@@ -133,7 +136,13 @@ def load_defence_sites(region: str) -> pd.DataFrame:
         if "in_june_1956" in s.columns:
             s = s[s["in_june_1956"].astype(str).str.lower().eq("yes")]
         parts.append(s)
-    return pd.concat(parts, ignore_index=True) if parts else pd.DataFrame()
+    if not parts:
+        return pd.DataFrame()
+    # One point per site and role: an airfield with three regiments is one air-defence site, and
+    # a few rows repeat across the 1956 tables.
+    sites = pd.concat(parts, ignore_index=True)
+    place = [sites["lat"].round(2), sites["lon"].round(2), sites["role"]]
+    return sites[~pd.concat(place, axis=1).duplicated()].reset_index(drop=True)
 
 
 def defence_features(lat, lon, sites: pd.DataFrame) -> pd.DataFrame:
@@ -212,7 +221,12 @@ def add_defence(towns: pd.DataFrame, region: str, year: int) -> pd.DataFrame:
     deff = defence_features(towns["lat"], towns["lon"], sites)
     towns[DEFENCE] = deff.to_numpy()
     if region == BLOC and not sites.empty:
+        rest = sites[sites["role"] != "sam_system"]
+        towns[NO_S25] = log_km(
+            nearest_km(towns["lat"], towns["lon"], rest["lat"].to_numpy(), rest["lon"].to_numpy())
+        )
+    if region == BLOC and not sites.empty:
         n = sites["country_1956"].value_counts()
         covered = set(n[n >= MIN_SITES_FOR_COVERAGE].index)
-        towns.loc[~towns["country"].isin(covered), DEFENCE] = np.nan
+        towns.loc[~towns["country"].isin(covered), [*DEFENCE, NO_S25]] = np.nan
     return towns

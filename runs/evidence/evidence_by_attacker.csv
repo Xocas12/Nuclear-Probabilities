@@ -12,7 +12,8 @@ US,requirements_study,A,train,1,2,2343
 US,requirements_study,B,excluded,1,1,43
 US,target_selection,A,train,1,1,42
 USSR,reconstruction,D,excluded,1,1,1
-USSR,training,B,train,1,1,19
+USSR,training,B,train,1,2,63
 Warsaw Pact,exercise,A,train,1,1,57
+Warsaw Pact,exercise,B,train,1,1,2
 Warsaw Pact,reconstruction,D,excluded,1,1,9
 Warsaw Pact,wargame,A,train,1,1,23

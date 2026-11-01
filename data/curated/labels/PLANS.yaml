@@ -45,6 +45,8 @@ plans:
   - {plan_id: wp_1967_lato67, attacker: Warsaw Pact, author: Polish Coastal Front directive (exercise Lato-67), date: 1967-05, doc_type: exercise, grade: A, group: pl_lato_1967, complete: true, role: train}
   - {plan_id: wp_1965_hu_wargame, attacker: Warsaw Pact, author: Hungarian Army with the Soviet Southern Group of Forces, date: 1965-06, doc_type: wargame, grade: A, group: hu_wargame_1965, complete: true, role: train}
   - {plan_id: wp_1977_gsa_front_lesson, attacker: USSR, author: Soviet General Staff Academy, date: 1977, doc_type: training, grade: B, group: su_gsa_1977, complete: false, role: train}
+  - {plan_id: wp_1977_gsa_lessons, attacker: USSR, author: Soviet General Staff Academy, date: 1977, doc_type: training, grade: B, group: su_gsa_1977, complete: false, role: train}
+  - {plan_id: wp_1975_soyuz75, attacker: Warsaw Pact, author: Polish Maritime Front (exercise Soyuz-75), date: 1975-03, doc_type: exercise, grade: B, group: pl_soyuz_1975, complete: false, role: train}
   - {plan_id: wp_1959_r5m_operation_atom, attacker: USSR, author: S. Evans (BBC News 2012), date: 1959, doc_type: reconstruction, grade: D, group: su_r5m_1959, complete: false, role: excluded}
   - {plan_id: wp_1979_seven_days, attacker: Warsaw Pact, author: Wikipedia, date: 1979, doc_type: reconstruction, grade: D, group: wiki_seven_days, complete: false, role: excluded}
   - {plan_id: nato_1962_pl_exercise_mirror, attacker: null, author: Polish Army command-staff exercise, date: 1962-01, doc_type: mirror, grade: A, group: pl_mirror_1962, complete: true, role: test-expectation}

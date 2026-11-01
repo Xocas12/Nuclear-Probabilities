@@ -127,3 +127,12 @@ amendments:
         holdouts, and on the lists other than SAC, which otherwise carry nine tenths of the weight.
       national_power: also read over population alone, because within one list it is one value per
         country and cannot add to a country term.
+  - date: 2026-11-01
+    # Before the full fit; the 3-bag check above had been read. Labels were added by a rule that
+    # reads documents, not scores: every candidate row was checked on the scan by a second reader.
+    reasons: new documents found, and the defence table's card
+    changes:
+      labels: wp_1977_gsa_lessons (same document group as the General Staff Academy lesson, type
+        training) and wp_1975_soyuz75 (exercise). Neither counts as a plan at the gate.
+      defence: one point per site and role; the 1956 reading is repeated without the S-25 points,
+        whose coordinates may descend from US intelligence. That column is not a model feature.

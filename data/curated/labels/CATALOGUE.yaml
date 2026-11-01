@@ -133,6 +133,28 @@ lists:
     card: data/notes/warsaw_pact.md (3)
     caveats: 7 rows are unit targets or unidentified places
 
+  - file: wp_1977_gsa_lessons.csv
+    title: Soviet General Staff Academy lessons, further named nuclear targets, 1977
+    planner: USSR (General Staff Academy)
+    targets: FRG, Netherlands
+    year: 1977
+    provenance: exercise
+    selection: judgment
+    use: transfer-test
+    completeness: named places under stated nuclear strikes in five lessons; not a whole list
+    card: data/notes/second_read_2026-11.md
+    caveats: training lessons on one fictional scenario, so one source with wp_1977_gsa_front_lesson; 4 places dropped as unidentified
+  - file: wp_1975_soyuz75.csv
+    title: Exercise Soyuz-75, Maritime Front combat instruction No. 04
+    planner: Poland/USSR (Maritime Front)
+    targets: Netherlands
+    year: 1975
+    provenance: exercise
+    selection: judgment
+    use: transfer-test
+    completeness: 2 of 7 candidate places; the rest unidentified or not stated to be nuclear
+    card: data/notes/second_read_2026-11.md
+    caveats: English translation only, no scan read; an exercise, not a war plan
   - file: wp_1977_gsa_front_lesson.csv
     title: Soviet General Staff Academy lesson, front offensive, 1977
     planner: USSR (General Staff Academy)

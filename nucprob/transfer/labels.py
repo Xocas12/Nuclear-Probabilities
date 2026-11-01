@@ -67,6 +67,16 @@ def clean(name: str) -> str:
     return n.strip(" .").title() if n.isupper() else n.strip(" .")
 
 
+def unlinked() -> set[tuple[str, int]]:
+    """Targets a reader could not tie to one place. They stay on the list and link to no town,
+    rather than to the largest town of that name."""
+    path = GAZ / "transfer_target_unlinked.csv"
+    if not path.exists():
+        return set()
+    d = pd.read_csv(path)
+    return set(zip(d["plan_id"], d["seq"].astype(int), strict=True))
+
+
 def hand_links() -> dict[tuple[str, int], tuple[float, float, str]]:
     path = GAZ / "transfer_target_links.csv"
     if not path.exists():
@@ -113,6 +123,7 @@ def universes():
 
 def link() -> pd.DataFrame:
     hand = hand_links()
+    skip = unlinked()
     gaz: dict[str, Gazetteer] = {}
     rows = []
     for region_id, codes, towns, plans in universes():
@@ -141,7 +152,9 @@ def link() -> pd.DataFrame:
                     "dist_km": np.nan,
                 }
                 key = (plan, int(t["seq"]))
-                if key in hand:
+                if key in skip:
+                    out["method"] = "left unlinked"
+                elif key in hand:
                     out["lat"], out["lon"], out["located_as"] = hand[key]
                     out["method"] = "hand"
                 else:

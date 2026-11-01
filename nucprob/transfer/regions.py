@@ -74,6 +74,8 @@ REGIONS = {
             "wp_1967_lato67",
             "wp_1970_coastal_front_map",
             "wp_1977_gsa_front_lesson",
+            "wp_1977_gsa_lessons",
+            "wp_1975_soyuz75",
             "wp_1977_zealand",
         ),
         military="weurope_military_sites_1965.csv",

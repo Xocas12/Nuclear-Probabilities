@@ -34,8 +34,9 @@ the S-25 area row (`S-25 Berkut system, Moscow area`), whose point is central Mo
   district, army, corps, division, radar and SAM lists; `air force/division/iad/iad.htm`;
   `air force/regiment/iap/iap.htm`; the two fighter army pages; and the non-Soviet Warsaw Pact air
   force pages. Wikipedia: en *S-25 Berkut*; ru *1-я армия ПВО особого назначения*, *Московский округ
-  ПВО*, *Бакинский округ ПВО* (wikitext read through `action=raw`). 726 pages were saved, about one
-  every 1.5 s. The 302 distinct URLs in `source` were all opened. `robots.txt` returned 404, so no
+  ПВО*, *Бакинский округ ПВО* (wikitext read through `action=raw`). 726 pages were saved, with at
+  least 1.2 s between requests on each stream. 17 pages came back empty while two streams ran and
+  were fetched again singly. The 303 distinct URLs in `source` were all opened. `robots.txt` returned 404, so no
   rules were published. The URL in the brief, `new/pvo/`, returned 403 (no directory listing), so
   the crawl started from `new/pvo/pvo.htm`.
 - **Selection rule, fighter divisions and regiments.** Every page on the two lists was parsed for
@@ -45,7 +46,8 @@ the S-25 area row (`S-25 Berkut system, Moscow area`), whose point is central Mo
   - Where the parent is unlabelled, the last dated rename before June 1956 decides. A unit "renamed
     ... PVO" in 1942 and renamed out in 1951 is not PVO.
   - A PVO label in a page title is not evidence, since titles carry the unit's last name.
-  - 115 pages were not PVO, 96 became PVO only after 1957, and 47 have no base line covering June 1956.
+  - Left out: 115 pages with no PVO label at the date; 96 under the air force or naval aviation in
+    June 1956 and not recorded as joining the PVO by 1957; 47 with no base line covering June 1956.
 - **Selection rule, others.** HQ rows for armies, corps and districts were written by hand from the
   quoted lines. S-25 rows take every regiment with an S-25 line and a launch area, cross-checked
   against the four special corps' Organisation 1960 lists. Radar rows are every page on the
@@ -57,13 +59,14 @@ the S-25 area row (`S-25 Berkut system, Moscow area`), whose point is central Mo
   same town appears in dated lists on both sides, 1952 or later and 1958 or earlier for regiments.
   HQs of the 56th, 78th and 88th corps rest on Organisation 1955 and the 1960 successor's activation.
 - **`uncertain` (71):**
-  - 33 outer-ring S-25 rows and one with no site code (below).
+  - 33 outer-ring S-25 rows, one of which (the 636th) also lacks an activation date, and one with
+    no site code (below).
   - 11 radar units activated "1956", month not given, and 3 whose base line begins before June 1956
     while the activation line is later (9th Brigade 1.8.58, 164th Brigade 13.8.57, 172nd Regiment
     1.11.67).
   - 8 HQs: 37th, 49th and 72nd Guards corps; Leningrad Special Army; Minsk, Lvov and Primorskiy
     corps; the 26th division. Most have a town known only from a name or a 1960 successor.
-  - 15 fighter rows: 11 page-less regiments known from division lists far from 1956; the 64th
+  - 15 fighter rows: 10 page-less regiments known from division lists far from 1956; the 64th
     Regiment's undated 1956 move (Omsk-Severnyy, Tunoshna); the 849th, renamed PVO on 23.6.56 while
     still under an assault division until 8.56; and the two Bulgarian regiments, listed under "Air
     Defence" on Holm's index but dated to it only from 1968 or not at all.
@@ -101,12 +104,13 @@ the S-25 area row (`S-25 Berkut system, Moscow area`), whose point is central Mo
   rows), because the row is a site and not a town or airfield. To follow the brief strictly, replace
   them with the town's GeoNames point.
 - HQ rows are the town, not the HQ building or the division's airfield; the gap to Holm's point is
-  in `source` where he gives one (up to 13 km, Borzya).
+  in `source` where he gives one (up to 16.7 km, Komsomolsk-na-Amure).
 - The two fighter rows on Holm's point are Savasleyka and Severno-Vostochniy Bank, which had no
   OurAirports or GeoNames match.
 - Holm's point for the 38th Guards Regiment reads `39 88 19E`, an impossible value; it was rejected
   and Rostov-na-Don's OurAirports point used.
 - Holm's radar points can be a unit's later position, since many base lines run to "today".
+- Isakogorka and Tukums use GeoNames because Holm marks their radar points "possibly".
 - Tukums' GeoNames choice is flagged in `source`: its region could not be confirmed by name.
 
 ### Coverage by air defence body (`yes` and `uncertain` rows)
@@ -148,24 +152,25 @@ may measure Holm's coverage in part.
   out: 735th, 266th, 423rd, 940th, 976th, 722nd, 772nd, 304th. Some have conflicting towns.
 - **Anti-aircraft artillery.** The AAA divisions and regiments that were much of 1956 air defence
   are not a role here. Holm names a few only in passing (the 78th, 95th and 100th).
-- **SAM pages.** The crawl was stopped once S-25 and radar were complete, leaving about 250 pages on
-  the SAM list unopened: later S-75 and S-125 regiments, not expected to bear on June 1956.
+- **SAM pages.** The crawl was stopped once S-25 and radar were complete, leaving 184 of the 259
+  pages on the SAM lists unopened. They are not named in the S-25 corps lists, so I expect them to
+  be later S-75 and S-125 units, but that was not checked page by page.
 - **Radar.** Companies and radar models are not given. Holm's list is regiments and brigades only.
 - **Satellites.** Polish, Czechoslovak, East German and Romanian air defence pages begin in 1959 or
   later; their predecessors are named without 1956 dates. Only Budaörs (Hungary) and the two
   Bulgarian regiments have rows. Soviet units in those countries appear under the air force and are
   excluded unless PVO. The 787th at Neuruppin, for example, left the PVO in 1951.
 - **China, North Korea, Albania, Mongolia, North Vietnam.** No cited page documents a unit in June
-  1956, so there are no rows. Soviet PVO divisions in China on Holm's pages had left by 1955.
+  1956, so there are no rows. No PVO base line covering June 1956 lies in China.
 - **Wikipedia.** ru has no article at the S-25 title tried (404), so it is not cited. Wikipedia was
   not searched for HQ towns beyond the S-25 and district articles.
 
 ### Anachronism and provenance
 
-- **S-25 points.** Holm labels his launch areas "US designation: Moscow SAM site ...", so they
-  descend from US intelligence, probably well after 1956. They are not a target list and were not
-  chosen as targets, but this is the one place the independence depends on Holm's unstated sources.
-  The 1956 study could not have used these codes, but a test without the S-25 rows is advisable.
+- **S-25 points.** Holm labels his launch areas "US designation: Moscow SAM site ...", which suggests
+  the positions descend from US intelligence. When the codes were assigned, and from what, was not
+  checked. The rows were not chosen as targets, but this is the one place the independence depends
+  on Holm's unstated sources, so a check of any result without the S-25 rows is advisable.
 - **Unit names.** `unit` is the page's name, often later than 1956. The 52nd Brigade was the 6th
   Radio-Technical Regiment then; see `note`.
 - **Town names.** `town` is Holm's spelling, not normalised to June 1956 as elsewhere in this
