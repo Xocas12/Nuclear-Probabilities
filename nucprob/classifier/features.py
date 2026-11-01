@@ -17,6 +17,7 @@ from nucprob.transfer.features import ISO3, MILITARY_GROUPS, POWER_KM
 from nucprob.transfer.regions import REGIONS
 
 BLOC = "bloc_1956"
+MIN_SITES_FOR_COVERAGE = 5  # one radar in a country does not describe its defences
 NMC_ZIP = RAW / "cow" / "NMCv7.zip"
 NMC_FEATURES = [
     "nmc_log_cinc",
@@ -126,8 +127,8 @@ def load_defence_sites(region: str) -> pd.DataFrame:
         s = pd.read_csv(path)
         if "category" in s.columns and "role" not in s.columns:
             s = s.rename(columns={"category": "role"})
-        # The 1956 table files the S-25 under air_defence; it is a missile system.
-        s.loc[s["site"].astype(str).str.contains("S-25"), "role"] = "sam_system"
+        # A point for the whole system, in central Moscow: not a site (its card says so).
+        s = s[s["site"] != "S-25 Berkut system, Moscow area"]
         s = s[s["role"].isin(SAM_ROLES | OTHER_DEFENCE_ROLES)]
         if "in_june_1956" in s.columns:
             s = s[s["in_june_1956"].astype(str).str.lower().eq("yes")]
@@ -201,8 +202,9 @@ def document_year_features(towns: pd.DataFrame, year: int) -> pd.DataFrame:
 
 
 def add_defence(towns: pd.DataFrame, region: str, year: int) -> pd.DataFrame:
-    """Defence features of the bloc or the UK. Bloc tables cover the USSR only unless a row says
-    otherwise; a country with no row in its table gets NaN, not a distance across a border."""
+    """Defence features of the bloc or the UK. A bloc country with fewer than
+    MIN_SITES_FOR_COVERAGE rows gets NaN, not a distance across a border: in the 1956 tables that
+    leaves the USSR alone."""
     towns = towns.reset_index(drop=True).copy()
     sites = load_defence_sites(region)
     if region == "uk_1980":
@@ -210,6 +212,7 @@ def add_defence(towns: pd.DataFrame, region: str, year: int) -> pd.DataFrame:
     deff = defence_features(towns["lat"], towns["lon"], sites)
     towns[DEFENCE] = deff.to_numpy()
     if region == BLOC and not sites.empty:
-        covered = set(sites["country_1956"].dropna())
+        n = sites["country_1956"].value_counts()
+        covered = set(n[n >= MIN_SITES_FOR_COVERAGE].index)
         towns.loc[~towns["country"].isin(covered), DEFENCE] = np.nan
     return towns

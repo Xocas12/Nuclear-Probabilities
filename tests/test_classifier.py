@@ -56,6 +56,29 @@ def test_defence_features_are_empty_with_no_table_and_measure_distance_with_one(
     assert near.loc[1, "log_air_defence_sites_50km"] == 0
 
 
+def test_the_1956_table_covers_only_countries_it_documents_and_only_units_in_being():
+    sites = cf.load_defence_sites("bloc_1956")
+    if not (cf.CURATED / "features" / "bloc_air_defence_1956.csv").exists():
+        pytest.skip("no table")
+    assert "S-25 Berkut system, Moscow area" not in set(sites["site"])
+    table = pd.read_csv(cf.CURATED / "features" / "bloc_air_defence_1956.csv")
+    outside = table[table["in_june_1956"] != "yes"]["site"]
+    assert not set(sites["site"]) & (
+        set(outside) - set(table[table["in_june_1956"] == "yes"]["site"])
+    )
+    towns = pd.DataFrame(
+        {
+            "place_id": ["a", "b"],
+            "country": ["USSR", "Hungary"],
+            "lat": [55.7, 47.5],
+            "lon": [37.6, 19.0],
+        }
+    )
+    out = cf.add_defence(towns, cf.BLOC, 1956)
+    assert out[cf.DEFENCE].iloc[0].notna().all()
+    assert out[cf.DEFENCE].iloc[1].isna().all()  # Hungary has one radar in the table
+
+
 def test_bags_keep_positives_and_complete_negatives_and_draw_only_from_incomplete_lists():
     y = np.array([1, 0, 0, 1, 0, 0, 0, 0])
     doc = np.array(["c", "c", "c", "p", "p", "p", "p", "p"])
