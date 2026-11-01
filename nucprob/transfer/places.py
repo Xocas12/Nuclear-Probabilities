@@ -54,10 +54,51 @@ def variants(*names: str) -> list[str]:
     return [k for k in dict.fromkeys(key(v) for v in out) if k]
 
 
+# The seat of each first-order unit at the census date, for the pop-stat pages (Land: seat
+# town, as the page spells it). The pages underline today's seats, which are not the 1961
+# ones: St. Pölten was made Lower Austria's capital in 1986 (until then, and in practice until
+# 1997, the Land was governed from Vienna), and the page underlines Dornbirn for Vorarlberg,
+# whose seat is Bregenz.
+# Eisenstadt (Burgenland) is listed but had fewer than 10,000 people in 1961.
+POPSTAT_SEATS = {
+    "austria": {
+        "Wien": "Wien",
+        "Burgenland": "Eisenstadt",
+        "Kärnten": "Klagenfurt am Wörthersee",
+        "Niederösterreich": "Wien",
+        "Oberösterreich": "Linz",
+        "Salzburg": "Salzburg",
+        "Steiermark": "Graz",
+        "Tirol": "Innsbruck",
+        "Vorarlberg": "Bregenz",
+    },
+}
+
+
+def popstat_seats(d: pd.DataFrame, page: str) -> pd.Series:
+    """1 for the towns of a parsed pop-stat page that were the seat of a first-order unit.
+
+    Checked against the whole page, before any population cut: every unit of the page must
+    have a seat in POPSTAT_SEATS, and every seat must name exactly one town of the page, so a
+    renamed town or a new page fails here instead of leaving the column silently at 0."""
+    if page not in POPSTAT_SEATS:
+        raise ValueError(f"pop-stat page {page!r} has no first-order seats in POPSTAT_SEATS")
+    seats = POPSTAT_SEATS[page]
+    unknown = sorted(set(d["region"]) - set(seats))
+    if unknown:
+        raise ValueError(f"pop-stat {page}: no seat given for {unknown}")
+    for unit, town in seats.items():
+        n = int((d["name_ru"] == town).sum())
+        if n != 1:
+            raise ValueError(f"pop-stat {page}: seat of {unit}, {town!r}, found {n} times")
+    return d["name_ru"].isin(set(seats.values())).astype(int)
+
+
 def load_table(spec: str) -> pd.DataFrame:
     if spec.startswith("popstat:"):
         _, page, col = spec.split(":", 2)
         d = popstat.parse(RAW / "popstat" / f"{page}-cities.htm", page)
+        d = d.assign(admin1_seat=popstat_seats(d, page))
         d = d[d[col].notna() & (d[col] >= 10_000)]
         return pd.DataFrame(
             {
@@ -67,7 +108,7 @@ def load_table(spec: str) -> pd.DataFrame:
                 "pop": d[col].astype(int),
                 "pop_date": col.removeprefix("pop_"),
                 "capital": (d["region"] == "Wien") & (d["name_ru"] == "Wien"),
-                "admin1_seat": 0,
+                "admin1_seat": d["admin1_seat"],
                 "source": f"pop-stat {page}",
             }
         )
