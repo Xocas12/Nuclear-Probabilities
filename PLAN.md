@@ -628,6 +628,10 @@ nuclear-probabilities/
 
 Phases 1 and 2 run side by side. Transcribing the labels is the long pole, so it starts first.
 
+**Progress (1 Nov 2026).** The protocol is committed and M6 and part of M7 run under it: global, US and
+pooled Warsaw Pact models (`REPORT.md`, `runs/classifier/`). This repo's brief supersedes the zoo of
+section 5.4: two candidates with fixed settings, no tuning. The sealed set waits for review.
+
 **Progress (10 Oct 2026, evening).** M4 is done.
 - **NAPB-90 Annex B** (fallout risk by county, `data/curated/napb90/fallout_counties.csv`).
   It covers 3,139 counties. Every county's population and area matches Annex A except six,

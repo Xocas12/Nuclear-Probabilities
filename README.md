@@ -7,19 +7,26 @@ targeting. The full design is in [PLAN.md](PLAN.md).
 
 ## Where things stand
 
-- **Rebuilt, 1 November 2026.** The fixes of issues #1 and #3-#11 are on this branch and every
-  table and check run has been regenerated (`data/ISSUES.md`, `runs/qa/issues.csv`).
-- **Evidence (`data/curated/labels/PLANS.yaml`, `runs/evidence/`).** Each list is recorded with
-  its attacker, author, date, document type and evidence grade. The Soviet evidence is thin: one
-  General Staff Academy lesson (19 rows) and one news report of a missile deployment (1 row,
-  which gives no labels), and no Soviet war plan. Two Warsaw Pact exercises under joint command
-  add 80 rows. No state but the US passes the pre-committed gate for its own model
-  (`runs/evidence/state_model_gate.csv`): Poland has 10 linked positives against the 50
-  required, and Czechoslovakia has 6 from one plan now the FRG's 583 towns of 1961 are in the
-  universe.
-- **Protocol (`configs/protocol.yaml`).** Holdouts, metrics, the gate and the positive-unlabeled
-  method are committed before any model it names is fitted. The classifier and the probability
-  map are not built yet.
+The classifier is built and its results are in **[REPORT.md](REPORT.md)**. The probability map is not
+built, and the sealed held-out set has not been scored.
+
+- **Main result.** Under spatial cross-validation the US model beats population plus a country term,
+  +0.02 [+0.01, +0.04] in PR-AUC. It does not carry over: on a left-out document it scores below the
+  rule that ranks towns by population, -0.15 [-0.17, -0.13]. Every gain the selected models show is on
+  spatial blocks.
+- **Evidence (`data/curated/labels/PLANS.yaml`, `runs/evidence/`).** Each list records its attacker,
+  author, date, document type and grade. There is no Soviet war plan: the USSR has 64 rows, 63 from
+  General Staff Academy lessons on one fictional scenario. Only the US passes the pre-committed gate for
+  its own model, and 1289 of its 1314 positives are one study. Every other state is refused, with the
+  reason, in `runs/classifier/state_gate.csv`. A pooled Warsaw Pact model is allowed and is always
+  labelled exercise-based.
+- **Protocol (`configs/protocol.yaml`).** Holdouts, metrics, gate and method were committed before any
+  model it names was fitted, with dated amendments.
+- **Rebuilt, 1 November 2026.** The fixes of issues #1 and #3-#11 are on this branch
+  (`data/ISSUES.md`, `runs/qa/issues.csv`).
+
+### Earlier milestones
+
 - **Labels (milestone M3).** The SAC 1956 study's complex list and airfield list are
   transcribed in full (two independent reads, adjudication, cross-line checks). So are the
   excerpts of its Part I airfield list, Part II complex list and cross-reference list:
@@ -49,11 +56,7 @@ targeting. The full design is in [PLAN.md](PLAN.md).
   curated military sites) and transport. Every feature names its sources and flags later
   knowledge (`data/FEATURES.md`); a guard test keeps the target list out of the features.
   The check run and its map are in `runs/m2-check/`; its numbers check the joins and are not
-  results. It and `runs/m4-transfer-check/` were built before the GeoNames matcher used the
-  1950s populations and hand-made region maps, when 43 East German, Polish and Chinese towns
-  (Dessau, Sosnowiec and Anshan among them) sat on namesakes 17 to 2,480 km away, so their
-  labels and features were computed at the wrong place. Both runs need a rebuild
-  (`data/curated/gazetteer/README.md`, "Matching to GeoNames").
+  results.
 
 ## Running it
 
@@ -65,6 +68,9 @@ make data       # download the sources of data/sources.yaml into data/raw/
 make check      # places -> labels -> features -> dataset -> check run -> map
 make transfer   # the smaller lists: universes, features, links, check run
 make evidence qa
+make classifier # the pre-committed models and holdouts, about an hour (runs/classifier/)
+uv run python -m nucprob.classifier.sensitivity  # the repeat without anachronistic features
+uv run python -m nucprob.classifier.report       # REPORT.md and runs/classifier/TABLES.md
 make test lint
 ```
 

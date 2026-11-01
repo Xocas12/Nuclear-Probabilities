@@ -2,13 +2,13 @@
 
     python -m nucprob.classifier.report
 
-Writes runs/classifier/TABLES.md. REPORT.md quotes it; tests/test_classifier_report.py checks every
-figure REPORT.md quotes against these outputs.
+Writes runs/classifier/TABLES.md and REPORT.md at the repository root. Every figure in both comes
+from a CSV here; tests/test_classifier_report.py fails if REPORT.md differs from a regeneration.
 """
 
 import pandas as pd
 
-from nucprob.paths import RUNS
+from nucprob.paths import ROOT, RUNS
 
 OUT = RUNS / "classifier"
 ORDER = [
@@ -54,6 +54,9 @@ def by_list(lists: pd.DataFrame, scope: str, holdout: str) -> pd.DataFrame:
 
 def comparison(c: pd.DataFrame, scope: str) -> pd.DataFrame:
     g = c[c["scope"] == scope].copy()
+    # Where no SAC row is held out, "lists other than SAC" repeats "all lists".
+    same = g.duplicated(["holdout", "model", "against", "positives", "delta"], keep="first")
+    g = g[~same]
     g["candidate minus baseline"] = g.apply(interval, axis=1)
     g["gain claimed"] = (g["low"] > 0).map({True: "yes", False: "no"})
     keep = ["holdout", "lists", "model", "against", "positives", "a_pr_auc", "b_pr_auc"]
@@ -96,8 +99,303 @@ def tables() -> str:
     return "\n".join(parts)
 
 
+SCOPES = {
+    "global, all attacker documents": "Global, all attacker documents (exercises included)",
+    "global, plan documents only": "Global, plan documents only",
+    "state: US": "United States",
+    "Warsaw Pact, pooled, exercise-based": "Warsaw Pact, pooled (exercise-based, not a war-plan model)",
+}
+HOLDOUTS = {
+    "spatial blocks": "Spatial blocks",
+    "leave one plan out": "Leave one plan out",
+    "temporal: fit up to 1956, score later": "Fit to 1956, score later",
+    "temporal reversed: fit after 1956, score earlier": "Fit after 1956, score earlier",
+}
+RULE = "population rule"
+PLUS = "population + country"
+
+
+def primary_table(comp: pd.DataFrame, selection: pd.DataFrame) -> pd.DataFrame:
+    """The protocol's primary comparison: each scope's selected candidate against population +
+    country, and against the population rule, on all lists and without SAC."""
+    best = selection[selection["selected"]].set_index("scope")["model"]
+    rows = []
+    for scope, label in SCOPES.items():
+        g = comp[(comp["scope"] == scope) & (comp["model"] == best[scope])]
+        g = g[~g.duplicated(["holdout", "against", "positives", "delta"])]
+        for holdout, name in HOLDOUTS.items():
+            for lists in ("all lists", "lists other than SAC"):
+                part = g[(g["holdout"] == holdout) & (g["lists"] == lists)]
+                if part.empty:
+                    continue
+                plus = part[part["against"] == PLUS].iloc[0]
+                rule = part[part["against"] == RULE].iloc[0]
+                rows.append(
+                    {
+                        "Scope": label,
+                        "Selected": best[scope],
+                        "Holdout": name,
+                        "Lists": lists,
+                        "Positives": int(plus["positives"]),
+                        "Model": float(plus["a_pr_auc"]),
+                        "Pop. + country": float(plus["b_pr_auc"]),
+                        "Difference": interval(plus),
+                        "Pop. rule": float(rule["b_pr_auc"]),
+                        "Difference ": interval(rule),
+                    }
+                )
+    return pd.DataFrame(rows)
+
+
+def verdicts(table: pd.DataFrame) -> dict[str, int]:
+    """How many rows of the primary table show a gain, a loss or neither over population + country."""
+
+    def sign(s: str) -> str:
+        low, high = s[s.index("[") + 1 : -1].split(", ")
+        return "gain" if float(low) > 0 else "loss" if float(high) < 0 else "neither"
+
+    return table["Difference"].map(sign).value_counts().to_dict()
+
+
+def report() -> str:
+    comp = pd.read_csv(OUT / "comparison.csv")
+    selection = pd.read_csv(OUT / "selection.csv")
+    lists = pd.read_csv(OUT / "lists.csv")
+    gate = pd.read_csv(OUT / "state_gate.csv")
+    scopes = pd.read_csv(OUT / "scopes.csv").set_index("scope")
+    fam = pd.read_csv(OUT / "family_gain.csv")
+    defence = pd.read_csv(OUT / "defence.csv")
+    cal = pd.read_csv(OUT / "calibration.csv")
+    evidence = pd.read_csv(RUNS / "evidence" / "evidence_by_attacker.csv")
+    primary = primary_table(comp, selection)
+    v = verdicts(primary)
+    glob = "global, all attacker documents"
+
+    def row(scope, holdout, model, against, which="all lists"):
+        return comp[
+            (comp["scope"] == scope)
+            & (comp["holdout"] == holdout)
+            & (comp["model"] == model)
+            & (comp["against"] == against)
+            & (comp["lists"] == which)
+        ].iloc[0]
+
+    def pr(scope, holdout, plan, model):
+        g = lists[
+            (lists["scope"] == scope)
+            & lists["holdout"].str.startswith(holdout)
+            & (lists["plan_id"] == plan)
+            & (lists["model"] == model)
+        ]
+        return f"{g['pr_auc'].iloc[0]:.2f}"
+
+    lgb, logit = "LightGBM, all permitted", "logistic, all permitted"
+    us_spatial = row("state: US", "spatial blocks", lgb, PLUS)
+    us_lopo = row("state: US", "leave one plan out", lgb, RULE)
+    us_lopo_rest = row("state: US", "leave one plan out", lgb, RULE, "lists other than SAC")
+    us_rev = row("state: US", "temporal reversed: fit after 1956, score earlier", lgb, RULE)
+    g_lopo_rest = row(glob, "leave one plan out", lgb, RULE, "lists other than SAC")
+    wp_sp = row("Warsaw Pact, pooled, exercise-based", "spatial blocks", lgb, PLUS)
+    wp_lopo = row("Warsaw Pact, pooled, exercise-based", "leave one plan out", lgb, PLUS)
+    wp_lopo_l = row("Warsaw Pact, pooled, exercise-based", "leave one plan out", logit, PLUS)
+    usr = gate[gate["attacker"] == "USSR"].iloc[0]
+    us_gate = gate[gate["attacker"] == "US"].iloc[0]
+    pl = gate[gate["attacker"] == "Poland"].iloc[0]
+    cz = gate[gate["attacker"] == "Czechoslovakia"].iloc[0]
+    pool = gate[gate["attacker"].str.startswith("Warsaw Pact, pooled")].iloc[0]
+    su_rows = int(evidence.loc[evidence["attacker"] == "USSR", "rows"].sum())
+    su_train = evidence[(evidence["attacker"] == "USSR") & (evidence["role"] == "train")]
+    plan_docs = evidence[evidence["doc_type"] == "war_plan"]
+    su_pos = lists[
+        (lists["scope"] == glob)
+        & (lists["holdout"] == "spatial blocks")
+        & lists["plan_id"].isin(["wp_1977_gsa_lessons", "wp_1977_gsa_front_lesson"])
+        & (lists["model"] == RULE)
+    ]["positives"].sum()
+
+    def fam_row(rows, family):
+        return fam[(fam["rows"] == rows) & (fam["family"] == family)].iloc[0]
+
+    def odds(desc, feature):
+        d = defence[
+            defence["rows_described"].str.startswith(desc) & (defence["feature"] == feature)
+        ]
+        d = d.iloc[0]
+        return f"{d['odds_ratio_per_tenfold']:.2f} [{d['low']:.2f}, {d['high']:.2f}]"
+
+    cal_raw = cal[(cal["model"] == lgb) & (cal["kind"] == "raw")].iloc[0]
+    cal_iso = cal[(cal["model"] == lgb) & (cal["kind"] == "isotonic")].iloc[0]
+    fam_table = fam.assign(gain=fam.apply(interval, axis=1))[
+        ["rows", "family", "base", "base_pr_auc", "with_family_pr_auc", "gain"]
+    ]
+    anach = OUT / "no_anachronisms.csv"
+    if anach.exists():
+        a = pd.read_csv(anach)
+        a_table = a.assign(difference=a.apply(interval, axis=1))[
+            ["scope", "model", "with_all_pr_auc", "none_flagged_pr_auc", "difference"]
+        ]
+        removed = a["removed"].iloc[0]
+        missing = [s for s in SCOPES if s not in set(a["scope"])]
+        note = f" Not finished in this run: {', '.join(missing)}." if missing else ""
+        anach_text = (
+            f"Removing the features flagged as today's data standing in for the past ({removed}) "
+            f"changes PR-AUC under spatial blocks as follows.{note}\n\n{markdown(a_table)}"
+        )
+    else:
+        anach_text = "The repeat without anachronistic features has not been run."
+
+    return f"""# What made a place a nuclear target? Report on the classifier
+
+Generated by `python -m nucprob.classifier.report` from `runs/classifier/`. Every figure below comes
+from a file in that folder. Full tables, list by list: `runs/classifier/TABLES.md`.
+
+**This covers the classifier only. The probability map of the brief's section D does not exist yet,
+and the sealed held-out set has not been scored.**
+
+## Main result
+
+Under spatial cross-validation, models with all permitted features beat population plus a country
+term, by {signed(us_spatial["delta"])} PR-AUC [{signed(us_spatial["low"])}, {signed(us_spatial["high"])}] for the US model. **They do not carry over to a plan they
+have not seen.** Fitted on the other US documents, LightGBM scores the SAC 1956 list and the smaller
+US lists at a weighted PR-AUC of {us_lopo["a_pr_auc"]:.2f} against {us_lopo["b_pr_auc"]:.2f} for the rule that ranks towns by population alone:
+{interval(us_lopo)}. Fitted on documents after 1956 and scoring earlier ones, the difference is {interval(us_rev)}.
+Across the primary table below, the selected model gains on population plus country in {v.get("gain", 0)} rows,
+loses in {v.get("loss", 0)} and cannot be told from it in {v.get("neither", 0)}. All of the gains are on spatial blocks.
+
+So what these models learn is largely specific to a plan's list. The features add detail within the SAC
+study, mostly transport. They have not been shown to describe targeting in general. On a left-out plan,
+ranking towns by population does better than the richer models or as well, though it too is weak on most
+of the small lists (`runs/classifier/TABLES.md`).
+
+## Question
+
+Which traits of a place, as of a document's date, predict that the document names it as a nuclear
+target? A place is a town of 10,000 or more in the target country at the census nearest the document.
+A positive is a town with a target of the document linked to it within 15 km.
+
+## Data
+
+**Documents.** `data/curated/labels/PLANS.yaml` records each list's attacker, author, date, type and
+evidence grade. Only `war_plan` documents are called war plans. SAC's 1956 list, the largest, is a
+requirements study. Exercises, war games and lessons may enter the models marked as such. Civil-defence
+lists and mirrors, which record what a defender expected, never train a model and are scored apart.
+
+**How much evidence there is, by side.** {int(us_gate["linked_positives"])} linked positives have the US as attacker, of which
+{int(us_gate["linked_positives"] - us_gate["positives_outside_largest"])} come from one document. For the USSR there is **no war plan at all**: {su_rows} rows, {int(su_train["rows"].sum())} of them from
+General Staff Academy lessons on one fictional scenario, one source, giving {int(su_pos)} linked towns across its two
+lists, and one news report. Czechoslovakia has {int(cz["linked_positives"])} linked positives from one plan and Poland {int(pl["linked_positives"])} from
+three plans. In all, {int(plan_docs["documents"].sum())} documents in the registry are war plans, {int(plan_docs["rows"].sum())} rows between them. No Soviet strategic
+target list has been found declassified.
+
+**Features** (`data/FEATURES_CLASSIFIER.md`): population, administration, geography, industry, transport,
+military sites, air and missile defences, and the target state's COW National Material Capabilities v7.0.
+They describe a town as of the document. The West German towns come from the official 1961 table, which
+sums to the printed total (`data/curated/gazetteer/towns_frg_1961.md`). The Soviet defences of June 1956 are
+a new cited table (`data/curated/features/bloc_air_defence_1956.md`).
+
+## Method
+
+The analysis was committed in `configs/protocol.yaml` before any listed model was fitted, with three dated
+amendments. The third followed a code check at 3 bags, which was read; the protocol says so. Earlier check
+runs had read the transfer lists, so leave-one-plan-out is not blind.
+
+- **Models.** Baselines: logistic regression on log population, and the same plus one intercept per
+  country. Candidates: L2 logistic regression and LightGBM with fixed settings. Nothing was tuned.
+- **Positive-unlabeled.** On a list that does not claim to be complete, a town off it is unlabeled. Each of
+  50 bags keeps all positives and draws as many unlabeled towns as the list has positives.
+- **Holdouts.** Leave one plan out (a document's lists go together); spatial blocks of 300 km in 5 folds on
+  three shifted grids; temporal, in both directions around 1956.
+- **Reading.** PR-AUC is primary, as a mean over lists weighted by their positives, on lists with 2 or more.
+  A gain is claimed only where a paired 95% bootstrap interval of 2,000 resamples excludes zero. On incomplete
+  lists PR-AUC understates precision, since some unlabeled towns were targets.
+- **Which model.** Each scope's candidate was chosen on spatial blocks alone.
+
+## Results
+
+### Models against baselines
+
+The selected candidate of each scope. "Difference" is against the baseline to its left, with a 95% interval.
+
+{markdown(primary)}
+
+- **The US model is the only state model.** {us_gate["reason"].capitalize()}: {int(us_gate["independent_plans"])} independent documents and
+  {int(us_gate["linked_positives"])} positives, though only {int(us_gate["positives_outside_largest"])} lie outside the SAC study. On those {int(us_lopo_rest["positives"])} the rule wins by far:
+  {interval(us_lopo_rest)} under leave one plan out.
+- **The global model** is mostly the SAC list too. Without it, on {int(g_lopo_rest["positives"])} positives, leave-one-plan-out LightGBM against
+  the population rule is {interval(g_lopo_rest)}: no gain.
+- **The Target Committee of 1945** shows the failure most plainly. Left out of the global model, its 17 cities score
+  {pr(glob, "leave", "us_1945_target_committee", lgb)} under LightGBM and {pr(glob, "leave", "us_1945_target_committee", logit)} under logistic regression, against {pr(glob, "leave", "us_1945_target_committee", RULE)} for the population rule.
+- **SAC itself** left out of the global model: {pr(glob, "leave", "us_1956_sac_complexes", lgb)} under LightGBM, {pr(glob, "leave", "us_1956_sac_complexes", RULE)} for the rule.
+- **The pooled Warsaw Pact model** ({int(pool["linked_positives"])} positives across {int(scopes.loc["Warsaw Pact, pooled, exercise-based", "lists"])} lists, almost all exercises and lessons) gains under
+  spatial blocks, {interval(wp_sp)}, and not on a left-out document: LightGBM {interval(wp_lopo)},
+  logistic regression {interval(wp_lopo_l)}. Its base rates are low and its lists are thin.
+
+### Which families add anything (US 1956 complexes)
+
+Each family with population and country, LightGBM, spatial blocks. Within one list national power is one value
+per country, so over a country term it can add nothing; over population alone it does the country term's work.
+Transport is the largest gain in both rows: {interval(fam_row("all countries", "transport"))} for all countries,
+{interval(fam_row("USSR", "transport"))} in the USSR. Transport here is largely today's data (below).
+
+{markdown(fam_table)}
+
+### Defences
+
+These are associations in the lists, not findings about intent. Odds ratios are per tenfold increase in the
+feature, controlling log population and an intercept per list and country; intervals bootstrap places.
+
+- **Soviet towns on the SAC list.** Adding the defence family gains {interval(fam_row("USSR", "defence"))} under spatial blocks. A town with
+  more air-defence sites within 50 km was listed *less* often at a given population: {odds("US 1956", "log_air_defence_sites_50km")}. Farther from an
+  S-25 site, more often: {odds("US 1956", "log_km_to_sam")}. Distance to any defence site shows no clear relation: {odds("US 1956", "log_km_to_air_defence")},
+  and without the S-25 points {odds("US 1956", "log_km_to_air_defence_no_s25")}.
+- **This does not show that SAC avoided defended places.** The S-25 ring surrounds Moscow, so nearby small towns
+  may be absorbed into its complex entry rather than listed in their own name, and PVO sites may follow large cities.
+  The table is not a list of what SAC knew: Holm's S-25 points carry US designations, while the rest is post-Soviet
+  knowledge.
+- **Warsaw Pact documents, NATO Europe.** Both intervals include 1: sites within 50 km {odds("Warsaw Pact", "log_air_defence_sites_50km")}, distance to a
+  Nike or HAWK site {odds("Warsaw Pact", "log_km_to_sam")}.
+- **Not tested.** Whether defence sites were targets in themselves, or struck before other targets, cannot be read
+  at town level. The SAC category codes may speak to the first, and that has not been done.
+
+### Calibration
+
+On the SAC list under spatial blocks, LightGBM's expected calibration error is {cal_raw["expected_calibration_error"]:.3f} raw and {cal_iso["expected_calibration_error"]:.3f} after
+cross-fitted isotonic calibration; Brier {cal_raw["brier"]:.3f} and {cal_iso["brier"]:.3f}. Calibration cannot be measured on incomplete lists, and
+no calibration measured on SAC carries to another plan's base rate.
+
+### Without anachronistic features
+
+{anach_text}
+
+## What the evidence cannot support
+
+- **Any statement about Soviet targeting.** The USSR is refused its own model. The gate's reason: {usr["reason"]}.
+- **A model of Warsaw Pact war plans.** Each attacker is refused; the pooled model is exercise-based.
+- **Prediction for a plan not in the data.** Under every holdout that leaves out a plan or an era, the selected
+  model never shows a gain over population plus country.
+- **Causes.** Population, industry and transport are correlated, and these are associations in lists.
+- **What planners knew.** The features record what existed according to later sources.
+- **Any modern reading.** Every attacker document dates from 1945 to 1977. Nothing here has been applied to a modern case.
+
+## State models refused or allowed
+
+{markdown(gate.drop(columns=["documents_any_type"]))}
+
+The rule is in `configs/protocol.yaml`. A document counts as a plan only if its type is war plan, target selection,
+requirements study or policy study, at grade C or better.
+
+## Not done
+
+- The sealed held-out set (`python -m nucprob.classifier.sealed`) is reserved until the models have been reviewed.
+- The probability map, allocation step and viewer.
+- 1970 Coastal Front map rows and about 15 Polish exercise scans too poor to search
+  (`data/notes/soviet_search_2026-11.md`): candidates, not labels.
+"""
+
+
 def main() -> None:
     (OUT / "TABLES.md").write_text(tables(), encoding="utf-8")
+    (ROOT / "REPORT.md").write_text(report(), encoding="utf-8")
 
 
 if __name__ == "__main__":

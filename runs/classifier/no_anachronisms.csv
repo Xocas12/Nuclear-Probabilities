@@ -1,0 +1,3 @@
+scope,model,with_all_pr_auc,none_flagged_pr_auc,removed,delta,low,high,excludes_zero
+state: US,logistic,0.8370,0.8286,"log_power_mw_25km, log_airfields_10km, log_airfields_25km, log_airfields_50km, log_km_to_rail, rail_lines_5km, log_km_to_port, log_km_to_nuclear_site",-0.0084,-0.0141,-0.0021,True
+state: US,LightGBM,0.8407,0.8250,"log_power_mw_25km, log_airfields_10km, log_airfields_25km, log_airfields_50km, log_km_to_rail, rail_lines_5km, log_km_to_port, log_km_to_nuclear_site",-0.0158,-0.0226,-0.0086,True

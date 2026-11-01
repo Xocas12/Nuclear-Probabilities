@@ -36,7 +36,8 @@ def main() -> None:
     full = pd.read_parquet(PROCESSED / "classifier_table.parquet")
     groups, _ = scopes(usable(full), positives_of(full))
     out = []
-    for scope, rows in groups.items():
+    # Smallest first, and written after each: a cut-off run still leaves what it finished.
+    for scope, rows in sorted(groups.items(), key=lambda kv: len(kv[1])):
         models = [
             Spec("logistic", logistic_all, ALL_FEATURES),
             Spec("logistic, none flagged", logistic_all, clean_columns()),
@@ -58,7 +59,7 @@ def main() -> None:
                 | r
             )
         print(scope, flush=True)
-    pd.DataFrame(out).to_csv(OUT / "no_anachronisms.csv", index=False, float_format="%.4f")
+        pd.DataFrame(out).to_csv(OUT / "no_anachronisms.csv", index=False, float_format="%.4f")
 
 
 if __name__ == "__main__":

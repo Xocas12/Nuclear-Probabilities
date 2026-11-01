@@ -1,0 +1,81 @@
+bin,n,mean_score,observed,model,kind,brier,expected_calibration_error
+0,215,0.2336,0.2326,population rule,raw,0.1986,0.0372
+1,214,0.2628,0.1963,population rule,raw,0.1986,0.0372
+2,215,0.2922,0.2558,population rule,raw,0.1986,0.0372
+3,214,0.3320,0.3458,population rule,raw,0.1986,0.0372
+4,215,0.3827,0.3721,population rule,raw,0.1986,0.0372
+5,214,0.4482,0.4907,population rule,raw,0.1986,0.0372
+6,214,0.5378,0.6075,population rule,raw,0.1986,0.0372
+7,215,0.6469,0.6977,population rule,raw,0.1986,0.0372
+8,214,0.7922,0.7477,population rule,raw,0.1986,0.0372
+9,215,0.9345,0.8977,population rule,raw,0.1986,0.0372
+0,215,0.1860,0.2372,population rule,isotonic,0.2002,0.0360
+1,214,0.2122,0.1963,population rule,isotonic,0.2002,0.0360
+2,215,0.2666,0.2791,population rule,isotonic,0.2002,0.0360
+3,214,0.3419,0.3785,population rule,isotonic,0.2002,0.0360
+4,215,0.3881,0.3628,population rule,isotonic,0.2002,0.0360
+5,214,0.4927,0.4626,population rule,isotonic,0.2002,0.0360
+6,214,0.6127,0.5888,population rule,isotonic,0.2002,0.0360
+7,215,0.6889,0.7628,population rule,isotonic,0.2002,0.0360
+8,214,0.7554,0.6822,population rule,isotonic,0.2002,0.0360
+9,215,0.9108,0.8930,population rule,isotonic,0.2002,0.0360
+0,215,0.1399,0.1628,population + country,raw,0.1766,0.0170
+1,214,0.1793,0.1449,population + country,raw,0.1766,0.0170
+2,215,0.2322,0.2512,population + country,raw,0.1766,0.0170
+3,214,0.3017,0.2944,population + country,raw,0.1766,0.0170
+4,215,0.3935,0.3860,population + country,raw,0.1766,0.0170
+5,214,0.4951,0.5187,population + country,raw,0.1766,0.0170
+6,214,0.5943,0.5981,population + country,raw,0.1766,0.0170
+7,215,0.7123,0.6791,population + country,raw,0.1766,0.0170
+8,214,0.8463,0.8364,population + country,raw,0.1766,0.0170
+9,215,0.9639,0.9721,population + country,raw,0.1766,0.0170
+0,215,0.1329,0.2140,population + country,isotonic,0.1792,0.0445
+1,214,0.1645,0.1542,population + country,isotonic,0.1792,0.0445
+2,215,0.2316,0.1907,population + country,isotonic,0.1792,0.0445
+3,214,0.3032,0.3879,population + country,isotonic,0.1792,0.0445
+4,215,0.4000,0.2930,population + country,isotonic,0.1792,0.0445
+5,214,0.5084,0.5607,population + country,isotonic,0.1792,0.0445
+6,214,0.5961,0.5561,population + country,isotonic,0.1792,0.0445
+7,215,0.6945,0.6930,population + country,isotonic,0.1792,0.0445
+8,214,0.8382,0.8318,population + country,isotonic,0.1792,0.0445
+9,215,0.9836,0.9628,population + country,isotonic,0.1792,0.0445
+0,215,0.0657,0.0651,"logistic, all permitted",raw,0.1647,0.0184
+1,214,0.1417,0.1869,"logistic, all permitted",raw,0.1647,0.0184
+2,215,0.2084,0.2047,"logistic, all permitted",raw,0.1647,0.0184
+3,214,0.2868,0.2897,"logistic, all permitted",raw,0.1647,0.0184
+4,215,0.3933,0.4140,"logistic, all permitted",raw,0.1647,0.0184
+5,214,0.5156,0.4953,"logistic, all permitted",raw,0.1647,0.0184
+6,214,0.6390,0.6308,"logistic, all permitted",raw,0.1647,0.0184
+7,215,0.7678,0.7023,"logistic, all permitted",raw,0.1647,0.0184
+8,214,0.8926,0.8785,"logistic, all permitted",raw,0.1647,0.0184
+9,215,0.9796,0.9767,"logistic, all permitted",raw,0.1647,0.0184
+0,215,0.0601,0.0651,"logistic, all permitted",isotonic,0.1664,0.0245
+1,214,0.1728,0.2196,"logistic, all permitted",isotonic,0.1664,0.0245
+2,215,0.2091,0.1721,"logistic, all permitted",isotonic,0.1664,0.0245
+3,214,0.2861,0.3178,"logistic, all permitted",isotonic,0.1664,0.0245
+4,215,0.4261,0.4093,"logistic, all permitted",isotonic,0.1664,0.0245
+5,214,0.4988,0.5327,"logistic, all permitted",isotonic,0.1664,0.0245
+6,214,0.6169,0.6168,"logistic, all permitted",isotonic,0.1664,0.0245
+7,215,0.7125,0.6512,"logistic, all permitted",isotonic,0.1664,0.0245
+8,214,0.8841,0.8832,"logistic, all permitted",isotonic,0.1664,0.0245
+9,215,0.9881,0.9767,"logistic, all permitted",isotonic,0.1664,0.0245
+0,215,0.0578,0.1070,"LightGBM, all permitted",raw,0.1671,0.0332
+1,214,0.1151,0.1636,"LightGBM, all permitted",raw,0.1671,0.0332
+2,215,0.1828,0.2326,"LightGBM, all permitted",raw,0.1671,0.0332
+3,214,0.2725,0.2664,"LightGBM, all permitted",raw,0.1671,0.0332
+4,215,0.3830,0.3767,"LightGBM, all permitted",raw,0.1671,0.0332
+5,214,0.5095,0.4673,"LightGBM, all permitted",raw,0.1671,0.0332
+6,214,0.6587,0.6495,"LightGBM, all permitted",raw,0.1671,0.0332
+7,215,0.8048,0.7488,"LightGBM, all permitted",raw,0.1671,0.0332
+8,214,0.9180,0.8645,"LightGBM, all permitted",raw,0.1671,0.0332
+9,215,0.9783,0.9674,"LightGBM, all permitted",raw,0.1671,0.0332
+0,215,0.0858,0.1116,"LightGBM, all permitted",isotonic,0.1681,0.0227
+1,214,0.1703,0.1682,"LightGBM, all permitted",isotonic,0.1681,0.0227
+2,215,0.2280,0.2326,"LightGBM, all permitted",isotonic,0.1681,0.0227
+3,214,0.2803,0.2570,"LightGBM, all permitted",isotonic,0.1681,0.0227
+4,215,0.3882,0.3860,"LightGBM, all permitted",isotonic,0.1681,0.0227
+5,214,0.4630,0.4953,"LightGBM, all permitted",isotonic,0.1681,0.0227
+6,214,0.6591,0.6168,"LightGBM, all permitted",isotonic,0.1681,0.0227
+7,215,0.7373,0.7814,"LightGBM, all permitted",isotonic,0.1681,0.0227
+8,214,0.8692,0.8318,"LightGBM, all permitted",isotonic,0.1681,0.0227
+9,215,0.9764,0.9628,"LightGBM, all permitted",isotonic,0.1681,0.0227
