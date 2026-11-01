@@ -15,10 +15,44 @@ class Region:
     countries: tuple[tuple[str, str, str], ...]
     lists: tuple[str, ...]
     military: str = ""  # curated military table in data/curated/features/, if any
+    # Where the military table covers only part of a country: country name -> the first-order
+    # units (the town table's `admin1`) it covers. A country not named here is covered whole.
+    # Towns outside the covered units get no military distances.
+    military_scope: dict[str, tuple[str, ...]] = field(default_factory=dict)
     note: str = ""
     extra: dict = field(default_factory=dict)
     withheld: tuple[tuple[str, str, str], ...] = ()  # countries with a table not yet complete
 
+
+ITALY_NORTH_1961 = (
+    # Lombardia
+    "Bergamo",
+    "Brescia",
+    "Como",
+    "Cremona",
+    "Mantova",
+    "Milano",
+    "Pavia",
+    "Sondrio",
+    "Varese",
+    # Veneto
+    "Belluno",
+    "Padova",
+    "Rovigo",
+    "Treviso",
+    "Venezia",
+    "Verona",
+    "Vicenza",
+    # Friuli-Venezia Giulia
+    "Gorizia",
+    "Trieste",
+    "Udine",
+    # Trentino-Alto Adige
+    "Bolzano",
+    "Trento",
+    # Piemonte: Novara only
+    "Novara",
+)
 
 REGIONS = {
     "wp_west_1965": Region(
@@ -44,6 +78,10 @@ REGIONS = {
             "wp_1977_zealand",
         ),
         military="weurope_military_sites_1965.csv",
+        # The 1965 table covers Italy north of the Po and the Venetian plain only: Lombardy,
+        # Veneto, Friuli-Venezia Giulia, Trentino-Alto Adige and the province of Novara
+        # (weurope_military_sites_1965.md). These are the 1961 provinces of those regions.
+        military_scope={"Italy": ITALY_NORTH_1961},
         note="one universe for the 1960s plans; the 1970s lists use it too",
         withheld=(("FRG", "DE", "towns_frg_1961"),),
     ),
