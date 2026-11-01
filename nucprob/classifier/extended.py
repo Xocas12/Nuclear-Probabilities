@@ -34,8 +34,8 @@ from nucprob.classifier.state_features import (
     state_codes,
     state_year_table,
 )
-from nucprob.model.cv import git_commit
 from nucprob.model.splits import BLOCK_KM, assign_blocks, folds
+from nucprob.outputs import hashes, start_record
 from nucprob.paths import PROCESSED, ROOT, RUNS
 from nucprob.sources.fetch import sha256
 
@@ -95,12 +95,12 @@ def read_scope(scope: str, rows: pd.DataFrame, bags: int) -> list[dict]:
         Spec("primary", lightgbm_quiet, ALL_FEATURES),
     ]
     spatial = ev.spatial_scores(rows, specs, bags)
-    _, held = ev.leave_one_plan_out(rows, specs, bags)
+    _, held = ev.leave_one_document_out(rows, specs, bags)
     held = held.reset_index(drop=True)
     spatial_trained = spatial_train_positives(rows)
     readings = [
         ("spatial blocks", rows, spatial),
-        ("leave one plan out", held, {m.name: held[m.name].to_numpy() for m in specs}),
+        ("leave one document out", held, {m.name: held[m.name].to_numpy() for m in specs}),
     ]
     out = []
     for holdout, frame, scores in readings:
@@ -116,7 +116,7 @@ def read_scope(scope: str, rows: pd.DataFrame, bags: int) -> list[dict]:
                     continue
                 trained = (
                     int(sub["train_positives"].min())
-                    if holdout == "leave one plan out"
+                    if holdout == "leave one document out"
                     else spatial_trained
                 )
                 out.append(
@@ -168,6 +168,7 @@ def verdict(r) -> str:
 
 
 def main() -> None:
+    started = start_record()
     full = pd.read_parquet(PROCESSED / "classifier_table.parquet")
     groups, _ = scopes(usable(full), positives_of(full))
     table = state_year_table(
@@ -190,11 +191,12 @@ def main() -> None:
     missing = table[NEW_COLUMNS].isna().sum().astype(int).to_dict()
     manifest = {
         "created": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
-        "git_commit": git_commit(),
+        **started,
         "amendment_sha256": sha256(AMENDMENT),
         "table_sha256": sha256(PROCESSED / "classifier_table.parquet"),
         "state_years": len(table),
         "state_years_missing": missing,
+        "outputs": hashes([OUT / "extended.csv"]),
     }
     (OUT / "extended_manifest.json").write_text(json.dumps(manifest, indent=2))
 

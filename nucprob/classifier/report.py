@@ -125,7 +125,7 @@ def tables() -> str:
         parts += [markdown(comparison(comp, scope)), ""]
         for holdout in (
             "spatial blocks",
-            "leave-one-plan-out",
+            "leave-one-document-out",
             "towns kept",
             "temporal: fit up",
             "temporal reversed",
@@ -161,7 +161,7 @@ SCOPES = {
 }
 HOLDOUTS = {
     "spatial blocks": "Spatial blocks",
-    "leave one plan out": "Leave one plan out",
+    "leave one document out": "Leave one document out",
     "temporal: fit up to 1956, score later": "Fit to 1956, score later",
     "temporal reversed: fit after 1956, score earlier": "Fit after 1956, score earlier",
 }
@@ -243,7 +243,7 @@ def headline_quotes() -> list[str]:
     sens = pd.read_csv(OUT / "sensitivity.csv")
     sac = _row(comp, SAC_SCOPE, "spatial blocks", _best(selection, SAC_SCOPE), PLUS)
     strict = sens[(sens["scope"] == SAC_SCOPE) & (sens["variant"] == "strict as-of")].iloc[0]
-    g = _row(comp, GLOBAL_ALL, "leave one plan out", _best(selection, GLOBAL_ALL), RULE)
+    g = _row(comp, GLOBAL_ALL, "leave one document out", _best(selection, GLOBAL_ALL), RULE)
     return [interval(sac), interval(strict), interval(g)]
 
 
@@ -385,7 +385,7 @@ def _extended_section() -> str:
         against=d["b_pr_auc"],
     )
     counts = d["verdict"].value_counts()
-    lopo = d[(d["holdout"] == "leave one plan out") & (d["verdict"] != "not a reading")]
+    lopo = d[(d["holdout"] == "leave one document out") & (d["verdict"] != "not a reading")]
     lopo_gains = int((lopo["verdict"] == "gain").sum())
     lopo_rest = lopo[lopo["lists"] == "other than SAC"]
     rest_gains = int((lopo_rest["verdict"] == "gain").sum())
@@ -394,7 +394,7 @@ def _extended_section() -> str:
     for lists, name in (("all lists", "all lists"), ("lists other than SAC", "other than SAC")):
         r = comp[
             (comp["scope"] == "global, all attacker documents")
-            & (comp["holdout"] == "leave one plan out")
+            & (comp["holdout"] == "leave one document out")
             & (comp["against"] == "population rule")
             & (comp["lists"] == lists)
         ].iloc[0]
@@ -483,14 +483,14 @@ def report() -> str:
     sac_strict = variant(SAC_SCOPE, "strict as-of")
     sac_flag = variant(SAC_SCOPE, "none flagged")
     g_best = best(GLOBAL_ALL)
-    g_lopo = row(GLOBAL_ALL, "leave one plan out", g_best, RULE)
-    g_lopo_rest = row(GLOBAL_ALL, "leave one plan out", g_best, RULE, "lists other than SAC")
+    g_lopo = row(GLOBAL_ALL, "leave one document out", g_best, RULE)
+    g_lopo_rest = row(GLOBAL_ALL, "leave one document out", g_best, RULE, "lists other than SAC")
     g_sp_rest = row(GLOBAL_ALL, "spatial blocks", g_best, PLUS, "lists other than SAC")
     g_rev = row(GLOBAL_ALL, "temporal reversed: fit after 1956, score earlier", g_best, RULE)
     wp_best = best(pooled)
     wp_sp = row(pooled, "spatial blocks", wp_best, PLUS)
-    wp_lopo = row(pooled, "leave one plan out", wp_best, PLUS)
-    wp_kept = row(pooled, "leave one plan out, towns kept in training", wp_best, PLUS)
+    wp_lopo = row(pooled, "leave one document out", wp_best, PLUS)
+    wp_kept = row(pooled, "leave one document out, towns kept in training", wp_best, PLUS)
     wp_nmc = variant(pooled, "no national power")
     wp_mark = variant(pooled, "no source markers")
     usr, us_gate, pl, cz = (gate.loc[k] for k in ("USSR", "US", "Poland", "Czechoslovakia"))
@@ -629,7 +629,7 @@ held back from every model, in `data/curated/splits/sealed_blocks.csv`, scored o
   country. Candidates: L2 logistic regression and LightGBM (gradient-boosted trees) with fixed settings. Nothing was tuned.
 - **Positive-unlabeled.** On a list that does not claim to be complete, a town off it is unlabeled, not a
   negative. Each of 50 fits (**bags**) keeps all positives and draws as many unlabeled towns as the list has positives.
-- **Holdouts.** Leave one plan out (a document's lists and towns leave together); spatial blocks of 300 km in
+- **Holdouts.** Leave one document out (a document's lists and towns leave together); spatial blocks of 300 km in
   5 folds on three shifted grids; temporal, in both directions around 1956.
 - **Reading.** Mean per-list PR-AUC, weighted by positives, on lists with 2 or more. Neither interval includes
   the variance of refitting a model.

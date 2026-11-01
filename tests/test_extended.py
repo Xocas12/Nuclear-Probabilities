@@ -116,7 +116,7 @@ def test_committed_extended_run_is_of_this_amendment_and_table_and_holds_every_r
     m = json.loads((RUNS / "classifier" / "extended_manifest.json").read_text())
     assert m["amendment_sha256"] == sha256(ex.AMENDMENT)
     d = pd.read_csv(OUT)
-    assert set(d["holdout"]) == {"spatial blocks", "leave one plan out"}
+    assert set(d["holdout"]) == {"spatial blocks", "leave one document out"}
     assert set(ex.comparisons()) <= set(d["comparison"])
     assert "defence industry over population" in set(d["comparison"])
     assert set(d["verdict"]) <= {"gain", "loss", "neither", "not a reading"}
@@ -128,13 +128,13 @@ def test_committed_extended_run_is_of_this_amendment_and_table_and_holds_every_r
 @needs_run
 def test_the_readme_states_what_the_extended_run_and_the_primary_run_hold():
     d = pd.read_csv(OUT)
-    glob = d[(d["scope"] == ex.SCOPES[0]) & (d["holdout"] == "leave one plan out")]
+    glob = d[(d["scope"] == ex.SCOPES[0]) & (d["holdout"] == "leave one document out")]
     assert not (glob.loc[glob["lists"] == "other than SAC", "verdict"] == "gain").any()
     best = glob.loc[glob["lists"] == "all lists", "a_pr_auc"].max()
     comp = pd.read_csv(RUNS / "classifier" / "comparison.csv")
     rule = comp[
         (comp["scope"] == ex.SCOPES[0])
-        & (comp["holdout"] == "leave one plan out")
+        & (comp["holdout"] == "leave one document out")
         & (comp["against"] == "population rule")
         & (comp["lists"] == "all lists")
     ]["b_pr_auc"].iloc[0]

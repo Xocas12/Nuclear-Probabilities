@@ -2,7 +2,7 @@
 
     python -m nucprob.classifier.run [--quick]
 
-Reads data/processed/classifier_table.parquet. For each scope: spatial blocks, leave one plan out,
+Reads data/processed/classifier_table.parquet. For each scope: spatial blocks, leave one document out,
 temporal holdouts, the candidates against both baselines with a paired bootstrap. Then the US 1956
 complexes alone: calibration, and the gain of each feature family. Then the defence reading.
 
@@ -35,9 +35,9 @@ from sklearn.preprocessing import StandardScaler
 from nucprob.classifier import evaluate as ev
 from nucprob.classifier.features import DEFENCE, NO_S25
 from nucprob.classifier.fit import ALL_FEATURES, FAMILIES, N_BAGS, Spec, fit_bagged, specs
-from nucprob.model.cv import git_commit
 from nucprob.model.splits import BLOCK_KM, assign_blocks, folds
 from nucprob.model.zoo import lightgbm
+from nucprob.outputs import hashes, start_record
 from nucprob.paths import CURATED, PROCESSED, ROOT, RUNS
 from nucprob.plans import exercise_gate, gate, plans, protocol
 from nucprob.sources.fetch import sha256
@@ -47,8 +47,8 @@ BASELINES = ("population rule", "population + country")
 CANDIDATES = ("logistic, all permitted", "LightGBM, all permitted")
 EXERCISE_TYPES = {"exercise", "wargame", "training", "disputed_plan_or_exercise"}
 SAC_ONLY = "single document: SAC 1956 (not a state model)"
-LOPO = "leave one plan out"
-LOPO_KEPT = "leave one plan out, towns kept in training"
+LOPO = "leave one document out"
+LOPO_KEPT = "leave one document out, towns kept in training"
 
 
 def usable(table: pd.DataFrame) -> pd.DataFrame:
@@ -168,12 +168,12 @@ def analyse_scope(name: str, rows: pd.DataFrame, models: list[Spec], bags: int, 
     ]
     print(" spatial done", flush=True)
     for holdout, keep_places in ((LOPO, False), (LOPO_KEPT, True)):
-        a, held = ev.leave_one_plan_out(rows, models, bags, keep_places)
+        a, held = ev.leave_one_document_out(rows, models, bags, keep_places)
         lists += [r | {"scope": name} for r in a]
         if len(held):
             comparison += compare(held, boot, name, holdout)
             held_scores[holdout] = held
-    print(" leave-one-plan-out done", flush=True)
+    print(" leave-one-document-out done", flush=True)
     a, kept = ev.temporal(rows, models, bags)
     lists += [r | {"scope": name} for r in a]
     for holdout, frame in kept.items():
@@ -246,6 +246,7 @@ def family_gain(rows: pd.DataFrame, boot: int) -> pd.DataFrame:
             models.append(Spec(fam, three_threads, [*base_cols, *cols]))
         scores = ev.spatial_scores(part, models, 1)
         y, doc = part["listed"].to_numpy(int), part["plan_id"].to_numpy()
+        block = part["block"].to_numpy()
         for fam in scores:
             if fam in ("base", "population only"):
                 continue
@@ -253,6 +254,14 @@ def family_gain(rows: pd.DataFrame, boot: int) -> pd.DataFrame:
             # add nothing; it is also read over population alone.
             base = "population only" if fam == "national_power over population" else "base"
             r = ev.paired_bootstrap(y, scores[fam], scores[base], doc, n=boot)
+            r |= ev.block_bootstrap(y, scores[fam], scores[base], doc, block, n=boot)
+            # The protocol's rule for every comparison: both intervals must exclude zero.
+            if r["low"] > 0 and r["block_low"] > 0:
+                r["verdict"] = "gain"
+            elif r["high"] < 0 and r["block_high"] < 0:
+                r["verdict"] = "loss"
+            else:
+                r["verdict"] = "neither"
             out.append(
                 {
                     "rows": label,
@@ -336,6 +345,7 @@ def main() -> None:
     args.add_argument("--quick", action="store_true")
     quick = args.parse_args().quick
     bags, boot = (3, 50) if quick else (N_BAGS, ev.N_BOOT)
+    started = start_record()
     out_dir = RUNS / ("classifier-quick" if quick else "classifier")
     out_dir.mkdir(parents=True, exist_ok=True)
     path = PROCESSED / "classifier_table.parquet"
@@ -376,7 +386,7 @@ def main() -> None:
     )
     manifest = {
         "created": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
-        "git_commit": git_commit(),
+        **started,
         "protocol_sha256": sha256(ROOT / "configs" / "protocol.yaml"),
         "table_sha256": sha256(path),
         "inputs_sha256": input_hashes(),
@@ -385,6 +395,20 @@ def main() -> None:
         "features": ALL_FEATURES,
         "sealed_rows_excluded": int(full["sealed"].astype(bool).sum()),
         "quick": quick,
+        "outputs": hashes(
+            out_dir / f
+            for f in (
+                "lists.csv",
+                "comparison.csv",
+                "selection.csv",
+                "scopes.csv",
+                "state_gate.csv",
+                "held_out_scores.csv.gz",
+                "calibration.csv",
+                "family_gain.csv",
+                "defence.csv",
+            )
+        ),
     }
     (out_dir / "manifest.json").write_text(json.dumps(manifest, indent=2))
     print(manifest)

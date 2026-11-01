@@ -58,3 +58,5 @@ Japan,Toyohira,Hokkaido,43.01333,141.39111,Toyohira (now Sapporo),"machi merged 
 Japan,Kawauchi,Kagoshima,31.81333,130.30389,Kawauchi (now Satsumasendai),"city of Kawauchi, today's Satsumasendai (en.wikipedia, Satsumasendai, Kagoshima). GeoNames' Kawauchi in this prefecture is a hamlet in the Amami islands"
 USA,Alisal,California,36.67913,-121.61772,Alisal,"unincorporated urban place of 1950 beside Salinas; GeoNames' Alisal. Pleasanton, which holds the name as an alternate, is 110 km away"
 USA,Washington,Ohio,39.53645,-83.43908,Washington Court House,"the Ohio city of Washington (county seat of Fayette County), named Washington Court House; GeoNames 4527660. Piqua holds the name as an alternate"
+Japan,Kokura,Fukuoka,33.88333,130.88333,Kokura,"GeoNames 1858956, the city now part of Kitakyushu; the matcher took 9888403, a hamlet of the same name about 55 km south-west"
+Japan,Wakamatsu,Fukuoka,33.88333,130.81667,Wakamatsu,"GeoNames 1848965, the city now part of Kitakyushu; the matcher took 10310919, a hamlet in another municipality"

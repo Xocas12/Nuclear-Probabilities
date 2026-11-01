@@ -54,6 +54,7 @@ from nucprob.paths import CURATED, PROCESSED
 
 RADIUS_KM = 10.0
 COVER_NAMES = CURATED / "sac1956" / "cover_names.csv"
+SAME_PLACE = CURATED / "sac1956" / "same_place_links.csv"
 NAME_OK = 75  # name similarity (0-100) below which a link is listed for review
 # Names second: a target with no settlement within RADIUS_KM is linked to a settlement up to
 # NAME_RADIUS_KM away whose name matches it closely. SAC's coordinates for remote towns can be
@@ -175,6 +176,31 @@ def cover_links(links_cx: pd.DataFrame, places: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
+def same_place_links(links_cx: pd.DataFrame, places: pd.DataFrame) -> pd.DataFrame:
+    """Entries SAME_PLACE ties to a town of the table with its reasons: the town was renamed, so
+    neither distance nor name finds it. Only an entry left unlinked may be tied this way."""
+    d = pd.read_csv(SAME_PLACE, dtype=str)
+    out = links_cx.copy()
+    town = places.set_index("place_id")
+    for _, r in d.iterrows():
+        i = out.index[out["id"] == r["sac_id"]]
+        if not len(i):
+            continue
+        assert out.loc[i, "place_id"].isna().all(), f"{r['sac_id']} already has a link"
+        if r["place_id"] not in town.index:
+            continue
+        t = town.loc[r["place_id"]]
+        out.loc[i, "place_id"] = r["place_id"]
+        out.loc[i, "dist_km"] = round(
+            float(
+                haversine_km(out.loc[i, "lat"].iat[0], out.loc[i, "lon"].iat[0], t["lat"], t["lon"])
+            ),
+            2,
+        )
+        out.loc[i, "link_method"] = "same place"
+    return out
+
+
 def link_names(links_cx: pd.DataFrame, located: pd.DataFrame, index: Points) -> None:
     """Names second: a complex with no settlement within the radius goes to a settlement up to
     NAME_RADIUS_KM away whose name matches it closely (in place)."""
@@ -265,6 +291,7 @@ def build(radius_km: float = RADIUS_KM) -> tuple[pd.DataFrame, pd.DataFrame, pd.
     links_cx = pd.concat(parts_cx, ignore_index=True)
     links_dgz = pd.concat(parts_dgz)
     located = places[places["has_coords"]]
+    links_cx = same_place_links(links_cx, located)
     # Entries SAC printed under an open town's name for the closed town next to it.
     credited = pd.concat([links_cx, cover_links(links_cx, located)], ignore_index=True)
 

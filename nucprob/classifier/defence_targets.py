@@ -9,10 +9,12 @@ complexes hold coded installations, the count is of category 284 (radar installa
 so it is an upper bound on defences. Writes runs/classifier/defence_targets.csv.
 """
 
+import json
 import re
 
 import pandas as pd
 
+from nucprob.outputs import hashes, start_record
 from nucprob.paths import CURATED, RUNS
 from nucprob.plans import plans
 
@@ -72,8 +74,12 @@ def table() -> pd.DataFrame:
 
 def main() -> None:
     OUT.parent.mkdir(parents=True, exist_ok=True)
+    started = start_record()
     table().to_csv(OUT, index=False)
     print(table().to_string(index=False))
+    (OUT.parent / "defence_targets_manifest.json").write_text(
+        json.dumps({**started, "outputs": hashes([OUT])}, indent=2)
+    )
 
 
 if __name__ == "__main__":

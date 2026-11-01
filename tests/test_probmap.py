@@ -213,14 +213,11 @@ def test_interceptors_come_off_in_proportion_and_a_stock_without_a_mix_is_unspec
     assert (parts["icbm"]["available"] == 25).all()
 
 
-def test_every_scenario_year_but_1950_has_a_delivery_split_and_shares_are_whole():
+def test_every_scenario_year_has_a_delivery_split_and_shares_are_whole():
     mix = pd.read_csv(st.MIX)
     for sc in rn.load_scenarios():
         for a in sc["attackers"]:
             shares = st.mix_of(a, mix)
-            if a["stock_year"] == 1950:
-                assert shares.empty
-                continue
             assert len(shares), (sc["id"], a["state"])
             raw = mix[(mix["state"] == a["state"]) & (mix["year"] == a["stock_year"])]["share"]
             assert raw.sum() == pytest.approx(1.0, abs=0.051), (sc["id"], a["state"])
@@ -237,6 +234,12 @@ def test_historical_shares_agree_with_the_cited_rows():
         ].set_index("delivery")["central"]
         m = mix[(mix["state"] == state) & (mix["year"] == year)].set_index("delivery")["share"]
         assert (rows / rows.sum()).round(2).to_dict() == m.to_dict()
+
+
+def test_the_nrdc_table_gives_1950_all_to_bombers():
+    t = pd.read_csv(st.TABLE)
+    r = t[(t["scenario_year"] == 1950) & (t["state"] == "US") & (t["source_id"] == "nrdc_table_us")]
+    assert r[["delivery", "central"]].values.tolist() == [["bomber", 330.0]]
 
 
 def test_a_missing_inventory_row_is_an_error_not_a_guess():
@@ -291,7 +294,10 @@ def test_committed_cells_obey_the_limits():
             "p_low_stockpile_only",
             "p_high_stockpile_only",
             "holds_sealed_town",
+            "reading",
         }
+        expected = "extrapolation" if sc["era"] == "modern" else "historical"
+        assert set(c["reading"]) == {expected}
         order = c.sort_values(["cell_lat", "cell_lon"]).reset_index(drop=True)
         pd.testing.assert_frame_equal(c, order)
         assert ((c["p_low"] <= c["p_median"]) & (c["p_median"] <= c["p_high"])).all()
@@ -331,6 +337,7 @@ def test_by_delivery_output_holds_no_place_and_adds_up():
     d = pd.read_csv(OUT / "by_delivery.csv")
     assert set(d.columns) == {
         "scenario",
+        "reading",
         "attacker",
         "stock_year",
         "delivery",
@@ -345,8 +352,8 @@ def test_by_delivery_output_holds_no_place_and_adds_up():
     summed = d.groupby(["scenario", "attacker"])["delivered_median"].sum()
     gap = (summed - total["delivered_median"]).abs() / total["delivered_median"].clip(lower=1)
     assert len(summed) == len(total) and gap.max() < 0.25
-    assert set(d.loc[d["stock_year"] == 1950, "delivery"]) == {"unspecified"}
-    assert not (set(d.loc[d["stock_year"] != 1950, "delivery"]) & {"unspecified"})
+    assert set(d.loc[d["stock_year"] == 1950, "delivery"]) == {"bomber"}
+    assert "unspecified" not in set(d["delivery"])
 
 
 @needs_run

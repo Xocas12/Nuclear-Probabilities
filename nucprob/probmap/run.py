@@ -2,12 +2,13 @@
 
     python -m nucprob.probmap.run [--quick]
 
-Steps: choose the score by transfer (leave one plan out); draw models and stockpiles together; allocate
+Steps: choose the score by transfer (leave one document out); draw models and stockpiles together; allocate
 each scenario's delivered warheads by score share (nucprob.probmap.allocate); summarise each grid cell.
 Then the validation against SAC 1956 and the domain shift of the modern towns.
 
 Writes runs/probmap/: model_choice.csv, cells/<scenario>.csv.gz (one row per cell, sorted by position,
-no names), scenarios.csv, delivered.csv, by_delivery.csv, validation.csv, reliability.csv, domain_shift.csv, manifest.json.
+no names), scenarios.csv, delivered.csv, by_delivery.csv, score_spread.csv, validation.csv, reliability.csv,
+domain_shift.csv, manifest.json.
 --quick uses 10 draws and writes to runs/probmap-quick/.
 """
 
@@ -32,14 +33,20 @@ from nucprob.classifier import evaluate as ev
 from nucprob.classifier.fit import N_BAGS, Spec, bag_rows, fit_bagged, lightgbm_quiet, logistic_all
 from nucprob.classifier.run import SAC, positives_of, scopes, usable
 from nucprob.classifier.table import transfer_towns
-from nucprob.model.cv import git_commit
 from nucprob.model.splits import BLOCK_KM, assign_blocks, folds
+from nucprob.outputs import hashes, start_record
 from nucprob.paths import PROCESSED, ROOT, RUNS
 from nucprob.plans import protocol
 from nucprob.probmap import allocate as al
 from nucprob.probmap import modern
 from nucprob.probmap.modern import PORTABLE
-from nucprob.probmap.stockpile import MIX, TABLE, by_delivery_draws, delivered_draws
+from nucprob.probmap.stockpile import (
+    MIX,
+    TABLE,
+    by_delivery_draws,
+    delivered_draws,
+    share_interceptors,
+)
 from nucprob.sources.fetch import sha256
 
 SCENARIOS = ROOT / "configs" / "scenarios.yaml"
@@ -65,7 +72,7 @@ def choose_model(train: pd.DataFrame, bags: int) -> tuple[Spec, pd.DataFrame]:
     """The rule of the protocol: highest weighted PR-AUC on a left-out plan, towns removed. Spatial
     blocks are read beside it and choose nothing."""
     models = candidates()
-    _, held = ev.leave_one_plan_out(train, models, bags)
+    _, held = ev.leave_one_document_out(train, models, bags)
     spatial = ev.spatial_scores(train, models, bags)
     y, doc = train["listed"].to_numpy(int), train["plan_id"].to_numpy()
     rest = held["plan_id"] != SAC
@@ -117,8 +124,9 @@ def bloc_universe(full: pd.DataFrame) -> Universe:
 
 
 def west_universe() -> Universe:
+    """The Western European towns of about 1961, and the UK's of 1981, the only UK table held."""
     t = transfer_towns()
-    t = t[(t["region"] == "wp_west_1965") & t["lat"].notna()].reset_index(drop=True)
+    t = t[t["region"].isin(["wp_west_1965", "uk_1980"]) & t["lat"].notna()].reset_index(drop=True)
     return Universe(t.assign(sealed=False), 1.0)
 
 
@@ -175,16 +183,23 @@ def summarise(cells: pd.DataFrame, draws: np.ndarray, fixed_stock, fixed_model) 
 def run_scenario(
     sc: dict, universe: Universe, score_matrix: np.ndarray, draws: int, rng
 ) -> tuple[pd.DataFrame, dict]:
-    # Only the scenario's target countries are on its map.
+    # Only the scenario's target countries are on its map. A named country with no town would
+    # silently put its warheads on the others.
     named = {c for a in sc["attackers"] for c in a["targets"]}
+    missing = named - set(universe.towns["country"])
+    if missing:
+        raise ValueError(f"{sc['id']} names targets with no towns: {sorted(missing)}")
+    reading = "extrapolation" if sc["era"] == "modern" else "historical"
     in_scope = universe.towns["country"].isin(named).to_numpy()
     towns = universe.towns[in_scope].reset_index(drop=True)
     score_matrix = score_matrix[in_scope]
     active = ~towns["sealed"].astype(bool).to_numpy()
     all_draws, median_w = {}, {}
     records, by_delivery = [], []
+    forces = {a["state"]: by_delivery_draws(a, draws, rng) for a in sc["attackers"]}
+    share_interceptors(forces, sc.get("interceptors", []), draws, rng)
     for a in sc["attackers"]:
-        parts = by_delivery_draws(a, draws, rng)
+        parts = forces[a["state"]]
         w = sum(p["delivered"] for p in parts.values()) * universe.unsealed_population_share
         all_draws[a["state"]] = w
         for delivery, p in parts.items():
@@ -193,6 +208,7 @@ def run_scenario(
             by_delivery.append(
                 {
                     "scenario": sc["id"],
+                    "reading": reading,
                     "attacker": a["state"],
                     "stock_year": a["stock_year"],
                     "delivery": delivery,
@@ -209,6 +225,7 @@ def run_scenario(
         records.append(
             {
                 "scenario": sc["id"],
+                "reading": reading,
                 "attacker": a["state"],
                 "delivered_low": q[0],
                 "delivered_median": q[1],
@@ -232,6 +249,7 @@ def run_scenario(
         )
     else:
         out["holds_sealed_town"] = 0
+    out["reading"] = reading
     counts = (p > 0.5).sum(axis=0)
     width = float((out["p_high"] - out["p_low"]).mean())
     summary = {
@@ -251,7 +269,36 @@ def run_scenario(
             (out["p_high_stockpile_only"] - out["p_low_stockpile_only"]).mean()
         ),
     }
-    return out, {"summary": summary, "warheads": records, "by_delivery": by_delivery}
+    spread = score_spread(sc["id"], t, s, cells["cell"].to_numpy(), p, sc["cell_deg"])
+    return out, {
+        "summary": summary,
+        "warheads": records,
+        "by_delivery": by_delivery,
+        "spread": spread,
+    }
+
+
+def score_spread(scenario, towns, scores, cell_names, p, cell_deg) -> dict:
+    """What decides a cell's probability: how far the score moves with population, and how closely
+    the cell's probability follows its count of towns and its people. Totals only, no place."""
+    median = np.median(scores, axis=1)
+    pop = towns["pop"].to_numpy(float)
+    per_cell = (
+        pd.DataFrame({"cell": al.cell_ids(towns["lat"], towns["lon"], cell_deg), "pop": pop})
+        .groupby("cell")["pop"]
+        .agg(["size", "sum"])
+    )
+    per_cell = per_cell.reindex(cell_names)
+    mid = np.median(p, axis=1)
+    return {
+        "scenario": scenario,
+        "population_ratio": float(pop.max() / pop.min()),
+        "score_ratio": float(median.max() / median.min()),
+        "p_correlation_with_towns_in_cell": float(np.corrcoef(mid, per_cell["size"])[0, 1]),
+        "p_correlation_with_log_people_in_cell": float(
+            np.corrcoef(mid, np.log10(per_cell["sum"]))[0, 1]
+        ),
+    }
 
 
 def validation(
@@ -270,7 +317,7 @@ def validation(
         held = set(sac.loc[test, "place_id"])
         rest = train[~train["place_id"].isin(held)].reset_index(drop=True)
         spatial[test] = fit_bagged(spec, rest, bags).score(sac[test])
-    # Towns of other lists stay out of the left-out fit too, as in leave one plan out.
+    # Towns of other lists stay out of the left-out fit too, as in leave one document out.
     left_out = fit_bagged(
         spec, others[~others["place_id"].isin(set(sac["place_id"]))].reset_index(drop=True), bags
     ).score(sac)
@@ -363,6 +410,7 @@ def main() -> None:
     args = argparse.ArgumentParser()
     args.add_argument("--quick", action="store_true")
     quick = args.parse_args().quick
+    started = start_record()
     n_draws, bags = (10, 3) if quick else (N_DRAWS, N_BAGS)
     out_dir = RUNS / ("probmap-quick" if quick else "probmap")
     (out_dir / "cells").mkdir(parents=True, exist_ok=True)
@@ -384,7 +432,7 @@ def main() -> None:
     }
     matrices = {k: score_matrix(models, u.towns, spec.columns) for k, u in universes.items()}
     rng = np.random.default_rng(SEED)
-    summaries, warheads, by_delivery = [], [], []
+    summaries, warheads, by_delivery, spreads = [], [], [], []
     for sc in load_scenarios():
         cells, rec = run_scenario(
             sc, universes[sc["universe"]], matrices[sc["universe"]], n_draws, rng
@@ -393,10 +441,12 @@ def main() -> None:
         summaries.append(rec["summary"])
         warheads += rec["warheads"]
         by_delivery += rec["by_delivery"]
+        spreads.append(rec["spread"])
         print(sc["id"], rec["summary"], flush=True)
     pd.DataFrame(summaries).to_csv(out_dir / "scenarios.csv", index=False, float_format="%.4f")
     pd.DataFrame(warheads).to_csv(out_dir / "delivered.csv", index=False, float_format="%.0f")
     pd.DataFrame(by_delivery).to_csv(out_dir / "by_delivery.csv", index=False, float_format="%.0f")
+    pd.DataFrame(spreads).to_csv(out_dir / "score_spread.csv", index=False, float_format="%.4f")
     first = next(s for s in load_scenarios() if s["id"] == protocol_validation_scenario())
     val, rel = validation(spec, train, full, first, bags, rng)
     val.to_csv(out_dir / "validation.csv", index=False, float_format="%.4f")
@@ -413,7 +463,7 @@ def main() -> None:
     )
     manifest = {
         "created": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
-        "git_commit": git_commit(),
+        **started,
         "protocol_sha256": sha256(ROOT / "configs" / "protocol.yaml"),
         "scenarios_sha256": sha256(SCENARIOS),
         "stockpiles_sha256": sha256(TABLE),
@@ -424,6 +474,9 @@ def main() -> None:
         "features": spec.columns,
         "quick": quick,
         "model_rule": protocol()["amendments"][-1]["changes"]["probability_map"]["score"],
+        "outputs": hashes(
+            [*sorted((out_dir / "cells").glob("*.csv.gz")), *sorted(out_dir.glob("*.csv"))]
+        ),
     }
     (out_dir / "manifest.json").write_text(json.dumps(manifest, indent=2))
 

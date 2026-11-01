@@ -1,0 +1,24 @@
+# Sixth amendment, in its own file like the fifth. Committed before the rerun it describes. The primary
+# results, the map and the independent review of 59a35e6 had all been read: nothing below is blind, and the
+# sealed set has still not been scored. No selection rule, model, gate threshold or holdout changes.
+date: 2026-11-01
+reasons: The review of 59a35e6 found label and link errors, a target country missing from a map scenario, and
+  a comparison reported against a rule it did not meet.
+labels:
+  corrected:
+    - us_1945_target_committee, Kokura, linked to Yawata through the shared modern name Kitakyushu; Kokura's designated rows now link to Kokura, and Yawata's only row is blank
+    - Kokura and Wakamatsu of the 1940 table move off same-named hamlets (data/curated/gazetteer/transfer_links.csv)
+    - Komarno moves to SAC's printed point (data/curated/gazetteer/coordinate_corrections.csv)
+    - LIEN YUN and ULAAN BAATAR, unlinked SAC entries, link to the renamed or misfiled town (data/curated/sac1956/same_place_links.csv)
+    - cd_1980_square_leg Manston is left unlinked; which Manston the map means cannot be read from the row
+    - wp_1964_csla_plan rows whose weapon the document does not state lose selected=1
+readings_added:
+  family_gain: block bootstrap and a verdict, as the protocol says of every comparison
+  sensitivity: SAC gain with negatives within 10 km of SAC's airfield list left out; document identification from the columns
+names:
+  holdout: The holdout the protocol calls leave one plan out is reported as leave one document out, since most of what it leaves out are not plans. Same computation.
+map:
+  - The 1965 scenario gains the UK towns it always named, on 1981 populations
+  - One interceptor force is drawn once and shared among the attackers it faces
+  - 1950 uses NRDC's split and the range between NRDC and OWID in place of the 1956 ratio
+  - French territories outside Europe leave the modern universe
