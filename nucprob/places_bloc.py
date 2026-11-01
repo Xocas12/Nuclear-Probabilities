@@ -38,6 +38,97 @@ WUP_COUNTRIES = {
 }
 NORTH_VIETNAM_LAT = 17.0  # the demarcation line of 1954
 
+# The GDR's Bezirke (as the yearbook names them) -> the GeoNames admin1 codes of the Länder
+# their territory lies in today (11 Brandenburg, 12 Mecklenburg-Vorpommern, 13 Saxony,
+# 14 Saxony-Anhalt, 15 Thuringia, 16 Berlin). A town is matched only to places in these codes.
+# Five Bezirke were divided between Länder in 1990, which the matcher's own region inference
+# (one Land per region) cannot express: it put Meuselwitz and Schmölln, in Bezirk Leipzig but
+# Thuringian since 1990, on Saxon hamlets of the same names. The Kreise that left their
+# Bezirk's main Land: Altenburg and Schmölln (Leipzig) and Artern (Halle) for Thuringia,
+# Hoyerswerda and Weißwasser (Cottbus) for Saxony, Jessen (Cottbus) for Saxony-Anhalt, and
+# Perleberg (Schwerin), Prenzlau and Templin (Neubrandenburg) for Brandenburg.
+EAST_GERMANY_ADMIN1 = {
+    "Berlin": ("16",),
+    "Cottbus": ("11", "13", "14"),
+    "Dresden": ("13",),
+    "Erfurt": ("15",),
+    "Frankfurt": ("11",),
+    "Gera": ("15",),
+    "Halle": ("14", "15"),
+    "Karl-Marx-Stadt": ("13",),
+    "Leipzig": ("13", "15"),
+    "Magdeburg": ("14",),
+    "Neubrandenburg": ("12", "11"),
+    "Potsdam": ("11",),
+    "Rostock": ("12",),
+    "Schwerin": ("12", "11"),
+    "Suhl": ("15",),
+}
+
+# China's 1953 provinces and province-level municipalities (as the census table names them) ->
+# the GeoNames admin1 codes of the provinces their territory lies in today. A city is matched
+# only to places in these codes: Chinese city names recur across provinces, and the matcher's
+# own region inference rarely has the two unambiguous matches per province it needs. Where a
+# 1953 province was later split, merged or trimmed, every province that took part of it is
+# listed: Liaodong and Liaoxi went to Liaoning and Jilin in 1954, Songjiang to Heilongjiang,
+# Suiyuan to Inner Mongolia, Rehe to Hebei, Liaoning and Inner Mongolia in 1955, Xikang to
+# Sichuan; Hainan (1988) left Guangdong, Chongqing (1997) left Sichuan, and Beijing and
+# Shanghai took counties from Hebei and Jiangsu in 1958.
+CHINA_ADMIN1 = {
+    "Anhui": ("01",),
+    "Fujian": ("07",),
+    "Gansu": ("15",),
+    "Guangdong": ("30", "31"),
+    "Guangxi": ("16",),
+    "Guizhou": ("18",),
+    "Hebei": ("10", "22", "28"),
+    "Heilongjiang": ("08",),
+    "Henan": ("09",),
+    "Hubei": ("12",),
+    "Hunan": ("11",),
+    "Inner Mongolia Autonomous Region": ("20",),
+    "Jiangsu": ("04", "23"),
+    "Jiangxi": ("03",),
+    "Jilin": ("05",),
+    "Liaodong": ("19", "05"),
+    "Liaoxi": ("19", "05"),
+    "Ningxia": ("21",),
+    "Qinghai": ("06",),
+    "Rehe": ("10", "19", "20"),
+    "Shaanxi": ("26",),
+    "Shandong": ("25",),
+    "Shanxi": ("24",),
+    "Sichuan": ("32", "33"),
+    "Songjiang": ("08",),
+    "Suiyuan": ("20",),
+    "Tibet Region": ("14",),
+    "Xikang": ("32",),
+    "Xinjiang": ("13",),
+    "Yunnan": ("29",),
+    "Zhejiang": ("02",),
+    "Municipality of Anshan": ("19",),
+    "Municipality of Beijing": ("22",),
+    "Municipality of Benxi": ("19",),
+    "Municipality of Changchun": ("05",),
+    "Municipality of Chongqing": ("33",),
+    "Municipality of Fushun": ("19",),
+    "Municipality of Guangzhou": ("30",),
+    "Municipality of Harbin": ("08",),
+    "Municipality of Lüda": ("19",),
+    "Municipality of Shanghai": ("23",),
+    "Municipality of Shenyang": ("19",),
+    "Municipality of Tianjin": ("28",),
+    "Municipality of Wuhan": ("12",),
+    "Municipality of Xi'an": ("26",),
+}
+
+
+def check_mapped(regions: pd.Series, admin1_of: dict, what: str) -> None:
+    """Refuse regions the hand-made admin1 map lacks: they would be matched anywhere."""
+    unmapped = sorted(set(regions) - set(admin1_of))
+    if unmapped:
+        raise ValueError(f"{what} missing from the admin1 map: {unmapped}")
+
 
 def years(date: str) -> float:
     day = pd.Timestamp(date)
@@ -99,6 +190,7 @@ def frame(
 
 def east_germany() -> pd.DataFrame:
     d = ddr.parse()
+    check_mapped(d["bezirk"], EAST_GERMANY_ADMIN1, "Bezirke")
     return frame(
         page="east germany",
         geonames="DE",
@@ -177,12 +269,14 @@ def china() -> pd.DataFrame:
     name = d["City"].astype(str).str.replace(r"\s*[（(].*?[）)]", "", regex=True)
     name = name.str.replace(r"\s+City$", "", regex=True).str.strip()
     notes = np.where(text.str.startswith(">"), "1953 census gives only a lower bound", "")
+    region = d[region_col].astype(str)
+    check_mapped(region, CHINA_ADMIN1, "1953 provinces")
     return frame(
         page="china",
         geonames="CN",
         country="China",
         unit="china",
-        region=d[region_col].astype(str),
+        region=region,
         name=name,
         pop=pop,
         pop_year=1953,
