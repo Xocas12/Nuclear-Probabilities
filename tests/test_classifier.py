@@ -167,6 +167,15 @@ def test_paired_bootstrap_sees_nothing_between_equal_models_and_finds_a_real_gap
     assert gap["delta"] > 0.3 and gap["excludes_zero"]
 
 
+def test_the_fast_pr_auc_is_scikit_learns_with_ties():
+    rng = np.random.default_rng(3)
+    for n in (5, 40, 700):
+        y = rng.integers(0, 2, n)
+        y[0] = 1
+        for s in (rng.uniform(size=n), rng.integers(0, 4, n).astype(float)):
+            assert ev.pr_auc(y, s) == pytest.approx(ev.average_precision_score(y, s), abs=1e-12)
+
+
 def test_weighted_pr_auc_leaves_out_lists_too_small_to_score():
     y = np.array([1, 0, 1, 1, 0, 0])
     s = np.array([0.9, 0.1, 0.1, 0.9, 0.8, 0.2])

@@ -27,6 +27,7 @@ import json
 
 import numpy as np
 import pandas as pd
+from joblib import Parallel, delayed
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 
@@ -97,24 +98,28 @@ def describe(name: str, rows: pd.DataFrame) -> dict:
     }
 
 
+def one_comparison(part: pd.DataFrame, a: str, b: str, boot: int) -> dict:
+    y, doc = part["listed"].to_numpy(int), part["plan_id"].to_numpy()
+    s, t = part[a].to_numpy(), part[b].to_numpy()
+    return {
+        "model": a,
+        "against": b,
+        "positives": int(y.sum()),
+        "a_pr_auc": ev.weighted_pr_auc(y, s, doc),
+        "b_pr_auc": ev.weighted_pr_auc(y, t, doc),
+    } | ev.paired_bootstrap(y, s, t, doc, n=boot)
+
+
 def compare(frame: pd.DataFrame, boot: int, scope: str, holdout: str) -> list[dict]:
     """Each candidate against each baseline on the same rows: all lists, and without the SAC
     list, which otherwise carries about nine tenths of the weight."""
-    out = []
-    for lists, part in (
-        ("all lists", frame),
-        ("lists other than SAC", frame[frame.plan_id != SAC]),
-    ):
-        y, doc = part["listed"].to_numpy(int), part["plan_id"].to_numpy()
-        for a in CANDIDATES:
-            for b in BASELINES:
-                r = ev.paired_bootstrap(y, part[a].to_numpy(), part[b].to_numpy(), doc, n=boot)
-                row = {"scope": scope, "holdout": holdout, "lists": lists, "model": a, "against": b}
-                row["positives"] = int(y.sum())
-                row["a_pr_auc"] = ev.weighted_pr_auc(y, part[a].to_numpy(), doc)
-                row["b_pr_auc"] = ev.weighted_pr_auc(y, part[b].to_numpy(), doc)
-                out.append(row | r)
-    return out
+    parts = {"all lists": frame, "lists other than SAC": frame[frame["plan_id"] != SAC]}
+    tasks = [(k, p, a, b) for k, p in parts.items() for a in CANDIDATES for b in BASELINES]
+    results = Parallel(n_jobs=3)(delayed(one_comparison)(p, a, b, boot) for _, p, a, b in tasks)
+    return [
+        {"scope": scope, "holdout": holdout, "lists": k} | r
+        for (k, *_), r in zip(tasks, results, strict=True)
+    ]
 
 
 def analyse_scope(name: str, rows: pd.DataFrame, models: list[Spec], bags: int, boot: int):

@@ -48,6 +48,16 @@ def by_list(rows: pd.DataFrame, scores: dict[str, np.ndarray], holdout: str) -> 
     return out
 
 
+def pr_auc(y: np.ndarray, s: np.ndarray) -> float:
+    """Average precision with tied scores taken as one threshold: scikit-learn's number
+    (tests/test_classifier.py), at a speed that makes 2,000 resamples per comparison practical."""
+    order = np.argsort(-s, kind="stable")
+    y, s = y[order], s[order]
+    ends = np.append(np.flatnonzero(s[1:] != s[:-1]), len(s) - 1)
+    hits = np.cumsum(y)[ends]
+    return float(np.sum(np.diff(hits, prepend=0) * hits / (ends + 1)) / hits[-1])
+
+
 def weighted_pr_auc(y: np.ndarray, s: np.ndarray, doc: np.ndarray) -> float:
     """Positive-weighted mean of per-list PR-AUC."""
     total, weight = 0.0, 0
@@ -55,7 +65,7 @@ def weighted_pr_auc(y: np.ndarray, s: np.ndarray, doc: np.ndarray) -> float:
         k = doc == d
         n = int(y[k].sum())
         if MIN_POSITIVES <= n < k.sum():
-            total += n * average_precision_score(y[k], s[k])
+            total += n * pr_auc(y[k], s[k])
             weight += n
     return total / weight if weight else float("nan")
 
