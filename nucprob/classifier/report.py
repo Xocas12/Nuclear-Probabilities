@@ -235,11 +235,14 @@ def report() -> str:
             ["scope", "model", "with_all_pr_auc", "none_flagged_pr_auc", "difference"]
         ]
         removed = a["removed"].iloc[0]
+        plus = selection[selection["model"] == PLUS].set_index("scope")["weighted_pr_auc"]
+        base_text = ", ".join(f"{plus[s]:.2f} ({s})" for s in SCOPES)
         missing = [s for s in SCOPES if s not in set(a["scope"])]
         note = f" Not finished in this run: {', '.join(missing)}." if missing else ""
         anach_text = (
             f"Removing the features flagged as today's data standing in for the past ({removed}) "
-            f"changes PR-AUC under spatial blocks as follows.{note}\n\n{markdown(a_table)}"
+            f"changes PR-AUC under spatial blocks as follows.{note} For comparison, population plus "
+            f"country scores {base_text} on the same rows.\n\n{markdown(a_table)}"
         )
     else:
         anach_text = "The repeat without anachronistic features has not been run."

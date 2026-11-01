@@ -160,12 +160,18 @@ no calibration measured on SAC carries to another plan's base rate.
 
 ### Without anachronistic features
 
-Removing the features flagged as today's data standing in for the past (log_power_mw_25km, log_airfields_10km, log_airfields_25km, log_airfields_50km, log_km_to_rail, rail_lines_5km, log_km_to_port, log_km_to_nuclear_site) changes PR-AUC under spatial blocks as follows. Not finished in this run: global, all attacker documents, global, plan documents only, Warsaw Pact, pooled, exercise-based.
+Removing the features flagged as today's data standing in for the past (log_power_mw_25km, log_airfields_10km, log_airfields_25km, log_airfields_50km, log_km_to_rail, rail_lines_5km, log_km_to_port, log_km_to_nuclear_site) changes PR-AUC under spatial blocks as follows. For comparison, population plus country scores 0.75 (global, all attacker documents), 0.80 (global, plan documents only), 0.82 (state: US), 0.11 (Warsaw Pact, pooled, exercise-based) on the same rows.
 
 | scope | model | with_all_pr_auc | none_flagged_pr_auc | difference |
 |---|---|---|---|---|
 | state: US | logistic | 0.84 | 0.83 | -0.01 [-0.01, 0.00] |
 | state: US | LightGBM | 0.84 | 0.82 | -0.02 [-0.02, -0.01] |
+| global, plan documents only | logistic | 0.82 | 0.81 | -0.01 [-0.01, 0.00] |
+| global, plan documents only | LightGBM | 0.82 | 0.81 | -0.01 [-0.02, -0.01] |
+| Warsaw Pact, pooled, exercise-based | logistic | 0.17 | 0.21 | +0.04 [+0.01, +0.06] |
+| Warsaw Pact, pooled, exercise-based | LightGBM | 0.20 | 0.20 | 0.00 [-0.02, +0.02] |
+| global, all attacker documents | logistic | 0.69 | 0.67 | -0.02 [-0.03, -0.01] |
+| global, all attacker documents | LightGBM | 0.77 | 0.76 | -0.01 [-0.02, 0.00] |
 
 ## What the evidence cannot support
 
