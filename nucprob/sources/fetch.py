@@ -6,7 +6,9 @@ retrieved and when.
 A file that is already present is checked against its recorded sha256 and kept; a
 different hash is reported (the source changed since it was recorded), not overwritten, and
 the same goes for a fresh download of a source with a recorded hash. A source that cannot be
-reached is reported and the rest continue.
+reached is reported and the rest continue; `mirror` names an archived copy to try instead.
+`volatile: <why>` marks a source whose bytes change with no change in what is used (a live
+database, a landing page): a difference is still reported, but is not a problem.
 `--refresh` downloads again and records the new hash. Entries with `fetch: false` are
 downloaded by hand and only checked; entries with `fetch: <module>` (tile sets) are fetched by
 that module.
@@ -90,7 +92,7 @@ def main(argv: list[str] | None = None) -> int:
             digest = sha256(dest)
             if src.get("sha256") and src["sha256"] != digest:
                 print(f"{src['id']}: present, but its sha256 differs from the recorded one")
-                problems += 1
+                problems += not src.get("volatile")
             elif not src.get("sha256"):
                 src["sha256"] = digest
                 changed += 1
@@ -103,14 +105,18 @@ def main(argv: list[str] | None = None) -> int:
         try:
             download(src["url"], dest)
         except requests.RequestException as err:
-            print(f"{src['id']}: FAILED ({type(err).__name__}); not obtained")
-            problems += 1
-            continue
+            if not src.get("mirror"):
+                print(f"{src['id']}: FAILED ({type(err).__name__}); not obtained")
+                problems += 1
+                continue
+            # An archived copy counts only if its bytes are the recorded ones (checked below).
+            print(f"{src['id']}: {type(err).__name__}; trying its mirror {src['mirror']}")
+            download(src["mirror"], dest)
         digest = sha256(dest)
         if src.get("sha256") and src["sha256"] != digest and not args.refresh:
             # The record stays: it says what the committed tables were built from.
             print(f"{src['id']}: downloaded, but its sha256 differs from the recorded one")
-            problems += 1
+            problems += not src.get("volatile")
             continue
         if src.get("sha256") == digest:
             continue

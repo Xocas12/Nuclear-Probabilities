@@ -118,7 +118,7 @@ within 15 km (an air base or Nike site in open country), stay unlinked. The link
 | Target Committee 1945 | 42 | 40 | 40 | 17 / 579 |
 | Lato-67 (DK, NL, BE) | 29 | 29 | 26 | 23 / 447 |
 | Hungarian war game 1965 (AT, IT) | 15 | 9 | 9 | 9 / 864 |
-| NATO mirror, Poland 1962 | 70 | 69 | 54 | 28 / 126 |
+| NATO mirror, Poland 1962 | 70 | 69 | 53 | 27 / 126 |
 | NATO mirror, Hungary 1965 | 23 | 13 | 13 | 13 / 120 |
 
 ## Check run (`runs/m4-transfer-check/`)
@@ -138,32 +138,31 @@ the number of towns listed.
 
 | List | Listed / towns | PR-AUC, rule / LightGBM | PR-AUC difference [95% CI] | Precision@k, rule / LightGBM | Precision@k difference [95% CI] | ROC-AUC, rule / LightGBM | ROC-AUC difference [95% CI] |
 |---|---|---|---|---|---|---|---|
-| Canada target areas 1956 | 13 / 137 | 0.85 / 0.84 | -0.01 [-0.11, +0.12] | 0.77 / 0.69 | -0.08 [-0.15, +0.15] | 0.96 / 0.98 | +0.02 [-0.02, +0.08] |
-| Operation Alert 1955 (full) | 51 / 1,262 | 0.70 / 0.33 | -0.36 [-0.44, -0.25] | 0.59 / 0.41 | -0.18 [-0.27, -0.04] | 0.98 / 0.92 | -0.06 [-0.10, -0.03] |
-| Target Committee 1945 | 17 / 579 | 0.88 / 0.34 | -0.54 [-0.67, -0.30] | 0.76 / 0.41 | -0.35 [-0.65, -0.18] | 0.98 / 0.95 | -0.03 [-0.05, -0.01] |
-| Square Leg 1980 | 75 / 476 | 0.39 / 0.42 | +0.04 [-0.04, +0.13] | 0.39 / 0.40 | +0.01 [-0.07, +0.11] | 0.66 / 0.70 | +0.04 [-0.02, +0.11] |
-| Lato-67 | 23 / 447 | 0.32 / 0.24 | -0.08 [-0.20, +0.08] | 0.30 / 0.43 | +0.13 [-0.13, +0.22] | 0.74 / 0.76 | +0.02 [-0.10, +0.13] |
-| NATO mirror, Poland 1962 | 28 / 126 | 0.47 / 0.54 | +0.07 [-0.01, +0.15] | 0.46 / 0.50 | +0.04 [-0.11, +0.18] | 0.69 / 0.71 | +0.02 [-0.06, +0.09] |
-| NATO mirror, Hungary 1965 | 13 / 120 | 0.41 / 0.31 | -0.11 [-0.20, +0.04] | 0.38 / 0.38 | 0.00 [0.00, +0.15] | 0.69 / 0.68 | -0.02 [-0.10, +0.06] |
-| Hungarian war game 1965 (AT, IT) | 9 / 864 | 0.16 / 0.26 | +0.09 [-0.05, +0.30] | 0.11 / 0.44 | +0.33 [0.00, +0.56] | 0.86 / 0.85 | -0.01 [-0.04, +0.01] |
+| Canada target areas 1956 | 13 / 137 | 0.85 / 0.82 | -0.02 [-0.11, +0.06] | 0.77 / 0.77 | 0.00 [-0.15, 0.00] | 0.96 / 0.97 | +0.01 [-0.02, +0.06] |
+| Operation Alert 1955 (full) | 51 / 1,262 | 0.70 / 0.33 | -0.37 [-0.45, -0.25] | 0.59 / 0.37 | -0.22 [-0.33, -0.10] | 0.98 / 0.95 | -0.03 [-0.04, -0.02] |
+| Target Committee 1945 | 17 / 579 | 0.88 / 0.26 | -0.62 [-0.75, -0.39] | 0.76 / 0.24 | -0.53 [-0.82, -0.29] | 0.98 / 0.94 | -0.04 [-0.07, -0.02] |
+| Square Leg 1980 | 75 / 476 | 0.39 / 0.40 | +0.02 [-0.06, +0.10] | 0.39 / 0.39 | 0.00 [-0.07, +0.09] | 0.66 / 0.71 | +0.05 [0.00, +0.10] |
+| Lato-67 | 23 / 447 | 0.32 / 0.23 | -0.09 [-0.21, +0.09] | 0.30 / 0.26 | -0.04 [-0.22, +0.17] | 0.74 / 0.76 | +0.02 [-0.06, +0.09] |
+| NATO mirror, Poland 1962 | 27 / 126 | 0.44 / 0.58 | +0.13 [+0.06, +0.20] | 0.44 / 0.52 | +0.07 [0.00, +0.22] | 0.68 / 0.73 | +0.05 [-0.02, +0.11] |
+| NATO mirror, Hungary 1965 | 13 / 120 | 0.41 / 0.28 | -0.13 [-0.22, +0.01] | 0.38 / 0.38 | 0.00 [-0.08, +0.08] | 0.69 / 0.68 | -0.01 [-0.09, +0.05] |
+| Hungarian war game 1965 (AT, IT) | 9 / 864 | 0.16 / 0.35 | +0.18 [-0.02, +0.44] | 0.11 / 0.44 | +0.33 [0.00, +0.67] | 0.86 / 0.86 | 0.00 [-0.04, +0.02] |
 
 - **City lists.** On Operation Alert and the 1945 Target Committee list, the bloc model ranks
   the top of the list clearly worse than population alone, on every metric. The 14 Operation
   Alert towns on the map, a subset of the full list, show it most: PR-AUC 0.74 for the rule
-  and 0.12 for LightGBM, -0.62 [-0.78, -0.39]; 9 of the 14 largest US places are listed,
+  and 0.10 for LightGBM, -0.64 [-0.81, -0.42]; 9 of the 14 largest US places are listed,
   against 1 of LightGBM's top 14. Only on Canada's target areas do the two match.
 - **Mixed lists** (Square Leg, Lato-67, the two mirror lists, the Hungarian war game). No
-  gain is detectable: every interval includes zero, on all three metrics. Lato-67 even
-  points different ways on PR-AUC and precision@k.
+  gain is detectable, with one exception: every interval includes zero except PR-AUC on the
+  Polish mirror list, +0.13 [+0.06, +0.20]. Its precision@k and ROC-AUC intervals touch or
+  cross zero, and it records what Polish staff expected NATO to strike, not an attacker's plan.
 - ROC-AUC differences are small on every list, which is why the ROC table alone read the city
   lists as "adds nothing".
 
-Two other lists have a model interval in `paired.csv` that excludes zero in the model's
-favour, and neither is much to lean on. Burza has 3 linked towns of 275, and both scores sit
-near its 1% base rate (PR-AUC 0.013 for the rule, 0.027 for LightGBM). On the Polish mirror
-list, the model with the military distances added gains in PR-AUC, +0.12 [+0.02, +0.20], but
-its ROC-AUC and precision@k intervals include zero. `paired.csv` holds 144 intervals (16
-lists, three models, three metrics), so at 95% a few will exclude zero by chance.
+Burza also has an interval that excludes zero in the model's favour, and it is not much to
+lean on: 3 linked towns of 275, both scores near its 1% base rate (PR-AUC 0.013 for the rule,
+0.020 for LightGBM). `paired.csv` holds 129 intervals (the military model has no row on a
+list with any town outside its table's scope), so at 95% a few will exclude zero by chance.
 
 This is a check that the pipeline joins end to end, not a result: the protocol is frozen at M5.
 

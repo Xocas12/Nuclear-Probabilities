@@ -27,7 +27,7 @@ import pandas as pd
 from nucprob import places_bloc
 from nucprob.gazetteer.match import match
 from nucprob.gazetteer.names import name_on
-from nucprob.geo import Points
+from nucprob.geo import Points, haversine_km
 from nucprob.paths import CURATED, PROCESSED, RAW
 from nucprob.places_bloc import interpolate
 from nucprob.sources import demoscope, geonames, popstat
@@ -84,6 +84,8 @@ PREFIX = {
 }
 CLOSED = CURATED / "gazetteer" / "closed_cities_1956.csv"
 REVIEWED = CURATED / "gazetteer" / "population_check_reviewed.csv"
+REJECTED = CURATED / "gazetteer" / "rejected_matches.csv"
+FAR_KM = 250.0
 EAST_GERMAN_LAENDER = {"11", "12", "13", "14", "15", "16"}  # GeoNames admin1 codes, Berlin incl.
 
 
@@ -190,11 +192,18 @@ def from_demoscope(republic_prefix: str, page: str, country: str) -> pd.DataFram
 def apply_links(matched: pd.DataFrame, gn: pd.DataFrame, page: str) -> pd.DataFrame:
     """Hand-checked links (data/curated/gazetteer/geonames_links.csv) for names the matcher
     cannot resolve: towns renamed since 1959 whose old name GeoNames does not carry."""
-    links = pd.read_csv(CURATED / "gazetteer" / "geonames_links.csv")
-    links = links[links["republic"] == page].set_index("name")["geonameid"]
+    links = pd.read_csv(CURATED / "gazetteer" / "geonames_links.csv", dtype={"region": str})
+    links = links[links["republic"] == page]
+    # A row with a `region` holds only for that census region: Russia has many a Lenino.
+    scoped = {(r.name, r.region): r.geonameid for r in links[links["region"].notna()].itertuples()}
+    plain = links[links["region"].isna()].set_index("name")["geonameid"].to_dict()
     by_id = gn.set_index("geonameid")
-    for i in matched.index[matched["name_ru"].isin(links.index)]:
-        g = by_id.loc[links[matched.at[i, "name_ru"]]]
+    for i in matched.index:
+        name = matched.at[i, "name_ru"]
+        link = scoped.get((name, matched.get("region", {}).get(i)), plain.get(name))
+        if link is None:
+            continue
+        g = by_id.loc[link]
         matched.loc[
             i,
             [
@@ -224,6 +233,23 @@ def apply_links(matched: pd.DataFrame, gn: pd.DataFrame, page: str) -> pd.DataFr
     return matched
 
 
+def far_namesakes(matched: pd.DataFrame) -> pd.Series:
+    """True for a match settled by rank alone ("exact, ranked": no candidate in the census
+    region) that lies well outside the region, as measured from the region's other settlements:
+    over FAR_KM from their median point and over three times their median distance from it.
+    Moscow's Tushino sat in Kaliningrad oblast this way; a match like that is a namesake."""
+    far = pd.Series(False, index=matched.index)
+    has = matched[matched["lat"].notna() & matched["region"].fillna("").ne("")]
+    for _, g in has.groupby("region"):
+        if len(g) < 4:
+            continue
+        lat, lon = g["lat"].to_numpy(), g["lon"].to_numpy()
+        d = haversine_km(lat, lon, np.median(lat), np.median(lon))
+        out = (d > FAR_KM) & (d > 3 * np.median(d))
+        far[g.index[out]] = True
+    return far & matched["match_method"].fillna("").eq("exact, ranked")
+
+
 def located(
     settlements: pd.DataFrame,
     country: str,
@@ -237,6 +263,15 @@ def located(
     if admin1 is not None:
         gn = gn[gn["admin1"].isin(admin1)]
     matched = apply_links(match(settlements, gn, admin1_of), gn, page)
+    far = far_namesakes(matched)
+    matched.loc[far, "match_method"] = "unmatched, namesake far outside the census region"
+    matched.loc[far, ["geonameid", "lat", "lon"]] = np.nan
+    rejected = pd.read_csv(REJECTED)
+    rejected = rejected[rejected["republic"] == page]
+    pairs = set(zip(rejected["name"], rejected["geonameid"].astype(float), strict=True))
+    no = [(n, g) in pairs for n, g in zip(matched["name_ru"], matched["geonameid"], strict=True)]
+    matched.loc[no, "match_method"] = "unmatched, match rejected by hand"
+    matched.loc[no, ["geonameid", "lat", "lon"]] = np.nan
     print(
         f"{page:13} {len(settlements):5} settlements >= {MIN_KEEP}; "
         f"matched {matched['geonameid'].notna().sum():5}; methods {matched['match_method'].str.split(',').str[0].value_counts().to_dict()}"
@@ -398,7 +433,12 @@ def population_check(places: pd.DataFrame, reviewed: pd.DataFrame | None = None)
         "GeoNames population 0",
         "GeoNames population under a tenth of pop",
     )
-    out["explanation"] = ""
+    out["explanation"] = np.where(
+        out["match_method"].str.match(r"exact, (unique|region)"),
+        "the only place of that name, or one inside its census region; GeoNames has no usable "
+        "figure for it",
+        np.where(out["match_method"].eq("curated link"), "a curated link (geonames_links.csv)", ""),
+    )
     if reviewed is not None and len(reviewed):
         notes = {
             (r, n, float(g)): e
@@ -407,8 +447,10 @@ def population_check(places: pd.DataFrame, reviewed: pd.DataFrame | None = None)
             )
         }
         out["explanation"] = [
-            notes.get((r, n, float(g)), "")
-            for r, n, g in zip(out["republic"], out["name_ru"], out["geonameid"], strict=True)
+            notes.get((r, n, float(g)), auto)
+            for r, n, g, auto in zip(
+                out["republic"], out["name_ru"], out["geonameid"], out["explanation"], strict=True
+            )
         ]
     return out.sort_values(["country_1956", "pop"], ascending=[True, False]).reset_index(drop=True)
 

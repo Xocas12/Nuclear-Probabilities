@@ -1,4 +1,4 @@
-# ruff: noqa: E702, E741
+# ruff: noqa: E741
 """Row specification for data/curated/features/us_military_sites_1985.csv (built by scripts/us_military_1985_build.py)."""
 
 # Each r(...) call:

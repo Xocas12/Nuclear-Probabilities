@@ -242,6 +242,7 @@ sources:
   role: universe
   retrieved: '2026-10-07'
   sha256: b110ae295e91a5fd03dae74634934fb61d0a8c1412c04e7344897072ab69a7bd
+  mirror: https://web.archive.org/web/20261010154124id_/https://www.demoscope.ru/weekly/ssp/ussr59_reg2.php
 - id: geonames_ru
   url: https://download.geonames.org/export/dump/RU.zip
   path: geonames/RU.zip
@@ -249,8 +250,11 @@ sources:
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
   role: universe
-  retrieved: '2026-10-07'
-  sha256: 98dd042648a4aa8f508cf650d6e38805d67013cf066153626fdb36b434ed8fbb
+  retrieved: '2026-11-01'
+  sha256: f545730af4e4fc572476bf96e64275661831cafb58b66fc847df6698ce0f4766
+  previous_sha256: 98dd042648a4aa8f508cf650d6e38805d67013cf066153626fdb36b434ed8fbb
+  previous_retrieved: '2026-10-07'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_ua
   url: https://download.geonames.org/export/dump/UA.zip
   path: geonames/UA.zip
@@ -258,8 +262,11 @@ sources:
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
   role: universe
-  retrieved: '2026-10-07'
-  sha256: 7ec4a2bbca115ba8fcc9464e8a688b338cd31f95902ecdd89b91be5dd18c01fd
+  retrieved: '2026-11-01'
+  sha256: cb3865b131d2d2b4e7d53584821fdf3a5b04aedd84df63837b1ee9d7239ae7b2
+  previous_sha256: 7ec4a2bbca115ba8fcc9464e8a688b338cd31f95902ecdd89b91be5dd18c01fd
+  previous_retrieved: '2026-10-07'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_by
   url: https://download.geonames.org/export/dump/BY.zip
   path: geonames/BY.zip
@@ -267,8 +274,11 @@ sources:
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
   role: universe
-  retrieved: '2026-10-07'
-  sha256: b6fb2cfaa8529a9037af2dad70270653c8c750793122097655450c6e9a592666
+  retrieved: '2026-11-01'
+  sha256: c795c8038531e062e1efee3119c1ef8461818e4bc52de33e7b31156c676349b8
+  previous_sha256: b6fb2cfaa8529a9037af2dad70270653c8c750793122097655450c6e9a592666
+  previous_retrieved: '2026-10-07'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_md
   url: https://download.geonames.org/export/dump/MD.zip
   path: geonames/MD.zip
@@ -276,8 +286,11 @@ sources:
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
   role: universe
-  retrieved: '2026-10-07'
-  sha256: ad739273c31e8bf6dbb3eddac093efb0f0bcac24698631e84065180cc11dd851
+  retrieved: '2026-11-01'
+  sha256: 284ac59f0697aa12ee92126747a10866219328e42c9a395f55bec26144adfbc4
+  previous_sha256: ad739273c31e8bf6dbb3eddac093efb0f0bcac24698631e84065180cc11dd851
+  previous_retrieved: '2026-10-07'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_lt
   url: https://download.geonames.org/export/dump/LT.zip
   path: geonames/LT.zip
@@ -285,8 +298,11 @@ sources:
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
   role: universe
-  retrieved: '2026-10-07'
-  sha256: 795b776d60e10860c46aa3bdafd206c585e895751537e41e506ffaf9a9a14613
+  retrieved: '2026-11-01'
+  sha256: d801bdc2578d826da5d9d503fd0fb4af714939fac455dcdf4b3d932e670fb3af
+  previous_sha256: 795b776d60e10860c46aa3bdafd206c585e895751537e41e506ffaf9a9a14613
+  previous_retrieved: '2026-10-07'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_lv
   url: https://download.geonames.org/export/dump/LV.zip
   path: geonames/LV.zip
@@ -294,8 +310,11 @@ sources:
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
   role: universe
-  retrieved: '2026-10-07'
-  sha256: fb97408db7c624ff70fb8e2af9132711aecaf4cfc6c5e99b02826cc8c158b23a
+  retrieved: '2026-11-01'
+  sha256: 5a32e853288ec64959fac7ebe13f8b852265170303ba1871cc3bcdc4705c5968
+  previous_sha256: fb97408db7c624ff70fb8e2af9132711aecaf4cfc6c5e99b02826cc8c158b23a
+  previous_retrieved: '2026-10-07'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_ee
   url: https://download.geonames.org/export/dump/EE.zip
   path: geonames/EE.zip
@@ -303,8 +322,11 @@ sources:
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
   role: universe
-  retrieved: '2026-10-07'
-  sha256: 5ceae2fac6347b8f51f9fffb539cafe66e9ae3b1279e2a6e21b94d10e750ba13
+  retrieved: '2026-11-01'
+  sha256: f1edf5c73ee82a0080a665940ab74fdfb659684b4708fe2df80add72769d5375
+  previous_sha256: 5ceae2fac6347b8f51f9fffb539cafe66e9ae3b1279e2a6e21b94d10e750ba13
+  previous_retrieved: '2026-10-07'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_ge
   url: https://download.geonames.org/export/dump/GE.zip
   path: geonames/GE.zip
@@ -312,8 +334,11 @@ sources:
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
   role: universe
-  retrieved: '2026-10-07'
-  sha256: 1c288fd1f469816d7bcc2b178ca530101c3148b0682c9eea5e25d330c15d66be
+  retrieved: '2026-11-01'
+  sha256: 439f2b85a95d0743aff2480250eb11fdf4f9f94524d03795c069e2651a540aff
+  previous_sha256: 1c288fd1f469816d7bcc2b178ca530101c3148b0682c9eea5e25d330c15d66be
+  previous_retrieved: '2026-10-07'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_am
   url: https://download.geonames.org/export/dump/AM.zip
   path: geonames/AM.zip
@@ -321,8 +346,11 @@ sources:
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
   role: universe
-  retrieved: '2026-10-07'
-  sha256: 16f8d7c4faaae92867cc149fd7ecda26f56e0e2f82a4dfeb466807e92fa2d94d
+  retrieved: '2026-11-01'
+  sha256: ee4d976787130d73038a88379fe995a030a10f305cde1843e6fa7e4d2e0e10e3
+  previous_sha256: 16f8d7c4faaae92867cc149fd7ecda26f56e0e2f82a4dfeb466807e92fa2d94d
+  previous_retrieved: '2026-10-07'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_az
   url: https://download.geonames.org/export/dump/AZ.zip
   path: geonames/AZ.zip
@@ -330,8 +358,11 @@ sources:
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
   role: universe
-  retrieved: '2026-10-07'
-  sha256: ac86941892ff612fc2280a1cda7cd0e9bf4ba2ac36d21bb542a3ceaa167c2f12
+  retrieved: '2026-11-01'
+  sha256: dd69a271bed979fbf24a0c34e8b6d12fb48382702172a1474976e16f98d4b6f2
+  previous_sha256: ac86941892ff612fc2280a1cda7cd0e9bf4ba2ac36d21bb542a3ceaa167c2f12
+  previous_retrieved: '2026-10-07'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_kz
   url: https://download.geonames.org/export/dump/KZ.zip
   path: geonames/KZ.zip
@@ -339,8 +370,11 @@ sources:
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
   role: universe
-  retrieved: '2026-10-07'
-  sha256: 1f3778a848b95e5377c1c5b27dc5e3b36c31be5d28702047c361ee324a731747
+  retrieved: '2026-11-01'
+  sha256: ec82db7cde9ac910367baeb87d4fee98106eb503854574d04365682f1a2745d8
+  previous_sha256: 1f3778a848b95e5377c1c5b27dc5e3b36c31be5d28702047c361ee324a731747
+  previous_retrieved: '2026-10-07'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_uz
   url: https://download.geonames.org/export/dump/UZ.zip
   path: geonames/UZ.zip
@@ -348,8 +382,11 @@ sources:
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
   role: universe
-  retrieved: '2026-10-07'
-  sha256: 2b6ac0765256ce26b1ce558927b6a7618aa78a59c210a037b05150ead2d43937
+  retrieved: '2026-11-01'
+  sha256: 66ee88577b1a50059691f79e7b90117ebf09d1f4a356a73ca4103c167a6e93ee
+  previous_sha256: 2b6ac0765256ce26b1ce558927b6a7618aa78a59c210a037b05150ead2d43937
+  previous_retrieved: '2026-10-07'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_tm
   url: https://download.geonames.org/export/dump/TM.zip
   path: geonames/TM.zip
@@ -357,8 +394,11 @@ sources:
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
   role: universe
-  retrieved: '2026-10-07'
-  sha256: 4fa411526b8ce194c4645ff5e7e681b7bd57b4e5abea4ec76d38bc296fd4fbfb
+  retrieved: '2026-11-01'
+  sha256: 7c40f55b29457c58300c737f0377f3cc23888429f50c27741963bb840733d7d8
+  previous_sha256: 4fa411526b8ce194c4645ff5e7e681b7bd57b4e5abea4ec76d38bc296fd4fbfb
+  previous_retrieved: '2026-10-07'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_kg
   url: https://download.geonames.org/export/dump/KG.zip
   path: geonames/KG.zip
@@ -366,8 +406,11 @@ sources:
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
   role: universe
-  retrieved: '2026-10-07'
-  sha256: d4bce3fad967ed6ac29cfdb6b574c58b485567781664dab68ce935445b4e4fa3
+  retrieved: '2026-11-01'
+  sha256: 43e33158a8b69e815b7caa5306a378b460ae35955788b4e0dc074690e886d239
+  previous_sha256: d4bce3fad967ed6ac29cfdb6b574c58b485567781664dab68ce935445b4e4fa3
+  previous_retrieved: '2026-10-07'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_tj
   url: https://download.geonames.org/export/dump/TJ.zip
   path: geonames/TJ.zip
@@ -375,16 +418,22 @@ sources:
   use: coordinates and alternate (Cyrillic) names for the place universe; modern admin seats (flagged
     as anachronistic)
   role: universe
-  retrieved: '2026-10-07'
-  sha256: 25879c630aeae00e890694c824a8885f85afb04149d7466a28cbb99232dc96cb
+  retrieved: '2026-11-01'
+  sha256: e88c0d8671dade30382bde1f2708d2843b1e234b2d4e7674c7968ab88646e6af
+  previous_sha256: 25879c630aeae00e890694c824a8885f85afb04149d7466a28cbb99232dc96cb
+  previous_retrieved: '2026-10-07'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_admin1
   url: https://download.geonames.org/export/dump/admin1CodesASCII.txt
   path: geonames/admin1CodesASCII.txt
   licence: CC BY 4.0 (GeoNames)
   use: names of first-level regions
   role: universe
-  retrieved: '2026-10-07'
-  sha256: 1da92a6323a5fec3176f3f743bf4cf4040fd56a876da55e46fbca23c863aa60a
+  retrieved: '2026-11-01'
+  sha256: 42458864faa9887933d75c33408d4a808b765edbcd62a1328fa9e8cfcdfc718e
+  previous_sha256: 1da92a6323a5fec3176f3f743bf4cf4040fd56a876da55e46fbca23c863aa60a
+  previous_retrieved: '2026-10-07'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: naturalearth_50m_land
   url: https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_land.geojson
   path: naturalearth/ne_50m_land.geojson
@@ -426,8 +475,11 @@ sources:
   licence: public domain (OurAirports)
   use: military features, airfields near a place (today's list, so flagged as anachronistic)
   role: features
-  retrieved: '2026-10-08'
-  sha256: 06bb430e3929969865065798765beaab4063e4695fbb32d83623b103a613e78f
+  retrieved: '2026-11-01'
+  sha256: 1aab80ccfa203a0d02476c16ac282d9e787cf3d08700d7365c5c5502a0db8ba7
+  previous_sha256: 06bb430e3929969865065798765beaab4063e4695fbb32d83623b103a613e78f
+  previous_retrieved: '2026-10-08'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: naturalearth_10m_railroads
   url: https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_railroads.geojson
   path: naturalearth/ne_10m_railroads.geojson
@@ -514,96 +566,132 @@ sources:
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate names for the place universe of the bloc outside the USSR
   role: universe
-  retrieved: '2026-10-08'
-  sha256: b2fce11acbaf912a9e0ef34ceb44d0ae30a46b8e731080aac48c3e5045b0795f
+  retrieved: '2026-11-01'
+  sha256: 1530b5288d2a7808d4ae596e956a33bc7d35880bb12cea0f2c52caf0cd587ef3
+  previous_sha256: b2fce11acbaf912a9e0ef34ceb44d0ae30a46b8e731080aac48c3e5045b0795f
+  previous_retrieved: '2026-10-08'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_de
   url: https://download.geonames.org/export/dump/DE.zip
   path: geonames/DE.zip
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate names for the place universe of the bloc outside the USSR
   role: universe
-  retrieved: '2026-10-08'
-  sha256: aea7cac6bec5e0073741efa4d82f822d1a8ce3d02634ffaca7644c145c73ccf0
+  retrieved: '2026-11-01'
+  sha256: fc6850e68b52504de724cd9e26be9b88aa2a969f1ffd7b70207e045539d9545a
+  previous_sha256: aea7cac6bec5e0073741efa4d82f822d1a8ce3d02634ffaca7644c145c73ccf0
+  previous_retrieved: '2026-10-08'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_cz
   url: https://download.geonames.org/export/dump/CZ.zip
   path: geonames/CZ.zip
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate names for the place universe of the bloc outside the USSR
   role: universe
-  retrieved: '2026-10-08'
-  sha256: 982dd00f82665ba98f9454214b580060b232d35b82a77b485194d37c5fbb62f7
+  retrieved: '2026-11-01'
+  sha256: 9d4522549d9238a9ed2cc16f7538ccee79d4af7c3d4d43a6772ab2eb027caf50
+  previous_sha256: 982dd00f82665ba98f9454214b580060b232d35b82a77b485194d37c5fbb62f7
+  previous_retrieved: '2026-10-08'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_sk
   url: https://download.geonames.org/export/dump/SK.zip
   path: geonames/SK.zip
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate names for the place universe of the bloc outside the USSR
   role: universe
-  retrieved: '2026-10-08'
-  sha256: cc2b5693a7e374e677af768ec2660dddff0af17c7e300e8d6ec58bcef1e800fa
+  retrieved: '2026-11-01'
+  sha256: 0f38ed3827e15904b746ae0053bcda7335493efebad3faca071169024b4a7efe
+  previous_sha256: cc2b5693a7e374e677af768ec2660dddff0af17c7e300e8d6ec58bcef1e800fa
+  previous_retrieved: '2026-10-08'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_hu
   url: https://download.geonames.org/export/dump/HU.zip
   path: geonames/HU.zip
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate names for the place universe of the bloc outside the USSR
   role: universe
-  retrieved: '2026-10-08'
-  sha256: be81fd6223b64a5107b7eca2e494c23295e3850511b97e5e5bdf8b11e20659e4
+  retrieved: '2026-11-01'
+  sha256: e7cd7a4f183c21f4fa51dc9ac6f11889c468c6afd9113a566daa6dd0080f2d08
+  previous_sha256: be81fd6223b64a5107b7eca2e494c23295e3850511b97e5e5bdf8b11e20659e4
+  previous_retrieved: '2026-10-08'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_ro
   url: https://download.geonames.org/export/dump/RO.zip
   path: geonames/RO.zip
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate names for the place universe of the bloc outside the USSR
   role: universe
-  retrieved: '2026-10-08'
-  sha256: c39d7a802578524b6ef256d5bae8b87a5011cd7033113068aed27e8dfd412a39
+  retrieved: '2026-11-01'
+  sha256: 67a229d69df9f1893b916341acbf69a9103b1489a0a1e45dc61cb3b475a124a5
+  previous_sha256: c39d7a802578524b6ef256d5bae8b87a5011cd7033113068aed27e8dfd412a39
+  previous_retrieved: '2026-10-08'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_bg
   url: https://download.geonames.org/export/dump/BG.zip
   path: geonames/BG.zip
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate names for the place universe of the bloc outside the USSR
   role: universe
-  retrieved: '2026-10-08'
-  sha256: e8bef04b5bff1d8d32ae7ece97aff89aa2a51496fd874758230760c96c5b1a0b
+  retrieved: '2026-11-01'
+  sha256: 2f657bcdd5dbf2f6ac370d3ab294940d82cb27abca88059a63e37254cb41f341
+  previous_sha256: e8bef04b5bff1d8d32ae7ece97aff89aa2a51496fd874758230760c96c5b1a0b
+  previous_retrieved: '2026-10-08'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_al
   url: https://download.geonames.org/export/dump/AL.zip
   path: geonames/AL.zip
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate names for the place universe of the bloc outside the USSR
   role: universe
-  retrieved: '2026-10-08'
-  sha256: 66f77a5bdcea20633a5e0d5cc2fea61867b2bd6b2b5f151406db441deb27f09f
+  retrieved: '2026-11-01'
+  sha256: 54c5fa442b147bbf60455cceb2ba1c94af6b4f4a48e003e4044d04a004367dba
+  previous_sha256: 66f77a5bdcea20633a5e0d5cc2fea61867b2bd6b2b5f151406db441deb27f09f
+  previous_retrieved: '2026-10-08'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_cn
   url: https://download.geonames.org/export/dump/CN.zip
   path: geonames/CN.zip
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate names for the place universe of the bloc outside the USSR
   role: universe
-  retrieved: '2026-10-08'
-  sha256: 0331f909ad8566bc7d04323c95906575b2be8c39fa9fe2e3ae09f44136e0587c
+  retrieved: '2026-11-01'
+  sha256: 03ab6d5253815b4040b61493a8bed83ffcdb5b6c6b4cf0d6709e41e51abdebc6
+  previous_sha256: 0331f909ad8566bc7d04323c95906575b2be8c39fa9fe2e3ae09f44136e0587c
+  previous_retrieved: '2026-10-08'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_kp
   url: https://download.geonames.org/export/dump/KP.zip
   path: geonames/KP.zip
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate names for the place universe of the bloc outside the USSR
   role: universe
-  retrieved: '2026-10-08'
-  sha256: f2af9614959029856df35259457efb45ff79e8e24ff92e460ef0c8ee90386167
+  retrieved: '2026-11-01'
+  sha256: f74e08df5c833b8d9953dbc2baa56f8359c7121df3216ad41ae6546c6a1281fb
+  previous_sha256: f2af9614959029856df35259457efb45ff79e8e24ff92e460ef0c8ee90386167
+  previous_retrieved: '2026-10-08'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_vn
   url: https://download.geonames.org/export/dump/VN.zip
   path: geonames/VN.zip
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate names for the place universe of the bloc outside the USSR
   role: universe
-  retrieved: '2026-10-08'
-  sha256: 3c551047ad2bbeda97ee72bc35306d35c5fe9cbeaca3f97867fa89bd1556dbba
+  retrieved: '2026-11-01'
+  sha256: 0ebb6f2fa313d84fd8b7fe241cc9c965c72593a5a918d46cac8d20266c2f68be
+  previous_sha256: 3c551047ad2bbeda97ee72bc35306d35c5fe9cbeaca3f97867fa89bd1556dbba
+  previous_retrieved: '2026-10-08'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_mn
   url: https://download.geonames.org/export/dump/MN.zip
   path: geonames/MN.zip
   licence: CC BY 4.0 (GeoNames)
   use: coordinates and alternate names for the place universe of the bloc outside the USSR
   role: universe
-  retrieved: '2026-10-08'
-  sha256: e03e3f8bb9d434f7716081246af82c62d47ba7ac5f3c4711a256ed7d102b47c5
+  retrieved: '2026-11-01'
+  sha256: 17b7e13f6a2c43be7794c9337ad3cfbd730850eecef596c8374705cd30a93f30
+  previous_sha256: e03e3f8bb9d434f7716081246af82c62d47ba7ac5f3c4711a256ed7d102b47c5
+  previous_retrieved: '2026-10-08'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: ddr_jahrbuch_1956_p0041
   url: https://digi.bib.uni-mannheim.de/fileadmin/statjahrb/514402644_1956/pdf/514402644_0041.pdf
   path: ddr/514402644_0041.pdf
@@ -846,7 +934,11 @@ sources:
   licence: CC BY-SA 4.0 (Wikipedia); figures from Shabad (1959), China's Changing Map
   use: 'China place universe: the 1953 census population of China''s 163 cities'
   role: universe
-  sha256: 6bc4abff5e6a75acde8d8a1a0aa4f27569da357ce11e92bb3d2d115decb9fbbc
+  sha256: e57382bdcf7f9ad0c21dd647f73bdeb7b64132ee78b960cff0d91c0ef9ce435e
+  previous_sha256: 6bc4abff5e6a75acde8d8a1a0aa4f27569da357ce11e92bb3d2d115decb9fbbc
+  previous_retrieved: null
+  retrieved: '2026-11-01'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: un_wup2018
   url: https://population.un.org/wup/assets/Download/Archive/WUP2018-Excel-files.zip
   path: un/WUP2018-Excel-files.zip
@@ -869,7 +961,8 @@ sources:
   url: https://www2.census.gov/programs-surveys/popest/tables/1980-1990/counties/totals/e8089co.txt
   path: census/e8089co.txt
   licence: US government work, public domain
-  use: US county universe and population features (1980 census, 1985 estimate); check of NAPB-90's printed populations
+  use: US county universe and population features (1980 census, 1985 estimate); check of NAPB-90's printed
+    populations
   role: universe
   retrieved: '2026-10-10'
   sha256: 0385ddcf6a5a4325897a870ea82b74d06b65bdf4a5f1dc6a65bc3b3877917a8c
@@ -885,83 +978,111 @@ sources:
   url: https://archive.org/details/nuclearattackplanningbase1990finalreport504pg
   path: civil_defence/FEMA_1990_Nuclear_attack_planning_base_(NAPB-90).pdf
   licence: US government record released under FOIA (27 Apr 2005), public domain
-  use: Annex A county tables of direct-effects risk and Annex B county tables of fallout risk,
-    transcribed in full (data/curated/napb90/)
+  use: Annex A county tables of direct-effects risk and Annex B county tables of fallout risk, transcribed
+    in full (data/curated/napb90/)
   role: labels
   retrieved: '2026-10-03'
   sha256: 3e884fd89adc43025d2c19f51e52f1a55b52402605ad267588de06113b836bb0
+  volatile: archive.org landing page; the scan itself is listed in the card
 - id: geonames_dk
   url: https://download.geonames.org/export/dump/DK.zip
   path: geonames/DK.zip
   licence: CC BY 4.0 (GeoNames)
   use: coordinates of the census towns of Denmark (transfer regions, nucprob/transfer/places.py)
   role: universe
-  retrieved: '2026-10-10'
-  sha256: 55c350388163a1fea1cdbd870832446765edf287dc6e9054d52a06de0478f283
+  retrieved: '2026-11-01'
+  sha256: 80b81bf11dad86307120fa97e132e0829aa78ce3eca717d2550c39f423449c41
+  previous_sha256: 55c350388163a1fea1cdbd870832446765edf287dc6e9054d52a06de0478f283
+  previous_retrieved: '2026-10-10'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_nl
   url: https://download.geonames.org/export/dump/NL.zip
   path: geonames/NL.zip
   licence: CC BY 4.0 (GeoNames)
   use: coordinates of the census towns of the Netherlands (transfer regions, nucprob/transfer/places.py)
   role: universe
-  retrieved: '2026-10-10'
-  sha256: cb4933df2c26ba034bf8bd576e5084897bc43ac02c480f036d2d0b900b8b2fb9
+  retrieved: '2026-11-01'
+  sha256: e241bb2fa3b6cb4c52429c1efa0962da872e701aca8f43581ffd612d41abdaa6
+  previous_sha256: cb4933df2c26ba034bf8bd576e5084897bc43ac02c480f036d2d0b900b8b2fb9
+  previous_retrieved: '2026-10-10'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_be
   url: https://download.geonames.org/export/dump/BE.zip
   path: geonames/BE.zip
   licence: CC BY 4.0 (GeoNames)
   use: coordinates of the census towns of Belgium (transfer regions, nucprob/transfer/places.py)
   role: universe
-  retrieved: '2026-10-10'
-  sha256: a6f1716316633779093f58a0eb8b8c7ed4f2461d889f8b8e9e00b15a8956dac1
+  retrieved: '2026-11-01'
+  sha256: ceff4ee24b5608267efffdb7a46e908ab8e57471c013adde922972f2f5182dc7
+  previous_sha256: a6f1716316633779093f58a0eb8b8c7ed4f2461d889f8b8e9e00b15a8956dac1
+  previous_retrieved: '2026-10-10'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_at
   url: https://download.geonames.org/export/dump/AT.zip
   path: geonames/AT.zip
   licence: CC BY 4.0 (GeoNames)
   use: coordinates of the census towns of Austria (transfer regions, nucprob/transfer/places.py)
   role: universe
-  retrieved: '2026-10-10'
-  sha256: f5279ec6020cb4762dbd7ab149430ef0b9d2ccb6f82c643238d218493916b0d5
+  retrieved: '2026-11-01'
+  sha256: a414056100db3eb1be214cc2b59474efcd5518f36c4615850ba45356b6606390
+  previous_sha256: f5279ec6020cb4762dbd7ab149430ef0b9d2ccb6f82c643238d218493916b0d5
+  previous_retrieved: '2026-10-10'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_it
   url: https://download.geonames.org/export/dump/IT.zip
   path: geonames/IT.zip
   licence: CC BY 4.0 (GeoNames)
   use: coordinates of the census towns of Italy (transfer regions, nucprob/transfer/places.py)
   role: universe
-  retrieved: '2026-10-10'
-  sha256: 4c241592e0f34f1760982be46042ae9ff39d2af26c2277dc4ad4b9552a814614
+  retrieved: '2026-11-01'
+  sha256: 147cab6778e3726b7e900db83fb4b386a3e532b13ff52e96547b67f1dcdce745
+  previous_sha256: 4c241592e0f34f1760982be46042ae9ff39d2af26c2277dc4ad4b9552a814614
+  previous_retrieved: '2026-10-10'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_gb
   url: https://download.geonames.org/export/dump/GB.zip
   path: geonames/GB.zip
   licence: CC BY 4.0 (GeoNames)
   use: coordinates of the census towns of the United Kingdom (transfer regions, nucprob/transfer/places.py)
   role: universe
-  retrieved: '2026-10-10'
-  sha256: eefc08df408aa4c3218151b5d9ca73768555fafac676a2ce5d612e2007c1f32a
+  retrieved: '2026-11-01'
+  sha256: b22d24512eb630f5f888d069d302e1cf79999781f5866612d4d2f3d2b722aed8
+  previous_sha256: eefc08df408aa4c3218151b5d9ca73768555fafac676a2ce5d612e2007c1f32a
+  previous_retrieved: '2026-10-10'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_jp
   url: https://download.geonames.org/export/dump/JP.zip
   path: geonames/JP.zip
   licence: CC BY 4.0 (GeoNames)
   use: coordinates of the census towns of Japan (transfer regions, nucprob/transfer/places.py)
   role: universe
-  retrieved: '2026-10-10'
-  sha256: f0e39e6f0df79934c69adc9e8ade4ab415f16d3e57840ea8580c3b9d32adfd58
+  retrieved: '2026-11-01'
+  sha256: 3a8d1d5578ba93d40fd02f7c2454d817505cb608ea959f96554e3634db5c341e
+  previous_sha256: f0e39e6f0df79934c69adc9e8ade4ab415f16d3e57840ea8580c3b9d32adfd58
+  previous_retrieved: '2026-10-10'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_ca
   url: https://download.geonames.org/export/dump/CA.zip
   path: geonames/CA.zip
   licence: CC BY 4.0 (GeoNames)
   use: coordinates of the census towns of Canada (transfer regions, nucprob/transfer/places.py)
   role: universe
-  retrieved: '2026-10-10'
-  sha256: bb6b148ffe8b2576b7e75b664925411036c3fd85db5a660d1d1bf5622a6d216c
+  retrieved: '2026-11-01'
+  sha256: 9862d1577d8456937399b0e63826b0ec76644c1c080772b929cb372ab1f21d71
+  previous_sha256: bb6b148ffe8b2576b7e75b664925411036c3fd85db5a660d1d1bf5622a6d216c
+  previous_retrieved: '2026-10-10'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: geonames_us
   url: https://download.geonames.org/export/dump/US.zip
   path: geonames/US.zip
   licence: CC BY 4.0 (GeoNames)
   use: coordinates of the census towns of the United States (transfer regions, nucprob/transfer/places.py)
   role: universe
-  retrieved: '2026-10-10'
-  sha256: 06775ef2f48a8e80ced51afb160aedc9aafc6d0fdc7e770506e8e4bae61140b2
+  retrieved: '2026-11-01'
+  sha256: 7af7c224772e66226bbf493b83ea51071d6a88c49563811c15ccb029e05cf875
+  previous_sha256: 06775ef2f48a8e80ced51afb160aedc9aafc6d0fdc7e770506e8e4bae61140b2
+  previous_retrieved: '2026-10-10'
+  volatile: live data, updated by its publisher; the hash is of the copy the tables were last built from
 - id: popstat_austria
   url: https://pop-stat.mashke.org/austria-cities.htm
   path: popstat/austria-cities.htm
@@ -978,6 +1099,7 @@ sources:
   role: universe
   retrieved: '2026-10-10'
   sha256: 4ea332714ce0914cf59c27004d7f212442125226e5bb0c01b4b1946e7e700b70
+  volatile: archive.org landing page; the scans are listed in the card
 - id: census_dk_1960
   url: https://www.dst.dk/pubfile/13352/areal
   path: denmark/aarbog1961_areal.pdf
@@ -994,6 +1116,7 @@ sources:
   role: universe
   retrieved: '2026-10-10'
   sha256: 2ee84898f4050cc9d2bc0763e8af580ac82863105e045b2270731b7af3c5f706
+  volatile: DOI landing page; the table is listed in the card
 - id: census_be_1961
   url: https://doc.statbel.fgov.be/publications/S210.A7/S210.A7F_Recensement_1961_Tome_01.pdf
   path: belgium/S210.A7F_Recensement_1961_Tome_01.pdf
@@ -1010,6 +1133,7 @@ sources:
   role: universe
   retrieved: '2026-10-10'
   sha256: aa2b08afaae1ebcf99b6d03c311cbb0341406efaa122c6344b4757c4f7e6bbb1
+  volatile: the publisher refused TLS on 2026-11-01; towns_it_1961.csv is the record
 - id: census_uk_1981_nomis
   url: https://www.nomisweb.co.uk/api/v01/dataset/NM_66_1.data.csv
   path: uk/nomis_sas81_districts_tot.csv
@@ -1018,6 +1142,7 @@ sources:
   role: universe
   retrieved: '2026-10-10'
   sha256: f2235286329448085101b255e58ba708e3b74712418e9439b80048df10c9b9d0
+  volatile: API output regenerated by the server; towns_uk_1981.csv is the record
 - id: census_ni_1981
   url: https://www.nisra.gov.uk/files/nisra/publications/1981-Census-towns-villages-booklet.pdf
   path: uk/nisra_1981-Census-towns-villages-booklet.pdf
@@ -1030,10 +1155,12 @@ sources:
   url: https://www.e-stat.go.jp/stat-search/file-download?statInfId=000007914029&fileKind=2
   path: japan/s15_7914028.pdf
   licence: e-Stat (Statistics Bureau of Japan), government terms of use
-  use: 'Japan 1940 transfer universe: cities and towns of 10,000+ (towns_jp_1940.csv); one of the four Table 1 volumes'
+  use: 'Japan 1940 transfer universe: cities and towns of 10,000+ (towns_jp_1940.csv); one of the four
+    Table 1 volumes'
   role: universe
   retrieved: '2026-10-10'
   sha256: f7a037a764122525125877c1c38ec13ab35436844bbbaf7c3d5e2176fdbe2d7e
+  volatile: file regenerated by the portal; towns_jp_1940.csv is the record
 - id: census_us_1950
   url: https://www2.census.gov/library/publications/decennial/1950/population-volume-1/vol-01-04.pdf
   path: united_states/vol-01-04.pdf

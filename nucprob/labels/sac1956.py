@@ -59,7 +59,9 @@ NAME_OK = 75  # name similarity (0-100) below which a link is listed for review
 # NAME_RADIUS_KM away whose name matches it closely. SAC's coordinates for remote towns can be
 # tens of kilometres off (INTA is printed 72 km from Inta).
 NAME_RADIUS_KM = 75.0
-NAME_LINK = 88
+# 90, not lower: the only two links under it were wrong. FALKENBURG (Falkenberg/Elster) went to
+# Eilenburg, 45 km off, and LANY (Lány) to Slaný, 15 km off, each on a score of 88.9.
+NAME_LINK = 90
 # Stretches of the alphabet whose entries are lost from the scan (data/curated/sac1956/README.md).
 # The list runs alphabetically across countries, so a settlement of any country that links to no
 # target and whose name falls in one of them has no label: it may have been on the lost page.

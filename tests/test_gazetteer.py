@@ -3,7 +3,7 @@ import pandas as pd
 
 from nucprob.gazetteer.match import choose, match
 from nucprob.gazetteer.names import key, latin_key, name_on, variants
-from nucprob.places import EAST_GERMAN_LAENDER, population_check
+from nucprob.places import EAST_GERMAN_LAENDER, far_namesakes, population_check
 from nucprob.places_bloc import CHINA_ADMIN1, EAST_GERMANY_ADMIN1
 
 
@@ -219,6 +219,8 @@ def test_population_check_lists_matches_to_a_place_of_no_or_few_people():
         "GeoNames population 0",
     ]
     assert list(out["explanation"]) == ["a district, without a population", ""]
+
+
 def test_verkh_neyvinsky_is_not_put_on_novouralsk():
     """GeoNames carries Верх-Нейвинский only as an alternate name of Novouralsk (Sverdlovsk-44),
     so the matcher puts the 1959 village on the closed town's coordinates; the curated link
@@ -259,3 +261,17 @@ def test_verkh_neyvinsky_is_not_put_on_novouralsk():
     assert out.at[0, "match_method"] == "curated link"
     header = (57.2667, 60.15)  # VERKHNE NEYVINSKIY, C120-L19
     assert haversine_km(*header, out.at[0, "lat"], out.at[0, "lon"]) < 1
+
+
+def test_far_namesakes_rejects_only_rank_settled_matches_outside_the_region():
+    moscow = {"lat": [55.75, 55.8, 55.7, 55.72, 54.99], "lon": [37.6, 37.5, 37.8, 37.7, 22.18]}
+    methods = ["exact, region"] * 4 + ["exact, ranked"]
+    table = pd.DataFrame(moscow).assign(region="г. Москва", match_method=methods)
+    assert far_namesakes(table).tolist() == [False] * 4 + [True]
+    # the same point reached by a curated link or a unique name stands
+    for method in ("curated link", "exact, unique"):
+        kept = table.assign(match_method=[*methods[:4], method])
+        assert not far_namesakes(kept).any()
+    # a ranked match near its region stands
+    near = table.assign(lat=[55.75, 55.8, 55.7, 55.72, 55.9], lon=[37.6, 37.5, 37.8, 37.7, 37.3])
+    assert not far_namesakes(near).any()

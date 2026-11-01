@@ -10,7 +10,7 @@ a source has one, and coordinates from GeoNames. The rule is fixed before lookin
 
 | Country | Source | Figures | `pop` | Table floor | Universe (10,000+) |
 |---|---|---|---|---|---|
-| USSR | pop-stat (14 republics), Demoscope (Uzbekistan) | censuses of 1939 and 1959 | 1959 census | 5,000 | 1,620 located of 1,635 |
+| USSR | pop-stat (14 republics), Demoscope (Uzbekistan) | censuses of 1939 and 1959 | 1959 census | 5,000 | 1,629 located of 1,645 (ten closed towns included) |
 | East Germany | *Statistisches Jahrbuch der DDR 1956*, table I.10 | 1939, 1946, 1950, end-1955, end-1956 | interpolated to 15 June 1956 | 10,000 (end of 1956) | 214 |
 | Poland | *Rocznik Statystyczny 1957*, table 7 | 1950 census, end-1956 estimate | interpolated | 10,000 (end of 1956) | 207 |
 | Czechoslovakia: Czech lands | pop-stat | censuses of 1930, 1950, 1961 | interpolated | 5,000 | 90 |
@@ -120,10 +120,21 @@ administrative rank.
   population 0, or under a tenth of `pop`. A town put on a hamlet shows up there. So do real
   towns that GeoNames records without a population, and towns since merged into a neighbour.
   A namesake of about the town's size does not: that is what the region maps are for.
-  `population_check_reviewed.csv` explains the rows already checked, each for the GeoNames
-  place it names; the build prints how many are left. East Germany, Poland, Hungary,
-  Slovakia and China have been checked (12 rows, all real places without a GeoNames
-  population); the other countries have not.
+  `population_check_reviewed.csv` explains rows checked by hand, each for the GeoNames place it
+  names, and curated links carry their own basis. The remaining rows are matches that are the
+  only place of the name or lie in the census region; the build labels those by that rule, which
+  is weaker than a reading of each row, and prints how many rows are left with no explanation.
+
+## Geographic check
+
+`far_namesakes` in `nucprob/places.py` measures every match settled by rank alone ("exact,
+ranked": no candidate in the census region) against the region's other settlements. One lying
+over 250 km from their median point, and over three times their median distance from it, is left
+unlocated: this is how Moscow's Tushino had reached Kaliningrad oblast. Places in very large
+regions that the test would wrongly reject have curated links (Satpayev, Karsakpay, Aktogay).
+
+`rejected_matches.csv` lists five small settlements left unlocated by hand, each with the reason.
+A rejected match is an unlocated place, not a moved one; none of them is in the universe.
 
 ## `geonames_links.csv`
 
@@ -132,7 +143,8 @@ since the census whose old name GeoNames lacks, and East German names with a suf
 GeoNames drops ("Neuenhagen bei Berlin"). Some towns are told apart from namesakes by hand:
 the two Oelsnitz; Ebersbach; Grodziec and Cieplice, now parts of Będzin and Jelenia Góra;
 Jinzhou, which shares Liaoning with a Jinzhou district of Dalian; Tianshui, Qulja and
-Chaozhou, where a namesake or a county seat is nearer the 1953 size or carries the name.
+Chaozhou, where a namesake or a county seat is nearer the 1953 size or carries the name. A row
+with a `region` holds for that census region only, since Russia has many a Lenino.
 
 ## Transfer regions
 

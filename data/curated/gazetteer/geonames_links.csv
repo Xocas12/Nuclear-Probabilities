@@ -1,37 +1,48 @@
-republic,name,geonameid,geonames_name,basis
-uzbekistan,Маргелан,1513243,Marg‘ilon,"GeoNames Russian alternate name Маргилан; Fergana region; 1959 spelling Маргелан"
-uzbekistan,Беговат,1514402,Bekobod,"renamed Bekabad 1964; GeoNames Russian alternate Бекабад; Tashkent region, the only large Bekobod"
-uzbekistan,Мирзачуль,1513966,Guliston,"renamed Gulistan 1961; GeoNames Russian alternate Гулистан; seat of Sirdaryo region"
-uzbekistan,Денау,1217474,Denov,"Russian alternate Денов; Surxondaryo region, the only large Denov"
-uzbekistan,Шахрисябз,1216187,Shahrisabz,"Russian alternates Шахрисабз, Шаҳрисабз; Qashqadaryo region"
-uzbekistan,Сыр-Дарьинский,1512770,Sirdaryo,"Russian alternates Сырдарья, Сырдарьинская; Sirdaryo region"
-uzbekistan,Искандер,1513900,Iskandar,"Russian alternate Искандар; Tashkent region"
-uzbekistan,Кувасай,1513331,Quvasoy,"Fergana region; the only Quvasoy"
-uzbekistan,Бируни,1514387,Beruniy,"Russian alternate Беруний; Karakalpakstan"
-uzbekistan,Янги-Юль,1512339,Yangiyŭl,"Russian alternate Янгиюль; Tashkent region"
-uzbekistan,Катта-Курган,1216982,Kattaqo’rg’on Shahri,"Russian alternate Каттакурган; Samarqand region"
-kazakhstan,Шемонайха,1519226,Shemonaikha,"Russian alternate Шемонаиха; East Kazakhstan"
-kazakhstan,Жезқазған,1516589,Zhezqazghan,"Russian alternate Жезказган; Ulytau region"
-belarus,Калінкавічы,627751,Kalinkovichi,"Russian alternate Калинковичи; Homyel region"
-kyrgyzstan,Таш-Көмүр,1527260,Tash-Kumyr,"Russian alternate Таш-Кумыр; Jalal-Abad region"
-tajikistan,Бобоҷон Ғафуров,1514900,Ghafurov,"Russian alternates Гафуроб, Ғафуроб; Sughd region"
-georgia,Tҟәарчал (ტყვარჩელი),611583,Tqvarch'eli,"Russian alternate Ткуарчал; Abkhazia"
-georgia,ახალქალაქი,615893,Akhalkalaki,"PPLA2 in Samtskhe-Javakheti; the Georgian-script name sits only on a namesake village near Tbilisi (615892)"
-china,Xinhailian,10859300,Lianyungang,"Xinhailian (Xinpu, Haizhou and Lianyun) was renamed Lianyungang in 1961"
-china,Guisui,2036892,Hohhot,"Guisui, capital of Suiyuan province, was renamed Hohhot (Huhehaote) in 1954"
-china,Jinzhou,2036427,Jinzhou,"Jinzhou of Liaoxi province (锦州), not the Jinzhou district of Dalian (金州): both are in Liaoning, and the district's GeoNames population is the closer to the 1953 figure"
-china,Tianshui,1792892,Tianshui,"Tianshui city (PPLA3), not Beidao (1816751), 14 km east, which is only nearer the 1953 figure in size"
-china,Qulja,1529435,Ghulja,"Qulja (Yining city, Ili), GeoNames' Ghulja; the name Qulja sits only on the Yining county seat (1529013), 17 km east"
-china,Chaozhou,1815395,Chaozhou,"Chaozhou in eastern Guangdong; GeoNames also files the name under Maoming (1801180), 626 km west"
-east germany,Stalinstadt,2931481,Eisenhüttenstadt,"Stalinstadt (founded 1950) was merged into Eisenhüttenstadt in 1961"
-east germany,Oelsnitz im Erzgebirge,2857918,Oelsnitz,"Oelsnitz/Erzgeb. (Erzgebirgskreis), not Oelsnitz/Vogtl."
-east germany,Oelsnitz,2857919,Oelsnitz,"the yearbook's Oelsnitz without suffix is Oelsnitz/Vogtl., listed apart from Oelsnitz im Erzgebirge"
-east germany,Mühlhausen in Thüringen,2867996,Mühlhausen,"Mühlhausen/Thüringen, Unstrut-Hainich-Kreis"
-east germany,Neuenhagen bei Berlin,2865716,Neuenhagen,"Neuenhagen bei Berlin, Märkisch-Oderland"
-east germany,Rüdersdorf bei Berlin,2843408,Rüdersdorf,"Rüdersdorf bei Berlin, Märkisch-Oderland"
-east germany,Schöneiche bei Berlin,2836746,Schöneiche,"Schöneiche bei Berlin, Oder-Spree"
-east germany,Lichtenstein in Sachsen,2878037,Lichtenstein,"Lichtenstein/Sachsen, Zwickau district"
-east germany,Ebersbach,2933965,Ebersbach,"Ebersbach/Sa. in the Oberlausitz (Kreis Löbau), not the smaller Ebersbach near Großenhain (3209001), a PPLA4"
-poland,Grodziec,3098306,Grodziec,"Grodziec, now a district of Będzin (PPLX, no GeoNames population), not the village near Bielsko-Biała (3098314)"
-poland,Cieplice,3101367,Cieplice Śląskie Zdrój,"Cieplice Śląskie-Zdrój in Wrocławskie, now part of Jelenia Góra; GeoNames' plain Cieplice are villages in other voivodeships"
-russia,Верх-Нейвинский,1487504,Verkh-Neyvinskiy,"Sverdlovsk region; GeoNames gives the Cyrillic Верх-Нейвинский only as an alternate name of Novouralsk (1538636, the old Sverdlovsk-44 settlement 3.3 km away), so the matcher put the village on the closed town; 1487504 is the village itself"
+republic,name,geonameid,geonames_name,basis,region
+uzbekistan,Маргелан,1513243,Marg‘ilon,"GeoNames Russian alternate name Маргилан; Fergana region; 1959 spelling Маргелан",
+uzbekistan,Беговат,1514402,Bekobod,"renamed Bekabad 1964; GeoNames Russian alternate Бекабад; Tashkent region, the only large Bekobod",
+uzbekistan,Мирзачуль,1513966,Guliston,"renamed Gulistan 1961; GeoNames Russian alternate Гулистан; seat of Sirdaryo region",
+uzbekistan,Денау,1217474,Denov,"Russian alternate Денов; Surxondaryo region, the only large Denov",
+uzbekistan,Шахрисябз,1216187,Shahrisabz,"Russian alternates Шахрисабз, Шаҳрисабз; Qashqadaryo region",
+uzbekistan,Сыр-Дарьинский,1512770,Sirdaryo,"Russian alternates Сырдарья, Сырдарьинская; Sirdaryo region",
+uzbekistan,Искандер,1513900,Iskandar,"Russian alternate Искандар; Tashkent region",
+uzbekistan,Кувасай,1513331,Quvasoy,"Fergana region; the only Quvasoy",
+uzbekistan,Бируни,1514387,Beruniy,"Russian alternate Беруний; Karakalpakstan",
+uzbekistan,Янги-Юль,1512339,Yangiyŭl,"Russian alternate Янгиюль; Tashkent region",
+uzbekistan,Катта-Курган,1216982,Kattaqo’rg’on Shahri,"Russian alternate Каттакурган; Samarqand region",
+kazakhstan,Шемонайха,1519226,Shemonaikha,"Russian alternate Шемонаиха; East Kazakhstan",
+kazakhstan,Жезқазған,1516589,Zhezqazghan,"Russian alternate Жезказган; Ulytau region",
+belarus,Калінкавічы,627751,Kalinkovichi,"Russian alternate Калинковичи; Homyel region",
+kyrgyzstan,Таш-Көмүр,1527260,Tash-Kumyr,"Russian alternate Таш-Кумыр; Jalal-Abad region",
+tajikistan,Бобоҷон Ғафуров,1514900,Ghafurov,"Russian alternates Гафуроб, Ғафуроб; Sughd region",
+georgia,Tҟәарчал (ტყვარჩელი),611583,Tqvarch'eli,"Russian alternate Ткуарчал; Abkhazia",
+georgia,ახალქალაქი,615893,Akhalkalaki,"PPLA2 in Samtskhe-Javakheti; the Georgian-script name sits only on a namesake village near Tbilisi (615892)",
+china,Xinhailian,10859300,Lianyungang,"Xinhailian (Xinpu, Haizhou and Lianyun) was renamed Lianyungang in 1961",
+china,Guisui,2036892,Hohhot,"Guisui, capital of Suiyuan province, was renamed Hohhot (Huhehaote) in 1954",
+china,Jinzhou,2036427,Jinzhou,"Jinzhou of Liaoxi province (锦州), not the Jinzhou district of Dalian (金州): both are in Liaoning, and the district's GeoNames population is the closer to the 1953 figure",
+china,Tianshui,1792892,Tianshui,"Tianshui city (PPLA3), not Beidao (1816751), 14 km east, which is only nearer the 1953 figure in size",
+china,Qulja,1529435,Ghulja,"Qulja (Yining city, Ili), GeoNames' Ghulja; the name Qulja sits only on the Yining county seat (1529013), 17 km east",
+china,Chaozhou,1815395,Chaozhou,"Chaozhou in eastern Guangdong; GeoNames also files the name under Maoming (1801180), 626 km west",
+east germany,Stalinstadt,2931481,Eisenhüttenstadt,"Stalinstadt (founded 1950) was merged into Eisenhüttenstadt in 1961",
+east germany,Oelsnitz im Erzgebirge,2857918,Oelsnitz,"Oelsnitz/Erzgeb. (Erzgebirgskreis), not Oelsnitz/Vogtl.",
+east germany,Oelsnitz,2857919,Oelsnitz,"the yearbook's Oelsnitz without suffix is Oelsnitz/Vogtl., listed apart from Oelsnitz im Erzgebirge",
+east germany,Mühlhausen in Thüringen,2867996,Mühlhausen,"Mühlhausen/Thüringen, Unstrut-Hainich-Kreis",
+east germany,Neuenhagen bei Berlin,2865716,Neuenhagen,"Neuenhagen bei Berlin, Märkisch-Oderland",
+east germany,Rüdersdorf bei Berlin,2843408,Rüdersdorf,"Rüdersdorf bei Berlin, Märkisch-Oderland",
+east germany,Schöneiche bei Berlin,2836746,Schöneiche,"Schöneiche bei Berlin, Oder-Spree",
+east germany,Lichtenstein in Sachsen,2878037,Lichtenstein,"Lichtenstein/Sachsen, Zwickau district",
+east germany,Ebersbach,2933965,Ebersbach,"Ebersbach/Sa. in the Oberlausitz (Kreis Löbau), not the smaller Ebersbach near Großenhain (3209001), a PPLA4",
+poland,Grodziec,3098306,Grodziec,"Grodziec, now a district of Będzin (PPLX, no GeoNames population), not the village near Bielsko-Biała (3098314)",
+poland,Cieplice,3101367,Cieplice Śląskie Zdrój,"Cieplice Śląskie-Zdrój in Wrocławskie, now part of Jelenia Góra; GeoNames' plain Cieplice are villages in other voivodeships",
+russia,Верх-Нейвинский,1487504,Verkh-Neyvinskiy,"Sverdlovsk region; GeoNames gives the Cyrillic Верх-Нейвинский only as an alternate name of Novouralsk (1538636, the old Sverdlovsk-44 settlement 3.3 km away), so the matcher put the village on the closed town; 1487504 is the village itself",
+russia,Тушино,480145,Tushino,"Tushino, annexed by Moscow in 1960; GeoNames PPLX in Moscow; the matcher had put it on a namesake in Kaliningrad oblast",г. Москва
+russia,Очаково,516264,Ochakovo-Matveyevskoye,"Ochakovo, annexed by Moscow in 1960, now in the district Ochakovo-Matveyevskoye; the matcher had put it in Kaliningrad oblast",г. Москва
+russia,Ленино,536164,Tsaritsyno,"Lenino (Lenino-Dachnoye, the former Tsaritsyno), annexed by Moscow in 1960, now the Moscow district Tsaritsyno; the matcher had put it in Tatarstan",г. Москва
+russia,Сабурово,499622,Moskvorech’ye-Saburovo,"Saburovo, annexed by Moscow in 1960, now in the district Moskvorechye-Saburovo; the matcher had put it in Tver oblast",г. Москва
+russia,Люблинский,532535,Lyublino,"in Moscow by the census page; placed at the Lyublino district, the name's only Moscow place in GeoNames, so the point is approximate; the matcher had put it in Rostov oblast",г. Москва
+russia,Горняцкий,1506257,Gornyatskiy,"Gornyatsky, Vorkuta district, Komi; the matcher had put it on a namesake in Rostov oblast",Республика Коми
+russia,Майский,528248,Mayskiy,"Maysky in Kabardino-Balkaria (PPLA2, admin1 22); the matcher had put it in Belgorod oblast",Кабардино-Балкарская Республика
+ukraine,Краснопілля,704340,Krasnopol’ye,"Krasnopillia in Luhansk oblast (PPLX, admin1 14); the matcher had put it in Sumy oblast",Луганська
+kazakhstan,Сәтбаев,1520692,Satpayev,"Satpayev (Nikolsky in 1959), Ulytau region: its census region is large, and the distance test would reject it",Қарағанды (+ Ұлытау)
+kazakhstan,Қарсақпай,1519933,Qarsaqbay,"Karsakpay, Ulytau region, as Satpayev",Қарағанды (+ Ұлытау)
+kazakhstan,Ақтоғай,1526268,Aqtoghay,"Aktogay on the Turksib in Ayagoz district, East Kazakhstan: a large census region, as Satpayev",Шығыс Қазақстан (+ Абай)
