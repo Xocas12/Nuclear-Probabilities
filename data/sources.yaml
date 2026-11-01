@@ -1485,6 +1485,17 @@ sources:
     so these are the bytes read then
   retrieved: '2026-11-01'
   sha256: a970ff094f1efc0bb73a3e5b641a87fa7dc3f490709dc058c32b32a43f88a605
+- id: plandoc_php_6505_plan_e
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/19635/ipublicationdocument_singledocument/0e169cd9-75ef-493a-8b64-035b470ae241/en/6505_Plan_E.pdf
+  title: Plan for Hungarian Command-Staff War Game, 1965 (PHP English translation)
+  path: plan_documents/18/6505_Plan_E.pdf
+  licence: Parallel History Project (ETH Zurich) copy of an archive document; no open licence stated, a
+    short quote kept in SECTORS.yaml, file not redistributed
+  use: 'sector box of target list wp_1965_hu_wargame (data/curated/labels/SECTORS.yaml): the Southwestern
+    Front''s stated objectives, which decide which towns the list says anything about'
+  role: labels
+  retrieved: '2026-11-01'
+  sha256: 2bac35a45ffe2cece71321977fa03f9ddb6e99a90915b9d67af63ba6cf2013f1
 - id: plandoc_php_6506_plan_easterners
   url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/19632/ipublicationdocument_singledocument/4021f42c-da63-4424-a2c8-1412ec3f02a2/hu/6506_Plan_Easterners.pdf
   title: Plan of the 'Easterners'' first massive nuclear strike, early morning 23 June [1965]; Supplement
@@ -1831,8 +1842,8 @@ sources:
   url: https://history.state.gov/historicaldocuments/frus1952-54v02p1/d66
   title: 'FRUS 1952-1954, vol. II part 1, document 66: Report of the Special Evaluation Subcommittee of
     the NSC, 18 May 1953.'
-  licence: US government record; no licence statement in the extracted text. Treated as public domain,
-    which you may want to confirm.
+  licence: US government record; no licence statement in the extracted text. Treated as public domain;
+    not confirmed.
   use: '1953-55 bomber aborts, operational losses, duds, attrition by defences. Not obtained: It covers
     Soviet bombers attacking the US, not SAC bombers attacking the USSR.'
   role: map

@@ -6,8 +6,7 @@ The same design as the 1956 check run (nucprob.model.check): the population rule
 regression and LightGBM on every feature, LightGBM with the population family plus each
 other family and without each family, and without the anachronisms; spatial-block 5-fold
 cross-validation on three shifted grids outside the sealed test, plus random 5-fold for the
-main models. A check that the US pipeline joins end to end, not results (the protocol is
-frozen at M5).
+main models. A check that the US pipeline joins end to end, outside the classifier protocol.
 
 Writes runs/m4-us-check/: metrics.csv, oof_predictions.csv, importance.csv, manifest.json.
 """
@@ -113,7 +112,7 @@ def main() -> None:
         "targets": TARGETS,
         "models": {k: v[1] for k, v in models.items()},
         "cv": {"k": K, "block_km": BLOCK_KM, "shifts_km": SHIFTS_KM, "random_seeds": RANDOM_SEEDS},
-        "note": "a check of the US feature base, not results: the protocol is frozen at M5",
+        "note": "a check of the US feature base, outside the classifier protocol",
     }
     (OUT / "manifest.json").write_text(json.dumps(manifest, indent=2))
     show = table[table["scheme"] == "spatial blocks"][

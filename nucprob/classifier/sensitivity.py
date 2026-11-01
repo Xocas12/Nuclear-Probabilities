@@ -18,8 +18,10 @@ Then two checks the review of 59a35e6 asked for (configs/protocol_amendment_6.ya
   those within 10 km;
 - how well a town's columns identify its document, with folds grouped by place.
 
+and how near a held-out town's nearest training town lies, since spatial blocks have no buffer.
+
 Writes runs/classifier/sensitivity.csv, ussr_population.csv, airfield_negatives.csv,
-document_identification.csv and sensitivity_manifest.json.
+document_identification.csv, block_neighbours.csv and sensitivity_manifest.json.
 """
 
 import os
@@ -53,6 +55,7 @@ from nucprob.classifier.fit import (
 from nucprob.classifier.run import SAC, positives_of, scopes, usable
 from nucprob.features.registry import FEATURES
 from nucprob.geo import Points
+from nucprob.model.splits import BLOCK_KM, assign_blocks, folds
 from nucprob.outputs import hashes, start_record
 from nucprob.paths import CURATED, PROCESSED, RUNS
 from nucprob.sources.fetch import sha256
@@ -224,6 +227,30 @@ def document_identification(rows: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(out)
 
 
+def block_neighbours(rows: pd.DataFrame) -> pd.DataFrame:
+    """Spatial folds have no buffer. The share of held-out rows with a training town within r km."""
+    rows = rows.reset_index(drop=True)
+    lat, lon = rows["lat"].to_numpy(float), rows["lon"].to_numpy(float)
+    out = []
+    for offset in ev.GRID_OFFSETS:
+        blocks = pd.Series(assign_blocks(lat, lon, BLOCK_KM, offset), index=rows.index)
+        fold = np.asarray(folds(blocks, rows["listed"], ev.N_FOLDS, seed=int(offset)))
+        near = np.full(len(rows), np.inf)
+        for f in range(ev.N_FOLDS):
+            test = fold == f
+            dist, _ = Points(lat[~test], lon[~test]).nearest(lat[test], lon[test])
+            near[test] = np.ravel(dist)
+        out.append(
+            {
+                "grid_offset_km": offset,
+                "rows": len(rows),
+                "within_25km": float((near <= 25).mean()),
+                "within_50km": float((near <= 50).mean()),
+            }
+        )
+    return pd.DataFrame(out)
+
+
 def main() -> None:
     started = start_record()
     full = pd.read_parquet(PROCESSED / "classifier_table.parquet")
@@ -246,7 +273,10 @@ def main() -> None:
     document_identification(groups["global, all attacker documents"]).to_csv(
         OUT / "document_identification.csv", index=False, float_format="%.4f"
     )
-    written = ["sensitivity.csv", "ussr_population.csv"]
+    block_neighbours(groups["global, all attacker documents"]).to_csv(
+        OUT / "block_neighbours.csv", index=False, float_format="%.4f"
+    )
+    written = ["sensitivity.csv", "ussr_population.csv", "block_neighbours.csv"]
     written += ["airfield_negatives.csv", "document_identification.csv"]
     manifest = {
         "created": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),

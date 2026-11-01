@@ -134,7 +134,7 @@ def main() -> None:
         "models": {k: v[1] for k, v in models.items()},
         "min_positives": MIN_POSITIVES,
         "paired_bootstrap": f"{N_BOOT} stratified resamples, model minus population rule",
-        "note": "a check of the transfer pipeline, not results: the protocol is frozen at M5",
+        "note": "a check of the transfer pipeline, outside the classifier protocol",
     }
     (OUT / "manifest.json").write_text(json.dumps(manifest, indent=2))
     show = table.pivot_table(index=["plan_id", "towns", "listed"], columns="model", values="pr_auc")
