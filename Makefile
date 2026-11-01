@@ -2,7 +2,7 @@
 UV ?= uv
 PY = $(UV) run python
 
-.PHONY: setup data places labels features dataset train map check test lint format clean
+.PHONY: setup data places labels features dataset train map check transfer evidence qa test lint format clean
 
 setup:
 	$(UV) sync --all-extras
@@ -35,6 +35,21 @@ map:
 
 # Milestone M2, end to end (PLAN section 9). The M1 slice is kept in runs/m1-slice/ as run.
 check: places labels features dataset train map
+
+# The smaller lists: transfer universes, features, links and the check (runs/m4-transfer-check/).
+transfer:
+	$(PY) -m nucprob.transfer.places
+	$(PY) -m nucprob.transfer.features
+	$(PY) -m nucprob.transfer.labels
+	$(PY) -m nucprob.transfer.check
+
+# Evidence by attacker and the state-model gate (runs/evidence/), and the issues' acceptance
+# checks against the rebuilt tables (runs/qa/).
+evidence:
+	$(PY) -m nucprob.plans
+
+qa:
+	$(PY) -m nucprob.qa
 
 test:
 	$(UV) run pytest -q

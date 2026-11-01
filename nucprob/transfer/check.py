@@ -114,7 +114,8 @@ def main() -> None:
     table.to_csv(OUT / "metrics.csv", index=False, float_format="%.4f")
     keep = ["plan_id", "region", "place_id", "country", "n_targets", "listed", *models]
     scores[keep].to_csv(OUT / "scores.csv", index=False, float_format="%.4f")
-    paired = compare(scores, list(models), MIN_POSITIVES)
+    # From the file just written, so that `python -m nucprob.transfer.paired` gives the same table.
+    paired = compare(pd.read_csv(OUT / "scores.csv"), list(models), MIN_POSITIVES)
     write_paired(paired, OUT)
     manifest = {
         "milestone": "M4 transfer check",

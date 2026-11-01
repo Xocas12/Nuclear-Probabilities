@@ -1,0 +1,26 @@
+# Open issues and pull requests: what was done
+
+The issues and PRs stay open on GitHub; this branch carries the fixes. `python -m nucprob.qa`
+measures each criterion on the rebuilt tables and writes `runs/qa/issues.csv`; `tests/test_qa.py`
+fails if a row does not pass.
+
+| Issue | PR | Taken | Checked by | What changed beyond the PR |
+|---|---|---|---|---|
+| #1 letter struck for a digit | #2 | yes | `runs/qa/issues.csv` | - |
+| #3 towns on same-named hamlets | #12 | yes | 11 towns within 10 km; `test_gazetteer.py` | A scan of every place against its census region found a case the PR did not cover: towns settled by rank alone, with no candidate in the region. Tushino (89,885 people, in Moscow) sat in Kaliningrad oblast. Eight towns of the universe got curated links; the rule `far_namesakes` now leaves such a match unlocated, which it did to one town of the universe (Koltsovo, 13,448) and ten smaller places. Five more were rejected by hand (`rejected_matches.csv`). Every row of the population check is fixed or explained, most by a rule (the place is the only one of its name, or lies in its census region), not row by row. |
+| #4 pooled population rule | #13 | yes | `test_model.py`, `runs/m2-check/gains.csv` | Run regenerated; the PLAN note now quotes its figures. |
+| #5 airfield verdicts | #15 | yes | `test_sac1956_crossdoc.py`; BRODY read again on the scan (`5005-02511`) | - |
+| #6 closed towns' cover names | #20 | yes | `runs/qa/issues.csv`, `test_labels.py` | - |
+| #7 rank floor | #14 | yes | `test_rank_floor.py`; country means of `pop_rank_pct` within 0.009 | - |
+| #8 transfer read in ROC | #17 | yes | `test_transfer_paired.py` | The rerun changed one reading: PR-AUC on the Polish mirror list now gains, +0.13 [+0.06, +0.20]. The card and PLAN name this exception, and the test fails on any other. |
+| #9 NaN read as 0 km | #16 | yes | `runs/qa/issues.csv`, `test_transfer_military.py` | PRs #16 and #17 conflict in effect: the bootstrap sorted a NaN score as a top score. `compare` now skips a model that left towns unscored. |
+| #10 district_seat tier | #19 | yes | `runs/qa/issues.csv`, `test_features.py` | - |
+| #11 Austrian Land seats | #18 | yes | `runs/qa/issues.csv`, `test_transfer_places.py` | - |
+
+Found while rebuilding, with no issue of their own:
+- `NAME_LINK` raised from 88 to 90: the only two links under it were wrong (FALKENBURG to
+  Eilenburg, LANY to Slaný).
+- The fetcher overwrote a recorded hash on download and stopped at the first dead host. It now
+  keeps the record, reports the difference and carries on. `data/sources.yaml` marks live sources
+  `volatile` and keeps their earlier hash in `previous_sha256`.
+- The sealed set depended on the labels (`data/curated/splits/README.md`).

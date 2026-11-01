@@ -7,6 +7,19 @@ targeting. The full design is in [PLAN.md](PLAN.md).
 
 ## Where things stand
 
+- **Rebuilt, 1 November 2026.** The fixes of issues #1 and #3-#11 are on this branch and every
+  table and check run has been regenerated (`data/ISSUES.md`, `runs/qa/issues.csv`).
+- **Evidence (`data/curated/labels/PLANS.yaml`, `runs/evidence/`).** Each list is recorded with
+  its attacker, author, date, document type and evidence grade. The Soviet evidence is thin: one
+  General Staff Academy lesson (19 rows) and one news report of a missile deployment (1 row,
+  which gives no labels), and no Soviet war plan. Two Warsaw Pact exercises under joint command
+  add 80 rows. No state but the US passes the pre-committed gate for its own model
+  (`runs/evidence/state_model_gate.csv`): Poland has 10 linked positives against the 50
+  required, and Czechoslovakia has none because the FRG, where all its targets lie, has no
+  complete town table yet.
+- **Protocol (`configs/protocol.yaml`).** Holdouts, metrics, the gate and the positive-unlabeled
+  method are committed before any model it names is fitted. The classifier and the probability
+  map are not built yet.
 - **Labels (milestone M3).** The SAC 1956 study's complex list and airfield list are
   transcribed in full (two independent reads, adjudication, cross-line checks). So are the
   excerpts of its Part I airfield list, Part II complex list and cross-reference list:
@@ -27,7 +40,7 @@ targeting. The full design is in [PLAN.md](PLAN.md).
   populations and coordinates, linked to the SAC targets, with population and administrative
   features, and three kinds of model under spatial cross-validation (`runs/m1-slice/`). The
   slice checks the pipeline; its numbers are not results.
-- **Milestone M2, the 1956 feature base.** The whole bloc: 2,600 towns of 10,000+ near 1956
+- **Milestone M2, the 1956 feature base.** The whole bloc: 2,621 towns of 10,000+ near 1956
   in the USSR, Eastern Europe, China, North Korea, North Vietnam and Mongolia, from 1950s
   censuses and yearbooks (`data/curated/gazetteer/README.md`). Six feature families describe
   each town as of June 1956: population, administration (a 1956 table of regional centres),
@@ -50,6 +63,8 @@ Requires [uv](https://docs.astral.sh/uv/) and GNU make.
 make setup      # Python 3.12 environment with every dependency
 make data       # download the sources of data/sources.yaml into data/raw/
 make check      # places -> labels -> features -> dataset -> check run -> map
+make transfer   # the smaller lists: universes, features, links, check run
+make evidence qa
 make test lint
 ```
 

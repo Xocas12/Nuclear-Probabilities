@@ -647,14 +647,15 @@ Phases 1 and 2 run side by side. Transcribing the labels is the long pole, so it
     LightGBM (common) minus the population rule (`runs/m4-transfer-check/paired.csv`).
   - City lists are ranked by size, and on two of them the bloc model ranks the top of the
     list clearly worse than population alone. Operation Alert: PR-AUC 0.33 against 0.70,
-    -0.36 [-0.44, -0.25]; precision@k 0.41 against 0.59, -0.18 [-0.27, -0.04]. The 1945
-    Target Committee: PR-AUC 0.34 against 0.88, -0.54 [-0.67, -0.30]; precision@k 0.41
-    against 0.76, -0.35 [-0.65, -0.18]. Canada 1956 matches (PR-AUC -0.01 [-0.11, +0.12]).
-    ROC-AUC (0.92-0.98 against 0.96-0.98) hid most of this.
-  - On the mixed civil and military lists no gain is detectable: Square Leg PR-AUC +0.04
-    [-0.04, +0.13], precision@k +0.01 [-0.07, +0.11]; Lato-67 -0.08 [-0.20, +0.08] and
-    +0.13 [-0.13, +0.22]; the Polish mirror list +0.07 [-0.01, +0.15] and +0.04
-    [-0.11, +0.18]. Every interval includes zero.
+    -0.37 [-0.45, -0.25]; precision@k 0.37 against 0.59, -0.22 [-0.33, -0.10]. The 1945
+    Target Committee: PR-AUC 0.26 against 0.88, -0.62 [-0.75, -0.39]; precision@k 0.24
+    against 0.76, -0.53 [-0.82, -0.29]. Canada 1956 matches (PR-AUC -0.02 [-0.11, +0.06]).
+    ROC-AUC (0.94-0.97 against 0.96-0.98) hid most of this.
+  - On the mixed civil and military lists no gain is detectable: Square Leg PR-AUC +0.02
+    [-0.06, +0.10], precision@k 0.00 [-0.07, +0.09]; Lato-67 -0.09 [-0.21, +0.09] and
+    -0.04 [-0.22, +0.17]. These intervals include zero.
+  - One exception: the Polish mirror list gains in PR-AUC, +0.13 [+0.06, +0.20], with
+    precision@k +0.07 [0.00, +0.22]. It records what Polish staff expected NATO to strike.
   - This is a check, not a result.
 - **Left for M4's L items:** TR-82 and the DTIC appendices (blocked), the UK lists at Kew, the
   print books, and an official FRG 1961 table.
@@ -731,28 +732,25 @@ Data card: `data/curated/sac1956/README.md`.
 - **Provenance.** Every feature names its sources and flags later knowledge
   (`data/FEATURES.md`). Every source in the manifest has a role. A guard test keeps the label
   sources out of the features.
-- **Check run** (`runs/m2-check/`). This is a check, not a result. Under spatial CV, "on the
-  list" scores a PR-AUC of 0.75 for the population rule and 0.84 for LightGBM or logistic
-  regression on every feature. Most of that gap is between countries, not within them. At a
-  given size the share of towns SAC listed differs a lot by country (towns of 20,000-30,000:
-  43% in the USSR, 90% in East Germany), and one pooled curve on population cannot fit that,
-  so any family that tells the countries apart is credited with the difference. On the same
-  splits, the population rule with one intercept per country already scores 0.81 (0.69 for
-  "given a DGZ", against 0.63 pooled), about two thirds of the way to every feature. Scored
-  inside each country (PR-AUC per country with at least ten places of each class, weighted by
-  positives), every feature adds only 0.02 over the rule for "on the list" (0.81 to 0.83) and
-  0.01 for "given a DGZ" (0.71 to 0.72), and population plus geography does no better than the
-  rule. The pooled reading that transport and geography add the most over population does not
-  hold up as stated: geography's anchor distances (km to Moscow, to a SAC base) partly just
-  say where a town is. Inside the USSR there is a real gain (0.77 to 0.82 for every feature);
-  in several Eastern European countries the population rule alone does as well as the global
-  model, so the per-country models (M7) will matter. The military sites add little once the
-  rest are in. Dropping the anachronistic features costs about 0.02. The check now scores each family over population plus a country
-  term, reports a within-country PR-AUC next to every pooled one (`metrics.csv`,
-  `gains.csv`), and scores geography over a location-only control (latitude and longitude).
-  The country-intercept and within-country figures above were computed from the committed
-  out-of-fold predictions; the run itself has not been regenerated with those models yet, so
-  the family gains over population plus country and over location are still to come.
+- **Check run** (`runs/m2-check/`, regenerated on 1 Nov 2026 after the geocoding and label
+  fixes). This is a check, not a result. Under spatial CV, "on the list" scores a PR-AUC of 0.77
+  for the population rule and 0.85 for LightGBM on every feature. Most of that gap is between
+  countries, not within them. At a given size the share of towns SAC listed differs a lot by
+  country (towns of 20,000-30,000: 43% in the USSR, 79% in Czechoslovakia), and one pooled curve
+  on population cannot fit that, so any family that tells the countries apart is credited with
+  the difference. On the same splits, the population rule with one intercept per country already
+  scores 0.82 (0.70 for "given a DGZ", against 0.65 pooled), about two thirds of the way to every
+  feature. Scored inside each country (PR-AUC per country with at least ten places of each class,
+  weighted by positives), every feature adds only 0.02 over the rule for "on the list" (0.82 to
+  0.84) and 0.02 for "given a DGZ" (0.72 to 0.73). Over population plus country
+  (`gains.csv`), transport adds +0.03 and geography +0.02, industry and administration about
+  0, and military +0.01, each with a fold spread as large or nearly as large as the gain itself.
+  Geography's anchor distances (km to Moscow, to a SAC base) partly just say where a town is:
+  over a location-only control (latitude and longitude) geography adds +0.01. Inside the USSR
+  every feature beats the rule (0.78 to 0.81), and in Hungary (0.79 to 0.86); in Poland,
+  Bulgaria, Romania and China the rule alone scores higher than the global model. The military
+  sites add almost nothing once the rest are in (0.846 with them, 0.845 without). Dropping the
+  anachronistic features costs about 0.02.
 - **Closed towns and cover names.** None of the ten closed towns appears on the 1956 list under
   its own name, but SAC did list the plants of three of them under the open town next door:
   Mayak (Ozersk) under KYSHTYM, with a 040 A/E line and an aim point 6 km from Ozersk; the
@@ -760,8 +758,7 @@ Data card: `data/curated/sac1956/README.md`.
   line; and the Kapustin Yar range (Znamensk) under KAPUSTIN YAR, with a 210 guided-missile
   line. The labels now credit those entries to the closed town as well as to the open one
   (`data/curated/sac1956/cover_names.csv`), so Ozersk, Novouralsk and Znamensk count as
-  listed with an aim point. The check run above predates this and still has them as
-  untargeted. Seversk, Snezhinsk, Sarov, Zheleznogorsk and the rest have no such entry nearby.
+  listed with an aim point. Seversk, Snezhinsk, Sarov, Zheleznogorsk and the rest have no such entry nearby.
 - **Gaps.**
   - Slovakia's towns that passed 10,000 after 1953 are missing.
   - China's towns below city rank are missing.

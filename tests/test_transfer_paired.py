@@ -112,17 +112,20 @@ def test_plan_claims_no_gain_the_intervals_do_not_show():
     assert len(found) >= 8
     for d, lo, hi in found:
         assert f"{d} [{lo}, {hi}]" in quoted
-    # "No gain is detectable" on the mixed lists: every interval quoted there includes zero.
-    mixed = note[note.index("mixed civil and military lists") :]
+    # "No gain is detectable" on the mixed lists: every interval quoted there includes zero,
+    # up to the exception, which the note names.
+    mixed = note[note.index("mixed civil and military lists") : note.index("One exception:")]
     assert "no gain is detectable" in mixed
+    assert INTERVAL.findall(mixed)
     for _, lo, hi in INTERVAL.findall(mixed):
         assert float(lo) <= 0 <= float(hi)
 
 
-def test_mixed_lists_show_no_detectable_gain():
-    """TRANSFER.md says no gain is detectable on the mixed lists; paired.csv must agree."""
-    text = (CURATED / "gazetteer" / "TRANSFER.md").read_text(encoding="utf-8")
-    assert "No gain is detectable" in " ".join(text.split())
+def test_mixed_lists_show_no_detectable_gain_but_the_one_named():
+    """TRANSFER.md says no gain is detectable on the mixed lists except PR-AUC on the Polish
+    mirror list; paired.csv must agree, so a new exception fails until the card names it."""
+    text = " ".join((CURATED / "gazetteer" / "TRANSFER.md").read_text(encoding="utf-8").split())
+    assert "No gain is detectable, with one exception" in text
     paired = pd.read_csv(RUN / "paired.csv")
     mixed = [
         "cd_1980_square_leg",
@@ -133,7 +136,11 @@ def test_mixed_lists_show_no_detectable_gain():
     ]
     rows = paired[(paired["model"] == MODEL) & paired["plan_id"].isin(mixed)]
     assert len(rows) == 15
-    assert not rows["excludes_zero"].any()
+    excluded = rows[rows["excludes_zero"]]
+    assert list(zip(excluded["plan_id"], excluded["metric"], strict=True)) == [
+        ("nato_1962_pl_exercise_mirror", "pr_auc")
+    ]
+    assert excluded["lo"].iloc[0] > 0
 
 
 def test_compare_skips_a_model_that_left_towns_unscored():
@@ -146,7 +153,7 @@ def test_compare_skips_a_model_that_left_towns_unscored():
             "listed": y,
             "population rule": rng.random(50),
             "whole": rng.random(50),
-            "partial": [np.nan] + list(rng.random(49)),
+            "partial": [np.nan, *list(rng.random(49))],
         }
     )
     out = compare(scores, ["population rule", "whole", "partial"], 2, n_boot=20)
