@@ -20,7 +20,7 @@ from urllib.robotparser import RobotFileParser
 import requests
 import yaml
 
-from nucprob.paths import RAW, RUNS, SOURCES
+from nucprob.paths import RAW, REGISTRIES, RUNS
 
 USER_AGENT = "nuclear-probabilities research project (historical data; contact via GitHub)"
 AGENTS = (USER_AGENT, "*", "ClaudeBot", "anthropic-ai")
@@ -83,7 +83,11 @@ def require(url: str, get=requests.get) -> None:
 
 
 def main() -> None:
-    sources = yaml.safe_load(SOURCES.read_text(encoding="utf-8"))["sources"]
+    sources = [
+        s
+        for path in REGISTRIES
+        for s in yaml.safe_load(path.read_text(encoding="utf-8"))["sources"]
+    ]
     entries = [
         (s["id"], str(s.get("url") or ""), s.get("role", ""), s.get("retrieved", ""), s.get("path"))
         for s in sources

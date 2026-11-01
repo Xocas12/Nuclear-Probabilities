@@ -134,7 +134,7 @@ def inventory_table(low=100.0, high=100.0) -> pd.DataFrame:
     ).assign(scenario_year=2000, state="U", delivery="unspecified", source_id="s")
 
 
-NO_MIX = pd.DataFrame(columns=["state", "delivery", "share"])
+NO_MIX = pd.DataFrame(columns=["year", "state", "delivery", "share"])
 
 
 def test_delivered_warheads_follow_the_inventory_and_lose_to_each_assumption():
@@ -162,6 +162,81 @@ def test_interceptors_take_off_at_most_one_warhead_each_and_never_go_below_zero(
     assert out.max() <= 36 and out.min() >= 26
     b = attacker(interceptors=1000)
     assert st.draw_delivered(b, 500, rng, inventory_table(), NO_MIX).min() == 0
+
+
+def mix_table() -> pd.DataFrame:
+    return pd.DataFrame(
+        [(2000, "U", "icbm", 0.25), (2000, "U", "slbm", 0.75), (1990, "U", "bomber", 1.0)],
+        columns=["year", "state", "delivery", "share"],
+    )
+
+
+def test_warheads_split_by_delivery_and_add_up_to_the_total():
+    a = attacker(
+        reliability={"by_delivery": {"icbm": [1, 1, 1], "slbm": [0.5, 0.5, 0.5]}},
+        fraction_lost_to_defences=[0, 0, 0],
+    )
+    parts = st.draw_by_delivery(a, 20, np.random.default_rng(0), inventory_table(), mix_table())
+    assert set(parts) == {"icbm", "slbm"}  # the 1990 row belongs to another year
+    assert parts["icbm"]["available"] == pytest.approx(np.full(20, 25.0))
+    assert parts["slbm"]["available"] == pytest.approx(np.full(20, 75.0))
+    assert parts["icbm"]["delivered"] == pytest.approx(np.full(20, 25 * 0.5 * 1.0))
+    assert parts["slbm"]["delivered"] == pytest.approx(np.full(20, 75 * 0.5 * 0.5))
+    total = st.draw_delivered(a, 20, np.random.default_rng(0), inventory_table(), mix_table())
+    assert total == pytest.approx(parts["icbm"]["delivered"] + parts["slbm"]["delivered"])
+
+
+def test_a_change_of_mix_changes_what_is_delivered_when_reliability_differs():
+    a = attacker(
+        reliability={"by_delivery": {"icbm": [1, 1, 1], "slbm": [0.5, 0.5, 0.5]}},
+        fraction_lost_to_defences=[0, 0, 0],
+    )
+    other = mix_table().assign(share=[0.75, 0.25, 1.0])
+    rng = np.random.default_rng(0)
+    one = st.draw_delivered(a, 5, rng, inventory_table(), mix_table())
+    two = st.draw_delivered(a, 5, rng, inventory_table(), other)
+    assert two[0] > one[0]
+
+
+def test_interceptors_come_off_in_proportion_and_a_stock_without_a_mix_is_unspecified():
+    a = attacker(interceptors=10)
+    parts = st.draw_by_delivery(a, 50, np.random.default_rng(0), inventory_table(), NO_MIX)
+    assert set(parts) == {"unspecified"}
+    b = attacker(
+        interceptors=10,
+        reliability={"by_delivery": {"icbm": [1, 1, 1], "slbm": [1, 1, 1]}},
+        fraction_lost_to_defences=[0, 0, 0],
+    )
+    parts = st.draw_by_delivery(b, 50, np.random.default_rng(0), inventory_table(), mix_table())
+    assert parts["slbm"]["delivered"] == pytest.approx(3 * parts["icbm"]["delivered"])
+    assert (parts["icbm"]["delivered"] + parts["slbm"]["delivered"]).max() <= 50
+    assert (parts["icbm"]["available"] == 25).all()
+
+
+def test_every_scenario_year_but_1950_has_a_delivery_split_and_shares_are_whole():
+    mix = pd.read_csv(st.MIX)
+    for sc in rn.load_scenarios():
+        for a in sc["attackers"]:
+            shares = st.mix_of(a, mix)
+            if a["stock_year"] == 1950:
+                assert shares.empty
+                continue
+            assert len(shares), (sc["id"], a["state"])
+            raw = mix[(mix["state"] == a["state"]) & (mix["year"] == a["stock_year"])]["share"]
+            assert raw.sum() == pytest.approx(1.0, abs=0.051), (sc["id"], a["state"])
+
+
+def test_historical_shares_agree_with_the_cited_rows():
+    table, mix = pd.read_csv(st.TABLE), pd.read_csv(st.MIX)
+    for state, year in (("US", 1956), ("USSR", 1965)):
+        rows = table[
+            (table["scenario_year"] == year)
+            & (table["state"] == state)
+            & (table["count_basis"] == "strategic_force_loading")
+            & (table["delivery"] != "unspecified")
+        ].set_index("delivery")["central"]
+        m = mix[(mix["state"] == state) & (mix["year"] == year)].set_index("delivery")["share"]
+        assert (rows / rows.sum()).round(2).to_dict() == m.to_dict()
 
 
 def test_a_missing_inventory_row_is_an_error_not_a_guess():
@@ -249,6 +324,38 @@ def test_every_modern_scenario_is_labelled_as_extrapolation():
             assert "extrapolation" in sc["evidence"].lower()
     shift = pd.read_csv(OUT / "domain_shift.csv")
     assert (shift["measure"] == "two-sample ROC-AUC").sum() == 2
+
+
+@needs_run
+def test_by_delivery_output_holds_no_place_and_adds_up():
+    d = pd.read_csv(OUT / "by_delivery.csv")
+    assert set(d.columns) == {
+        "scenario",
+        "attacker",
+        "stock_year",
+        "delivery",
+        "available_low",
+        "available_median",
+        "available_high",
+        "delivered_low",
+        "delivered_median",
+        "delivered_high",
+    }
+    total = pd.read_csv(OUT / "delivered.csv").set_index(["scenario", "attacker"])
+    summed = d.groupby(["scenario", "attacker"])["delivered_median"].sum()
+    gap = (summed - total["delivered_median"]).abs() / total["delivered_median"].clip(lower=1)
+    assert len(summed) == len(total) and gap.max() < 0.25
+    assert set(d.loc[d["stock_year"] == 1950, "delivery"]) == {"unspecified"}
+    assert not (set(d.loc[d["stock_year"] != 1950, "delivery"]) & {"unspecified"})
+
+
+@needs_run
+def test_the_map_was_run_on_the_committed_stockpile_tables():
+    from nucprob.sources.fetch import sha256
+
+    m = json.loads((OUT / "manifest.json").read_text())
+    assert m["stockpiles_sha256"] == sha256(st.TABLE)
+    assert m["delivery_mix_sha256"] == sha256(st.MIX)
 
 
 @needs_run

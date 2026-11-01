@@ -1,14 +1,14 @@
 """From cited inventories to warheads delivered, for one attacker of a scenario.
 
-    delivered = available x theatre share x mean reliability over the delivery mix, less defences
+    delivered, for each delivery = available x its share x theatre share x its reliability, less defences
 
 `available` is a triangular draw from a low inventory (forces deployed or loaded) to a high one (the
 military stockpile), with its mode midway, because how much of a reserve could be used is not known.
 Each figure comes from data/curated/stockpiles/stockpiles.csv by year, state, count basis and source.
 Reliability, theatre share and the losses to defences are given in configs/scenarios.yaml, each with a
 source or expressly as a stated assumption. Interceptors take off a uniform draw from none to one warhead
-each, an upper bound that assumes every interceptor stops one warhead. Totals by attacker are inputs to the
-map; nothing here divides them among places.
+each, an upper bound that assumes every interceptor stops one warhead. Totals by attacker and delivery are
+inputs to the map; nothing here divides them among places.
 """
 
 from collections.abc import Mapping
@@ -44,9 +44,19 @@ def triangle(spec, n: int, rng) -> np.ndarray:
     return rng.triangular(low, mode, high, n)
 
 
-def draw_delivered(
+def mix_of(attacker: Mapping, mix: pd.DataFrame) -> pd.Series:
+    """Shares by delivery for this attacker in its stock year, summing to 1; empty if none is known."""
+    rows = mix[(mix["state"] == attacker["state"]) & (mix["year"] == attacker["stock_year"])]
+    shares = rows.set_index("delivery")["share"].astype(float)
+    return shares / shares.sum() if len(shares) else shares
+
+
+def draw_by_delivery(
     attacker: Mapping, n: int, rng, table: pd.DataFrame, mix: pd.DataFrame
-) -> np.ndarray:
+) -> dict[str, dict[str, np.ndarray]]:
+    """For each delivery, the draws of warheads available and delivered. Without a known mix there is
+    one entry, `unspecified`. Interceptors come off each delivery in proportion: no source says how
+    they would divide, and the map uses only the total."""
     high = inventory(table, attacker["stock_year"], attacker["state"], *attacker["inventory_high"])
     spec = attacker["inventory_low"]
     if isinstance(spec, list):
@@ -57,19 +67,37 @@ def draw_delivered(
     low, high = low * scale, high * scale
     available = triangle((low, (low + high) / 2, high), n, rng)
     share = triangle(attacker["theatre_share"], n, rng)
-    shares = mix[mix["state"] == attacker["state"]].set_index("delivery")["share"]
-    table_rel = attacker["reliability"]
-    if len(shares) and "by_delivery" in table_rel:
-        total = shares.sum()
-        reliability = sum(
-            shares[d] / total * triangle(table_rel["by_delivery"][d], n, rng) for d in shares.index
-        )
+    shares = mix_of(attacker, mix)
+    named = attacker["reliability"]
+    if len(shares) and "by_delivery" in named:
+        reliability = {d: triangle(named["by_delivery"][d], n, rng) for d in shares.index}
     else:
-        reliability = triangle(table_rel["all"], n, rng)
+        common = triangle(named["all"], n, rng)
+        reliability = {d: common for d in shares.index} or {"unspecified": common}
+    if not len(shares):
+        shares = pd.Series({"unspecified": 1.0})
     lost = triangle(attacker["fraction_lost_to_defences"], n, rng)
     interceptors = rng.uniform(0, attacker.get("interceptors", 0), n)
-    return np.clip(available * share * reliability * (1 - lost) - interceptors, 0, None)
+    before = {d: available * shares[d] * share * reliability[d] * (1 - lost) for d in shares.index}
+    total = sum(before.values())
+    kept = np.divide(
+        np.clip(total - interceptors, 0, None), total, out=np.zeros(n), where=total > 0
+    )
+    return {
+        d: {"available": available * shares[d], "delivered": before[d] * kept} for d in shares.index
+    }
+
+
+def draw_delivered(
+    attacker: Mapping, n: int, rng, table: pd.DataFrame, mix: pd.DataFrame
+) -> np.ndarray:
+    parts = draw_by_delivery(attacker, n, rng, table, mix)
+    return sum(p["delivered"] for p in parts.values())
 
 
 def delivered_draws(attacker: Mapping, n: int, rng) -> np.ndarray:
     return draw_delivered(attacker, n, rng, pd.read_csv(TABLE), pd.read_csv(MIX))
+
+
+def by_delivery_draws(attacker: Mapping, n: int, rng) -> dict[str, dict[str, np.ndarray]]:
+    return draw_by_delivery(attacker, n, rng, pd.read_csv(TABLE), pd.read_csv(MIX))

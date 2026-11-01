@@ -10,4 +10,6 @@ INTERIM = DATA / "interim"
 PROCESSED = DATA / "processed"  # places, labels, features, datasets; git-ignored, rebuilt
 CURATED = DATA / "curated"  # small hand-built or transcribed tables, committed
 SOURCES = DATA / "sources.yaml"
+SOURCES_AMENDMENT_5 = DATA / "sources_amendment_5.yaml"  # feeds only that amendment's readings
+REGISTRIES = (SOURCES, SOURCES_AMENDMENT_5)
 RUNS = ROOT / "runs"

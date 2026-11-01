@@ -262,6 +262,7 @@ def _map_section() -> str:
         return "The probability map has not been run.\n"
     s = pd.read_csv(MAP / "scenarios.csv")
     d = pd.read_csv(MAP / "delivered.csv")
+    by_delivery = pd.read_csv(MAP / "by_delivery.csv")
     choice = pd.read_csv(MAP / "model_choice.csv")
     val = pd.read_csv(MAP / "validation.csv")
     rel = pd.read_csv(MAP / "reliability.csv")
@@ -325,6 +326,15 @@ beyond that. Sealed towns are not scored, so a 1956 cell holding only sealed tow
 
 {markdown(d)}
 
+**By delivery.** Warheads available by state and delivery after the stated assumptions, and those delivered. The
+shares come from SIPRI and NRDC (`data/curated/stockpiles/delivery_mix.csv`), on bases that differ by state, and no
+split was found for 1950. A share measured on strategic or deployed forces is applied to the whole inventory range, so a
+Soviet row of 1965 spreads NRDC's strategic shares over a stockpile that also holds tactical weapons with no known split.
+Reliability has one range for every modern delivery, because no source separates them, so the split changes the map very
+little. These are totals for a whole force. No delivery is assigned to any area.
+
+{markdown(by_delivery)}
+
 **Check against the 1956 list.** The `us_1956_on_bloc` scenario, with {spatial["median_delivered_warheads"]:.0f} warheads
 delivered, against whether SAC listed a town in each 0.5-degree cell. {int(spatial["cells_listed"])} of {int(spatial["cells"])} cells hold a listed town, a
 base rate of {spatial["base_rate"]:.2f}. Scored by models that never saw the cell's block: PR-AUC {spatial["pr_auc"]:.2f}, ROC-AUC {spatial["roc_auc"]:.2f},
@@ -357,6 +367,67 @@ def _defence_summary() -> str:
         f"Across the Warsaw Pact lists {int(pact['naming_defences'].sum())} of {int(pact['total'].sum())} designated rows name "
         f"a defence, {pact['naming_defences'].gt(0).sum()} lists of {len(pact)}."
     )
+
+
+def _extended_section() -> str:
+    path = OUT / "extended.csv"
+    d = pd.read_csv(path) if path.exists() else pd.DataFrame()
+    if "verdict" not in d:
+        return "The economic and political readings have not been run.\n"
+    d = d.assign(
+        difference=d.apply(interval3, axis=1),
+        by_blocks=d.apply(lambda r: f"[{r['block_low']:+.3f}, {r['block_high']:+.3f}]", axis=1),
+        model=d["a_pr_auc"],
+        against=d["b_pr_auc"],
+    )
+    counts = d["verdict"].value_counts()
+    lopo = d[(d["holdout"] == "leave one plan out") & (d["verdict"] != "not a reading")]
+    lopo_gains = int((lopo["verdict"] == "gain").sum())
+    lopo_rest = lopo[lopo["lists"] == "other than SAC"]
+    rest_gains = int((lopo_rest["verdict"] == "gain").sum())
+    comp = pd.read_csv(OUT / "comparison.csv")
+    rule = {}
+    for lists, name in (("all lists", "all lists"), ("lists other than SAC", "other than SAC")):
+        r = comp[
+            (comp["scope"] == "global, all attacker documents")
+            & (comp["holdout"] == "leave one plan out")
+            & (comp["against"] == "population rule")
+            & (comp["lists"] == lists)
+        ].iloc[0]
+        rule[name] = r["b_pr_auc"]
+    glob = lopo[lopo["scope"] == "global, all attacker documents"]
+    best = {k: glob.loc[glob["lists"] == k, "a_pr_auc"].max() for k in rule}
+    table = d[
+        [
+            "scope",
+            "comparison",
+            "holdout",
+            "lists",
+            "positives",
+            "train_positives",
+            "model",
+            "against",
+            "difference",
+            "by_blocks",
+            "verdict",
+        ]
+    ]
+    return f"""The primary model holds almost no economic or political data. `configs/protocol_amendment_5.yaml` fixed, before
+any of these columns was fitted, a separate reading of the target state's regime (Regimes of the World), its defence pacts
+(COW Formal Alliances) and its GDP per capita (Maddison), each as of the document's year, and of the Soviet defence-industry
+counts on Soviet towns. None of them enters the primary model or the map. A gain needs both intervals to exclude zero.
+
+Of {len(d)} rows: {int(counts.get("gain", 0))} gain, {int(counts.get("loss", 0))} lose, {int(counts.get("neither", 0))} cannot be told apart, {int(counts.get("not a reading", 0))} are not readings. On a left-out plan, the reading that
+matters here, {lopo_gains} of {len(lopo)} rows gain, and {rest_gains} of the {len(lopo_rest)} on lists other than SAC. **Those gains are over LightGBM on the
+population family, which is itself a weak comparator on a left-out plan.** In the global scope the best of these models
+scores {best["all lists"]:.2f} over all lists against {rule["all lists"]:.2f} for the plain population rule, and {best["other than SAC"]:.2f} on lists other than SAC
+against {rule["other than SAC"]:.2f}. The all-lists rows also rest on the fit with SAC left out, which trains on few positives. Each country-level column has one value per country and year, so within one
+list it can do no more than a country term, and in a pooled list it can identify a document: a gain under spatial blocks
+may be just that. "Model" and "against" are PR-AUC with and without the columns. The defence-industry counts are later
+knowledge of what existed, not what SAC knew.
+
+{markdown(table)}
+"""
 
 
 def _msites() -> int:
@@ -541,7 +612,8 @@ Several are today's data standing in for the past and are flagged. Sources, lice
 
 ## Method
 
-The analysis is in `configs/protocol.yaml`, with four dated amendments. **It is not blind.** Earlier
+The analysis is in `configs/protocol.yaml`, with four dated amendments, and a fifth that only adds readings,
+`configs/protocol_amendment_5.yaml`. **It is not blind.** Earlier
 runs read scores on SAC's spatial folds and on the small lists, and an independent review read the full results
 before the fourth amendment; that amendment records what it changed and why. The only blind test left is the **sealed set**: places
 held back from every model, in `data/curated/splits/sealed_blocks.csv`, scored once at the end. It has not been scored.
@@ -601,6 +673,9 @@ largely today's data.
 
 {markdown(fam_table)}
 
+### Economic and political data
+
+{_extended_section()}
 ### Defences
 
 These are associations in the lists, not findings about intent. Odds ratios are per tenfold increase in the
@@ -611,7 +686,7 @@ feature, controlling log population and an intercept per list and country; inter
   without the S-25 points {odds("US 1956", "log_km_to_air_defence_no_s25")}.
 - **This does not show that SAC avoided defended places.** The S-25 ring surrounds Moscow, so nearby small towns
   may be absorbed into its complex entry rather than listed by name, and air-defence sites may follow large cities.
-  The table is not what SAC knew: Holm's S-25 points carry US designations, while the rest is post-Soviet knowledge.
+  The table is not what SAC knew: the S-25 points, from Michael Holm's web pages on Soviet units, carry US designations, while the rest is post-Soviet knowledge.
 - **Warsaw Pact documents, NATO Europe.** Sites within 50 km {odds("Warsaw Pact", "log_air_defence_sites_50km")}, distance to a Nike or HAWK site {odds("Warsaw Pact", "log_km_to_sam")}.
 - **Defences as targets in themselves.** Some documents name them. Counts of rows or complexes, from the documents' own
   words (`runs/classifier/defence_targets.csv`); the plans' order of strikes is not read here. The Warsaw Pact documents' shares are a finding about
@@ -622,7 +697,7 @@ feature, controlling log population and an intercept per list and country; inter
 ### Calibration
 
 On the SAC list under spatial blocks, LightGBM's expected calibration error is {cal_raw["expected_calibration_error"]:.3f} raw and {cal_iso["expected_calibration_error"]:.3f} after
-isotonic calibration fitted on other folds; Brier {cal_raw["brier"]:.3f} and {cal_iso["brier"]:.3f}. Calibration cannot be measured on incomplete lists, and
+isotonic calibration (a monotone remapping of scores to observed shares) fitted on other folds; Brier {cal_raw["brier"]:.3f} and {cal_iso["brier"]:.3f}. Calibration cannot be measured on incomplete lists, and
 no calibration measured on SAC carries to another plan's base rate.
 
 ### All metrics
@@ -654,8 +729,9 @@ least one linked positive: the US's come to policy and requirements studies and 
 ## Not done
 
 - The sealed set (`python -m nucprob.classifier.sealed`) is reserved until the models have been reviewed.
-- Rows of the 1970 Coastal Front map beyond the four kept, and about 15 Polish exercise scans too poor to search
-  (`data/notes/soviet_search_2026-11.md`): candidates, not labels.
+- Rows of the 1970 Coastal Front map beyond the four kept (`data/notes/soviet_search_2026-11.md`), and 96 rows from three
+  more General Staff Academy lessons and a 1963 Polish exercise, found in a further search that also found no new war plan
+  naming places (`data/notes/soviet_search_2026-11b.md`): candidates awaiting a second reader, not labels.
 """
 
 

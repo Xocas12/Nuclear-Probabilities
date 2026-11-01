@@ -1,4 +1,4 @@
-"""Download the sources listed in data/sources.yaml into data/raw/ and record what was
+"""Download the sources listed in data/sources*.yaml into data/raw/ and record what was
 retrieved and when.
 
     python -m nucprob.sources.fetch [ID ...] [--refresh]
@@ -25,7 +25,7 @@ from pathlib import Path
 import requests
 import yaml
 
-from nucprob.paths import RAW, SOURCES
+from nucprob.paths import RAW, REGISTRIES
 from nucprob.sources import robots
 
 HEADER_LINES = 4  # the comment block at the top of sources.yaml, kept on rewrite
@@ -40,14 +40,25 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def _read(path: Path) -> list[dict]:
+    return yaml.safe_load(path.read_text(encoding="utf-8"))["sources"]
+
+
 def load_manifest() -> dict:
-    return yaml.safe_load(SOURCES.read_text(encoding="utf-8"))
+    return {"sources": [s for path in REGISTRIES for s in _read(path)]}
 
 
 def save_manifest(manifest: dict) -> None:
-    header = "".join(SOURCES.read_text(encoding="utf-8").splitlines(keepends=True)[:HEADER_LINES])
-    body = yaml.safe_dump(manifest, sort_keys=False, allow_unicode=True, width=100)
-    SOURCES.write_text(header + body, encoding="utf-8")
+    """Rewrite only a registry with a changed entry: the primary run records one file's hash."""
+    by_id = {s["id"]: s for s in manifest["sources"]}
+    for path in REGISTRIES:
+        old = _read(path)
+        new = [by_id[s["id"]] for s in old]
+        if new == old:
+            continue
+        lines = path.read_text(encoding="utf-8").splitlines(keepends=True)
+        body = yaml.safe_dump({"sources": new}, sort_keys=False, allow_unicode=True, width=100)
+        path.write_text("".join(lines[:HEADER_LINES]) + body, encoding="utf-8")
 
 
 def download(url: str, dest: Path, tries: int = 4) -> None:

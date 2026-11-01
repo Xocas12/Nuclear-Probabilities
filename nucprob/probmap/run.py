@@ -7,7 +7,7 @@ each scenario's delivered warheads by score share (nucprob.probmap.allocate); su
 Then the validation against SAC 1956 and the domain shift of the modern towns.
 
 Writes runs/probmap/: model_choice.csv, cells/<scenario>.csv.gz (one row per cell, sorted by position,
-no names), scenarios.csv, variance.csv, validation.csv, reliability.csv, domain_shift.csv, manifest.json.
+no names), scenarios.csv, delivered.csv, by_delivery.csv, validation.csv, reliability.csv, domain_shift.csv, manifest.json.
 --quick uses 10 draws and writes to runs/probmap-quick/.
 """
 
@@ -39,7 +39,7 @@ from nucprob.plans import protocol
 from nucprob.probmap import allocate as al
 from nucprob.probmap import modern
 from nucprob.probmap.modern import PORTABLE
-from nucprob.probmap.stockpile import delivered_draws
+from nucprob.probmap.stockpile import MIX, TABLE, by_delivery_draws, delivered_draws
 from nucprob.sources.fetch import sha256
 
 SCENARIOS = ROOT / "configs" / "scenarios.yaml"
@@ -182,10 +182,28 @@ def run_scenario(
     score_matrix = score_matrix[in_scope]
     active = ~towns["sealed"].astype(bool).to_numpy()
     all_draws, median_w = {}, {}
-    records = []
+    records, by_delivery = [], []
     for a in sc["attackers"]:
-        w = delivered_draws(a, draws, rng) * universe.unsealed_population_share
+        parts = by_delivery_draws(a, draws, rng)
+        w = sum(p["delivered"] for p in parts.values()) * universe.unsealed_population_share
         all_draws[a["state"]] = w
+        for delivery, p in parts.items():
+            have = np.percentile(p["available"], QUANTILES)
+            sent = np.percentile(p["delivered"] * universe.unsealed_population_share, QUANTILES)
+            by_delivery.append(
+                {
+                    "scenario": sc["id"],
+                    "attacker": a["state"],
+                    "stock_year": a["stock_year"],
+                    "delivery": delivery,
+                    "available_low": have[0],
+                    "available_median": have[1],
+                    "available_high": have[2],
+                    "delivered_low": sent[0],
+                    "delivered_median": sent[1],
+                    "delivered_high": sent[2],
+                }
+            )
         median_w[a["state"]] = np.full(draws, np.median(w))
         q = np.percentile(w, QUANTILES)
         records.append(
@@ -233,7 +251,7 @@ def run_scenario(
             (out["p_high_stockpile_only"] - out["p_low_stockpile_only"]).mean()
         ),
     }
-    return out, {"summary": summary, "warheads": records}
+    return out, {"summary": summary, "warheads": records, "by_delivery": by_delivery}
 
 
 def validation(
@@ -366,7 +384,7 @@ def main() -> None:
     }
     matrices = {k: score_matrix(models, u.towns, spec.columns) for k, u in universes.items()}
     rng = np.random.default_rng(SEED)
-    summaries, warheads = [], []
+    summaries, warheads, by_delivery = [], [], []
     for sc in load_scenarios():
         cells, rec = run_scenario(
             sc, universes[sc["universe"]], matrices[sc["universe"]], n_draws, rng
@@ -374,9 +392,11 @@ def main() -> None:
         cells.to_csv(out_dir / "cells" / f"{sc['id']}.csv.gz", index=False, float_format="%.4f")
         summaries.append(rec["summary"])
         warheads += rec["warheads"]
+        by_delivery += rec["by_delivery"]
         print(sc["id"], rec["summary"], flush=True)
     pd.DataFrame(summaries).to_csv(out_dir / "scenarios.csv", index=False, float_format="%.4f")
     pd.DataFrame(warheads).to_csv(out_dir / "delivered.csv", index=False, float_format="%.0f")
+    pd.DataFrame(by_delivery).to_csv(out_dir / "by_delivery.csv", index=False, float_format="%.0f")
     first = next(s for s in load_scenarios() if s["id"] == protocol_validation_scenario())
     val, rel = validation(spec, train, full, first, bags, rng)
     val.to_csv(out_dir / "validation.csv", index=False, float_format="%.4f")
@@ -396,6 +416,8 @@ def main() -> None:
         "git_commit": git_commit(),
         "protocol_sha256": sha256(ROOT / "configs" / "protocol.yaml"),
         "scenarios_sha256": sha256(SCENARIOS),
+        "stockpiles_sha256": sha256(TABLE),
+        "delivery_mix_sha256": sha256(MIX),
         "table_sha256": sha256(PROCESSED / "classifier_table.parquet"),
         "draws": n_draws,
         "score": spec.name,

@@ -71,7 +71,8 @@ Several are today's data standing in for the past and are flagged. Sources, lice
 
 ## Method
 
-The analysis is in `configs/protocol.yaml`, with four dated amendments. **It is not blind.** Earlier
+The analysis is in `configs/protocol.yaml`, with four dated amendments, and a fifth that only adds readings,
+`configs/protocol_amendment_5.yaml`. **It is not blind.** Earlier
 runs read scores on SAC's spatial folds and on the small lists, and an independent review read the full results
 before the fourth amendment; that amendment records what it changed and why. The only blind test left is the **sealed set**: places
 held back from every model, in `data/curated/splits/sealed_blocks.csv`, scored once at the end. It has not been scored.
@@ -190,6 +191,10 @@ largely today's data.
 | USSR | defence | base | 0.76 | 0.77 | +0.016 [+0.005, +0.027] |
 | USSR | national_power | base | 0.76 | 0.76 | +0.000 [+0.000, +0.000] |
 
+### Economic and political data
+
+The economic and political readings have not been run.
+
 ### Defences
 
 These are associations in the lists, not findings about intent. Odds ratios are per tenfold increase in the
@@ -200,7 +205,7 @@ feature, controlling log population and an intercept per list and country; inter
   without the S-25 points 1.13 [0.93, 1.43].
 - **This does not show that SAC avoided defended places.** The S-25 ring surrounds Moscow, so nearby small towns
   may be absorbed into its complex entry rather than listed by name, and air-defence sites may follow large cities.
-  The table is not what SAC knew: Holm's S-25 points carry US designations, while the rest is post-Soviet knowledge.
+  The table is not what SAC knew: the S-25 points, from Michael Holm's web pages on Soviet units, carry US designations, while the rest is post-Soviet knowledge.
 - **Warsaw Pact documents, NATO Europe.** Sites within 50 km 0.61 [0.24, 1.44], distance to a Nike or HAWK site 1.51 [0.76, 3.29].
 - **Defences as targets in themselves.** Some documents name them. Counts of rows or complexes, from the documents' own
   words (`runs/classifier/defence_targets.csv`); the plans' order of strikes is not read here. The Warsaw Pact documents' shares are a finding about
@@ -228,7 +233,7 @@ feature, controlling log population and an intercept per list and country; inter
 ### Calibration
 
 On the SAC list under spatial blocks, LightGBM's expected calibration error is 0.033 raw and 0.023 after
-isotonic calibration fitted on other folds; Brier 0.167 and 0.168. Calibration cannot be measured on incomplete lists, and
+isotonic calibration (a monotone remapping of scores to observed shares) fitted on other folds; Brier 0.167 and 0.168. Calibration cannot be measured on incomplete lists, and
 no calibration measured on SAC carries to another plan's base rate.
 
 ### All metrics
@@ -413,8 +418,8 @@ beyond that. Sealed towns are not scored, so a 1956 cell holding only sealed tow
 | ussr_1965_on_west | historical | 0.50 | 1843 | 355 | 291 [203, 331] | 0.02 | 0.31 | 0.31 |
 | modern_us_russia | modern | 1.00 | 1638 | 1178 | 1125 [1036, 1157] | 0.03 | 0.15 | 0.15 |
 | modern_us_russia_half | modern | 1.00 | 1638 | 1178 | 910 [687, 1051] | 0.03 | 0.21 | 0.22 |
-| modern_us_china | modern | 1.00 | 1008 | 715 | 343 [275, 454] | 0.03 | 0.35 | 0.36 |
-| modern_india_pakistan | modern | 1.00 | 255 | 182 | 35 [15, 68] | 0.02 | 0.35 | 0.35 |
+| modern_us_china | modern | 1.00 | 1008 | 715 | 341 [275, 448] | 0.03 | 0.34 | 0.35 |
+| modern_india_pakistan | modern | 1.00 | 255 | 182 | 36 [24, 68] | 0.02 | 0.34 | 0.34 |
 
 | scenario | attacker | delivered_low | delivered_median | delivered_high |
 |---|---|---|---|---|
@@ -430,11 +435,55 @@ beyond that. Sealed towns are not scored, so a 1956 cell holding only sealed tow
 | modern_us_russia_half | UK | 0 | 20 | 55 |
 | modern_us_russia_half | Russia | 642 | 955 | 1354 |
 | modern_us_china | US | 301 | 588 | 972 |
-| modern_us_china | China | 45 | 166 | 319 |
-| modern_india_pakistan | India | 16 | 59 | 104 |
-| modern_india_pakistan | Pakistan | 15 | 51 | 88 |
+| modern_us_china | China | 53 | 164 | 321 |
+| modern_india_pakistan | India | 20 | 57 | 101 |
+| modern_india_pakistan | Pakistan | 16 | 52 | 91 |
 
-**Check against the 1956 list.** The `us_1956_on_bloc` scenario, with 1132 warheads
+**By delivery.** Warheads available by state and delivery after the stated assumptions, and those delivered. The
+shares come from SIPRI and NRDC (`data/curated/stockpiles/delivery_mix.csv`), on bases that differ by state, and no
+split was found for 1950. A share measured on strategic or deployed forces is applied to the whole inventory range, so a
+Soviet row of 1965 spreads NRDC's strategic shares over a stockpile that also holds tactical weapons with no known split.
+Reliability has one range for every modern delivery, because no source separates them, so the split changes the map very
+little. These are totals for a whole force. No delivery is assigned to any area.
+
+| scenario | attacker | stock_year | delivery | available_low | available_median | available_high | delivered_low | delivered_median | delivered_high |
+|---|---|---|---|---|---|---|---|---|---|
+| us_1956_on_bloc | US | 1956 | bomber | 2424 | 2867 | 3456 | 887 | 1128 | 1405 |
+| us_1950_stock_on_bloc | US | 1950 | unspecified | 191 | 237 | 283 | 70 | 92 | 111 |
+| ussr_1965_on_west | USSR | 1965 | icbm | 561 | 1109 | 1770 | 154 | 336 | 668 |
+| ussr_1965_on_west | USSR | 1965 | slbm | 140 | 277 | 442 | 38 | 84 | 167 |
+| ussr_1965_on_west | USSR | 1965 | bomber | 1052 | 2080 | 3319 | 289 | 630 | 1253 |
+| modern_us_russia | US | 2026 | bomber | 383 | 495 | 625 | 212 | 301 | 431 |
+| modern_us_russia | US | 2026 | icbm | 479 | 618 | 781 | 269 | 373 | 534 |
+| modern_us_russia | US | 2026 | slbm | 1150 | 1484 | 1875 | 641 | 907 | 1269 |
+| modern_us_russia | France | 2026 | bomber | 42 | 43 | 43 | 13 | 21 | 30 |
+| modern_us_russia | France | 2026 | slbm | 239 | 242 | 245 | 78 | 122 | 168 |
+| modern_us_russia | UK | 2026 | slbm | 141 | 173 | 212 | 26 | 76 | 123 |
+| modern_us_russia | Russia | 2026 | bomber | 209 | 314 | 407 | 128 | 193 | 277 |
+| modern_us_russia | Russia | 2026 | icbm | 1047 | 1568 | 2037 | 629 | 982 | 1367 |
+| modern_us_russia | Russia | 2026 | slbm | 838 | 1254 | 1630 | 509 | 777 | 1074 |
+| modern_us_russia_half | US | 2026 | bomber | 188 | 256 | 325 | 107 | 153 | 221 |
+| modern_us_russia_half | US | 2026 | icbm | 234 | 320 | 407 | 134 | 190 | 272 |
+| modern_us_russia_half | US | 2026 | slbm | 563 | 767 | 976 | 317 | 459 | 651 |
+| modern_us_russia_half | France | 2026 | bomber | 21 | 21 | 22 | 3 | 9 | 14 |
+| modern_us_russia_half | France | 2026 | slbm | 120 | 121 | 122 | 16 | 49 | 78 |
+| modern_us_russia_half | UK | 2026 | slbm | 68 | 87 | 105 | 0 | 20 | 55 |
+| modern_us_russia_half | Russia | 2026 | bomber | 112 | 157 | 203 | 63 | 96 | 138 |
+| modern_us_russia_half | Russia | 2026 | icbm | 559 | 787 | 1016 | 322 | 478 | 686 |
+| modern_us_russia_half | Russia | 2026 | slbm | 447 | 629 | 813 | 251 | 384 | 543 |
+| modern_us_china | US | 2026 | bomber | 382 | 517 | 644 | 57 | 112 | 186 |
+| modern_us_china | US | 2026 | icbm | 478 | 647 | 805 | 72 | 139 | 232 |
+| modern_us_china | US | 2026 | slbm | 1146 | 1552 | 1931 | 172 | 340 | 551 |
+| modern_us_china | China | 2026 | bomber | 5 | 16 | 26 | 3 | 8 | 16 |
+| modern_us_china | China | 2026 | land_missile | 92 | 269 | 448 | 45 | 139 | 272 |
+| modern_us_china | China | 2026 | slbm | 11 | 32 | 53 | 5 | 16 | 32 |
+| modern_india_pakistan | India | 2026 | bomber | 10 | 28 | 47 | 6 | 17 | 30 |
+| modern_india_pakistan | India | 2026 | land_missile | 22 | 61 | 102 | 13 | 37 | 66 |
+| modern_india_pakistan | India | 2026 | slbm | 2 | 5 | 8 | 1 | 3 | 5 |
+| modern_india_pakistan | Pakistan | 2026 | bomber | 5 | 17 | 28 | 3 | 11 | 18 |
+| modern_india_pakistan | Pakistan | 2026 | land_missile | 19 | 69 | 111 | 13 | 41 | 74 |
+
+**Check against the 1956 list.** The `us_1956_on_bloc` scenario, with 1128 warheads
 delivered, against whether SAC listed a town in each 0.5-degree cell. 794 of 1370 cells hold a listed town, a
 base rate of 0.58. Scored by models that never saw the cell's block: PR-AUC 0.84, ROC-AUC 0.79,
 Brier 0.197 against 0.244 for the base rate. By models with no SAC row at all: PR-AUC 0.84, ROC-AUC 0.79,
@@ -442,7 +491,7 @@ Brier 0.205. The reliability table compares the map's mean probability with the 
 
 | reading | bin | n | mean_score | observed |
 |---|---|---|---|---|
-| spatial blocks held out | 0 | 274 | 0.24 | 0.22 |
+| spatial blocks held out | 0 | 274 | 0.23 | 0.22 |
 | spatial blocks held out | 1 | 274 | 0.31 | 0.40 |
 | spatial blocks held out | 2 | 274 | 0.45 | 0.63 |
 | spatial blocks held out | 3 | 274 | 0.60 | 0.76 |
@@ -500,5 +549,6 @@ least one linked positive: the US's come to policy and requirements studies and 
 ## Not done
 
 - The sealed set (`python -m nucprob.classifier.sealed`) is reserved until the models have been reviewed.
-- Rows of the 1970 Coastal Front map beyond the four kept, and about 15 Polish exercise scans too poor to search
-  (`data/notes/soviet_search_2026-11.md`): candidates, not labels.
+- Rows of the 1970 Coastal Front map beyond the four kept (`data/notes/soviet_search_2026-11.md`), and 96 rows from three
+  more General Staff Academy lessons and a 1963 Polish exercise, found in a further search that also found no new war plan
+  naming places (`data/notes/soviet_search_2026-11b.md`): candidates awaiting a second reader, not labels.

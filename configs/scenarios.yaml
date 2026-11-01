@@ -7,7 +7,8 @@ assumptions: {reading: 'Attacker pairs, theatre shares and mid-points are assump
     military stockpile (FAS 2026; OWID citing FAS and NRDC for history). inventory_low.fraction_of_high
     = 0.575 is the 1956 ratio of 2,123 loaded to 3,692 total, used for years where no loading was extracted.',
   reliability_modern: '0.8 to 0.9: sgs_hobson_1991 and nrdc_war_plan_2001 for ICBM and SLBM. No source
-    was found for bombers or for states other than the US; the same range is a stated assumption there.',
+    was found for bombers, for other land-based missiles or for states other than the US; the same range
+    is a stated assumption there.',
   reliability_historical: '0.65, from 0.2 abort, 0.1 operational loss and 0.1 ineffective bombs (frus_1952_54v02p1_d66):
     figures about Soviet bombers attacking the US in 1953, standing in for lack of any source on other
     forces. +/- 0.07 is stated.', losses_historical: '0.07 to 0.27: attrition by US defences of Soviet
@@ -91,6 +92,7 @@ scenarios:
         icbm: [0.8, 0.8, 0.9]
         slbm: [0.8, 0.8, 0.9]
         bomber: [0.8, 0.8, 0.9]
+        land_missile: [0.8, 0.8, 0.9]
       all: [0.8, 0.8, 0.9]
     fraction_lost_to_defences: &id004 [0, 0, 0]
     targets: [RUS]

@@ -1,6 +1,6 @@
 # Nuclear warhead inventories and delivery assumptions: data card
 
-These tables give cited warhead inventories and stated assumptions, as inputs for a coarse area-level map of P(area struck | stockpile) at 0.5 degrees or coarser. They hold no facility-level data. All sources were retrieved on 2026-11-01. Downloads stay outside the repository, in /var/tmp/np-stockpile-sources/<source_id>/. The tables carry figures, short quotes and citations only.
+These tables give cited warhead inventories and stated assumptions, as inputs for a coarse area-level map of P(area struck | stockpile) at 0.5 degrees or coarser. They hold no facility-level data. All sources were retrieved on 2026-11-01. Downloads stay out of git, in data/raw/stockpiles/<source_id>/. The tables carry figures, short quotes and citations only.
 
 ## What the files hold
 
@@ -20,7 +20,7 @@ Historic totals and historic splits measure different things. The OWID series is
 
 Alert data by state dates from 2012, and US alert levels by delivery date from 2001, when forces were larger. Reliability values are analysts' assumptions of 80 to 90 percent, not measured rates. The 1953 FRUS fractions describe Soviet bombers attacking the US, so applying them to SAC in 1956 would be an extrapolation.
 
-SIPRI's terms allow analytical use and fair-use reproduction of under 10 percent of a data set, and require authorisation above that. So the rows transcribed from SIPRI Yearbook 2026 chapter 8 are not committed; they stay in the git-ignored data/raw/stockpiles/sipri_yb2026_rows.csv. Committed from it are delivery_mix.csv, shares by delivery rounded to 0.05 for the four states the maps use them for, and two short quoted counts in assumptions.csv. Every committed inventory figure is from FAS, OWID or NRDC. The delivery mix cannot be recomputed from a clean clone without reading the chapter. For China, India and Pakistan no mix is used and delivery is unspecified.
+SIPRI's terms allow analytical use and fair-use reproduction of under 10 percent of a data set, and require authorisation above that. So the rows transcribed from SIPRI Yearbook 2026 chapter 8 are not committed; they stay in the git-ignored data/raw/stockpiles/sipri_yb2026_rows.csv. Committed from it are the 2026 rows of delivery_mix.csv, shares by delivery rounded to 0.05 for the seven states the maps use, and two short quoted counts in assumptions.csv. Every committed inventory figure is from FAS, OWID or NRDC. The 2026 mix cannot be recomputed from a clean clone without reading the chapter. Its bases differ: US and Russia are deployed forces, the others the stockpile or what is operationally available. `land_missile` is SIPRI's land-based category for China, India and Pakistan, which mixes ranges; it is not the same class as `icbm`. The 1956 US and 1965 Soviet rows come from NRDC's strategic loadings in stockpiles.csv and are exact to 0.01. No split was found for 1950, so that scenario's delivery stays unspecified.
 
 ## What could not be obtained
 

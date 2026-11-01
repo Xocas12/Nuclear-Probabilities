@@ -27,3 +27,9 @@ Found while rebuilding, with no issue of their own:
 
 The independent review of e1ed40e (findings 2-22) is answered in `configs/protocol.yaml`, fourth amendment, and in
 `tests/test_label_rules.py`, `tests/test_classifier_report.py`, `tests/test_provenance.py` and `tests/test_probmap.py`.
+
+Added after the independent review:
+- `nucprob/sources/robots.py` makes the fetcher refuse what robots.txt disallows, and `runs/qa/robots.csv` records the answer
+  for every source. Files already fetched from disallowed paths are named in `README.md` and stay until the owner decides.
+- `runs/classifier/extended.csv` holds the economic and political readings fixed by `configs/protocol_amendment_5.yaml`, and
+  `runs/probmap/by_delivery.csv` holds warheads by state and delivery for every scenario.

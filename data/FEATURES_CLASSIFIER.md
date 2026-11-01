@@ -9,17 +9,16 @@
 | population, administration, geography, industry, transport | the 20 `COMMON` columns of `nucprob/transfer/features.py` | census town tables, GeoNames, Natural Earth, Copernicus DEM, WRI, OurAirports (`data/FEATURES.md`) | census at or before the document. Power plants by commissioning year. Western European towns take plants as of the document's own year |
 | military | `log_km_to_naval_base`, `log_km_to_lra_base`, `log_km_to_nuclear_site` | curated site tables (`data/curated/features/`) | Sites in being in the document's year, for Western European towns; June 1956 for the bloc. NaN where no table covers the town (Japan, the US, Canada, Italy south of the Po) |
 | defence | `log_km_to_sam`, `log_km_to_air_defence`, `log_air_defence_sites_50km` | the same tables' Nike, HAWK, radar and RAF defence rows; `bloc_air_defence_1956.csv`, with its S-25 positions, for the bloc | as above. NaN for a country with no row in its table |
+| political, economic (not in the primary model) | `pol_regime`, `pol_defence_pact_usa`, `pol_defence_pact_ussr`, `pol_log_defence_pacts`; `econ_log_gdp_pc` | Regimes of the World through OWID (`owid_political_regime`), COW Formal Alliances v4.1 (`cow_alliances_v41`), Maddison Project 2023 through OWID (`owid_maddison_gdp_pc`) | The target state's last year at or before the document; pacts in force in the document's year. Missing for the GDR and North Vietnam in Maddison, never borrowed. The FRG takes Maddison's Germany. Registered in `data/sources_amendment_5.yaml`. Read apart, in `runs/classifier/extended.csv` (`configs/protocol_amendment_5.yaml`) |
+| defence industry (not in the primary model) | `log_vpk_*` | Dexter and Rodionov's guide (`data/FEATURES.md`) | Establishments active in 1956; later knowledge of what existed; Soviet towns of SAC only. Read apart, in the same file |
 | national power | `nmc_log_cinc`, `nmc_log_milex`, `nmc_log_milper`, `nmc_log_irst`, `nmc_log_pec`, `nmc_log_tpop`, `nmc_log_upop` | COW National Material Capabilities v7.0 (`cow_nmc_v7`) | The target state's last year at or before the document |
 
 Limits that bear on any reading:
 
 - **Anachronism.** The COMMON set carries the flags of `data/FEATURES.md`: railways, ports and
   airfields are today's data standing in for the document's date. Protocol: results are to be
-  repeated without them. That repeat is in `runs/classifier/no_anachronisms.csv`, with all eight
-  flagged columns removed: three airfield counts, two railway columns, ports, `log_power_mw_25km`
-  and `log_km_to_nuclear_site`. PR-AUC falls by 0.008 to 0.019 for the US and global scopes, all
-  intervals excluding zero. For the pooled Warsaw Pact exercises it rises for the logistic model,
-  +0.037 [+0.014, +0.058], and does not move detectably for LightGBM, +0.002 [-0.024, +0.021].
+  repeated without them. That repeat is the `none flagged` and `strict as-of` rows of
+  `runs/classifier/sensitivity.csv`, read in REPORT.md under "What the gains rest on".
 - **The annual COW figure** for the document's year covers months after the document.
 - **Military expenditure** in COW is in thousands of current US dollars, so it is not comparable
   across decades. The Soviet and Chinese figures are COW's estimates.

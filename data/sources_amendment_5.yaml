@@ -1,0 +1,37 @@
+# Sources added by configs/protocol_amendment_5.yaml, in the same form as data/sources.yaml. They feed only
+# the readings of that amendment, never the primary analysis, so they are kept apart: the primary run records
+# the hash of data/sources.yaml, and that file's content has not changed. The fetcher and the provenance
+# tests read both files.
+sources:
+- id: cow_alliances_v41
+  url: https://correlatesofwar.org/wp-content/uploads/version4.1_csv.zip
+  path: cow/alliances_v4.1_csv.zip
+  licence: No licence stated; free download, cite Gibler 2009 and the version. Derived features only,
+    the data are not committed
+  use: 'Formal Alliances v4.1 (1816-2012), dyads by year: the target state''s defence pacts as of each
+    document (protocol, fifth amendment)'
+  role: features
+  retrieved: '2026-11-01'
+  sha256: a2422bb361dcc4b0ab5ff0e46f65a7ab2b4c6eafa97bdd9910302dac75e786b6
+- id: owid_political_regime
+  url: https://ourworldindata.org/grapher/political-regime.csv
+  path: owid/political-regime.csv
+  licence: CC BY 4.0 (Our World in Data); underlying Regimes of the World from V-Dem, cite Luhrmann, Tannenberg
+    and Lindberg 2018 and V-Dem. Derived features only, the data are not committed
+  use: 'Regimes of the World, 0 closed autocracy to 3 liberal democracy: the target state''s regime as
+    of each document (protocol, fifth amendment)'
+  role: features
+  volatile: OWID's grapher export is regenerated when its dataset updates
+  retrieved: '2026-11-01'
+  sha256: d8c524a911b822922d105876d8a702a7854d6221da7097e7198128b20674e986
+- id: owid_maddison_gdp_pc
+  url: https://ourworldindata.org/grapher/gdp-per-capita-maddison-project-database.csv
+  path: owid/gdp-per-capita-maddison-project-database.csv
+  licence: CC BY 4.0 (Maddison Project Database 2023, Bolt and van Zanden 2024; OWID's export). Derived
+    features only, the data are not committed
+  use: 'GDP per capita in 2011 international dollars: the target state''s economy as of each document
+    (protocol, fifth amendment)'
+  role: features
+  volatile: OWID's grapher export is regenerated when its dataset updates
+  retrieved: '2026-11-01'
+  sha256: 0545ad6ca37529206af49f9f964f17af927e8c154c1fe8d3813c523e0d2f43f8

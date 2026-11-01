@@ -10,7 +10,7 @@ import yaml
 from nucprob.classifier import extended as ex
 from nucprob.classifier import state_features as sf
 from nucprob.classifier.features import COW
-from nucprob.paths import PROCESSED, ROOT, RUNS
+from nucprob.paths import PROCESSED, ROOT, RUNS, SOURCES, SOURCES_AMENDMENT_5
 from nucprob.sources.fetch import sha256
 
 OUT = RUNS / "classifier" / "extended.csv"
@@ -77,6 +77,18 @@ def test_the_amendment_names_every_new_column_and_changes_no_primary_rule():
     assert "Primary comparisons" in a["unchanged"]
     protocol = (ROOT / "configs" / "protocol.yaml").read_text(encoding="utf-8")
     assert "pol_regime" not in protocol
+
+
+def test_the_new_sources_are_registered_with_a_date_and_hash_and_the_primary_registry_is_untouched():
+    extra = yaml.safe_load(SOURCES_AMENDMENT_5.read_text(encoding="utf-8"))["sources"]
+    assert {s["id"] for s in extra} == {
+        "cow_alliances_v41",
+        "owid_political_regime",
+        "owid_maddison_gdp_pc",
+    }
+    assert all(s["retrieved"] and s["sha256"] and s["licence"] for s in extra)
+    primary = yaml.safe_load(SOURCES.read_text(encoding="utf-8"))["sources"]
+    assert not {s["id"] for s in extra} & {s["id"] for s in primary}
 
 
 @needs_data

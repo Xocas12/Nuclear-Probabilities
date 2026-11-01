@@ -3,9 +3,8 @@
 import pandas as pd
 import pytest
 import requests
-import yaml
 
-from nucprob.paths import ROOT, RUNS, SOURCES
+from nucprob.paths import ROOT, RUNS
 from nucprob.sources import fetch, robots
 
 
@@ -70,7 +69,7 @@ def test_a_refused_source_and_its_mirror_are_reported_not_obtained(monkeypatch, 
 
 def test_the_audit_covers_every_source_and_names_each_refusal_in_the_readme():
     audit = pd.read_csv(RUNS / "qa" / "robots.csv", dtype={"allowed": "string"})
-    ids = {s["id"] for s in yaml.safe_load(SOURCES.read_text(encoding="utf-8"))["sources"]}
+    ids = {s["id"] for s in fetch.load_manifest()["sources"]}
     assert ids <= set(audit["id"])
     refused = audit.loc[audit["status"].eq("rules") & audit["allowed"].eq("False"), "host"]
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
