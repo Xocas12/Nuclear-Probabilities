@@ -4,6 +4,9 @@ Nothing here reads a target list (tests/test_leakage.py). The site tables say wh
 in being; nucprob.classifier.table applies them.
 """
 
+import io
+import zipfile
+
 import numpy as np
 import pandas as pd
 
@@ -14,7 +17,7 @@ from nucprob.transfer.features import ISO3, MILITARY_GROUPS, POWER_KM
 from nucprob.transfer.regions import REGIONS
 
 BLOC = "bloc_1956"
-NMC_PATH = RAW / "cow" / "NMC-70-abridged.csv"
+NMC_ZIP = RAW / "cow" / "NMCv7.zip"
 NMC_FEATURES = [
     "nmc_log_cinc",
     "nmc_log_milex",
@@ -75,9 +78,13 @@ def document_year(date) -> int:
     return int(str(date)[:4])
 
 
-def nmc(path=NMC_PATH) -> pd.DataFrame:
-    """COW's state-years, with -9 as missing and the indicators logged (base 10, plus 1)."""
-    d = pd.read_csv(path).replace(-9, np.nan)
+def nmc(path=NMC_ZIP) -> pd.DataFrame:
+    """COW's state-years, with -9 as missing and the indicators logged (base 10, plus 1). The
+    abridged table sits in a zip inside the download."""
+    with zipfile.ZipFile(path) as outer:
+        inner = io.BytesIO(outer.read("NMCv7/NMC-v7-abridged.zip"))
+    with zipfile.ZipFile(inner) as z:
+        d = pd.read_csv(io.BytesIO(z.read("NMC-70-abridged.csv"))).replace(-9, np.nan)
     out = d[["stateabb", "year"]].copy()
     out["nmc_log_cinc"] = np.log10(d["cinc"].clip(lower=1e-6))
     for c in ("milex", "milper", "irst", "pec", "tpop", "upop"):
