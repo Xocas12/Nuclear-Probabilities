@@ -5,7 +5,7 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [main, build/strike-classifier]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
