@@ -44,8 +44,8 @@ Sealed places have not been scored. They are held for after an independent revie
 - `data/curated/labels/`: target lists, the registry `PLANS.yaml` (attacker, date, type, grade), `SECTORS.yaml`.
 - `data/curated/stockpiles/`: cited inventories and assumptions. `data/sources.yaml`: every source's provenance;
   `data/curated/features/cited_pages.csv`: the pages cited row by row in the site tables.
-- `configs/protocol.yaml`: pre-committed analysis and its dated amendments, with `configs/protocol_amendment_5.yaml` and
-  `configs/protocol_amendment_6.yaml`. `configs/scenarios.yaml`: scenarios.
+- `configs/protocol.yaml`: pre-committed analysis and its dated amendments, with `configs/protocol_amendment_5.yaml`,
+  `configs/protocol_amendment_6.yaml` and `configs/protocol_amendment_7.yaml`. `configs/scenarios.yaml`: scenarios.
 - `runs/classifier/`, `runs/probmap/`: committed outputs. `REPORT.md` is generated from them.
 
 ## Running it

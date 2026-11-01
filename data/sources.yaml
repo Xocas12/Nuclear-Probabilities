@@ -1538,6 +1538,28 @@ sources:
     be shown
   retrieved: '2026-11-01'
   sha256: 4d6b8a47e1d84f7a5f583886046151ae8e3cae2e84a232193cd75ba4f745890d
+- id: plandoc_cia_5166d4f999326091c6a607ee
+  url: https://archive.org/download/cia-readingroom-document-5166d4f999326091c6a607ee/5166d4f999326091c6a607ee.pdf
+  title: CIA FIRDB-312/01472-81 (12 Jun 1981), General Staff Academy Lesson No. 27a, making the decision for the
+    assault crossing of a wide water obstacle from the march (lesson of 1977)
+  path: plan_documents/37/5166d4f999326091c6a607ee.pdf
+  licence: US government record, public domain (CIA FOIA reading room release; archive.org copy)
+  use: 'target list wp_1977_gsa_lessons: the source_url of its rows'
+  role: labels
+  retrieved: '2026-11-02'
+  retrieved_note: same bytes as the copy hashed on 2026-11-01 in data/notes/soviet_search_2026-11b.md
+  sha256: dd8c34ac07c6d3383ade1ea3c41531b7af8aa2fd51b25a314b47bdd02b4d9c57
+- id: plandoc_cia_5166d4f999326091c6a607e7
+  url: https://archive.org/download/cia-readingroom-document-5166d4f999326091c6a607e7/5166d4f999326091c6a607e7.pdf
+  title: CIA FIRDB-312/00726-81 (20 Mar 1981), General Staff Academy Lesson No. 24b, control of rocket troops and
+    artillery during preparation and delivery of the initial nuclear strike (lesson of 1977)
+  path: plan_documents/38/5166d4f999326091c6a607e7.pdf
+  licence: US government record, public domain (CIA FOIA reading room release; archive.org copy)
+  use: 'target list wp_1977_gsa_lessons: the source_url of its rows'
+  role: labels
+  retrieved: '2026-11-02'
+  retrieved_note: same bytes as the copy hashed on 2026-11-01 in data/notes/soviet_search_2026-11b.md
+  sha256: 5c67d02b6058337d65bee63f804151f0b5be2166984641c7e70705f1ab96e507
 - id: plandoc_cia_0001197532
   url: https://archive.org/download/cia-readingroom-document-0001197532/0001197532.pdf
   title: CIA FIRDB-312/00680-80, USSR General Staff Academy Lessons, Table of Contents and Lesson No.

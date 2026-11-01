@@ -40,3 +40,10 @@ One is not answered: finding 4, files fetched against robots.txt. That needs the
 
 Found while answering it, with no finding of its own: SAC's ULAAN BAATAR is printed with the suffix CHINA, so it stayed unlinked and
 the Mongolian capital read as a negative. `data/curated/sac1956/same_place_links.csv`. Wakamatsu of 1940 sat on a hamlet like Kokura.
+
+Link audit of 2 November 2026, after that answer (`configs/protocol_amendment_7.yaml`). The 233 unsealed entries of `data/processed/sac1956_link_report.csv`
+whose printed name disagrees with their town were read by name, with the 16 unlinked entries whose largest negative town within 60 km holds 40,000 or more. Almost all are a suburb or works beside a
+town, which is how the 10 km rule is meant to work. Their coordinates were not checked against the scan. One error: SKURATOVO credited Skuratovskiy at Tula, 70 km away (`data/curated/sac1956/rejected_name_links.csv`).
+The other name links over 25 km are in `data/curated/sac1956/far_name_links_reviewed.csv`, three of them not confirmed, and a new one fails `tests/test_label_rules.py`.
+Square Leg's Gatwick and "Tay Bridge / Dundee" were wrong too. Large towns that stay negative on SAC, such as Baotou and Huainan, have no unlinked SAC entry within 60 km:
+the audit found nothing to link them to, and it cannot show whether the study meant to leave them out.

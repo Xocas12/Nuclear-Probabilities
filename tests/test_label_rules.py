@@ -124,3 +124,43 @@ def test_corrected_sac_links_hold():
     assert d.loc["Xinhailian", "listed"] == 1
     assert d.loc["Ulaanbaatar", "listed"] == 1
     assert abs(d.loc["Komárno", "lat"] - 47.76) < 0.02
+
+
+def test_second_read_rows_are_cited_and_dropped_names_stay_out():
+    """Lessons 27a and 24b, read on the scan (data/notes/second_read_2026-11b.md)."""
+    d = pd.read_csv(LABELS / "wp_1977_gsa_lessons.csv", dtype=str, keep_default_na=False)
+    new = d[d["seq"].astype(int) > 44]
+    assert len(new) == 25
+    assert (new["quote"] != "").all() and (new["source_page"] != "").all()
+    assert not new["name_source"].str.contains("TALBURG|BORGER").any()
+    weert = new[new["name_source"] == "WEERT"].iloc[0]
+    assert weert["selected"] == "", "p.26 does not say Weert gets a nuclear weapon"
+    assert (new.loc[new["name_source"] != "WEERT", "selected"] == "1").all()
+    skip = lb.unlinked()
+    for name, cls in (("WINTERSLAG", "north of"), ("THE HAGUE", "east of"), ("WEERT", "SW of")):
+        row = new[new["name_source"].eq(name) & new["target_class"].str.contains(cls)].iloc[0]
+        assert ("wp_1977_gsa_lessons", int(row["seq"])) in skip
+
+
+@needs_tables
+def test_links_the_audit_corrected_hold():
+    links = pd.read_csv(PROCESSED / "transfer_links.csv", dtype=str, keep_default_na=False)
+    leg = links[links["plan_id"] == "cd_1980_square_leg"].set_index("seq")
+    assert leg.at["64", "town"] == "Crawley"
+    assert leg.at["82", "town"] == "Dundee City"
+    sac = pd.read_parquet(PROCESSED / "sac1956_links.parquet")
+    assert sac.loc[sac["id"] == "C086-L07", "place_id"].isna().all()
+
+
+@needs_tables
+def test_every_far_name_link_on_sac_has_been_read():
+    """A SAC entry tied to a town by name alone, over 25 km from its printed point, is either in
+    the reviewed table or rejected. A new one fails here. Sealed places are not looked at."""
+    sac = pd.read_parquet(PROCESSED / "sac1956_links.parquet")
+    sealed = pd.read_parquet(PROCESSED / "classifier_table.parquet")
+    sealed = set(sealed.loc[sealed["sealed"].astype(bool), "place_id"])
+    far = sac[sac["link_method"].eq("name") & (sac["dist_km"] > 25)]
+    far = far[~far["place_id"].isin(sealed)]
+    read = pd.read_csv(CURATED / "sac1956" / "far_name_links_reviewed.csv", dtype=str)
+    assert set(far["id"]) <= set(read["sac_id"])
+    assert read["reading"].str.len().min() > 20

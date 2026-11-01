@@ -10,3 +10,6 @@ wp_1961_burza,21,zgrupowanie wojsk płd UTRECHT,"troop concentration south of Ut
 wp_1977_zealand,7,Bas-Mosede,"name as printed; the row note says probably Mosede fort, not certain"
 us_1963_jcs_china_vulnerability,5,Shuangcheng Tzu,"the missile test range, not the Shuangchengzi of GeoNames (Liaoning, 42.4N), which is the only hit; no point for the range is on file"
 cd_1980_square_leg,65,Manston,"the map label gives no county: the matcher took a village in Dorset, and whether the bomb plot means that one or RAF Manston in Kent cannot be read from this row"
+wp_1977_gsa_lessons,46,WINTERSLAG,"Pershing launchers north of Winterslag: the document prints a direction but no distance, so no point or town can be read from it"
+wp_1977_gsa_lessons,62,THE HAGUE,troops concentrating east of The Hague: a direction but no distance
+wp_1977_gsa_lessons,64,WEERT,squadron southwest of Weert: a direction but no distance
