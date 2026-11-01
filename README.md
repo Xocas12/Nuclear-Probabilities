@@ -55,5 +55,9 @@ built tables skip.
 **Not all rebuildable.** COW's data is not committed (no licence stated), so rebuilding needs its download. SIPRI's
 tables are not redistributed (its terms), so `data/curated/stockpiles/delivery_mix.csv` holds rounded shares only.
 `data/curated/features/bloc_air_defence_1956.csv` was made by hand from cited pages
-(`scripts/bloc_air_defence_1956/README.md`). `download.geonames.org` has a robots.txt that disallows all paths, and
-the GeoNames dumps in `data/raw/geonames/` came from it in earlier work; `make data` would fetch them again.
+(`scripts/bloc_air_defence_1956/README.md`). **Robots.** `make data` asks each host's robots.txt before every download and reports a refused source as not
+obtained; `python -m nucprob.sources.robots` records the answer for every source in `runs/qa/robots.csv`. Some
+tables were built in earlier work from paths that robots.txt disallows. These files are kept and not fetched again:
+37 GeoNames dumps from `download.geonames.org`, which feed town coordinates; the UK 1981 census from
+`www.nomisweb.co.uk`; and Wikipedia wikitext through `en.wikipedia.org/w/index.php` for the military site tables of Western Europe
+and the UK. A fresh clone therefore cannot rebuild the place tables from `make data` alone. The owner has been asked to decide.

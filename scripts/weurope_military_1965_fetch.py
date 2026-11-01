@@ -21,6 +21,8 @@ import urllib.parse
 import urllib.request
 from datetime import UTC, datetime
 
+from nucprob.sources import robots
+
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 RAW = ROOT / "data/raw/weurope_military/wikipedia"
 UA = "nuclear-probabilities-research/1.0 (historical dataset; contact via repository owner)"
@@ -38,6 +40,7 @@ def path(lang, title):
 def get(url, tries=8):
     for k in range(tries):
         try:
+            robots.require(url)
             req = urllib.request.Request(url, headers={"User-Agent": UA})
             with urllib.request.urlopen(req, context=CTX, timeout=60) as r:
                 return r.read().decode("utf-8")

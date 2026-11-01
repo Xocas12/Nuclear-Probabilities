@@ -9,7 +9,8 @@ the same goes for a fresh download of a source with a recorded hash. A source th
 reached is reported and the rest continue; `mirror` names an archived copy to try instead.
 `volatile: <why>` marks a source whose bytes change with no change in what is used (a live
 database, a landing page): a difference is still reported, but is not a problem.
-`--refresh` downloads again and records the new hash. Entries with `fetch: false` are
+Nothing is downloaded that the host's robots.txt does not allow (nucprob.sources.robots): such a
+source is reported as not obtained, and its mirror is not tried. `--refresh` downloads again and records the new hash. Entries with `fetch: false` are
 downloaded by hand and only checked; entries with `fetch: <module>` (tile sets) are fetched by
 that module.
 """
@@ -25,9 +26,10 @@ import requests
 import yaml
 
 from nucprob.paths import RAW, SOURCES
+from nucprob.sources import robots
 
 HEADER_LINES = 4  # the comment block at the top of sources.yaml, kept on rewrite
-USER_AGENT = "nuclear-probabilities research project (historical data; contact via GitHub)"
+USER_AGENT = robots.USER_AGENT
 
 
 def sha256(path: Path) -> str:
@@ -49,7 +51,9 @@ def save_manifest(manifest: dict) -> None:
 
 
 def download(url: str, dest: Path, tries: int = 4) -> None:
-    """Stream to a temporary file and move it into place, retrying with backoff."""
+    """Stream to a temporary file and move it into place, retrying with backoff. Raises
+    robots.RobotsRefused, with nothing requested, if robots.txt does not allow the URL."""
+    robots.require(url)
     dest.parent.mkdir(parents=True, exist_ok=True)
     tmp = dest.with_suffix(dest.suffix + ".part")
     for attempt in range(tries):
@@ -104,6 +108,10 @@ def main(argv: list[str] | None = None) -> int:
         print(f"{src['id']}: downloading {src['url']}", flush=True)
         try:
             download(src["url"], dest)
+        except robots.RobotsRefused as err:
+            print(f"{src['id']}: not obtained; {err}")
+            problems += 1
+            continue
         except requests.RequestException as err:
             if not src.get("mirror"):
                 print(f"{src['id']}: FAILED ({type(err).__name__}); not obtained")
@@ -111,7 +119,12 @@ def main(argv: list[str] | None = None) -> int:
                 continue
             # An archived copy counts only if its bytes are the recorded ones (checked below).
             print(f"{src['id']}: {type(err).__name__}; trying its mirror {src['mirror']}")
-            download(src["mirror"], dest)
+            try:
+                download(src["mirror"], dest)
+            except robots.RobotsRefused as refused:
+                print(f"{src['id']}: not obtained; {refused}")
+                problems += 1
+                continue
         digest = sha256(dest)
         if src.get("sha256") and src["sha256"] != digest and not args.refresh:
             # The record stays: it says what the committed tables were built from.

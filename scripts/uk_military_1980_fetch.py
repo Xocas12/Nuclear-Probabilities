@@ -15,6 +15,8 @@ import time
 import urllib.parse
 import urllib.request
 
+from nucprob.sources import robots
+
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 RAW = ROOT / "data/raw/uk_military/wikipedia"
 UA = "nuclear-probabilities historical research (contact xocas75 via repo owner)"
@@ -32,6 +34,7 @@ def raw(title):
     )
     for k in range(5):
         try:
+            robots.require(u)
             req = urllib.request.Request(u, headers={"User-Agent": UA})
             return u, urllib.request.urlopen(req, timeout=60).read().decode("utf-8")
         except Exception as e:
