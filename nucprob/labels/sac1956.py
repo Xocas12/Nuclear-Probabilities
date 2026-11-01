@@ -4,11 +4,23 @@ every bloc country in the place table.
     python -m nucprob.labels.sac1956 [--radius-km 10]
 
 Coordinates first, names second (PLAN section 10): every complex and sub-complex header and
-every DGZ is linked to the nearest settlement of its own country in the place table (all
-settlements of at least 5,000) within the radius. A target nearest to a settlement below the
-universe threshold stays with that settlement, so it does not make a larger neighbour look
-targeted. The SAC name is compared with the settlement's names (1956, today's, GeoNames) as a
-check, not a key.
+every DGZ is linked to the nearest settlement of its own country in the place table within the
+radius. A target nearest to a settlement below the universe threshold (10,000) stays with that
+settlement, so it does not make a larger neighbour look targeted. The SAC name is compared with
+the settlement's names (1956, today's, GeoNames) as a check, not a key.
+
+That rule only works where the place table goes below 10,000, and how far it goes depends on
+the source (data/curated/gazetteer/README.md):
+- 5,000 in the USSR, the Czech lands, Hungary, Romania, Bulgaria and Albania;
+- 10,000 in East Germany, Poland and Slovakia (Poland's interpolated June figures leave a few
+  towns just under it);
+- China's 1953 cities, and the UN's cities in North Korea, North Vietnam and Mongolia: nothing
+  below those.
+In the last two groups there are no small settlements to keep a target, so a target at a town
+of 5,000-10,000 within the radius of a larger one goes to the larger one (Sebnitz to NEUSTADT,
+Wernigerode to ILSENBURG, Pszczyna to BRZESZCZE). No absorbers below 10,000 are added for
+them: this is a known gap of a handful of towns per country, not a change in what `listed`
+means.
 
 Writes to data/processed/:
   sac1956_links.parquet   one row per complex, sub-complex and DGZ, with its place

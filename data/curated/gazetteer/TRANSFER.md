@@ -72,7 +72,8 @@ Japan. The leakage guard (`tests/test_leakage.py`) covers this code.
 
 Differences from the bloc:
 - the tables stop at 10,000, so neighbour sums run a little lower than the bloc's (which
-  count down to 5,000);
+  count down to 5,000 in most countries). `pop_rank_pct` is not affected: it is ranked among
+  towns of 10,000 or more in the bloc and here alike;
 - the UK rows are districts, not towns;
 - airfields, rail, ports and rivers are today's data, as for the bloc.
 
