@@ -10,8 +10,10 @@ As of the document's date:
 - national capabilities: the state's last year at or before the document (`nmc`);
 - power plants and military and defence sites: only those dated at or before the document, for
   the Western European towns, whose documents run from 1961 to 1977 (`document_year_features`).
-  Sites are never dated after 1965 here, so a 1977 document sees the table as of 1965: stale, not
-  later knowledge. Town populations are the 1961 census for all of them.
+  The site table was compiled as of 1965, with 3 sites dated 1966, so a 1977 document sees it as of
+  about 1965: stale, not later knowledge. 23 undated sites the table holds as in role in 1965 count
+  for every document, including those of 1961 and 1964: for those two the dating is not known.
+  Town populations are the 1961 census for all of them.
 - The 1956 bloc towns serve the US documents of 1956-64 with features of June 1956.
 
 A list complete only within the sector its document concerns (data/curated/labels/SECTORS.yaml)

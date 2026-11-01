@@ -229,7 +229,7 @@ Collection page: https://phpisn.ethz.ch/lory1.ethz.ch/collections/colltopic4241.
 - The only 1979-specific claims are from Guardian/Telegraph 2005 (not opened): NATO strikes in the Vistula valley, ~2 million Polish dead, and Soviet counter-strikes on the FRG, Benelux, Denmark and NE Italy. These are classes only.
 
 ## 9. CIA: USSR General Staff Academy lessons (1977 lesson set, translated 1980–81)
-- The URL in the brief, https://www.cia.gov/readingroom/docs/1980-07-03.pdf, **does not exist**: cia.gov redirects it to the reading-room home page. DOC_0001197534/45.pdf and the site search also redirect, because search needs JavaScript. The redirect pages were deleted.
+- The URL first given for this set, https://www.cia.gov/readingroom/docs/1980-07-03.pdf, **does not exist**: cia.gov redirects it to the reading-room home page. DOC_0001197534/45.pdf and the site search also redirect, because search needs JavaScript. The redirect pages were deleted.
 - Obtained from the archive.org mirror:
   - 0001197534 ("Work of the Nuclear Planning Group Using the Calculations Performed on Electronic Computers...", FIRDB-312/00987-80, 1 May 1980): https://archive.org/download/cia-readingroom-document-0001197534/0001197534.pdf. Retrieved 2026-10-03T15:25:36Z.
     - File: `cia_0001197534.pdf`, sha256 `54eddb0bde648b4ec8732ef383c706fabdd2d2889b906f6a06ffb7ffca416296`. Scan without a text layer; read via archive.org OCR (`_djvu.txt`).

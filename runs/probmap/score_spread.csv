@@ -1,0 +1,8 @@
+scenario,population_ratio,score_ratio,p_correlation_with_towns_in_cell,p_correlation_with_log_people_in_cell
+us_1956_on_bloc,620.0697,7.1399,0.5215,0.9379
+us_1950_stock_on_bloc,620.0697,7.1399,0.8422,0.8046
+ussr_1965_on_west,219.7387,6.9823,0.6633,0.9221
+modern_us_russia,1904.0000,7.2091,0.4273,0.6500
+modern_us_russia_half,1904.0000,7.2091,0.5259,0.6641
+modern_us_china,1904.0000,7.2091,0.3121,0.7904
+modern_india_pakistan,1775.6362,6.8378,0.4549,0.3521

@@ -21,9 +21,11 @@ FEATURE_CODE = [
     ROOT / "nucprob" / "classifier" / "state_features.py",
     *[ROOT / "nucprob" / "sources" / f"{m}.py" for m in ("terrain", "cshapes", "naturalearth")],
 ]
-# What the label code reads or writes: the SAC transcription, its links and labels.
+# What the label code reads or writes: the SAC transcription, its links and labels, and the label
+# folder and any list in it by its file name.
 LABEL_MARKERS = re.compile(
     r"sac1956|nucprob\.labels|labels_|dgz|complexes\.csv|installations|napb|cd_19|band_rank"
+    r"|curated[/\"' ]+labels|(?:wp|us|nato|cd|fr|rec)_\d{4}_\w+"
 )
 # Curated folders that hold label transcriptions.
 LABEL_FOLDERS = {"sac1956", "napb90", "labels"}
@@ -60,3 +62,10 @@ def test_feature_code_does_not_touch_labels():
         text = Path(path).read_text(encoding="utf-8")
         hits = LABEL_MARKERS.findall(text)
         assert not hits, f"{path.name} mentions {sorted(set(hits))}"
+
+
+def test_a_feature_module_naming_a_warsaw_pact_list_fails_the_guard():
+    """The markers catch a label file of any list, not only SAC's."""
+    assert LABEL_MARKERS.search('_LEAK = "data/curated/labels/wp_1967_lato67.csv"')
+    assert LABEL_MARKERS.search('Path("nato_1965_hu_wargame_mirror.csv")')
+    assert not LABEL_MARKERS.search("log_km_to_sam = distance to a Nike site")

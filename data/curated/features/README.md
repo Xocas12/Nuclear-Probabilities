@@ -88,3 +88,5 @@ official administrative histories).
 - China: the provincial-level divisions of 1955–56 (Rehe and Xikang abolished in 1955;
   Xinjiang an autonomous region from October 1955; Henan's capital at Zhengzhou from 1954).
 - SAC bases: each base's history (the `basis` column).
+
+**Provenance of the site tables.** `cited_pages.csv` registers every page cited in `bloc_air_defence_1956`, `military_sites_1956`, `weurope_military_sites_1965`, `uk_military_sites_1980` and `us_military_sites_1985`: licence, retrieval date, status and sha256 as fetched on that date, not as first read. sha256 of `military_sites_1956.csv`: `e81ada2a2be29b7993268dca16b376ccc4542fdb1b6e9155eb468c5c9c5a8c1a`.

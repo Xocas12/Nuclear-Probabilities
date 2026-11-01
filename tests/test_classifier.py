@@ -135,29 +135,29 @@ class Spy:
         return M()
 
 
-def test_leave_one_plan_out_never_trains_on_the_group_it_scores():
+def test_leave_one_document_out_never_trains_on_the_group_it_scores():
     d = toy()
     seen: list = []
     spec = cfit.Spec("spy", Spy(seen), ["log_pop", "group"])
-    out, held = ev.leave_one_plan_out(d, [spec], n_bags=2)
+    out, held = ev.leave_one_document_out(d, [spec], n_bags=2)
     assert len(held) == len(d)
-    assert {r["holdout"] for r in out} == {f"leave-one-plan-out ({g})" for g in "ABC"}
+    assert {r["holdout"] for r in out} == {f"leave-one-document-out ({g})" for g in "ABC"}
     trained_on = {frozenset(x["group"]) for x in seen}
     assert trained_on == {frozenset("AB"), frozenset("AC"), frozenset("BC")}
 
 
-def test_leave_one_plan_out_takes_the_left_out_towns_out_of_training():
+def test_leave_one_document_out_takes_the_left_out_towns_out_of_training():
     d = toy()
     d = pd.concat([d, d[d["group"] == "A"].assign(group="B", plan_id="B2")], ignore_index=True)
     seen: list = []
     spec = cfit.Spec("spy", Spy(seen), ["log_pop", "group", "place_id"])
-    ev.leave_one_plan_out(d, [spec], n_bags=2)
+    ev.leave_one_document_out(d, [spec], n_bags=2)
     places_a = set(d.loc[d["group"] == "A", "place_id"])
     # Fits that scored group A saw none of its towns, under any other document either.
     without_a = [x for x in seen if "A" not in set(x["group"])]
     assert any(not (set(x["place_id"]) & places_a) for x in without_a)
     seen.clear()
-    ev.leave_one_plan_out(d, [spec], n_bags=2, keep_places=True)
+    ev.leave_one_document_out(d, [spec], n_bags=2, keep_places=True)
     assert any(set(x["place_id"]) & places_a for x in seen if "A" not in set(x["group"]))
 
 

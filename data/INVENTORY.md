@@ -32,7 +32,7 @@ source are in `data/notes/`. Raw downloads are in `data/raw/` (not in git).
 | `wp_1965_coastal_front_zealand.csv` | 5 | Poland (Coastal Front / Front Nadmorski), landing operation on Zealand | Denmark | 1965 | plan | 5 | 0 |
 | `wp_1965_hu_wargame.csv` | 23 | Hungary/USSR (Southern Group of Forces command-staff war game; 'Easterners' = Warsaw Pact side) | Austria, FRG, Italy | 1965 | exercise | 0 | 0 |
 | `wp_1967_lato67.csv` | 57 | Unified Armed Forces Supreme Command (strategic means) in favour of the Polish Coastal Front; exercise 'Lato-67' | Belgium, Denmark, FRG, Netherlands | 1967 | exercise | 0 | 0 |
-| `wp_1970_coastal_front_map.csv` | 4 | Poland (Coastal Front / Front Nadmorski); map plan signed by W. Jaruzelski 25 Feb 1970 | Denmark | 1970 | plan | 4 | 0 |
+| `wp_1970_coastal_front_map.csv` | 4 | Poland (Coastal Front / Front Nadmorski); map plan signed by W. Jaruzelski 25 Feb 1970 | Denmark | 1970 | disputed_plan_or_exercise | 4 | 0 |
 | `wp_1975_soyuz75.csv` | 2 | Poland/USSR (Maritime Front, exercise Soyuz-75) | Netherlands | 1975 | exercise | 0 | 0 |
 | `wp_1977_gsa_front_lesson.csv` | 19 | USSR (Soviet General Staff Academy lesson, 1977: front offensive vs NATO Northern Army Group) | FRG | 1977 | exercise | 0 | 0 |
 | `wp_1977_gsa_lessons.csv` | 44 | USSR (General Staff Academy lesson) | FRG, Netherlands | 1977 | exercise | 0 | 0 |
@@ -43,7 +43,7 @@ Total: 33 files, 6506 rows.
 
 ## Data cards
 
-From `data/curated/labels/CATALOGUE.yaml` (checked by `tests/test_catalogue.py`). Use: training lists are large enough to fit a model; transfer-test lists check whether a model transfers; validation files hold totals to check against.
+From `data/curated/labels/CATALOGUE.yaml` (checked by `tests/test_catalogue.py`). Use: training lists are large enough to fit a model; transfer-test lists check whether a model transfers; validation files hold totals to check against. A civil-defence list marked training is large enough to fit a model of its own, as `runs/m4-us-check/` does; it never trains the classifier (`data/curated/labels/PLANS.yaml`).
 
 | File | What | Planner → targets, year | Provenance | Selection | Use | Completeness | Caveats | Card |
 |---|---|---|---|---|---|---|---|---|

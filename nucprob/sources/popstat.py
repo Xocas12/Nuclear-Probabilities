@@ -75,7 +75,3 @@ def parse(path: Path, republic: str) -> pd.DataFrame:
                 row[f"pop_{col}"] = number(val)
         rows.append(row)
     return pd.DataFrame(rows)
-
-
-def census_columns(df: pd.DataFrame) -> list[str]:
-    return sorted(c for c in df.columns if c.startswith("pop_"))

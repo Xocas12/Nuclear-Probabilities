@@ -4,7 +4,8 @@ the modern map, so nothing here identifies a facility.
 
 Natural Earth's populated places (public domain): a map-label set of 7,342 places, not a census. It
 is selective, and thinner in some countries than others, which is one more reason the modern map is
-an extrapolation. Towns below MIN_POP are dropped, as are research and weather stations.
+an extrapolation. Towns below MIN_POP are dropped, as are research and weather stations, and France's
+territories outside Europe, which Natural Earth files under France.
 
 The table is built in memory and never written out; only grid cells are published.
 """
@@ -43,10 +44,16 @@ TOWN_CLASSES = {
 }
 
 
+def overseas(d: pd.DataFrame) -> pd.Series:
+    """Rows of France outside metropolitan France (Réunion, Mayotte, Guiana and the others)."""
+    home = d["latitude"].between(41, 52) & d["longitude"].between(-6, 10)
+    return d["adm0_a3"].eq("FRA") & ~home
+
+
 def read_towns(path=PLACES) -> pd.DataFrame:
     """Columns: country (ISO alpha-3 of Natural Earth), kind, lat, lon, pop."""
     d = naturalearth.points(path)
-    d = d[d["featurecla"].isin(TOWN_CLASSES) & (d["pop_max"] >= MIN_POP)]
+    d = d[d["featurecla"].isin(TOWN_CLASSES) & (d["pop_max"] >= MIN_POP) & ~overseas(d)]
     return pd.DataFrame(
         {
             "country": d["adm0_a3"],

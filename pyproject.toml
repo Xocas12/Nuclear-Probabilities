@@ -1,7 +1,7 @@
 [project]
 name = "nuclear-probabilities"
 version = "0.1.0"
-description = "What made a place a nuclear target? Places described as of each plan's date, labelled from declassified strike plans (PLAN.md)."
+description = "What made a place a nuclear target? Places described as of each plan's date, labelled from declassified target lists: studies, exercises and a few war plans (PLAN.md)."
 requires-python = ">=3.12"
 license = { text = "MIT" }
 dependencies = [

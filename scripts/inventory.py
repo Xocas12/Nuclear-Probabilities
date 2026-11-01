@@ -11,6 +11,8 @@ import yaml
 
 LABELS = Path("data/curated/labels")
 OUT = Path("data/INVENTORY.md")
+PLANS = yaml.safe_load((LABELS / "PLANS.yaml").read_text(encoding="utf-8"))["plans"]
+REGISTRY = {p["plan_id"]: p for p in PLANS}
 SCHEMA_COLS = {"plan_id", "planner", "target_country", "plan_year", "provenance", "name_source"}
 
 
@@ -24,6 +26,9 @@ def summarise(path: Path) -> dict:
         )
         row["year"] = ", ".join(sorted(df["plan_year"].dropna().astype(str).unique()))
         row["provenance"] = ", ".join(sorted(df["provenance"].dropna().astype(str).unique()))
+        # The registry decides a document's status where its rows' own column has gone out of date.
+        if REGISTRY.get(path.stem, {}).get("doc_type") == "disputed_plan_or_exercise":
+            row["provenance"] = "disputed_plan_or_exercise"
         notes = df.get("notes", pd.Series(dtype=str)).fillna("").astype(str).str.lower()
         row["secondary_rows"] = int(notes.str.contains("secondary").sum())
         row["selected_0"] = int((df.get("selected") == 0).sum()) if "selected" in df else 0
@@ -58,7 +63,9 @@ def main() -> None:
         "",
         "From `data/curated/labels/CATALOGUE.yaml` (checked by `tests/test_catalogue.py`). "
         "Use: training lists are large enough to fit a model; transfer-test lists check whether "
-        "a model transfers; validation files hold totals to check against.",
+        "a model transfers; validation files hold totals to check against. A civil-defence list "
+        "marked training is large enough to fit a model of its own, as `runs/m4-us-check/` does; "
+        "it never trains the classifier (`data/curated/labels/PLANS.yaml`).",
         "",
         "| File | What | Planner → targets, year | Provenance | Selection | Use | Completeness | Caveats | Card |",
         "|---|---|---|---|---|---|---|---|---|",

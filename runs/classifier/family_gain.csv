@@ -1,17 +1,17 @@
-rows,family,base,base_pr_auc,with_family_pr_auc,delta,low,high,excludes_zero
-all countries,national_power over population,population only,0.7838,0.8080,0.0242,0.0164,0.0318,True
-all countries,administration,base,0.8054,0.8093,0.0038,-0.0010,0.0085,False
-all countries,geography,base,0.8054,0.8174,0.0119,0.0044,0.0196,True
-all countries,industry,base,0.8054,0.8089,0.0035,0.0010,0.0059,True
-all countries,transport,base,0.8054,0.8305,0.0251,0.0148,0.0349,True
-all countries,military,base,0.8054,0.8168,0.0114,0.0040,0.0182,True
-all countries,defence,base,0.8054,0.8146,0.0092,0.0033,0.0150,True
-all countries,national_power,base,0.8054,0.8066,0.0011,-0.0012,0.0034,False
-USSR,national_power over population,population only,0.7588,0.7588,0.0000,0.0000,0.0000,False
-USSR,administration,base,0.7588,0.7678,0.0090,0.0010,0.0175,True
-USSR,geography,base,0.7588,0.7776,0.0188,0.0078,0.0301,True
-USSR,industry,base,0.7588,0.7619,0.0031,-0.0009,0.0072,False
-USSR,transport,base,0.7588,0.8048,0.0459,0.0291,0.0628,True
-USSR,military,base,0.7588,0.7824,0.0236,0.0111,0.0355,True
-USSR,defence,base,0.7588,0.7749,0.0161,0.0052,0.0268,True
-USSR,national_power,base,0.7588,0.7588,0.0000,0.0000,0.0000,False
+rows,family,base,base_pr_auc,with_family_pr_auc,delta,low,high,excludes_zero,block_low,block_high,block_excludes_zero,verdict
+all countries,national_power over population,population only,0.7888,0.8133,0.0245,0.0170,0.0321,True,0.0112,0.0360,True,gain
+all countries,administration,base,0.8106,0.8128,0.0022,-0.0024,0.0066,False,-0.0039,0.0081,False,neither
+all countries,geography,base,0.8106,0.8229,0.0123,0.0046,0.0199,True,0.0037,0.0209,True,gain
+all countries,industry,base,0.8106,0.8132,0.0026,0.0002,0.0051,True,-0.0001,0.0051,False,neither
+all countries,transport,base,0.8106,0.8337,0.0231,0.0129,0.0331,True,0.0097,0.0377,True,gain
+all countries,military,base,0.8106,0.8219,0.0112,0.0039,0.0183,True,0.0027,0.0206,True,gain
+all countries,defence,base,0.8106,0.8185,0.0078,0.0019,0.0138,True,0.0006,0.0157,True,gain
+all countries,national_power,base,0.8106,0.8126,0.0019,0.0001,0.0041,True,-0.0003,0.0044,False,neither
+USSR,national_power over population,population only,0.7588,0.7588,0.0000,0.0000,0.0000,False,0.0000,0.0000,False,neither
+USSR,administration,base,0.7588,0.7678,0.0090,0.0010,0.0175,True,-0.0006,0.0188,False,neither
+USSR,geography,base,0.7588,0.7776,0.0188,0.0078,0.0301,True,0.0067,0.0309,True,gain
+USSR,industry,base,0.7588,0.7619,0.0031,-0.0009,0.0072,False,-0.0009,0.0069,False,neither
+USSR,transport,base,0.7588,0.8048,0.0459,0.0291,0.0628,True,0.0293,0.0625,True,gain
+USSR,military,base,0.7588,0.7824,0.0236,0.0111,0.0355,True,0.0098,0.0382,True,gain
+USSR,defence,base,0.7588,0.7749,0.0161,0.0052,0.0268,True,0.0016,0.0326,True,gain
+USSR,national_power,base,0.7588,0.7588,0.0000,0.0000,0.0000,False,0.0000,0.0000,False,neither

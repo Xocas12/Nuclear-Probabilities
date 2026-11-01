@@ -7,8 +7,9 @@ military stockpile), with its mode midway, because how much of a reserve could b
 Each figure comes from data/curated/stockpiles/stockpiles.csv by year, state, count basis and source.
 Reliability, theatre share and the losses to defences are given in configs/scenarios.yaml, each with a
 source or expressly as a stated assumption. Interceptors take off a uniform draw from none to one warhead
-each, an upper bound that assumes every interceptor stops one warhead. Totals by attacker and delivery are
-inputs to the map; nothing here divides them among places.
+each, an upper bound that assumes every interceptor stops one warhead; one force shared by several attackers
+is drawn once and divided among them (`share_interceptors`). Totals by attacker and delivery are inputs to
+the map; nothing here divides them among places.
 """
 
 from collections.abc import Mapping
@@ -58,11 +59,7 @@ def draw_by_delivery(
     one entry, `unspecified`. Interceptors come off each delivery in proportion: no source says how
     they would divide, and the map uses only the total."""
     high = inventory(table, attacker["stock_year"], attacker["state"], *attacker["inventory_high"])
-    spec = attacker["inventory_low"]
-    if isinstance(spec, list):
-        low = inventory(table, attacker["stock_year"], attacker["state"], *spec)
-    else:
-        low = high * float(spec["fraction_of_high"])
+    low = inventory(table, attacker["stock_year"], attacker["state"], *attacker["inventory_low"])
     scale = float(attacker.get("stock_multiplier", 1.0))
     low, high = low * scale, high * scale
     available = triangle((low, (low + high) / 2, high), n, rng)
@@ -86,6 +83,22 @@ def draw_by_delivery(
     return {
         d: {"available": available * shares[d], "delivered": before[d] * kept} for d in shares.index
     }
+
+
+def share_interceptors(
+    parts: Mapping[str, dict[str, dict[str, np.ndarray]]], groups: list[Mapping], n: int, rng
+) -> None:
+    """One interceptor force against several attackers: a single uniform draw from none to `count`,
+    taken from those attackers' delivered warheads in proportion to each one's. Changes `parts`, a
+    {attacker: draw_by_delivery result}, in place."""
+    for group in groups:
+        hit = [parts[a] for a in group["attackers"]]
+        total = sum(p["delivered"] for attacker in hit for p in attacker.values())
+        stopped = rng.uniform(0, group["count"], n)
+        kept = np.divide(np.clip(total - stopped, 0, None), total, out=np.zeros(n), where=total > 0)
+        for attacker in hit:
+            for p in attacker.values():
+                p["delivered"] = p["delivered"] * kept
 
 
 def draw_delivered(

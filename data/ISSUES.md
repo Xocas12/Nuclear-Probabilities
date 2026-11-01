@@ -33,3 +33,10 @@ Added after the independent review:
   for every source. Files already fetched from disallowed paths are named in `README.md` and stay until the owner decides.
 - `runs/classifier/extended.csv` holds the economic and political readings fixed by `configs/protocol_amendment_5.yaml`, and
   `runs/probmap/by_delivery.csv` holds warheads by state and delivery for every scenario.
+
+The independent review of 59a35e6 (findings 1-33) is answered by `configs/protocol_amendment_6.yaml`, the rerun it describes,
+`tests/test_committed_outputs.py`, the end-to-end map tests in `tests/test_probmap.py`, and `data/curated/features/cited_pages.csv`.
+One is not answered: finding 4, files fetched against robots.txt. That needs the owner (README, "Robots").
+
+Found while answering it, with no finding of its own: SAC's ULAAN BAATAR is printed with the suffix CHINA, so it stayed unlinked and
+the Mongolian capital read as a negative. `data/curated/sac1956/same_place_links.csv`. Wakamatsu of 1940 sat on a hamlet like Kokura.

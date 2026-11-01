@@ -109,3 +109,5 @@ The table has 184 rows in role and 12 out.
 - **Anachronism.** Sites are curated from present-day articles and dated to 1985. The
   articles' titles are today's (Fort Cavazos/Hood, Space Force bases). The `site` column uses
   the 1985 names.
+
+**Provenance.** The pages this table cites are in `cited_pages.csv` in this folder: for each, the licence, retrieval date, status and sha256, with `python -m nucprob.sources.cited_pages` to fill in what is missing. Each is the page as fetched on that date, not as first read: the table was made from earlier copies, and nothing shows the two agree. Licences: Wikipedia CC BY-SA 4.0; ww2.dk states no open licence, so its pages are cited and not kept; the few others were not assessed. sha256 of this table: `8cbca76f8243fc0b452b24a6275fcfe7a5488c5a215c90660780ef81a1740eab`.

@@ -20,3 +20,4 @@ year,state,delivery,share,basis,source_id,notes
 1965,USSR,icbm,0.32,strategic_force_loading,nrdc_table_ussr,"from the NRDC rows of stockpiles.csv, strategic forces only"
 1965,USSR,slbm,0.08,strategic_force_loading,nrdc_table_ussr,"from the NRDC rows of stockpiles.csv, strategic forces only"
 1965,USSR,bomber,0.6,strategic_force_loading,nrdc_table_ussr,"from the NRDC rows of stockpiles.csv, strategic forces only"
+1950,US,bomber,1.0,strategic_force_loading,nrdc_table_us,"all warheads of 1950 are on bombers in the source: it has no ICBM or SLBM row before 1959"

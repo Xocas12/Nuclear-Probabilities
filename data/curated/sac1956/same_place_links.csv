@@ -1,0 +1,3 @@
+sac_id,name_printed,place_id,town,basis
+C149-L21,LIEN YUN CHINA,cn-10859300,Xinhailian,"SAC's printed point 34.7333, 119.45 is GeoNames 11494364, the port of Lianyungang (also 1803849, Lianyun Gang), to the second. The town table's Xinhailian is GeoNames 10859300, Lianyungang: 26 km away, beyond the 10 km link, and the printed name does not match the table's 1956 name."
+C275-L28,ULAAN BAATAR CHINA,mn-x257,Ulaanbaatar,"SAC prints this entry with the suffix CHINA, so the reader put it under China and no Chinese town lies within reach. The printed point 47.9167, 106.8833 is about 1 km from the Mongolian capital of the town table."

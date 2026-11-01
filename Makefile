@@ -2,7 +2,7 @@
 UV ?= uv
 PY = $(UV) run python
 
-.PHONY: setup data places labels features dataset train map check transfer evidence qa classifier probmap viewer test lint format clean
+.PHONY: us1985 setup data places labels features dataset train map check transfer evidence qa classifier probmap viewer test lint format clean
 
 setup:
 	$(UV) sync --all-extras
@@ -68,6 +68,11 @@ probmap:
 # The static viewer of the committed map: one self-contained page, runs/probmap/viewer/index.html.
 viewer:
 	$(PY) -m nucprob.probmap.viewer
+
+# The check of FEMA's 1987 NAPB-90 risk bands on US counties (runs/m4-us-check/), a civil-defence reading outside
+# the classifier: a check that the US features join, not a result.
+us1985:
+	$(PY) -m nucprob.us1985.check
 
 test:
 	$(UV) run pytest -q

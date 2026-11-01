@@ -6,10 +6,12 @@ import csv
 import hashlib
 import re
 
+import pandas as pd
 import pytest
 import yaml
 
 from nucprob.paths import CURATED, RAW
+from nucprob.sources import cited_pages
 from nucprob.sources.fetch import load_manifest, sha256
 
 LABELS = CURATED / "labels"
@@ -118,3 +120,27 @@ def test_tiles_match_the_manifest():
     assert present == set(listed)
     for tile, digest in listed.items():
         assert hashlib.sha256((terrain / tile).read_bytes()).hexdigest() == digest, tile
+
+
+def test_every_sector_box_cites_a_registered_document():
+    urls = {s.get("url") for s in load_manifest()["sources"]}
+    sectors = yaml.safe_load((CURATED / "labels" / "SECTORS.yaml").read_text(encoding="utf-8"))
+    cited = [s["source_url"] for s in sectors["sectors"] if s.get("source_url")]
+    assert cited
+    assert not [u for u in cited if u not in urls]
+
+
+def test_every_cited_page_has_a_registry_row_with_date_and_licence_or_a_stated_failure():
+    pages = cited_pages.cited()
+    rows = pd.read_csv(cited_pages.OUT, dtype=str, keep_default_na=False).set_index("url")
+    assert set(pages) == set(rows.index)
+    assert (rows["licence"] != "").all() and (rows["retrieved"] != "").all()
+    fetched = rows["status"] == "ok"
+    assert rows.loc[fetched, "sha256"].str.fullmatch("[0-9a-f]{64}").all()
+    assert (rows.loc[~fetched, "status"] != "").all()
+
+
+def test_urls_keep_their_brackets_and_lose_trailing_punctuation():
+    got = cited_pages.urls_in("see https://a.org/x_(y), https://b.org/z; https://c.org/k.")
+    assert got == {"https://a.org/x_(y)", "https://b.org/z", "https://c.org/k"}
+    assert cited_pages.urls_in("(https://a.org/k)") == {"https://a.org/k"}

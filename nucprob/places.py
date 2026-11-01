@@ -388,10 +388,24 @@ def build() -> pd.DataFrame:
         for i, (p, g, k) in enumerate(zip(prefix, places["geonameid"], keys, strict=True))
     ]
     places["in_universe"] = places["pop"] >= UNIVERSE
+    places = correct_coordinates(places)
     places["has_coords"] = places["lat"].notna()
     return places.sort_values(["country_1956", "republic", "region", "name_ru"]).reset_index(
         drop=True
     )
+
+
+def correct_coordinates(places: pd.DataFrame) -> pd.DataFrame:
+    """Hand-checked points where GeoNames holds the right name twice and the matcher took the wrong
+    row (data/curated/gazetteer/coordinate_corrections.csv). The place keeps its id."""
+    fixes = pd.read_csv(CURATED / "gazetteer" / "coordinate_corrections.csv")
+    missing = set(fixes["place_id"]) - set(places["place_id"])
+    assert not missing, f"corrections for unknown places: {sorted(missing)}"
+    out = places.copy()
+    for _, r in fixes.iterrows():
+        rows = out["place_id"] == r["place_id"]
+        out.loc[rows, "lat"], out.loc[rows, "lon"] = r["lat"], r["lon"]
+    return out
 
 
 def population_check(places: pd.DataFrame, reviewed: pd.DataFrame | None = None) -> pd.DataFrame:

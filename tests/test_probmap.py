@@ -213,14 +213,11 @@ def test_interceptors_come_off_in_proportion_and_a_stock_without_a_mix_is_unspec
     assert (parts["icbm"]["available"] == 25).all()
 
 
-def test_every_scenario_year_but_1950_has_a_delivery_split_and_shares_are_whole():
+def test_every_scenario_year_has_a_delivery_split_and_shares_are_whole():
     mix = pd.read_csv(st.MIX)
     for sc in rn.load_scenarios():
         for a in sc["attackers"]:
             shares = st.mix_of(a, mix)
-            if a["stock_year"] == 1950:
-                assert shares.empty
-                continue
             assert len(shares), (sc["id"], a["state"])
             raw = mix[(mix["state"] == a["state"]) & (mix["year"] == a["stock_year"])]["share"]
             assert raw.sum() == pytest.approx(1.0, abs=0.051), (sc["id"], a["state"])
@@ -237,6 +234,12 @@ def test_historical_shares_agree_with_the_cited_rows():
         ].set_index("delivery")["central"]
         m = mix[(mix["state"] == state) & (mix["year"] == year)].set_index("delivery")["share"]
         assert (rows / rows.sum()).round(2).to_dict() == m.to_dict()
+
+
+def test_the_nrdc_table_gives_1950_all_to_bombers():
+    t = pd.read_csv(st.TABLE)
+    r = t[(t["scenario_year"] == 1950) & (t["state"] == "US") & (t["source_id"] == "nrdc_table_us")]
+    assert r[["delivery", "central"]].values.tolist() == [["bomber", 330.0]]
 
 
 def test_a_missing_inventory_row_is_an_error_not_a_guess():
@@ -291,7 +294,10 @@ def test_committed_cells_obey_the_limits():
             "p_low_stockpile_only",
             "p_high_stockpile_only",
             "holds_sealed_town",
+            "reading",
         }
+        expected = "extrapolation" if sc["era"] == "modern" else "historical"
+        assert set(c["reading"]) == {expected}
         order = c.sort_values(["cell_lat", "cell_lon"]).reset_index(drop=True)
         pd.testing.assert_frame_equal(c, order)
         assert ((c["p_low"] <= c["p_median"]) & (c["p_median"] <= c["p_high"])).all()
@@ -331,6 +337,7 @@ def test_by_delivery_output_holds_no_place_and_adds_up():
     d = pd.read_csv(OUT / "by_delivery.csv")
     assert set(d.columns) == {
         "scenario",
+        "reading",
         "attacker",
         "stock_year",
         "delivery",
@@ -345,8 +352,8 @@ def test_by_delivery_output_holds_no_place_and_adds_up():
     summed = d.groupby(["scenario", "attacker"])["delivered_median"].sum()
     gap = (summed - total["delivered_median"]).abs() / total["delivered_median"].clip(lower=1)
     assert len(summed) == len(total) and gap.max() < 0.25
-    assert set(d.loc[d["stock_year"] == 1950, "delivery"]) == {"unspecified"}
-    assert not (set(d.loc[d["stock_year"] != 1950, "delivery"]) & {"unspecified"})
+    assert set(d.loc[d["stock_year"] == 1950, "delivery"]) == {"bomber"}
+    assert "unspecified" not in set(d["delivery"])
 
 
 @needs_run
@@ -363,3 +370,187 @@ def test_the_viewer_holds_no_town_name():
     text = (OUT / "viewer" / "index.html").read_text(encoding="utf-8").lower()
     for name in ("moscow", "washington", "beijing", "omaha", "severodvinsk"):
         assert name not in text
+
+
+def run_towns() -> pd.DataFrame:
+    """Towns of two target countries, in distinct half-degree cells."""
+    n = 40
+    return pd.DataFrame(
+        {
+            "lat": 40.0 + np.arange(n) * 0.5,
+            "lon": 10.0 + np.arange(n) * 0.5,
+            "country": ["RUS"] * 20 + ["USA"] * 20,
+            "pop": 20_000.0 + 1_000.0 * np.arange(n),
+            "sealed": False,
+        }
+    )
+
+
+def run_scenario_of(multiplier: float = 1.0, draws: int = 200, score_noise: float = 0.0, seed=0):
+    attackers = [
+        {
+            "state": "US",
+            "stock_year": 2026,
+            "inventory_low": ["deployed", "fas_status"],
+            "inventory_high": ["military_stockpile", "fas_status"],
+            "theatre_share": [0.01, 0.02, 0.03],
+            "reliability": {"all": [0.8, 0.8, 0.9]},
+            "fraction_lost_to_defences": [0, 0, 0],
+            "targets": ["RUS"],
+            "stock_multiplier": multiplier,
+        }
+    ]
+    sc = {
+        "id": "t",
+        "era": "modern",
+        "evidence": "e",
+        "cell_deg": 0.5,
+        "attackers": attackers,
+    }
+    towns = run_towns()
+    rng = np.random.default_rng(seed)
+    base = 0.2 + 0.6 * np.linspace(0, 1, len(towns))[:, None]
+    scores = np.tile(base, (1, draws)) * (1 + score_noise * rng.normal(size=(len(towns), draws)))
+    universe = rn.Universe(towns, 1.0)
+    return rn.run_scenario(sc, universe, scores, draws, rng)
+
+
+def test_the_map_itself_follows_the_scenario_stockpile():
+    """run_scenario, the path that writes the map: half the stock halves what it delivers and moves
+    each cell's probability as the formula says. Fails if the map uses any other number of warheads."""
+    full_cells, full = run_scenario_of(1.0)
+    half_cells, half = run_scenario_of(0.5)
+    a, b = full["warheads"][0], half["warheads"][0]
+    assert a["delivered_median"] > 1 and b["delivered_median"] == pytest.approx(
+        a["delivered_median"] / 2, rel=0.1
+    )
+    assert (half_cells["p_median"] < full_cells["p_median"]).all()
+    towns = run_towns()
+    towns = towns[towns["country"] == "RUS"]
+    score = 0.2 + 0.6 * np.linspace(0, 1, 40)[:20]
+    share = score / score.sum()
+    expected = 1 - (1 - share) ** a["delivered_median"]
+    # The draws are of a skewed range, so the median of P lies near P at the median of W.
+    assert np.sort(full_cells["p_median"])[:20] == pytest.approx(np.sort(expected), abs=0.03)
+
+
+def test_the_map_interval_holds_stockpile_draws_when_the_model_is_fixed():
+    """The joint interval carries the stockpile: with one score for every draw the only spread left
+    comes from the warheads. Fails if the interval is taken from the model-only draws."""
+    cells, _ = run_scenario_of(1.0, score_noise=0.0)
+    assert (cells["p_high_model_only"] - cells["p_low_model_only"]).max() == pytest.approx(0)
+    assert (cells["p_high"] - cells["p_low"]).max() > 0.01
+    assert cells["p_high"].to_numpy() == pytest.approx(cells["p_high_stockpile_only"].to_numpy())
+
+
+def test_the_map_interval_holds_model_draws_when_the_stockpile_is_fixed():
+    cells, _ = run_scenario_of(1.0, score_noise=0.2)
+    assert (cells["p_high_model_only"] - cells["p_low_model_only"]).max() > 0.01
+
+
+def test_a_model_draw_resamples_whole_blocks():
+    """On complete lists a bag keeps every row, so only the resampling of blocks can make two draws
+    differ. Fails if fit_draw uses each block once."""
+    n = 300
+    rng = np.random.default_rng(0)
+    pop = rng.uniform(4, 6, n)
+    train = pd.DataFrame(
+        {
+            "log_pop": pop,
+            "listed": (pop + rng.normal(0, 0.5, n) > 5).astype(int),
+            "complete": True,
+            "plan_id": "a",
+            "place_id": [f"p{i}" for i in range(n)],
+            "block": np.arange(n) % 30,
+        }
+    )
+    spec = rn.Spec("rule", rn.logistic_all, ["log_pop"])
+    grid = pd.DataFrame({"log_pop": [4.0, 5.0, 6.0]})
+    a = rn.fit_draw(spec, train, 1).predict_proba(grid)[:, 1]
+    b = rn.fit_draw(spec, train, 2).predict_proba(grid)[:, 1]
+    assert np.abs(a - b).max() > 1e-3
+
+
+def test_a_named_target_with_no_town_is_an_error_not_a_silent_shift_of_warheads():
+    towns = run_towns()
+    sc = {
+        "id": "t",
+        "era": "historical",
+        "evidence": "e",
+        "cell_deg": 0.5,
+        "attackers": [{"state": "US", "targets": ["RUS", "UK"]}],
+    }
+    with pytest.raises(ValueError, match="UK"):
+        rn.run_scenario(
+            sc, rn.Universe(towns, 1.0), np.ones((len(towns), 2)), 2, np.random.default_rng(0)
+        )
+
+
+def test_every_committed_scenario_names_only_countries_its_universe_holds():
+    from nucprob.paths import PROCESSED
+
+    if not (PROCESSED / "transfer_places.parquet").exists():
+        pytest.skip("no built tables")
+    west = set(rn.west_universe().towns["country"])
+    for sc in rn.load_scenarios():
+        if sc["universe"] == "wp_west_1965":
+            assert {c for a in sc["attackers"] for c in a["targets"]} <= west
+
+
+def test_one_interceptor_force_is_drawn_once_and_shared():
+    """Three attackers of 100, 100 and 200 warheads against one force of 40: the force stops the same
+    number in every attacker's draw, in proportion to each one's warheads, and no more than 40 in all."""
+    n = 500
+    force = lambda w: {"slbm": {"available": np.full(n, w), "delivered": np.full(n, w)}}  # noqa: E731
+    parts = {"A": force(100.0), "B": force(100.0), "C": force(200.0)}
+    st.share_interceptors(
+        parts,
+        [{"defender": "D", "count": 40, "attackers": ["A", "B", "C"]}],
+        n,
+        np.random.default_rng(0),
+    )
+    a, c = parts["A"]["slbm"]["delivered"], parts["C"]["slbm"]["delivered"]
+    total = a + parts["B"]["slbm"]["delivered"] + c
+    assert c == pytest.approx(2 * a)
+    assert total.min() >= 360 and total.max() <= 400 and np.ptp(total) > 20
+
+
+def test_scenarios_give_each_defender_one_force():
+    for sc in rn.load_scenarios():
+        names = [g["defender"] for g in sc.get("interceptors", [])]
+        assert len(names) == len(set(names)), sc["id"]
+        assert not any("interceptors" in a for a in sc["attackers"]), sc["id"]
+        states = {a["state"] for a in sc["attackers"]}
+        for g in sc.get("interceptors", []):
+            assert set(g["attackers"]) <= states, sc["id"]
+
+
+def test_french_overseas_territories_are_not_in_the_modern_towns():
+    from nucprob.probmap import modern
+
+    d = pd.DataFrame(
+        {
+            "adm0_a3": ["FRA", "FRA", "FRA", "USA"],
+            "latitude": [48.8, -21.1, 4.9, 21.3],
+            "longitude": [2.3, 55.5, -52.3, -157.8],
+        }
+    )
+    assert modern.overseas(d).tolist() == [False, True, True, False]
+
+
+@needs_run
+def test_the_viewer_says_what_the_score_is_and_what_the_interval_holds_fixed():
+    text = (OUT / "viewer" / "index.html").read_text(encoding="utf-8")
+    m = json.loads((OUT / "manifest.json").read_text())
+    assert f'"score":"{m["score"]}"' in text
+    assert "how many towns it holds" in text and "holds the allocation rule" in text
+
+
+@needs_run
+def test_modern_rows_of_every_map_table_say_extrapolation():
+    for name in ("delivered.csv", "by_delivery.csv"):
+        d = pd.read_csv(OUT / name)
+        era = {s["id"]: s["era"] for s in rn.load_scenarios()}
+        modern_rows = d["scenario"].map(era) == "modern"
+        assert set(d.loc[modern_rows, "reading"]) == {"extrapolation"}
+        assert set(d.loc[~modern_rows, "reading"]) == {"historical"}

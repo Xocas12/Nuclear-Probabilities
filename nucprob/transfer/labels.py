@@ -132,6 +132,24 @@ def main_town(towns: pd.DataFrame) -> pd.Series:
     )
 
 
+def town_hits(own: pd.DataFrame, name_modern: str, printed: str) -> pd.DataFrame:
+    """Towns a target's names match. Several towns of 1940 can share one name of today (Kokura and
+    Yawata are both Kitakyushu now): a town's own old name, as printed or as the qualifier in
+    "Kitakyushu (Kokura)", then wins over the shared name."""
+    m = re.search(r"\((.+?)\)", name_modern)
+    own_names = [m.group(1)] if m else []
+    for keys in (set(variants(*own_names, printed)), set(variants(name_modern, printed))):
+        hit = [bool(keys & set(variants(n))) for n in own["name"]]
+        if any(hit):
+            return own[np.array(hit, dtype=bool)]
+    keys = set(variants(name_modern, printed))
+    hit = [
+        bool(keys & set(variants(n, m)))
+        for n, m in zip(own["name"], own["name_today"], strict=True)
+    ]
+    return own[np.array(hit, dtype=bool)]
+
+
 def link() -> pd.DataFrame:
     hand = hand_links()
     skip = unlinked()
@@ -170,12 +188,7 @@ def link() -> pd.DataFrame:
                     out["lat"], out["lon"], out["located_as"] = hand[key]
                     out["method"] = "hand"
                 else:
-                    keys = set(variants(*names))
-                    hit = [
-                        bool(keys & set(variants(n, m)))
-                        for n, m in zip(own["name"], own["name_today"], strict=True)
-                    ]
-                    town_hit = own[np.array(hit, dtype=bool)]
+                    town_hit = town_hits(own, t["name_modern"], names[1])
                     if len(town_hit):
                         h = main_town(town_hit)
                         named = h["place_id"]

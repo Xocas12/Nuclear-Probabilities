@@ -141,3 +141,5 @@ Northern Ireland 4.
   titles are today's (Remote Radar Head, MDP Wethersfield, BAE Systems Submarines for the
   Vickers yard at Barrow, Atomic Weapons Establishment for AWRE Aldermaston). The `site` column
   uses the 1980 names.
+
+**Provenance.** The pages this table cites are in `cited_pages.csv` in this folder: for each, the licence, retrieval date, status and sha256, with `python -m nucprob.sources.cited_pages` to fill in what is missing. Each is the page as fetched on that date, not as first read: the table was made from earlier copies, and nothing shows the two agree. Licences: Wikipedia CC BY-SA 4.0; ww2.dk states no open licence, so its pages are cited and not kept; the few others were not assessed. sha256 of this table: `456cc943214102992b06eb2e0dadc9795d4966b1d71a3e5c0afe54df18be5a84`.

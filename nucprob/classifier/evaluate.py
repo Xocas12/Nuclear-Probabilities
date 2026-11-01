@@ -1,6 +1,6 @@
 """The protocol's holdouts and comparison.
 
-- Leave one plan out: fit on every other group of the scope, without the towns of the left-out group,
+- Leave one document out: fit on every other group of the scope, without the towns of the left-out group,
   and score each list of that group. A town that stays in training carries its label from the other
   document into the fit; `keep_places=True` measures what that does.
 - Spatial blocks: 5 folds of 300 km blocks on three shifted grids; a place stays on one side of a
@@ -136,7 +136,7 @@ def _scored(rows: pd.DataFrame, scores: dict[str, np.ndarray], train: pd.DataFra
     return keep.assign(train_positives=int(train["listed"].sum()), **scores)
 
 
-def leave_one_plan_out(
+def leave_one_document_out(
     table: pd.DataFrame, models: list[Spec], n_bags: int, keep_places: bool = False
 ) -> tuple[list[dict], pd.DataFrame]:
     """Rows of `by_list`, and every held-out score, for the paired comparison."""
@@ -151,7 +151,7 @@ def leave_one_plan_out(
         if train["listed"].sum() == 0 or rows["listed"].sum() == 0:
             continue
         scores = {m.name: fit_bagged(m, train, n_bags).score(rows) for m in models}
-        label = "towns kept" if keep_places else "leave-one-plan-out"
+        label = "towns kept" if keep_places else "leave-one-document-out"
         out += by_list(rows, scores, f"{label} ({group})")
         kept.append(_scored(rows, scores, train))
     return out, pd.concat(kept, ignore_index=True) if kept else pd.DataFrame()

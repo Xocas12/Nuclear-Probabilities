@@ -148,3 +148,5 @@ What each role covers:
   and AFCENT's is *Allied Joint Force Command Brunssum*. Where an article's coordinate is a unit's later HQ, the 1965 HQ town
   was used instead. This applies, for example, to 1. Panzerdivision (Oldenburg today, Hannover
   in 1965) and 10. Panzerdivision.
+
+**Provenance.** The pages this table cites are in `cited_pages.csv` in this folder: for each, the licence, retrieval date, status and sha256, with `python -m nucprob.sources.cited_pages` to fill in what is missing. Each is the page as fetched on that date, not as first read: the table was made from earlier copies, and nothing shows the two agree. Licences: Wikipedia CC BY-SA 4.0; ww2.dk states no open licence, so its pages are cited and not kept; the few others were not assessed. sha256 of this table: `1121c9a5f6914c923c085e2f9344a0be378783a8e0f3c90909afe9f3edaec881`.

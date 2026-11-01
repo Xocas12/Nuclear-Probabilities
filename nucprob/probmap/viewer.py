@@ -57,13 +57,14 @@ def payload() -> dict:
                 "delivered": d[
                     ["attacker", "delivered_low", "delivered_median", "delivered_high"]
                 ].to_dict("records"),
-                "cells": c[columns].round(3).to_numpy().tolist(),
+                "cells": c[columns].round(2).to_numpy().tolist(),
             }
         )
     return {
         "scenarios": items,
         "land": land_paths(),
-        "shift": pd.read_csv(OUT / "domain_shift.csv").round(3).to_dict("records")[:2],
+        "shift": pd.read_csv(OUT / "domain_shift.csv").round(2).to_dict("records")[:2],
+        "score": json.loads((OUT / "manifest.json").read_text())["score"],
     }
 
 
@@ -90,12 +91,10 @@ th:first-child,td:first-child{text-align:left}
 details{margin:12px 0}
 </style></head><body><main>
 <h1>Probability that an area is struck, given a stockpile scenario</h1>
-<p class="note">Each delivered warhead falls on a town in proportion to a model's score. These are the
-consequences of stated assumptions, not forecasts. See REPORT.md: the score has not been shown to
-carry over to a plan it has not seen.</p>
+<p class="note" id="method"></p>
 <div class="row">
 <label>Scenario <select id="sc"></select></label>
-<label>Show <select id="band"><option value="2">median</option><option value="3">5th percentile</option><option value="4">95th percentile</option></select></label>
+<label>Show <select id="band"><option value="2">median</option><option value="3">low end of the interval</option><option value="4">high end of the interval</option></select></label>
 <div id="legend"><span>0</span><canvas id="ramp" width="200" height="12" style="border:0"></canvas><span>1</span></div>
 </div>
 <div class="warn" id="banner"></div>
@@ -106,6 +105,7 @@ carry over to a plan it has not seen.</p>
 <div id="tip" role="status"></div>
 </main><script>
 const D=__DATA__;
+document.getElementById("method").textContent=`The score here is the ${D.score}: each delivered warhead falls on a town with chance in proportion to a score that moves only a few times over a range of hundreds of times in population, so a cell's probability follows how many towns it holds as well as its people. What a town produced, housed or defended plays no part. These are consequences of stated assumptions, not forecasts. The interval runs from the 5th to the 95th percentile of draws of the model and the stockpile; it holds the allocation rule, who fires on whom and the list of towns fixed, so it is narrower than what is unknown. See REPORT.md: no score has been shown to beat population on a document it has not seen.`;
 const stops=[[205,226,251],[158,197,244],[109,167,236],[57,135,229],[28,92,171],[13,54,107]];
 function col(p){const x=Math.min(.9999,Math.max(0,p))*(stops.length-1),i=Math.floor(x),f=x-i,a=stops[i],b=stops[i+1];return `rgb(${a.map((v,k)=>Math.round(v+(b[k]-v)*f)).join(",")})`}
 const map=document.getElementById("map"),g=map.getContext("2d"),sel=document.getElementById("sc"),band=document.getElementById("band"),tip=document.getElementById("tip");
@@ -119,23 +119,27 @@ const X=(v,lon)=>(lon-v.c)*v.k*v.sc,Y=(v,lat)=>map.height-(lat-v.a)*v.sc;
 function draw(){const s=D.scenarios[sel.value],v=view=frame(s),b=+band.value;g.fillStyle=css("--surface");g.fillRect(0,0,map.width,map.height);
 g.fillStyle=css("--land");for(const ring of D.land){g.beginPath();ring.forEach((p,i)=>i?g.lineTo(X(v,p[0]),Y(v,p[1])):g.moveTo(X(v,p[0]),Y(v,p[1])));g.closePath();g.fill()}
 for(const q of s.cells){g.fillStyle=col(q[b]);const w=s.deg*v.k*v.sc,h=s.deg*v.sc;g.fillRect(X(v,q[1])+.5,Y(v,q[0]+s.deg)+.5,w-1,h-1);if(q[5]){g.strokeStyle=css("--ink");g.lineWidth=1;g.strokeRect(X(v,q[1])+1,Y(v,q[0]+s.deg)+1,w-2,h-2)}}
-document.getElementById("banner").textContent=(s.era=="modern"?"EXTRAPOLATION. A model of Cold War lists applied to present-day towns, whose populations and places are outside its training (two-sample ROC-AUC "+D.shift[0].value+" where 0.5 is no shift). Not a statement about any present plan. ":"HISTORICAL. ")+s.evidence;
+document.getElementById("banner").textContent=(s.era=="modern"?"EXTRAPOLATION. A score from Cold War lists applied to present-day towns from a map-label set. A classifier tells them from the training towns at ROC-AUC "+D.shift[0].value+" on ten features, where 0.5 is no shift. Not a statement about any present plan. ":"HISTORICAL. ")+s.evidence;
 document.getElementById("info").textContent=`${s.note} ${s.towns} towns on a ${s.deg}-degree grid.`+(s.cells.some(q=>q[5])?" Outlined cells hold a town of the sealed test set, which is not scored; a cell with only sealed towns is absent.":"");
 document.getElementById("del").innerHTML="<tr><th>Attacker</th><th>5th</th><th>median</th><th>95th</th></tr>"+s.delivered.map(d=>`<tr><td>${d.attacker}</td><td>${Math.round(d.delivered_low)}</td><td>${Math.round(d.delivered_median)}</td><td>${Math.round(d.delivered_high)}</td></tr>`).join("");
 document.getElementById("tab").innerHTML="<tr><th>Cell (S, W corner)</th><th>median</th><th>5th</th><th>95th</th></tr>"+s.cells.map(q=>`<tr><td>${q[0]}, ${q[1]}</td><td>${q[2]}</td><td>${q[3]}</td><td>${q[4]}</td></tr>`).join("")}
 map.addEventListener("mousemove",e=>{const s=D.scenarios[sel.value],v=view,b=map.getBoundingClientRect(),f=map.width/b.width,x=(e.clientX-b.left)*f,y=(e.clientY-b.top)*f,lon=x/(v.k*v.sc)+v.c,lat=(map.height-y)/v.sc+v.a;
 const q=s.cells.find(c=>lat>=c[0]&&lat<c[0]+s.deg&&lon>=c[1]&&lon<c[1]+s.deg);if(!q){tip.style.display="none";return}
-tip.textContent=`P ${q[2]} [${q[3]}, ${q[4]}]`+(q[5]?" (cell holds a sealed town)":"");tip.style.display="block";tip.style.left=e.clientX+14+"px";tip.style.top=e.clientY+14+"px"});
+tip.textContent=`P about ${q[2]} (${q[3]} to ${q[4]})`+(q[5]?" (cell holds a sealed town)":"");tip.style.display="block";tip.style.left=e.clientX+14+"px";tip.style.top=e.clientY+14+"px"});
 map.addEventListener("mouseleave",()=>tip.style.display="none");sel.onchange=draw;band.onchange=draw;draw();
 </script></body></html>
 """
 
 
+def render() -> str:
+    data = json.dumps(payload(), separators=(",", ":")).replace("</", "<\\/")
+    return PAGE.replace("__DATA__", data)
+
+
 def main() -> None:
     path = OUT / "viewer" / "index.html"
     path.parent.mkdir(parents=True, exist_ok=True)
-    data = json.dumps(payload(), separators=(",", ":")).replace("</", "<\\/")
-    path.write_text(PAGE.replace("__DATA__", data), encoding="utf-8")
+    path.write_text(render(), encoding="utf-8")
     print(path)
 
 

@@ -1,10 +1,11 @@
 {
-  "created": "2026-11-01T15:31:57+00:00",
-  "git_commit": "878e45e87f1a12390f547ba89beed271970e26e0",
+  "created": "2026-11-01T22:35:23+00:00",
+  "git_commit": "5a0d5178fc3ba34435a9cbf6f71f498a320c8b83",
+  "git_dirty": false,
   "protocol_sha256": "cc14e52ef3cce2f0562ea24195872a3cfa10a30571a0e13fb5dcb130914794f8",
-  "table_sha256": "03b2853024b481b5a3a8dd4049d363db2160eb0fd9fc873f44c1527bda1d24eb",
+  "table_sha256": "0a0f0d284cb97a4953364145301b2b8dbffeabbe2d529fb0943517505ec3e783",
   "inputs_sha256": {
-    "data/sources.yaml": "8108c74035c25f022d1301aa68fabdaa1d5b330cbd12feadb1771ca5e8ed9f6e",
+    "data/sources.yaml": "66ee1af85785662f306c9637b56ba1be49f06c55da12a196a94926c980b58557",
     "data/curated/labels/CATALOGUE.yaml": "d0ff4e2ea8628615e471f09099c45513e3db4902a7698b0c38fac2178d10a6fb",
     "data/curated/labels/PLANS.yaml": "b935e16551fe4b2984543211ccf8c27160924910668c3feb3897ad42c0117f34",
     "data/curated/labels/SCHEMA.md": "5850b91be6486e4c10a02e86d7bc13c3d05fc49092224fe3d2519ee22c7e95df",
@@ -32,7 +33,7 @@
     "data/curated/labels/us_1964_china_nuclear.csv": "a4e823254e3272bd8e105fd11d43ba7b2b2cccce01ca5d82b076df2ca2d8c9a0",
     "data/curated/labels/wp_1959_r5m_operation_atom.csv": "2332e83ae0d01e25c4a2d23fd8213724ef84262c7f419138b5a30e97917a90d4",
     "data/curated/labels/wp_1961_burza.csv": "7e8c268a8e8d6160563c71ba5e43d945a0c30f873672ce641984ea5c13890077",
-    "data/curated/labels/wp_1964_csla_plan.csv": "0973b2ccf3e7ae51fefd9f906b0967ad400dea384b8305a8dd58bdadf0868f57",
+    "data/curated/labels/wp_1964_csla_plan.csv": "13136d861634f2030bfde6c5f4c658c97ae5a282e3ecbc6bd39b2f87d2b72f2f",
     "data/curated/labels/wp_1965_coastal_front_zealand.csv": "4b5f9bd3d6bef5c2d3d44b3564b609eeaf685253c6e01104534f3736ced5d077",
     "data/curated/labels/wp_1965_hu_wargame.csv": "8568d33753145c803a2a38cad5be186d3436e2d6fd2f4dfcba52faee7c016fd8",
     "data/curated/labels/wp_1967_lato67.csv": "38573e21a7efdfa53f790eed2f4c5580d5c50e646cd97f85f718466e5e088465",
@@ -81,5 +82,16 @@
     "nmc_log_upop"
   ],
   "sealed_rows_excluded": 463,
-  "quick": false
+  "quick": false,
+  "outputs": {
+    "runs/classifier/calibration.csv": "fca9caf2025a7c44e219e051090744ea6ec736438a6e75c2baf3ba7325944fd6",
+    "runs/classifier/comparison.csv": "8655a1c4bb6eed1b098ff9590c0537fc3d991f00fb9959e3ad73aa156259b21e",
+    "runs/classifier/defence.csv": "f595c5dda36a8399ac7583677e2e1740a693d6ca5f9ac443ac3808c85cd5fcbf",
+    "runs/classifier/family_gain.csv": "63cbff1950c6ee49bd6eac28816887fbd5ba8376c6c725bb79ac7d5ec3025da9",
+    "runs/classifier/held_out_scores.csv.gz": "cb30cbd33c74139ad9f47d02a1fcf58421238a55303dbd5ef81c6afcb9dc093d",
+    "runs/classifier/lists.csv": "0b32a38890bdca12f83f3c6494030a0268ae23f930661c230c58214854f902f3",
+    "runs/classifier/scopes.csv": "b5e05531da68f76d9f6aaba751cb094197a9d7ed86cf50967c6feaeae431900e",
+    "runs/classifier/selection.csv": "bce8d589bb2d019842feb9977f5ffd840391d32d5f2db36d28fd25b889a473e7",
+    "runs/classifier/state_gate.csv": "7daef4d13ce02bdd17275f7c92fe4a191b4c2d8d4a4e5f104da9e82703a78061"
+  }
 }

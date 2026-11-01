@@ -2,9 +2,9 @@
 
 > **Rerun 1 November 2026** on designated rows only and on towns geocoded within their own unit (protocol, fourth amendment). The classifier's reading is `REPORT.md`. Lists here cover whole countries, not the sectors of `SECTORS.yaml`.
 
-The smaller target lists (PLAN sections 4.5 and 5.2) are too small to train on. They test
+The smaller target lists (PLAN sections 4.5 and 5.2) were first too small to train on, and tested
 whether a model fitted on the Soviet bloc in 1956 ranks another plan's targets above the other
-places of that plan's country and date. Each list needs a **place universe**: every town of its
+places of that plan's country and date. The classifier (`configs/protocol.yaml`) now also trains on them. Each list needs a **place universe**: every town of its
 countries near its date, with the same features as the bloc's towns. This folder holds those
 universes. The code is in `nucprob/transfer/`.
 

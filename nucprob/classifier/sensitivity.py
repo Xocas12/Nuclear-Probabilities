@@ -13,7 +13,15 @@ Then the Soviet towns of the SAC list, whose population is the 1959 census for a
 the population rule and LightGBM on the 1939 census instead (earlier than the document, and missing
 for towns founded after it), against the same on 1959.
 
-Writes runs/classifier/sensitivity.csv and runs/classifier/ussr_population.csv.
+Then two checks the review of 59a35e6 asked for (configs/protocol_amendment_6.yaml):
+- how far SAC's "complete" negatives lie beside the study's own airfield list, and the SAC gain without
+  those within 10 km;
+- how well a town's columns identify its document, with folds grouped by place.
+
+and how near a held-out town's nearest training town lies, since spatial blocks have no buffer.
+
+Writes runs/classifier/sensitivity.csv, ussr_population.csv, airfield_negatives.csv,
+document_identification.csv, block_neighbours.csv and sensitivity_manifest.json.
 """
 
 import os
@@ -21,10 +29,15 @@ import os
 os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
 os.environ.setdefault("OMP_NUM_THREADS", "1")
 
+import datetime as dt
+import json
+
 import numpy as np
 import pandas as pd
+from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import GroupKFold, cross_val_predict
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
@@ -41,7 +54,11 @@ from nucprob.classifier.fit import (
 )
 from nucprob.classifier.run import SAC, positives_of, scopes, usable
 from nucprob.features.registry import FEATURES
-from nucprob.paths import PROCESSED, RUNS
+from nucprob.geo import Points
+from nucprob.model.splits import BLOCK_KM, assign_blocks, folds
+from nucprob.outputs import hashes, start_record
+from nucprob.paths import CURATED, PROCESSED, RUNS
+from nucprob.sources.fetch import sha256
 
 OUT = RUNS / "classifier"
 PLUS = "population + country"
@@ -137,7 +154,105 @@ def ussr_population(table: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(out)
 
 
+def airfield_distance_km(rows: pd.DataFrame) -> np.ndarray:
+    """Each town's distance to the nearest row of SAC's airfield list."""
+    fields = pd.read_csv(CURATED / "labels" / "us_1956_sac_airfields.csv")
+    fields = fields[fields["lat"].notna() & fields["lon"].notna()]
+    dist, _ = Points(fields["lat"].to_numpy(), fields["lon"].to_numpy()).nearest(
+        rows["lat"].to_numpy(), rows["lon"].to_numpy()
+    )
+    return np.ravel(dist)
+
+
+def airfield_negatives(rows: pd.DataFrame, selected: str, bags: int) -> pd.DataFrame:
+    """SAC's town list is complete for towns, but a town off it may sit beside an airfield SAC lists
+    apart. The reading on all towns, and with negatives within 10 km of such an airfield left out."""
+    sac = rows[rows["plan_id"] == SAC].reset_index(drop=True)
+    near = airfield_distance_km(sac)
+    negative = sac["listed"].to_numpy(int) == 0
+    keep = ~(negative & (near <= 10))
+    out = []
+    for label, part in (("all towns", sac), ("negatives within 10 km left out", sac[keep])):
+        part = part.reset_index(drop=True)
+        models = [
+            Spec(PLUS, logistic_country, ["log_pop", "country"]),
+            Spec(selected, FACTORY[selected], ALL_FEATURES),
+        ]
+        s = ev.spatial_scores(part, models, bags)
+        y, doc, block = part["listed"].to_numpy(int), part["plan_id"].to_numpy(), part["block"]
+        out.append(
+            {
+                "towns": label,
+                "rows": len(part),
+                "negatives": int((y == 0).sum()),
+                "negatives_within_5km": int((negative & (near <= 5)).sum()),
+                "negatives_within_10km": int((negative & (near <= 10)).sum()),
+                "a_pr_auc": ev.weighted_pr_auc(y, s[selected], doc),
+                "b_pr_auc": ev.weighted_pr_auc(y, s[PLUS], doc),
+            }
+            | ev.paired_bootstrap(y, s[selected], s[PLUS], doc)
+            | ev.block_bootstrap(y, s[selected], s[PLUS], doc, block.to_numpy())
+        )
+    return pd.DataFrame(out)
+
+
+def document_identification(rows: pd.DataFrame) -> pd.DataFrame:
+    """Cross-validated share of rows whose document a classifier names from the columns, against always
+    naming the largest. Folds are grouped by place, so a town's own label cannot help."""
+    y = rows["plan_id"].astype("category").cat.codes.to_numpy()
+    sets = {
+        "all permitted": ALL_FEATURES,
+        "no national power": without(NMC_FEATURES),
+        "no source markers": without(NMC_FEATURES, DEFENCE, MILITARY),
+        "population only": ["log_pop"],
+    }
+    out = []
+    for name, columns in sets.items():
+        p = cross_val_predict(
+            HistGradientBoostingClassifier(max_iter=60, max_depth=4, random_state=0),
+            rows[columns],
+            y,
+            cv=GroupKFold(4),
+            groups=rows["place_id"].to_numpy(),
+        )
+        out.append(
+            {
+                "columns": name,
+                "rows": len(y),
+                "documents": len(np.unique(y)),
+                "accuracy": float((p == y).mean()),
+                "largest_document_share": float(np.bincount(y).max() / len(y)),
+            }
+        )
+    return pd.DataFrame(out)
+
+
+def block_neighbours(rows: pd.DataFrame) -> pd.DataFrame:
+    """Spatial folds have no buffer. The share of held-out rows with a training town within r km."""
+    rows = rows.reset_index(drop=True)
+    lat, lon = rows["lat"].to_numpy(float), rows["lon"].to_numpy(float)
+    out = []
+    for offset in ev.GRID_OFFSETS:
+        blocks = pd.Series(assign_blocks(lat, lon, BLOCK_KM, offset), index=rows.index)
+        fold = np.asarray(folds(blocks, rows["listed"], ev.N_FOLDS, seed=int(offset)))
+        near = np.full(len(rows), np.inf)
+        for f in range(ev.N_FOLDS):
+            test = fold == f
+            dist, _ = Points(lat[~test], lon[~test]).nearest(lat[test], lon[test])
+            near[test] = np.ravel(dist)
+        out.append(
+            {
+                "grid_offset_km": offset,
+                "rows": len(rows),
+                "within_25km": float((near <= 25).mean()),
+                "within_50km": float((near <= 50).mean()),
+            }
+        )
+    return pd.DataFrame(out)
+
+
 def main() -> None:
+    started = start_record()
     full = pd.read_parquet(PROCESSED / "classifier_table.parquet")
     table = usable(full)
     groups, _ = scopes(table, positives_of(full))
@@ -151,6 +266,25 @@ def main() -> None:
         print(scope, flush=True)
         pd.DataFrame(out).to_csv(OUT / "sensitivity.csv", index=False, float_format="%.4f")
     assert np.isfinite(pd.DataFrame(out)["delta"]).all()
+    sac_scope = "single document: SAC 1956 (not a state model)"
+    airfield_negatives(groups[sac_scope], best[sac_scope], N_BAGS).to_csv(
+        OUT / "airfield_negatives.csv", index=False, float_format="%.4f"
+    )
+    document_identification(groups["global, all attacker documents"]).to_csv(
+        OUT / "document_identification.csv", index=False, float_format="%.4f"
+    )
+    block_neighbours(groups["global, all attacker documents"]).to_csv(
+        OUT / "block_neighbours.csv", index=False, float_format="%.4f"
+    )
+    written = ["sensitivity.csv", "ussr_population.csv", "block_neighbours.csv"]
+    written += ["airfield_negatives.csv", "document_identification.csv"]
+    manifest = {
+        "created": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
+        **started,
+        "table_sha256": sha256(PROCESSED / "classifier_table.parquet"),
+        "outputs": hashes(OUT / f for f in written),
+    }
+    (OUT / "sensitivity_manifest.json").write_text(json.dumps(manifest, indent=2))
 
 
 if __name__ == "__main__":

@@ -55,16 +55,3 @@ def load_country(code: str, raw: Path = RAW) -> pd.DataFrame:
     df["population"] = pd.to_numeric(df["population"], errors="coerce").fillna(0).astype(int)
     df["dem"] = pd.to_numeric(df["dem"], errors="coerce")  # SRTM3 or GTOPO30 mean elevation, m
     return df.drop(columns=["cc2", "admin3", "admin4", "timezone", "modified"])
-
-
-def load_admin1(raw: Path = RAW) -> pd.DataFrame:
-    df = pd.read_csv(
-        raw / "geonames" / "admin1CodesASCII.txt",
-        sep="\t",
-        header=None,
-        names=["code", "name", "asciiname", "geonameid"],
-        keep_default_na=False,
-        quoting=3,
-    )
-    df[["country", "admin1"]] = df["code"].str.split(".", n=1, expand=True)
-    return df
