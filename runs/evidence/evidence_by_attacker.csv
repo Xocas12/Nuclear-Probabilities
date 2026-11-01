@@ -1,0 +1,18 @@
+attacker,doc_type,grade,role,documents,lists,rows
+(none: expectation of a defender),civil_defence,A,excluded,1,1,16
+(none: expectation of a defender),civil_defence,A,test-expectation,2,2,3155
+(none: expectation of a defender),civil_defence,C,test-expectation,2,2,155
+(none: expectation of a defender),mirror,A,test-expectation,2,2,102
+Czechoslovakia,war_plan,A,train,1,1,21
+Poland,exercise,B,train,1,1,23
+Poland,war_plan,C,train,3,3,19
+US,policy_study,A,train,2,2,11
+US,policy_study,B,train,1,1,4
+US,requirements_study,A,train,1,2,2343
+US,requirements_study,B,excluded,1,1,43
+US,target_selection,A,train,1,1,42
+USSR,reconstruction,D,excluded,1,1,1
+USSR,training,B,train,1,1,19
+Warsaw Pact,exercise,A,train,1,1,57
+Warsaw Pact,reconstruction,D,excluded,1,1,9
+Warsaw Pact,wargame,A,train,1,1,23

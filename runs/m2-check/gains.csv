@@ -1,0 +1,35 @@
+target,comparison,model,baseline,pr_auc,baseline_pr_auc,gain_mean,gain_std,pooled_oof_gain,within_country_gain
+has_dgz,country term over the population rule,population rule + country,population rule,0.6963,0.6497,0.0466,0.0202,0.0491,-0.0167
+has_dgz,all features over the population rule,"LightGBM, all features",population rule,0.7368,0.6497,0.0871,0.0295,0.0869,0.0146
+has_dgz,all features over the population rule + country,"LightGBM, all features",population rule + country,0.7368,0.6963,0.0405,0.0266,0.0378,0.0313
+has_dgz,all features over population + country,"LightGBM, all features","LightGBM, population family + country",0.7368,0.6913,0.0455,0.0238,0.0442,0.0386
+has_dgz,country term over the population family,"LightGBM, population family + country","LightGBM, population family",0.6913,0.6798,0.0115,0.0104,0.0136,0.0058
+has_dgz,location over the population family,"LightGBM, population + location","LightGBM, population family",0.7061,0.6798,0.0263,0.0202,0.0258,0.0161
+has_dgz,administrative over population (pooled),"LightGBM, population + administrative","LightGBM, population family",0.6793,0.6798,-0.0005,0.0061,-0.0009,-0.0017
+has_dgz,administrative over population + country,"LightGBM, population + country + administrative","LightGBM, population family + country",0.6889,0.6913,-0.0024,0.0072,-0.0030,-0.0042
+has_dgz,geography over population (pooled),"LightGBM, population + geography","LightGBM, population family",0.7135,0.6798,0.0337,0.0278,0.0342,0.0244
+has_dgz,geography over population + country,"LightGBM, population + country + geography","LightGBM, population family + country",0.7138,0.6913,0.0224,0.0183,0.0216,0.0195
+has_dgz,industry over population (pooled),"LightGBM, population + industry","LightGBM, population family",0.6931,0.6798,0.0133,0.0130,0.0148,0.0093
+has_dgz,industry over population + country,"LightGBM, population + country + industry","LightGBM, population family + country",0.6952,0.6913,0.0039,0.0098,0.0033,0.0023
+has_dgz,military over population (pooled),"LightGBM, population + military","LightGBM, population family",0.6946,0.6798,0.0148,0.0176,0.0143,0.0130
+has_dgz,military over population + country,"LightGBM, population + country + military","LightGBM, population family + country",0.7019,0.6913,0.0106,0.0163,0.0089,0.0099
+has_dgz,transport over population (pooled),"LightGBM, population + transport","LightGBM, population family",0.7076,0.6798,0.0278,0.0119,0.0274,0.0249
+has_dgz,transport over population + country,"LightGBM, population + country + transport","LightGBM, population family + country",0.7214,0.6913,0.0301,0.0114,0.0281,0.0258
+has_dgz,geography over population + location,"LightGBM, population + location + geography","LightGBM, population + location",0.7133,0.7061,0.0072,0.0210,0.0089,0.0077
+listed,country term over the population rule,population rule + country,population rule,0.8222,0.7733,0.0489,0.0196,0.0551,-0.0090
+listed,all features over the population rule,"LightGBM, all features",population rule,0.8451,0.7733,0.0718,0.0154,0.0781,0.0197
+listed,all features over the population rule + country,"LightGBM, all features",population rule + country,0.8451,0.8222,0.0229,0.0190,0.0230,0.0286
+listed,all features over population + country,"LightGBM, all features","LightGBM, population family + country",0.8451,0.8066,0.0384,0.0184,0.0389,0.0357
+listed,country term over the population family,"LightGBM, population family + country","LightGBM, population family",0.8066,0.7850,0.0216,0.0087,0.0248,0.0038
+listed,location over the population family,"LightGBM, population + location","LightGBM, population family",0.8272,0.7850,0.0422,0.0152,0.0451,0.0231
+listed,administrative over population (pooled),"LightGBM, population + administrative","LightGBM, population family",0.7876,0.7850,0.0025,0.0054,0.0031,0.0008
+listed,administrative over population + country,"LightGBM, population + country + administrative","LightGBM, population family + country",0.8059,0.8066,-0.0008,0.0035,-0.0009,-0.0002
+listed,geography over population (pooled),"LightGBM, population + geography","LightGBM, population family",0.8318,0.7850,0.0467,0.0189,0.0524,0.0276
+listed,geography over population + country,"LightGBM, population + country + geography","LightGBM, population family + country",0.8310,0.8066,0.0243,0.0150,0.0265,0.0230
+listed,industry over population (pooled),"LightGBM, population + industry","LightGBM, population family",0.8032,0.7850,0.0181,0.0150,0.0207,0.0061
+listed,industry over population + country,"LightGBM, population + country + industry","LightGBM, population family + country",0.8101,0.8066,0.0035,0.0068,0.0030,0.0028
+listed,military over population (pooled),"LightGBM, population + military","LightGBM, population family",0.8062,0.7850,0.0212,0.0160,0.0229,0.0120
+listed,military over population + country,"LightGBM, population + country + military","LightGBM, population family + country",0.8137,0.8066,0.0070,0.0118,0.0065,0.0082
+listed,transport over population (pooled),"LightGBM, population + transport","LightGBM, population family",0.8265,0.7850,0.0415,0.0122,0.0431,0.0286
+listed,transport over population + country,"LightGBM, population + country + transport","LightGBM, population family + country",0.8325,0.8066,0.0259,0.0113,0.0251,0.0249
+listed,geography over population + location,"LightGBM, population + location + geography","LightGBM, population + location",0.8336,0.8272,0.0064,0.0075,0.0091,0.0062

@@ -647,14 +647,14 @@ Phases 1 and 2 run side by side. Transcribing the labels is the long pole, so it
     LightGBM (common) minus the population rule (`runs/m4-transfer-check/paired.csv`).
   - City lists are ranked by size, and on two of them the bloc model ranks the top of the
     list clearly worse than population alone. Operation Alert: PR-AUC 0.33 against 0.70,
-    -0.37 [-0.45, -0.25]; precision@k 0.37 against 0.59, -0.22 [-0.33, -0.10]. The 1945
-    Target Committee: PR-AUC 0.26 against 0.88, -0.62 [-0.75, -0.39]; precision@k 0.24
-    against 0.76, -0.53 [-0.82, -0.29]. Canada 1956 matches (PR-AUC -0.02 [-0.11, +0.06]).
+    -0.37 [-0.45, -0.26]; precision@k 0.37 against 0.59, -0.22 [-0.33, -0.08]. The 1945
+    Target Committee: PR-AUC 0.26 against 0.88, -0.62 [-0.75, -0.40]; precision@k 0.24
+    against 0.76, -0.53 [-0.82, -0.29]. Canada 1956 matches (PR-AUC -0.03 [-0.13, +0.06]).
     ROC-AUC (0.94-0.97 against 0.96-0.98) hid most of this.
-  - On the mixed civil and military lists no gain is detectable: Square Leg PR-AUC +0.02
-    [-0.06, +0.10], precision@k 0.00 [-0.07, +0.09]; Lato-67 -0.09 [-0.21, +0.09] and
-    -0.04 [-0.22, +0.17]. These intervals include zero.
-  - One exception: the Polish mirror list gains in PR-AUC, +0.13 [+0.06, +0.20], with
+  - On the mixed civil and military lists no gain is detectable: Square Leg PR-AUC +0.02 [-0.04, +0.11],
+    precision@k 0.00 [-0.07, +0.09]; Lato-67 -0.09 [-0.21, +0.09] and
+    0.00 [-0.17, +0.17]. These intervals include zero.
+  - One exception: the Polish mirror list gains in PR-AUC, +0.14 [+0.07, +0.21], with
     precision@k +0.07 [0.00, +0.22]. It records what Polish staff expected NATO to strike.
   - This is a check, not a result.
 - **Left for M4's L items:** TR-82 and the DTIC appendices (blocked), the UK lists at Kew, the
@@ -743,13 +743,13 @@ Data card: `data/curated/sac1956/README.md`.
   feature. Scored inside each country (PR-AUC per country with at least ten places of each class,
   weighted by positives), every feature adds only 0.02 over the rule for "on the list" (0.82 to
   0.84) and 0.02 for "given a DGZ" (0.72 to 0.73). Over population plus country
-  (`gains.csv`), transport adds +0.03 and geography +0.02, industry and administration about
-  0, and military +0.01, each with a fold spread as large or nearly as large as the gain itself.
+  (`gains.csv`), transport adds +0.03 (fold spread 0.01), geography +0.02 (0.02) and military
+  +0.01 (0.01); industry and administration add about 0.
   Geography's anchor distances (km to Moscow, to a SAC base) partly just say where a town is:
   over a location-only control (latitude and longitude) geography adds +0.01. Inside the USSR
   every feature beats the rule (0.78 to 0.81), and in Hungary (0.79 to 0.86); in Poland,
   Bulgaria, Romania and China the rule alone scores higher than the global model. The military
-  sites add almost nothing once the rest are in (0.846 with them, 0.845 without). Dropping the
+  sites add almost nothing once the rest are in (0.845 with them, 0.846 without). Dropping the
   anachronistic features costs about 0.02.
 - **Closed towns and cover names.** None of the ten closed towns appears on the 1956 list under
   its own name, but SAC did list the plants of three of them under the open town next door:

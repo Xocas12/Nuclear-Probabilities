@@ -12,7 +12,7 @@ fails if a row does not pass.
 | #5 airfield verdicts | #15 | yes | `test_sac1956_crossdoc.py`; BRODY read again on the scan (`5005-02511`) | - |
 | #6 closed towns' cover names | #20 | yes | `runs/qa/issues.csv`, `test_labels.py` | - |
 | #7 rank floor | #14 | yes | `test_rank_floor.py`; country means of `pop_rank_pct` within 0.009 | - |
-| #8 transfer read in ROC | #17 | yes | `test_transfer_paired.py` | The rerun changed one reading: PR-AUC on the Polish mirror list now gains, +0.13 [+0.06, +0.20]. The card and PLAN name this exception, and the test fails on any other. |
+| #8 transfer read in ROC | #17 | yes | `test_transfer_paired.py` | The rerun changed two readings: PR-AUC on the Polish mirror list now gains, +0.14 [+0.07, +0.21], and ROC-AUC on Square Leg, +0.05 [+0.01, +0.10]. The card names both, and the test fails on any other. |
 | #9 NaN read as 0 km | #16 | yes | `runs/qa/issues.csv`, `test_transfer_military.py` | PRs #16 and #17 conflict in effect: the bootstrap sorted a NaN score as a top score. `compare` now skips a model that left towns unscored. |
 | #10 district_seat tier | #19 | yes | `runs/qa/issues.csv`, `test_features.py` | - |
 | #11 Austrian Land seats | #18 | yes | `runs/qa/issues.csv`, `test_transfer_places.py` | - |

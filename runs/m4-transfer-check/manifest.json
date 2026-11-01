@@ -1,15 +1,15 @@
 {
   "milestone": "M4 transfer check",
-  "created": "2026-10-10T22:52:16+00:00",
-  "git_commit": "2537a516d1ba8de6a9e8bfaf80cd0bfa20779e3e",
+  "created": "2026-11-01T09:20:25+00:00",
+  "git_commit": "e917cdf3ec749b1ef7e7cdc6f9d8d0b6091a7ac3",
   "data": {
-    "dataset_sac1956.parquet": "9d237ec9afcf8e007c16e501dcbc3f708088c7ba7e2f0e2d1e9f00b797c7ec8a",
-    "features_transfer.parquet": "4e6e32a70fe274f2c9ac0f8b6976198156a66d9fca961c22d22367e092a08ffa",
-    "labels_transfer.parquet": "4d347981eb81d262fde57f479fbf5c283fa6701868b65aa89acf275c16c4e5b6"
+    "dataset_sac1956.parquet": "595b6fead2ecb8453198bc359cef75a21f1e365158b83f96ec24639545ada1db",
+    "features_transfer.parquet": "e33871f71fe8b232bf0c7447a880d66c3eb3781d662ae70cfd09b174f88d2279",
+    "labels_transfer.parquet": "ee1a1f2dca5ed6f06dfc1d727c1cad64bc13b2159dea5abe5042fd3f05d1f025"
   },
   "train": {
-    "rows": 2127,
-    "positives": 1011
+    "rows": 2145,
+    "positives": 1039
   },
   "bloc_lists": "fitted without the list's country (leave-country-out)",
   "models": {
@@ -87,5 +87,6 @@
     ]
   },
   "min_positives": 2,
+  "paired_bootstrap": "2000 stratified resamples, model minus population rule",
   "note": "a check of the transfer pipeline, not results: the protocol is frozen at M5"
 }
