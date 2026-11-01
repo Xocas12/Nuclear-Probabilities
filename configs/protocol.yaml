@@ -82,4 +82,37 @@ limits:
   - no weapon-allocation or attack-optimisation output
   - no detail beyond what the area map needs; historical labels stay at their documented resolution
 
-amendments: []
+amendments:
+  - date: 2026-11-01
+    # Committed before any model named in this protocol was fitted. The transfer check and M2
+    # check of the earlier milestones had already been read (what_was_already_seen).
+    reasons: the owner's brief requires defences as features; the FRG table became available
+    changes:
+      features:
+        defences: log_km_to_sam, log_km_to_air_defence, log_air_defence_sites_50km from the curated
+          site tables, as of each document; NaN where no table covers the town. S-25 is one point
+          while NATO's Nike sites are many, so the family's transfer across regions is not expected
+          to be meaningful and its finding is read within a region.
+        military: the three distances of nucprob.transfer.features.MILITARY_GROUPS are permitted
+          features, as of each document, NaN outside a table's scope.
+        document_year: Western European towns take power plants and sites as of the document's
+          year, because one region's lists run from 1961 to 1977.
+      universe: the FRG's 583 towns of 1961 join the Western European universe (towns_frg_1961.md).
+      scopes:
+        - global, all attacker documents (exercises included, labelled so)
+        - global, plan documents only (state_models.plan_doc_types, grades A-C)
+        - each attacker the gate allows, on its plan documents
+        - warsaw_pact_exercise_model if its own gate allows; always labelled exercise-based
+      model_selection: the best candidate of a scope is the higher positive-weighted mean of
+        per-list PR-AUC under spatial blocks, lists with at least 2 positives. No other holdout
+        chooses anything.
+      readings:
+        lists_too_small: a list with fewer than 2 linked positives is reported without metrics
+        spatial_score: a row's score is the mean of its held-out scores on the three grids
+        family_gain: LightGBM with population, country and one family, against population and
+          country, on the US 1956 complexes, by spatial blocks, read with the same bootstrap
+        calibration: on complete lists only (an unlabeled town is not a negative), raw and with
+          isotonic calibration cross-fitted on the spatial folds
+      sealed: scored by python -m nucprob.classifier.sealed, which writes a lock and refuses a
+        second run. It waits for an independent review of these models, so that a fault found in
+        review is not fixed after the sealed set has been read.

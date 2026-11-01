@@ -98,6 +98,29 @@ def gate(positives: Mapping[str, int], reg: pd.DataFrame, rule: Mapping) -> pd.D
     return pd.DataFrame(rows)
 
 
+def exercise_gate(positives: Mapping[str, int], reg: pd.DataFrame, rule: Mapping) -> dict:
+    """The one pooled model the protocol allows on Warsaw Pact documents including exercises:
+    every attacker of the Pact, every document type with role train. Always exercise-based."""
+    pact = reg[reg["plan_id"].str.startswith("wp_") & reg["role"].eq("train")]
+    pos = pact.assign(pos=pact["plan_id"].map(positives).fillna(0))
+    linked = pos.groupby("group")["pos"].sum()
+    documents, total = int((linked > 0).sum()), int(linked.sum())
+    reasons = []
+    if total < rule["min_positives"]:
+        reasons.append(f"{total} linked positives, needs {rule['min_positives']}")
+    if documents < rule["min_documents"]:
+        reasons.append(f"{documents} documents with a linked target, needs {rule['min_documents']}")
+    return {
+        "attacker": "Warsaw Pact, pooled, exercise-based",
+        "documents_any_type": int(pact["group"].nunique()),
+        "independent_plans": 0,
+        "linked_positives": total,
+        "positives_outside_largest": int(linked.sum() - linked.max()),
+        "allowed": not reasons,
+        "reason": "; ".join(reasons) or "meets the rule; never a war-plan model",
+    }
+
+
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     evidence_table().to_csv(OUT / "evidence_by_attacker.csv", index=False)
@@ -110,7 +133,10 @@ def main() -> None:
     positives = t.groupby("plan_id")["listed"].sum().astype(int).to_dict()
     d = pd.read_parquet(dataset)
     positives["us_1956_sac_complexes"] = int(d["listed"].sum())
-    table = gate(positives, plans(), protocol()["state_models"])
+    rule = protocol()["state_models"]
+    table = gate(positives, plans(), rule)
+    pooled = exercise_gate(positives, plans(), rule["warsaw_pact_exercise_model"])
+    table = pd.concat([table, pd.DataFrame([pooled])], ignore_index=True)
     table.to_csv(OUT / "state_model_gate.csv", index=False)
     print(table.to_string(index=False))
 

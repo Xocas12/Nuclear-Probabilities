@@ -2,7 +2,7 @@
 UV ?= uv
 PY = $(UV) run python
 
-.PHONY: setup data places labels features dataset train map check transfer evidence qa test lint format clean
+.PHONY: setup data places labels features dataset train map check transfer evidence qa classifier test lint format clean
 
 setup:
 	$(UV) sync --all-extras
@@ -50,6 +50,11 @@ evidence:
 
 qa:
 	$(PY) -m nucprob.qa
+
+# The pre-committed classifier (configs/protocol.yaml): global and per-state models, all holdouts.
+classifier:
+	$(PY) -m nucprob.classifier.table
+	$(PY) -m nucprob.classifier.run
 
 test:
 	$(UV) run pytest -q
