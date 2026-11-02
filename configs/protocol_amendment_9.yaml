@@ -1,0 +1,36 @@
+# Ninth amendment, in its own file like the fifth to eighth. Committed before the map rerun it describes and
+# after every result of the run pinned at 110174e, and the independent review of 1e98ebc, had been read: nothing
+# below is blind, and the sealed set has still not been scored. No label, model, gate threshold, selection rule
+# or holdout changes, and the classifier is not refitted.
+date: 2026-11-02
+reasons: The review of 1e98ebc found holdout settings no test guarded, a decomposition of the warhead interval
+  that could exceed its whole, a domain-shift sentence with no output behind it, and statements in the report and
+  cards that the outputs do not support.
+disclosed:
+  quick_runs: Before the eighth amendment was committed, two quick runs (--quick; 3 bags, 50 resamples, from an
+    uncommitted tree on c840f88) were made on the final table d765c330. The map's printed the held-out PR-AUC of its
+    candidate scores and every scenario's map summary; the classifier's wrote its held-out tables to
+    runs/classifier-quick/, which is not committed. The eighth amendment did not say so.
+  sectors_wording: data/curated/labels/SECTORS.yaml says no box was chosen by looking at a model score. For
+    wp_1961_burza that is not so, since the review of c840f88 had shown the box's effect on its scores. Burza's
+    FRG and Denmark boxes are one combined extent of its linked positives, written once per country, not a box per
+    country. The file is an input of the committed classifier run, so it is left as it is until the next refit and
+    corrected here.
+readings_added:
+  share_variance: runs/probmap/share_variance.csv, the share of the variance of each attacker's delivered warheads
+    that the theatre share explains alone (first-order Sobol index, pick-freeze, 20,000 draws). It replaces, in the
+    report, the ratio of the interval with shares held at their mode to the full interval, which is kept in
+    delivered.csv but can exceed 1 because fixing a share at its mode also moves the centre.
+  domain_shift: each portable feature alone (folded one-feature ROC-AUC) and the domain classifier with each
+    feature left out, appended to runs/probmap/domain_shift.csv.
+  modern_universe: runs/probmap/modern_universe.csv, counts of Natural Earth places after each filter.
+  link_audit: runs/classifier/link_audit_coverage_subcomplex.csv, SAC's subcomplex entries linked or not.
+reporting:
+  block_intervals: A block-bootstrap interval is shown as n/a, and no gain or loss is called on it, where the
+    positives of the row lie in fewer than 5 blocks of 300 km. Set after the review showed a row with 7 positives
+    in 2 blocks whose interval collapsed onto its point; that row's verdict was "neither" before and after.
+  precision: every difference and bound in the report has two decimals, three only where it would print as 0.00.
+pins:
+  milestone_manifests: runs/milestone_hashes.json pins each milestone manifest without its run stamps (created,
+    git_commit, git_dirty), so that rebuilding by the README's commands leaves the suite green. Every other field and
+    every data file is pinned as before.

@@ -2,7 +2,8 @@
 rank and distance to the coast. No present-day military, industrial or infrastructure data enters
 the modern map, so nothing here identifies a facility.
 
-Natural Earth's populated places (public domain): a map-label set of 7,342 places, not a census. It
+Natural Earth's populated places (public domain): a map-label set, not a census (counts by filter in
+runs/probmap/modern_universe.csv). It
 is selective, and thinner in some countries than others, which is one more reason the modern map is
 an extrapolation. Towns below MIN_POP are dropped, as are research and weather stations, and France's
 territories outside Europe, which Natural Earth files under France.
@@ -48,6 +49,16 @@ def overseas(d: pd.DataFrame) -> pd.Series:
     """Rows of France outside metropolitan France (Réunion, Mayotte, Guiana and the others)."""
     home = d["latitude"].between(41, 52) & d["longitude"].between(-6, 10)
     return d["adm0_a3"].eq("FRA") & ~home
+
+
+def universe_counts(path=PLACES) -> pd.DataFrame:
+    """How many of Natural Earth's places survive each filter of `read_towns`: counts only."""
+    d = naturalearth.points(path)
+    steps = [("places in the file", pd.Series(True, index=d.index))]
+    steps.append(("town classes", d["featurecla"].isin(TOWN_CLASSES)))
+    steps.append((f"and at least {MIN_POP:,} people", steps[-1][1] & (d["pop_max"] >= MIN_POP)))
+    steps.append(("and not France outside Europe", steps[-1][1] & ~overseas(d)))
+    return pd.DataFrame([{"step": name, "places": int(k.sum())} for name, k in steps])
 
 
 def read_towns(path=PLACES) -> pd.DataFrame:

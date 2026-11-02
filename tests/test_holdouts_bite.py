@@ -170,3 +170,86 @@ def test_milestone_outputs_are_the_files_their_runs_wrote(folder):
     for name in names:
         assert current[name] == recorded[name], name
         assert (ROOT / name).exists()
+
+
+def test_a_manifest_pin_ignores_run_stamps_and_reads_everything_else(tmp_path):
+    from nucprob.outputs import manifest_hash
+
+    path = RUNS / "m4-transfer-check" / "manifest.json"
+    record = json.loads(path.read_text())
+    copy = tmp_path / "manifest.json"
+    copy.write_text(json.dumps(record | {"created": "2030-01-01", "git_commit": "0" * 40}))
+    assert manifest_hash(copy) == manifest_hash(path)
+    copy.write_text(json.dumps(record | {"train": {"rows": 1, "positives": 1}}))
+    assert manifest_hash(copy) != manifest_hash(path)
+
+
+def _protocol_holdouts() -> dict:
+    return protocol()["evaluation"]["holdouts"]
+
+
+def test_the_holdout_constants_are_the_protocols():
+    """The settings themselves, read from configs/protocol.yaml: the toy tables above would pass
+    with another cut year, grid or fold count."""
+    h = _protocol_holdouts()
+    assert f"documents dated up to {ev.TEMPORAL_CUT}," in h["temporal"]
+    offsets = ", ".join(f"{o:g}" for o in ev.GRID_OFFSETS)
+    assert (
+        f"{ev.N_FOLDS} folds of {BLOCK_KM:g} km blocks on three shifted grids ({offsets} km)"
+        in (h["spatial_blocks"])
+    )
+    assert len(ev.GRID_OFFSETS) == 3 and len(set(ev.GRID_OFFSETS)) == 3
+    assert "groups, not lists" in h["leave_one_plan_out"]
+
+
+def test_the_temporal_cut_puts_the_protocol_year_in_training_and_the_next_in_scoring(monkeypatch):
+    spy = Spy()
+    monkeypatch.setattr(ev, "fit_bagged", spy)
+    t = small_table()
+    t["year"] = np.resize([1955, 1956, 1957, 1960], len(t))
+    ev.temporal(t, [SPEC], 1)
+    assert set(spy.trained[0]["year"]) == {1955, 1956}
+    assert set(spy.trained[1]["year"]) == {1957, 1960}
+
+
+def test_spatial_scores_use_every_shifted_grid(monkeypatch):
+    seen = []
+
+    def spy_blocks(lat, lon, km=BLOCK_KM, offset=0.0):
+        seen.append(offset)
+        return assign_blocks(lat, lon, km, offset)
+
+    monkeypatch.setattr(ev, "fit_bagged", Spy())
+    monkeypatch.setattr(ev, "assign_blocks", spy_blocks)
+    ev.spatial_scores(small_table(), [SPEC], 1)
+    assert seen == [0.0, 100.0, 200.0]
+
+
+def test_leave_one_document_out_holds_out_a_whole_group(monkeypatch):
+    """Two documents of one group (a wargame and its mirror) are never split across a fit and its
+    scoring."""
+    spy = Spy()
+    monkeypatch.setattr(ev, "fit_bagged", spy)
+    t = small_table()
+    t["plan_id"] = np.resize(["a1", "a2", "b"], len(t))
+    t["group"] = np.where(t["plan_id"] == "b", "gb", "ga")
+    rows, kept = ev.leave_one_document_out(t, [SPEC], 1)
+    assert len(spy.trained) == 2
+    for train in spy.trained:
+        assert set(train["group"]) in ({"ga"}, {"gb"})
+    assert set(kept.groupby("plan_id").size().index) == {"a1", "a2", "b"}
+    assert {r["holdout"] for r in rows} == {
+        "leave-one-document-out (ga)",
+        "leave-one-document-out (gb)",
+    }
+
+
+def test_a_plain_fit_on_complete_lists_learns_the_labels_it_is_given():
+    """The path of the SAC headline: every list complete, so one fit and no bags."""
+    t = small_table().assign(complete=True)
+    spec = Spec("m", logistic_all, ["log_pop"])
+    fitted = cfit.fit_bagged(spec, t, 5)
+    assert len(fitted.models) == 1
+    assert roc_auc_score(t["listed"], fitted.score(t)) > 0.95
+    upended = t.assign(listed=1 - t["listed"])
+    assert roc_auc_score(t["listed"], cfit.fit_bagged(spec, upended, 5).score(t)) < 0.05

@@ -650,3 +650,49 @@ def test_the_scale_on_scored_towns_is_shown_and_reconciles():
     assert units["uk_units"].is_monotonic_decreasing and units["uk_units"].nunique() == 3
     west = d[d["scenario"] == "ussr_1965_on_west"].iloc[0]
     assert west["share_of_people_in_scored_towns"] == 1.0
+
+
+def _variance_attacker(share, reliability):
+    return {
+        "state": "US",
+        "stock_year": 2026,
+        "inventory_low": ["military_stockpile", "fas_status"],
+        "inventory_high": ["military_stockpile", "fas_status"],
+        "theatre_share": share,
+        "reliability": {"all": reliability},
+        "fraction_lost_to_defences": [0, 0, 0],
+        "targets": ["RUS"],
+    }
+
+
+def test_the_theatre_share_variance_index_is_one_when_only_the_share_varies_and_zero_when_it_is_fixed():
+    alone = {"id": "a", "attackers": [_variance_attacker([0.01, 0.1, 0.5], [0.8, 0.8, 0.8])]}
+    fixed = {"id": "f", "attackers": [_variance_attacker([0.1, 0.1, 0.1], [0.2, 0.5, 0.9])]}
+    both = {"id": "b", "attackers": [_variance_attacker([0.05, 0.1, 0.15], [0.2, 0.5, 0.9])]}
+    a = rn.theatre_share_variance(alone, 5000)[0]["variance_share_theatre"]
+    f = rn.theatre_share_variance(fixed, 5000)[0]["variance_share_theatre"]
+    b = rn.theatre_share_variance(both, 5000)[0]["variance_share_theatre"]
+    assert a == pytest.approx(1.0, abs=1e-9)  # the inventory is a point here: nothing else varies
+    assert abs(f) < 0.05
+    assert 0.05 < b < 0.95
+
+
+def test_one_feature_separation_is_half_for_the_same_values_and_one_for_disjoint_ones():
+    same = pd.Series(np.arange(100.0))
+    assert rn.separation(same, same) == pytest.approx(0.5)
+    assert rn.separation(same, same + 1000) == 1.0
+    assert rn.separation(same + 1000, same) == 1.0
+
+
+@needs_run
+def test_the_domain_shift_is_read_feature_by_feature():
+    shift = pd.read_csv(OUT / "domain_shift.csv")
+    for measure in ("one-feature ROC-AUC, folded", "two-sample ROC-AUC, one feature left out"):
+        rows = shift[shift["measure"] == measure]
+        assert len(rows) == len(rn.PORTABLE), measure
+        assert rows["value"].between(0.0, 1.0).all()
+    counts = pd.read_csv(OUT / "modern_universe.csv")
+    assert counts["places"].is_monotonic_decreasing and counts["places"].iloc[0] > 0
+    v = pd.read_csv(OUT / "share_variance.csv")
+    assert v["variance_share_theatre"].between(-0.05, 1.05).all()
+    assert (v["standard_error"] < 0.05).all()

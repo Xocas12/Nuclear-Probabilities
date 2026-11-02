@@ -12,7 +12,7 @@ fails if a row does not pass.
 | #5 airfield verdicts | #15 | yes | `test_sac1956_crossdoc.py`; BRODY read again on the scan (`5005-02511`) | - |
 | #6 closed towns' cover names | #20 | yes | `runs/qa/issues.csv`, `test_labels.py` | - |
 | #7 rank floor | #14 | yes | `test_rank_floor.py`; country means of `pop_rank_pct` within 0.009 | - |
-| #8 transfer read in ROC | #17 | yes | `test_transfer_paired.py` | The rerun changed two readings: PR-AUC on the Polish mirror list now gains, +0.14 [+0.07, +0.21], and ROC-AUC on Square Leg, +0.05 [+0.01, +0.10]. The card names both, and the test fails on any other. |
+| #8 transfer read in ROC | #17 | yes | `test_transfer_paired.py` | The rerun changed two readings: PR-AUC on the Polish mirror list now gains, +0.14 [+0.07, +0.21], and ROC-AUC on Square Leg, +0.05 [+0.004, +0.10] (`runs/m4-transfer-check/paired.csv`). The card names both, and the test fails on any other. |
 | #9 NaN read as 0 km | #16 | yes | `runs/qa/issues.csv`, `test_transfer_military.py` | PRs #16 and #17 conflict in effect: the bootstrap sorted a NaN score as a top score. `compare` now skips a model that left towns unscored. |
 | #10 district_seat tier | #19 | yes | `runs/qa/issues.csv`, `test_features.py` | - |
 | #11 Austrian Land seats | #18 | yes | `runs/qa/issues.csv`, `test_transfer_places.py` | - |
@@ -48,5 +48,5 @@ The other name links over 25 km are in `data/curated/sac1956/far_name_links_revi
 Square Leg's Gatwick and "Tay Bridge / Dundee" were wrong too. Large towns that stay negative on SAC, such as Baotou and Huainan, have no unlinked SAC entry within 60 km:
 the audit found nothing to link them to, and it cannot show whether the study meant to leave them out.
 
-The independent review of c840f88 (`~/hand/nuclear/review-6.md`, outside this repository, findings 1-29) is answered by `configs/protocol_amendment_8.yaml`, the rerun it
+The independent review of c840f88 (a file held by the owner, not in this repository, findings 1-29) is answered by `configs/protocol_amendment_8.yaml`, the rerun it
 describes, `tests/test_holdouts_bite.py`, and the new tests in `tests/test_label_rules.py` and `tests/test_probmap.py`. One is not answered: finding 1, files fetched against robots.txt, which needs the owner. "Review finding" numbers cited here and in tests refer to those review files, which are not in the repository.

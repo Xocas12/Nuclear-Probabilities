@@ -3,6 +3,8 @@ the hash of every file it wrote. tests/test_committed_outputs.py compares those 
 committed files, so a figure edited by hand, or left over from an earlier run, fails a test.
 """
 
+import hashlib
+import json
 import subprocess
 from collections.abc import Iterable
 from pathlib import Path
@@ -45,11 +47,28 @@ def hashes(files: Iterable[Path]) -> dict[str, str]:
 MILESTONES = ("m1-slice", "m2-check", "m4-transfer-check", "m4-us-check")
 
 
+# Written by a run about when and from which commit it ran. A rebuild by the README's commands changes
+# them and nothing else, so the pin reads every other field of a manifest.
+RUN_STAMPS = ("created", "git_commit", "git_dirty")
+
+
+def manifest_hash(path: Path) -> str:
+    """sha256 of a manifest's JSON with its run stamps removed, keys sorted."""
+    record = json.loads(Path(path).read_text())
+    kept = {k: v for k, v in record.items() if k not in RUN_STAMPS}
+    return hashlib.sha256(json.dumps(kept, sort_keys=True).encode()).hexdigest()
+
+
 def milestone_hashes() -> dict[str, str]:
+    """Data files by their bytes; manifests by `manifest_hash`."""
     files = [
         f
         for folder in MILESTONES
         for f in sorted((ROOT / "runs" / folder).iterdir())
         if f.suffix in (".csv", ".json")
     ]
-    return hashes(files)
+    out = hashes(f for f in files if f.name != "manifest.json")
+    for f in files:
+        if f.name == "manifest.json":
+            out[str(f.resolve().relative_to(ROOT.resolve()))] = manifest_hash(f)
+    return dict(sorted(out.items()))

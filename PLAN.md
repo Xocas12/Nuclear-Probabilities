@@ -5,8 +5,8 @@
 > US war plan of 1956. Fit one global model, one model per country and one per regime type.
 > Map which characteristics drive targeting.
 
-This is the plan as written at the start of the project, kept as the design record. It predates the
-work: what exists and what was found is in README.md and REPORT.md, and where they differ they are
+This is the plan as written at the start of the project, kept as the design record; only its lines on
+results have been brought up to date since. It predates the work: what exists and what was found is in README.md and REPORT.md, and where they differ they are
 right. "The US war plan of 1956" above is the SAC requirements study, not a war plan. Models by regime
 type were not built.
 

@@ -53,17 +53,23 @@ def mix_of(attacker: Mapping, mix: pd.DataFrame) -> pd.Series:
 
 
 def draw_by_delivery(
-    attacker: Mapping, n: int, rng, table: pd.DataFrame, mix: pd.DataFrame
+    attacker: Mapping,
+    n: int,
+    rng,
+    table: pd.DataFrame,
+    mix: pd.DataFrame,
+    share: np.ndarray | None = None,
 ) -> dict[str, dict[str, np.ndarray]]:
     """For each delivery, the draws of warheads available and delivered. Without a known mix there is
     one entry, `unspecified`. Interceptors come off each delivery in proportion: no source says how
-    they would divide, and the map uses only the total."""
+    they would divide, and the map uses only the total. `share`, if given, replaces the theatre-share
+    draw (nucprob.probmap.run.theatre_share_variance)."""
     high = inventory(table, attacker["stock_year"], attacker["state"], *attacker["inventory_high"])
     low = inventory(table, attacker["stock_year"], attacker["state"], *attacker["inventory_low"])
     scale = float(attacker.get("stock_multiplier", 1.0))
     low, high = low * scale, high * scale
     available = triangle((low, (low + high) / 2, high), n, rng)
-    share = triangle(attacker["theatre_share"], n, rng)
+    share = triangle(attacker["theatre_share"], n, rng) if share is None else share
     shares = mix_of(attacker, mix)
     named = attacker["reliability"]
     if len(shares) and "by_delivery" in named:
@@ -108,5 +114,7 @@ def draw_delivered(
     return sum(p["delivered"] for p in parts.values())
 
 
-def by_delivery_draws(attacker: Mapping, n: int, rng) -> dict[str, dict[str, np.ndarray]]:
-    return draw_by_delivery(attacker, n, rng, pd.read_csv(TABLE), pd.read_csv(MIX))
+def by_delivery_draws(
+    attacker: Mapping, n: int, rng, share: np.ndarray | None = None
+) -> dict[str, dict[str, np.ndarray]]:
+    return draw_by_delivery(attacker, n, rng, pd.read_csv(TABLE), pd.read_csv(MIX), share)

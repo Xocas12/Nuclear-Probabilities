@@ -16,6 +16,10 @@ from nucprob.sources.fetch import sha256
 
 OUT = RUNS / "classifier"
 needs_run = pytest.mark.skipif(not (OUT / "comparison.csv").exists(), reason="no classifier run")
+# A clean clone has the committed outputs but not the tables built from data/raw.
+needs_table = pytest.mark.skipif(
+    not (PROCESSED / "classifier_table.parquet").exists(), reason="classifier table not built here"
+)
 
 
 @needs_run
@@ -155,6 +159,7 @@ def test_the_readme_quotes_the_report_and_the_gate():
 
 
 @needs_run
+@needs_table
 def test_each_scope_lists_only_documents_of_that_scope():
     lists = pd.read_csv(OUT / "lists.csv")
     table = pd.read_parquet(PROCESSED / "classifier_table.parquet")
@@ -202,6 +207,9 @@ def test_the_transcription_figures_in_the_report_are_those_of_the_card():
     card = " ".join(card.split())
     assert "(743 lines, seed 1956)" in card and "0 of 743, 95% interval 0 to 0.51%" in card
     assert "error rate was 1.3%" in card and "is 3 in 216" in card
+    text = " ".join((ROOT / "REPORT.md").read_text(encoding="utf-8").split())
+    assert "743 lines, found 0 errors in the final reading (95% interval 0 to 0.51%)" in text
+    assert "own error rate was 1.3%" in text and "rate was 3 in 216" in text
 
 
 @needs_run

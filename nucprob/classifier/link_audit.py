@@ -4,6 +4,7 @@
 
 Writes, in runs/classifier/:
 - link_audit_coverage.csv: SAC's complex entries by country, linked or not to a town of the universe.
+- link_audit_coverage_subcomplex.csv: the same for SAC's subcomplex entries.
 - link_audit_dgz.csv: unsealed SAC negatives holding a designated ground zero point as their nearest
   entry, and PR-AUC under spatial blocks with those towns counted as they are and as positive.
 - link_audit_temporal.csv: which attackers supply the positives of each temporal holdout.
@@ -26,8 +27,8 @@ SAC_SCOPE = "single document: SAC 1956 (not a state model)"
 MODELS = ["population rule", "population + country", "logistic, all permitted"]
 
 
-def coverage(links: pd.DataFrame, universe: set[str]) -> pd.DataFrame:
-    c = links[links["level"] == "complex"]
+def coverage(links: pd.DataFrame, universe: set[str], level: str = "complex") -> pd.DataFrame:
+    c = links[links["level"] == level]
     linked = c["place_id"].isin(universe)
     g = c.assign(linked=linked).groupby("country_1956")["linked"]
     out = g.agg(entries="size", linked="sum").reset_index()
@@ -102,6 +103,7 @@ def main() -> None:
     universe = set(dataset["place_id"])
     outputs = {
         "link_audit_coverage.csv": coverage(links, universe),
+        "link_audit_coverage_subcomplex.csv": coverage(links, universe, "subcomplex"),
         "link_audit_dgz.csv": dgz_negatives(dataset, labels, held),
         "link_audit_temporal.csv": temporal_mix(table),
         "link_audit_floors.csv": floors(table),

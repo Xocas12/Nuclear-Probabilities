@@ -159,3 +159,34 @@ def test_compare_skips_a_model_that_left_towns_unscored():
     )
     out = compare(scores, ["population rule", "whole", "partial"], 2, n_boot=20)
     assert set(out["model"]) == {"whole"}
+
+
+CARD_LISTS = {
+    "Canada target areas 1956": "cd_1956_canada_target_areas",
+    "Operation Alert 1955 (full)": "cd_1955_operation_alert_full",
+    "Square Leg 1980": "cd_1980_square_leg",
+    "Target Committee 1945": "us_1945_target_committee",
+    "Lato-67 (FRG, DK, NL, BE)": "wp_1967_lato67",
+    "Hungarian war game 1965 (AT, IT, FRG)": "wp_1965_hu_wargame",
+    "Burza 1961 (FRG, DK, NL)": "wp_1961_burza",
+    "Czechoslovak plan 1964 (FRG)": "wp_1964_csla_plan",
+    "General Staff Academy lesson 1977 (FRG)": "wp_1977_gsa_front_lesson",
+    "NATO mirror, Poland 1962": "nato_1962_pl_exercise_mirror",
+    "NATO mirror, Hungary 1965": "nato_1965_hu_wargame_mirror",
+}
+
+
+def test_the_cards_link_table_has_the_check_runs_towns():
+    """The last column of TRANSFER.md's link table, list by list, against the run's metrics."""
+    card = (CURATED / "gazetteer" / "TRANSFER.md").read_text(encoding="utf-8")
+    m = pd.read_csv(RUN / "metrics.csv").drop_duplicates("plan_id").set_index("plan_id")
+    for label, plan in CARD_LISTS.items():
+        row = re.search(
+            rf"^\| {re.escape(label)} \| (\d+) \| (\d+) \| (\d+) \| ([\d,]+) / ([\d,]+) \|$",
+            card,
+            re.M,
+        )
+        assert row, label
+        listed, towns = (int(row.group(i).replace(",", "")) for i in (4, 5))
+        assert (listed, towns) == (m.loc[plan, "listed"], m.loc[plan, "towns"]), label
+        assert int(row.group(3)) <= int(row.group(2)) <= int(row.group(1)), label

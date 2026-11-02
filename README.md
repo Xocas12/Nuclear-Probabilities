@@ -28,8 +28,8 @@ resampling towns and "by blocks" resampling 300 km squares; a difference counts 
 - **Economic and political data** (regime, defence pacts, GDP per capita, Soviet defence plants), read apart under an
   amendment committed before fitting: on a left-out document 0 of the 6 rows on lists other
   than SAC gain, and the highest model over all lists scores 0.66 against 0.71 for the population rule. Plant counts add
-  +0.001 [-0.006, +0.006] on Soviet towns.
-- **The map.** Because of that transfer result the rule chose population as the score. The map follows people far less than in proportion: the
+  +0.001 [-0.01, +0.01] on Soviet towns.
+- **The map.** Because of that transfer result the selection rule chose population as the score. The map follows people far less than in proportion: the
   1956 score moves only 6.9-fold over a 620-fold range of population, so a cell's probability also depends on how many
   towns it holds. Delivered warheads drive most of its intervals, and those rest on cited inventories and on theatre shares with no source. Modern scenarios use Natural Earth's map-label towns and are
   extrapolation: a classifier told them from the training towns at ROC-AUC 0.97 on ten features, where 0.5 would mean no shift, with
@@ -58,8 +58,9 @@ make setup
 make data       # sources of data/sources.yaml into data/raw/; see "Not all rebuildable" below
 make places labels features dataset
 make transfer evidence qa
-make classifier # table, models, repeats, report; about 1.5 hours on 3 cores
-make probmap    # about 10 minutes
+make classifier # table, models, repeats and audits; several hours on 3 cores
+make probmap    # about half an hour
+make report     # REPORT.md, TABLES.md and README's results, from both runs
 make viewer     # one self-contained page: runs/probmap/viewer/index.html
 make test lint
 ```

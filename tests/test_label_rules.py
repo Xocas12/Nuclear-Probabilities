@@ -243,24 +243,43 @@ def test_every_sac_entry_passing_a_nearer_negative_town_has_been_read():
         assert towns["place_id"].eq(r["was_place_id"]).any()
 
 
+def test_every_entry_read_as_moved_is_a_nearer_town_link_and_the_reverse():
+    """Undoing the KITOY or ZUYEVKA move by deleting its link row fails here, without built tables."""
+    read = pd.read_csv(CURATED / "sac1956" / "nearer_negatives_reviewed.csv", dtype=str)
+    links = pd.read_csv(CURATED / "sac1956" / "nearer_town_links.csv", dtype=str)
+    moved = read[read["reading"].str.startswith("moved to")]
+    assert set(moved["sac_id"]) == set(links["sac_id"])
+    for _, r in moved.iterrows():
+        town = links.loc[links["sac_id"] == r["sac_id"], "town"].iloc[0]
+        assert r["nearer_negative"] == town and r["reading"].startswith(f"moved to {town}:")
+    assert {"C277-L17", "C247-L22"} <= set(links["sac_id"])
+
+
 def test_every_scored_list_rests_on_a_source_with_a_hash_or_a_named_record():
     """Section A of the standard: a list that enters a model or a score has a source on record."""
     sources = yaml.safe_load((ROOT / "data" / "sources.yaml").read_text(encoding="utf-8"))
     sources = sources["sources"] if isinstance(sources, dict) else sources
     by_url = {s.get("url"): s for s in sources}
+    by_id = {s.get("id"): s for s in sources}
+    # Label files that carry no source_url column, and the sources.yaml record each rests on.
+    named = {"cd_1987_napb90_counties": "fema_napb90"}
     reg = plans()
+    checked = 0
     for plan in reg.loc[reg["role"].isin(["train", "test-expectation"]), "plan_id"]:
         path = LABELS / f"{plan}.csv"
         if not path.exists():
             continue
         d = pd.read_csv(path, dtype=str, keep_default_na=False)
-        if "source_url" not in d:
-            continue
-        for url in d["source_url"].unique():
-            s = by_url.get(url)
-            if s is None:
-                continue
+        if "source_url" in d:
+            records = [(url, by_url.get(url)) for url in d["source_url"].unique()]
+        else:
+            assert plan in named, plan
+            records = [(named[plan], by_id.get(named[plan]))]
+        for url, s in records:
+            assert s is not None, (plan, url)  # every source a list cites is in sources.yaml
             assert s.get("sha256"), (plan, url)
             assert s.get("retrieved") not in (None, "unknown"), (plan, url)
+            checked += 1
+    assert checked > 20
     canada = reg.set_index("plan_id").loc["cd_1956_canada_target_areas"]
     assert canada["role"] == "excluded" and canada["grade"] == "U"

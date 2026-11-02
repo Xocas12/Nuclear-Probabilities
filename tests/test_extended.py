@@ -10,6 +10,7 @@ import yaml
 from nucprob.classifier import extended as ex
 from nucprob.classifier import state_features as sf
 from nucprob.classifier.features import COW
+from nucprob.classifier.report import signed
 from nucprob.paths import PROCESSED, ROOT, RUNS, SOURCES, SOURCES_AMENDMENT_5
 from nucprob.sources.fetch import sha256
 
@@ -144,4 +145,5 @@ def test_the_readme_states_what_the_extended_run_and_the_primary_run_hold():
     plants = d[d["comparison"] == "defence industry over population"].iloc[0]
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     assert f"scores {best:.2f} against {rule:.2f}" in " ".join(readme.split())
-    assert f"[{plants['low']:+.3f}, {plants['high']:+.3f}]" in readme
+    # The report's precision rule (nucprob.classifier.report.signed): two decimals, three near zero.
+    assert f"[{signed(plants['low'])}, {signed(plants['high'])}]" in readme

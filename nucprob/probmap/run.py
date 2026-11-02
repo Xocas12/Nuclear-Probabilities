@@ -8,7 +8,7 @@ Then the validation against SAC 1956 and the domain shift of the modern towns.
 
 Writes runs/probmap/: model_choice.csv, cells/<scenario>.csv.gz (one row per cell, sorted by position,
 no names), scenarios.csv, delivered.csv, by_delivery.csv, score_spread.csv, unit_sensitivity.csv, validation.csv,
-reliability.csv, domain_shift.csv, manifest.json.
+reliability.csv, domain_shift.csv, share_variance.csv, modern_universe.csv, manifest.json.
 --quick uses 10 draws and writes to runs/probmap-quick/.
 """
 
@@ -39,12 +39,13 @@ from nucprob.paths import PROCESSED, ROOT, RUNS
 from nucprob.plans import protocol
 from nucprob.probmap import allocate as al
 from nucprob.probmap import modern
-from nucprob.probmap.modern import PORTABLE
+from nucprob.probmap.modern import PORTABLE, universe_counts
 from nucprob.probmap.stockpile import (
     MIX,
     TABLE,
     by_delivery_draws,
     share_interceptors,
+    triangle,
 )
 from nucprob.sources.fetch import sha256
 
@@ -215,6 +216,49 @@ def summarise(cells: pd.DataFrame, draws: np.ndarray, fixed_stock, fixed_model) 
         }
     )
     return out.sort_values(["cell_lat", "cell_lon"]).reset_index(drop=True)
+
+
+SHARE_DRAWS = 20_000
+SHARE_RESAMPLES = 200
+
+
+def theatre_share_variance(sc: dict, n: int = SHARE_DRAWS, seed: int = SEED) -> list[dict]:
+    """The share of the variance of each attacker's delivered warheads that its theatre share explains
+    on its own: the first-order Sobol index, by the pick-freeze estimator. Two runs draw everything
+    afresh except the theatre shares, which they share; the index is the covariance of their delivered
+    totals over the variance. Unlike holding a share at its mode, it cannot exceed 1 except by sampling
+    error, and it does not move the centre of the distribution."""
+    rng = np.random.default_rng(seed)
+    shares = {a["state"]: triangle(a["theatre_share"], n, rng) for a in sc["attackers"]}
+    totals = []
+    for run_seed in (seed + 1, seed + 2):
+        r = np.random.default_rng(run_seed)
+        forces = {
+            a["state"]: by_delivery_draws(a, n, r, shares[a["state"]]) for a in sc["attackers"]
+        }
+        share_interceptors(forces, sc.get("interceptors", []), n, r)
+        totals.append({k: sum(p["delivered"] for p in v.values()) for k, v in forces.items()})
+
+    def index(x: np.ndarray, y: np.ndarray) -> float:
+        var = np.var(np.r_[x, y])
+        return float(np.mean(x * y) - np.mean(x) * np.mean(y)) / var if var > 0 else float("nan")
+
+    rows, boot = [], np.random.default_rng(seed + 3)
+    resamples = [boot.integers(n, size=n) for _ in range(SHARE_RESAMPLES)]
+    for a in sc["attackers"]:
+        x, y = totals[0][a["state"]], totals[1][a["state"]]
+        rows.append(
+            {
+                "scenario": sc["id"],
+                "attacker": a["state"],
+                "theatre_share": "/".join(f"{v:g}" for v in a["theatre_share"]),
+                "draws": n,
+                "variance_share_theatre": index(x, y),
+                # Of the estimate, over draws resampled with replacement.
+                "standard_error": float(np.nanstd([index(x[k], y[k]) for k in resamples])),
+            }
+        )
+    return rows
 
 
 def pin_share(attacker: dict) -> dict:
@@ -404,7 +448,7 @@ def unit_sensitivity(models: list, spec: Spec, sc: dict, draws: int) -> pd.DataF
 
 
 def validation(
-    spec: Spec, train: pd.DataFrame, full: pd.DataFrame, sc: dict, bags: int, w: float
+    spec: Spec, train: pd.DataFrame, sc: dict, bags: int, w: float
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """The 1956 scenario against SAC's own list. Cell probabilities from models that never saw the
     cell's block, and from models with no SAC row at all. Cells are read at the stockpile's median."""
@@ -449,13 +493,26 @@ def validation(
     return pd.DataFrame(rows), pd.concat(bins, ignore_index=True)
 
 
-def shift_auc(a: pd.DataFrame, b: pd.DataFrame, seed: int = 0) -> float:
+def shift_auc(
+    a: pd.DataFrame, b: pd.DataFrame, seed: int = 0, columns: list[str] | None = None
+) -> float:
     """Cross-validated ROC-AUC of telling two sets of towns apart on the portable features. 0.5 means
     the features cannot tell them apart; 1.0 means no town of one set resembles the other."""
-    x = pd.concat([a[PORTABLE], b[PORTABLE]], ignore_index=True)
+    columns = PORTABLE if columns is None else columns
+    x = pd.concat([a[columns], b[columns]], ignore_index=True)
     y = np.r_[np.zeros(len(a)), np.ones(len(b))]
     p = cross_val_predict(lightgbm_quiet(seed), x, y, cv=5, method="predict_proba")[:, 1]
     return float(roc_auc_score(y, p))
+
+
+def separation(a: pd.Series, b: pd.Series) -> float:
+    """ROC-AUC of one feature's raw values between two sets, folded so that 0.5 is none and 1.0 is
+    complete separation in either direction. Missing values are left out."""
+    a, b = a.dropna().astype(float), b.dropna().astype(float)
+    if not len(a) or not len(b):
+        return float("nan")
+    auc = roc_auc_score(np.r_[np.zeros(len(a)), np.ones(len(b))], np.r_[a, b])
+    return float(max(auc, 1 - auc))
 
 
 def domain_shift(
@@ -489,6 +546,28 @@ def domain_shift(
                 "comparison": f"modern towns outside the 1st-99th percentile of training: {c}",
                 "measure": "share of modern towns",
                 "value": float(((v < low) | (v > high)).mean()),
+                "towns_a": len(hist),
+                "towns_b": len(mod),
+            }
+        )
+    # Which features carry the shift: each one alone, and the classifier without it.
+    for c in PORTABLE:
+        rows.append(
+            {
+                "comparison": f"training towns against modern towns, this feature alone: {c}",
+                "measure": "one-feature ROC-AUC, folded",
+                "value": separation(hist[c], mod[c]),
+                "towns_a": len(hist),
+                "towns_b": len(mod),
+            }
+        )
+    for c in PORTABLE:
+        rest = [k for k in PORTABLE if k != c]
+        rows.append(
+            {
+                "comparison": f"training towns against modern towns, without: {c}",
+                "measure": "two-sample ROC-AUC, one feature left out",
+                "value": shift_auc(hist, mod, columns=rest),
                 "towns_a": len(hist),
                 "towns_b": len(mod),
             }
@@ -558,7 +637,7 @@ def main() -> None:
     first = next(s for s in load_scenarios() if s["id"] == protocol_validation_scenario())
     # The scenario's own median, so that the check reads the warheads the map's table shows.
     w = next(r["on_scored_towns_median"] for r in warheads if r["scenario"] == first["id"])
-    val, rel = validation(spec, train, full, first, bags, float(w))
+    val, rel = validation(spec, train, first, bags, float(w))
     val.to_csv(out_dir / "validation.csv", index=False, float_format="%.4f")
     rel.to_csv(out_dir / "reliability.csv", index=False, float_format="%.4f")
     countries = {
@@ -571,6 +650,10 @@ def main() -> None:
     domain_shift(train, universes["modern"].towns, countries).to_csv(
         out_dir / "domain_shift.csv", index=False, float_format="%.4f"
     )
+    pd.DataFrame([r for sc in load_scenarios() for r in theatre_share_variance(sc)]).to_csv(
+        out_dir / "share_variance.csv", index=False, float_format="%.4f"
+    )
+    universe_counts().to_csv(out_dir / "modern_universe.csv", index=False)
     manifest = {
         "created": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
         **started,
