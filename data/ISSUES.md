@@ -50,3 +50,12 @@ the audit found nothing to link them to, and it cannot show whether the study me
 
 The independent review of c840f88 (a file held by the owner, not in this repository, findings 1-29) is answered by `configs/protocol_amendment_8.yaml`, the rerun it
 describes, `tests/test_holdouts_bite.py`, and the new tests in `tests/test_label_rules.py` and `tests/test_probmap.py`. One is not answered: finding 1, files fetched against robots.txt, which needs the owner. "Review finding" numbers cited here and in tests refer to those review files, which are not in the repository.
+
+The robots finding, answered on 2 November 2026 except for one source. The 37 GeoNames dumps were fetched again from a CC BY 4.0
+mirror whose robots.txt allows them, with the recorded hashes; the Demoscope page and the Pałka article are held as Wayback
+captures with the recorded hashes (`data/sources_obtained.yaml`). The Wikipedia fetch scripts and the transcription instructions
+now use an allowed path, and the pages of `uk_districts_1981_seats.csv`, `frg_1961_wikipedia.csv` and `closed_cities_1956.csv`
+are registered through allowed paths in `data/curated/features/cited_pages.csv`. Those three tables, and the use of
+`Special:Export` and `/w/api.php`, were not in the earlier audit. Still open for the owner: the UK 1981 census district totals from
+Nomis's disallowed API path, which feed the Great Britain units of the Square Leg comparison (README, "Robots";
+`tests/test_robots.py` names it as the one exception).

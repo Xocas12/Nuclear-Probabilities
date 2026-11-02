@@ -1,188 +1,191 @@
-id,host,status,allowed,denied_agents,role,retrieved,held_locally
-sac1956_part1_complex_list,nsarchive2.gwu.edu,rules,True,,labels,2026-10-03,True
-sac1956_section1,nsarchive2.gwu.edu,rules,True,,labels,2026-10-03,True
-sac1956_section2,nsarchive2.gwu.edu,rules,True,,labels,2026-10-03,True
-sac1956_section3,nsarchive2.gwu.edu,rules,True,,labels,2026-10-03,True
-sac1956_section4,nsarchive2.gwu.edu,rules,True,,labels,2026-10-03,True
-sac1956_section5,nsarchive2.gwu.edu,rules,True,,labels,2026-10-03,True
-sac1956_section6,nsarchive2.gwu.edu,rules,True,,labels,2026-10-03,True
-sac1956_section7,nsarchive2.gwu.edu,rules,True,,labels,2026-10-03,True
-sac1956_section8,nsarchive2.gwu.edu,rules,True,,labels,2026-10-03,True
-nsa_city_sheet_moscow,nsarchive2.gwu.edu,rules,True,,labels,2026-10-03,True
-nsa_city_sheet_leningrad,nsarchive2.gwu.edu,rules,True,,labels,2026-10-03,True
-nsa_city_sheet_beijing,nsarchive2.gwu.edu,rules,True,,labels,2026-10-03,True
-nsa_city_sheet_warsaw,nsarchive2.gwu.edu,rules,True,,labels,2026-10-03,True
-popstat_russia,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True
-popstat_ukraine,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True
-popstat_belarus,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True
-popstat_moldova,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True
-popstat_lithuania,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True
-popstat_latvia,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True
-popstat_estonia,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True
-popstat_georgia,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True
-popstat_armenia,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True
-popstat_azerbaijan,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True
-popstat_kazakhstan,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True
-popstat_kyrgyzstan,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True
-popstat_tajikistan,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True
-popstat_turkmenistan,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True
-demoscope_ussr59_reg2,www.demoscope.ru,unreachable,False,project; *; ClaudeBot; anthropic-ai,universe,2026-10-07,True
-geonames_ru,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_ua,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_by,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_md,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_lt,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_lv,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_ee,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_ge,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_am,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_az,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_kz,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_uz,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_tm,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_kg,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_tj,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_admin1,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-naturalearth_50m_land,raw.githubusercontent.com,no_rule_http_404,True,,map,2026-10-07,True
-naturalearth_50m_lakes,raw.githubusercontent.com,no_rule_http_404,True,,map,2026-10-07,True
-vpk_dexter_rodionov_v24,warwick.ac.uk,rules,True,,features,2026-10-08,True
-wri_gppd,raw.githubusercontent.com,no_rule_http_404,True,,features,2026-10-08,True
-ourairports,davidmegginson.github.io,no_rule_http_404,True,,features,2026-11-01,True
-naturalearth_10m_railroads,raw.githubusercontent.com,no_rule_http_404,True,,features,2026-10-08,True
-naturalearth_10m_ports,raw.githubusercontent.com,no_rule_http_404,True,,features,2026-10-08,True
-naturalearth_10m_coastline,raw.githubusercontent.com,no_rule_http_404,True,,features,2026-10-08,True
-naturalearth_10m_rivers,raw.githubusercontent.com,no_rule_http_404,True,,features,2026-10-08,True
-naturalearth_10m_admin0,raw.githubusercontent.com,no_rule_http_404,True,,features,2026-10-08,True
-cshapes_2,icr.ethz.ch,rules,True,,features,2026-10-08,True
-popstat_albania,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-08,True
-popstat_bulgaria,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-08,True
-popstat_romania,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-08,True
-popstat_czechia,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-08,True
-geonames_pl,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_de,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_cz,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_sk,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_hu,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_ro,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_bg,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_al,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_cn,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_kp,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_vn,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_mn,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-ddr_jahrbuch_1956_p0041,digi.bib.uni-mannheim.de,rules,True,,universe,2026-10-08,True
-ddr_jahrbuch_1956_p0042,digi.bib.uni-mannheim.de,rules,True,,universe,2026-10-08,True
-ddr_jahrbuch_1956_p0043,digi.bib.uni-mannheim.de,rules,True,,universe,2026-10-08,True
-gus_rocznik_1957_p13,polona.pl,rules,True,,universe,2026-10-08,True
-gus_rocznik_1957_p14,polona.pl,rules,True,,universe,2026-10-08,True
-gus_rocznik_1957_p15,polona.pl,rules,True,,universe,2026-10-08,True
-ksh_2011_4_1_1_1_01,www.ksh.hu,rules,True,,universe,2026-10-08,True
-ksh_2011_4_1_1_1_02,www.ksh.hu,rules,True,,universe,2026-10-08,True
-ksh_2011_4_1_1_1_03,www.ksh.hu,rules,True,,universe,2026-10-08,True
-ksh_2011_4_1_1_1_04,www.ksh.hu,rules,True,,universe,2026-10-08,True
-ksh_2011_4_1_1_1_05,www.ksh.hu,rules,True,,universe,2026-10-08,True
-ksh_2011_4_1_1_1_06,www.ksh.hu,rules,True,,universe,2026-10-08,True
-ksh_2011_4_1_1_1_07,www.ksh.hu,rules,True,,universe,2026-10-08,True
-ksh_2011_4_1_1_1_08,www.ksh.hu,rules,True,,universe,2026-10-08,True
-ksh_2011_4_1_1_1_09,www.ksh.hu,rules,True,,universe,2026-10-08,True
-ksh_2011_4_1_1_1_10,www.ksh.hu,rules,True,,universe,2026-10-08,True
-ksh_2011_4_1_1_1_11,www.ksh.hu,rules,True,,universe,2026-10-08,True
-ksh_2011_4_1_1_1_12,www.ksh.hu,rules,True,,universe,2026-10-08,True
-ksh_2011_4_1_1_1_13,www.ksh.hu,rules,True,,universe,2026-10-08,True
-ksh_2011_4_1_1_1_14,www.ksh.hu,rules,True,,universe,2026-10-08,True
-ksh_2011_4_1_1_1_15,www.ksh.hu,rules,True,,universe,2026-10-08,True
-ksh_2011_4_1_1_1_16,www.ksh.hu,rules,True,,universe,2026-10-08,True
-ksh_2011_4_1_1_1_17,www.ksh.hu,rules,True,,universe,2026-10-08,True
-ksh_2011_4_1_1_1_18,www.ksh.hu,rules,True,,universe,2026-10-08,True
-ksh_2011_4_1_1_1_19,www.ksh.hu,rules,True,,universe,2026-10-08,True
-ksh_2011_4_1_1_1_20,www.ksh.hu,rules,True,,universe,2026-10-08,True
-votrubec_1959,www.sav.sk,rules,True,,universe,2026-10-08,True
-wikipedia_1953_chinese_census,en.wikipedia.org,rules,True,,universe,2026-11-01,True
-un_wup2018,population.un.org,rules,True,,universe,2026-10-08,True
-aws_terrain_tiles,s3.amazonaws.com,no_rule_http_403,True,,features,2026-11-01,True
-census_us_estimates_1980s,www2.census.gov,rules,True,,universe,2026-10-10,True
-census_us_boundaries_1990,www2.census.gov,rules,True,,universe,2026-10-10,True
-fema_napb90,archive.org,rules,True,,labels,2026-10-03,True
-geonames_dk,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_nl,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_be,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_at,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_it,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_gb,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_jp,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_ca,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-geonames_us,download.geonames.org,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-11-01,True
-popstat_austria,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-10,True
-census_ca_1956,archive.org,rules,True,,universe,2026-10-10,True
-census_dk_1960,www.dst.dk,rules,True,,universe,2026-10-10,True
-census_nl_1960,doi.org,no_rule_http_404,True,,universe,2026-10-10,True
-census_be_1961,doc.statbel.fgov.be,no_rule_http_400,True,,universe,2026-10-10,True
-census_it_1961,ebiblio.istat.it,no_rule_http_404,True,,universe,2026-10-10,False
-census_uk_1981_nomis,www.nomisweb.co.uk,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-10-10,True
-census_ni_1981,www.nisra.gov.uk,rules,True,,universe,2026-10-10,True
-census_jp_1940,www.e-stat.go.jp,rules,True,,universe,2026-10-10,True
-census_us_1950,www2.census.gov,rules,True,,universe,2026-10-10,True
-census_frg_1961,www.statistischebibliothek.de,no_rule_http_403,True,,universe,2026-11-01,True
-cow_nmc_v7,correlatesofwar.org,rules,True,,features,2026-11-01,True
-plandoc_nsa_sac_doc09_page,nsarchive.gwu.edu,rules,True,,labels,2026-11-01,True
-plandoc_nsa_ww2_009,nsarchive.gwu.edu,rules,True,,labels,2026-11-01,True
-plandoc_nsa_ww2_011,nsarchive.gwu.edu,rules,True,,labels,2026-11-01,True
-plandoc_nsa_ww2_015,nsarchive.gwu.edu,rules,True,,labels,2026-11-01,True
-plandoc_nsa_ww2_016,nsarchive.gwu.edu,rules,True,,labels,2026-11-01,True
-plandoc_nsa_ww2_046e,nsarchive.gwu.edu,rules,True,,labels,2026-11-01,True
-plandoc_nsa_ww2_060b,nsarchive.gwu.edu,rules,True,,labels,2026-11-01,True
-plandoc_nsa_ww2_060e,nsarchive.gwu.edu,rules,True,,labels,2026-11-01,True
-plandoc_nsa_ww2_047,nsarchive.gwu.edu,rules,True,,labels,2026-11-01,True
-plandoc_halperin_rm4900,www.ellsberg.net,rules,True,,labels,2026-11-01,True
-plandoc_nsa_ebb38_doc6,nsarchive2.gwu.edu,rules,True,,labels,2026-11-01,True
-plandoc_nsa_ebb488_doc16,nsarchive2.gwu.edu,rules,True,,labels,2026-11-01,True
-plandoc_php_warplan_dossier,www.files.ethz.ch,rules,True,,labels,2026-11-01,True
-plandoc_palka_2022,rcin.org.pl,unreachable,False,project; *; ClaudeBot; anthropic-ai,labels,2026-11-01,True
-plandoc_nielsen_2016,rucforsk.ruc.dk,rules,True,,labels,2026-11-01,True
-plandoc_php_report_001061,phpisn.ethz.ch,no_rule_http_404,True,,labels,2026-11-01,True
-plandoc_php_situationreport_101061,phpisn.ethz.ch,no_rule_http_404,True,,labels,2026-11-01,True
-plandoc_php_operationaldirective_310567,phpisn.ethz.ch,no_rule_http_404,True,,labels,2026-11-01,True
-plandoc_php_6505_plan_e,phpisn.ethz.ch,no_rule_http_404,True,,labels,2026-11-01,True
-plandoc_php_6506_plan_easterners,phpisn.ethz.ch,no_rule_http_404,True,,labels,2026-11-01,True
-plandoc_cia_0001197534,archive.org,rules,True,,labels,2026-11-01,True
-plandoc_cia_0001197557,archive.org,rules,True,,labels,2026-11-01,True
-plandoc_cia_5166d4f999326091c6a607ee,archive.org,rules,True,,labels,2026-11-02,True
-plandoc_cia_5166d4f999326091c6a607e7,archive.org,rules,True,,labels,2026-11-02,True
-plandoc_cia_0001197532,archive.org,rules,True,,labels,2026-11-01,True
-plandoc_cia_0001197563,archive.org,rules,True,,labels,2026-11-01,True
-plandoc_cia_0001197561,archive.org,rules,True,,labels,2026-11-01,True
-plandoc_cia_0001197576,archive.org,rules,True,,labels,2026-11-01,True
-plandoc_soyuz75,web.archive.org,no_rule_http_404,True,,labels,2026-11-01,True
-plandoc_php_listnuclear_240162,phpisn.ethz.ch,no_rule_http_404,True,,labels,2026-11-01,True
-plandoc_php_6506_plan_westerners_e,phpisn.ethz.ch,no_rule_http_404,True,,labels,2026-11-01,True
-plandoc_fcda_1955_report,archive.org,rules,True,,labels,2026-11-01,True
-plandoc_loc_sn83045462_00280607083_1955061501_1195,tile.loc.gov,no_rule_http_404,True,,labels,2026-11-01,True
-plandoc_loc_sn83016244_00517170665_1955061501_0438,tile.loc.gov,no_rule_http_404,True,,labels,2026-11-01,True
-plandoc_loc_sn83045462_00280607095_1955061601_0004,tile.loc.gov,no_rule_http_404,True,,labels,2026-11-01,True
-plandoc_loc_sn84020662_00414185277_1955061701_0442,tile.loc.gov,no_rule_http_404,True,,labels,2026-11-01,True
-plandoc_canada_1956_extract,,no_url,,,labels,unknown,False
-plandoc_campbell_1980,www.duncancampbell.org,rules,True,,labels,2026-11-01,True
-plandoc_campbell_1981,www.duncancampbell.org,rules,True,,labels,2026-11-01,True
-fas_status,fas.org,rules,True,,map,2026-11-01,True
-sipri_yb2026_ch08,www.sipri.org,rules,True,,map,2026-11-01,True
-sipri_terms,www.sipri.org,rules,True,,map,2026-11-01,True
-owid_warhead_stockpiles,ourworldindata.org,rules,True,,map,2026-11-01,True
-nrdc_table_us,web.archive.org,no_rule_http_404,True,,map,2026-11-01,True
-nrdc_table_ussr,web.archive.org,no_rule_http_404,True,,map,2026-11-01,True
-nrdc_war_plan_2001,www.nrdc.org,rules,True,,map,2026-11-01,True
-unidir_alert_2012,unidir.org,rules,True,,map,2026-11-01,True
-ucs_hair_trigger_faq,www.ucs.org,rules,True,,map,2026-11-01,True
-sgs_hobson_1991,scienceandglobalsecurity.org,rules,True,,map,2026-11-01,True
-frus_1952_54v02p1_d66,history.state.gov,rules,True,,map,2026-11-01,True
-airforcemag_early_war_plans,www.airandspaceforces.com,rules,True,,map,2026-11-01,True
-csis_gmd,missilethreat.csis.org,rules,True,,map,2026-11-01,True
-cacnp_bmd_factsheet,armscontrolcenter.org,rules,True,,map,2026-11-01,True
-wiki_a135,en.wikipedia.org,rules,True,,map,2026-11-01,True
-acp_toon_2007,acp.copernicus.org,rules,True,,map,2026-11-01,True
-sgs_plan_a,sgs.princeton.edu,rules,True,,map,2026-11-01,True
-naturalearth_10m_populated_places,raw.githubusercontent.com,no_rule_http_404,True,,universe,2026-11-01,True
-cow_alliances_v41,correlatesofwar.org,rules,True,,features,2026-11-01,True
-owid_political_regime,ourworldindata.org,rules,True,,features,2026-11-01,True
-owid_maddison_gdp_pc,ourworldindata.org,rules,True,,features,2026-11-01,True
-script:weurope_military_1965_fetch,en.wikipedia.org,rules,False,project; *; ClaudeBot; anthropic-ai,script,,False
-script:uk_military_1980_fetch,en.wikipedia.org,rules,False,project; *; ClaudeBot; anthropic-ai,script,,False
+id,host,status,allowed,denied_agents,role,retrieved,held_locally,checked,publisher_status,publisher_allowed
+sac1956_part1_complex_list,nsarchive2.gwu.edu,rules,True,,labels,2026-10-03,True,url,rules,True
+sac1956_section1,nsarchive2.gwu.edu,rules,True,,labels,2026-10-03,True,url,rules,True
+sac1956_section2,nsarchive2.gwu.edu,rules,True,,labels,2026-10-03,True,url,rules,True
+sac1956_section3,nsarchive2.gwu.edu,rules,True,,labels,2026-10-03,True,url,rules,True
+sac1956_section4,nsarchive2.gwu.edu,rules,True,,labels,2026-10-03,True,url,rules,True
+sac1956_section5,nsarchive2.gwu.edu,rules,True,,labels,2026-10-03,True,url,rules,True
+sac1956_section6,nsarchive2.gwu.edu,rules,True,,labels,2026-10-03,True,url,rules,True
+sac1956_section7,nsarchive2.gwu.edu,rules,True,,labels,2026-10-03,True,url,rules,True
+sac1956_section8,nsarchive2.gwu.edu,rules,True,,labels,2026-10-03,True,url,rules,True
+nsa_city_sheet_moscow,nsarchive2.gwu.edu,rules,True,,labels,2026-10-03,True,url,rules,True
+nsa_city_sheet_leningrad,nsarchive2.gwu.edu,rules,True,,labels,2026-10-03,True,url,rules,True
+nsa_city_sheet_beijing,nsarchive2.gwu.edu,rules,True,,labels,2026-10-03,True,url,rules,True
+nsa_city_sheet_warsaw,nsarchive2.gwu.edu,rules,True,,labels,2026-10-03,True,url,rules,True
+popstat_russia,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True,url,no_rule_http_404,True
+popstat_ukraine,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True,url,no_rule_http_404,True
+popstat_belarus,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True,url,no_rule_http_404,True
+popstat_moldova,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True,url,no_rule_http_404,True
+popstat_lithuania,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True,url,no_rule_http_404,True
+popstat_latvia,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True,url,no_rule_http_404,True
+popstat_estonia,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True,url,no_rule_http_404,True
+popstat_georgia,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True,url,no_rule_http_404,True
+popstat_armenia,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True,url,no_rule_http_404,True
+popstat_azerbaijan,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True,url,no_rule_http_404,True
+popstat_kazakhstan,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True,url,no_rule_http_404,True
+popstat_kyrgyzstan,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True,url,no_rule_http_404,True
+popstat_tajikistan,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True,url,no_rule_http_404,True
+popstat_turkmenistan,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-07,True,url,no_rule_http_404,True
+demoscope_ussr59_reg2,web.archive.org,no_rule_http_404,True,,universe,2026-10-07,True,obtained_from,unreachable,False
+geonames_ru,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_ua,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_by,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_md,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_lt,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_lv,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_ee,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_ge,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_am,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_az,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_kz,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_uz,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_tm,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_kg,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_tj,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_admin1,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+naturalearth_50m_land,raw.githubusercontent.com,no_rule_http_404,True,,map,2026-10-07,True,url,no_rule_http_404,True
+naturalearth_50m_lakes,raw.githubusercontent.com,no_rule_http_404,True,,map,2026-10-07,True,url,no_rule_http_404,True
+vpk_dexter_rodionov_v24,warwick.ac.uk,rules,True,,features,2026-10-08,True,url,rules,True
+wri_gppd,raw.githubusercontent.com,no_rule_http_404,True,,features,2026-10-08,True,url,no_rule_http_404,True
+ourairports,davidmegginson.github.io,no_rule_http_404,True,,features,2026-11-01,True,url,no_rule_http_404,True
+naturalearth_10m_railroads,raw.githubusercontent.com,no_rule_http_404,True,,features,2026-10-08,True,url,no_rule_http_404,True
+naturalearth_10m_ports,raw.githubusercontent.com,no_rule_http_404,True,,features,2026-10-08,True,url,no_rule_http_404,True
+naturalearth_10m_coastline,raw.githubusercontent.com,no_rule_http_404,True,,features,2026-10-08,True,url,no_rule_http_404,True
+naturalearth_10m_rivers,raw.githubusercontent.com,no_rule_http_404,True,,features,2026-10-08,True,url,no_rule_http_404,True
+naturalearth_10m_admin0,raw.githubusercontent.com,no_rule_http_404,True,,features,2026-10-08,True,url,no_rule_http_404,True
+cshapes_2,icr.ethz.ch,rules,True,,features,2026-10-08,True,url,rules,True
+popstat_albania,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-08,True,url,no_rule_http_404,True
+popstat_bulgaria,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-08,True,url,no_rule_http_404,True
+popstat_romania,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-08,True,url,no_rule_http_404,True
+popstat_czechia,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-08,True,url,no_rule_http_404,True
+geonames_pl,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_de,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_cz,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_sk,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_hu,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_ro,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_bg,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_al,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_cn,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_kp,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_vn,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_mn,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+ddr_jahrbuch_1956_p0041,digi.bib.uni-mannheim.de,rules,True,,universe,2026-10-08,True,url,rules,True
+ddr_jahrbuch_1956_p0042,digi.bib.uni-mannheim.de,rules,True,,universe,2026-10-08,True,url,rules,True
+ddr_jahrbuch_1956_p0043,digi.bib.uni-mannheim.de,rules,True,,universe,2026-10-08,True,url,rules,True
+gus_rocznik_1957_p13,polona.pl,rules,True,,universe,2026-10-08,True,url,rules,True
+gus_rocznik_1957_p14,polona.pl,rules,True,,universe,2026-10-08,True,url,rules,True
+gus_rocznik_1957_p15,polona.pl,rules,True,,universe,2026-10-08,True,url,rules,True
+ksh_2011_4_1_1_1_01,www.ksh.hu,rules,True,,universe,2026-10-08,True,url,rules,True
+ksh_2011_4_1_1_1_02,www.ksh.hu,rules,True,,universe,2026-10-08,True,url,rules,True
+ksh_2011_4_1_1_1_03,www.ksh.hu,rules,True,,universe,2026-10-08,True,url,rules,True
+ksh_2011_4_1_1_1_04,www.ksh.hu,rules,True,,universe,2026-10-08,True,url,rules,True
+ksh_2011_4_1_1_1_05,www.ksh.hu,rules,True,,universe,2026-10-08,True,url,rules,True
+ksh_2011_4_1_1_1_06,www.ksh.hu,rules,True,,universe,2026-10-08,True,url,rules,True
+ksh_2011_4_1_1_1_07,www.ksh.hu,rules,True,,universe,2026-10-08,True,url,rules,True
+ksh_2011_4_1_1_1_08,www.ksh.hu,rules,True,,universe,2026-10-08,True,url,rules,True
+ksh_2011_4_1_1_1_09,www.ksh.hu,rules,True,,universe,2026-10-08,True,url,rules,True
+ksh_2011_4_1_1_1_10,www.ksh.hu,rules,True,,universe,2026-10-08,True,url,rules,True
+ksh_2011_4_1_1_1_11,www.ksh.hu,rules,True,,universe,2026-10-08,True,url,rules,True
+ksh_2011_4_1_1_1_12,www.ksh.hu,rules,True,,universe,2026-10-08,True,url,rules,True
+ksh_2011_4_1_1_1_13,www.ksh.hu,rules,True,,universe,2026-10-08,True,url,rules,True
+ksh_2011_4_1_1_1_14,www.ksh.hu,rules,True,,universe,2026-10-08,True,url,rules,True
+ksh_2011_4_1_1_1_15,www.ksh.hu,rules,True,,universe,2026-10-08,True,url,rules,True
+ksh_2011_4_1_1_1_16,www.ksh.hu,rules,True,,universe,2026-10-08,True,url,rules,True
+ksh_2011_4_1_1_1_17,www.ksh.hu,rules,True,,universe,2026-10-08,True,url,rules,True
+ksh_2011_4_1_1_1_18,www.ksh.hu,rules,True,,universe,2026-10-08,True,url,rules,True
+ksh_2011_4_1_1_1_19,www.ksh.hu,rules,True,,universe,2026-10-08,True,url,rules,True
+ksh_2011_4_1_1_1_20,www.ksh.hu,rules,True,,universe,2026-10-08,True,url,rules,True
+votrubec_1959,www.sav.sk,rules,True,,universe,2026-10-08,True,url,rules,True
+wikipedia_1953_chinese_census,en.wikipedia.org,rules,True,,universe,2026-11-01,True,url,rules,True
+un_wup2018,population.un.org,rules,True,,universe,2026-10-08,True,url,rules,True
+aws_terrain_tiles,s3.amazonaws.com,no_rule_http_403,True,,features,2026-11-01,True,url,no_rule_http_403,True
+census_us_estimates_1980s,www2.census.gov,rules,True,,universe,2026-10-10,True,url,rules,True
+census_us_boundaries_1990,www2.census.gov,rules,True,,universe,2026-10-10,True,url,rules,True
+fema_napb90,archive.org,rules,True,,labels,2026-10-03,True,url,rules,True
+geonames_dk,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_nl,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_be,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_at,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_it,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_gb,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_jp,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_ca,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+geonames_us,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,rules,False
+popstat_austria,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-10,True,url,no_rule_http_404,True
+census_ca_1956,archive.org,rules,True,,universe,2026-10-10,True,url,rules,True
+census_dk_1960,www.dst.dk,rules,True,,universe,2026-10-10,True,url,rules,True
+census_nl_1960,doi.org,no_rule_http_404,True,,universe,2026-10-10,True,url,no_rule_http_404,True
+census_be_1961,doc.statbel.fgov.be,no_rule_http_400,True,,universe,2026-10-10,True,url,no_rule_http_400,True
+census_it_1961,ebiblio.istat.it,no_rule_http_404,True,,universe,2026-10-10,False,url,no_rule_http_404,True
+census_uk_1981_nomis,www.nomisweb.co.uk,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-10-10,True,url,rules,False
+census_ni_1981,www.nisra.gov.uk,rules,True,,universe,2026-10-10,True,url,rules,True
+census_jp_1940,www.e-stat.go.jp,rules,True,,universe,2026-10-10,True,url,rules,True
+census_us_1950,www2.census.gov,rules,True,,universe,2026-10-10,True,url,rules,True
+census_frg_1961,www.statistischebibliothek.de,no_rule_http_403,True,,universe,2026-11-01,True,url,no_rule_http_403,True
+cow_nmc_v7,correlatesofwar.org,rules,True,,features,2026-11-01,True,url,rules,True
+plandoc_nsa_sac_doc09_page,nsarchive.gwu.edu,rules,True,,labels,2026-11-01,True,url,rules,True
+plandoc_nsa_ww2_009,nsarchive.gwu.edu,rules,True,,labels,2026-11-01,True,url,rules,True
+plandoc_nsa_ww2_011,nsarchive.gwu.edu,rules,True,,labels,2026-11-01,True,url,rules,True
+plandoc_nsa_ww2_015,nsarchive.gwu.edu,rules,True,,labels,2026-11-01,True,url,rules,True
+plandoc_nsa_ww2_016,nsarchive.gwu.edu,rules,True,,labels,2026-11-01,True,url,rules,True
+plandoc_nsa_ww2_046e,nsarchive.gwu.edu,rules,True,,labels,2026-11-01,True,url,rules,True
+plandoc_nsa_ww2_060b,nsarchive.gwu.edu,rules,True,,labels,2026-11-01,True,url,rules,True
+plandoc_nsa_ww2_060e,nsarchive.gwu.edu,rules,True,,labels,2026-11-01,True,url,rules,True
+plandoc_nsa_ww2_047,nsarchive.gwu.edu,rules,True,,labels,2026-11-01,True,url,rules,True
+plandoc_halperin_rm4900,www.ellsberg.net,rules,True,,labels,2026-11-01,True,url,rules,True
+plandoc_nsa_ebb38_doc6,nsarchive2.gwu.edu,rules,True,,labels,2026-11-01,True,url,rules,True
+plandoc_nsa_ebb488_doc16,nsarchive2.gwu.edu,rules,True,,labels,2026-11-01,True,url,rules,True
+plandoc_php_warplan_dossier,www.files.ethz.ch,rules,True,,labels,2026-11-01,True,url,rules,True
+plandoc_palka_2022,web.archive.org,no_rule_http_404,True,,labels,2026-11-01,True,obtained_from,unreachable,False
+plandoc_nielsen_2016,rucforsk.ruc.dk,rules,True,,labels,2026-11-01,True,url,rules,True
+plandoc_php_report_001061,phpisn.ethz.ch,no_rule_http_404,True,,labels,2026-11-01,True,url,no_rule_http_404,True
+plandoc_php_situationreport_101061,phpisn.ethz.ch,no_rule_http_404,True,,labels,2026-11-01,True,url,no_rule_http_404,True
+plandoc_php_operationaldirective_310567,phpisn.ethz.ch,no_rule_http_404,True,,labels,2026-11-01,True,url,no_rule_http_404,True
+plandoc_php_6505_plan_e,phpisn.ethz.ch,no_rule_http_404,True,,labels,2026-11-01,True,url,no_rule_http_404,True
+plandoc_php_6506_plan_easterners,phpisn.ethz.ch,no_rule_http_404,True,,labels,2026-11-01,True,url,no_rule_http_404,True
+plandoc_cia_0001197534,archive.org,rules,True,,labels,2026-11-01,True,url,rules,True
+plandoc_cia_0001197557,archive.org,rules,True,,labels,2026-11-01,True,url,rules,True
+plandoc_cia_5166d4f999326091c6a607ee,archive.org,rules,True,,labels,2026-11-02,True,url,rules,True
+plandoc_cia_5166d4f999326091c6a607e7,archive.org,rules,True,,labels,2026-11-02,True,url,rules,True
+plandoc_cia_0001197532,archive.org,rules,True,,labels,2026-11-01,True,url,rules,True
+plandoc_cia_0001197563,archive.org,rules,True,,labels,2026-11-01,True,url,rules,True
+plandoc_cia_0001197561,archive.org,rules,True,,labels,2026-11-01,True,url,rules,True
+plandoc_cia_0001197576,archive.org,rules,True,,labels,2026-11-01,True,url,rules,True
+plandoc_soyuz75,web.archive.org,no_rule_http_404,True,,labels,2026-11-01,True,url,no_rule_http_404,True
+plandoc_php_listnuclear_240162,phpisn.ethz.ch,no_rule_http_404,True,,labels,2026-11-01,True,url,no_rule_http_404,True
+plandoc_php_6506_plan_westerners_e,phpisn.ethz.ch,no_rule_http_404,True,,labels,2026-11-01,True,url,no_rule_http_404,True
+plandoc_fcda_1955_report,archive.org,rules,True,,labels,2026-11-01,True,url,rules,True
+plandoc_loc_sn83045462_00280607083_1955061501_1195,tile.loc.gov,no_rule_http_404,True,,labels,2026-11-01,True,url,no_rule_http_404,True
+plandoc_loc_sn83016244_00517170665_1955061501_0438,tile.loc.gov,no_rule_http_404,True,,labels,2026-11-01,True,url,no_rule_http_404,True
+plandoc_loc_sn83045462_00280607095_1955061601_0004,tile.loc.gov,no_rule_http_404,True,,labels,2026-11-01,True,url,no_rule_http_404,True
+plandoc_loc_sn84020662_00414185277_1955061701_0442,tile.loc.gov,no_rule_http_404,True,,labels,2026-11-01,True,url,no_rule_http_404,True
+plandoc_canada_1956_extract,,no_url,,,labels,unknown,False,,,
+plandoc_campbell_1980,www.duncancampbell.org,rules,True,,labels,2026-11-01,True,url,rules,True
+plandoc_campbell_1981,www.duncancampbell.org,rules,True,,labels,2026-11-01,True,url,rules,True
+fas_status,fas.org,rules,True,,map,2026-11-01,True,url,rules,True
+sipri_yb2026_ch08,www.sipri.org,rules,True,,map,2026-11-01,True,url,rules,True
+sipri_terms,www.sipri.org,rules,True,,map,2026-11-01,True,url,rules,True
+owid_warhead_stockpiles,ourworldindata.org,rules,True,,map,2026-11-01,True,url,rules,True
+nrdc_table_us,web.archive.org,no_rule_http_404,True,,map,2026-11-01,True,url,no_rule_http_404,True
+nrdc_table_ussr,web.archive.org,no_rule_http_404,True,,map,2026-11-01,True,url,no_rule_http_404,True
+nrdc_war_plan_2001,www.nrdc.org,rules,True,,map,2026-11-01,True,url,rules,True
+unidir_alert_2012,unidir.org,rules,True,,map,2026-11-01,True,url,rules,True
+ucs_hair_trigger_faq,www.ucs.org,rules,True,,map,2026-11-01,True,url,rules,True
+sgs_hobson_1991,scienceandglobalsecurity.org,rules,True,,map,2026-11-01,True,url,rules,True
+frus_1952_54v02p1_d66,history.state.gov,rules,True,,map,2026-11-01,True,url,rules,True
+airforcemag_early_war_plans,www.airandspaceforces.com,rules,True,,map,2026-11-01,True,url,rules,True
+csis_gmd,missilethreat.csis.org,rules,True,,map,2026-11-01,True,url,rules,True
+cacnp_bmd_factsheet,armscontrolcenter.org,rules,True,,map,2026-11-01,True,url,rules,True
+wiki_a135,en.wikipedia.org,rules,True,,map,2026-11-01,True,url,rules,True
+acp_toon_2007,acp.copernicus.org,rules,True,,map,2026-11-01,True,url,rules,True
+sgs_plan_a,sgs.princeton.edu,rules,True,,map,2026-11-01,True,url,rules,True
+naturalearth_10m_populated_places,raw.githubusercontent.com,no_rule_http_404,True,,universe,2026-11-01,True,url,no_rule_http_404,True
+cow_alliances_v41,correlatesofwar.org,rules,True,,features,2026-11-01,True,url,rules,True
+owid_political_regime,ourworldindata.org,rules,True,,features,2026-11-01,True,url,rules,True
+owid_maddison_gdp_pc,ourworldindata.org,rules,True,,features,2026-11-01,True,url,rules,True
+script:weurope_military_1965_fetch,en.wikipedia.org,rules,True,,script,,False,url,rules,True
+script:uk_military_1980_fetch,en.wikipedia.org,rules,True,,script,,False,url,rules,True
+past:wikipedia_index_raw,en.wikipedia.org,rules,False,project; *; ClaudeBot; anthropic-ai,past_route,,False,url,rules,False
+past:wikipedia_special_export,en.wikipedia.org,rules,False,project; *; ClaudeBot; anthropic-ai,past_route,,False,url,rules,False
+past:wikipedia_api,en.wikipedia.org,rules,False,project; *; ClaudeBot; anthropic-ai,past_route,,False,url,rules,False

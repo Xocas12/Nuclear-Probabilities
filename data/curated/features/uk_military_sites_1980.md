@@ -20,7 +20,8 @@
 
   The wikitext was saved under `data/raw/uk_military/wikipedia/`, one JSON file per page, with
   the URL it was fetched from (`index.php?action=raw`, following redirects; the API was
-  rate-limited). `scripts/uk_military_1980_fetch.py` downloads them.
+  rate-limited). `/w/index.php` is a path en.wikipedia.org's robots.txt disallows, so these copies were fetched against it; they are not held. The pages are registered through allowed paths in `cited_pages.csv` (README, "Robots"). `scripts/uk_military_1980_fetch.py` now fetches through
+  `/wiki/<title>?action=raw`, which robots.txt allows.
   `scripts/uk_military_1980_spec.py` holds the rows, years and decisions. Each row also has a
   regex that has to match its article or one of its extra pages; for the rows whose role began
   or ended near 1980 the regex is the dating sentence itself (for example "first arriving in

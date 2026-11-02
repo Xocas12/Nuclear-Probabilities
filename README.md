@@ -75,11 +75,19 @@ built tables skip.
 tables are not redistributed (its terms), so `data/curated/stockpiles/delivery_mix.csv` holds rounded shares only.
 `data/curated/features/bloc_air_defence_1956.csv` was made by hand from cited pages
 (`scripts/bloc_air_defence_1956/README.md`). **Robots.** `make data` asks each host's robots.txt before every download and reports a refused source as not
-obtained; `python -m nucprob.sources.robots` records the answer for every source in `runs/qa/robots.csv`. Some
-tables were built in earlier work from paths that robots.txt disallows. These files are kept and not fetched again:
-37 GeoNames dumps from `download.geonames.org`, which feed town coordinates; the UK 1981 census from
-`www.nomisweb.co.uk`; and Wikipedia wikitext through `en.wikipedia.org/w/index.php` for the military site tables of Western Europe
-and the UK. A fresh clone therefore cannot rebuild the place tables from `make data` alone. Whether the files may stay or
-must be replaced is the project owner's decision and is open. The Wikipedia pages behind those site tables are registered through
-paths robots.txt allows, in `data/curated/features/cited_pages.csv`. Two pages cited by those tables, on `www.armedconflicts.com`, are
+obtained; `python -m nucprob.sources.robots` records the answer for every source in `runs/qa/robots.csv`. Each row is judged on the URL the held bytes came from: where that is not the publisher's,
+`data/sources_obtained.yaml` names it, and `make data` downloads it in place of the publisher's URL. `download.geonames.org`
+disallows every path, so the 37 GeoNames dumps that feed town coordinates were fetched again on 2026-11-02 from the
+`DataDock/geonames` mirror on `huggingface.co` (CC BY 4.0, revision pinned), whose robots.txt allows them. All 37 have the
+recorded hashes, so no table changed. The Demoscope page (its host gave no robots.txt answer) and the Pałka article are
+held as Wayback captures with the recorded hashes. One held source is still from a refused path: the UK 1981 census
+district totals from `www.nomisweb.co.uk` (`/api/v01/dataset/`), which feed `towns_uk_1981.csv`, the Great Britain units
+of the Square Leg comparison. No allowed copy was found; whether to keep them or drop those units is the owner's decision
+and is open. Earlier work also read Wikipedia through paths robots.txt disallows: `en.wikipedia.org/w/index.php` for the
+military site tables of Western Europe, the UK and the US; `Special:Export` and `/w/api.php` for
+`uk_districts_1981_seats.csv`; `/w/api.php` as named in the gazetteer's transcription instructions until 2026-11-02 and
+for one wargame page in `data/notes/warsaw_pact.md`. Those copies are not held, the scripts and instructions now use
+`/wiki/<title>?action=raw`, and the routes are listed as `past_route` rows in `runs/qa/robots.csv`. The pages those tables
+cite are registered through paths robots.txt allows, with date, hash and revision, in
+`data/curated/features/cited_pages.csv`. Two pages cited by those tables, on `www.armedconflicts.com`, are
 refused to this project's agents and stand there with no hash. The Dutch census volume's only held copy is a landing page, since `ssh.datastations.nl` disallows the path of the PDF, and the Italian volume is not held (`held` in `data/sources.yaml`).

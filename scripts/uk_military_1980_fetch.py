@@ -1,8 +1,10 @@
 """Fetch Wikipedia wikitext for the UK 1980 military-sites table.
 
 Saves one JSON per requested page under data/raw/uk_military/wikipedia/ with the URL it came
-from ({"parse": {"requested", "title", "url", "wikitext"}}). Uses index.php?action=raw (the API
-is rate-limited) and follows #REDIRECTs.
+from ({"parse": {"requested", "title", "url", "wikitext"}}). Uses /wiki/<title>?action=raw, which
+en.wikipedia.org's robots.txt allows, and follows #REDIRECTs. The copies the table was built from
+came through /w/index.php?action=raw, a path that robots.txt disallows; they are not held, and the
+pages' provenance is data/curated/features/cited_pages.csv (python -m nucprob.sources.cited_pages).
 
 Run: .venv/bin/python scripts/uk_military_1980_fetch.py "Page title" ...   (or no args = all spec pages)
 """
@@ -28,13 +30,13 @@ def fname(page):
 
 def raw(title):
     u = (
-        "https://en.wikipedia.org/w/index.php?title="
+        "https://en.wikipedia.org/wiki/"
         + urllib.parse.quote(title.replace(" ", "_"))
-        + "&action=raw"
+        + "?action=raw"
     )
+    robots.require(u)  # a refusal is final, not retried
     for k in range(5):
         try:
-            robots.require(u)
             req = urllib.request.Request(u, headers={"User-Agent": UA})
             return u, urllib.request.urlopen(req, timeout=60).read().decode("utf-8")
         except Exception as e:

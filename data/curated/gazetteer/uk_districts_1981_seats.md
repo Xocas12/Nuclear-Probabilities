@@ -57,7 +57,11 @@
 - **Dual seats noted:** Sefton (Bootle and Southport), Halton (Widnes and Runcorn), Lancaster (Lancaster and Morecambe), High Peak (Buxton and Glossop), Erewash (Ilkeston and Long Eaton), Caithness (Wick and Thurso), East Northamptonshire (Thrapston and Rushden).
 
 ## Sources
-- English Wikipedia, read in October 2026 through `Special:Export` and the MediaWiki API.
+- English Wikipedia, read in October 2026 through `Special:Export` and the MediaWiki API. robots.txt
+  disallows both paths, so the pages were fetched against it. The raw XML is not held in this
+  checkout. The pages in `source` are registered through paths robots.txt allows in
+  `data/curated/features/cited_pages.csv`, with the date, hash and revision of the copy fetched then
+  (README, "Robots").
 - GeoNames GB dump (download.geonames.org/export/dump/GB.zip).
 
 No nuclear target lists or civil defence documents were used.

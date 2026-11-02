@@ -8,8 +8,11 @@ rule, and the two names that the project's automated agents answer to. Unavailab
 9309, section 2.3.1: a 4xx answer for robots.txt sets no rule, while a 5xx answer or no answer means
 that nothing may be assumed, so nothing is fetched.
 
-Files already in data/raw/ are not touched here. The table says which of them came from a host
-that disallows them, so that the decision about them is visible.
+Files already in data/raw/ are not touched here. Each row is judged on the URL the held bytes came
+from: `obtained_from` in data/sources_obtained.yaml where it has one (a licensed mirror or an archived capture), else
+its `url`. The publisher's own answer is kept beside it (`publisher_status`, `publisher_allowed`), so
+a source obtained from a mirror because its publisher refuses stays visible. The table says which
+files came from a URL that disallows them, so that the decision about them is visible.
 """
 
 import csv
@@ -18,17 +21,28 @@ from urllib.parse import urlparse
 from urllib.robotparser import RobotFileParser
 
 import requests
-import yaml
 
-from nucprob.paths import RAW, REGISTRIES, RUNS
+from nucprob.paths import RAW, RUNS
 
 USER_AGENT = "nuclear-probabilities research project (historical data; contact via GitHub)"
 AGENTS = (USER_AGENT, "*", "ClaudeBot", "anthropic-ai")
 OUT = RUNS / "qa" / "robots.csv"
 # Fetches made by record-keeping scripts, not registered as sources: one URL for each kind of path.
 SCRIPT_URLS = {
-    "script:weurope_military_1965_fetch": "https://en.wikipedia.org/w/index.php?title=Nike&action=raw",
-    "script:uk_military_1980_fetch": "https://en.wikipedia.org/w/index.php?title=Thor&action=raw",
+    "script:weurope_military_1965_fetch": "https://en.wikipedia.org/wiki/Nike?action=raw",
+    "script:uk_military_1980_fetch": "https://en.wikipedia.org/wiki/Thor?action=raw",
+}
+# Routes that earlier work used and its cards record, one URL for each kind of path. They are listed so
+# that their refusal stays visible; no code uses them now. The pages behind the tables they fed are
+# registered through allowed paths in data/curated/features/cited_pages.csv; their copies are not held.
+PAST_ROUTES = {
+    # weurope_military_sites_1965, uk_military_sites_1980 and us_military_sites_1985 (their cards)
+    "past:wikipedia_index_raw": "https://en.wikipedia.org/w/index.php?title=Thor&action=raw",
+    # uk_districts_1981_seats (its card, Method 1)
+    "past:wikipedia_special_export": "https://en.wikipedia.org/wiki/Special:Export/Bolsover",
+    # uk_districts_1981_seats (Method 3), gazetteer TOWNS_INSTRUCTIONS.md before 2026-11-02, and
+    # one wargame page in data/notes/warsaw_pact.md
+    "past:wikipedia_api": "https://en.wikipedia.org/w/api.php?action=parse&page=Thor&prop=wikitext",
 }
 
 
@@ -83,19 +97,26 @@ def require(url: str, get=requests.get) -> None:
 
 
 def main() -> None:
-    sources = [
-        s
-        for path in REGISTRIES
-        for s in yaml.safe_load(path.read_text(encoding="utf-8"))["sources"]
-    ]
+    from nucprob.sources.fetch import load_manifest  # fetch imports this module
+
+    sources = load_manifest()["sources"]
     entries = [
-        (s["id"], str(s.get("url") or ""), s.get("role", ""), s.get("retrieved", ""), s.get("path"))
+        (
+            s["id"],
+            str(s.get("obtained_from") or s.get("url") or ""),
+            str(s.get("url") or ""),
+            s.get("role", ""),
+            s.get("retrieved", ""),
+            s.get("path"),
+        )
         for s in sources
-    ] + [(k, u, "script", "", None) for k, u in SCRIPT_URLS.items()]
+    ] + [(k, u, u, "script", "", None) for k, u in SCRIPT_URLS.items()]
+    entries += [(k, u, u, "past_route", "", None) for k, u in PAST_ROUTES.items()]
     rows = []
-    for name, url, role, retrieved, path in entries:
+    for name, url, publisher, role, retrieved, path in entries:
         known = url.startswith("http")
         v = check(url) if known else None
+        p = check(publisher) if publisher != url and publisher.startswith("http") else v
         rows.append(
             {
                 "id": name,
@@ -108,6 +129,9 @@ def main() -> None:
                 "role": role,
                 "retrieved": retrieved,
                 "held_locally": (RAW / path).exists() if path else False,
+                "checked": "obtained_from" if url != publisher else ("url" if known else ""),
+                "publisher_status": p.status if p else "",
+                "publisher_allowed": p.allowed if p else "",
             }
         )
     OUT.parent.mkdir(parents=True, exist_ok=True)

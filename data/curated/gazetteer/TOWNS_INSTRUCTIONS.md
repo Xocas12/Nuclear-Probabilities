@@ -31,8 +31,9 @@ you can reach only lists a higher threshold, use it and say so). Columns:
   or citypopulation.de where it states the census date). Prefer the original publication. Never
   fill a missing figure from another year or by interpolation; leave the town out and say so.
 - Record every URL you download, and save the raw files under `data/raw/<country>/`. Use curl
-  (Wikipedia: https://en.wikipedia.org/w/api.php?action=parse&page=...&prop=wikitext&format=json
-  or the same on de./da./nl./fr./it./ja. wikipedia). Many statistics offices block scripts;
+  (Wikipedia: https://en.wikipedia.org/wiki/<title>?action=raw or the same on
+  de./da./nl./fr./it./ja. wikipedia; robots.txt disallows `/w/api.php` and `/w/index.php`, which
+  this file named until 2026-11-02). Ask `nucprob.sources.robots.require(url)` before each download. Many statistics offices block scripts;
   try them, then fall back to good tabulations.
 - **Do not use any nuclear target list, war plan, civil-defence target list or analysis of where
   bombs would fall** (Square Leg, Hard Rock, Operation Alert, NAPB-90, the Warsaw Pact plans,

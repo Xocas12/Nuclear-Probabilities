@@ -11,4 +11,5 @@ CURATED = DATA / "curated"  # small hand-built or transcribed tables, committed
 SOURCES = DATA / "sources.yaml"
 SOURCES_AMENDMENT_5 = DATA / "sources_amendment_5.yaml"  # feeds only that amendment's readings
 REGISTRIES = (SOURCES, SOURCES_AMENDMENT_5)
+OBTAINED = DATA / "sources_obtained.yaml"  # where held bytes came from, if not the publisher's url
 RUNS = ROOT / "runs"

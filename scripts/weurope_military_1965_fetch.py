@@ -2,8 +2,11 @@
 
 Saves one JSON file per page under data/raw/weurope_military/wikipedia/<lang>/ with the
 URL it was fetched from ({"lang", "requested", "title", "url", "fetched", "wikitext"}).
-The action API was rate-limited (HTTP 429), so pages come through index.php?action=raw;
-redirects are followed by hand.
+Pages come through /wiki/<title>?action=raw, which robots.txt allows; redirects are followed by
+hand. The copies the table was built from came through /w/index.php?action=raw, a path that
+robots.txt disallows; they are not held, and the pages' provenance is
+data/curated/features/cited_pages.csv (python -m nucprob.sources.cited_pages). Search went through
+/w/index.php too; it now goes through Special:Search, and is refused if robots.txt refuses that.
 
 Usage: .venv/bin/python -I scripts/weurope_military_1965_fetch.py de:Fliegerhorst_Büchel en:Ramstein_Air_Base ...
        .venv/bin/python -I scripts/weurope_military_1965_fetch.py --search de "Nike-Stellung"
@@ -26,7 +29,7 @@ from nucprob.sources import robots
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 RAW = ROOT / "data/raw/weurope_military/wikipedia"
 UA = "nuclear-probabilities-research/1.0 (historical dataset; contact via repository owner)"
-CTX = ssl.create_default_context(cafile="/root/.ccr/ca-bundle.crt")
+CTX = ssl.create_default_context()
 
 
 def fname(title):
@@ -38,9 +41,9 @@ def path(lang, title):
 
 
 def get(url, tries=8):
+    robots.require(url)  # a refusal is final, not retried
     for k in range(tries):
         try:
-            robots.require(url)
             req = urllib.request.Request(url, headers={"User-Agent": UA})
             with urllib.request.urlopen(req, context=CTX, timeout=60) as r:
                 return r.read().decode("utf-8")
@@ -63,7 +66,7 @@ def fetch(lang, title, force=False):
         return json.load(open(p))
     t = title
     for _ in range(4):
-        url = f"https://{lang}.wikipedia.org/w/index.php?title={urllib.parse.quote(t.replace(' ', '_'))}&action=raw"
+        url = f"https://{lang}.wikipedia.org/wiki/{urllib.parse.quote(t.replace(' ', '_'))}?action=raw"
         w = get(url)
         if w is None:
             print("MISSING", lang, title, file=sys.stderr)
@@ -100,7 +103,7 @@ def search(lang, q, n=20):
         "da": "Speciel:Søgning",
         "it": "Speciale:Ricerca",
     }.get(lang, "Special:Search")
-    url = f"https://{lang}.wikipedia.org/w/index.php?search={urllib.parse.quote(q)}&title={urllib.parse.quote(sp)}&ns0=1&fulltext=1&limit={n}"
+    url = f"https://{lang}.wikipedia.org/wiki/{urllib.parse.quote(sp)}?search={urllib.parse.quote(q)}&ns0=1&fulltext=1&limit={n}"
     h = get(url) or ""
     return [
         html.unescape(t)

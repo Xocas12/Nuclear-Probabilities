@@ -17,7 +17,7 @@
 
   The wikitext was saved under `data/raw/us_military/wikipedia/`, one JSON file per page, with
   the URL it was fetched from. The API was rate-limited, so most pages came through
-  `index.php?action=raw`.
+  `index.php?action=raw`. `/w/index.php` is a path en.wikipedia.org's robots.txt disallows, so these copies were fetched against it; they are not held. The pages are registered through allowed paths in `cited_pages.csv` (README, "Robots").
 
   `scripts/us_military_1985_spec.py` holds the rows, years and decisions. Each row also has a
   regex that has to match its article; every match was read by hand. The CSV is rebuilt with

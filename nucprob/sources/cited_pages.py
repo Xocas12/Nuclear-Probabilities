@@ -3,7 +3,7 @@
     python -m nucprob.sources.cited_pages          # fetch what is not yet recorded, one request a second
     python -m nucprob.sources.cited_pages --check  # say what is missing, fetch nothing
 
-The site tables cite about 1,150 pages in their `source` columns. This registry gives each page the host's
+The site tables, and the gazetteer tables built from Wikipedia, cite their pages row by row. This registry gives each page the host's
 licence, the date it was retrieved here and the hash of the bytes received, with Wikipedia's revision id when
 the page states one. These are the pages as they stood on that date, not as they stood when the row was
 written: where a table was made from an earlier copy, nothing here shows that the two agree. A page that
@@ -28,13 +28,19 @@ from nucprob.paths import CURATED
 from nucprob.sources import robots
 
 FEATURES = CURATED / "features"
-TABLES = (
-    "bloc_air_defence_1956",
-    "military_sites_1956",
-    "weurope_military_sites_1965",
-    "uk_military_sites_1980",
-    "us_military_sites_1985",
-)
+GAZETTEER = CURATED / "gazetteer"
+TABLES = {
+    "bloc_air_defence_1956": FEATURES,
+    "military_sites_1956": FEATURES,
+    "weurope_military_sites_1965": FEATURES,
+    "uk_military_sites_1980": FEATURES,
+    "us_military_sites_1985": FEATURES,
+    # Gazetteer tables read from Wikipedia, some through paths robots.txt disallows (README, "Robots"):
+    # their pages are registered here through paths it allows.
+    "uk_districts_1981_seats": GAZETTEER,
+    "frg_1961_wikipedia": GAZETTEER,
+    "closed_cities_1956": GAZETTEER,
+}
 OUT = FEATURES / "cited_pages.csv"
 COLUMNS = ["url", "host", "tables", "rows", "licence", "retrieved", "status", "sha256", "revision"]
 URL = re.compile(r"https?://[^\s;|\]\"]+")
@@ -65,8 +71,8 @@ def urls_in(text: str) -> set[str]:
 def cited() -> dict[str, dict]:
     """Each URL in the tables, with the tables and the number of rows that cite it."""
     pages: dict[str, dict] = {}
-    for name in TABLES:
-        with open(FEATURES / f"{name}.csv", encoding="utf-8", newline="") as fh:
+    for name, folder in TABLES.items():
+        with open(folder / f"{name}.csv", encoding="utf-8", newline="") as fh:
             for row in csv.DictReader(fh):
                 urls = {u for v in row.values() if v for u in urls_in(v)}
                 for u in urls:

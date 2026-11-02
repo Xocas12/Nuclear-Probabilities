@@ -23,7 +23,9 @@
 
   The wikitext was saved under `data/raw/weurope_military/wikipedia/<lang>/`, one JSON file per
   page, with the URL it was fetched from. The action API answered HTTP 429, so the pages came
-  through `index.php?action=raw`, and redirects were followed by hand.
+  through `index.php?action=raw`, and redirects were followed by hand. `/w/index.php` is a path en.wikipedia.org's robots.txt disallows, so these copies were fetched against it; they are not held. The pages are registered through allowed paths in `cited_pages.csv` (README, "Robots").
+  `scripts/weurope_military_1965_fetch.py` now fetches through `/wiki/<title>?action=raw`, which
+  robots.txt allows.
 
   The scripts:
   - `scripts/weurope_military_1965_fetch.py` downloads the pages.
