@@ -1,8 +1,8 @@
 {
-  "created": "2026-11-02T07:15:43+00:00",
-  "git_commit": "110174e2f00f1ada0797bc3ed2b17780b5eea07b",
+  "created": "2026-11-02T12:14:22+00:00",
+  "git_commit": "930a164aee6c6cd3fbe9d8a2bcf5a71d98076ef0",
   "git_dirty": false,
-  "table_sha256": "d765c330d02ce9777a5e19c7a9016d7d73929e51f5257fa02420186b33e7de2b",
+  "table_sha256": "28c139144a8cde8a7a87610448c2f5b0d882a24c4f5a4638704ff630489a97ed",
   "outputs": {
     "runs/classifier/airfield_negatives.csv": "a6c492dd05c608cfb21027b7b14853d712cde8dd4e11398b3e99f201db295fad",
     "runs/classifier/block_neighbours.csv": "2bcaf9b43a8af8227a0e27fcce691448a68365949232724dbb1f5be2bc60ee63",
