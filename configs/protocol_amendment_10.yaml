@@ -1,0 +1,23 @@
+# Tenth amendment, in its own file like the fifth to ninth. Committed before the classifier and map rerun it
+# describes and after every result of the runs pinned at 110174e and de8a502, and the independent review of 46021d7,
+# had been read: nothing below is blind. The sealed set has still not been scored.
+date: 2026-11-02
+reasons: The review of 46021d7 found that a table built from a source fetched against robots.txt was still read.
+  Great Britain's 1981 district totals came through www.nomisweb.co.uk/api/v01/dataset/, which robots.txt
+  disallows; Nomis serves them through no other route that it allows, and no allowed copy was found.
+changes:
+  great_britain_withdrawn: The 454 Great Britain rows of data/curated/gazetteer/towns_uk_1981.csv are removed and
+    the held raw file is taken out of data/raw/. Region uk_1980 is removed from nucprob/transfer/regions.py, so
+    cd_1980_square_leg (Square Leg 1980, a civil-defence exercise list scored as an expectation, never trained on)
+    is no longer scored by the transfer check, the classifier or the report. Northern Ireland's 22 towns, the
+    rest of the table, hold none of Square Leg's points and are read by nothing.
+  map_1965: The United Kingdom is removed from the targets of scenario ussr_1965_on_west. Its theatre share, a
+    stated assumption without a source, is left as it was and now falls on Denmark, the FRG, the Netherlands,
+    Belgium and Italy alone. In the map run pinned at de8a502 the UK took 32% of the scenario's warheads at the
+    median score (unit_sensitivity.csv at that commit), so continental cells read higher than they did.
+  unit_sensitivity: The reading of Great Britain's districts counted three ways (runs/probmap/unit_sensitivity.csv,
+    added by the eighth amendment) has no rows left to read and is withdrawn with the code that merged districts.
+  sectors_wording: data/curated/labels/SECTORS.yaml's header now says what the ninth amendment said of it.
+unchanged: No other label, feature, model, gate threshold, selection rule, holdout, seed or scenario changes.
+  Square Leg was never trained on, so no other list's scores should move; the rerun's diff against the
+  committed outputs is reported, whatever it shows.

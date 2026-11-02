@@ -64,8 +64,9 @@ scenarios:
   cell_deg: 0.5
   evidence: 'Evidence: Warsaw Pact exercises and lessons, none a Soviet war plan. The searches recorded
     in data/notes found no declassified Soviet strategic target list.'
-  note: Soviet inventory of 1965; the share aimed at Western Europe is a stated assumption. UK towns carry
-    1981 populations, the only UK table held; the others carry those of about 1961.
+  note: Soviet inventory of 1965; the share aimed at Western Europe is a stated assumption. Towns carry
+    populations of about 1961. The United Kingdom is left out (tenth amendment): its only table was withdrawn,
+    so the share falls on the five continental countries alone.
   attackers:
   - state: USSR
     stock_year: 1965
@@ -74,7 +75,7 @@ scenarios:
     theatre_share: [0.25, 0.5, 1.0]
     reliability: *id001
     fraction_lost_to_defences: [0.07, 0.17, 0.27]
-    targets: [Denmark, FRG, Netherlands, Belgium, Italy, UK]
+    targets: [Denmark, FRG, Netherlands, Belgium, Italy]
 - id: modern_us_russia
   label: '2026: US, UK and France with Russia and European NATO'
   era: modern

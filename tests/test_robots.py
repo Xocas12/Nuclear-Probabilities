@@ -79,15 +79,27 @@ def test_the_audit_covers_every_source_and_names_each_refusal_in_the_readme():
         assert host in readme, host
 
 
-# The one held source still from a refused path, open for the owner (README, "Robots").
-OWNER_PENDING = {"census_uk_1981_nomis"}
-
-
-def test_every_held_file_came_from_a_url_robots_allows_except_the_named_open_one():
+def test_every_held_file_came_from_a_url_robots_allows():
     audit = pd.read_csv(RUNS / "qa" / "robots.csv", dtype=str, keep_default_na=False)
     held = audit[audit["held_locally"].eq("True")]
     refused = set(held.loc[held["allowed"].ne("True"), "id"])
-    assert refused == OWNER_PENDING
+    assert refused == set()
+
+
+def test_a_withdrawn_source_is_neither_held_nor_read():
+    """The tenth amendment withdrew Great Britain's 1981 district totals (Nomis, refused by robots):
+    no raw copy, no curated row and no region may come back without a source robots allows."""
+    from nucprob.paths import CURATED, RAW
+    from nucprob.transfer.regions import REGIONS
+
+    withdrawn = [s for s in fetch.load_manifest()["sources"] if s.get("withdrawn")]
+    assert {s["id"] for s in withdrawn} == {"census_uk_1981_nomis"}
+    for s in withdrawn:
+        assert not (RAW / s["path"]).exists(), s["id"]
+    uk = pd.read_csv(CURATED / "gazetteer" / "towns_uk_1981.csv", dtype=str)
+    assert not uk["source"].str.contains("Nomis").any()
+    tables = {stem for r in REGIONS.values() for _, _, stem in r.countries}
+    assert "towns_uk_1981" not in tables
 
 
 def test_scripts_use_allowed_routes_and_past_routes_stay_listed_as_refused():

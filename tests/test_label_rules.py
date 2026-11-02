@@ -149,9 +149,8 @@ def test_second_read_rows_are_cited_and_dropped_names_stay_out():
 @needs_tables
 def test_links_the_audit_corrected_hold():
     links = pd.read_csv(PROCESSED / "transfer_links.csv", dtype=str, keep_default_na=False)
-    leg = links[links["plan_id"] == "cd_1980_square_leg"].set_index("seq")
-    assert leg.at["64", "town"] == "Crawley"
-    assert leg.at["82", "town"] == "Dundee City"
+    # Square Leg's corrected links (Crawley, Dundee City) went with Great Britain's table (tenth amendment).
+    assert not links["plan_id"].eq("cd_1980_square_leg").any()
     sac = pd.read_parquet(PROCESSED / "sac1956_links.parquet")
     assert sac.loc[sac["id"] == "C086-L07", "place_id"].isna().all()
 

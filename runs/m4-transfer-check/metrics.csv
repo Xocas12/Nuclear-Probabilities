@@ -11,10 +11,6 @@ cd_1956_canada_target_areas,canada_1956,137,13,population rule,0.8478,0.9591,0.1
 cd_1956_canada_target_areas,canada_1956,137,13,"logistic, common",0.8219,0.9752,0.2778,0.7991,0.7692,0.0949,137.0000
 cd_1956_canada_target_areas,canada_1956,137,13,"LightGBM, common",0.8123,0.9653,0.1871,0.5913,0.7692,0.0949,137.0000
 cd_1956_canada_target_areas,canada_1956,137,13,"LightGBM, common + military",,,,,,,
-cd_1980_square_leg,uk_1980,476,73,population rule,0.3818,0.6563,0.5398,1.4733,0.3836,0.1534,476.0000
-cd_1980_square_leg,uk_1980,476,73,"logistic, common",0.2975,0.6636,0.3563,1.0248,0.2877,0.1534,476.0000
-cd_1980_square_leg,uk_1980,476,73,"LightGBM, common",0.4115,0.7086,0.2184,0.6380,0.3973,0.1534,476.0000
-cd_1980_square_leg,uk_1980,476,73,"LightGBM, common + military",0.4003,0.6882,0.2023,0.6034,0.3836,0.1534,476.0000
 nato_1962_pl_exercise_mirror,bloc_1956,126,27,population rule,0.4448,0.6771,0.2145,0.6338,0.4444,0.2143,126.0000
 nato_1962_pl_exercise_mirror,bloc_1956,126,27,"logistic, common",0.5083,0.7097,0.3106,0.9380,0.4074,0.2143,126.0000
 nato_1962_pl_exercise_mirror,bloc_1956,126,27,"LightGBM, common",0.5865,0.7396,0.3309,0.9554,0.5185,0.2143,126.0000

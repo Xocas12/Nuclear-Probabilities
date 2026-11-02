@@ -9,7 +9,10 @@
 #        derived = no boundary stated: the linked targets' extent plus a fixed margin of 0.5 deg
 #          latitude and 0.75 deg longitude (about 55 km), chosen before any box was drawn.
 # Line vertices are the named towns' GeoNames points. A country missing from `include` has no
-# rows in that plan, or is out of its sector. No box was chosen by looking at a model score.
+# rows in that plan, or is out of its sector. Boxes were drawn from the documents and the linked
+# targets, not from model scores, with one exception: wp_1961_burza's boxes were set by the eighth
+# amendment after the review of c840f88 had shown their effect on its scores (protocol_amendment_9.yaml).
+# Burza's FRG and Denmark boxes are one combined extent of its linked positives, written once per country.
 sectors:
   - plan_id: wp_1967_lato67
     basis: documented

@@ -7,7 +7,7 @@ each scenario's delivered warheads by score share (nucprob.probmap.allocate); su
 Then the validation against SAC 1956 and the domain shift of the modern towns.
 
 Writes runs/probmap/: model_choice.csv, cells/<scenario>.csv.gz (one row per cell, sorted by position,
-no names), scenarios.csv, delivered.csv, by_delivery.csv, score_spread.csv, unit_sensitivity.csv, validation.csv,
+no names), scenarios.csv, delivered.csv, by_delivery.csv, score_spread.csv, validation.csv,
 reliability.csv, domain_shift.csv, share_variance.csv, modern_universe.csv, manifest.json.
 --quick uses 10 draws and writes to runs/probmap-quick/.
 """
@@ -123,49 +123,12 @@ def bloc_universe(full: pd.DataFrame) -> Universe:
     return Universe(sac.reset_index(drop=True), float(share))
 
 
-# How the columns of several UK districts combine into one unit. The score reads log_pop.
-_UNIT_MAX = ["pop_rank_pct", "log_pop_within_25km", "log_pop_within_50km", "log_pop_within_100km"]
-_UNIT_MAX += ["national_capital", "regional_centre"]
-_UNIT_MIN = ["log_km_to_100k", "log_km_to_capital", "log_km_to_coast"]
-METROPOLITAN = (
-    "Greater Manchester",
-    "Merseyside",
-    "South Yorkshire",
-    "Tyne and Wear",
-    "West Midlands",
-    "West Yorkshire",
-)
-
-
-def merge_units(towns: pd.DataFrame, counties: tuple[str, ...]) -> pd.DataFrame:
-    """Each named UK county's rows become one unit: people summed, the point weighted by people.
-    Great Britain's table is local government districts (towns_uk_1981.md). A London borough is part of
-    one city, and a share of warheads is drawn per row, so the count of rows moves the map."""
-    uk = towns["country"].eq("UK") & towns["admin1"].isin(counties)
-    rows = []
-    for county, g in towns[uk].groupby("admin1"):
-        row = g.iloc[0].copy()
-        pop = g["pop"].to_numpy(float)
-        row["name"], row["pop"] = county, pop.sum()
-        row["lat"] = float(np.average(g["lat"], weights=pop))
-        row["lon"] = float(np.average(g["lon"], weights=pop))
-        row["log_pop"] = float(np.log10(pop.sum()))
-        for c in _UNIT_MAX:
-            row[c] = g[c].max()
-        for c in _UNIT_MIN:
-            row[c] = g[c].min()
-        rows.append(row)
-    if not rows:
-        return towns
-    return pd.concat([towns[~uk], pd.DataFrame(rows)], ignore_index=True).infer_objects()
-
-
-def west_universe(merged: tuple[str, ...] = ("Greater London",)) -> Universe:
-    """The Western European towns of about 1961, and the UK's of 1981, the only UK table held. Greater
-    London counts as one unit; unit_sensitivity reads the other two choices."""
+def west_universe() -> Universe:
+    """The Western European towns of about 1961. The United Kingdom is not held: its only table, of
+    1981, was withdrawn by the tenth amendment (robots)."""
     t = transfer_towns()
-    t = t[t["region"].isin(["wp_west_1965", "uk_1980"]) & t["lat"].notna()].reset_index(drop=True)
-    return Universe(merge_units(t.assign(sealed=False), merged), 1.0)
+    t = t[t["region"].eq("wp_west_1965") & t["lat"].notna()].reset_index(drop=True)
+    return Universe(t.assign(sealed=False), 1.0)
 
 
 def modern_universe() -> Universe:
@@ -407,46 +370,6 @@ def score_spread(scenario, towns, scores, cell_names, p, cell_deg) -> dict:
     }
 
 
-def unit_sensitivity(models: list, spec: Spec, sc: dict, draws: int) -> pd.DataFrame:
-    """The 1965 scenario with Great Britain's districts counted three ways. Totals for the UK only: a
-    cell's probability depends on how many rows it holds, so the count of rows is itself an assumption."""
-    readings = {
-        "every district one unit, as tabled": (),
-        "Greater London one unit (the map)": ("Greater London",),
-        "Greater London and the six metropolitan counties one unit each": (
-            "Greater London",
-            *METROPOLITAN,
-        ),
-    }
-    rows = []
-    for label, merged in readings.items():
-        universe = west_universe(merged)
-        matrix = score_matrix(models, universe.towns, spec.columns)
-        out, _ = run_scenario(sc, universe, matrix, draws, np.random.default_rng(SEED))
-        named = {c for a in sc["attackers"] for c in a["targets"]}
-        in_scope = universe.towns["country"].isin(named).to_numpy()
-        towns = universe.towns[in_scope]
-        uk = towns["country"].eq("UK").to_numpy()
-        mid = np.nanmedian(matrix[in_scope], axis=1)
-        parts = al.cell_ids(towns.loc[uk, "lat"], towns.loc[uk, "lon"], sc["cell_deg"])
-        parts = parts.drop_duplicates().str.split("_", expand=True).astype(float)
-        cells = out.merge(
-            parts.set_axis(["cell_lat", "cell_lon"], axis=1), on=["cell_lat", "cell_lon"]
-        )
-        rows.append(
-            {
-                "reading": label,
-                "uk_units": int(uk.sum()),
-                "uk_share_of_warheads": float(mid[uk].sum() / mid.sum()),
-                "uk_cells": len(cells),
-                "uk_cells_over_half_at_median": int((cells["p_median"] > 0.5).sum()),
-                "uk_mean_p_median": float(cells["p_median"].mean()),
-                "all_cells_mean_p_median": float(out["p_median"].mean()),
-            }
-        )
-    return pd.DataFrame(rows)
-
-
 def validation(
     spec: Spec, train: pd.DataFrame, sc: dict, bags: int, w: float
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -630,10 +553,6 @@ def main() -> None:
     table.to_csv(out_dir / "delivered.csv", index=False, float_format="%.0f")
     pd.DataFrame(by_delivery).to_csv(out_dir / "by_delivery.csv", index=False, float_format="%.0f")
     pd.DataFrame(spreads).to_csv(out_dir / "score_spread.csv", index=False, float_format="%.4f")
-    west = next(s for s in load_scenarios() if s["id"] == "ussr_1965_on_west")
-    unit_sensitivity(models, spec, west, n_draws).to_csv(
-        out_dir / "unit_sensitivity.csv", index=False, float_format="%.4f"
-    )
     first = next(s for s in load_scenarios() if s["id"] == protocol_validation_scenario())
     # The scenario's own median, so that the check reads the warheads the map's table shows.
     w = next(r["on_scored_towns_median"] for r in warheads if r["scenario"] == first["id"])

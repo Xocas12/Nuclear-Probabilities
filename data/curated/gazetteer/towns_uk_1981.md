@@ -1,6 +1,14 @@
 # towns_uk_1981: United Kingdom, census of 5 April 1981
 
-**File:** `towns_uk_1981.csv` (476 rows). It was built by `data/raw/uk/build_towns_uk_1981.py`. The raw files are in `data/raw/uk/`.
+**Withdrawn from the analysis (tenth amendment, 2026-11-02).** Great Britain's 454 district rows were built from
+Nomis output fetched through `www.nomisweb.co.uk/api/v01/dataset/`, which robots.txt disallows. No allowed copy was
+found: Nomis serves these totals only through `/api/v01/dataset/` and `/query/` (both disallowed), Vision of
+Britain did not answer, and the OPCS *Key Statistics* volumes are in print only. The Great Britain rows were removed
+from `towns_uk_1981.csv` and the held raw file from `data/raw/uk/`; region `uk_1980` (Square Leg 1980) is no longer
+scored, and the 1965 map has no UK. The 22 Northern Ireland rows, from NISRA's booklet, stay in the file but are read
+by no analysis: none of Square Leg's points is in Northern Ireland. What follows describes the table as it was built.
+
+**File:** `towns_uk_1981.csv` (476 rows when built; 22 now). It was built by `data/raw/uk/build_towns_uk_1981.py`. The raw files are in `data/raw/uk/`.
 
 ## The unit is mixed. Read this first.
 

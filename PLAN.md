@@ -649,7 +649,7 @@ section 5.4: two candidates with fixed settings, no tuning. The sealed set waits
   (Western Europe 1965, the UK 1980). The FRG was withheld until 1 Nov 2026, when
   the official table of all 583 towns of 1961 was fetched (`towns_frg_1961.md`).
 - **Transfer check** (`runs/m4-transfer-check/`). The check fits on the bloc's SAC labels
-  with the 20 common features and scores 16 lists; the bloc lists are scored leave-country-out.
+  with the 20 common features and scored 16 lists then (Square Leg has since been withdrawn); the bloc lists are scored leave-country-out.
   - Read in PR-AUC, the primary metric (§5.5), with paired bootstrap intervals for
     LightGBM (common) minus the population rule (`runs/m4-transfer-check/paired.csv`).
   - On Operation Alert the bloc model ranks the top of the list clearly worse than population alone:
@@ -657,8 +657,8 @@ section 5.4: two candidates with fixed settings, no tuning. The sealed set waits
     -0.65 [-0.81, -0.44]; precision@k 0.00 against 0.64, -0.64 [-0.86, -0.36]. The 1945
     Target Committee's 6 designated towns: -0.42 [-0.82, -0.11], precision@k -0.67 [-1.00, -0.17]. Canada 1956, from an extract of unrecorded origin,
     cannot be told apart (PR-AUC -0.04 [-0.12, +0.04]). ROC-AUC hid most of this.
-  - On the mixed civil and military lists no gain is detectable: Square Leg PR-AUC +0.03 [-0.04, +0.12],
-    precision@k +0.01 [-0.07, +0.10]; Lato-67, with the FRG in its universe since 1 Nov 2026, -0.01 [-0.09, +0.06] and
+  - On the mixed civil and military lists no gain is detectable (Square Leg, scored here at first, was withdrawn on
+    2 Nov 2026 with its universe, tenth amendment): Lato-67, with the FRG in its universe since 1 Nov 2026, -0.01 [-0.09, +0.06] and
     +0.05 [-0.10, +0.17]. These intervals include zero.
   - One exception: the Polish mirror list gains in PR-AUC, +0.14 [+0.07, +0.21], with
     precision@k +0.07 [0.00, +0.22]. It records what Polish staff expected NATO to strike.

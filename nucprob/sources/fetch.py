@@ -119,6 +119,9 @@ def main(argv: list[str] | None = None) -> int:
         if wanted and src["id"] not in wanted:
             continue
         dest = RAW / src["path"]
+        if src.get("withdrawn"):
+            print(f"{src['id']}: withdrawn, not fetched ({src['withdrawn'].split('.')[0]})")
+            continue
         if isinstance(src.get("fetch"), str):
             print(f"{src['id']}: fetched by {src['fetch']}")
             continue

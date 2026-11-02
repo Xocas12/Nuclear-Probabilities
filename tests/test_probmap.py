@@ -492,6 +492,7 @@ def test_every_committed_scenario_names_only_countries_its_universe_holds():
     if not (PROCESSED / "transfer_places.parquet").exists():
         pytest.skip("no built tables")
     west = set(rn.west_universe().towns["country"])
+    assert "UK" not in west
     for sc in rn.load_scenarios():
         if sc["universe"] == "wp_west_1965":
             assert {c for a in sc["attackers"] for c in a["targets"]} <= west
@@ -556,35 +557,6 @@ def test_modern_rows_of_every_map_table_say_extrapolation():
         assert set(d.loc[~modern_rows, "reading"]) == {"historical"}
 
 
-def uk_towns() -> pd.DataFrame:
-    rows = {
-        "country": ["UK", "UK", "UK", "FRG"],
-        "admin1": ["Greater London", "Greater London", "Kent", "Hessen"],
-        "name": ["Camden", "Brent", "Dover", "Fulda"],
-        "lat": [51.5, 51.6, 51.1, 50.5],
-        "lon": [-0.1, -0.3, 1.3, 9.7],
-        "pop": [100_000.0, 300_000.0, 50_000.0, 45_000.0],
-        "log_pop": np.log10([100_000.0, 300_000.0, 50_000.0, 45_000.0]),
-    }
-    t = pd.DataFrame(rows)
-    for c in [*rn._UNIT_MAX, *rn._UNIT_MIN]:
-        t[c] = [1.0, 2.0, 3.0, 4.0]
-    return t
-
-
-def test_a_merged_county_is_one_unit_with_its_people_summed():
-    out = rn.merge_units(uk_towns(), ("Greater London",))
-    assert len(out) == 3 and out["pop"].sum() == uk_towns()["pop"].sum()
-    london = out[out["name"] == "Greater London"].iloc[0]
-    assert london["pop"] == 400_000 and london["log_pop"] == pytest.approx(np.log10(400_000))
-    assert london["lat"] == pytest.approx(51.575)
-    assert london["log_km_to_coast"] == 1.0 and london["pop_rank_pct"] == 2.0
-    assert out["log_pop"].dtype == float
-    # Only the UK's rows merge, and only the counties named.
-    assert set(out["name"]) == {"Greater London", "Dover", "Fulda"}
-    assert len(rn.merge_units(uk_towns(), ())) == 4
-
-
 def test_delivered_is_unscaled_and_the_map_reads_the_scored_share():
     """A share of people in scored towns below 1 scales what falls on them and only that."""
     draws = 200
@@ -646,8 +618,8 @@ def test_the_scale_on_scored_towns_is_shown_and_reconciles():
     assert (gap.abs() <= d["delivered_median"].clip(lower=1) * 0.01 + 1).all()
     bloc = d[d["scenario"] == "us_1956_on_bloc"]["share_of_people_in_scored_towns"].iloc[0]
     assert 0 < bloc < 1
-    units = pd.read_csv(OUT / "unit_sensitivity.csv")
-    assert units["uk_units"].is_monotonic_decreasing and units["uk_units"].nunique() == 3
+    # The tenth amendment withdrew Great Britain's table: no UK reading is written and no UK town is mapped.
+    assert not (OUT / "unit_sensitivity.csv").exists()
     west = d[d["scenario"] == "ussr_1965_on_west"].iloc[0]
     assert west["share_of_people_in_scored_towns"] == 1.0
 

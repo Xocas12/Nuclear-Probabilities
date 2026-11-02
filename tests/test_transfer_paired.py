@@ -81,7 +81,6 @@ def test_transfer_card_quotes_pr_auc_and_precision_with_intervals():
         "Canada target areas 1956": "cd_1956_canada_target_areas",
         "Operation Alert 1955 (full)": "cd_1955_operation_alert_full",
         "Target Committee 1945": "us_1945_target_committee",
-        "Square Leg 1980": "cd_1980_square_leg",
         "Lato-67": "wp_1967_lato67",
         "NATO mirror, Poland 1962": "nato_1962_pl_exercise_mirror",
     }
@@ -123,23 +122,23 @@ def test_plan_claims_no_gain_the_intervals_do_not_show():
 
 def test_mixed_lists_show_no_detectable_gain_but_the_two_named():
     """TRANSFER.md says no gain is detectable on the mixed lists except PR-AUC on the Polish
-    mirror list and ROC-AUC on Square Leg; paired.csv must agree, so a new exception fails until the card names it."""
+    mirror list; paired.csv must agree, so a new exception fails until the card names it.
+    Square Leg was withdrawn with its universe (tenth amendment) and must have no row."""
     text = " ".join((CURATED / "gazetteer" / "TRANSFER.md").read_text(encoding="utf-8").split())
-    assert "No gain is detectable, with two exceptions" in text
+    assert "No gain is detectable, with one exception" in text
     paired = pd.read_csv(RUN / "paired.csv")
+    assert not paired["plan_id"].eq("cd_1980_square_leg").any()
     mixed = [
-        "cd_1980_square_leg",
         "wp_1967_lato67",
         "nato_1962_pl_exercise_mirror",
         "nato_1965_hu_wargame_mirror",
         "wp_1965_hu_wargame",
     ]
     rows = paired[(paired["model"] == MODEL) & paired["plan_id"].isin(mixed)]
-    assert len(rows) == 15
+    assert len(rows) == 12
     excluded = rows[rows["excludes_zero"]]
     assert set(zip(excluded["plan_id"], excluded["metric"], strict=True)) == {
         ("nato_1962_pl_exercise_mirror", "pr_auc"),
-        ("cd_1980_square_leg", "roc_auc"),
     }
     assert (excluded["lo"] > 0).all()
 
@@ -164,7 +163,6 @@ def test_compare_skips_a_model_that_left_towns_unscored():
 CARD_LISTS = {
     "Canada target areas 1956": "cd_1956_canada_target_areas",
     "Operation Alert 1955 (full)": "cd_1955_operation_alert_full",
-    "Square Leg 1980": "cd_1980_square_leg",
     "Target Committee 1945": "us_1945_target_committee",
     "Lato-67 (FRG, DK, NL, BE)": "wp_1967_lato67",
     "Hungarian war game 1965 (AT, IT, FRG)": "wp_1965_hu_wargame",

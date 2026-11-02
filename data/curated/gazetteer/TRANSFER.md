@@ -30,7 +30,6 @@ war plan.
 | | | Austria: census 1961 (pop-stat; the 1961 Land seats from `POPSTAT_SEATS` in `places.py`) | 50 | 50 |
 | | | Italy: census 1961 (ISTAT, comuni) | 814 | 814 |
 | | | FRG, 1961 census (`towns_frg_1961.md`) | 583 | 582 |
-| `uk_1980` (1980) | Square Leg 1980 | UK: census 1981 (GB districts from Nomis; NI towns from NISRA) | 476 | 476 |
 | `japan_1945` (1945) | Target Committee 1945 | Japan: census 1940 (cities and towns) | 579 | 560 |
 | `usa_1955` (1955) | Operation Alert 1955 | USA: census 1950 (urban places, 48 states and DC) | 1,262 | 1,262 |
 | `canada_1956` (1956) | Canadian target areas 1956 | Canada: census 1956 (Canada Year Book) | 137 | 137 |
@@ -125,7 +124,6 @@ which states a nuclear weapon, list no town. Counts are of the rebuilt tables at
 |---|---|---|---|---|
 | Canada target areas 1956 | 13 | 13 | 13 | 13 / 137 |
 | Operation Alert 1955 (full) | 53 | 53 | 52 | 51 / 1,262 |
-| Square Leg 1980 | 95 | 86 | 77 | 73 / 476 |
 | Target Committee 1945 | 42 | 40 | 40 | 6 / 549 |
 | Lato-67 (FRG, DK, NL, BE) | 57 | 49 | 46 | 42 / 1,029 |
 | Hungarian war game 1965 (AT, IT, FRG) | 19 | 12 | 12 | 12 / 1,446 |
@@ -155,7 +153,6 @@ the number of towns listed.
 | Canada target areas 1956 | 13 / 137 | 0.85 / 0.81 | -0.04 [-0.12, +0.04] | 0.77 / 0.77 | 0.00 [-0.15, 0.00] | 0.96 / 0.97 | +0.01 [-0.03, +0.06] |
 | Operation Alert 1955 (full) | 51 / 1,262 | 0.70 / 0.32 | -0.37 [-0.45, -0.26] | 0.59 / 0.31 | -0.27 [-0.39, -0.12] | 0.98 / 0.95 | -0.03 [-0.04, -0.02] |
 | Target Committee 1945 | 6 / 549 | 0.55 / 0.14 | -0.42 [-0.82, -0.11] | 0.67 / 0.00 | -0.67 [-1.00, -0.17] | 0.99 / 0.95 | -0.04 [-0.08, -0.01] |
-| Square Leg 1980 | 73 / 476 | 0.38 / 0.41 | +0.03 [-0.04, +0.12] | 0.38 / 0.40 | +0.01 [-0.07, +0.10] | 0.66 / 0.71 | +0.05 [0.00, +0.10] |
 | Lato-67 | 42 / 1,029 | 0.13 / 0.12 | -0.01 [-0.09, +0.06] | 0.14 / 0.19 | +0.05 [-0.10, +0.17] | 0.74 / 0.72 | -0.02 [-0.06, +0.03] |
 | NATO mirror, Poland 1962 | 27 / 126 | 0.44 / 0.59 | +0.14 [+0.07, +0.21] | 0.44 / 0.52 | +0.07 [0.00, +0.22] | 0.68 / 0.74 | +0.06 [-0.01, +0.13] |
 | NATO mirror, Hungary 1965 | 13 / 120 | 0.41 / 0.28 | -0.13 [-0.24, +0.04] | 0.38 / 0.38 | 0.00 [-0.08, +0.15] | 0.69 / 0.68 | -0.02 [-0.09, +0.05] |
@@ -165,18 +162,17 @@ the number of towns listed.
   on every metric. The 14 Operation Alert towns on the map, a subset of the full list, show it most: PR-AUC 0.74 for the
   rule and 0.09 for LightGBM, -0.65 [-0.81, -0.44]. On the Target Committee's 6 designated towns, PR-AUC -0.42 [-0.82, -0.11] is also worse, with a wide interval. On Canada's target areas the
   two cannot be told apart, -0.04 [-0.12, +0.04]. That row rests on a text extract of unrecorded origin (`data/sources.yaml`) and is not scored in the classifier.
-- **Mixed lists** (Square Leg, Lato-67, the two mirror lists, the Hungarian war game). No
-  gain is detectable, with two exceptions: PR-AUC on the Polish mirror list, +0.14 [+0.07, +0.21],
-  and ROC-AUC on Square Leg, +0.05 [0.00, +0.10], whose lower bound is just above zero before rounding. The Polish list records what Polish staff expected
-  NATO to strike, not an attacker's plan. Square Leg's PR-AUC and precision@k intervals include zero.
-- These margins are fragile. Leaving one small Uzbek town unlocated, which changes no label in
-  these lists, once moved the Square Leg ROC-AUC interval's lower end across zero. An interval that barely excludes zero is not a finding.
+- **Mixed lists** (Lato-67, the two mirror lists, the Hungarian war game). No
+  gain is detectable, with one exception: PR-AUC on the Polish mirror list, +0.14 [+0.07, +0.21]. The Polish list records what Polish staff expected
+  NATO to strike, not an attacker's plan.
+- These margins are fragile. Before Square Leg was withdrawn, leaving one small Uzbek town unlocated, which changes no label in
+  these lists, moved the Square Leg ROC-AUC interval's lower end across zero. An interval that barely excludes zero is not a finding.
 - ROC-AUC differences are small on every list, which is why the ROC table alone read the city
   lists as "adds nothing".
 
 Burza shows no gain: 8 linked towns of 857 (this card reads whole countries; the classifier reads its sector), PR-AUC 0.11 for the rule and 0.08 for LightGBM
 on the common features, a difference of -0.03 [-0.18, +0.06], which includes zero. 0 of
-Burza's intervals exclude zero. `paired.csv` holds 129 intervals (the military model has no row on a
+Burza's intervals exclude zero. `paired.csv` holds 120 intervals (the military model has no row on a
 list with any town outside its table's scope), so at 95% a few will exclude zero by chance.
 
 This is a check that the pipeline joins end to end, not a result: it was read before the protocol (`configs/protocol.yaml`) was frozen. The classifier run is in `REPORT.md`.
@@ -186,10 +182,10 @@ This is a check that the pipeline joins end to end, not a result: it was read be
 - **FRG added 1 November 2026.** The official table of all 583 towns of 10,000+ could be fetched
   (`towns_frg_1961.md`), so the FRG is in the Western European universe and the plans and exercises
   that aim there are scored. The earlier Wikipedia table is kept as `frg_1961_wikipedia.csv`.
-- **The UK universe is districts.** Official 1981 urban-area tables exist only in print, so a
-  "place" is a 1981 district, located at its council's town. Square Leg's targets are linked
-  to the district seat within 15 km, not to the district that contains them. Military
-  targets in large rural districts can stay unlinked.
+- **No UK universe.** Square Leg 1980 (95 targets) is no longer scored (tenth amendment). Its universe was Great
+  Britain's 1981 districts, whose totals came through a Nomis path that robots.txt disallows; no allowed copy was
+  found (`towns_uk_1981.md`). Until 46021d7 it scored 73 linked districts of 476, PR-AUC 0.38 for the rule and 0.41
+  for LightGBM; those rows are in that commit's `runs/m4-transfer-check/`.
 - **Japan's towns.** Town (machi) figures were read once by OCR with internal checks; the city
   figures are checked against the census's own totals. Villages of 10,000+ are left out.
 - **Small lists.** Most lists have fewer than 30 linked towns, and several have under five, so

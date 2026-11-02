@@ -84,13 +84,9 @@ REGIONS = {
         military_scope={"Italy": ITALY_NORTH_1961},
         note="one universe for the 1960s plans; the 1970s lists use it too",
     ),
-    "uk_1980": Region(
-        "The United Kingdom, 1980",
-        1980,
-        (("UK", "GB", "towns_uk_1981"),),
-        ("cd_1980_square_leg",),
-        military="uk_military_sites_1980.csv",
-    ),
+    # "uk_1980" (Square Leg 1980 on Great Britain's 1981 districts) was withdrawn by the tenth amendment:
+    # the district totals came through www.nomisweb.co.uk/api/v01/dataset/, which robots.txt disallows,
+    # and no allowed copy was found. Northern Ireland's towns alone hold none of Square Leg's points.
     "japan_1945": Region(
         "Japan, 1945",
         1945,

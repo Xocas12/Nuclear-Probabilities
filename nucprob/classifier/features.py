@@ -74,7 +74,6 @@ OTHER_DEFENCE_ROLES = {
 DEFENCE_TABLES = {
     "bloc_1956": ["military_sites_1956.csv", "bloc_air_defence_1956.csv"],
     "wp_west_1965": ["weurope_military_sites_1965.csv"],
-    "uk_1980": ["uk_military_sites_1980.csv"],
 }
 
 
@@ -211,13 +210,11 @@ def document_year_features(towns: pd.DataFrame, year: int) -> pd.DataFrame:
 
 
 def add_defence(towns: pd.DataFrame, region: str, year: int) -> pd.DataFrame:
-    """Defence features of the bloc or the UK. A bloc country with fewer than
+    """Defence features of the bloc. A bloc country with fewer than
     MIN_SITES_FOR_COVERAGE rows gets NaN, not a distance across a border: in the 1956 tables that
     leaves the USSR alone."""
     towns = towns.reset_index(drop=True).copy()
     sites = load_defence_sites(region)
-    if region == "uk_1980":
-        sites = sites_as_of(sites, year)
     deff = defence_features(towns["lat"], towns["lon"], sites)
     towns[DEFENCE] = deff.to_numpy()
     if region == BLOC and not sites.empty:

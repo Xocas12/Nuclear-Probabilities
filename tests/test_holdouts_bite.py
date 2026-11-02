@@ -14,7 +14,7 @@ from nucprob.classifier.fit import Spec, logistic_all
 from nucprob.model.splits import BLOCK_KM, assign_blocks, folds
 from nucprob.outputs import MILESTONES, milestone_hashes
 from nucprob.paths import CURATED, ROOT, RUNS
-from nucprob.plans import gate, plans, protocol
+from nucprob.plans import gate, protocol
 from nucprob.sources.fetch import sha256
 
 SPLITS = CURATED / "splits"
@@ -141,7 +141,6 @@ def test_a_bagged_fit_learns_the_labels_it_is_given():
 def test_the_committed_gate_is_what_the_rule_gives():
     table = pd.read_csv(RUNS / "evidence" / "state_model_gate.csv").set_index("attacker")
     rule = protocol()["state_models"]
-    reg = plans()
     for attacker, row in table.iterrows():
         if attacker.startswith("Warsaw Pact"):
             continue
@@ -151,7 +150,30 @@ def test_the_committed_gate_is_what_the_rule_gives():
             and row["linked_positives"] >= rule["min_positives"]
             and row["positives_outside_largest"] >= rule["min_positives_outside_largest"]
         ), attacker
-    assert not gate({}, reg, rule)["allowed"].any()
+    # The rule itself, at its edges, on a toy registry: the committed rows above could all be refusals.
+    toy = pd.DataFrame(
+        {
+            "plan_id": ["a", "b", "c"],
+            "attacker": "X",
+            "doc_type": ["war_plan", "war_plan", "exercise"],
+            "grade": "A",
+            "group": ["g1", "g2", "g3"],
+            "role": "train",
+        }
+    )
+    big, small = (
+        rule["min_positives"] - rule["min_positives_outside_largest"],
+        rule["min_positives_outside_largest"],
+    )
+    assert gate({"a": big, "b": small}, toy, rule)["allowed"].item()
+    assert not gate({"a": big, "b": small - 1}, toy, rule)["allowed"].item()
+    assert not gate({"a": big + small}, toy, rule)["allowed"].item()
+    # An exercise's positives do not make a second plan.
+    assert not gate({"a": big, "c": small}, toy, rule)["allowed"].item()
+
+
+def test_the_bootstrap_seed_is_the_protocols():
+    assert ev.BOOT_SEED == protocol()["evaluation"]["bootstrap"]["seed"]
 
 
 def test_the_sealed_set_is_the_one_frozen_on_1_november():

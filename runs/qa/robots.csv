@@ -118,7 +118,7 @@ census_dk_1960,www.dst.dk,rules,True,,universe,2026-10-10,True,url,rules,True
 census_nl_1960,doi.org,no_rule_http_404,True,,universe,2026-10-10,True,url,no_rule_http_404,True
 census_be_1961,doc.statbel.fgov.be,no_rule_http_400,True,,universe,2026-10-10,True,url,no_rule_http_400,True
 census_it_1961,ebiblio.istat.it,no_rule_http_404,True,,universe,2026-10-10,False,url,no_rule_http_404,True
-census_uk_1981_nomis,www.nomisweb.co.uk,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-10-10,True,url,rules,False
+census_uk_1981_nomis,www.nomisweb.co.uk,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-10-10,False,url,rules,False
 census_ni_1981,www.nisra.gov.uk,rules,True,,universe,2026-10-10,True,url,rules,True
 census_jp_1940,www.e-stat.go.jp,rules,True,,universe,2026-10-10,True,url,rules,True
 census_us_1950,www2.census.gov,rules,True,,universe,2026-10-10,True,url,rules,True
