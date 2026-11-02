@@ -87,7 +87,7 @@ lists:
 
   - file: wp_1964_csla_plan.csv
     title: Czechoslovak People's Army war plan, 1964
-    planner: Czechoslovakia (ČSLA, Soviet-approved)
+    planner: Czechoslovakia (ČSLA; approved by Novotný)
     targets: FRG
     year: 1964
     provenance: plan
@@ -138,7 +138,7 @@ lists:
     planner: USSR (General Staff Academy)
     targets: FRG, Netherlands
     year: 1977
-    provenance: exercise
+    provenance: training
     selection: judgment
     use: transfer-test
     completeness: named places under stated nuclear strikes in five lessons; not a whole list
@@ -160,7 +160,7 @@ lists:
     planner: USSR (General Staff Academy)
     targets: FRG
     year: 1977
-    provenance: exercise
+    provenance: training
     selection: judgment
     use: transfer-test
     completeness: the five named sites and the unit targets of the lesson
@@ -232,7 +232,7 @@ lists:
     planner: Poland (simulating NATO, the "Westerners")
     targets: Poland, USSR, GDR
     year: 1962
-    provenance: exercise
+    provenance: mirror
     selection: judgment
     use: transfer-test
     completeness: all 76 strikes of the list
@@ -244,7 +244,7 @@ lists:
     planner: Hungary/USSR (simulating NATO)
     targets: Hungary, Czechoslovakia, USSR
     year: 1965
-    provenance: exercise
+    provenance: mirror
     selection: judgment
     use: transfer-test
     completeness: all 30 plan weapons

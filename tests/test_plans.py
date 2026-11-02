@@ -88,6 +88,11 @@ def test_a_disputed_document_never_counts_as_a_plan():
     reg = plans().set_index("plan_id")
     assert reg.at["wp_1970_coastal_front_map", "doc_type"] == "disputed_plan_or_exercise"
     assert "disputed_plan_or_exercise" not in protocol()["state_models"]["plan_doc_types"]
+    # Through the gate itself: a disputed document's positives, however many, make no plan.
+    out = gate({"wp_1970_coastal_front_map": 1000}, plans(), protocol()["state_models"])
+    poland = out.set_index("attacker").loc["Poland"]
+    assert poland["independent_plans"] == 0 and poland["linked_positives"] == 0
+    assert not poland["allowed"]
 
 
 def test_protocol_rule_has_the_declared_fields():

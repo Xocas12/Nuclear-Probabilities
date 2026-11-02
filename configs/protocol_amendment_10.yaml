@@ -17,6 +17,11 @@ changes:
     median score (unit_sensitivity.csv at that commit), so continental cells read higher than they did.
   unit_sensitivity: The reading of Great Britain's districts counted three ways (runs/probmap/unit_sensitivity.csv,
     added by the eighth amendment) has no rows left to read and is withdrawn with the code that merged districts.
+  label_wording: No label changes, only how label files describe themselves. The CSLA plan of 1964 was approved by
+    Novotný (held copy, PDF p.18), not "Soviet-approved" as PLANS.yaml, CATALOGUE.yaml and the list's planner field
+    said. The row-level provenance tag of the two mirror lists is now `mirror` and of the two staff-academy lessons
+    `training`, as in PLANS.yaml; SCHEMA.md says the tag is coarser than PLANS.yaml's document type, which governs.
+    SEVERO KURILSK's blank longitude in us_1956_sac_part2_complexes.csv is explained in its notes.
   sectors_wording: data/curated/labels/SECTORS.yaml's header now says what the ninth amendment said of it.
 unchanged: No other label, feature, model, gate threshold, selection rule, holdout, seed or scenario changes.
   Square Leg was never trained on, so no other list's scores should move; the rerun's diff against the

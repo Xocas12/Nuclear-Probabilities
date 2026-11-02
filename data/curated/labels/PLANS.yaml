@@ -40,7 +40,7 @@ plans:
   - {plan_id: us_1958_taiwan_strait, attacker: US, author: M. Halperin (RAND RM-4900) on JCS and PACAF options, date: 1958-09, doc_type: policy_study, grade: B, group: us_1958, complete: false, role: train}
   - {plan_id: us_1963_jcs_china_vulnerability, attacker: US, author: US Joint Chiefs of Staff, date: 1963, doc_type: policy_study, grade: A, group: us_1963, complete: false, role: train}
   - {plan_id: us_1964_china_nuclear, attacker: US, author: R. H. Johnson (State Department Policy Planning), date: 1964, doc_type: policy_study, grade: A, group: us_1964, complete: false, role: train}
-  - {plan_id: wp_1964_csla_plan, attacker: Czechoslovakia, author: Czechoslovak People's Army (Soviet-approved), date: 1964-10, doc_type: war_plan, grade: A, group: csla_1964, complete: false, role: train}
+  - {plan_id: wp_1964_csla_plan, attacker: Czechoslovakia, author: Czechoslovak People's Army (approved by Novotný; signed 11-14 Oct 1964), date: 1964-10, doc_type: war_plan, grade: A, group: csla_1964, complete: false, role: train}
   - {plan_id: wp_1965_coastal_front_zealand, attacker: Poland, author: Polish Coastal Front, date: 1965-02, doc_type: war_plan, grade: C, group: pl_coastal_1965, complete: false, role: train}
   - {plan_id: wp_1970_coastal_front_map, attacker: Poland, author: Polish Coastal Front, date: 1970-02, doc_type: disputed_plan_or_exercise, grade: C, group: pl_coastal_1970, complete: false, role: train}
   - {plan_id: wp_1977_zealand, attacker: Poland, author: Polish Coastal Front, date: 1977-09, doc_type: war_plan, grade: C, group: pl_coastal_1977, complete: false, role: train}

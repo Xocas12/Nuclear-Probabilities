@@ -5,11 +5,11 @@ named target (or per candidate, for lists that record rejected candidates too).
 
 | column | meaning |
 |---|---|
-| plan_id | short slug, e.g. `fr_1959_airstaff`, `wp_1965_hu_wargame` |
+| plan_id | short slug, e.g. `us_1956_sac_complexes`, `wp_1965_hu_wargame` |
 | planner | who drew up / assumed the list, e.g. `US`, `UK`, `France`, `Poland/USSR`, `FEMA (defender)` |
 | target_country | country containing the target, as at the plan date (e.g. `USSR`, `FRG`) |
 | plan_year | year of the document |
-| provenance | `plan` / `disputed` (sources disagree whether plan or exercise) / `study` / `exercise` / `defender` / `reconstruction` |
+| provenance | a row-level tag: `plan` / `disputed` (sources disagree whether plan or exercise) / `study` / `exercise` / `training` (a staff-academy lesson) / `mirror` (one side's exercise assumption of the other's strikes) / `defender` / `reconstruction`. It is coarser than the document type in `PLANS.yaml`, which governs: in `us_1945_target_committee.csv`, `plan` marks the rows of the committee's selections and the orders that followed, a document the registry types as `target_selection`, not as a war plan |
 | seq | row order in the source |
 | name_source | spelling exactly as in the source |
 | name_modern | modern name, only if certain; else blank |

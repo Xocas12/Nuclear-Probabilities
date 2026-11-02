@@ -9,6 +9,7 @@ import pytest
 
 from nucprob.classifier import report
 from nucprob.paths import PROCESSED, ROOT, RUNS
+from nucprob.plans import protocol
 from nucprob.probmap import viewer
 from nucprob.sources.fetch import sha256
 
@@ -72,9 +73,23 @@ def test_the_readme_results_are_a_regeneration_of_the_outputs():
 
 @needs_run
 def test_the_state_gate_still_refuses_what_it_refused():
-    """The gate's own recomputation is in tests/test_plans.py; this reads what was committed."""
+    """What the classifier run committed: refusals, each with the counts the rule reads put through the rule
+    again (tests/test_holdouts_bite.py does the same for runs/evidence/), and the same rows as the evidence run."""
     g = pd.read_csv(CLASSIFIER / "state_gate.csv").set_index("attacker")
     assert not g.loc[["US", "USSR", "Poland", "Czechoslovakia"], "allowed"].any()
+    rule = protocol()["state_models"]
+    for attacker, row in g.iterrows():
+        if attacker.startswith("Warsaw Pact"):
+            continue
+        assert row["allowed"] == (
+            row["independent_plans"] >= rule["min_independent_plans"]
+            and row["linked_positives"] >= rule["min_positives"]
+            and row["positives_outside_largest"] >= rule["min_positives_outside_largest"]
+        ), attacker
+    evidence = pd.read_csv(RUNS / "evidence" / "state_model_gate.csv").set_index("attacker")
+    shared = g.index.intersection(evidence.index)
+    assert len(shared) >= 4
+    pd.testing.assert_frame_equal(g.loc[shared], evidence.loc[shared], check_dtype=False)
 
 
 @pytest.mark.parametrize(
