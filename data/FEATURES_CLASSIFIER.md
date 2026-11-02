@@ -30,8 +30,8 @@ Limits that bear on any reading:
   The 1956 reading is repeated without these points, through `log_km_to_air_defence_no_s25`, which
   is not a model feature.
 - **Family names.** Airfield counts (`log_airfields_10km`, `_25km`, `_50km`) are in the *transport*
-  family in `nucprob/classifier/fit.py`, while the catalogue (`data/FEATURES.md`) and the viewer call
-  them *military*. The *industry* family here is the single column `log_power_mw_25km`, today's power
+  family in `nucprob/classifier/fit.py`, while the catalogue (`data/FEATURES.md`) calls
+  them *military*. The map's viewer does not name them. The *industry* family here is the single column `log_power_mw_25km`, today's power
   plants, so a result for "industry" says nothing about factories.
 - **Later sites.** No site table runs past its own date. A 1977 document on Western European towns
   sees the sites of 1965: stale, not later knowledge.

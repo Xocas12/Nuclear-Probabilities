@@ -42,11 +42,20 @@ def _cell(v) -> str:
 
 def signed(v: float) -> str:
     """Two decimals. A value that would round to zero keeps its sign and a third decimal, since which
-    side of zero a bound lies on decides a verdict."""
+    side of zero a bound lies on decides a verdict. An exact zero prints as 0.00 with no sign."""
+    if v == 0:
+        return "0.00"
     return f"{v:+.3f}" if abs(v) < 0.005 else f"{v:+.2f}"
 
 
+def constant(r) -> bool:
+    """A comparison whose two scores never differ on these rows: a family constant within them."""
+    return all(r.get(c) == 0 for c in ("delta", "low", "high", "block_low", "block_high"))
+
+
 def interval(r) -> str:
+    if constant(r):
+        return "none: constant on these rows"
     return f"{signed(r['delta'])} [{signed(r['low'])}, {signed(r['high'])}]"
 
 
@@ -82,6 +91,8 @@ def positive_blocks(r) -> int | None:
 def block_interval(r) -> str:
     if pd.isna(r["block_low"]):
         return "n/a"
+    if constant(r):
+        return "none"
     k = positive_blocks(r)
     if k is not None and k < MIN_POSITIVE_BLOCKS:
         return f"n/a: positives in {k} blocks"
@@ -197,6 +208,7 @@ def tables() -> str:
     parts += ["## Calibration, US 1956 complexes under spatial blocks", ""]
     parts += [markdown(summary), ""]
     fam = pd.read_csv(OUT / "family_gain.csv")
+    fam["verdict"] = fam.apply(lambda r: "not a reading" if constant(r) else r["verdict"], axis=1)
     fam["gain"] = fam.apply(interval, axis=1)
     fam["by_blocks"] = fam.apply(block_interval, axis=1)
     keep = [
@@ -217,7 +229,6 @@ def tables() -> str:
 SCOPES = {
     "global, all attacker documents": "Global, all attacker documents (exercises included)",
     "global, plan documents only": "Global, plan documents only",
-    "state: US": "United States",
     "Warsaw Pact, pooled, exercise-based": "Warsaw Pact, pooled (exercise-based, not a war-plan model)",
     "single document: SAC 1956 (not a state model)": "SAC 1956 alone (one document, not a state model)",
 }
@@ -265,11 +276,11 @@ def primary_table(comp: pd.DataFrame, selection: pd.DataFrame) -> pd.DataFrame:
                         "Base rate": float(plus["base_rate"]),
                         "Model": float(plus["a_pr_auc"]),
                         "Pop. + country": float(plus["b_pr_auc"]),
-                        "Difference": interval(plus),
+                        "Difference, country": interval(plus),
                         "By blocks": block_interval(plus),
                         "Verdict": verdict(plus),
                         "Pop. rule": float(rule["b_pr_auc"]),
-                        "Difference ": interval(rule),
+                        "Difference, rule": interval(rule),
                     }
                 )
     return pd.DataFrame(rows)
@@ -296,17 +307,6 @@ GLOBAL_ALL = "global, all attacker documents"
 def _best(selection: pd.DataFrame, scope: str) -> str:
     b = selection[selection["selected"]].set_index("scope")["model"]
     return b[scope]
-
-
-def headline_quotes() -> list[str]:
-    """Figures the README must repeat from the report."""
-    comp = pd.read_csv(OUT / "comparison.csv")
-    selection = pd.read_csv(OUT / "selection.csv")
-    sens = pd.read_csv(OUT / "sensitivity.csv")
-    sac = _row(comp, SAC_SCOPE, "spatial blocks", _best(selection, SAC_SCOPE), PLUS)
-    strict = sens[(sens["scope"] == SAC_SCOPE) & (sens["variant"] == "strict as-of")].iloc[0]
-    g = _row(comp, GLOBAL_ALL, "leave one document out", _best(selection, GLOBAL_ALL), RULE)
-    return [interval(sac), interval(strict), interval(g)]
 
 
 def _population_note(model: str) -> str:
@@ -388,7 +388,10 @@ def _map_section() -> str:
     west = s[s["scenario"] == "ussr_1965_on_west"].iloc[0]
     west_d = d[d["scenario"] == "ussr_1965_on_west"].iloc[0]
     bloc_d = d[d["scenario"] == "us_1956_on_bloc"].iloc[0]
-    units = pd.read_csv(MAP / "unit_sensitivity.csv")
+    towns_more = spread[
+        spread["p_correlation_with_towns_in_cell"] > spread["p_correlation_with_log_people_in_cell"]
+    ]
+    model_wider = s[s["mean_width_model_only"] > s["mean_width_stockpile_only"]]
     v = variance["variance_share_theatre"]
     v_low, v_high = variance.loc[v.idxmin()], variance.loc[v.idxmax()]
     shown_choice = choice.rename(
@@ -417,18 +420,15 @@ probability equal to the town's share of the scenario's total score, and an area
 1 - (1 - share)^warheads. Nothing is optimised, and no count of weapons by area is computed or written. One interceptor
 force is drawn once and shared among the attackers it faces. The modern universe is Natural Earth's populated places: a
 map-label set of {int(universe["places in the file"]):,} places, not a census, thinner in some countries than others, of which {int(universe.iloc[-1]):,} are kept:
-towns with 10,000 or more people, without France's territories outside Europe (`runs/probmap/modern_universe.csv`). The 1965 scenario's UK rows carry 1981 populations, the
-only UK table held; its other towns carry those of about 1961.
+towns with 10,000 or more people, without France's territories outside Europe (`runs/probmap/modern_universe.csv`). The 1965 scenario's towns carry populations of about 1961.
 
-**British units.** Great Britain's rows are 1981 local government districts, not towns (`data/curated/gazetteer/towns_uk_1981.md`). A district is
-often a town and its countryside, and in the conurbations one city is cut into several. Since warheads are shared out per row, the
-count of rows moves the map. Greater London's 32 boroughs therefore count as one unit; every other district stays a row. The same
-scenario read three ways (`runs/probmap/unit_sensitivity.csv`):
-
-{markdown(units)}
-
-No reading is right: merging lowers the share of a conurbation because the score moves little with population, and leaving it cut up raises it.
-The other countries' rows are municipalities, which have the same fault in smaller measure.
+**No United Kingdom in 1965.** The only UK table held, Great Britain's 1981 districts, came through a path of
+`www.nomisweb.co.uk` that robots.txt disallows, and was withdrawn (`configs/protocol_amendment_10.yaml`). So the
+1965 map covers Denmark, the FRG, the Netherlands, Belgium and Italy, and its unsourced theatre share falls on them
+alone, so its continental cells read higher than they would if the UK were among the targets. The reading of British
+units counted three ways, made before the withdrawal, was withdrawn with them and is no result.
+Warheads are shared out per row, so how a country's towns are cut into rows also moves the map: the rows are municipalities,
+and how much that matters was not measured.
 
 **Score.** The selection rule in `configs/protocol.yaml` selected **{best["model"]}**, by highest PR-AUC on a left-out document
 ({best["lopo_pr_auc"]:.2f}). The candidates use only features that exist in every era without any present-day
@@ -442,8 +442,8 @@ state's model, because no state passes the gate with enough outside its largest 
 **What that score does.** On the 1956 towns population runs over a {first["population_ratio"]:.0f}-fold range and the median score over a
 {first["score_ratio"]:.1f}-fold range, and a town's share of warheads is its share of the score. So a large town gets only a few times the
 warheads of a small one, and a cell's probability depends on how many towns it holds as well as on how many people
-live there. Across 1956 cells it correlates {first["p_correlation_with_towns_in_cell"]:.2f} with the count of towns and {first["p_correlation_with_log_people_in_cell"]:.2f} with log people
-(`runs/probmap/score_spread.csv`, every scenario). So the map follows people on a log scale, far less than in proportion.
+live there. Across 1956 cells the probability correlates {first["p_correlation_with_towns_in_cell"]:.2f} with the count of towns and {first["p_correlation_with_log_people_in_cell"]:.2f} with log people.
+{_follows(spread, towns_more)} (`runs/probmap/score_spread.csv`).
 
 **Scenarios.** Intervals are the 5th to 95th percentile over {int(pd.read_json(MAP / "manifest.json", typ="series")["draws"])} joint draws of model (block resample, one
 bag) and stockpile. They hold fixed the allocation rule, who fires on whom and the list of towns, so they are narrower than
@@ -451,7 +451,7 @@ what is actually unknown. "Mean width" is the mean over cells of that interval; 
 stockpile at its median, then the model at its median. Cells over one half are counted within each draw. Cells saturate because warheads can outnumber cells while not outnumbering towns:
 `ussr_1965_on_west` has {west_d["delivered_median"]:.0f} median delivered warheads, {int(west["towns"])} towns and {int(west["cells"])} cells, and a cell of several towns passes one half
 before each of its towns would. Where most cells are over one half the map says little beyond that. Sealed towns are not scored, so a 1956 cell holding only sealed towns is absent from the map.
-Delivered warheads, not the model, drive most of the width, because the population rule has one feature. "Delivered" in the tables below is before one more step: towns of the sealed set draw no warheads, so the 1956 map uses the share of people living in scored towns, {float(bloc_d["share_of_people_in_scored_towns"]):.2f}, of what is delivered: {bloc_d["delivered_median"]:.0f} delivered at the median and {bloc_d["on_scored_towns_median"]:.0f} on scored towns in `us_1956_on_bloc`. Part of the spread of delivered warheads comes from cited inventories and part from the unsourced theatre shares. The theatre share alone accounts for {v.min():.0%} ({v_low["attacker"]}, `{v_low["scenario"]}`) to {v.max():.0%} ({v_high["attacker"]}, `{v_high["scenario"]}`) of the variance of an attacker's delivered warheads: a first-order Sobol index by the pick-freeze estimator on {int(variance["draws"].iloc[0]):,} draws, with standard errors up to {variance["standard_error"].max():.3f} (`runs/probmap/share_variance.csv`). The columns `delivered_low_share_fixed` and `delivered_high_share_fixed` are the interval with every share held at its mode, from separate draws; holding a share at its mode also moves the centre, so they are not a split of the interval's width.
+{_width_source(s, model_wider)} "Delivered" in the tables below is before one more step: towns of the sealed set draw no warheads, so the 1956 map uses the share of people living in scored towns, {float(bloc_d["share_of_people_in_scored_towns"]):.2f}, of what is delivered: {bloc_d["delivered_median"]:.0f} delivered at the median and {bloc_d["on_scored_towns_median"]:.0f} on scored towns in `us_1956_on_bloc`. Part of the spread of delivered warheads comes from cited inventories and part from the unsourced theatre shares. The theatre share alone accounts for {v.min():.0%} ({v_low["attacker"]}, `{v_low["scenario"]}`) to {v.max():.0%} ({v_high["attacker"]}, `{v_high["scenario"]}`) of the variance of an attacker's delivered warheads: a first-order Sobol index by the pick-freeze estimator on {int(variance["draws"].iloc[0]):,} draws, with standard errors up to {variance["standard_error"].max():.3f} (`runs/probmap/share_variance.csv`). The columns `delivered_low_share_fixed` and `delivered_high_share_fixed` are the interval with every share held at its mode, from separate draws; holding a share at its mode also moves the centre, so they are not a split of the interval's width.
 
 {markdown(scen)}
 
@@ -462,8 +462,9 @@ shares come from SIPRI and NRDC (`data/curated/stockpiles/delivery_mix.csv`), on
 NRDC has all on bombers, 330 loaded, more than the 299 OWID gives for the whole stockpile: the sources conflict, and the
 scenario's range runs between them. A share measured on strategic or deployed forces is applied to the whole inventory range, so a
 Soviet row of 1965 spreads NRDC's strategic shares over a stockpile that also holds tactical weapons with no known split.
-Reliability has one range for every modern delivery, because no source separates them, so the split changes the map very
-little. These are totals for a whole force. No delivery is assigned to any area.
+Reliability has one range for every modern delivery, because no source separates them. Each delivery draws from that
+range separately, so the split leaves the expected delivered total unchanged and changes only how much the draws average
+out. These are totals for a whole force. No delivery is assigned to any area.
 
 {markdown(by_delivery)}
 
@@ -471,9 +472,9 @@ little. These are totals for a whole force. No delivery is assigned to any area.
 delivered warhead with what one study listed, so it can show agreement in order and not that the probabilities are right.
 The `us_1956_on_bloc` scenario, with {spatial["median_warheads_on_scored_towns"]:.0f} warheads
 on scored towns, against whether SAC listed a town in each 0.5-degree cell. {int(spatial["cells_listed"])} of {int(spatial["cells"])} cells hold a listed town, a
-base rate of {spatial["base_rate"]:.2f}. Scored by models that never saw the cell's block: PR-AUC {spatial["pr_auc"]:.2f}, ROC-AUC {spatial["roc_auc"]:.2f},
-Brier {spatial["brier"]:.3f} against {spatial["brier_of_base_rate"]:.3f} for the base rate. By models with no SAC row at all: PR-AUC {left["pr_auc"]:.2f}, ROC-AUC {left["roc_auc"]:.2f},
-Brier {left["brier"]:.3f}. That second reading looks like transfer, and it is not evidence of it: with a one-feature monotone score,
+base rate of {spatial["base_rate"]:.2f}. Scored by models that never saw the cell's block: PR-AUC {spatial["pr_auc"]:.3f}, ROC-AUC {spatial["roc_auc"]:.3f},
+Brier {spatial["brier"]:.3f} against {spatial["brier_of_base_rate"]:.3f} for the base rate. By models with no SAC row at all: PR-AUC {left["pr_auc"]:.3f}, ROC-AUC {left["roc_auc"]:.3f},
+Brier {left["brier"]:.3f}{" (a higher PR-AUC than with SAC's rows; no interval was computed for the difference)" if left["pr_auc"] > spatial["pr_auc"] else ""}. That second reading looks like transfer, and it is not evidence of it: with a one-feature monotone score,
 the order of towns barely depends on which rows trained it, so agreement is largely built in. Across cells the map's mean
 probability is {spatial["mean_p"]:.2f} and the share listed {spatial["base_rate"]:.2f}, beside a mean interval width of {bloc_width:.2f} for this scenario. The reliability table:
 
@@ -484,13 +485,70 @@ probability is {spatial["mean_p"]:.2f} and the share listed {spatial["base_rate"
 {two.iloc[1]["value"]:.2f}. {worst["value"]:.0%} of modern towns lie outside the training's 1st-99th percentile on `{worst["feature"]}`, the worst feature.
 There are no modern labels, so performance on modern towns cannot be measured at all. Every modern row is an
 **extrapolation**: it applies lists of 1945-1977 to towns of today, on a selective set of named places. The ROC-AUC is measured on all
-{len(outside)} portable features, of which the map's score uses one, `log_pop`: {float(outside.loc[outside["feature"] == "log_pop", "value"].iloc[0]):.0%} of modern towns lie outside the training's 1st-99th
-percentile on it. Feature by feature: on its own, `log_pop` separates the two sets at a folded ROC-AUC of {pop_alone:.2f}
+{len(outside)} portable features, of which the map's score uses one, `log_pop`{_pop_outside(outside, worst)}. Feature by feature: on its own, `log_pop` separates the two sets at a folded ROC-AUC of {pop_alone:.2f}
 (0.5 is no separation); the single features run from {alone.iloc[0]["value"]:.2f} (`{alone.iloc[0]["feature"]}`) to {alone.iloc[-1]["value"]:.2f} (`{alone.iloc[-1]["feature"]}`){", so the one feature the score reads is the one that separates the sets most" if alone.iloc[-1]["feature"] == "log_pop" else ""}.
 With one feature left out, the classifier's ROC-AUC stays between {dropped.iloc[0]["value"]:.2f} (without `{dropped.iloc[0]["feature"]}`) and {dropped.iloc[-1]["value"]:.2f}{_carried(dropped, two.iloc[0]["value"])}
 
 {markdown(shift[["comparison", "measure", "value", "towns_a", "towns_b"]])}
 """
+
+
+def _unscored_note(lists: pd.DataFrame) -> str:
+    """Lists with positives but no metric (fewer than 2 positives), by name and count, from lists.csv."""
+    g = lists[lists["scope"] == GLOBAL_ALL].groupby("plan_id")
+    small = g.agg(positives=("positives", "max"), never=("pr_auc", lambda x: x.isna().all()))
+    small = small[small["never"] & (small["positives"] > 0)]
+    if small.empty:
+        return "no list"
+    return ", ".join(f"`{plan}` with {int(r.positives)}" for plan, r in small.iterrows())
+
+
+def _pop_outside(outside: pd.DataFrame, worst) -> str:
+    """The share of modern towns outside the training range on log_pop, unless the sentence before gave it."""
+    if worst["feature"] == "log_pop":
+        return ", the worst feature named above"
+    share = float(outside.loc[outside["feature"] == "log_pop", "value"].iloc[0])
+    return f": {share:.0%} of modern towns lie outside the training's 1st-99th percentile on it"
+
+
+def _pct(v: float) -> str:
+    """A share as a percentage, with a decimal where whole percents would hide an order."""
+    return f"{v:.1%}"
+
+
+def _trivial(idents: pd.DataFrame) -> str:
+    pop = idents.loc["population only", "accuracy"]
+    base = idents.loc["population only", "largest_document_share"]
+    return "; population alone does worse than that" if pop < base else ""
+
+
+def _follows(spread: pd.DataFrame, towns_more: pd.DataFrame) -> str:
+    """Which scenarios' cells follow log people more than the count of towns, from score_spread.csv."""
+    if towns_more.empty:
+        return (
+            "In every scenario the cell probability correlates more with log people than with the count of "
+            "towns: the map follows people on a log scale, far less than in proportion"
+        )
+    named = ", ".join(f"`{n}`" for n in towns_more["scenario"])
+    return (
+        f"In {len(spread) - len(towns_more)} of {len(spread)} scenarios it correlates more with log people "
+        f"than with the count of towns; in {named} it correlates more with the count of towns"
+    )
+
+
+def _width_source(s: pd.DataFrame, model_wider: pd.DataFrame) -> str:
+    """Which part of the interval is wider, scenario by scenario, from scenarios.csv. No cause is claimed."""
+    n, k = len(s), len(model_wider)
+    if k == 0:
+        return (
+            f"In all {n} scenarios the mean width with the model held at its median is larger than with "
+            "the stockpile held at its median: the stockpile draws, not the model, make most of the width."
+        )
+    named = ", ".join(f"`{x}`" for x in model_wider["scenario"])
+    return (
+        f"In {n - k} of {n} scenarios the mean width with the model held at its median is larger than with the "
+        f"stockpile held at its median; in {named} the model's part is the larger."
+    )
 
 
 def _holdout_list(names: list[str]) -> str:
@@ -543,7 +601,9 @@ def _extended_section() -> str:
     vpk = d[d["comparison"] == "defence industry over population"].iloc[0]
     d = d.assign(
         difference=d.apply(interval, axis=1),
-        by_blocks=d.apply(lambda r: f"[{r['block_low']:+.3f}, {r['block_high']:+.3f}]", axis=1),
+        by_blocks=d.apply(
+            lambda r: f"[{signed(r['block_low'])}, {signed(r['block_high'])}]", axis=1
+        ),
         model=d["a_pr_auc"],
         against=d["b_pr_auc"],
     )
@@ -750,7 +810,9 @@ def report() -> str:
     air = pd.read_csv(OUT / "airfield_negatives.csv").set_index("towns")
     air_all, air_less = air.loc["all towns"], air.loc["negatives within 10 km left out"]
     fam_table = fam.assign(
-        gain=fam.apply(interval, axis=1), by_blocks=fam.apply(block_interval, axis=1)
+        gain=fam.apply(interval, axis=1),
+        by_blocks=fam.apply(block_interval, axis=1),
+        verdict=fam.apply(lambda r: "not a reading" if constant(r) else r["verdict"], axis=1),
     )[
         [
             "rows",
@@ -799,13 +861,20 @@ base rate of {sac_rate:.2f}, the others together {rest_rate:.2f}. On a list that
 list is unlabeled, not a negative, so PR-AUC there understates true precision: read such figures against each other and
 the base rate, not as how often a model is right. Intervals are 95%. "By blocks" resamples whole 300 km squares of towns;
 the other interval resamples single towns. Verdicts use the unrounded bounds; a bound that would print as 0.00 is shown to
-three decimals with its sign. Where the positives lie in fewer than {MIN_POSITIVE_BLOCKS} blocks, resampling blocks measures nothing, and the block interval is shown as "n/a" with the count. "Document" is the general word here: most of the lists are studies, exercises, lessons and a war
+three decimals with its sign, an exact zero as 0.00, and a comparison whose scores never differ as "constant". Where the positives lie in fewer than {MIN_POSITIVE_BLOCKS} blocks, resampling blocks measures nothing, and the block interval is shown as "n/a" with the count. That rule was set in the ninth amendment after the review of 1e98ebc had shown the row it changes (7 positives in 2 blocks, verdict "neither" before and after), so it is not blind. "Document" is the general word here: most of the lists are studies, exercises, lessons and a war
 game, and few are war plans (see "How much evidence there is, by side"). "Leave one document out" is the holdout `configs/protocol.yaml` calls leave one plan out.
 
 **Terms.** SAC is the US Strategic Air Command, whose 1956 study supplies the largest list. COW is the Correlates of War project. "All permitted"
 means every feature the protocol allows a model to read as of a document's date: population, administration, geography, the one
 industry column, transport, military sites, defences and national power (`data/FEATURES_CLASSIFIER.md`). The **population rule** is a baseline: a
-logistic regression on log population. The **state gate** is the rule deciding whether a state gets its own model. The **selection rule** decides which model is chosen.
+logistic regression on log population. The **state gate** is the rule deciding whether a state gets its own model. The **selection rule** decides which model is chosen. A
+**sector box** (`data/curated/labels/SECTORS.yaml`) is the area a list covers: a town outside it is not a negative of that list.
+**Burza** is the Polish front exercise of 1961 whose list is `wp_1961_burza`. A **theatre share** is the stated share of an attacker's
+inventory assumed to be aimed at a scenario's countries. A **folded** ROC-AUC is the larger of the ROC-AUC and one minus it, so that
+0.5 means no separation whichever way a feature points. **Pick-freeze** is the estimator of a first-order Sobol index: the share of a
+quantity's variance that one input explains alone, from pairs of draws sharing that input. Reviews are named by the commit they read,
+such as "the review of c840f88". "Plan" alone means a document of a type the protocol counts as a plan (war plan, target selection,
+requirements or policy study); "war plan" means that type only.
 
 ## Main result
 
@@ -858,7 +927,7 @@ read over its whole universe. Corrected link errors are listed in
 independent passes of vision-language models (Claude agents), with disagreements resolved against the page
 (`data/curated/sac1956/README.md`). A blind audit of a random 5% of rows, 743 lines, found 0 errors in the final reading (95% interval 0 to 0.51%),
 by auditors whose own error rate was 1.3%, so the audit's reading is itself uncertain. On the low-resolution Part II pages, where 270 airfield rows can be compared with a second printing, the confirmed misread
-rate was 3 in 216, well above that bound. **Links** lose entries too: {int(every["unlinked"])} of SAC's {int(every["entries"]):,} complex entries link to no town of the universe ({int(sub["unlinked"])} of its {int(sub["entries"])} subcomplex entries; `runs/classifier/link_audit_coverage_subcomplex.csv`), and the share varies by country: China {int(coverage.loc["China", "unlinked"])} of {int(coverage.loc["China", "entries"])}, North Korea {int(coverage.loc["North Korea", "unlinked"])} of {int(coverage.loc["North Korea", "entries"])}, North Vietnam {int(coverage.loc["North Vietnam", "unlinked"])} of {int(coverage.loc["North Vietnam", "entries"])}, Albania {int(coverage.loc["Albania", "unlinked"])} of {int(coverage.loc["Albania", "entries"])} (`runs/classifier/link_audit_coverage.csv`).
+rate was 3 in 216, well above that bound. **Links** lose entries too: {int(every["unlinked"])} of SAC's {int(every["entries"]):,} complex entries link to no town of the universe ({int(sub["unlinked"])} of its {int(sub["entries"])} subcomplex entries; `runs/classifier/link_audit_coverage_subcomplex.csv`), and the share varies by country: China {int(coverage.loc["China", "unlinked"])} of {int(coverage.loc["China", "entries"])}, North Korea {int(coverage.loc["North Korea", "unlinked"])} of {int(coverage.loc["North Korea", "entries"])}, North Vietnam {int(coverage.loc["North Vietnam", "unlinked"])} of {int(coverage.loc["North Vietnam", "entries"])}, Albania {int(coverage.loc["Albania", "unlinked"])} of {int(coverage.loc["Albania", "entries"])} (`runs/classifier/link_audit_coverage.csv`). These count entries, not towns: an entry whose cover name stands for a town and its closed city (Kapustin Yar and Znamensk, for example) links to both, so the linked complex entries give {int(every["towns_linked"] - every["linked"])} and the subcomplex entries {int(sub["towns_linked"] - sub["linked"])} more linked towns than entries.
 
 **Documents.** `data/curated/labels/PLANS.yaml` records each list's attacker, author, date, type and evidence
 grade. The grades: A, a primary document or its published translation read here; B, a primary document read here that names only part of the
@@ -887,11 +956,11 @@ Several are today's data standing in for the past and are flagged. Sources, lice
 
 ## Method
 
-The analysis is in `configs/protocol.yaml`, with four dated amendments, and a fifth that only adds readings,
-`configs/protocol_amendment_5.yaml`. **It is not blind.** Earlier
+The analysis is in `configs/protocol.yaml`, which holds four dated amendments, and six more amendments in their own
+files, `configs/protocol_amendment_5.yaml` (which only adds readings) to `configs/protocol_amendment_10.yaml`. **It is not blind.** Earlier
 runs read scores on SAC's spatial folds and on the small lists, and an independent review read the full results
 before the fourth amendment; that amendment records what it changed and why. A sixth, `configs/protocol_amendment_6.yaml`, records the corrections made
-after a later review, also with results already read, a seventh, `configs/protocol_amendment_7.yaml`, adds lesson rows and three link corrections on the same terms, and an eighth, `configs/protocol_amendment_8.yaml`, makes the corrections after the review of c840f88, including sector boxes whose effect that review had already shown. It was not written blind to its own final labels either: before it was committed, two quick runs (`--quick`: 3 bags, 50 resamples, from an uncommitted tree) on the final table were made: the map's printed the held-out PR-AUC of its candidate scores and every scenario's map summary, and the classifier's wrote its held-out tables to a folder that is not committed. `data/curated/labels/SECTORS.yaml` says no box was chosen by looking at a model score; for Burza that is not so, for the reason just given, and Burza's FRG and Denmark boxes are one combined extent written twice, not a box per country. That file is an input of the committed run, so its wording is corrected in `configs/protocol_amendment_9.yaml` rather than in the file. The ninth amendment changes no label, model or holdout. The last blind test is the **sealed set**, places
+after a later review, also with results already read, a seventh, `configs/protocol_amendment_7.yaml`, adds lesson rows and three link corrections on the same terms, and an eighth, `configs/protocol_amendment_8.yaml`, makes the corrections after the review of c840f88, including sector boxes whose effect that review had already shown. It was not written blind to its own final labels either: before it was committed, two quick runs (`--quick`: 3 bags, 50 resamples, from an uncommitted tree) on the final table were made: the map's printed the held-out PR-AUC of its candidate scores and every scenario's map summary, and the classifier's wrote its held-out tables to a folder that is not committed. `data/curated/labels/SECTORS.yaml` says no box was chosen by looking at a model score; for Burza that is not so, for the reason just given, and Burza's FRG and Denmark boxes are one combined extent written twice, not a box per country. Its wording was corrected in `configs/protocol_amendment_9.yaml`, and in the file itself with the tenth amendment. The ninth amendment changes no label, model or holdout. The tenth, `configs/protocol_amendment_10.yaml`, withdraws Great Britain's 1981 districts, fetched through a path robots.txt disallows, and with them Square Leg 1980 and the UK of the 1965 map; it corrects how label files describe themselves, changes no other label, and was followed by a full refit. The last blind test is the **sealed set**, places
 held back from every model in `data/curated/splits/sealed_blocks.csv` and scored once at the end. Of its 467 places only the 273 `never_scored`
 ones are blind: an early slice scored the other 194, 193 of them under their present id and one, Kirovsk, matched by name (`data/curated/splits/README.md`). Their labels are in the committed label files, so the seal is a procedure and not a secret. {_sealed_status()} The word "brief" in the protocol means the owner's
 instructions for this project, which are not in this repository.
@@ -913,8 +982,8 @@ instructions for this project, which are not in this repository.
 ### Models against baselines
 
 The selected candidate of each scope. "Trained on" is the smallest number of positives in any fit behind the row, over every grid and fold.
-"Difference" is against the baseline to its left. Rows marked "not a reading" are shown and not counted.
-**The temporal rows also change attacker:** {later_pact} of the {int(later["positives"].sum())} positives dated after 1956 are on Warsaw Pact or Soviet-lesson lists, so "fit to 1956, score later" tests a US study against the other side's lists, and era and attacker cannot be told apart (`runs/classifier/link_audit_temporal.csv`).
+"Difference, country" is the model against population plus country; "Difference, rule" against the population rule. Rows marked "not a reading" are shown and not counted.
+**The temporal rows also change attacker:** {later_pact} of the {int(later["positives"].sum())} positives dated after 1956 are on Warsaw Pact or Soviet-lesson lists, and the rest on lists too small to score ({_unscored_note(lists)}), so "fit to 1956, score later" tests a US study against the other side's lists, and era and attacker cannot be told apart (`runs/classifier/link_audit_temporal.csv`).
 
 {markdown(primary)}
 
@@ -931,12 +1000,15 @@ The selected candidate of each scope. "Trained on" is the smallest number of pos
 
 Each scope's selected candidate against population plus country under spatial blocks, with columns removed.
 "None flagged" removes today's data standing in for the past. "Strict as-of" also removes the defence tables, mostly
-post-Soviet knowledge. "No national power" removes COW's values, which within pooled scopes nearly identify a document:
-one value per country and year. "No source markers" also removes defence and military columns, whose presence or
-absence shows which table a row came from. Even without those columns, the rest still tell documents apart: from the columns alone,
-with folds grouped by place, a classifier names a row's document {idents.loc["all permitted", "accuracy"]:.0%} of the time on all columns,
-{idents.loc["no national power", "accuracy"]:.0%} without national power, {idents.loc["no source markers", "accuracy"]:.0%} with no source markers as well and {idents.loc["population only", "accuracy"]:.0%} on population alone, against {idents.loc["all permitted", "largest_document_share"]:.0%} for always naming the largest
-(`runs/classifier/document_identification.csv`). That removing columns raises the accuracy is not explained here; a classifier given more columns would be expected to do no worse. So this accuracy shows that the columns tell documents apart; its changes between column sets are not a measure of how much each set does so.
+post-Soviet knowledge. "No national power" removes COW's values, which take one value per country and year and so
+were suspected of marking a document. "No source markers" also removes the defence and military columns, which are
+blank or filled according to the table a row came from. The check below did not confirm either suspicion. From the
+columns alone, with folds grouped by place, a classifier names a row's document {_pct(idents.loc["all permitted", "accuracy"])} of the time on all columns,
+{_pct(idents.loc["no national power", "accuracy"])} without national power, {_pct(idents.loc["no source markers", "accuracy"])} with no source markers as well and {_pct(idents.loc["population only", "accuracy"])} on population alone,
+against {_pct(idents.loc["all permitted", "largest_document_share"])} for always naming the largest document{_trivial(idents)}
+(`runs/classifier/document_identification.csv`). Removing the suspected columns made identification easier, not harder, which a
+classifier given more columns should not show; this is not explained. So the accuracy shows that the remaining columns tell documents apart, and
+the changes between column sets do not measure how much any set does so.
 
 {markdown(sens_table)}
 
@@ -1002,7 +1074,8 @@ large towns to be hit too.
 ### All metrics
 
 The protocol's secondary metrics, as positive-weighted means over scored lists. Brier and log-loss are on raw scores, which
-are not probabilities where a list is incomplete. Precision is at k equal to the list's positives.
+are not probabilities where a list is incomplete. Precision is at k equal to the list's positives. A list is scored only with 2
+or more positives, so the positives here leave out {_unscored_note(lists)} that the table of models against baselines counts.
 
 {markdown(metrics_table)}
 
@@ -1015,7 +1088,7 @@ are not probabilities where a list is incomplete. Precision is at k equal to the
 - **That SAC's list is free of error.** See how it was transcribed, under Data, and `data/ISSUES.md` for what has been corrected.
 - **A state's own model.** Each state is refused. A model of Warsaw Pact war plans in particular has no basis: {war_positives} linked positives, none from a plan read at source. The pooled model is exercise-based.
 - **Prediction for a plan not in the data.** See the main result. The map's score carries this limit into every cell.
-- **Causes.** Population, industry and transport are correlated, and these are associations in lists.
+- **Causes.** These are associations between a town's traits and its presence on a list. No design here separates one trait's effect from another's or from the planners' reasons.
 - **What planners knew.** Features record what existed according to later sources.
 - **Any statement about a present-day plan.** Modern map rows extrapolate from lists of 1945 to 1977.
 
@@ -1073,6 +1146,7 @@ def readme_results() -> str:
     shift = pd.read_csv(MAP / "domain_shift.csv")
     log_pop = shift[shift["comparison"].str.endswith(": log_pop")].iloc[0]
     other = _row(comp, GLOBAL_ALL, "spatial blocks", g_best, PLUS, "lists other than SAC")
+    scen = pd.read_csv(MAP / "scenarios.csv")
     return f"""PR-AUC, the area under the precision-recall curve, measures how many of a model's top-ranked towns are on a
 list. A list's base rate is what no information scores: {float(sac["base_rate"]):.2f} for SAC, {float(other["base_rate"]):.2f} for the other lists.
 Where a list is incomplete a town off it is unlabeled, so PR-AUC understates precision there. Each interval is 95%, the first
@@ -1091,11 +1165,25 @@ resampling towns and "by blocks" resampling 300 km squares; a difference counts 
   amendment committed before fitting: on a left-out document {int((rest_ext["verdict"] == "gain").sum())} of the {len(rest_ext)} rows on lists other
   than SAC gain, and the highest model over all lists scores {glob["a_pr_auc"].max():.2f} against {lopo["b_pr_auc"]:.2f} for the population rule. Plant counts add
   {interval(vpk)} on Soviet towns.
-- **The map.** Because of that transfer result the selection rule chose population as the score. The map follows people far less than in proportion: the
-  1956 score moves only {spread["score_ratio"]:.1f}-fold over a {spread["population_ratio"]:.0f}-fold range of population, so a cell's probability also depends on how many
-  towns it holds. Delivered warheads drive most of its intervals, and those rest on cited inventories and on theatre shares with no source. Modern scenarios use Natural Earth's map-label towns and are
+- **The map.** Because of that transfer result the selection rule chose population as the score. On the 1956 towns the score moves only
+  {spread["score_ratio"]:.1f}-fold over a {spread["population_ratio"]:.0f}-fold range of population, so a cell's probability also depends on how many
+  towns it holds. {_readme_width(scen)} The 1965 map has no United Kingdom: its only census table came through a path robots.txt disallows and was withdrawn. Modern scenarios use Natural Earth's map-label towns and are
   extrapolation: a classifier told them from the training towns at ROC-AUC {shift.iloc[0]["value"]:.2f} on ten features, where 0.5 would mean no shift, with
   {log_pop["value"]:.0%} outside the training's 1st-99th percentile on the one feature the score reads, and no modern label exists to test them."""
+
+
+def _readme_width(s: pd.DataFrame) -> str:
+    """Which part of the map's intervals is wider, from scenarios.csv."""
+    stock = (s["mean_width_stockpile_only"] > s["mean_width_model_only"]).sum()
+    if stock == len(s):
+        return (
+            "In every scenario the stockpile draws, more than the model's, make the width of its intervals, and those rest on "
+            "cited inventories and on theatre shares with no source."
+        )
+    return (
+        f"In {stock} of {len(s)} scenarios the stockpile draws, more than the model's, make the width of its intervals; "
+        "the stockpile rests on cited inventories and on theatre shares with no source."
+    )
 
 
 def _repeats(clean, strict) -> str:

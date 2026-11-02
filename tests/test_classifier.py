@@ -75,7 +75,7 @@ def test_the_1956_table_covers_only_countries_it_documents_and_only_units_in_bei
             "lon": [37.6, 19.0],
         }
     )
-    out = cf.add_defence(towns, cf.BLOC, 1956)
+    out = cf.add_defence(towns, cf.BLOC)
     assert out[cf.DEFENCE].iloc[0].notna().all()
     assert out[cf.DEFENCE].iloc[1].isna().all()  # Hungary has one radar in the table
 

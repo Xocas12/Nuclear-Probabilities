@@ -209,7 +209,7 @@ def document_year_features(towns: pd.DataFrame, year: int) -> pd.DataFrame:
     return towns
 
 
-def add_defence(towns: pd.DataFrame, region: str, year: int) -> pd.DataFrame:
+def add_defence(towns: pd.DataFrame, region: str) -> pd.DataFrame:
     """Defence features of the bloc. A bloc country with fewer than
     MIN_SITES_FOR_COVERAGE rows gets NaN, not a distance across a border: in the 1956 tables that
     leaves the USSR alone."""

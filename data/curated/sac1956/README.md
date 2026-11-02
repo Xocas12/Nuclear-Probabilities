@@ -45,6 +45,8 @@ classified.
 | `audit.csv` | line of the audit sample | `curated`, `audit` (the independent re-reading), `judged` (blind judgement where they differ), `outcome` |
 | `pilot.csv` | row of the pilot reading (`../labels/sac1956_pilot_*.csv`) | `final_id` (the final line it is set against), `differing_fields`, `agrees` |
 | `excerpts/` | the three excerpted lists and their comparison with the full lists | see "The excerpts" below and `excerpts/REPORT.md` |
+| `nearer_town_links.csv` | link moved from a hamlet below the town floor to the town at SAC's printed point (2 rows: KITOY to Angarsk, ZUYEVKA to Zuhres) | `sac_id`, `name_printed`, `was_place_id`, `place_id`, `town`, `basis` (distances from the printed point); read by `nucprob/labels/sac1956.py` |
+| `nearer_negatives_reviewed.csv` | linked entry whose printed point lies nearer an unlisted town than the linked one, read by hand (12 rows) | `sac_id`, `name_printed`, `linked_town`, `nearer_negative`, `reading` ("moved to ..." or why the link stands); `tests/test_label_rules.py` requires every such entry to be read and every "moved" reading to be a row of `nearer_town_links.csv` |
 | `../validation_sac1956_nsa_city_sheets.csv` | category count on the Archive's city sheets | Moscow, Leningrad, Beijing, Warsaw |
 
 Line ids are `<page>-L<nn>`: `C` pages are the complex list (PDF page number), `A` pages the

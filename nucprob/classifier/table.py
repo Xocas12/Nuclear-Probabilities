@@ -116,7 +116,7 @@ def assemble(registry: pd.DataFrame | None = None) -> pd.DataFrame:
         if plan == SAC:
             t = bloc[bloc["listed"].notna()].copy()
             t["n_targets"] = np.nan
-            t = add_defence(t, BLOC, year)
+            t = add_defence(t, BLOC)
         else:
             lab = labels[labels["plan_id"] == plan]
             if lab.empty:
@@ -124,7 +124,7 @@ def assemble(registry: pd.DataFrame | None = None) -> pd.DataFrame:
             region = lab["region"].iloc[0]
             if region == BLOC:
                 t = lab[["place_id", "n_targets", "listed"]].merge(bloc.drop(columns="listed"))
-                t = add_defence(t, BLOC, year)
+                t = add_defence(t, BLOC)
             else:
                 t = lab[["place_id", "region", "n_targets", "listed"]].merge(
                     towns, on=["place_id", "region"]
@@ -133,7 +133,7 @@ def assemble(registry: pd.DataFrame | None = None) -> pd.DataFrame:
                 if region == "wp_west_1965":
                     t = document_year_features(t, year)
                 else:
-                    t = add_defence(t, region, year)
+                    t = add_defence(t, region)
         if plan in boxes:
             t = t[in_sector(t, boxes[plan])].reset_index(drop=True)
         for c in ID_COLUMNS:

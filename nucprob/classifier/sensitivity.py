@@ -113,6 +113,7 @@ def repeat_scope(scope: str, rows: pd.DataFrame, selected: str) -> list[dict]:
 
 
 def imputed_logistic(seed: int = 0):
+    """`seed` is part of every factory's signature; nothing here is random."""
     return make_pipeline(
         SimpleImputer(strategy="median"), StandardScaler(), LogisticRegression(max_iter=5000)
     )

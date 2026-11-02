@@ -12,7 +12,7 @@ fails if a row does not pass.
 | #5 airfield verdicts | #15 | yes | `test_sac1956_crossdoc.py`; BRODY read again on the scan (`5005-02511`) | - |
 | #6 closed towns' cover names | #20 | yes | `runs/qa/issues.csv`, `test_labels.py` | - |
 | #7 rank floor | #14 | yes | `test_rank_floor.py`; country means of `pop_rank_pct` within 0.009 | - |
-| #8 transfer read in ROC | #17 | yes | `test_transfer_paired.py` | The rerun changed two readings: PR-AUC on the Polish mirror list now gains, +0.14 [+0.07, +0.21], and ROC-AUC on Square Leg, +0.05 [+0.004, +0.10] (`runs/m4-transfer-check/paired.csv`). The card names both, and the test fails on any other. |
+| #8 transfer read in ROC | #17 | yes | `test_transfer_paired.py` | The rerun changed two readings: PR-AUC on the Polish mirror list now gains, +0.14 [+0.07, +0.21] (`runs/m4-transfer-check/paired.csv`), and ROC-AUC on Square Leg did too until Square Leg was withdrawn with its universe (tenth amendment). The card names the remaining one, and the test fails on any other. |
 | #9 NaN read as 0 km | #16 | yes | `runs/qa/issues.csv`, `test_transfer_military.py` | PRs #16 and #17 conflict in effect: the bootstrap sorted a NaN score as a top score. `compare` now skips a model that left towns unscored. |
 | #10 district_seat tier | #19 | yes | `runs/qa/issues.csv`, `test_features.py` | - |
 | #11 Austrian Land seats | #18 | yes | `runs/qa/issues.csv`, `test_transfer_places.py` | - |
@@ -56,6 +56,6 @@ mirror whose robots.txt allows them, with the recorded hashes; the Demoscope pag
 captures with the recorded hashes (`data/sources_obtained.yaml`). The Wikipedia fetch scripts and the transcription instructions
 now use an allowed path, and the pages of `uk_districts_1981_seats.csv`, `frg_1961_wikipedia.csv` and `closed_cities_1956.csv`
 are registered through allowed paths in `data/curated/features/cited_pages.csv`. Those three tables, and the use of
-`Special:Export` and `/w/api.php`, were not in the earlier audit. Still open for the owner: the UK 1981 census district totals from
-Nomis's disallowed API path, which feed the Great Britain units of the Square Leg comparison (README, "Robots";
-`tests/test_robots.py` names it as the one exception).
+`Special:Export` and `/w/api.php`, were not in the earlier audit. The last source, the UK 1981 census district totals from
+Nomis's disallowed API path, was withdrawn after the review of 46021d7 with the Great Britain rows built from it, the Square Leg
+list they scored and the UK of the 1965 map (`configs/protocol_amendment_10.yaml`; `tests/test_robots.py`). No allowed copy was found.

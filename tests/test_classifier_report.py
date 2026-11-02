@@ -76,6 +76,14 @@ def test_every_comparison_row_recomputes_from_the_held_out_scores():
             assert a - b == pytest.approx(r["delta"], abs=2e-3)
 
 
+def test_numbers_keep_two_decimals_and_a_constant_is_not_shown_as_a_measurement():
+    assert report.signed(0.0234) == "+0.02" and report.signed(-0.0004) == "-0.000"
+    assert report.signed(0.0) == "0.00"
+    flat = {"delta": 0.0, "low": 0.0, "high": 0.0, "block_low": 0.0, "block_high": 0.0}
+    assert report.constant(flat) and "constant" in report.interval(flat)
+    assert not report.constant(flat | {"high": 0.001})
+
+
 @needs_run
 def test_verdicts_come_from_unrounded_bounds_and_need_both_intervals():
     row = {
@@ -147,11 +155,34 @@ def test_no_sealed_place_is_in_any_committed_score():
     assert not (OUT / "sealed" / "metrics.csv").exists() or (OUT / "sealed" / "LOCK.json").exists()
 
 
+def headline_quotes() -> list[str]:
+    """Figures the README must repeat from the report."""
+    comp = pd.read_csv(OUT / "comparison.csv")
+    selection = pd.read_csv(OUT / "selection.csv")
+    sens = pd.read_csv(OUT / "sensitivity.csv")
+    sac = report._row(
+        comp,
+        report.SAC_SCOPE,
+        "spatial blocks",
+        report._best(selection, report.SAC_SCOPE),
+        report.PLUS,
+    )
+    strict = sens[(sens["scope"] == report.SAC_SCOPE) & (sens["variant"] == "strict as-of")].iloc[0]
+    g = report._row(
+        comp,
+        report.GLOBAL_ALL,
+        "leave one document out",
+        report._best(selection, report.GLOBAL_ALL),
+        report.RULE,
+    )
+    return [report.interval(sac), report.interval(strict), report.interval(g)]
+
+
 @needs_run
 def test_the_readme_quotes_the_report_and_the_gate():
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     text = (ROOT / "REPORT.md").read_text(encoding="utf-8")
-    for quoted in report.headline_quotes():
+    for quoted in headline_quotes():
         assert quoted in readme and quoted in text, quoted
     gate = pd.read_csv(OUT / "state_gate.csv").set_index("attacker")
     us = gate.loc["US"]
@@ -195,7 +226,8 @@ def test_the_report_states_what_earlier_reviews_found_it_withholding():
     # The map's unsourced shares and its scaling are printed, not left to the config.
     assert "The theatre shares have no source" in text
     assert "share of people living in scored towns" in text
-    assert "unit_sensitivity.csv" in text
+    # Great Britain was withdrawn (tenth amendment): the report says so and cites no withdrawn reading.
+    assert "No United Kingdom in 1965" in text and "unit_sensitivity.csv" not in text
     assert "The temporal rows also change attacker" in text
     # A gain named in prose is one in the table, whatever the data say.
     assert "Those gains are over LightGBM" not in text
@@ -226,3 +258,53 @@ def test_a_row_under_the_training_floor_is_counted_over_every_grid():
         & (comp["holdout"] == "spatial blocks")
     ].iloc[0]
     assert row["train_positives_min"] == ev.spatial_train_positives(t.reset_index(drop=True))
+
+
+@needs_run
+def test_what_the_map_follows_is_stated_scenario_by_scenario():
+    """A scenario whose cells follow the count of towns more than log people is named, not covered by
+    a sentence about every scenario (the review of 46021d7)."""
+    text = " ".join((ROOT / "REPORT.md").read_text(encoding="utf-8").split())
+    spread = pd.read_csv(RUNS / "probmap" / "score_spread.csv")
+    towns_more = spread[
+        spread["p_correlation_with_towns_in_cell"] > spread["p_correlation_with_log_people_in_cell"]
+    ]
+    for scenario in towns_more["scenario"]:
+        assert f"`{scenario}`" in text[text.index("**What that score does.**") :][:1500], scenario
+    if len(towns_more):
+        assert "In every scenario the cell probability correlates more with log people" not in text
+
+
+@needs_run
+def test_no_sentence_says_removed_columns_identify_documents_when_removing_them_helps():
+    ident = pd.read_csv(OUT / "document_identification.csv").set_index("columns")
+    text = (ROOT / "REPORT.md").read_text(encoding="utf-8")
+    if ident.at["no national power", "accuracy"] > ident.at["all permitted", "accuracy"]:
+        assert "nearly identify" not in text
+        assert "made identification easier" in " ".join(text.split())
+    if (
+        ident.at["population only", "accuracy"]
+        < ident.at["population only", "largest_document_share"]
+    ):
+        assert "population alone does worse than that" in text
+
+
+def test_the_readme_names_every_committed_amendment():
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    numbers = sorted(
+        int(p.stem.rsplit("_", 1)[1]) for p in (ROOT / "configs").glob("protocol_amendment_*.yaml")
+    )
+    assert (
+        f"`configs/protocol_amendment_{numbers[0]}.yaml` to `configs/protocol_amendment_{numbers[-1]}.yaml`"
+        in readme
+    )
+    assert numbers == list(range(numbers[0], numbers[-1] + 1))
+
+
+@needs_run
+def test_the_readme_count_of_war_plan_positives_is_the_runs():
+    lists = pd.read_csv(OUT / "lists.csv")
+    war = lists[(lists["scope"] == report.GLOBAL_ALL) & (lists["doc_type"] == "war_plan")]
+    n = int(war.drop_duplicates("plan_id")["positives"].sum())
+    readme = " ".join((ROOT / "README.md").read_text(encoding="utf-8").split())
+    assert f"war plans give {n} linked positives" in readme

@@ -5,8 +5,10 @@
 - `scored_before_freeze.csv`: every place the M1 slice (1,294 rows) or the M2 check (2,127 rows)
   scored, read from their outputs at commit `de2e54a`, with its 1956 name, because a corrected
   match changes a place's id.
-- `sealed_blocks.csv`: the 300 km blocks (`nucprob/model/splits.py`) that hold a place today and
-  held no place the M2 check scored.
+- `sealed_blocks.csv`: the 300 km blocks (`nucprob/model/splits.py`) that held a place and no place
+  the M2 check scored, on the coordinates of 1 November. Coordinates corrected since then put 11 places
+  the M2 check had scored inside these blocks. They are not sealed, since a place the M2 check scored
+  never is (below), and they stay scored (`tests/test_classifier_report.py` allows exactly those).
 
 `nucprob/dataset.py` reads them. A place is `sealed` if its block is listed and the M2 check did
 not score it, and `never_scored` if the M1 slice did not score it either. No label is read.

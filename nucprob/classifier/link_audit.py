@@ -28,14 +28,31 @@ MODELS = ["population rule", "population + country", "logistic, all permitted"]
 
 
 def coverage(links: pd.DataFrame, universe: set[str], level: str = "complex") -> pd.DataFrame:
-    c = links[links["level"] == level]
-    linked = c["place_id"].isin(universe)
-    g = c.assign(linked=linked).groupby("country_1956")["linked"]
-    out = g.agg(entries="size", linked="sum").reset_index()
-    total = pd.DataFrame([{"country_1956": "all", "entries": len(c), "linked": int(linked.sum())}])
-    return pd.concat([out, total], ignore_index=True).assign(
-        unlinked=lambda d: d["entries"] - d["linked"]
+    """Entries of SAC's list, not link rows: an entry whose cover name links to two towns (Kapustin Yar
+    and Znamensk, for example) counts once, and is linked if any of its towns is in the universe.
+    `towns_linked` counts the towns, so it can exceed `linked`."""
+    c = links[links["level"] == level].assign(in_universe=lambda d: d["place_id"].isin(universe))
+    entry = c.groupby("id").agg(
+        country_1956=("country_1956", "first"),
+        linked=("in_universe", "any"),
+        towns_linked=("in_universe", "sum"),
     )
+    g = entry.groupby("country_1956")
+    out = g.agg(
+        entries=("linked", "size"), linked=("linked", "sum"), towns_linked=("towns_linked", "sum")
+    ).reset_index()
+    total = pd.DataFrame(
+        [
+            {
+                "country_1956": "all",
+                "entries": len(entry),
+                "linked": int(entry["linked"].sum()),
+                "towns_linked": int(entry["towns_linked"].sum()),
+            }
+        ]
+    )
+    out = pd.concat([out, total], ignore_index=True).astype({"linked": int, "towns_linked": int})
+    return out.assign(unlinked=lambda d: d["entries"] - d["linked"])
 
 
 def dgz_negatives(dataset: pd.DataFrame, labels: pd.DataFrame, held: pd.DataFrame) -> pd.DataFrame:

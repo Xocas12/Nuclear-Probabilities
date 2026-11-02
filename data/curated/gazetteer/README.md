@@ -84,6 +84,17 @@ The floor matters in two places.
 - **Votrubec's Slovak rows** were transcribed and checked against the scan. The text layer
   misreads Nitra's change (2 030 for 2 630) and Trnava's (1 706 for 1 796).
 
+## Hand corrections
+
+- `coordinate_corrections.csv` (1 row): a place whose name GeoNames holds twice in one district,
+  where the matcher took the wrong row. Columns `place_id`, `name`, `lat`, `lon`, `geonameid`, `basis`
+  (the evidence, here SAC's printed point for KOMARNO CZECH). `nucprob/places.py` (`correct_coordinates`)
+  moves the point; the place keeps its id.
+- `transfer_target_unlinked.csv` (14 rows): targets of the smaller lists that a reader could not tie
+  to one place. Columns `plan_id`, `seq`, `name_source`, `reason`. `nucprob/transfer/labels.py`
+  (`unlinked`) keeps them on their list linked to no town, rather than to the largest town of that
+  name. The Square Leg row is read by nothing since the tenth amendment withdrew that list.
+
 ## Matching to GeoNames
 
 `nucprob/gazetteer/match.py` gives each settlement the GeoNames populated place of its name.

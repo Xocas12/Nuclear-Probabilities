@@ -107,13 +107,6 @@ def share_interceptors(
                 p["delivered"] = p["delivered"] * kept
 
 
-def draw_delivered(
-    attacker: Mapping, n: int, rng, table: pd.DataFrame, mix: pd.DataFrame
-) -> np.ndarray:
-    parts = draw_by_delivery(attacker, n, rng, table, mix)
-    return sum(p["delivered"] for p in parts.values())
-
-
 def by_delivery_draws(
     attacker: Mapping, n: int, rng, share: np.ndarray | None = None
 ) -> dict[str, dict[str, np.ndarray]]:

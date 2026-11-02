@@ -27,8 +27,10 @@ The earlier 33-row pilot (`../labels/cd_1987_napb90_county_pilot.csv`) is supers
 
 ## How it was made
 
-1. **Pages.** PDF pages 135-292 of the compilation in `data/raw/civil_defence/` (1-bit, 200 ppi,
-   scanned on their side) rendered upright (`scripts/napb90_pages.py`).
+1. **Pages.** PDF pages 135-292 of archive.org's scan of the compilation (1-bit, 200 ppi, scanned on
+   their side), rendered upright (`scripts/napb90_pages.py`). The scan is not held: the file under
+   `data/raw/civil_defence/` is the item's landing page, and the scan answered HTTP 500 on 2026-11-02
+   (`data/sources.yaml`, `fema_napb90`, `held:`), so the transcription cannot be rechecked here.
 2. **Two independent transcriptions** (`data/interim/napb90/INSTRUCTIONS.md`), one by each of two
    models, eight pages per worker, each worker checking its column sums against the printed
    totals and re-reading failures on enlarged images.

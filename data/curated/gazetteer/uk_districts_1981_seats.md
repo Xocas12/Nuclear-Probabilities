@@ -1,5 +1,7 @@
 # uk_districts_1981_seats: council headquarters of the 1981 districts
 
+**Read by no analysis since the tenth amendment** (`configs/protocol_amendment_10.yaml`): the Great Britain district table it located was withdrawn. The seats themselves come from Wikipedia pages registered through allowed paths; the district names came from Nomis.
+
 **File:** `uk_districts_1981_seats.csv` (456 rows, UTF-8). It gives one point per district: the town where the district council had its headquarters (administrative centre) in about 1981.
 
 **Rows:** the input list. It has 454 Great Britain districts and 2 Northern Ireland districts (Belfast and Londonderry). It has the same names as `towns_uk_1981.csv`, and Nomis labels such as "East Wood", "Tweedale", "Taff - Ely" and "Westminster, City of" are kept as they are.

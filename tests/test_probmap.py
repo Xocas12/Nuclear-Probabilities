@@ -16,6 +16,11 @@ OUT = RUNS / "probmap"
 needs_run = pytest.mark.skipif(not (OUT / "scenarios.csv").exists(), reason="no map run")
 
 
+def delivered_total(attacker, n, rng, table, mix) -> np.ndarray:
+    """An attacker's delivered warheads, summed over deliveries as run_scenario sums them."""
+    return sum(p["delivered"] for p in st.draw_by_delivery(attacker, n, rng, table, mix).values())
+
+
 def towns() -> pd.DataFrame:
     return pd.DataFrame(
         {
@@ -139,11 +144,11 @@ NO_MIX = pd.DataFrame(columns=["year", "state", "delivery", "share"])
 
 def test_delivered_warheads_follow_the_inventory_and_lose_to_each_assumption():
     rng = np.random.default_rng(0)
-    out = st.draw_delivered(attacker(), 50, rng, inventory_table(), NO_MIX)
+    out = delivered_total(attacker(), 50, rng, inventory_table(), NO_MIX)
     assert out == pytest.approx(np.full(50, 100 * 0.5 * 0.8 * 0.9))
-    half = st.draw_delivered(attacker(stock_multiplier=0.5), 50, rng, inventory_table(), NO_MIX)
+    half = delivered_total(attacker(stock_multiplier=0.5), 50, rng, inventory_table(), NO_MIX)
     assert half == pytest.approx(out * 0.5)
-    more = st.draw_delivered(attacker(), 50, rng, inventory_table(200.0, 200.0), NO_MIX)
+    more = delivered_total(attacker(), 50, rng, inventory_table(200.0, 200.0), NO_MIX)
     assert more == pytest.approx(out * 2)
 
 
@@ -151,17 +156,17 @@ def test_inventory_range_is_drawn_between_its_cited_ends():
     rng = np.random.default_rng(0)
     a = attacker(theatre_share=[1, 1, 1], reliability={"all": [1, 1, 1]})
     a["fraction_lost_to_defences"] = [0, 0, 0]
-    out = st.draw_delivered(a, 2000, rng, inventory_table(100.0, 300.0), NO_MIX)
+    out = delivered_total(a, 2000, rng, inventory_table(100.0, 300.0), NO_MIX)
     assert out.min() >= 100 and out.max() <= 300 and np.ptp(out) > 100
 
 
 def test_interceptors_take_off_at_most_one_warhead_each_and_never_go_below_zero():
     rng = np.random.default_rng(0)
     a = attacker(interceptors=10)
-    out = st.draw_delivered(a, 500, rng, inventory_table(), NO_MIX)
+    out = delivered_total(a, 500, rng, inventory_table(), NO_MIX)
     assert out.max() <= 36 and out.min() >= 26
     b = attacker(interceptors=1000)
-    assert st.draw_delivered(b, 500, rng, inventory_table(), NO_MIX).min() == 0
+    assert delivered_total(b, 500, rng, inventory_table(), NO_MIX).min() == 0
 
 
 def mix_table() -> pd.DataFrame:
@@ -182,7 +187,7 @@ def test_warheads_split_by_delivery_and_add_up_to_the_total():
     assert parts["slbm"]["available"] == pytest.approx(np.full(20, 75.0))
     assert parts["icbm"]["delivered"] == pytest.approx(np.full(20, 25 * 0.5 * 1.0))
     assert parts["slbm"]["delivered"] == pytest.approx(np.full(20, 75 * 0.5 * 0.5))
-    total = st.draw_delivered(a, 20, np.random.default_rng(0), inventory_table(), mix_table())
+    total = delivered_total(a, 20, np.random.default_rng(0), inventory_table(), mix_table())
     assert total == pytest.approx(parts["icbm"]["delivered"] + parts["slbm"]["delivered"])
 
 
@@ -193,8 +198,8 @@ def test_a_change_of_mix_changes_what_is_delivered_when_reliability_differs():
     )
     other = mix_table().assign(share=[0.75, 0.25, 1.0])
     rng = np.random.default_rng(0)
-    one = st.draw_delivered(a, 5, rng, inventory_table(), mix_table())
-    two = st.draw_delivered(a, 5, rng, inventory_table(), other)
+    one = delivered_total(a, 5, rng, inventory_table(), mix_table())
+    two = delivered_total(a, 5, rng, inventory_table(), other)
     assert two[0] > one[0]
 
 
@@ -253,7 +258,7 @@ def test_every_scenario_reads_its_inventories_from_the_cited_table():
     for sc in rn.load_scenarios():
         assert sc["era"] in {"historical", "modern"}
         for a in sc["attackers"]:
-            w = st.draw_delivered(a, 20, rng, table, pd.read_csv(st.MIX))
+            w = delivered_total(a, 20, rng, table, pd.read_csv(st.MIX))
             assert np.isfinite(w).all() and (w >= 0).all()
 
 
@@ -323,11 +328,16 @@ def test_committed_scenarios_respond_to_their_stockpile():
 @needs_run
 def test_every_modern_scenario_is_labelled_as_extrapolation():
     text = (OUT / "viewer" / "index.html").read_text(encoding="utf-8")
-    assert "EXTRAPOLATION" in text
+    assert 'EXTRAPOLATION. ":"HISTORICAL. ' in text  # the banner's two branches, on `era`
     assert "http://" not in text and "https://" not in text
-    for sc in rn.load_scenarios():
-        if sc["era"] == "modern":
-            assert "extrapolation" in sc["evidence"].lower()
+    data = viewer_data(text)
+    eras = {sc["id"]: sc["era"] for sc in rn.load_scenarios()}
+    assert {item["id"] for item in data["scenarios"]} == set(eras)
+    for item in data["scenarios"]:
+        assert item["era"] == eras[item["id"]]
+        modern = item["era"] == "modern"
+        assert item["shift_label"] == ("Extrapolation" if modern else "Historical"), item["id"]
+        assert ("extrapolation" in item["evidence"].lower()) == modern, item["id"]
     shift = pd.read_csv(OUT / "domain_shift.csv")
     assert (shift["measure"] == "two-sample ROC-AUC").sum() == 2
 
@@ -539,12 +549,22 @@ def test_french_overseas_territories_are_not_in_the_modern_towns():
     assert modern.overseas(d).tolist() == [False, True, True, False]
 
 
+def viewer_data(text: str) -> dict:
+    start = text.index("const D=") + len("const D=")
+    return json.loads(text[start : text.index(";\n", start)])
+
+
 @needs_run
 def test_the_viewer_says_what_the_score_is_and_what_the_interval_holds_fixed():
     text = (OUT / "viewer" / "index.html").read_text(encoding="utf-8")
     m = json.loads((OUT / "manifest.json").read_text())
     assert f'"score":"{m["score"]}"' in text
     assert "how many towns it holds" in text and "holds the allocation rule" in text
+    # The spread of population and score is each scenario's own, not one phrase for all.
+    spread = pd.read_csv(OUT / "score_spread.csv").set_index("scenario")
+    for item in viewer_data(text)["scenarios"]:
+        assert item["population_ratio"] == round(spread.loc[item["id"], "population_ratio"])
+        assert item["score_ratio"] == round(spread.loc[item["id"], "score_ratio"], 1)
 
 
 @needs_run

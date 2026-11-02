@@ -56,7 +56,8 @@ ALL_FEATURES = [*COMMON, *MILITARY, *DEFENCE, *NMC_FEATURES]
 
 def logistic_country(seed: int = 0) -> object:
     """Log population plus one intercept per country; a country unseen in training gets the
-    reference level, so on a left-out country this is the population rule."""
+    reference level, so on a left-out country this is the population rule. `seed` is part of every
+    factory's signature (Spec calls factory(seed)); nothing here is random."""
     return make_pipeline(
         ColumnTransformer(
             [
@@ -80,6 +81,7 @@ def lightgbm_quiet(seed: int = 0):
 
 
 def logistic_all(seed: int = 0):
+    """`seed` is part of every factory's signature; nothing here is random."""
     # Median imputation inside the fold; a NaN family says "no table covers this town".
     return make_pipeline(
         SimpleImputer(strategy="median", keep_empty_features=True),

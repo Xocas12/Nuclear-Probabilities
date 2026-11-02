@@ -36,15 +36,59 @@ resampling towns and "by blocks" resampling 300 km squares; a difference counts 
   18% outside the training's 1st-99th percentile on the one feature the score reads, and no modern label exists to test them.
 <!-- end of results -->
 
-Sealed places have not been scored. They are held for after an independent review.
+## Data
+
+- **Labels.** The 26 lists registered in `data/curated/labels/PLANS.yaml`, each row quoting its page. `PLANS.yaml` keeps four things apart for
+  every list: the attacker, the date, the document type (war plan, requirements study, policy study, exercise, war game,
+  staff-academy lesson, civil-defence list, or a mirror: one side's guess at the other's targets) and an evidence grade.
+  Only types the protocol counts as plans count towards a state's model; exercises and lessons are labelled as such
+  wherever they are used. Soviet and Warsaw Pact evidence is thin: no Soviet war plan naming places was found, and the
+  three registered Warsaw Pact war plans give 6 linked positives between them, none from a plan read at source (REPORT,
+  "What the evidence cannot support").
+- **Places and features.** Towns, mostly of 10,000 or more, from censuses as near each document's date as could be found, with
+  population, rank, distances to coast, capital and other towns, and, where a source exists for that date, military
+  sites, air and missile defences and COW National Material Capabilities. A feature may not postdate its document;
+  where one does (the 1959 Soviet census for 1956, for example) it is flagged and the results are repeated without it.
+- **Stockpiles.** `data/curated/stockpiles/`: inventories by state, year and delivery from the FAS Nuclear Notebook,
+  NRDC, OWID and SIPRI, with every other assumption stated beside its source or marked as having none.
+- **Provenance.** `data/sources.yaml`: every source's URL, licence, retrieval date and sha256. `data/ISSUES.md`
+  answers the repository's issues and pull requests.
+
+## Method
+
+The analysis was fixed in `configs/protocol.yaml` before the final models were fitted, and changed since only by
+dated amendments, `configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_10.yaml`, each saying what had
+already been read. A town off an incomplete list is treated as unlabeled, not as a negative (positive-unlabeled:
+each of 50 bagged fits keeps all positives and draws as many unlabeled towns). Every model is compared with two baselines on the same
+towns: ranking by population (the "population rule") and population plus one intercept per country. Holdouts are
+spatial blocks of 300 km, leaving out one document at a time, and fitting before 1956 to score later and the
+reverse. PR-AUC is the primary metric, with paired bootstrap intervals over towns and over blocks, and calibration
+is reported. A state gets its own model only if it passes the gate in the protocol (two independent plans, 50
+positives, 15 outside its largest plan); every state fails it. The map takes the model the protocol's rule selects,
+draws stockpiles and models together (an attacker's inventory times its stated **theatre share**, the part assumed
+aimed at the scenario's countries, times reliability and survival of defences), and shares each scenario's delivered
+warheads among towns in proportion to the score, summarised on a 0.5-degree grid (1 degree for modern scenarios). The sealed set, 467 places in held-back
+blocks, is for one final scoring after independent review. The first milestone check, `runs/m1-slice/`, scored 194
+of them before the seal was drawn (`data/curated/splits/README.md`); no run since has scored any, and the 273 others
+are blind. The sealed set has not been scored.
+
+## What the evidence cannot support
+
+- **A model of any one state's plans.** Each state is refused by the gate; the Warsaw Pact model pools exercises.
+- **Prediction for a document not in the data.** No model beat population on a left-out document.
+- **Causes.** These are associations between a town's traits and its presence on a list.
+- **What planners knew.** Features record what existed according to later sources.
+- **Any present-day plan.** Modern map rows apply lists of 1945-1977 to towns of today: extrapolation, with no
+  modern label to test it.
+- **The map's probabilities as forecasts.** They follow from stated assumptions; the theatre shares have no source.
 
 ## Layout
 
-- `data/curated/labels/`: target lists, the registry `PLANS.yaml` (attacker, date, type, grade), `SECTORS.yaml`.
+- `data/curated/labels/`: target lists, the registry `PLANS.yaml` (attacker, date, type, grade), `SECTORS.yaml`
+  (the area each list covers; a town outside it is not a negative of that list).
 - `data/curated/stockpiles/`: cited inventories and assumptions. `data/sources.yaml` and `data/sources_amendment_5.yaml`: every source's provenance;
   `data/curated/features/cited_pages.csv`: the pages cited row by row in the site tables.
-- `configs/protocol.yaml`: pre-committed analysis and its dated amendments, with `configs/protocol_amendment_5.yaml`,
-  `configs/protocol_amendment_6.yaml`, `configs/protocol_amendment_7.yaml` and `configs/protocol_amendment_8.yaml`. `configs/scenarios.yaml`: scenarios.
+- `configs/protocol.yaml` and `configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_10.yaml`: the analysis and its amendments. `configs/scenarios.yaml`: scenarios.
 - `runs/classifier/`, `runs/probmap/`: committed outputs. `REPORT.md` is generated from them.
 - `runs/m1-slice/`, `runs/m2-check/`: earlier milestone checks, on the labels of their date. They were not
   rerun after later label corrections and feed no result above. `runs/m4-transfer-check/`: the transfer check, rerun on the corrected labels; it reads whole countries, not sectors, and feeds no result above.
@@ -75,19 +119,9 @@ built tables skip.
 tables are not redistributed (its terms), so `data/curated/stockpiles/delivery_mix.csv` holds rounded shares only.
 `data/curated/features/bloc_air_defence_1956.csv` was made by hand from cited pages
 (`scripts/bloc_air_defence_1956/README.md`). **Robots.** `make data` asks each host's robots.txt before every download and reports a refused source as not
-obtained; `python -m nucprob.sources.robots` records the answer for every source in `runs/qa/robots.csv`. Each row is judged on the URL the held bytes came from: where that is not the publisher's,
-`data/sources_obtained.yaml` names it, and `make data` downloads it in place of the publisher's URL. `download.geonames.org`
-disallows every path, so the 37 GeoNames dumps that feed town coordinates were fetched again on 2026-11-02 from the
-`DataDock/geonames` mirror on `huggingface.co` (CC BY 4.0, revision pinned), whose robots.txt allows them. All 37 have the
-recorded hashes, so no table changed. The Demoscope page (its host gave no robots.txt answer) and the Pałka article are
-held as Wayback captures with the recorded hashes. One held source is still from a refused path: the UK 1981 census
-district totals from `www.nomisweb.co.uk` (`/api/v01/dataset/`), which feed `towns_uk_1981.csv`, the Great Britain units
-of the Square Leg comparison. No allowed copy was found; whether to keep them or drop those units is the owner's decision
-and is open. Earlier work also read Wikipedia through paths robots.txt disallows: `en.wikipedia.org/w/index.php` for the
-military site tables of Western Europe, the UK and the US; `Special:Export` and `/w/api.php` for
-`uk_districts_1981_seats.csv`; `/w/api.php` as named in the gazetteer's transcription instructions until 2026-11-02 and
-for one wargame page in `data/notes/warsaw_pact.md`. Those copies are not held, the scripts and instructions now use
-`/wiki/<title>?action=raw`, and the routes are listed as `past_route` rows in `runs/qa/robots.csv`. The pages those tables
-cite are registered through paths robots.txt allows, with date, hash and revision, in
-`data/curated/features/cited_pages.csv`. Two pages cited by those tables, on `www.armedconflicts.com`, are
-refused to this project's agents and stand there with no hash. The Dutch census volume's only held copy is a landing page, since `ssh.datastations.nl` disallows the path of the PDF, and the Italian volume is not held (`held` in `data/sources.yaml`).
+obtained; `python -m nucprob.sources.robots` records the answer of the day for every source in `runs/qa/robots.csv`, judged on the URL the
+held bytes came from (`data/sources_obtained.yaml` names it where that is a mirror or an archived capture). No held file came
+from a refused path. Great Britain's 1981 district totals, fetched earlier from `www.nomisweb.co.uk` through a disallowed
+path, were withdrawn with everything built from them (tenth amendment). Earlier transcriptions read `en.wikipedia.org` through
+disallowed paths; those copies are not held, and the pages are registered through allowed ones in
+`data/curated/features/cited_pages.csv`. Sources that could not be obtained are listed with `held` in `data/sources.yaml`.

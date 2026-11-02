@@ -209,23 +209,12 @@ class Gazetteer:
         return None, "not found"
 
 
-# Tables whose rows are districts, not towns, with a file giving each district's
-# headquarters town and its point; the seat stands for the district.
-SEATS_FILES = {"UK": "uk_districts_1981_seats.csv"}
-
-
 def manual_links(country: str) -> dict[tuple[str, str], tuple[dict, str]]:
     """Hand-checked coordinates for towns GeoNames does not know by their old name
-    (data/curated/gazetteer/transfer_links.csv), and district seats (SEATS_FILES), keyed by
-    (name, admin1); admin1 is blank where the name alone is unique in the country. A row with
-    no lat stays unplaced: the notes say why no point could be fixed."""
+    (data/curated/gazetteer/transfer_links.csv), keyed by (name, admin1); admin1 is blank where the
+    name alone is unique in the country. A row with no lat stays unplaced: the notes say why no point
+    could be fixed. Great Britain's district seats went with its table (tenth amendment)."""
     out: dict[tuple[str, str], tuple[dict, str]] = {}
-    seats = GAZ / SEATS_FILES.get(country, "-")
-    if seats.exists():
-        d = pd.read_csv(seats)
-        for _, r in d[d["lat"].notna()].iterrows():
-            hit = {"lat": r["lat"], "lon": r["lon"], "gn": r["seat"]}
-            out[(r["name"], "")] = (hit, "district seat")
     path = GAZ / "transfer_links.csv"
     if path.exists():
         d = pd.read_csv(path, dtype={"admin1": str}, keep_default_na=False)
