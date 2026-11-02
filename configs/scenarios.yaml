@@ -64,9 +64,9 @@ scenarios:
   cell_deg: 0.5
   evidence: 'Evidence: Warsaw Pact exercises and lessons, none a Soviet war plan. The searches recorded
     in data/notes found no declassified Soviet strategic target list.'
-  note: Soviet inventory of 1965; the share aimed at Western Europe is a stated assumption. Towns carry
+  note: 'Soviet inventory of 1965; the share aimed at Western Europe is a stated assumption. Towns carry
     populations of about 1961. The United Kingdom is left out (tenth amendment): its only table was withdrawn,
-    so the share falls on the five continental countries alone.
+    so the share falls on the five continental countries alone.'
   attackers:
   - state: USSR
     stock_year: 1965
