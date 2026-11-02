@@ -29,9 +29,9 @@ resampling towns and "by blocks" resampling 300 km squares; a difference counts 
   amendment committed before fitting: on a left-out document 0 of the 6 rows on lists other
   than SAC gain, and the highest model over all lists scores 0.66 against 0.71 for the population rule. Plant counts add
   +0.001 [-0.01, +0.01] on Soviet towns.
-- **The map.** Because of that transfer result the selection rule chose population as the score. The map follows people far less than in proportion: the
-  1956 score moves only 6.9-fold over a 620-fold range of population, so a cell's probability also depends on how many
-  towns it holds. Delivered warheads drive most of its intervals, and those rest on cited inventories and on theatre shares with no source. Modern scenarios use Natural Earth's map-label towns and are
+- **The map.** Because of that transfer result the selection rule chose population as the score. On the 1956 towns the score moves only
+  6.9-fold over a 620-fold range of population, so a cell's probability also depends on how many
+  towns it holds. In every scenario the stockpile draws, more than the model's, make the width of its intervals, and those rest on cited inventories and on theatre shares with no source. The 1965 map has no United Kingdom: its only census table came through a path robots.txt disallows and was withdrawn. Modern scenarios use Natural Earth's map-label towns and are
   extrapolation: a classifier told them from the training towns at ROC-AUC 0.97 on ten features, where 0.5 would mean no shift, with
   18% outside the training's 1st-99th percentile on the one feature the score reads, and no modern label exists to test them.
 <!-- end of results -->

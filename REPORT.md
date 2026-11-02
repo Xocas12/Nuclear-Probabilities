@@ -11,13 +11,20 @@ base rate of 0.49, the others together 0.07. On a list that does not claim to be
 list is unlabeled, not a negative, so PR-AUC there understates true precision: read such figures against each other and
 the base rate, not as how often a model is right. Intervals are 95%. "By blocks" resamples whole 300 km squares of towns;
 the other interval resamples single towns. Verdicts use the unrounded bounds; a bound that would print as 0.00 is shown to
-three decimals with its sign. Where the positives lie in fewer than 5 blocks, resampling blocks measures nothing, and the block interval is shown as "n/a" with the count. "Document" is the general word here: most of the lists are studies, exercises, lessons and a war
+three decimals with its sign, an exact zero as 0.00, and a comparison whose scores never differ as "constant". Where the positives lie in fewer than 5 blocks, resampling blocks measures nothing, and the block interval is shown as "n/a" with the count. That rule was set in the ninth amendment after the review of 1e98ebc had shown the row it changes (7 positives in 2 blocks, verdict "neither" before and after), so it is not blind. "Document" is the general word here: most of the lists are studies, exercises, lessons and a war
 game, and few are war plans (see "How much evidence there is, by side"). "Leave one document out" is the holdout `configs/protocol.yaml` calls leave one plan out.
 
 **Terms.** SAC is the US Strategic Air Command, whose 1956 study supplies the largest list. COW is the Correlates of War project. "All permitted"
 means every feature the protocol allows a model to read as of a document's date: population, administration, geography, the one
 industry column, transport, military sites, defences and national power (`data/FEATURES_CLASSIFIER.md`). The **population rule** is a baseline: a
-logistic regression on log population. The **state gate** is the rule deciding whether a state gets its own model. The **selection rule** decides which model is chosen.
+logistic regression on log population. The **state gate** is the rule deciding whether a state gets its own model. The **selection rule** decides which model is chosen. A
+**sector box** (`data/curated/labels/SECTORS.yaml`) is the area a list covers: a town outside it is not a negative of that list.
+**Burza** is the Polish front exercise of 1961 whose list is `wp_1961_burza`. A **theatre share** is the stated share of an attacker's
+inventory assumed to be aimed at a scenario's countries. A **folded** ROC-AUC is the larger of the ROC-AUC and one minus it, so that
+0.5 means no separation whichever way a feature points. **Pick-freeze** is the estimator of a first-order Sobol index: the share of a
+quantity's variance that one input explains alone, from pairs of draws sharing that input. Reviews are named by the commit they read,
+such as "the review of c840f88". "Plan" alone means a document of a type the protocol counts as a plan (war plan, target selection,
+requirements or policy study); "war plan" means that type only.
 
 ## Main result
 
@@ -70,7 +77,7 @@ read over its whole universe. Corrected link errors are listed in
 independent passes of vision-language models (Claude agents), with disagreements resolved against the page
 (`data/curated/sac1956/README.md`). A blind audit of a random 5% of rows, 743 lines, found 0 errors in the final reading (95% interval 0 to 0.51%),
 by auditors whose own error rate was 1.3%, so the audit's reading is itself uncertain. On the low-resolution Part II pages, where 270 airfield rows can be compared with a second printing, the confirmed misread
-rate was 3 in 216, well above that bound. **Links** lose entries too: 318 of SAC's 1,217 complex entries link to no town of the universe (327 of its 874 subcomplex entries; `runs/classifier/link_audit_coverage_subcomplex.csv`), and the share varies by country: China 40 of 119, North Korea 12 of 15, North Vietnam 6 of 8, Albania 3 of 6 (`runs/classifier/link_audit_coverage.csv`).
+rate was 3 in 216, well above that bound. **Links** lose entries too: 318 of SAC's 1,215 complex entries link to no town of the universe (326 of its 873 subcomplex entries; `runs/classifier/link_audit_coverage_subcomplex.csv`), and the share varies by country: China 40 of 119, North Korea 12 of 15, North Vietnam 6 of 8, Albania 3 of 6 (`runs/classifier/link_audit_coverage.csv`). These count entries, not towns: an entry whose cover name stands for a town and its closed city (Kapustin Yar and Znamensk, for example) links to both, so the linked complex entries give 2 and the subcomplex entries 0 more linked towns than entries.
 
 **Documents.** `data/curated/labels/PLANS.yaml` records each list's attacker, author, date, type and evidence
 grade. The grades: A, a primary document or its published translation read here; B, a primary document read here that names only part of the
@@ -99,11 +106,11 @@ Several are today's data standing in for the past and are flagged. Sources, lice
 
 ## Method
 
-The analysis is in `configs/protocol.yaml`, with four dated amendments, and a fifth that only adds readings,
-`configs/protocol_amendment_5.yaml`. **It is not blind.** Earlier
+The analysis is in `configs/protocol.yaml`, which holds four dated amendments, and six more amendments in their own
+files, `configs/protocol_amendment_5.yaml` (which only adds readings) to `configs/protocol_amendment_10.yaml`. **It is not blind.** Earlier
 runs read scores on SAC's spatial folds and on the small lists, and an independent review read the full results
 before the fourth amendment; that amendment records what it changed and why. A sixth, `configs/protocol_amendment_6.yaml`, records the corrections made
-after a later review, also with results already read, a seventh, `configs/protocol_amendment_7.yaml`, adds lesson rows and three link corrections on the same terms, and an eighth, `configs/protocol_amendment_8.yaml`, makes the corrections after the review of c840f88, including sector boxes whose effect that review had already shown. It was not written blind to its own final labels either: before it was committed, two quick runs (`--quick`: 3 bags, 50 resamples, from an uncommitted tree) on the final table were made: the map's printed the held-out PR-AUC of its candidate scores and every scenario's map summary, and the classifier's wrote its held-out tables to a folder that is not committed. `data/curated/labels/SECTORS.yaml` says no box was chosen by looking at a model score; for Burza that is not so, for the reason just given, and Burza's FRG and Denmark boxes are one combined extent written twice, not a box per country. That file is an input of the committed run, so its wording is corrected in `configs/protocol_amendment_9.yaml` rather than in the file. The ninth amendment changes no label, model or holdout. The last blind test is the **sealed set**, places
+after a later review, also with results already read, a seventh, `configs/protocol_amendment_7.yaml`, adds lesson rows and three link corrections on the same terms, and an eighth, `configs/protocol_amendment_8.yaml`, makes the corrections after the review of c840f88, including sector boxes whose effect that review had already shown. It was not written blind to its own final labels either: before it was committed, two quick runs (`--quick`: 3 bags, 50 resamples, from an uncommitted tree) on the final table were made: the map's printed the held-out PR-AUC of its candidate scores and every scenario's map summary, and the classifier's wrote its held-out tables to a folder that is not committed. `data/curated/labels/SECTORS.yaml` says no box was chosen by looking at a model score; for Burza that is not so, for the reason just given, and Burza's FRG and Denmark boxes are one combined extent written twice, not a box per country. Its wording was corrected in `configs/protocol_amendment_9.yaml`, and in the file itself with the tenth amendment. The ninth amendment changes no label, model or holdout. The tenth, `configs/protocol_amendment_10.yaml`, withdraws Great Britain's 1981 districts, fetched through a path robots.txt disallows, and with them Square Leg 1980 and the UK of the 1965 map; it corrects how label files describe themselves, changes no other label, and was followed by a full refit. That refit, at 930a164, with its main step run again at a776225 after a quoting fault in `data/sources.yaml` was fixed, wrote every classifier table with the same content as the run of 110174e before it, except that `lists.csv` lost Square Leg's rows; the link audit was rerun after it began counting SAC entries rather than link rows. The last blind test is the **sealed set**, places
 held back from every model in `data/curated/splits/sealed_blocks.csv` and scored once at the end. Of its 467 places only the 273 `never_scored`
 ones are blind: an early slice scored the other 194, 193 of them under their present id and one, Kirovsk, matched by name (`data/curated/splits/README.md`). Their labels are in the committed label files, so the seal is a procedure and not a secret. It has not been scored. The word "brief" in the protocol means the owner's
 instructions for this project, which are not in this repository.
@@ -125,10 +132,10 @@ instructions for this project, which are not in this repository.
 ### Models against baselines
 
 The selected candidate of each scope. "Trained on" is the smallest number of positives in any fit behind the row, over every grid and fold.
-"Difference" is against the baseline to its left. Rows marked "not a reading" are shown and not counted.
-**The temporal rows also change attacker:** 123 of the 124 positives dated after 1956 are on Warsaw Pact or Soviet-lesson lists, so "fit to 1956, score later" tests a US study against the other side's lists, and era and attacker cannot be told apart (`runs/classifier/link_audit_temporal.csv`).
+"Difference, country" is the model against population plus country; "Difference, rule" against the population rule. Rows marked "not a reading" are shown and not counted.
+**The temporal rows also change attacker:** 123 of the 124 positives dated after 1956 are on Warsaw Pact or Soviet-lesson lists, and the rest on lists too small to score (`us_1958_taiwan_strait` with 1), so "fit to 1956, score later" tests a US study against the other side's lists, and era and attacker cannot be told apart (`runs/classifier/link_audit_temporal.csv`).
 
-| Scope | Selected | Holdout | Lists | Positives | Trained on | Base rate | Model | Pop. + country | Difference | By blocks | Verdict | Pop. rule | Difference  |
+| Scope | Selected | Holdout | Lists | Positives | Trained on | Base rate | Model | Pop. + country | Difference, country | By blocks | Verdict | Pop. rule | Difference, rule |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | Global, all attacker documents (exercises included) | LightGBM, all permitted | Spatial blocks | all lists | 1172 | 937 | 0.44 | 0.79 | 0.76 | +0.03 [+0.02, +0.04] | [+0.01, +0.06] | gain | 0.71 | +0.08 [+0.06, +0.10] |
 | Global, all attacker documents (exercises included) | LightGBM, all permitted | Spatial blocks | lists other than SAC | 130 | 937 | 0.07 | 0.29 | 0.21 | +0.08 [+0.03, +0.13] | [-0.02, +0.13] | neither | 0.23 | +0.06 [+0.01, +0.11] |
@@ -161,12 +168,15 @@ The selected candidate of each scope. "Trained on" is the smallest number of pos
 
 Each scope's selected candidate against population plus country under spatial blocks, with columns removed.
 "None flagged" removes today's data standing in for the past. "Strict as-of" also removes the defence tables, mostly
-post-Soviet knowledge. "No national power" removes COW's values, which within pooled scopes nearly identify a document:
-one value per country and year. "No source markers" also removes defence and military columns, whose presence or
-absence shows which table a row came from. Even without those columns, the rest still tell documents apart: from the columns alone,
-with folds grouped by place, a classifier names a row's document 51% of the time on all columns,
-65% without national power, 66% with no source markers as well and 44% on population alone, against 44% for always naming the largest
-(`runs/classifier/document_identification.csv`). That removing columns raises the accuracy is not explained here; a classifier given more columns would be expected to do no worse. So this accuracy shows that the columns tell documents apart; its changes between column sets are not a measure of how much each set does so.
+post-Soviet knowledge. "No national power" removes COW's values, which take one value per country and year and so
+were suspected of marking a document. "No source markers" also removes the defence and military columns, which are
+blank or filled according to the table a row came from. The check below did not confirm either suspicion. From the
+columns alone, with folds grouped by place, a classifier names a row's document 50.6% of the time on all columns,
+64.9% without national power, 65.7% with no source markers as well and 44.1% on population alone,
+against 44.4% for always naming the largest document; population alone does worse than that
+(`runs/classifier/document_identification.csv`). Removing the suspected columns made identification easier, not harder, which a
+classifier given more columns should not show; this is not explained. So the accuracy shows that the remaining columns tell documents apart, and
+the changes between column sets do not measure how much any set does so.
 
 | scope | model | variant | features | a_pr_auc | b_pr_auc | difference | by_blocks |
 |---|---|---|---|---|---|---|---|
@@ -223,15 +233,15 @@ largely today's data.
 | all countries | transport | base | 0.81 | 0.83 | +0.02 [+0.01, +0.03] | [+0.01, +0.04] | gain |
 | all countries | military | base | 0.81 | 0.83 | +0.01 [+0.01, +0.02] | [+0.01, +0.02] | gain |
 | all countries | defence | base | 0.81 | 0.82 | +0.01 [+0.004, +0.01] | [+0.002, +0.02] | gain |
-| all countries | national_power | base | 0.81 | 0.81 | +0.002 [-0.000, +0.004] | [-0.001, +0.01] | neither |
-| USSR | national_power over population | population only | 0.77 | 0.77 | +0.000 [+0.000, +0.000] | [+0.000, +0.000] | neither |
+| all countries | national_power | base | 0.81 | 0.81 | +0.002 [0.00, +0.004] | [-0.001, +0.01] | neither |
+| USSR | national_power over population | population only | 0.77 | 0.77 | none: constant on these rows | none | not a reading |
 | USSR | administration | base | 0.77 | 0.78 | +0.01 [+0.004, +0.02] | [+0.003, +0.02] | gain |
 | USSR | geography | base | 0.77 | 0.78 | +0.01 [+0.003, +0.03] | [+0.004, +0.03] | gain |
 | USSR | industry | base | 0.77 | 0.77 | +0.003 [-0.001, +0.01] | [-0.002, +0.01] | neither |
 | USSR | transport | base | 0.77 | 0.81 | +0.04 [+0.03, +0.06] | [+0.03, +0.06] | gain |
 | USSR | military | base | 0.77 | 0.79 | +0.02 [+0.01, +0.03] | [+0.01, +0.03] | gain |
 | USSR | defence | base | 0.77 | 0.78 | +0.01 [+0.004, +0.03] | [+0.002, +0.03] | gain |
-| USSR | national_power | base | 0.77 | 0.77 | +0.000 [+0.000, +0.000] | [+0.000, +0.000] | neither |
+| USSR | national_power | base | 0.77 | 0.77 | none: constant on these rows | none | not a reading |
 
 ### Economic and political data
 
@@ -253,43 +263,43 @@ knew, and they are matched to the town by name, so this does not show that SAC i
 
 | scope | comparison | holdout | lists | positives | train_positives | model | against | difference | by_blocks | verdict |
 |---|---|---|---|---|---|---|---|---|---|---|
-| global, all attacker documents | political over population | spatial blocks | all lists | 1172 | 937 | 0.75 | 0.71 | +0.04 [+0.03, +0.05] | [+0.018, +0.064] | gain |
-| global, all attacker documents | political over population | spatial blocks | other than SAC | 130 | 937 | 0.27 | 0.24 | +0.03 [+0.004, +0.06] | [+0.006, +0.110] | gain |
-| global, all attacker documents | economic over population | spatial blocks | all lists | 1172 | 937 | 0.76 | 0.71 | +0.05 [+0.04, +0.06] | [+0.030, +0.071] | gain |
-| global, all attacker documents | economic over population | spatial blocks | other than SAC | 130 | 937 | 0.27 | 0.24 | +0.03 [-0.01, +0.06] | [-0.010, +0.114] | neither |
-| global, all attacker documents | national power over population | spatial blocks | all lists | 1172 | 937 | 0.76 | 0.71 | +0.05 [+0.04, +0.06] | [+0.028, +0.067] | gain |
-| global, all attacker documents | national power over population | spatial blocks | other than SAC | 130 | 937 | 0.25 | 0.24 | +0.01 [-0.02, +0.04] | [-0.020, +0.100] | neither |
-| global, all attacker documents | all three over population | spatial blocks | all lists | 1172 | 937 | 0.76 | 0.71 | +0.06 [+0.04, +0.07] | [+0.030, +0.074] | gain |
-| global, all attacker documents | all three over population | spatial blocks | other than SAC | 130 | 937 | 0.28 | 0.24 | +0.04 [+0.01, +0.07] | [+0.006, +0.133] | gain |
+| global, all attacker documents | political over population | spatial blocks | all lists | 1172 | 937 | 0.75 | 0.71 | +0.04 [+0.03, +0.05] | [+0.02, +0.06] | gain |
+| global, all attacker documents | political over population | spatial blocks | other than SAC | 130 | 937 | 0.27 | 0.24 | +0.03 [+0.004, +0.06] | [+0.01, +0.11] | gain |
+| global, all attacker documents | economic over population | spatial blocks | all lists | 1172 | 937 | 0.76 | 0.71 | +0.05 [+0.04, +0.06] | [+0.03, +0.07] | gain |
+| global, all attacker documents | economic over population | spatial blocks | other than SAC | 130 | 937 | 0.27 | 0.24 | +0.03 [-0.01, +0.06] | [-0.01, +0.11] | neither |
+| global, all attacker documents | national power over population | spatial blocks | all lists | 1172 | 937 | 0.76 | 0.71 | +0.05 [+0.04, +0.06] | [+0.03, +0.07] | gain |
+| global, all attacker documents | national power over population | spatial blocks | other than SAC | 130 | 937 | 0.25 | 0.24 | +0.01 [-0.02, +0.04] | [-0.02, +0.10] | neither |
+| global, all attacker documents | all three over population | spatial blocks | all lists | 1172 | 937 | 0.76 | 0.71 | +0.06 [+0.04, +0.07] | [+0.03, +0.07] | gain |
+| global, all attacker documents | all three over population | spatial blocks | other than SAC | 130 | 937 | 0.28 | 0.24 | +0.04 [+0.01, +0.07] | [+0.01, +0.13] | gain |
 | global, all attacker documents | political over primary | spatial blocks | all lists | 1172 | 937 | 0.79 | 0.79 | +0.001 [-0.002, +0.004] | [-0.002, +0.004] | neither |
-| global, all attacker documents | political over primary | spatial blocks | other than SAC | 130 | 937 | 0.28 | 0.29 | -0.003 [-0.02, +0.02] | [-0.024, +0.026] | neither |
+| global, all attacker documents | political over primary | spatial blocks | other than SAC | 130 | 937 | 0.28 | 0.29 | -0.003 [-0.02, +0.02] | [-0.02, +0.03] | neither |
 | global, all attacker documents | economic over primary | spatial blocks | all lists | 1172 | 937 | 0.79 | 0.79 | +0.001 [-0.001, +0.002] | [-0.001, +0.003] | neither |
-| global, all attacker documents | economic over primary | spatial blocks | other than SAC | 130 | 937 | 0.29 | 0.29 | +0.004 [-0.01, +0.02] | [-0.011, +0.015] | neither |
-| global, all attacker documents | political over population | leave one document out | all lists | 1172 | 129 | 0.66 | 0.64 | +0.02 [+0.01, +0.04] | [-0.002, +0.051] | neither |
-| global, all attacker documents | political over population | leave one document out | other than SAC | 130 | 1061 | 0.25 | 0.24 | +0.02 [-0.03, +0.05] | [-0.025, +0.102] | neither |
-| global, all attacker documents | economic over population | leave one document out | all lists | 1172 | 129 | 0.66 | 0.64 | +0.03 [+0.01, +0.04] | [+0.004, +0.052] | gain |
-| global, all attacker documents | economic over population | leave one document out | other than SAC | 130 | 1061 | 0.24 | 0.24 | +0.004 [-0.03, +0.03] | [-0.027, +0.067] | neither |
-| global, all attacker documents | national power over population | leave one document out | all lists | 1172 | 129 | 0.58 | 0.64 | -0.06 [-0.08, -0.04] | [-0.087, -0.021] | loss |
-| global, all attacker documents | national power over population | leave one document out | other than SAC | 130 | 1061 | 0.21 | 0.24 | -0.02 [-0.06, +0.02] | [-0.060, +0.037] | neither |
-| global, all attacker documents | all three over population | leave one document out | all lists | 1172 | 129 | 0.64 | 0.64 | +0.01 [-0.01, +0.02] | [-0.025, +0.047] | neither |
-| global, all attacker documents | all three over population | leave one document out | other than SAC | 130 | 1061 | 0.24 | 0.24 | +0.004 [-0.03, +0.04] | [-0.021, +0.062] | neither |
-| global, all attacker documents | political over primary | leave one document out | all lists | 1172 | 129 | 0.58 | 0.58 | -0.000 [-0.004, +0.003] | [-0.005, +0.003] | neither |
-| global, all attacker documents | political over primary | leave one document out | other than SAC | 130 | 1061 | 0.24 | 0.25 | -0.02 [-0.05, +0.01] | [-0.045, +0.020] | neither |
-| global, all attacker documents | economic over primary | leave one document out | all lists | 1172 | 129 | 0.66 | 0.58 | +0.08 [+0.07, +0.09] | [+0.064, +0.099] | gain |
-| global, all attacker documents | economic over primary | leave one document out | other than SAC | 130 | 1061 | 0.25 | 0.25 | -0.01 [-0.02, +0.01] | [-0.031, +0.014] | neither |
-| Warsaw Pact, pooled, exercise-based | political over population | spatial blocks | all lists | 123 | 69 | 0.21 | 0.21 | +0.001 [-0.01, +0.01] | [-0.028, +0.014] | neither |
-| Warsaw Pact, pooled, exercise-based | economic over population | spatial blocks | all lists | 123 | 69 | 0.21 | 0.21 | +0.004 [-0.02, +0.03] | [-0.060, +0.044] | neither |
-| Warsaw Pact, pooled, exercise-based | national power over population | spatial blocks | all lists | 123 | 69 | 0.23 | 0.21 | +0.02 [-0.02, +0.05] | [-0.033, +0.087] | neither |
-| Warsaw Pact, pooled, exercise-based | all three over population | spatial blocks | all lists | 123 | 69 | 0.22 | 0.21 | +0.02 [-0.02, +0.04] | [-0.038, +0.064] | neither |
+| global, all attacker documents | economic over primary | spatial blocks | other than SAC | 130 | 937 | 0.29 | 0.29 | +0.004 [-0.01, +0.02] | [-0.01, +0.01] | neither |
+| global, all attacker documents | political over population | leave one document out | all lists | 1172 | 129 | 0.66 | 0.64 | +0.02 [+0.01, +0.04] | [-0.002, +0.05] | neither |
+| global, all attacker documents | political over population | leave one document out | other than SAC | 130 | 1061 | 0.25 | 0.24 | +0.02 [-0.03, +0.05] | [-0.03, +0.10] | neither |
+| global, all attacker documents | economic over population | leave one document out | all lists | 1172 | 129 | 0.66 | 0.64 | +0.03 [+0.01, +0.04] | [+0.004, +0.05] | gain |
+| global, all attacker documents | economic over population | leave one document out | other than SAC | 130 | 1061 | 0.24 | 0.24 | +0.004 [-0.03, +0.03] | [-0.03, +0.07] | neither |
+| global, all attacker documents | national power over population | leave one document out | all lists | 1172 | 129 | 0.58 | 0.64 | -0.06 [-0.08, -0.04] | [-0.09, -0.02] | loss |
+| global, all attacker documents | national power over population | leave one document out | other than SAC | 130 | 1061 | 0.21 | 0.24 | -0.02 [-0.06, +0.02] | [-0.06, +0.04] | neither |
+| global, all attacker documents | all three over population | leave one document out | all lists | 1172 | 129 | 0.64 | 0.64 | +0.01 [-0.01, +0.02] | [-0.03, +0.05] | neither |
+| global, all attacker documents | all three over population | leave one document out | other than SAC | 130 | 1061 | 0.24 | 0.24 | +0.004 [-0.03, +0.04] | [-0.02, +0.06] | neither |
+| global, all attacker documents | political over primary | leave one document out | all lists | 1172 | 129 | 0.58 | 0.58 | -0.000 [-0.004, +0.003] | [-0.01, +0.003] | neither |
+| global, all attacker documents | political over primary | leave one document out | other than SAC | 130 | 1061 | 0.24 | 0.25 | -0.02 [-0.05, +0.01] | [-0.04, +0.02] | neither |
+| global, all attacker documents | economic over primary | leave one document out | all lists | 1172 | 129 | 0.66 | 0.58 | +0.08 [+0.07, +0.09] | [+0.06, +0.10] | gain |
+| global, all attacker documents | economic over primary | leave one document out | other than SAC | 130 | 1061 | 0.25 | 0.25 | -0.01 [-0.02, +0.01] | [-0.03, +0.01] | neither |
+| Warsaw Pact, pooled, exercise-based | political over population | spatial blocks | all lists | 123 | 69 | 0.21 | 0.21 | +0.001 [-0.01, +0.01] | [-0.03, +0.01] | neither |
+| Warsaw Pact, pooled, exercise-based | economic over population | spatial blocks | all lists | 123 | 69 | 0.21 | 0.21 | +0.004 [-0.02, +0.03] | [-0.06, +0.04] | neither |
+| Warsaw Pact, pooled, exercise-based | national power over population | spatial blocks | all lists | 123 | 69 | 0.23 | 0.21 | +0.02 [-0.02, +0.05] | [-0.03, +0.09] | neither |
+| Warsaw Pact, pooled, exercise-based | all three over population | spatial blocks | all lists | 123 | 69 | 0.22 | 0.21 | +0.02 [-0.02, +0.04] | [-0.04, +0.06] | neither |
 | Warsaw Pact, pooled, exercise-based | political over primary | spatial blocks | all lists | 123 | 69 | 0.28 | 0.28 | +0.001 [-0.001, +0.004] | [-0.000, +0.004] | neither |
-| Warsaw Pact, pooled, exercise-based | economic over primary | spatial blocks | all lists | 123 | 69 | 0.27 | 0.28 | -0.01 [-0.03, +0.01] | [-0.035, +0.016] | neither |
-| Warsaw Pact, pooled, exercise-based | political over population | leave one document out | all lists | 123 | 12 | 0.20 | 0.19 | +0.005 [-0.001, +0.01] | [-0.005, +0.008] | not a reading |
-| Warsaw Pact, pooled, exercise-based | economic over population | leave one document out | all lists | 123 | 12 | 0.19 | 0.19 | -0.002 [-0.02, +0.02] | [-0.022, +0.018] | not a reading |
-| Warsaw Pact, pooled, exercise-based | national power over population | leave one document out | all lists | 123 | 12 | 0.20 | 0.19 | +0.001 [-0.02, +0.02] | [-0.019, +0.017] | not a reading |
-| Warsaw Pact, pooled, exercise-based | all three over population | leave one document out | all lists | 123 | 12 | 0.19 | 0.19 | -0.001 [-0.02, +0.02] | [-0.022, +0.017] | not a reading |
-| Warsaw Pact, pooled, exercise-based | political over primary | leave one document out | all lists | 123 | 12 | 0.19 | 0.19 | -0.002 [-0.01, +0.000] | [-0.009, +0.002] | not a reading |
-| Warsaw Pact, pooled, exercise-based | economic over primary | leave one document out | all lists | 123 | 12 | 0.19 | 0.19 | -0.004 [-0.01, +0.01] | [-0.007, +0.018] | not a reading |
-| SAC 1956, Soviet towns | defence industry over population | spatial blocks | all lists | 566 | 452 | 0.77 | 0.77 | +0.001 [-0.01, +0.01] | [-0.006, +0.007] | neither |
+| Warsaw Pact, pooled, exercise-based | economic over primary | spatial blocks | all lists | 123 | 69 | 0.27 | 0.28 | -0.01 [-0.03, +0.01] | [-0.03, +0.02] | neither |
+| Warsaw Pact, pooled, exercise-based | political over population | leave one document out | all lists | 123 | 12 | 0.20 | 0.19 | +0.005 [-0.001, +0.01] | [-0.005, +0.01] | not a reading |
+| Warsaw Pact, pooled, exercise-based | economic over population | leave one document out | all lists | 123 | 12 | 0.19 | 0.19 | -0.002 [-0.02, +0.02] | [-0.02, +0.02] | not a reading |
+| Warsaw Pact, pooled, exercise-based | national power over population | leave one document out | all lists | 123 | 12 | 0.20 | 0.19 | +0.001 [-0.02, +0.02] | [-0.02, +0.02] | not a reading |
+| Warsaw Pact, pooled, exercise-based | all three over population | leave one document out | all lists | 123 | 12 | 0.19 | 0.19 | -0.001 [-0.02, +0.02] | [-0.02, +0.02] | not a reading |
+| Warsaw Pact, pooled, exercise-based | political over primary | leave one document out | all lists | 123 | 12 | 0.19 | 0.19 | -0.002 [-0.01, +0.000] | [-0.01, +0.002] | not a reading |
+| Warsaw Pact, pooled, exercise-based | economic over primary | leave one document out | all lists | 123 | 12 | 0.19 | 0.19 | -0.004 [-0.01, +0.01] | [-0.01, +0.02] | not a reading |
+| SAC 1956, Soviet towns | defence industry over population | spatial blocks | all lists | 566 | 452 | 0.77 | 0.77 | +0.001 [-0.01, +0.01] | [-0.01, +0.01] | neither |
 
 ### Defences
 
@@ -352,14 +362,14 @@ large towns to be hit too.
 | plan_id | doc_type | towns | positives | base_rate | population rule | LightGBM, all permitted |
 |---|---|---|---|---|---|---|
 | cd_1955_operation_alert_full | civil_defence | 1262 | 51 | 0.04 | 0.70 | 0.46 |
-| cd_1980_square_leg | civil_defence | 476 | 73 | 0.15 | 0.38 | 0.37 |
 | nato_1962_pl_exercise_mirror | mirror | 126 | 27 | 0.21 | 0.44 | 0.51 |
 | nato_1965_hu_wargame_mirror | mirror | 120 | 13 | 0.11 | 0.41 | 0.38 |
 
 ### All metrics
 
 The protocol's secondary metrics, as positive-weighted means over scored lists. Brier and log-loss are on raw scores, which
-are not probabilities where a list is incomplete. Precision is at k equal to the list's positives.
+are not probabilities where a list is incomplete. Precision is at k equal to the list's positives. A list is scored only with 2
+or more positives, so the positives here leave out `us_1958_taiwan_strait` with 1 that the table of models against baselines counts.
 
 | scope | holdout | model | positives | pr_auc | roc_auc | brier | log_loss | precision_at_k | base_rate |
 |---|---|---|---|---|---|---|---|---|---|
@@ -446,22 +456,15 @@ probability equal to the town's share of the scenario's total score, and an area
 1 - (1 - share)^warheads. Nothing is optimised, and no count of weapons by area is computed or written. One interceptor
 force is drawn once and shared among the attackers it faces. The modern universe is Natural Earth's populated places: a
 map-label set of 7,342 places, not a census, thinner in some countries than others, of which 6,091 are kept:
-towns with 10,000 or more people, without France's territories outside Europe (`runs/probmap/modern_universe.csv`). The 1965 scenario's UK rows carry 1981 populations, the
-only UK table held; its other towns carry those of about 1961.
+towns with 10,000 or more people, without France's territories outside Europe (`runs/probmap/modern_universe.csv`). The 1965 scenario's towns carry populations of about 1961.
 
-**British units.** Great Britain's rows are 1981 local government districts, not towns (`data/curated/gazetteer/towns_uk_1981.md`). A district is
-often a town and its countryside, and in the conurbations one city is cut into several. Since warheads are shared out per row, the
-count of rows moves the map. Greater London's 32 boroughs therefore count as one unit; every other district stays a row. The same
-scenario read three ways (`runs/probmap/unit_sensitivity.csv`):
-
-| reading | uk_units | uk_share_of_warheads | uk_cells | uk_cells_over_half_at_median | uk_mean_p_median | all_cells_mean_p_median |
-|---|---|---|---|---|---|---|
-| every district one unit, as tabled | 476 | 0.34 | 131 | 102 | 0.73 | 0.68 |
-| Greater London one unit (the map) | 445 | 0.32 | 131 | 103 | 0.74 | 0.69 |
-| Greater London and the six metropolitan counties one unit each | 415 | 0.30 | 131 | 105 | 0.74 | 0.70 |
-
-No reading is right: merging lowers the share of a conurbation because the score moves little with population, and leaving it cut up raises it.
-The other countries' rows are municipalities, which have the same fault in smaller measure.
+**No United Kingdom in 1965.** The only UK table held, Great Britain's 1981 districts, came through a path of
+`www.nomisweb.co.uk` that robots.txt disallows, and was withdrawn (`configs/protocol_amendment_10.yaml`). So the
+1965 map covers Denmark, the FRG, the Netherlands, Belgium and Italy, and its unsourced theatre share falls on them
+alone, so its continental cells read higher than they would if the UK were among the targets. The reading of British
+units counted three ways, made before the withdrawal, was withdrawn with them and is no result.
+Warheads are shared out per row, so how a country's towns are cut into rows also moves the map: the rows are municipalities,
+and how much that matters was not measured.
 
 **Score.** The selection rule in `configs/protocol.yaml` selected **population rule**, by highest PR-AUC on a left-out document
 (0.71). The candidates use only features that exist in every era without any present-day
@@ -481,22 +484,22 @@ The population rule won, so **the map's shares are read from town population and
 **What that score does.** On the 1956 towns population runs over a 620-fold range and the median score over a
 6.9-fold range, and a town's share of warheads is its share of the score. So a large town gets only a few times the
 warheads of a small one, and a cell's probability depends on how many towns it holds as well as on how many people
-live there. Across 1956 cells it correlates 0.52 with the count of towns and 0.94 with log people
-(`runs/probmap/score_spread.csv`, every scenario). So the map follows people on a log scale, far less than in proportion.
+live there. Across 1956 cells the probability correlates 0.52 with the count of towns and 0.94 with log people.
+In 5 of 7 scenarios it correlates more with log people than with the count of towns; in `us_1950_stock_on_bloc`, `modern_india_pakistan` it correlates more with the count of towns (`runs/probmap/score_spread.csv`).
 
 **Scenarios.** Intervals are the 5th to 95th percentile over 200 joint draws of model (block resample, one
 bag) and stockpile. They hold fixed the allocation rule, who fires on whom and the list of towns, so they are narrower than
 what is actually unknown. "Mean width" is the mean over cells of that interval; the two columns before it hold the
 stockpile at its median, then the model at its median. Cells over one half are counted within each draw. Cells saturate because warheads can outnumber cells while not outnumbering towns:
-`ussr_1965_on_west` has 1051 median delivered warheads, 2288 towns and 486 cells, and a cell of several towns passes one half
+`ussr_1965_on_west` has 1051 median delivered warheads, 1843 towns and 355 cells, and a cell of several towns passes one half
 before each of its towns would. Where most cells are over one half the map says little beyond that. Sealed towns are not scored, so a 1956 cell holding only sealed towns is absent from the map.
-Delivered warheads, not the model, drive most of the width, because the population rule has one feature. "Delivered" in the tables below is before one more step: towns of the sealed set draw no warheads, so the 1956 map uses the share of people living in scored towns, 0.82, of what is delivered: 1377 delivered at the median and 1128 on scored towns in `us_1956_on_bloc`. Part of the spread of delivered warheads comes from cited inventories and part from the unsourced theatre shares. The theatre share alone accounts for 9% (India, `modern_india_pakistan`) to 96% (France, `modern_us_russia`) of the variance of an attacker's delivered warheads: a first-order Sobol index by the pick-freeze estimator on 20,000 draws, with standard errors up to 0.007 (`runs/probmap/share_variance.csv`). The columns `delivered_low_share_fixed` and `delivered_high_share_fixed` are the interval with every share held at its mode, from separate draws; holding a share at its mode also moves the centre, so they are not a split of the interval's width.
+In all 7 scenarios the mean width with the model held at its median is larger than with the stockpile held at its median: the stockpile draws, not the model, make most of the width. "Delivered" in the tables below is before one more step: towns of the sealed set draw no warheads, so the 1956 map uses the share of people living in scored towns, 0.82, of what is delivered: 1377 delivered at the median and 1128 on scored towns in `us_1956_on_bloc`. Part of the spread of delivered warheads comes from cited inventories and part from the unsourced theatre shares. The theatre share alone accounts for 9% (India, `modern_india_pakistan`) to 96% (France, `modern_us_russia`) of the variance of an attacker's delivered warheads: a first-order Sobol index by the pick-freeze estimator on 20,000 draws, with standard errors up to 0.007 (`runs/probmap/share_variance.csv`). The columns `delivered_low_share_fixed` and `delivered_high_share_fixed` are the interval with every share held at its mode, from separate draws; holding a share at its mode also moves the centre, so they are not a split of the interval's width.
 
 | scenario | era | cell_deg | towns | cells | cells_over_half | mean_width_model_only | mean_width_stockpile_only | mean_interval_width |
 |---|---|---|---|---|---|---|---|---|
 | us_1956_on_bloc | historical | 0.50 | 2145 | 1370 | 597 [441, 744] | 0.04 | 0.13 | 0.14 |
 | us_1950_stock_on_bloc | historical | 0.50 | 2145 | 1370 | 6 [3, 9] | 0.01 | 0.02 | 0.02 |
-| ussr_1965_on_west | historical | 0.50 | 2288 | 486 | 361 [226, 437] | 0.03 | 0.34 | 0.34 |
+| ussr_1965_on_west | historical | 0.50 | 1843 | 355 | 290 [205, 333] | 0.02 | 0.31 | 0.31 |
 | modern_us_russia | modern | 1.00 | 1630 | 1170 | 1117 [1036, 1149] | 0.03 | 0.15 | 0.15 |
 | modern_us_russia_half | modern | 1.00 | 1630 | 1170 | 912 [660, 1057] | 0.03 | 0.22 | 0.22 |
 | modern_us_china | modern | 1.00 | 1008 | 715 | 356 [283, 449] | 0.03 | 0.34 | 0.34 |
@@ -525,8 +528,9 @@ shares come from SIPRI and NRDC (`data/curated/stockpiles/delivery_mix.csv`), on
 NRDC has all on bombers, 330 loaded, more than the 299 OWID gives for the whole stockpile: the sources conflict, and the
 scenario's range runs between them. A share measured on strategic or deployed forces is applied to the whole inventory range, so a
 Soviet row of 1965 spreads NRDC's strategic shares over a stockpile that also holds tactical weapons with no known split.
-Reliability has one range for every modern delivery, because no source separates them, so the split changes the map very
-little. These are totals for a whole force. No delivery is assigned to any area.
+Reliability has one range for every modern delivery, because no source separates them. Each delivery draws from that
+range separately, so the split leaves the expected delivered total unchanged and changes only how much the draws average
+out. These are totals for a whole force. No delivery is assigned to any area.
 
 | scenario | reading | attacker | stock_year | delivery | available_low | available_median | available_high | delivered_low | delivered_median | delivered_high |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -569,9 +573,9 @@ little. These are totals for a whole force. No delivery is assigned to any area.
 delivered warhead with what one study listed, so it can show agreement in order and not that the probabilities are right.
 The `us_1956_on_bloc` scenario, with 1128 warheads
 on scored towns, against whether SAC listed a town in each 0.5-degree cell. 796 of 1370 cells hold a listed town, a
-base rate of 0.58. Scored by models that never saw the cell's block: PR-AUC 0.84, ROC-AUC 0.79,
-Brier 0.197 against 0.243 for the base rate. By models with no SAC row at all: PR-AUC 0.84, ROC-AUC 0.80,
-Brier 0.204. That second reading looks like transfer, and it is not evidence of it: with a one-feature monotone score,
+base rate of 0.58. Scored by models that never saw the cell's block: PR-AUC 0.839, ROC-AUC 0.793,
+Brier 0.197 against 0.243 for the base rate. By models with no SAC row at all: PR-AUC 0.845, ROC-AUC 0.795,
+Brier 0.204 (a higher PR-AUC than with SAC's rows; no interval was computed for the difference). That second reading looks like transfer, and it is not evidence of it: with a one-feature monotone score,
 the order of towns barely depends on which rows trained it, so agreement is largely built in. Across cells the map's mean
 probability is 0.48 and the share listed 0.58, beside a mean interval width of 0.14 for this scenario. The reliability table:
 
@@ -593,8 +597,7 @@ probability is 0.48 and the share listed 0.58, beside a mean interval width of 0
 0.89. 18% of modern towns lie outside the training's 1st-99th percentile on `log_pop`, the worst feature.
 There are no modern labels, so performance on modern towns cannot be measured at all. Every modern row is an
 **extrapolation**: it applies lists of 1945-1977 to towns of today, on a selective set of named places. The ROC-AUC is measured on all
-10 portable features, of which the map's score uses one, `log_pop`: 18% of modern towns lie outside the training's 1st-99th
-percentile on it. Feature by feature: on its own, `log_pop` separates the two sets at a folded ROC-AUC of 0.87
+10 portable features, of which the map's score uses one, `log_pop`, the worst feature named above. Feature by feature: on its own, `log_pop` separates the two sets at a folded ROC-AUC of 0.87
 (0.5 is no separation); the single features run from 0.50 (`pop_rank_pct`) to 0.87 (`log_pop`), so the one feature the score reads is the one that separates the sets most.
 With one feature left out, the classifier's ROC-AUC stays between 0.92 (without `log_pop`) and 0.97: leaving out `log_pop` lowers it by 0.05, the most of any feature. That measures the shift; it does not show the score valid there.
 
@@ -639,7 +642,7 @@ With one feature left out, the classifier's ROC-AUC stays between 0.92 (without 
 - **That SAC's list is free of error.** See how it was transcribed, under Data, and `data/ISSUES.md` for what has been corrected.
 - **A state's own model.** Each state is refused. A model of Warsaw Pact war plans in particular has no basis: 6 linked positives, none from a plan read at source. The pooled model is exercise-based.
 - **Prediction for a plan not in the data.** See the main result. The map's score carries this limit into every cell.
-- **Causes.** Population, industry and transport are correlated, and these are associations in lists.
+- **Causes.** These are associations between a town's traits and its presence on a list. No design here separates one trait's effect from another's or from the planners' reasons.
 - **What planners knew.** Features record what existed according to later sources.
 - **Any statement about a present-day plan.** Modern map rows extrapolate from lists of 1945 to 1977.
 
