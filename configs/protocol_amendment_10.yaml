@@ -22,6 +22,7 @@ changes:
     said. The row-level provenance tag of the two mirror lists is now `mirror` and of the two staff-academy lessons
     `training`, as in PLANS.yaml; SCHEMA.md says the tag is coarser than PLANS.yaml's document type, which governs.
     SEVERO KURILSK's blank longitude in us_1956_sac_part2_complexes.csv is explained in its notes.
+    data/sources.yaml now says that the held NAPB-90 file is archive.org's landing page, not the scan.
   sectors_wording: data/curated/labels/SECTORS.yaml's header now says what the ninth amendment said of it.
 unchanged: No other label, feature, model, gate threshold, selection rule, holdout, seed or scenario changes.
   Square Leg was never trained on, so no other list's scores should move; the rerun's diff against the

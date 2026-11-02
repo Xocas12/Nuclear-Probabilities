@@ -1049,6 +1049,11 @@ sources:
   retrieved: '2026-10-03'
   sha256: 3e884fd89adc43025d2c19f51e52f1a55b52402605ad267588de06113b836bb0
   volatile: archive.org landing page; the scan itself is listed in the card
+  held: 'the scan is not held. The file at path is the item's HTML landing page (sha256 above, of the copy of
+    2026-10-03), whatever its name says. The scan, "Nuclear Attack planning Base 1990 Final Report 504 pg.pdf"
+    (archive.org sha1 60eeeb0f8a1e685283d921b26d33aa49fdcd4721, 14,052,290 bytes), answered HTTP 500 on
+    2026-11-02. The transcription in data/curated/napb90/ was made from it and cannot be rechecked here; it
+    feeds only the us1985 check, no result.'
 - id: geonames_dk
   url: https://download.geonames.org/export/dump/DK.zip
   path: geonames/DK.zip
