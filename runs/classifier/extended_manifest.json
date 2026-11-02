@@ -1,10 +1,10 @@
 {
-  "created": "2026-11-01T22:46:01+00:00",
-  "git_commit": "5a0d5178fc3ba34435a9cbf6f71f498a320c8b83",
+  "created": "2026-11-02T02:50:26+00:00",
+  "git_commit": "2f361d8bfd2d3b21aa278224e9bc18b069cba7af",
   "git_dirty": false,
   "amendment_sha256": "bd422f3b69feb4fe0dbcf54101e00bba3c3758dc3c5bf976ba066bb24ee96f82",
-  "table_sha256": "0a0f0d284cb97a4953364145301b2b8dbffeabbe2d529fb0943517505ec3e783",
-  "state_years": 38,
+  "table_sha256": "3c383c2b07f78844f664443c5158e260793b71d878fb41821f878d29b8b1696f",
+  "state_years": 39,
   "state_years_missing": {
     "pol_regime": 0,
     "pol_defence_pact_usa": 0,
@@ -13,6 +13,6 @@
     "econ_log_gdp_pc": 2
   },
   "outputs": {
-    "runs/classifier/extended.csv": "6a2dc4f26875671af023c35f982117aeb77b7112e0761fd256369620deb74bb2"
+    "runs/classifier/extended.csv": "4b2d909e65ddc6125d693cfea93d15aba663bcc352166c4c7887957625b72348"
   }
 }

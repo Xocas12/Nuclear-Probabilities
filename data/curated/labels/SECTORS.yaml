@@ -88,7 +88,7 @@ sectors:
     basis: documented
     include:
       - {country: Netherlands, lat_min: 50.7, lat_max: 53.6, lon_min: 3.3, lon_max: 7.3}
-      # Belgium: north of Duisburg-Dinant; no rows, given for the record.
+      # Belgium: north of Duisburg-Dinant. Lesson 27a names Belgian targets.
       - {country: Belgium, lat_min: 49.4, lat_max: 51.6, lon_min: 2.5, lon_max: 4.91}
       - {country: Belgium, lat_min: 50.26, lat_max: 51.6, lon_min: 4.91, lon_max: 5.6}
       - {country: Belgium, lat_min: 50.70, lat_max: 51.6, lon_min: 5.6, lon_max: 6.5}

@@ -37,7 +37,7 @@ the S-25 area row (`S-25 Berkut system, Moscow area`), whose point is central Mo
   ПВО*, *Бакинский округ ПВО* (wikitext read through `action=raw`). 726 pages were saved, with at
   least 1.2 s between requests on each stream. 17 pages came back empty while two streams ran and
   were fetched again singly. The 303 distinct URLs in `source` were all opened. `robots.txt` returned 404, so no
-  rules were published. The URL in the brief, `new/pvo/`, returned 403 (no directory listing), so
+  rules were published. The URL in the owner's instructions, `new/pvo/`, returned 403 (no directory listing), so
   the crawl started from `new/pvo/pvo.htm`.
 - **Selection rule, fighter divisions and regiments.** Every page on the two lists was parsed for
   its dated `Bases` and `Subordination` lines.
@@ -77,7 +77,7 @@ the S-25 area row (`S-25 Berkut system, Moscow area`), whose point is central Mo
 ### S-25
 
 - 56 regiment positions, matching the 14 regiments of each of the four corps. Holm gives a launch
-  area for each, and that point is used. The brief allowed site rows only if a citable source gave
+  area for each, and that point is used. The instructions allowed site rows only if a citable source gave
   them; these pages do.
 - **The site codes do not match Wikipedia's split.** Holm's codes give 22 C sites and 33 E sites,
   with the 756th uncoded; en-Wikipedia gives 24 inner and 32 outer. Holm calls E-coded sites the
@@ -100,8 +100,8 @@ the S-25 area row (`S-25 Berkut system, Moscow area`), whose point is central Mo
 | sam_system | | | 1 | 56 |
 | radar | | | 15 | 25 |
 
-- **Deviation from the brief.** S-25 and radar points use Holm's coordinate where it has one (81
-  rows), because the row is a site and not a town or airfield. To follow the brief strictly, replace
+- **Deviation from the instructions.** S-25 and radar points use Holm's coordinate where it has one (81
+  rows), because the row is a site and not a town or airfield. To follow them strictly, replace
   them with the town's GeoNames point.
 - HQ rows are the town, not the HQ building or the division's airfield; the gap to Holm's point is
   in `source` where he gives one (up to 16.7 km, Komsomolsk-na-Amure).

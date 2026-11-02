@@ -1,0 +1,17 @@
+# Seventh amendment, in its own file like the fifth and sixth. Committed before the rerun it describes.
+# All primary results had been read: nothing below is blind, and the sealed set has still not been
+# scored. No selection rule, model, gate threshold or holdout changes.
+date: 2026-11-02
+reasons: Rows of two General Staff Academy lessons survived a second read of the scan, and a link audit
+  found three wrong links.
+labels:
+  added:
+    wp_1977_gsa_lessons: 25 rows of Lessons 27a and 24b (data/notes/second_read_2026-11b.md), same document
+      group su_gsa_1977, doc_type training. They add towns and Belgium to the list, and no independent plan.
+  corrected:
+    - us_1956_sac_complexes SKURATOVO no longer credits Skuratovskiy at Tula, 70 km from SAC's printed point (data/curated/sac1956/rejected_name_links.csv)
+    - cd_1980_square_leg Gatwick links to Crawley district, not a hamlet in Waverley
+    - cd_1980_square_leg "Tay Bridge / Dundee" links to Dundee, not Stalybridge
+  not_entered:
+    Mazowsze 1963 and Lesson 25a mirror rows; reasons in data/notes/second_read_2026-11b.md.
+readings_added: none

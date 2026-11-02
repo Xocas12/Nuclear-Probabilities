@@ -6,7 +6,7 @@ Search date 2026-11-01, about 10:04 to 10:36 UTC. Only what was actually opened 
 
 Eleven documents that name targets are new to the repo. 97 candidate rows follow.
 
-The largest find is not a lead from the brief. It is the rest of the CIA set of 1977 General Staff Academy lessons, which the repo had sampled through one lesson. Five more lessons give real place names for airfields, nuclear warhead depots, Pershing and Lance areas and warning posts, mostly in the FRG with some in the Netherlands. The lesson already held lists 14 airfields by number; these lessons name them.
+The largest find is not a lead from the owner's instructions. It is the rest of the CIA set of 1977 General Staff Academy lessons, which the repo had sampled through one lesson. Five more lessons give real place names for airfields, nuclear warhead depots, Pershing and Lance areas and warning posts, mostly in the FRG with some in the Netherlands. The lesson already held lists 14 airfields by number; these lessons name them.
 
 The second find is warplans.org, which hosts a large scan of the 1970 Coastal Front map and a copy of the 1979 exercise map. The 1970 scan resolves open issue 4 in `data/notes/warsaw_pact.md`: all 17 bomb symbols can now be placed, against 5 named before. The 1979 map is a real primary image, but this copy is too coarse to read its targets.
 

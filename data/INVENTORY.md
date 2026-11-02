@@ -35,11 +35,11 @@ source are in `data/notes/`. Raw downloads are in `data/raw/` (not in git).
 | `wp_1970_coastal_front_map.csv` | 4 | Poland (Coastal Front / Front Nadmorski); map plan signed by W. Jaruzelski 25 Feb 1970 | Denmark | 1970 | disputed_plan_or_exercise | 4 | 0 |
 | `wp_1975_soyuz75.csv` | 2 | Poland/USSR (Maritime Front, exercise Soyuz-75) | Netherlands | 1975 | exercise | 0 | 0 |
 | `wp_1977_gsa_front_lesson.csv` | 19 | USSR (Soviet General Staff Academy lesson, 1977: front offensive vs NATO Northern Army Group) | FRG | 1977 | exercise | 0 | 0 |
-| `wp_1977_gsa_lessons.csv` | 44 | USSR (General Staff Academy lesson) | FRG, Netherlands | 1977 | exercise | 0 | 0 |
+| `wp_1977_gsa_lessons.csv` | 69 | USSR (General Staff Academy lesson) | Belgium, FRG, Netherlands | 1977 | exercise | 0 | 0 |
 | `wp_1977_zealand.csv` | 10 | Poland (Coastal Front / Front Nadmorski), landing operation on Zealand | Denmark | 1977 | plan | 10 | 0 |
 | `wp_1979_seven_days.csv` | 9 | Warsaw Pact/USSR (as attributed by Wikipedia) | Austria, Denmark, FRG, Italy | 1979 | reconstruction | 9 | 0 |
 
-Total: 33 files, 6506 rows.
+Total: 33 files, 6531 rows.
 
 ## Data cards
 

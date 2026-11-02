@@ -1,7 +1,7 @@
 {
-  "git_commit": "5a0d5178fc3ba34435a9cbf6f71f498a320c8b83",
+  "git_commit": "2f361d8bfd2d3b21aa278224e9bc18b069cba7af",
   "git_dirty": false,
   "outputs": {
-    "runs/classifier/defence_targets.csv": "b2d16761439449b120ef645bbbf3ad83067b57c0970664e6ce23248e023a3aec"
+    "runs/classifier/defence_targets.csv": "ac16fc11e11d6ba17ba66ff5dde85755184558e9b4bfb8edc4900dfc7ef5995a"
   }
 }

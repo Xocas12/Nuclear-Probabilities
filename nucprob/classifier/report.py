@@ -699,7 +699,7 @@ named only in rows that neither designate nor reject it, such as areas "appropri
 facility in the 1963 JCS vulnerability table, is left out of that list. SAC targets link to the nearest
 town within 10 km, or up to 75 km if the name matches closely; other lists link within 15 km. A list that
 concerns one sector keeps only that sector's towns (`data/curated/labels/SECTORS.yaml`). Corrected link errors are listed in
-`configs/protocol_amendment_6.yaml`. SAC's lists, about nine positives in ten of what is trained on, were transcribed from the scan by two
+`configs/protocol_amendment_6.yaml` and `configs/protocol_amendment_7.yaml`. SAC's lists, about nine positives in ten of what is trained on, were transcribed from the scan by two
 independent passes of vision-language models (Claude agents), with disagreements resolved against the page
 (`data/curated/sac1956/README.md`). A sample of rows has been checked; the transcription has no measured error rate.
 
@@ -730,7 +730,7 @@ The analysis is in `configs/protocol.yaml`, with four dated amendments, and a fi
 `configs/protocol_amendment_5.yaml`. **It is not blind.** Earlier
 runs read scores on SAC's spatial folds and on the small lists, and an independent review read the full results
 before the fourth amendment; that amendment records what it changed and why. A sixth, `configs/protocol_amendment_6.yaml`, records the corrections made
-after a later review, also with results already read. The last blind test is the **sealed set**, places
+after a later review, also with results already read, and a seventh, `configs/protocol_amendment_7.yaml`, adds lesson rows and three link corrections on the same terms. The last blind test is the **sealed set**, places
 held back from every model in `data/curated/splits/sealed_blocks.csv` and scored once at the end. Of its 467 places only the 273 `never_scored`
 ones are blind: an early slice scored the other 194 (`data/curated/splits/README.md`). Their labels are in the committed label files, so the seal is a procedure and not a secret. {_sealed_status()} The word "brief" in the protocol means the owner's
 instructions for this project, which are not in this repository.
@@ -866,9 +866,10 @@ least one linked positive: the US's come to policy and requirements studies and 
 
 ## Not done
 
-{_sealed_not_done()}- Rows of the 1970 Coastal Front map beyond the four kept (`data/notes/soviet_search_2026-11.md`), and 96 rows from three
-  more General Staff Academy lessons and a 1963 Polish exercise, found in a further search that also found no new war plan
-  naming places (`data/notes/soviet_search_2026-11b.md`): candidates awaiting a second reader, not labels.
+{_sealed_not_done()}- Rows of the 1970 Coastal Front map beyond the four kept (`data/notes/soviet_search_2026-11.md`), and 69 mirror candidates
+  from a 1963 Polish exercise and one lesson, 65 of them map symbols with no text to quote, are not labels
+  (`data/notes/second_read_2026-11b.md`). Of the 27 lesson candidates in the same search, which found no new war plan
+  naming places, 25 passed a second read of the scan and are labels.
 """
 
 

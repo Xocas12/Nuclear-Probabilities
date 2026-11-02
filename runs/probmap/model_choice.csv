@@ -1,4 +1,4 @@
 model,lopo_pr_auc,lopo_pr_auc_without_sac,spatial_pr_auc,selected
-population rule,0.7136,0.2066,0.7083,True
-portable logistic,0.6836,0.1663,0.6829,False
-portable LightGBM,0.6633,0.1763,0.7239,False
+population rule,0.7058,0.2038,0.7004,True
+portable logistic,0.6804,0.1688,0.6789,False
+portable LightGBM,0.6540,0.1699,0.7153,False

@@ -1,12 +1,12 @@
 {
-  "created": "2026-11-01T21:03:34+00:00",
-  "git_commit": "5a0d5178fc3ba34435a9cbf6f71f498a320c8b83",
+  "created": "2026-11-02T00:18:12+00:00",
+  "git_commit": "2f361d8bfd2d3b21aa278224e9bc18b069cba7af",
   "git_dirty": false,
   "protocol_sha256": "cc14e52ef3cce2f0562ea24195872a3cfa10a30571a0e13fb5dcb130914794f8",
   "scenarios_sha256": "84b9572c8d2e2126f190b709a2c4a84617b073e5e765ef259cc995ee32b16905",
   "stockpiles_sha256": "3bf14fcf852b646261150fe895ee3c49f82b18e28dd26e948f82c77733ae5f41",
   "delivery_mix_sha256": "4cf794f52c9c99da34b94120e53daff74d6df78f74acc8aa1933d4147959424e",
-  "table_sha256": "0a0f0d284cb97a4953364145301b2b8dbffeabbe2d529fb0943517505ec3e783",
+  "table_sha256": "3c383c2b07f78844f664443c5158e260793b71d878fb41821f878d29b8b1696f",
   "draws": 200,
   "score": "population rule",
   "features": [
@@ -16,19 +16,19 @@
   "model_rule": "whichever of the population rule, portable logistic and portable LightGBM has the highest positive-weighted PR-AUC under leave one plan out, towns removed. It is one rule for every scenario, so scenarios differ only in towns and warheads.",
   "outputs": {
     "runs/probmap/by_delivery.csv": "2ca192dd7206155239fd054988f7f8cbe81df7615b5c779b7618cb8d9a86dcb7",
-    "runs/probmap/cells/modern_india_pakistan.csv.gz": "7e7675ddc3ca098ff0cc838e8054fab9d1968efca5fdc1114a3698b74ce853e3",
-    "runs/probmap/cells/modern_us_china.csv.gz": "d58139cd2635e45061c2caa219a311270a7924409ed3ed6dad8eba913a6e75c8",
-    "runs/probmap/cells/modern_us_russia.csv.gz": "1fa1fa38a9911160670f36445f0a1cb4addbda7bd5705d0c80b7c126045966fc",
-    "runs/probmap/cells/modern_us_russia_half.csv.gz": "cff71fd3cc2dab91e42e4764a1608f8f9841d77c9b902ae2c4b2e952fabded26",
-    "runs/probmap/cells/us_1950_stock_on_bloc.csv.gz": "c3cab9edfd13165083fb9498f5cce7fdbe57d0dcc34501cea0e1f247b2827cfc",
-    "runs/probmap/cells/us_1956_on_bloc.csv.gz": "2d832b97038a2f953286fd58687126549f0029adf6a6ebd0ff4b874e53622036",
-    "runs/probmap/cells/ussr_1965_on_west.csv.gz": "1d3e3a5bfc146d884bdaca92fc7a15785757b1ec4b01ffac44d76b80fdabffe1",
+    "runs/probmap/cells/modern_india_pakistan.csv.gz": "0f6e89f5efcb77d2d5cdd3518d96d99ab41e9acaf01ee987e8ba3ee8feff657c",
+    "runs/probmap/cells/modern_us_china.csv.gz": "71d274187f4aa4452ee395d4df89c626234e77d045d81ceb8d811eae0685cb20",
+    "runs/probmap/cells/modern_us_russia.csv.gz": "78622e10d381ea0490370950079fec32f197ef758a40b0b4af69d6ebf0e0f072",
+    "runs/probmap/cells/modern_us_russia_half.csv.gz": "8ff82fabfb91c8f4f519b50ac54628f29c1a009cebf2b3f82eba4fa0e0c3fa4f",
+    "runs/probmap/cells/us_1950_stock_on_bloc.csv.gz": "bfc7805beef813c24b5c4d07b7164d50fe11e48261d30c76c9cac0fdd467df62",
+    "runs/probmap/cells/us_1956_on_bloc.csv.gz": "3f287dd7216c36cf31fc2efb457721c8eb99e9d0fe281245eebf3eeaecdc41d8",
+    "runs/probmap/cells/ussr_1965_on_west.csv.gz": "a788862f9713fef5d0945c241db10d225bc2d602dce6adf7bd772a4acb636104",
     "runs/probmap/delivered.csv": "6a4402849e4b0c825fb8e62e4ba529dc13bb78d1387227f52b4ca289d9e6ea7c",
-    "runs/probmap/domain_shift.csv": "5a0bbaff7b6db4300902aa30d72be63e5792393c5da82671434262f8304384bb",
-    "runs/probmap/model_choice.csv": "5acb4e4b752689e66e58d4be4bf31289385a4ed74bb1b047c824b0da67334c6c",
-    "runs/probmap/reliability.csv": "d830288514e99565b0f9835561f35ec1c25e8a5d52110d036e5e021c30e0928f",
-    "runs/probmap/scenarios.csv": "d2aa0c9cdefd9c4a0ea4509a63dfc38e3189aa2ea7f888f33c28321fe40014ef",
-    "runs/probmap/score_spread.csv": "0454b230cbd6839dbaf5264a7b2b36e2103dd98d9ed183315f73d72c153f16a9",
-    "runs/probmap/validation.csv": "d39ec8674dbd9966010df4f916318068259eae3e0bf29ca6b2a4cf08891e6963"
+    "runs/probmap/domain_shift.csv": "6b7ff37946719282a42ed96ebd41ffa9fa30e0662672c4728cb2e2ed6593535c",
+    "runs/probmap/model_choice.csv": "8e22e389088c1ae184e1944a09edf249b7f1d0931fef148cd706ad0960d74abd",
+    "runs/probmap/reliability.csv": "c0bae31eb9b331ccf13ec28b9c3335f8c4f5d83aef5be8be467e3ec774013710",
+    "runs/probmap/scenarios.csv": "0b361c49e60433ab1d80162f8cbb256c1001af1ffb7988e3139d547715172c1b",
+    "runs/probmap/score_spread.csv": "ac80a780a63f9730ecf12498d7441b97f71b4f784a4d6a5dcef73043cc228c6d",
+    "runs/probmap/validation.csv": "9b2b3444313b65e6d33a9f7d1bbf2daeff9d50dd8378e77c9a672c6fa8e94aa7"
   }
 }

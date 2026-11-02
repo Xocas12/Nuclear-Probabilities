@@ -1,5 +1,5 @@
 columns,rows,documents,accuracy,largest_document_share
-all permitted,5812,15,0.7263,0.3691
-no national power,5812,15,0.6201,0.3691
-no source markers,5812,15,0.6800,0.3691
-population only,5812,15,0.3673,0.3691
+all permitted,5976,15,0.7033,0.3589
+no national power,5976,15,0.6394,0.3589
+no source markers,5976,15,0.6638,0.3589
+population only,5976,15,0.3576,0.3589

@@ -1,13 +1,13 @@
 comparison,measure,value,towns_a,towns_b
-training towns against modern towns,two-sample ROC-AUC,0.9688,3907,2276
-for scale: SAC 1956 towns against the other training towns,two-sample ROC-AUC,0.8793,2145,1762
-modern towns outside the 1st-99th percentile of training: log_pop,share of modern towns,0.1845,3907,2276
-modern towns outside the 1st-99th percentile of training: pop_rank_pct,share of modern towns,0.0220,3907,2276
-modern towns outside the 1st-99th percentile of training: log_pop_within_25km,share of modern towns,0.0048,3907,2276
-modern towns outside the 1st-99th percentile of training: log_pop_within_50km,share of modern towns,0.0110,3907,2276
-modern towns outside the 1st-99th percentile of training: log_pop_within_100km,share of modern towns,0.0171,3907,2276
-modern towns outside the 1st-99th percentile of training: log_km_to_100k,share of modern towns,0.0158,3907,2276
-modern towns outside the 1st-99th percentile of training: national_capital,share of modern towns,0.0092,3907,2276
-modern towns outside the 1st-99th percentile of training: regional_centre,share of modern towns,0.0000,3907,2276
-modern towns outside the 1st-99th percentile of training: log_km_to_capital,share of modern towns,0.0321,3907,2276
-modern towns outside the 1st-99th percentile of training: log_km_to_coast,share of modern towns,0.0237,3907,2276
+training towns against modern towns,two-sample ROC-AUC,0.9688,3909,2276
+for scale: SAC 1956 towns against the other training towns,two-sample ROC-AUC,0.8781,2145,1764
+modern towns outside the 1st-99th percentile of training: log_pop,share of modern towns,0.1845,3909,2276
+modern towns outside the 1st-99th percentile of training: pop_rank_pct,share of modern towns,0.0220,3909,2276
+modern towns outside the 1st-99th percentile of training: log_pop_within_25km,share of modern towns,0.0048,3909,2276
+modern towns outside the 1st-99th percentile of training: log_pop_within_50km,share of modern towns,0.0110,3909,2276
+modern towns outside the 1st-99th percentile of training: log_pop_within_100km,share of modern towns,0.0171,3909,2276
+modern towns outside the 1st-99th percentile of training: log_km_to_100k,share of modern towns,0.0158,3909,2276
+modern towns outside the 1st-99th percentile of training: national_capital,share of modern towns,0.0092,3909,2276
+modern towns outside the 1st-99th percentile of training: regional_centre,share of modern towns,0.0000,3909,2276
+modern towns outside the 1st-99th percentile of training: log_km_to_capital,share of modern towns,0.0321,3909,2276
+modern towns outside the 1st-99th percentile of training: log_km_to_coast,share of modern towns,0.0237,3909,2276

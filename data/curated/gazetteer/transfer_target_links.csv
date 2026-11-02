@@ -18,3 +18,8 @@ wp_1977_zealand,4,55.3096,12.3888,Store Heddinge,town and vicinity
 cd_1956_canada_target_areas,3,45.41117,-75.69812,Ottawa,Ottawa-Hull target area: Ottawa's point (Hull lies across the river)
 us_1963_jcs_china_vulnerability,7,41.0275,113.10583,Jining (Ulanqab),"Row note: probably Jining, Inner Mongolia, on the Beijing-Ulan Bator line, not Jining in Shandong; JCS 1963 appendix para 4d. GeoNames 2036458"
 wp_1977_gsa_lessons,7,53.07582,8.80717,Bremen (Vegesack),"Vegesack was incorporated into Bremen in 1939 (de.wikipedia, Vegesack), so the airfield name credits Bremen: GeoNames' point of the city, the universe town"
+wp_1977_gsa_lessons,47,52.8936,6.7177,18 km NW of Emmen,"offset as printed, from the point of the town in the 1960 table"
+wp_1977_gsa_lessons,48,52.142,6.7713,12 km SW of Enschede,"offset as printed, from the point of the town in the 1960 table"
+wp_1977_gsa_lessons,60,51.5128,5.4778,8 km N of Eindhoven,"offset as printed, from the point of the town in the 1960 table"
+cd_1980_square_leg,64,51.1481,-0.1903,Gatwick Airport,"the airport (its own point), in Crawley district; the name matcher had taken a hamlet of that name in Waverley"
+cd_1980_square_leg,82,56.461,-2.97,Dundee,the row names the Tay Bridge at Dundee; the fuzzy matcher had taken Stalybridge

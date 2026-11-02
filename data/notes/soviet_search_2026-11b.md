@@ -233,9 +233,9 @@ About 187 CIA OCR files were fetched from archive.org and searched with patterns
 
 | Item | Reason |
 |---|---|
-| CIA reading-room PDFs (`www.cia.gov/readingroom/docs/1974-01-30.pdf`, `cia.gov/.../1968-03-11b.pdf`) | The fetch tool returned the reading-room home page, as in the first search, not a 403. I did not fetch this host with curl. I read the CIA collection on archive.org instead, which the brief names, but the owner should know that it may count as another route if that home page was in effect a block |
+| CIA reading-room PDFs (`www.cia.gov/readingroom/docs/1974-01-30.pdf`, `cia.gov/.../1968-03-11b.pdf`) | The fetch tool returned the reading-room home page, as in the first search, not a 403. I did not fetch this host with curl. I read the CIA collection on archive.org instead, which the owner's instructions name, but the owner should know that it may count as another route if that home page was in effect a block |
 | digitalarchive.umd.edu and digitalarchive.wilsoncenter.org, including Malinovsky and Zakharov's memo of 8 Sep 1962, Statsenko's report, and the 1961 exercise document | The first search got a 403 from umd.edu, which is final. I did not try the Wilson host, which appears to be the same archive, so the 8 Sep memo stays unread, and its target attachment question is unresolved |
-| Wayback captures | The first search recorded that the fetch tool refuses web.archive.org. This brief forbids using curl there, so none were fetched |
+| Wayback captures | The first search recorded that the fetch tool refuses web.archive.org. The owner's instructions forbid using curl there, so none were fetched |
 | defence24.pl article on WBH's 1978 list of objects in Poland as potential nuclear targets | The fetch tool failed twice with no output. Not tried with curl. Per the search snippet only, this would be a civil-defence or mirror source, and WBH is a route to it |
 | Polnar 2024, BJMH, Soviet nuclear munitions in Czechoslovakia (CC BY-NC-ND per its article page) | The fetch tool returned only the page shell. Not read |
 | Portfolio.hu 2021 on Hungarian plans and Vienna | Subscription. Not attempted |

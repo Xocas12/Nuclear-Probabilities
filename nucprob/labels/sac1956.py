@@ -55,6 +55,7 @@ from nucprob.paths import CURATED, PROCESSED
 RADIUS_KM = 10.0
 COVER_NAMES = CURATED / "sac1956" / "cover_names.csv"
 SAME_PLACE = CURATED / "sac1956" / "same_place_links.csv"
+REJECTED_NAME_LINKS = CURATED / "sac1956" / "rejected_name_links.csv"
 NAME_OK = 75  # name similarity (0-100) below which a link is listed for review
 # Names second: a target with no settlement within RADIUS_KM is linked to a settlement up to
 # NAME_RADIUS_KM away whose name matches it closely. SAC's coordinates for remote towns can be
@@ -176,6 +177,17 @@ def cover_links(links_cx: pd.DataFrame, places: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
+def reject_name_links(links_cx: pd.DataFrame) -> pd.DataFrame:
+    """Entries the name matcher tied to a same-named town elsewhere, per REJECTED_NAME_LINKS: they
+    stay on the list and link to no town. A link by coordinates is not touched."""
+    d = pd.read_csv(REJECTED_NAME_LINKS, dtype=str)
+    out = links_cx.copy()
+    rejected = out["id"].isin(d["sac_id"]) & out["link_method"].eq("name")
+    out.loc[rejected, "place_id"] = None
+    out.loc[rejected, "link_method"] = ""
+    return out
+
+
 def same_place_links(links_cx: pd.DataFrame, places: pd.DataFrame) -> pd.DataFrame:
     """Entries SAME_PLACE ties to a town of the table with its reasons: the town was renamed, so
     neither distance nor name finds it. Only an entry left unlinked may be tied this way."""
@@ -291,7 +303,7 @@ def build(radius_km: float = RADIUS_KM) -> tuple[pd.DataFrame, pd.DataFrame, pd.
     links_cx = pd.concat(parts_cx, ignore_index=True)
     links_dgz = pd.concat(parts_dgz)
     located = places[places["has_coords"]]
-    links_cx = same_place_links(links_cx, located)
+    links_cx = same_place_links(reject_name_links(links_cx), located)
     # Entries SAC printed under an open town's name for the closed town next to it.
     credited = pd.concat([links_cx, cover_links(links_cx, located)], ignore_index=True)
 

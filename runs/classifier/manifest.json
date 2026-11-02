@@ -1,15 +1,15 @@
 {
-  "created": "2026-11-01T22:35:23+00:00",
-  "git_commit": "5a0d5178fc3ba34435a9cbf6f71f498a320c8b83",
+  "created": "2026-11-02T02:07:53+00:00",
+  "git_commit": "2f361d8bfd2d3b21aa278224e9bc18b069cba7af",
   "git_dirty": false,
   "protocol_sha256": "cc14e52ef3cce2f0562ea24195872a3cfa10a30571a0e13fb5dcb130914794f8",
-  "table_sha256": "0a0f0d284cb97a4953364145301b2b8dbffeabbe2d529fb0943517505ec3e783",
+  "table_sha256": "3c383c2b07f78844f664443c5158e260793b71d878fb41821f878d29b8b1696f",
   "inputs_sha256": {
-    "data/sources.yaml": "66ee1af85785662f306c9637b56ba1be49f06c55da12a196a94926c980b58557",
+    "data/sources.yaml": "9d8294d1aa0f8bb62d7f15adeae149cd43de8fe2609f6eae6f938257a61aa5c8",
     "data/curated/labels/CATALOGUE.yaml": "d0ff4e2ea8628615e471f09099c45513e3db4902a7698b0c38fac2178d10a6fb",
     "data/curated/labels/PLANS.yaml": "b935e16551fe4b2984543211ccf8c27160924910668c3feb3897ad42c0117f34",
     "data/curated/labels/SCHEMA.md": "5850b91be6486e4c10a02e86d7bc13c3d05fc49092224fe3d2519ee22c7e95df",
-    "data/curated/labels/SECTORS.yaml": "7d9da59c9a5b53df8a445da0332908584c6f7eefda9581a55a632300f0fd562f",
+    "data/curated/labels/SECTORS.yaml": "847b1144cc2362fd232ebfebdbe0d37ea3d7b150592a6f827d48d811a188acb7",
     "data/curated/labels/cd_1955_operation_alert.csv": "12fc16eea9964d3e19ad8ad5b5d49818393647f456dee393f86aea38578a99cf",
     "data/curated/labels/cd_1955_operation_alert_full.csv": "a6b1a95a22d531bd984cfcb8c6860ddc622cdca3fb9d5dfaaa1714e4426508a2",
     "data/curated/labels/cd_1956_canada_target_areas.csv": "8bb8ba9f8ca4a79dd745dcb86ef976c08b837a3112227b92c95c08074a7f2ca6",
@@ -40,7 +40,7 @@
     "data/curated/labels/wp_1970_coastal_front_map.csv": "ad2e56207ed3545ef9088192c7516fcb1030c057128632272b937f0364ac95eb",
     "data/curated/labels/wp_1975_soyuz75.csv": "5bf96679f92867dac7c72c4dd9d1371071273946df632c3ef6ae1d8b38858412",
     "data/curated/labels/wp_1977_gsa_front_lesson.csv": "fedc68df3a52b7ffd406f09ba7973d4914c7a138289be256d2ae7da95c0cdd7a",
-    "data/curated/labels/wp_1977_gsa_lessons.csv": "3bf706db876a7eaa1c322556d9781c5c614cd49efa62e413d40d5d97254f4615",
+    "data/curated/labels/wp_1977_gsa_lessons.csv": "473805dd8f91695e4920e3b3fe483e926a0eeed0999f8f45846102f36abd7a57",
     "data/curated/labels/wp_1977_zealand.csv": "ac5b88f253a6421c854fa67bfdf3de2d07140c1bbca3302a77d2dbe7a4d4caa5",
     "data/curated/labels/wp_1979_seven_days.csv": "1a5f16adae7b991e181499a8af70c823eb118ce74b75c557eb15ed921e79ea3f"
   },
@@ -84,14 +84,14 @@
   "sealed_rows_excluded": 463,
   "quick": false,
   "outputs": {
-    "runs/classifier/calibration.csv": "fca9caf2025a7c44e219e051090744ea6ec736438a6e75c2baf3ba7325944fd6",
-    "runs/classifier/comparison.csv": "8655a1c4bb6eed1b098ff9590c0537fc3d991f00fb9959e3ad73aa156259b21e",
-    "runs/classifier/defence.csv": "f595c5dda36a8399ac7583677e2e1740a693d6ca5f9ac443ac3808c85cd5fcbf",
-    "runs/classifier/family_gain.csv": "63cbff1950c6ee49bd6eac28816887fbd5ba8376c6c725bb79ac7d5ec3025da9",
-    "runs/classifier/held_out_scores.csv.gz": "cb30cbd33c74139ad9f47d02a1fcf58421238a55303dbd5ef81c6afcb9dc093d",
-    "runs/classifier/lists.csv": "0b32a38890bdca12f83f3c6494030a0268ae23f930661c230c58214854f902f3",
-    "runs/classifier/scopes.csv": "b5e05531da68f76d9f6aaba751cb094197a9d7ed86cf50967c6feaeae431900e",
-    "runs/classifier/selection.csv": "bce8d589bb2d019842feb9977f5ffd840391d32d5f2db36d28fd25b889a473e7",
-    "runs/classifier/state_gate.csv": "7daef4d13ce02bdd17275f7c92fe4a191b4c2d8d4a4e5f104da9e82703a78061"
+    "runs/classifier/calibration.csv": "ec55fa65664f133aafa025f7701c353e949767350fcebb41d1e81a32f8708704",
+    "runs/classifier/comparison.csv": "34b913b9b0c961881cf799c1900e7660e1e5963cfaf89d312545e031b2092eae",
+    "runs/classifier/defence.csv": "6abbc455f58247ff653586b67782469376044719a27d8e47a2b26c52d42da345",
+    "runs/classifier/family_gain.csv": "291c1221492a99e249574938e3527c3e2721c037108671786ed76d333315ad08",
+    "runs/classifier/held_out_scores.csv.gz": "8b6723396024f3afd6244277e12bdbb0edb53a6aed785b5a74177d7591b238da",
+    "runs/classifier/lists.csv": "461f9b931b8e4ac3a240b2ef796e9309c6ba89d5de5fd99a115f522ccbcb0b8a",
+    "runs/classifier/scopes.csv": "67d340f0fc01f61d28098afa0c7e1886abc64c4637f08754a2882f7d7271fb00",
+    "runs/classifier/selection.csv": "9b6e19a4788143a84593415e6781e96a357ea66d791aed03d3da74ccf27d8e93",
+    "runs/classifier/state_gate.csv": "1c1849a767d4d451238eeecbf6873cf37107ced1f18ee8551aba3798e4634228"
   }
 }

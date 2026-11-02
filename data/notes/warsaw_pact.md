@@ -233,7 +233,7 @@ Collection page: https://phpisn.ethz.ch/lory1.ethz.ch/collections/colltopic4241.
 - Obtained from the archive.org mirror:
   - 0001197534 ("Work of the Nuclear Planning Group Using the Calculations Performed on Electronic Computers...", FIRDB-312/00987-80, 1 May 1980): https://archive.org/download/cia-readingroom-document-0001197534/0001197534.pdf. Retrieved 2026-10-03T15:25:36Z.
     - File: `cia_0001197534.pdf`, sha256 `54eddb0bde648b4ec8732ef383c706fabdd2d2889b906f6a06ffb7ffca416296`. Scan without a text layer; read via archive.org OCR (`_djvu.txt`).
-  - 0001197545 ("Study and Critique of the Decision of the Commander of the Combined Baltic Fleet...", FIRDB-312/02033-80, dated 1980-07-04 in the archive.org metadata). This is probably the "1980-07-03" document in the brief. https://archive.org/download/cia-readingroom-document-0001197545/0001197545.pdf. Retrieved 2026-10-03T15:25:41Z.
+  - 0001197545 ("Study and Critique of the Decision of the Commander of the Combined Baltic Fleet...", FIRDB-312/02033-80, dated 1980-07-04 in the archive.org metadata). This is probably the "1980-07-03" document in the owner's instructions. https://archive.org/download/cia-readingroom-document-0001197545/0001197545.pdf. Retrieved 2026-10-03T15:25:41Z.
     - File: `cia_0001197545.pdf`, sha256 `b28c6e4f26028fad58cc2cd1ba73a1fa5eb090db8fd654b10027cacc129ada35`.
 - Are targets named? **Partly.** In the front lesson (PDF p.8), the initial nuclear strike names:
   - control and warning posts "in the areas of WROHM, EYTIN, BADMUNDEN, FALLINGBOSTEL, AHRENSBURG" (FRG);

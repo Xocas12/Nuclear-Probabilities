@@ -1,3 +1,3 @@
 model,towns,positives,towns_without_1939,pr_auc_1939,pr_auc_1959,delta,low,high,excludes_zero,block_low,block_high,block_excludes_zero
-rule,1359,565,237,0.7613,0.7738,-0.0126,-0.0321,0.0082,False,-0.0426,0.0124,False
-LightGBM,1359,565,237,0.7513,0.7794,-0.0281,-0.0476,-0.0081,True,-0.0537,-0.0053,True
+rule,1359,564,237,0.7620,0.7748,-0.0128,-0.0326,0.0063,False,-0.0436,0.0118,False
+LightGBM,1359,564,237,0.7514,0.7773,-0.0259,-0.0451,-0.0061,True,-0.0538,-0.0016,True
