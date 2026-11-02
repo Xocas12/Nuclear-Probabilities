@@ -38,7 +38,7 @@ def popstat_raw(tmp_path, monkeypatch):
 def table_specs() -> list[tuple[str, str]]:
     out = []
     for region in REGIONS.values():
-        for country, _, spec in (*region.countries, *region.withheld):
+        for country, _, spec in region.countries:
             out.append((country, spec))
     return out
 
@@ -108,7 +108,6 @@ def test_the_frg_table_is_the_whole_printed_table():
 def test_the_frg_is_in_the_universe_of_the_western_european_lists():
     countries = {c for c, _, _ in REGIONS["wp_west_1965"].countries}
     assert "FRG" in countries
-    assert not REGIONS["wp_west_1965"].withheld
 
 
 # Review finding 12: a town whose coordinates come from a GeoNames entry in another first-order

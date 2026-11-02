@@ -108,9 +108,5 @@ def draw_delivered(
     return sum(p["delivered"] for p in parts.values())
 
 
-def delivered_draws(attacker: Mapping, n: int, rng) -> np.ndarray:
-    return draw_delivered(attacker, n, rng, pd.read_csv(TABLE), pd.read_csv(MIX))
-
-
 def by_delivery_draws(attacker: Mapping, n: int, rng) -> dict[str, dict[str, np.ndarray]]:
     return draw_by_delivery(attacker, n, rng, pd.read_csv(TABLE), pd.read_csv(MIX))

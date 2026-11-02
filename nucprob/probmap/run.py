@@ -7,8 +7,8 @@ each scenario's delivered warheads by score share (nucprob.probmap.allocate); su
 Then the validation against SAC 1956 and the domain shift of the modern towns.
 
 Writes runs/probmap/: model_choice.csv, cells/<scenario>.csv.gz (one row per cell, sorted by position,
-no names), scenarios.csv, delivered.csv, by_delivery.csv, score_spread.csv, validation.csv, reliability.csv,
-domain_shift.csv, manifest.json.
+no names), scenarios.csv, delivered.csv, by_delivery.csv, score_spread.csv, unit_sensitivity.csv, validation.csv,
+reliability.csv, domain_shift.csv, manifest.json.
 --quick uses 10 draws and writes to runs/probmap-quick/.
 """
 
@@ -44,7 +44,6 @@ from nucprob.probmap.stockpile import (
     MIX,
     TABLE,
     by_delivery_draws,
-    delivered_draws,
     share_interceptors,
 )
 from nucprob.sources.fetch import sha256
@@ -123,11 +122,49 @@ def bloc_universe(full: pd.DataFrame) -> Universe:
     return Universe(sac.reset_index(drop=True), float(share))
 
 
-def west_universe() -> Universe:
-    """The Western European towns of about 1961, and the UK's of 1981, the only UK table held."""
+# How the columns of several UK districts combine into one unit. The score reads log_pop.
+_UNIT_MAX = ["pop_rank_pct", "log_pop_within_25km", "log_pop_within_50km", "log_pop_within_100km"]
+_UNIT_MAX += ["national_capital", "regional_centre"]
+_UNIT_MIN = ["log_km_to_100k", "log_km_to_capital", "log_km_to_coast"]
+METROPOLITAN = (
+    "Greater Manchester",
+    "Merseyside",
+    "South Yorkshire",
+    "Tyne and Wear",
+    "West Midlands",
+    "West Yorkshire",
+)
+
+
+def merge_units(towns: pd.DataFrame, counties: tuple[str, ...]) -> pd.DataFrame:
+    """Each named UK county's rows become one unit: people summed, the point weighted by people.
+    Great Britain's table is local government districts (towns_uk_1981.md). A London borough is part of
+    one city, and a share of warheads is drawn per row, so the count of rows moves the map."""
+    uk = towns["country"].eq("UK") & towns["admin1"].isin(counties)
+    rows = []
+    for county, g in towns[uk].groupby("admin1"):
+        row = g.iloc[0].copy()
+        pop = g["pop"].to_numpy(float)
+        row["name"], row["pop"] = county, pop.sum()
+        row["lat"] = float(np.average(g["lat"], weights=pop))
+        row["lon"] = float(np.average(g["lon"], weights=pop))
+        row["log_pop"] = float(np.log10(pop.sum()))
+        for c in _UNIT_MAX:
+            row[c] = g[c].max()
+        for c in _UNIT_MIN:
+            row[c] = g[c].min()
+        rows.append(row)
+    if not rows:
+        return towns
+    return pd.concat([towns[~uk], pd.DataFrame(rows)], ignore_index=True).infer_objects()
+
+
+def west_universe(merged: tuple[str, ...] = ("Greater London",)) -> Universe:
+    """The Western European towns of about 1961, and the UK's of 1981, the only UK table held. Greater
+    London counts as one unit; unit_sensitivity reads the other two choices."""
     t = transfer_towns()
     t = t[t["region"].isin(["wp_west_1965", "uk_1980"]) & t["lat"].notna()].reset_index(drop=True)
-    return Universe(t.assign(sealed=False), 1.0)
+    return Universe(merge_units(t.assign(sealed=False), merged), 1.0)
 
 
 def modern_universe() -> Universe:
@@ -180,6 +217,11 @@ def summarise(cells: pd.DataFrame, draws: np.ndarray, fixed_stock, fixed_model) 
     return out.sort_values(["cell_lat", "cell_lon"]).reset_index(drop=True)
 
 
+def pin_share(attacker: dict) -> dict:
+    mode = attacker["theatre_share"][1]
+    return {**attacker, "theatre_share": [mode, mode, mode]}
+
+
 def run_scenario(
     sc: dict, universe: Universe, score_matrix: np.ndarray, draws: int, rng
 ) -> tuple[pd.DataFrame, dict]:
@@ -198,13 +240,24 @@ def run_scenario(
     records, by_delivery = [], []
     forces = {a["state"]: by_delivery_draws(a, draws, rng) for a in sc["attackers"]}
     share_interceptors(forces, sc.get("interceptors", []), draws, rng)
+    # Delivered again with every theatre share held at its mode, from its own generator: how much of
+    # the width of `delivered` comes from those shares, which have no source.
+    rng_pinned = np.random.default_rng(SEED)
+    pinned = {
+        a["state"]: by_delivery_draws(pin_share(a), draws, rng_pinned) for a in sc["attackers"]
+    }
+    share_interceptors(pinned, sc.get("interceptors", []), draws, rng_pinned)
+    scored_share = universe.unsealed_population_share
     for a in sc["attackers"]:
         parts = forces[a["state"]]
-        w = sum(p["delivered"] for p in parts.values()) * universe.unsealed_population_share
+        delivered = sum(p["delivered"] for p in parts.values())
+        # Sealed towns are never scored, so they cannot draw warheads; the share of warheads their people
+        # would draw comes off what falls on the scored towns. `delivered` itself is not scaled.
+        w = delivered * scored_share
         all_draws[a["state"]] = w
         for delivery, p in parts.items():
             have = np.percentile(p["available"], QUANTILES)
-            sent = np.percentile(p["delivered"] * universe.unsealed_population_share, QUANTILES)
+            sent = np.percentile(p["delivered"], QUANTILES)
             by_delivery.append(
                 {
                     "scenario": sc["id"],
@@ -221,7 +274,10 @@ def run_scenario(
                 }
             )
         median_w[a["state"]] = np.full(draws, np.median(w))
-        q = np.percentile(w, QUANTILES)
+        q = np.percentile(delivered, QUANTILES)
+        on_scored = np.percentile(w, QUANTILES)
+        fixed = sum(p["delivered"] for p in pinned[a["state"]].values())
+        fixed_q = np.percentile(fixed, QUANTILES)
         records.append(
             {
                 "scenario": sc["id"],
@@ -230,6 +286,12 @@ def run_scenario(
                 "delivered_low": q[0],
                 "delivered_median": q[1],
                 "delivered_high": q[2],
+                "share_of_people_in_scored_towns": scored_share,
+                "on_scored_towns_low": on_scored[0],
+                "on_scored_towns_median": on_scored[1],
+                "on_scored_towns_high": on_scored[2],
+                "delivered_low_share_fixed": fixed_q[0],
+                "delivered_high_share_fixed": fixed_q[2],
             }
         )
     t = towns[active].reset_index(drop=True)
@@ -301,8 +363,48 @@ def score_spread(scenario, towns, scores, cell_names, p, cell_deg) -> dict:
     }
 
 
+def unit_sensitivity(models: list, spec: Spec, sc: dict, draws: int) -> pd.DataFrame:
+    """The 1965 scenario with Great Britain's districts counted three ways. Totals for the UK only: a
+    cell's probability depends on how many rows it holds, so the count of rows is itself an assumption."""
+    readings = {
+        "every district one unit, as tabled": (),
+        "Greater London one unit (the map)": ("Greater London",),
+        "Greater London and the six metropolitan counties one unit each": (
+            "Greater London",
+            *METROPOLITAN,
+        ),
+    }
+    rows = []
+    for label, merged in readings.items():
+        universe = west_universe(merged)
+        matrix = score_matrix(models, universe.towns, spec.columns)
+        out, _ = run_scenario(sc, universe, matrix, draws, np.random.default_rng(SEED))
+        named = {c for a in sc["attackers"] for c in a["targets"]}
+        in_scope = universe.towns["country"].isin(named).to_numpy()
+        towns = universe.towns[in_scope]
+        uk = towns["country"].eq("UK").to_numpy()
+        mid = np.nanmedian(matrix[in_scope], axis=1)
+        parts = al.cell_ids(towns.loc[uk, "lat"], towns.loc[uk, "lon"], sc["cell_deg"])
+        parts = parts.drop_duplicates().str.split("_", expand=True).astype(float)
+        cells = out.merge(
+            parts.set_axis(["cell_lat", "cell_lon"], axis=1), on=["cell_lat", "cell_lon"]
+        )
+        rows.append(
+            {
+                "reading": label,
+                "uk_units": int(uk.sum()),
+                "uk_share_of_warheads": float(mid[uk].sum() / mid.sum()),
+                "uk_cells": len(cells),
+                "uk_cells_over_half_at_median": int((cells["p_median"] > 0.5).sum()),
+                "uk_mean_p_median": float(cells["p_median"].mean()),
+                "all_cells_mean_p_median": float(out["p_median"].mean()),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
 def validation(
-    spec: Spec, train: pd.DataFrame, full: pd.DataFrame, sc: dict, bags: int, rng
+    spec: Spec, train: pd.DataFrame, full: pd.DataFrame, sc: dict, bags: int, w: float
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """The 1956 scenario against SAC's own list. Cell probabilities from models that never saw the
     cell's block, and from models with no SAC row at all. Cells are read at the stockpile's median."""
@@ -321,9 +423,6 @@ def validation(
     left_out = fit_bagged(
         spec, others[~others["place_id"].isin(set(sac["place_id"]))].reset_index(drop=True), bags
     ).score(sac)
-    attacker = sc["attackers"][0]
-    w = float(np.median(delivered_draws(attacker, 2000, rng)))
-    w *= bloc_universe(full).unsealed_population_share
     rows, bins = [], []
     cell = al.cell_ids(sac["lat"], sac["lon"], sc["cell_deg"])
     codes, names = pd.factorize(cell)
@@ -337,7 +436,7 @@ def validation(
                 "cells": len(names),
                 "cells_listed": int(observed.sum()),
                 "base_rate": float(observed.mean()),
-                "median_delivered_warheads": w,
+                "median_warheads_on_scored_towns": w,
                 "pr_auc": float(average_precision_score(observed, p)),
                 "roc_auc": float(roc_auc_score(observed, p)),
                 "brier": float(np.mean((p - observed) ** 2)),
@@ -444,11 +543,22 @@ def main() -> None:
         spreads.append(rec["spread"])
         print(sc["id"], rec["summary"], flush=True)
     pd.DataFrame(summaries).to_csv(out_dir / "scenarios.csv", index=False, float_format="%.4f")
-    pd.DataFrame(warheads).to_csv(out_dir / "delivered.csv", index=False, float_format="%.0f")
+    table = pd.DataFrame(warheads)
+    # A share, not a count: it keeps its decimals where every count is rounded to a warhead.
+    table["share_of_people_in_scored_towns"] = table["share_of_people_in_scored_towns"].map(
+        "{:.4f}".format
+    )
+    table.to_csv(out_dir / "delivered.csv", index=False, float_format="%.0f")
     pd.DataFrame(by_delivery).to_csv(out_dir / "by_delivery.csv", index=False, float_format="%.0f")
     pd.DataFrame(spreads).to_csv(out_dir / "score_spread.csv", index=False, float_format="%.4f")
+    west = next(s for s in load_scenarios() if s["id"] == "ussr_1965_on_west")
+    unit_sensitivity(models, spec, west, n_draws).to_csv(
+        out_dir / "unit_sensitivity.csv", index=False, float_format="%.4f"
+    )
     first = next(s for s in load_scenarios() if s["id"] == protocol_validation_scenario())
-    val, rel = validation(spec, train, full, first, bags, rng)
+    # The scenario's own median, so that the check reads the warheads the map's table shows.
+    w = next(r["on_scored_towns_median"] for r in warheads if r["scenario"] == first["id"])
+    val, rel = validation(spec, train, full, first, bags, float(w))
     val.to_csv(out_dir / "validation.csv", index=False, float_format="%.4f")
     rel.to_csv(out_dir / "reliability.csv", index=False, float_format="%.4f")
     countries = {

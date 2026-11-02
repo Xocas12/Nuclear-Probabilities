@@ -128,3 +128,43 @@ sectors:
       neighbour, so the box is the located targets' extent plus the fixed margin. It is not
       evidence about the plan's scope, and with four located points it says little. The rest of
       the lesson's rows have no place name.
+  # Derived boxes added by the eighth amendment. Each is the fixed rule above applied to the list's linked
+  # positives as they stood before any box: extent, plus 0.5 degrees latitude and 0.75 longitude, one box for
+  # each country holding a positive. None of these documents' boundaries was read, so a documented
+  # boundary could differ. Marked derived; they say nothing about the plan's real scope.
+  - plan_id: wp_1961_burza
+    basis: derived
+    include:
+      - {country: FRG, lat_min: 52.58, lat_max: 56.14, lon_min: 6.46, lon_max: 12.93}
+      - {country: Denmark, lat_min: 52.58, lat_max: 56.14, lon_min: 6.46, lon_max: 12.93}
+    notes: Maritime Front exercise. The Netherlands has rows and no positive, so it is out.
+  - plan_id: wp_1965_coastal_front_zealand
+    basis: derived
+    include:
+      - {country: Denmark, lat_min: 54.51, lat_max: 56.14, lon_min: 10.60, lon_max: 12.83}
+    notes: The planner field reads "landing operation on Zealand"; Jutland towns are outside the box.
+  - plan_id: wp_1970_coastal_front_map
+    basis: derived
+    include:
+      - {country: Denmark, lat_min: 55.15, lat_max: 56.22, lon_min: 10.96, lon_max: 13.32}
+  - plan_id: wp_1977_zealand
+    basis: derived
+    include:
+      - {country: Denmark, lat_min: 55.13, lat_max: 56.14, lon_min: 11.33, lon_max: 13.35}
+    notes: The planner field reads "landing operation on Zealand".
+  - plan_id: wp_1975_soyuz75
+    basis: derived
+    include:
+      - {country: Netherlands, lat_min: 52.70, lat_max: 53.72, lon_min: 5.06, lon_max: 7.32}
+  - plan_id: us_1958_taiwan_strait
+    basis: derived
+    include:
+      - {country: China, lat_min: 23.98, lat_max: 24.98, lon_min: 117.33, lon_max: 118.83}
+    notes: One linked positive, Xiamen, so the list is too small to score and the box holds 3 towns.
+# Lists read over their whole universe, each with the reason. tests/test_label_rules.py fails if a list
+# with role train and a linked positive is in neither part of this file.
+whole_universe:
+  us_1956_sac_complexes: The study covers the whole Soviet bloc and its town list claims completeness.
+  us_1945_target_committee: A list of cities considered across Japan; its candidates are the whole country's.
+  us_1963_jcs_china_vulnerability: A table for China as a whole. It has no linked unsealed designated town.
+  us_1964_china_nuclear: A study of China as a whole. It has no linked unsealed designated town.

@@ -1,10 +1,14 @@
 """What a list's rows mean as labels, on small fixtures: designated, rejected, neither; sectors."""
 
+import numpy as np
 import pandas as pd
 import pytest
+import yaml
 
 from nucprob.classifier import table as tb
-from nucprob.paths import CURATED, PROCESSED
+from nucprob.geo import Points
+from nucprob.paths import CURATED, PROCESSED, ROOT
+from nucprob.plans import plans
 from nucprob.transfer import labels as lb
 
 LABELS = CURATED / "labels"
@@ -164,3 +168,99 @@ def test_every_far_name_link_on_sac_has_been_read():
     read = pd.read_csv(CURATED / "sac1956" / "far_name_links_reviewed.csv", dtype=str)
     assert set(far["id"]) <= set(read["sac_id"])
     assert read["reading"].str.len().min() > 20
+
+
+def test_no_row_is_designated_when_its_own_notes_say_the_weapon_is_not_stated():
+    """The rule of the sixth amendment, on every list, in the wordings the notes use."""
+    says = (
+        r"(?i)weapon type[^.;|]{0,40}not stated|not stated[^.;]{0,40}weapon type"
+        r"|does not say this (?:task|target)[^.;]{0,20}nuclear"
+    )
+    seen = 0
+    for path in LABELS.glob("*.csv"):
+        d = pd.read_csv(path, dtype=str, keep_default_na=False)
+        if not {"notes", "selected"} <= set(d.columns):
+            continue
+        rows = d[d["notes"].str.contains(says)]
+        seen += len(rows)
+        assert (rows["selected"] == "").all(), path.name
+    assert seen >= 14
+
+
+def test_every_list_with_a_linked_positive_has_a_sector_or_a_stated_reason_for_none():
+    data = yaml.safe_load((LABELS / "SECTORS.yaml").read_text(encoding="utf-8"))
+    boxed = {s["plan_id"] for s in data["sectors"]}
+    whole = set(data["whole_universe"])
+    assert not boxed & whole
+    assert all(len(reason) > 20 for reason in data["whole_universe"].values())
+    reg = plans()
+    train = set(reg.loc[reg["role"].eq("train") & reg["attacker"].notna(), "plan_id"])
+    table = PROCESSED / "classifier_table.parquet"
+    if not table.exists():
+        pytest.skip("no built tables")
+    t = pd.read_parquet(table, columns=["plan_id", "listed"])
+    held = set(t["plan_id"]) & train
+    linked = set(t.loc[t["listed"].eq(1), "plan_id"]) & train
+    assert linked <= boxed | whole
+    assert held - linked - boxed - whole == set()
+
+
+@needs_tables
+def test_a_list_with_a_derived_box_keeps_only_the_towns_inside_it():
+    t = pd.read_parquet(PROCESSED / "classifier_table.parquet")
+    for plan, boxes in tb.sectors().items():
+        g = t[t["plan_id"] == plan]
+        if len(g):
+            assert tb.in_sector(g, boxes).all(), plan
+    assert set(t.loc[t["plan_id"] == "wp_1965_coastal_front_zealand", "lon"].round()) <= set(
+        range(10, 14)
+    )
+
+
+@needs_tables
+def test_every_sac_entry_passing_a_nearer_negative_town_has_been_read():
+    """An entry linked to a place while a town the list leaves negative lies nearer its printed point:
+    a new one fails here until it is read. Sealed places are not looked at."""
+    links = pd.read_parquet(PROCESSED / "sac1956_links.parquet")
+    d = pd.read_parquet(PROCESSED / "dataset_sac1956.parquet")
+    towns = pd.read_parquet(PROCESSED / "places_1956.parquet")
+    e = links[links["level"].isin(["complex", "subcomplex"]) & links["place_id"].notna()]
+    e = e[~e["link_method"].isin(["cover name", "nearer town"])]
+    e = e[~e["place_id"].isin(d.loc[d["sealed"].astype(bool), "place_id"])]
+    neg = d[(d["listed"] == 0) & ~d["sealed"].astype(bool)]
+    dist, _ = Points(neg["lat"].to_numpy(), neg["lon"].to_numpy()).nearest(
+        e["lat"].to_numpy(), e["lon"].to_numpy()
+    )
+    passing = e[np.ravel(dist) < e["dist_km"].to_numpy() - 0.5]
+    read = pd.read_csv(CURATED / "sac1956" / "nearer_negatives_reviewed.csv", dtype=str)
+    assert set(passing["id"]) <= set(read["sac_id"])
+    assert read["reading"].str.len().min() > 15
+    moved = pd.read_csv(CURATED / "sac1956" / "nearer_town_links.csv", dtype=str)
+    for _, r in moved.iterrows():
+        assert links.loc[links["id"] == r["sac_id"], "place_id"].eq(r["place_id"]).all()
+        assert d.loc[d["place_id"] == r["place_id"], "listed"].eq(1).all()
+        assert not d["place_id"].eq(r["was_place_id"]).any()  # below the floor: labels nothing
+        assert towns["place_id"].eq(r["was_place_id"]).any()
+
+
+def test_every_scored_list_rests_on_a_source_with_a_hash_or_a_named_record():
+    """Section A of the standard: a list that enters a model or a score has a source on record."""
+    sources = yaml.safe_load((ROOT / "data" / "sources.yaml").read_text(encoding="utf-8"))
+    sources = sources["sources"] if isinstance(sources, dict) else sources
+    by_url = {s.get("url"): s for s in sources}
+    reg = plans()
+    for plan in reg.loc[reg["role"].isin(["train", "test-expectation"]), "plan_id"]:
+        path = LABELS / f"{plan}.csv"
+        if not path.exists():
+            continue
+        d = pd.read_csv(path, dtype=str, keep_default_na=False)
+        if "source_url" not in d:
+            continue
+        for url in d["source_url"].unique():
+            s = by_url.get(url)
+            if s is None:
+                continue
+            assert s.get("sha256"), (plan, url)
+            assert s.get("retrieved") not in (None, "unknown"), (plan, url)
+    canada = reg.set_index("plan_id").loc["cd_1956_canada_target_areas"]
+    assert canada["role"] == "excluded" and canada["grade"] == "U"

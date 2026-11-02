@@ -554,3 +554,99 @@ def test_modern_rows_of_every_map_table_say_extrapolation():
         modern_rows = d["scenario"].map(era) == "modern"
         assert set(d.loc[modern_rows, "reading"]) == {"extrapolation"}
         assert set(d.loc[~modern_rows, "reading"]) == {"historical"}
+
+
+def uk_towns() -> pd.DataFrame:
+    rows = {
+        "country": ["UK", "UK", "UK", "FRG"],
+        "admin1": ["Greater London", "Greater London", "Kent", "Hessen"],
+        "name": ["Camden", "Brent", "Dover", "Fulda"],
+        "lat": [51.5, 51.6, 51.1, 50.5],
+        "lon": [-0.1, -0.3, 1.3, 9.7],
+        "pop": [100_000.0, 300_000.0, 50_000.0, 45_000.0],
+        "log_pop": np.log10([100_000.0, 300_000.0, 50_000.0, 45_000.0]),
+    }
+    t = pd.DataFrame(rows)
+    for c in [*rn._UNIT_MAX, *rn._UNIT_MIN]:
+        t[c] = [1.0, 2.0, 3.0, 4.0]
+    return t
+
+
+def test_a_merged_county_is_one_unit_with_its_people_summed():
+    out = rn.merge_units(uk_towns(), ("Greater London",))
+    assert len(out) == 3 and out["pop"].sum() == uk_towns()["pop"].sum()
+    london = out[out["name"] == "Greater London"].iloc[0]
+    assert london["pop"] == 400_000 and london["log_pop"] == pytest.approx(np.log10(400_000))
+    assert london["lat"] == pytest.approx(51.575)
+    assert london["log_km_to_coast"] == 1.0 and london["pop_rank_pct"] == 2.0
+    assert out["log_pop"].dtype == float
+    # Only the UK's rows merge, and only the counties named.
+    assert set(out["name"]) == {"Greater London", "Dover", "Fulda"}
+    assert len(rn.merge_units(uk_towns(), ())) == 4
+
+
+def test_delivered_is_unscaled_and_the_map_reads_the_scored_share():
+    """A share of people in scored towns below 1 scales what falls on them and only that."""
+    draws = 200
+    a = {
+        "state": "US",
+        "stock_year": 2026,
+        "inventory_low": ["deployed", "fas_status"],
+        "inventory_high": ["military_stockpile", "fas_status"],
+        "theatre_share": [0.02, 0.02, 0.02],
+        "reliability": {"all": [0.8, 0.8, 0.8]},
+        "fraction_lost_to_defences": [0, 0, 0],
+        "targets": ["RUS"],
+    }
+    sc = {"id": "t", "era": "historical", "evidence": "e", "cell_deg": 0.5, "attackers": [a]}
+    towns = run_towns()
+    scores = np.tile(0.2 + 0.6 * np.linspace(0, 1, len(towns))[:, None], (1, draws))
+    run = lambda share, seed: rn.run_scenario(  # noqa: E731
+        sc, rn.Universe(towns, share), scores, draws, np.random.default_rng(seed)
+    )
+    whole_cells, whole = run(1.0, 0)
+    half_cells, half = run(0.5, 0)
+    w, h = whole["warheads"][0], half["warheads"][0]
+    assert h["delivered_median"] == pytest.approx(w["delivered_median"])
+    assert h["on_scored_towns_median"] == pytest.approx(w["delivered_median"] / 2)
+    assert h["share_of_people_in_scored_towns"] == 0.5
+    assert (half_cells["p_median"] < whole_cells["p_median"]).all()
+    by_delivery = sum(d["delivered_median"] for d in half["by_delivery"])
+    assert by_delivery == pytest.approx(h["delivered_median"], rel=0.1)
+
+
+def test_the_fixed_share_interval_is_narrower_when_the_shares_are_wide():
+    """The columns that say how much of the width comes from theatre shares with no source."""
+    a = {
+        "state": "US",
+        "stock_year": 2026,
+        "inventory_low": ["deployed", "fas_status"],
+        "inventory_high": ["military_stockpile", "fas_status"],
+        "theatre_share": [0.01, 0.1, 0.5],
+        "reliability": {"all": [0.8, 0.8, 0.8]},
+        "fraction_lost_to_defences": [0, 0, 0],
+        "targets": ["RUS"],
+    }
+    assert rn.pin_share(a)["theatre_share"] == [0.1, 0.1, 0.1]
+    sc = {"id": "t", "era": "historical", "evidence": "e", "cell_deg": 0.5, "attackers": [a]}
+    towns = run_towns()
+    scores = np.tile(0.2 + 0.6 * np.linspace(0, 1, len(towns))[:, None], (1, 400))
+    _, rec = rn.run_scenario(sc, rn.Universe(towns, 1.0), scores, 400, np.random.default_rng(0))
+    r = rec["warheads"][0]
+    fixed = r["delivered_high_share_fixed"] - r["delivered_low_share_fixed"]
+    assert fixed < (r["delivered_high"] - r["delivered_low"]) / 2
+
+
+@needs_run
+def test_the_scale_on_scored_towns_is_shown_and_reconciles():
+    d = pd.read_csv(OUT / "delivered.csv")
+    gap = (d["delivered_median"] * d["share_of_people_in_scored_towns"]) - d[
+        "on_scored_towns_median"
+    ]
+    assert (gap.abs() <= d["delivered_median"].clip(lower=1) * 0.01 + 1).all()
+    bloc = d[d["scenario"] == "us_1956_on_bloc"]["share_of_people_in_scored_towns"].iloc[0]
+    assert 0 < bloc < 1
+    units = pd.read_csv(OUT / "unit_sensitivity.csv")
+    assert units["uk_units"].is_monotonic_decreasing and units["uk_units"].nunique() == 3
+    west = d[d["scenario"] == "ussr_1965_on_west"].iloc[0]
+    assert west["share_of_people_in_scored_towns"] == 1.0

@@ -155,7 +155,7 @@ def analyse_scope(name: str, rows: pd.DataFrame, models: list[Spec], bags: int, 
     spatial = ev.spatial_scores(rows, models, bags)
     lists += [r | {"scope": name} for r in ev.by_list(rows, spatial, "spatial blocks")]
     frame = rows[["plan_id", "place_id", "listed", "block"]].assign(
-        train_positives=int(rows["listed"].sum() * (ev.N_FOLDS - 1) / ev.N_FOLDS), **spatial
+        train_positives=ev.spatial_train_positives(rows), **spatial
     )
     comparison += compare(frame, boot, name, "spatial blocks")
     held_scores = {"spatial blocks": frame}

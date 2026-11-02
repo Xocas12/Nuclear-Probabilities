@@ -6,7 +6,7 @@ import yaml
 from nucprob.paths import CURATED, ROOT
 
 LABELS = CURATED / "labels"
-PROVENANCE = {"plan", "study", "exercise", "defender", "reconstruction", "reference"}
+PROVENANCE = {"plan", "study", "exercise", "disputed", "defender", "reconstruction", "reference"}
 SELECTION = {"judgment", "rule", "mixed", "unknown", "n/a"}
 USE = {"training", "transfer-test", "validation", "audit", "reference"}
 KEYS = {

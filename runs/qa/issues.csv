@@ -19,7 +19,7 @@ issue,criterion,passes,value
 7,mean pop_rank_pct is about 0.5 in every large country,True,0.009
 9,no military distance for Italian towns outside the table's scope,True,630
 9,"no military distance in the US, Canada or Japan",True,1959
-9,no common + military score where no table covers the town,True,3211
+9,no common + military score where no table covers the town,True,3210
 10,Wismar is a district seat,True,[1.0]
 10,Weimar is a district seat,True,[1.0]
 11,the six Land capitals have regional_centre = 1,True,[]

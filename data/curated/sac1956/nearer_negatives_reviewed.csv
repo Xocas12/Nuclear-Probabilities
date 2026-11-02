@@ -1,0 +1,13 @@
+sac_id,name_printed,linked_town,nearer_negative,reading
+C277-L17,KITOY,Kitoy,Angarsk,"moved to Angarsk: the named hamlet is below the floor and the printed point lies in the town"
+C247-L22,ZUYEVKA,Zuyivka,Zuhres,"moved to Zuhres: the named town is below the floor and the printed point lies 1.2 km from Zuhres"
+C247-L04,MAKEYEVKA,Makiyivka,Voikove,"kept: the named town is listed in its own right; a nearer small town does not change what SAC named"
+C217-L09,PSZOW POL,Pszów,Rydułtowy,"kept: the named town is at or above the floor and carries the entry"
+C175-L14,NAIBUCHI,Bykov,Dolinsk,"kept: the nearer town is 11.7 km off, past the 10 km link, and the name decides"
+C088-L16,GORLOVKA,Horlivka,Kindrativskyi,"kept: the named city is listed in its own right"
+C002-L19,AGA,Aginskoye,Olovyannaya,"kept: the nearer town is 40 km off; no reason to prefer it to the name"
+C217-L18,RYBNIK POL,Rybnik,Niedobczyce,"kept: the named town carries the entry"
+C045-L35,MEZDRA BULG,Mezdra,Montana,"kept: the nearer town is 34 km off; no reason to prefer it to the name"
+C166-L06,MORDOVO,Mordovo,Usman’,"kept: the nearer town is 25 km off; no reason to prefer it to the name"
+C018-L23,BEREZNIKI,Berezniki,Usol’ye,"kept: the named city is listed in its own right"
+C035-L22,TOROKBALINT HUNG,Törökbálint,Budaörs,"kept: both about 5-6 km from the point; nothing favours the unnamed town"

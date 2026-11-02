@@ -173,6 +173,18 @@ def spatial_scores(table: pd.DataFrame, models: list[Spec], n_bags: int) -> dict
     return total
 
 
+def spatial_train_positives(rows: pd.DataFrame) -> int:
+    """The fewest positives any spatial fit trained on, over every grid and fold."""
+    lat, lon = rows["lat"].to_numpy(float), rows["lon"].to_numpy(float)
+    fewest = int(rows["listed"].sum())
+    for offset in GRID_OFFSETS:
+        blocks = pd.Series(assign_blocks(lat, lon, BLOCK_KM, offset), index=rows.index)
+        fold = folds(blocks, rows["listed"], N_FOLDS, seed=int(offset))
+        for f in range(N_FOLDS):
+            fewest = min(fewest, int(rows.loc[fold != f, "listed"].sum()))
+    return fewest
+
+
 def temporal(
     table: pd.DataFrame, models: list[Spec], n_bags: int
 ) -> tuple[list[dict], dict[str, pd.DataFrame]]:

@@ -1,15 +1,15 @@
 {
   "milestone": "M4 transfer check",
-  "created": "2026-11-01T16:17:01+00:00",
-  "git_commit": "878e45e87f1a12390f547ba89beed271970e26e0",
+  "created": "2026-11-02T04:29:32+00:00",
+  "git_commit": "c840f885fc0a5aa45b11f82b6327f4f5c6bc9c74",
   "data": {
-    "dataset_sac1956.parquet": "595b6fead2ecb8453198bc359cef75a21f1e365158b83f96ec24639545ada1db",
-    "features_transfer.parquet": "b3614453d15822f7115317e587e7c7ba7df8601bfda428f54916bbd57e267e7d",
-    "labels_transfer.parquet": "5d091fc48b5a2ecfdd85b12da087b8c5649ce2c72fbcec5dcef17d54fddb4b42"
+    "dataset_sac1956.parquet": "dcf7cc958ffbdc3f5170aea0348f6232a00d65c12291c49d21dfb919c1b38348",
+    "features_transfer.parquet": "78ce9a8f98a87b039ac287fe98ed971d67c38b72eeb251b6ba864cdb4aecf53e",
+    "labels_transfer.parquet": "962ea663cf045057ded6ab7e1e743dbda6ecf79a960bfd498ce7f0718716aebc"
   },
   "train": {
     "rows": 2145,
-    "positives": 1039
+    "positives": 1042
   },
   "bloc_lists": "fitted without the list's country (leave-country-out)",
   "models": {

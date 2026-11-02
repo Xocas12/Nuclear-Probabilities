@@ -38,3 +38,18 @@ def start_record() -> dict:
 
 def hashes(files: Iterable[Path]) -> dict[str, str]:
     return {str(Path(f).resolve().relative_to(ROOT.resolve())): sha256(f) for f in sorted(files)}
+
+
+# Earlier checks whose manifests record no hashes. runs/milestone_hashes.json holds them instead, so
+# that a figure edited by hand fails tests/test_holdouts_bite.py.
+MILESTONES = ("m1-slice", "m2-check", "m4-transfer-check", "m4-us-check")
+
+
+def milestone_hashes() -> dict[str, str]:
+    files = [
+        f
+        for folder in MILESTONES
+        for f in sorted((ROOT / "runs" / folder).iterdir())
+        if f.suffix in (".csv", ".json")
+    ]
+    return hashes(files)

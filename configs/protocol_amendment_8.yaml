@@ -1,0 +1,27 @@
+# Eighth amendment, in its own file like the fifth to seventh. Committed before the rerun it describes. All
+# primary results and the independent review of c840f88 had been read: nothing below is blind, and the sealed
+# set has still not been scored. No selection rule, model, gate threshold or holdout changes.
+date: 2026-11-02
+reasons: The review of c840f88 found a label rule applied to some rows only, a sector rule applied to some lists
+  only, a false negative on SAC, a scored list with no source on record, and a map unit that moved the map.
+labels:
+  corrected:
+    - wp_1964_csla_plan seq 8-14 lose selected=1. The sixth amendment's rule, that rows whose weapon the document does not state lose it, had reached only seq 15-21. The explicitly nuclear seq 1-7 link to no town, so this war plan has no linked positive.
+    - us_1956_sac_complexes KITOY moves to Angarsk and ZUYEVKA to Zuhres (data/curated/sac1956/nearer_town_links.csv). Each printed point lies within 2 km of a town of the table, and the matched name is a place below the town floor, which labels nothing. The other entries passing a nearer negative town stay (nearer_negatives_reviewed.csv).
+  sectors:
+    - Derived boxes, the fixed rule of SECTORS.yaml applied to linked positives before any box, for wp_1961_burza, wp_1965_coastal_front_zealand, wp_1970_coastal_front_map, wp_1977_zealand, wp_1975_soyuz75 and us_1958_taiwan_strait. No boundary of these documents was read. The review had shown what the Burza box does to its scores before this was written.
+    - Every other list with a linked positive is named under whole_universe in SECTORS.yaml with a reason.
+  excluded:
+    cd_1956_canada_target_areas: Role excluded and grade U. Its only source is a text extract of unrecorded origin with no copy held, no date and no hash. No primary copy could be obtained. It trained nothing; it was scored apart.
+  status:
+    wp_1970_coastal_front_map: provenance column and catalogue now say disputed, as the registry always did.
+readings_added:
+  link_audit: SAC link coverage by country, SAC designated ground zero points whose nearest town is a negative, the attackers behind the temporal holdout, and each country's town floor (runs/classifier/link_audit_*.csv). Readings only; no label changes on them.
+  spatial_train_positives: The primary table's "Trained on" now counts the smallest fit over every grid and fold, as the extended table already did; it had been an estimate of four-fifths of the positives. A row may therefore fall under the 30-positive rule.
+wording:
+  selection: configs/protocol.yaml says nothing is chosen on a held-out set. That sentence is about model settings. Each scope's candidate is chosen on spatial held-out scores, and the headline spatial gain is read on those same rows, so it is optimistic to the extent of a choice among two candidates.
+map:
+  - Greater London's 32 borough rows count as one unit in the 1965 scenario. Great Britain's other rows stay local government districts. runs/probmap/unit_sensitivity.csv reads the map with every district as a unit, with London merged, and with London and the six metropolitan counties merged.
+  - delivered.csv and by_delivery.csv now show delivered warheads unscaled. The share going to scored towns, used by the map, has its own columns. The map's arithmetic is unchanged.
+  - delivered.csv also gives the delivered interval with every theatre share held at its mode, because those shares have no source.
+  - The 1956 check against SAC's list reads the scenario's own median instead of a second draw.

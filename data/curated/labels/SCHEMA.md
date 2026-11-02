@@ -9,7 +9,7 @@ named target (or per candidate, for lists that record rejected candidates too).
 | planner | who drew up / assumed the list, e.g. `US`, `UK`, `France`, `Poland/USSR`, `FEMA (defender)` |
 | target_country | country containing the target, as at the plan date (e.g. `USSR`, `FRG`) |
 | plan_year | year of the document |
-| provenance | `plan` / `study` / `exercise` / `defender` / `reconstruction` |
+| provenance | `plan` / `disputed` (sources disagree whether plan or exercise) / `study` / `exercise` / `defender` / `reconstruction` |
 | seq | row order in the source |
 | name_source | spelling exactly as in the source |
 | name_modern | modern name, only if certain; else blank |

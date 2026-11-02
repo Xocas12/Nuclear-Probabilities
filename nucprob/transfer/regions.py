@@ -21,7 +21,6 @@ class Region:
     military_scope: dict[str, tuple[str, ...]] = field(default_factory=dict)
     note: str = ""
     extra: dict = field(default_factory=dict)
-    withheld: tuple[tuple[str, str, str], ...] = ()  # countries with a table not yet complete
 
 
 ITALY_NORTH_1961 = (

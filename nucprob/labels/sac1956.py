@@ -56,6 +56,7 @@ RADIUS_KM = 10.0
 COVER_NAMES = CURATED / "sac1956" / "cover_names.csv"
 SAME_PLACE = CURATED / "sac1956" / "same_place_links.csv"
 REJECTED_NAME_LINKS = CURATED / "sac1956" / "rejected_name_links.csv"
+NEARER_TOWN = CURATED / "sac1956" / "nearer_town_links.csv"
 NAME_OK = 75  # name similarity (0-100) below which a link is listed for review
 # Names second: a target with no settlement within RADIUS_KM is linked to a settlement up to
 # NAME_RADIUS_KM away whose name matches it closely. SAC's coordinates for remote towns can be
@@ -213,6 +214,30 @@ def same_place_links(links_cx: pd.DataFrame, places: pd.DataFrame) -> pd.DataFra
     return out
 
 
+def nearer_town_links(links_cx: pd.DataFrame, places: pd.DataFrame) -> pd.DataFrame:
+    """Entries NEARER_TOWN moves: the name matched a place below the town floor, which labels nothing,
+    while the printed point lies within 2 km of a town of the table. Fails if the link it corrects
+    has changed, so a stale row cannot silently move a different link."""
+    d = pd.read_csv(NEARER_TOWN, dtype=str)
+    out = links_cx.copy()
+    town = places.set_index("place_id")
+    for _, r in d.iterrows():
+        if r["place_id"] not in town.index:
+            continue
+        i = out.index[out["id"] == r["sac_id"]]
+        assert (out.loc[i, "place_id"] == r["was_place_id"]).all(), r["sac_id"]
+        t = town.loc[r["place_id"]]
+        out.loc[i, "place_id"] = r["place_id"]
+        out.loc[i, "dist_km"] = round(
+            float(
+                haversine_km(out.loc[i, "lat"].iat[0], out.loc[i, "lon"].iat[0], t["lat"], t["lon"])
+            ),
+            2,
+        )
+        out.loc[i, "link_method"] = "nearer town"
+    return out
+
+
 def link_names(links_cx: pd.DataFrame, located: pd.DataFrame, index: Points) -> None:
     """Names second: a complex with no settlement within the radius goes to a settlement up to
     NAME_RADIUS_KM away whose name matches it closely (in place)."""
@@ -303,7 +328,7 @@ def build(radius_km: float = RADIUS_KM) -> tuple[pd.DataFrame, pd.DataFrame, pd.
     links_cx = pd.concat(parts_cx, ignore_index=True)
     links_dgz = pd.concat(parts_dgz)
     located = places[places["has_coords"]]
-    links_cx = same_place_links(reject_name_links(links_cx), located)
+    links_cx = nearer_town_links(same_place_links(reject_name_links(links_cx), located), located)
     # Entries SAC printed under an open town's name for the closed town next to it.
     credited = pd.concat([links_cx, cover_links(links_cx, located)], ignore_index=True)
 

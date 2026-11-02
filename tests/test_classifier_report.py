@@ -155,8 +155,12 @@ def test_the_readme_quotes_the_report_and_the_gate():
 
 
 @needs_run
-def test_tables_hold_no_row_for_a_list_absent_from_the_scope():
-    tables = (OUT / "TABLES.md").read_text(encoding="utf-8")
+def test_each_scope_lists_only_documents_of_that_scope():
     lists = pd.read_csv(OUT / "lists.csv")
-    assert tables.count("\n") < 12 * len(lists) ** 0.5 + len(lists)
+    table = pd.read_parquet(PROCESSED / "classifier_table.parquet")
+    pact = lists[lists["scope"].str.startswith("Warsaw Pact")]
+    assert pact["plan_id"].str.startswith("wp_").all()
+    train = set(table.loc[table["role"] == "train", "plan_id"])
+    expected = lists["holdout"].str.startswith("expectation")
+    assert set(lists.loc[~expected, "plan_id"]) <= train
     assert not np.isnan(pd.read_csv(OUT / "comparison.csv")["delta"]).any()

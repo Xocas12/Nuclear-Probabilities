@@ -1,0 +1,20 @@
+{
+  "runs/m1-slice/importance.csv": "d902272ca767070e4d290fabc5dd317eefec28d9351c534b6f38a83264d67f73",
+  "runs/m1-slice/manifest.json": "7661e5bdfdc7ee22b0bbe3436b96c180622222542e3c9cc0fb602cff60a9692f",
+  "runs/m1-slice/metrics.csv": "26704c4299da08857ad5bb7f89b781f64dcb8278fdfeffb53388482e125d6992",
+  "runs/m1-slice/oof_predictions.csv": "6b121d025ad061a07d747fe90500acd5e071c4edfe8f18f3272ccd26164490e3",
+  "runs/m2-check/by_country.csv": "cafc7d61333ac728ac4913eae9bb00320e47926a44e6e46c0f8ce099689b2030",
+  "runs/m2-check/gains.csv": "60ab652166c1f7f218e9b7b9674f0ec5c0e22c52e70795da64bcb881fe80268b",
+  "runs/m2-check/importance.csv": "78b5bbcf8df9ccdd6dfca8150c5bae4e1aa944f43b076fa665e6405c6efac378",
+  "runs/m2-check/manifest.json": "01ca94d0870e217d5413b45ddbd626f4e7cc271d3f28e1cb56fc0a740d04d169",
+  "runs/m2-check/metrics.csv": "6217b1da227a72b8177008ae81599590ee7fe709cc7898627c0ebade7d5ffb46",
+  "runs/m2-check/oof_predictions.csv": "1b98ef105eec2a572b42124c866af902ca721ac49ef5bb9531c841f718d124df",
+  "runs/m4-transfer-check/manifest.json": "0aa11e61437927ea7e1705a158d50dc1e75b2c75693e80a99f73279aa6ae99b7",
+  "runs/m4-transfer-check/metrics.csv": "863ee480d56081eff5b8b473c4f5818e9ae87dcbe295ed34839e6be5a6afa554",
+  "runs/m4-transfer-check/paired.csv": "5fe2b2d08d8e83b3cafc2ec64f99462629d8481f7c14dbae3a29761487859aea",
+  "runs/m4-transfer-check/scores.csv": "c926982e01c361a4e432735729ecd78348e0f1a47429559a19c64761b319f567",
+  "runs/m4-us-check/importance.csv": "a43e3692854754a48d2844f188482d4ac4fda38e22971567d095358641a47e7c",
+  "runs/m4-us-check/manifest.json": "f32500aa71963df50ce72abfeab2ebe3c28b79aa84600bb6f05f87944f950641",
+  "runs/m4-us-check/metrics.csv": "d1926588ac73100e4a2b5f278230fa0ab55c64dc9b6116ce4ae7fa0da8cb64c6",
+  "runs/m4-us-check/oof_predictions.csv": "04c04c889daebc70bb246440c3a845a254db780b7946700435dcf2336fb67ec4"
+}

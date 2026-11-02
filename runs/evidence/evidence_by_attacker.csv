@@ -1,7 +1,8 @@
 attacker,doc_type,grade,role,documents,lists,rows
 (none: expectation of a defender),civil_defence,A,excluded,1,1,16
-(none: expectation of a defender),civil_defence,A,test-expectation,2,2,3155
+(none: expectation of a defender),civil_defence,A,test-expectation,1,1,3142
 (none: expectation of a defender),civil_defence,C,test-expectation,2,2,155
+(none: expectation of a defender),civil_defence,U,excluded,1,1,13
 (none: expectation of a defender),mirror,A,test-expectation,2,2,102
 Czechoslovakia,war_plan,A,train,1,1,21
 Poland,disputed_plan_or_exercise,C,train,1,1,4

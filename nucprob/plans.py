@@ -10,11 +10,13 @@ Writes runs/evidence/evidence_by_attacker.csv (documents and rows by attacker, d
 grade) and, if the labels are built, runs/evidence/state_model_gate.csv.
 """
 
+import json
 from collections.abc import Mapping
 
 import pandas as pd
 import yaml
 
+from nucprob.outputs import hashes, start_record
 from nucprob.paths import CURATED, PROCESSED, ROOT, RUNS
 
 REGISTRY = CURATED / "labels" / "PLANS.yaml"
@@ -33,7 +35,7 @@ DOC_TYPES = {
     "civil_defence",
     "reconstruction",
 }
-GRADES = {"A", "B", "C", "D"}
+GRADES = {"A", "B", "C", "D", "U"}
 ROLES = {"train", "test-expectation", "excluded"}
 
 
@@ -124,6 +126,7 @@ def exercise_gate(positives: Mapping[str, int], reg: pd.DataFrame, rule: Mapping
 
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
+    started = start_record()
     evidence_table().to_csv(OUT / "evidence_by_attacker.csv", index=False)
     labels = PROCESSED / "labels_transfer.parquet"
     dataset = PROCESSED / "dataset_sac1956.parquet"
@@ -139,6 +142,15 @@ def main() -> None:
     pooled = exercise_gate(positives, plans(), rule["warsaw_pact_exercise_model"])
     table = pd.concat([table, pd.DataFrame([pooled])], ignore_index=True)
     table.to_csv(OUT / "state_model_gate.csv", index=False)
+    (OUT / "manifest.json").write_text(
+        json.dumps(
+            {
+                **started,
+                "outputs": hashes([OUT / "evidence_by_attacker.csv", OUT / "state_model_gate.csv"]),
+            },
+            indent=2,
+        )
+    )
     print(table.to_string(index=False))
 
 

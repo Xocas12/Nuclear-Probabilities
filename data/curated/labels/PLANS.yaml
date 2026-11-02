@@ -24,7 +24,8 @@
 #   B a primary document read here, naming only part of the targets it counts, or a later
 #     classified history quoting the primary;
 #   C a scholar's table or paraphrase of an archive file not read here;
-#   D journalism, or an encyclopedia.
+#   D journalism, or an encyclopedia;
+#   U a text of unrecorded origin, not checked against any document held here. Never scored.
 # group: lists sharing a group come from one document or exercise, and count as one plan when
 #   plans are counted (configs/protocol.yaml).
 # complete: true if the list claims to give all targets within its scope. false = positive-
@@ -55,6 +56,6 @@ plans:
   - {plan_id: nato_1965_hu_wargame_mirror, attacker: null, author: Hungarian Army with the Soviet Southern Group of Forces, date: 1965-06, doc_type: mirror, grade: A, group: hu_wargame_1965, complete: true, role: test-expectation}
   - {plan_id: cd_1955_operation_alert, attacker: null, author: US Federal Civil Defense Administration, date: 1955-06, doc_type: civil_defence, grade: A, group: cd_alert_1955, complete: false, role: excluded}
   - {plan_id: cd_1955_operation_alert_full, attacker: null, author: US Federal Civil Defense Administration, date: 1955-06, doc_type: civil_defence, grade: C, group: cd_alert_1955, complete: true, role: test-expectation}
-  - {plan_id: cd_1956_canada_target_areas, attacker: null, author: Canadian federal civil defence, date: 1956, doc_type: civil_defence, grade: A, group: cd_canada_1956, complete: true, role: test-expectation}
+  - {plan_id: cd_1956_canada_target_areas, attacker: null, author: Canadian federal civil defence, date: 1956, doc_type: civil_defence, grade: U, group: cd_canada_1956, complete: true, role: excluded}
   - {plan_id: cd_1980_square_leg, attacker: null, author: UK Home Office and MoD exercise (New Statesman reproduction), date: 1980-09, doc_type: civil_defence, grade: C, group: cd_square_leg_1980, complete: false, role: test-expectation}
   - {plan_id: cd_1987_napb90_counties, attacker: null, author: US Federal Emergency Management Agency, date: 1987, doc_type: civil_defence, grade: A, group: cd_napb90_1987, complete: true, role: test-expectation}

@@ -55,7 +55,13 @@ def payload() -> dict:
                 "shift_label": "Extrapolation" if sc["era"] == "modern" else "Historical",
                 "towns": int(s["towns"]),
                 "delivered": d[
-                    ["attacker", "delivered_low", "delivered_median", "delivered_high"]
+                    [
+                        "attacker",
+                        "delivered_low",
+                        "delivered_median",
+                        "delivered_high",
+                        "on_scored_towns_median",
+                    ]
                 ].to_dict("records"),
                 "cells": c[columns].round(2).to_numpy().tolist(),
             }

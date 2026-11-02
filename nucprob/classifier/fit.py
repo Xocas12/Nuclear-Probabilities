@@ -69,6 +69,7 @@ def logistic_country(seed: int = 0) -> object:
 
 
 def population_rule(seed: int = 0):
+    """`seed` is part of every factory's signature; a logistic regression has nothing random in it."""
     return logistic()
 
 

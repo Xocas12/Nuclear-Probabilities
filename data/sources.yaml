@@ -1182,6 +1182,8 @@ sources:
   retrieved: '2026-10-10'
   sha256: 2ee84898f4050cc9d2bc0763e8af580ac82863105e045b2270731b7af3c5f706
   volatile: DOI landing page; the table is listed in the card
+  held: 'not the document. The file in data/raw is the XHTML landing page (256 kB). The recorded sha256 is of the 11.5 MB
+    PDF named in the card, which is not held; ssh.datastations.nl robots.txt disallows the path. towns_nl_1960.csv is the record.'
 - id: census_be_1961
   url: https://doc.statbel.fgov.be/publications/S210.A7/S210.A7F_Recensement_1961_Tome_01.pdf
   path: belgium/S210.A7F_Recensement_1961_Tome_01.pdf
@@ -1199,6 +1201,8 @@ sources:
   retrieved: '2026-10-10'
   sha256: aa2b08afaae1ebcf99b6d03c311cbb0341406efaa122c6344b4757c4f7e6bbb1
   volatile: the publisher refused TLS on 2026-11-01; towns_it_1961.csv is the record
+  held: 'not held. The volume answered 403 on 2026-11-02. towns_it_1961.csv, 814 of the Western towns, cannot be rechecked
+    against it here.'
 - id: census_uk_1981_nomis
   url: https://www.nomisweb.co.uk/api/v01/dataset/NM_66_1.data.csv
   path: uk/nomis_sas81_districts_tot.csv
@@ -1736,6 +1740,9 @@ sources:
   sha256: null
   hash_note: no file is held. data/notes/civil_defence.md gives a shortened hash, d036cd97…7fd57930, of
     a copy of the extract that is gone
+  scored: 'no. Registry role excluded, grade U, from the eighth amendment: without an origin, a date or a
+    hash the rows meet neither data/curated/labels/SCHEMA.md nor the data-card standard. On 2026-11-02 canadiana.ca''s
+    robots.txt refused AI agents and LiPaD answered 403, so no primary copy was obtained.'
 - id: plandoc_campbell_1980
   url: https://www.duncancampbell.org/menu/journalism/newstatesman/newstatesman-1980/WW3.pdf
   title: 'Duncan Campbell, ''World War III: an exclusive preview'', New Statesman, 3 October 1980, map

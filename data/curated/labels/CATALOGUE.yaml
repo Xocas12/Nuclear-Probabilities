@@ -196,7 +196,7 @@ lists:
     planner: Poland (Coastal Front)
     targets: Denmark
     year: 1970
-    provenance: plan
+    provenance: disputed
     selection: judgment
     use: transfer-test
     completeness: 5 of 17 strikes named (secondary, Nielsen et al. 2016)
@@ -321,7 +321,7 @@ lists:
     use: transfer-test
     completeness: the 13 areas named in the House of Commons
     card: data/notes/civil_defence.md (5)
-    caveats: sitting date and page not verified
+    caveats: a text extract of unrecorded origin; no copy is held, sitting date and page not verified; not scored in the classifier (eighth amendment)
 
   - file: rec_2002_helfand_classes.csv
     title: Helfand et al. 2002, a 2,000-warhead Russian attack on the US, by target class

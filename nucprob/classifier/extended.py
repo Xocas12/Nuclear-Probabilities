@@ -20,7 +20,7 @@ import numpy as np
 import pandas as pd
 
 from nucprob.classifier import evaluate as ev
-from nucprob.classifier.evaluate import GRID_OFFSETS, MIN_TRAIN_POSITIVES, N_FOLDS
+from nucprob.classifier.evaluate import MIN_TRAIN_POSITIVES
 from nucprob.classifier.features import NMC_FEATURES
 from nucprob.classifier.fit import ALL_FEATURES, FAMILIES, N_BAGS, Spec, lightgbm_quiet
 from nucprob.classifier.run import SAC, positives_of, scopes, usable
@@ -34,7 +34,6 @@ from nucprob.classifier.state_features import (
     state_codes,
     state_year_table,
 )
-from nucprob.model.splits import BLOCK_KM, assign_blocks, folds
 from nucprob.outputs import hashes, start_record
 from nucprob.paths import PROCESSED, ROOT, RUNS
 from nucprob.sources.fetch import sha256
@@ -74,18 +73,6 @@ def read_pair(frame: pd.DataFrame, a: np.ndarray, b: np.ndarray, label: dict) ->
     )
 
 
-def spatial_train_positives(rows: pd.DataFrame) -> int:
-    """The fewest positives any spatial fit trained on, as the primary table counts them."""
-    lat, lon = rows["lat"].to_numpy(float), rows["lon"].to_numpy(float)
-    fewest = int(rows["listed"].sum())
-    for offset in GRID_OFFSETS:
-        blocks = pd.Series(assign_blocks(lat, lon, BLOCK_KM, offset), index=rows.index)
-        fold = folds(blocks, rows["listed"], N_FOLDS, seed=int(offset))
-        for f in range(N_FOLDS):
-            fewest = min(fewest, int(rows.loc[fold != f, "listed"].sum()))
-    return fewest
-
-
 def read_scope(scope: str, rows: pd.DataFrame, bags: int) -> list[dict]:
     rows = rows.reset_index(drop=True)
     pairs = comparisons()
@@ -97,7 +84,7 @@ def read_scope(scope: str, rows: pd.DataFrame, bags: int) -> list[dict]:
     spatial = ev.spatial_scores(rows, specs, bags)
     _, held = ev.leave_one_document_out(rows, specs, bags)
     held = held.reset_index(drop=True)
-    spatial_trained = spatial_train_positives(rows)
+    spatial_trained = ev.spatial_train_positives(rows)
     readings = [
         ("spatial blocks", rows, spatial),
         ("leave one document out", held, {m.name: held[m.name].to_numpy() for m in specs}),
@@ -151,7 +138,7 @@ def read_defence_industry(rows: pd.DataFrame, bags: int) -> list[dict]:
         "comparison": "defence industry over population",
         "holdout": "spatial blocks",
         "lists": "all lists",
-        "train_positives": spatial_train_positives(su),
+        "train_positives": ev.spatial_train_positives(su),
         "constant": False,
     }
     return [read_pair(su, s["vpk"], s["population"], label)]

@@ -19,6 +19,8 @@ MANIFESTS = [
     CLASSIFIER / "sensitivity_manifest.json",
     CLASSIFIER / "extended_manifest.json",
     CLASSIFIER / "defence_targets_manifest.json",
+    CLASSIFIER / "link_audit_manifest.json",
+    RUNS / "evidence" / "manifest.json",
     MAP / "manifest.json",
 ]
 needs_run = pytest.mark.skipif(not (MAP / "manifest.json").exists(), reason="no committed run")
@@ -38,7 +40,7 @@ def test_no_table_stands_outside_a_manifest():
     listed = set()
     for path in MANIFESTS:
         listed |= set(json.loads(path.read_text())["outputs"])
-    for folder in (CLASSIFIER, MAP, MAP / "cells"):
+    for folder in (CLASSIFIER, MAP, MAP / "cells", RUNS / "evidence"):
         for f in [*folder.glob("*.csv"), *folder.glob("*.csv.gz")]:
             assert str(f.relative_to(ROOT)) in listed, f
 
@@ -85,11 +87,13 @@ def test_the_state_gate_still_refuses_what_it_refused():
         ("README.md", "military_sites_1956.csv"),
     ],
 )
-def test_each_site_table_card_gives_the_table_hash_and_licences(card, table):
+def test_each_site_table_card_gives_the_table_hash_and_points_to_its_licences(card, table):
     folder = ROOT / "data" / "curated" / "features"
     text = (folder / card).read_text(encoding="utf-8")
     assert sha256(folder / table) in text
     assert "cited_pages.csv" in text
+    pages = pd.read_csv(folder / "cited_pages.csv", dtype=str, keep_default_na=False)
+    assert pages["licence"].str.len().min() > 0
 
 
 def test_the_sealed_sizes_in_the_report_are_those_of_the_table():

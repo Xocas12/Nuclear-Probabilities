@@ -1,6 +1,6 @@
 # Transfer regions: data card
 
-> **Rerun 1 November 2026** on designated rows only and on towns geocoded within their own unit (protocol, fourth amendment). The classifier's reading is `REPORT.md`. Lists here cover whole countries, not the sectors of `SECTORS.yaml`.
+> **Rerun 2 November 2026** on the labels of the eighth amendment (`configs/protocol_amendment_8.yaml`). The classifier's reading is `REPORT.md`. Lists here cover whole countries, not the sectors of `SECTORS.yaml`.
 
 The smaller target lists (PLAN sections 4.5 and 5.2) were first too small to train on, and tested
 whether a model fitted on the Soviet bloc in 1956 ranks another plan's targets above the other
@@ -149,33 +149,31 @@ the number of towns listed.
 
 | List | Listed / towns | PR-AUC, rule / LightGBM | PR-AUC difference [95% CI] | Precision@k, rule / LightGBM | Precision@k difference [95% CI] | ROC-AUC, rule / LightGBM | ROC-AUC difference [95% CI] |
 |---|---|---|---|---|---|---|---|
-| Canada target areas 1956 | 13 / 137 | 0.85 / 0.81 | -0.03 [-0.14, +0.06] | 0.77 / 0.77 | 0.00 [-0.23, 0.00] | 0.96 / 0.97 | +0.01 [-0.02, +0.07] |
-| Operation Alert 1955 (full) | 51 / 1,262 | 0.70 / 0.33 | -0.37 [-0.45, -0.26] | 0.59 / 0.37 | -0.22 [-0.33, -0.08] | 0.98 / 0.95 | -0.03 [-0.04, -0.02] |
-| Target Committee 1945 | 6 / 550 | 0.64 / 0.22 | -0.42 [-0.87, +0.08] | 0.83 / 0.33 | -0.50 [-1.00, +0.17] | 0.99 / 0.96 | -0.03 [-0.07, 0.00] |
-| Square Leg 1980 | 75 / 476 | 0.39 / 0.41 | +0.02 [-0.04, +0.11] | 0.39 / 0.39 | 0.00 [-0.07, +0.09] | 0.66 / 0.71 | +0.05 [+0.01, +0.10] |
-| Lato-67 | 42 / 1,029 | 0.13 / 0.12 | -0.01 [-0.08, +0.06] | 0.14 / 0.21 | +0.07 [-0.07, +0.19] | 0.74 / 0.71 | -0.03 [-0.08, +0.02] |
-| NATO mirror, Poland 1962 | 27 / 126 | 0.44 / 0.59 | +0.14 [+0.07, +0.21] | 0.44 / 0.52 | +0.07 [0.00, +0.22] | 0.68 / 0.73 | +0.06 [-0.01, +0.12] |
-| NATO mirror, Hungary 1965 | 13 / 120 | 0.41 / 0.27 | -0.14 [-0.24, +0.02] | 0.38 / 0.38 | 0.00 [-0.08, +0.15] | 0.69 / 0.67 | -0.02 [-0.09, +0.04] |
-| Hungarian war game 1965 (AT, IT, FRG) | 12 / 1,446 | 0.09 / 0.19 | +0.10 [-0.03, +0.32] | 0.17 / 0.42 | +0.25 [0.00, +0.50] | 0.79 / 0.83 | +0.04 [-0.01, +0.11] |
+| Canada target areas 1956 | 13 / 137 | 0.85 / 0.81 | -0.04 [-0.12, +0.04] | 0.77 / 0.77 | 0.00 [-0.15, 0.00] | 0.96 / 0.97 | +0.01 [-0.03, +0.06] |
+| Operation Alert 1955 (full) | 51 / 1,262 | 0.70 / 0.32 | -0.37 [-0.45, -0.26] | 0.59 / 0.31 | -0.27 [-0.39, -0.12] | 0.98 / 0.95 | -0.03 [-0.04, -0.02] |
+| Target Committee 1945 | 6 / 549 | 0.55 / 0.14 | -0.42 [-0.82, -0.11] | 0.67 / 0.00 | -0.67 [-1.00, -0.17] | 0.99 / 0.95 | -0.04 [-0.08, -0.01] |
+| Square Leg 1980 | 73 / 476 | 0.38 / 0.41 | +0.03 [-0.04, +0.12] | 0.38 / 0.40 | +0.01 [-0.07, +0.10] | 0.66 / 0.71 | +0.05 [0.00, +0.10] |
+| Lato-67 | 42 / 1,029 | 0.13 / 0.12 | -0.01 [-0.09, +0.06] | 0.14 / 0.19 | +0.05 [-0.10, +0.17] | 0.74 / 0.72 | -0.02 [-0.06, +0.03] |
+| NATO mirror, Poland 1962 | 27 / 126 | 0.44 / 0.59 | +0.14 [+0.07, +0.21] | 0.44 / 0.52 | +0.07 [0.00, +0.22] | 0.68 / 0.74 | +0.06 [-0.01, +0.13] |
+| NATO mirror, Hungary 1965 | 13 / 120 | 0.41 / 0.28 | -0.13 [-0.24, +0.04] | 0.38 / 0.38 | 0.00 [-0.08, +0.15] | 0.69 / 0.68 | -0.02 [-0.09, +0.05] |
+| Hungarian war game 1965 (AT, IT, FRG) | 12 / 1,446 | 0.09 / 0.21 | +0.12 [-0.03, +0.35] | 0.17 / 0.25 | +0.08 [-0.17, +0.33] | 0.79 / 0.83 | +0.04 [-0.01, +0.11] |
 
 - **City lists.** On Operation Alert the bloc model ranks the top of the list clearly worse than population alone,
   on every metric. The 14 Operation Alert towns on the map, a subset of the full list, show it most: PR-AUC 0.74 for the
-  rule and 0.10 for LightGBM, -0.64 [-0.80, -0.43]; 9 of the 14 largest US places are listed, against 1 of LightGBM's
-  top 14. On the Target Committee's 6 designated towns, PR-AUC -0.42 [-0.87, +0.08] is wide and includes zero. On Canada's target areas the
-  two match.
+  rule and 0.09 for LightGBM, -0.65 [-0.81, -0.44]. On the Target Committee's 6 designated towns, PR-AUC -0.42 [-0.82, -0.11] is also worse, with a wide interval. On Canada's target areas the
+  two cannot be told apart, -0.04 [-0.12, +0.04]. That row rests on a text extract of unrecorded origin (`data/sources.yaml`) and is not scored in the classifier.
 - **Mixed lists** (Square Leg, Lato-67, the two mirror lists, the Hungarian war game). No
   gain is detectable, with two exceptions: PR-AUC on the Polish mirror list, +0.14 [+0.07, +0.21],
-  and ROC-AUC on Square Leg, +0.05 [+0.01, +0.10]. The Polish list records what Polish staff expected
+  and ROC-AUC on Square Leg, +0.05 [0.00, +0.10], whose lower bound is just above zero before rounding. The Polish list records what Polish staff expected
   NATO to strike, not an attacker's plan. Square Leg's PR-AUC and precision@k intervals include zero.
 - These margins are fragile. Leaving one small Uzbek town unlocated, which changes no label in
-  these lists, moved the Square Leg ROC-AUC interval's lower end from 0.00 to +0.01 and so
-  across zero. An interval that barely excludes zero is not a finding.
+  these lists, once moved the Square Leg ROC-AUC interval's lower end across zero. An interval that barely excludes zero is not a finding.
 - ROC-AUC differences are small on every list, which is why the ROC table alone read the city
   lists as "adds nothing".
 
-Burza shows no gain: 8 linked towns of 857, PR-AUC 0.1069 for the rule and 0.0613 for LightGBM
-on the common features, a difference of -0.0456 [-0.2108, +0.0141], which includes zero. 0 of
-Burza's intervals exclude zero. `paired.csv` holds 138 intervals (the military model has no row on a
+Burza shows no gain: 8 linked towns of 857 (this card reads whole countries; the classifier reads its sector), PR-AUC 0.1069 for the rule and 0.0771 for LightGBM
+on the common features, a difference of -0.0298 [-0.1828, +0.0587], which includes zero. 0 of
+Burza's intervals exclude zero. `paired.csv` holds 129 intervals (the military model has no row on a
 list with any town outside its table's scope), so at 95% a few will exclude zero by chance.
 
 This is a check that the pipeline joins end to end, not a result: it was read before the protocol (`configs/protocol.yaml`) was frozen. The classifier run is in `REPORT.md`.
