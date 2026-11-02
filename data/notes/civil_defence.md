@@ -268,3 +268,7 @@ Provenance in the label CSVs is `defender` for government or exercise assumption
 - `wikipedia_Square_Leg.json` `082ba536…815a`; `wikipedia_Hard_Rock_(exercise).json` `8d3aa254…a5d25e`
 - `OSTI_biblio_7361159.html` `ee8cfa68…98067`
 - FEMA-196 PDF `9ddf7911…2828`: not used in this pass.
+
+---
+
+**Note, 2 November 2026.** Section 5's Canadian list is no longer scored (`configs/protocol_amendment_8.yaml`). canadiana.ca's robots.txt refuses AI agents and LiPaD answered 403, so no primary copy was obtained.

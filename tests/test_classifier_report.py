@@ -158,9 +158,63 @@ def test_the_readme_quotes_the_report_and_the_gate():
 def test_each_scope_lists_only_documents_of_that_scope():
     lists = pd.read_csv(OUT / "lists.csv")
     table = pd.read_parquet(PROCESSED / "classifier_table.parquet")
-    pact = lists[lists["scope"].str.startswith("Warsaw Pact")]
-    assert pact["plan_id"].str.startswith("wp_").all()
-    train = set(table.loc[table["role"] == "train", "plan_id"])
     expected = lists["holdout"].str.startswith("expectation")
+    pact = lists[lists["scope"].str.startswith("Warsaw Pact")]
+    # Rows the pooled model is fitted and held out on are Warsaw Pact documents; the other side's
+    # expectations of a Soviet strike are scored only as expectation lists, never as plans.
+    assert pact.loc[~expected, "plan_id"].str.startswith("wp_").all()
+    roles = table.groupby("plan_id")["role"].first()
+    assert (roles.reindex(lists.loc[expected, "plan_id"]) == "test-expectation").all()
+    assert not lists.loc[expected, "plan_id"].str.startswith("wp_").any()
+    train = set(table.loc[table["role"] == "train", "plan_id"])
     assert set(lists.loc[~expected, "plan_id"]) <= train
     assert not np.isnan(pd.read_csv(OUT / "comparison.csv")["delta"]).any()
+
+
+@needs_run
+def test_the_report_states_what_earlier_reviews_found_it_withholding():
+    text = " ".join((ROOT / "REPORT.md").read_text(encoding="utf-8").split())
+    assert "no measured error rate" not in text
+    assert "743 lines, found 0 errors" in text and "3 in 216" in text
+    # Terms a newcomer needs, and the grades.
+    for term in (
+        "Strategic Air Command",
+        "Correlates of War",
+        '"All permitted"',
+        "C, a scholar's table",
+    ):
+        assert term in text, term
+    # War plans: what was read at source, in numbers from the outputs.
+    assert "Only one was read at source" in text
+    assert "A further 1 document" not in text
+    # The map's unsourced shares and its scaling are printed, not left to the config.
+    assert "The theatre shares have no source" in text
+    assert "share of people living in scored towns" in text
+    assert "unit_sensitivity.csv" in text
+    assert "The temporal rows also change attacker" in text
+    # A gain named in prose is one in the table, whatever the data say.
+    assert "Those gains are over LightGBM" not in text
+
+
+@needs_run
+def test_the_transcription_figures_in_the_report_are_those_of_the_card():
+    card = (ROOT / "data" / "curated" / "sac1956" / "README.md").read_text(encoding="utf-8")
+    card = " ".join(card.split())
+    assert "(743 lines, seed 1956)" in card and "0 of 743, 95% interval 0 to 0.51%" in card
+    assert "error rate was 1.3%" in card and "is 3 in 216" in card
+
+
+@needs_run
+def test_a_row_under_the_training_floor_is_counted_over_every_grid():
+    """The primary table's training count is the fewest positives of any fit, not an estimate."""
+    table = PROCESSED / "classifier_table.parquet"
+    if not table.exists():
+        pytest.skip("no built tables")
+    t = pd.read_parquet(table)
+    t = t[~t["sealed"].astype(bool) & (t["role"] == "train") & t["plan_id"].str.startswith("wp_")]
+    comp = pd.read_csv(OUT / "comparison.csv")
+    row = comp[
+        (comp["scope"] == "Warsaw Pact, pooled, exercise-based")
+        & (comp["holdout"] == "spatial blocks")
+    ].iloc[0]
+    assert row["train_positives_min"] == ev.spatial_train_positives(t.reset_index(drop=True))

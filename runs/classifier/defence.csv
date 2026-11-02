@@ -1,0 +1,8 @@
+rows_described,feature,rows,positives,odds_ratio_per_tenfold,low,high,excludes_one
+"US 1956 complexes, USSR towns",log_km_to_sam,1359,566,1.3083,1.0306,1.7098,True
+"US 1956 complexes, USSR towns",log_km_to_air_defence,1359,566,1.1244,0.9287,1.4212,False
+"US 1956 complexes, USSR towns",log_air_defence_sites_50km,1359,566,0.3262,0.1929,0.5035,True
+"US 1956 complexes, USSR towns",log_km_to_air_defence_no_s25,1359,566,1.1178,0.9264,1.4115,False
+"Warsaw Pact documents, NATO Europe (attacker lists; exercises included)",log_km_to_sam,1846,122,1.7713,0.9774,3.6776,False
+"Warsaw Pact documents, NATO Europe (attacker lists; exercises included)",log_km_to_air_defence,1846,122,1.7198,0.9111,3.6604,False
+"Warsaw Pact documents, NATO Europe (attacker lists; exercises included)",log_air_defence_sites_50km,1846,122,0.5235,0.2321,1.1205,False

@@ -1,0 +1,35 @@
+{
+  "created": "2026-11-02T05:05:43+00:00",
+  "git_commit": "110174e2f00f1ada0797bc3ed2b17780b5eea07b",
+  "git_dirty": false,
+  "protocol_sha256": "cc14e52ef3cce2f0562ea24195872a3cfa10a30571a0e13fb5dcb130914794f8",
+  "scenarios_sha256": "84b9572c8d2e2126f190b709a2c4a84617b073e5e765ef259cc995ee32b16905",
+  "stockpiles_sha256": "3bf14fcf852b646261150fe895ee3c49f82b18e28dd26e948f82c77733ae5f41",
+  "delivery_mix_sha256": "4cf794f52c9c99da34b94120e53daff74d6df78f74acc8aa1933d4147959424e",
+  "table_sha256": "d765c330d02ce9777a5e19c7a9016d7d73929e51f5257fa02420186b33e7de2b",
+  "draws": 200,
+  "score": "population rule",
+  "features": [
+    "log_pop"
+  ],
+  "quick": false,
+  "model_rule": "whichever of the population rule, portable logistic and portable LightGBM has the highest positive-weighted PR-AUC under leave one plan out, towns removed. It is one rule for every scenario, so scenarios differ only in towns and warheads.",
+  "outputs": {
+    "runs/probmap/by_delivery.csv": "d9686b2e211d479924083797f82aa9301269f101ff4f7ed331f85ee14cbd9fa5",
+    "runs/probmap/cells/modern_india_pakistan.csv.gz": "cb25727a67011231cb979f393712de1c00327ba12abd7e3a43c03e7fbb977de1",
+    "runs/probmap/cells/modern_us_china.csv.gz": "cc5a78b34e53c37608cf573c2949b8fb02d334ddfa31d6a57d31f584decf7be8",
+    "runs/probmap/cells/modern_us_russia.csv.gz": "7c3234439e42b630229e35dc7eadc94d7af66a8a5b88d4dff5809615eb5f60ce",
+    "runs/probmap/cells/modern_us_russia_half.csv.gz": "1a545202df02db507e6c072bcf386e057125a2f6a8f9e2eef9ccd4560d28e7ee",
+    "runs/probmap/cells/us_1950_stock_on_bloc.csv.gz": "fa62bc1571ece9a18e310c5b24bbaf4f086fd3042b846ab0417db27e0e1066eb",
+    "runs/probmap/cells/us_1956_on_bloc.csv.gz": "2d12a38b4f0a4c734b8153a3716e0a37db340a7be779981fadf640fd7b33f108",
+    "runs/probmap/cells/ussr_1965_on_west.csv.gz": "8aa9e177b53cd3479932a9e9d248389155ffa71ae09453f3472a65860b07ede9",
+    "runs/probmap/delivered.csv": "f00011d33e8e49fc5811bbdbceb07078d29d57197a34270157d984c813192ebc",
+    "runs/probmap/domain_shift.csv": "6c71b5ff1c3344824710cad17fd37d2bd5c2160a8ddf2824718b2f91c07d2deb",
+    "runs/probmap/model_choice.csv": "4a472c8da18c196c98109a0c3c645e39172884335c0ffc88d1243802a89f38b5",
+    "runs/probmap/reliability.csv": "600e990740134dbab6ff3e782a849119ca1d81ebd0eb913b37a52bb2cf229683",
+    "runs/probmap/scenarios.csv": "acf551104cdc9814fc48941f69aaf1493cf02ce6d43117bc593061ffe73212a3",
+    "runs/probmap/score_spread.csv": "93a4c093828372acb08277d93bf9b7f68a173a67ad0354926e685a1d75b13c9a",
+    "runs/probmap/unit_sensitivity.csv": "6c5c07bb963c4a570ea540c055dc5e7196d05bab294ad206d391111da821e719",
+    "runs/probmap/validation.csv": "9bf33a793b168ab23f9a6b7067be4e3cd75cfec108e39a8791fe05987553181c"
+  }
+}

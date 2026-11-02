@@ -1,0 +1,17 @@
+document,doc_type,attacker,counted,total,naming_defences,share
+"us_1956_sac_complexes, category 284: radar installations",requirements_study,US,complexes holding one,2087,7,0.003
+"us_1956_sac_complexes, category 210: guided missiles, upper bound",requirements_study,US,complexes holding one,2087,5,0.002
+us_1945_target_committee,target_selection,US,designated rows,21,0,0.0
+us_1958_taiwan_strait,policy_study,US,designated rows,2,0,0.0
+us_1963_jcs_china_vulnerability,policy_study,US,designated rows,0,0,
+us_1964_china_nuclear,policy_study,US,designated rows,0,0,
+wp_1964_csla_plan,war_plan,Czechoslovakia,designated rows,7,0,0.0
+wp_1965_coastal_front_zealand,war_plan,Poland,designated rows,5,0,0.0
+wp_1970_coastal_front_map,disputed_plan_or_exercise,Poland,designated rows,4,0,0.0
+wp_1977_zealand,war_plan,Poland,designated rows,10,3,0.3
+wp_1961_burza,exercise,Poland,designated rows,23,3,0.13
+wp_1967_lato67,exercise,Warsaw Pact,designated rows,57,5,0.088
+wp_1965_hu_wargame,wargame,Warsaw Pact,designated rows,23,0,0.0
+wp_1977_gsa_front_lesson,training,USSR,designated rows,19,9,0.474
+wp_1977_gsa_lessons,training,USSR,designated rows,68,6,0.088
+wp_1975_soyuz75,exercise,Warsaw Pact,designated rows,2,0,0.0

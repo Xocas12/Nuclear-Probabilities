@@ -1,0 +1,3 @@
+reading,cells,cells_listed,base_rate,median_warheads_on_scored_towns,pr_auc,roc_auc,brier,brier_of_base_rate,mean_p
+spatial blocks held out,1370,796,0.5810,1128.1690,0.8394,0.7933,0.1967,0.2434,0.4799
+SAC list left out,1370,796,0.5810,1128.1690,0.8450,0.7952,0.2036,0.2434,0.4516

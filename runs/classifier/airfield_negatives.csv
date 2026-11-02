@@ -1,0 +1,3 @@
+towns,rows,negatives,negatives_within_5km,negatives_within_10km,a_pr_auc,b_pr_auc,delta,low,high,excludes_zero,block_low,block_high,block_excludes_zero
+all towns,2145,1103,88,174,0.8475,0.8241,0.0234,0.0136,0.0337,True,0.0068,0.0436,True
+negatives within 10 km left out,1971,929,88,174,0.8755,0.8508,0.0247,0.0152,0.0339,True,0.0125,0.0397,True

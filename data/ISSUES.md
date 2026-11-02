@@ -47,3 +47,6 @@ town, which is how the 10 km rule is meant to work. Their coordinates were not c
 The other name links over 25 km are in `data/curated/sac1956/far_name_links_reviewed.csv`, three of them not confirmed, and a new one fails `tests/test_label_rules.py`.
 Square Leg's Gatwick and "Tay Bridge / Dundee" were wrong too. Large towns that stay negative on SAC, such as Baotou and Huainan, have no unlinked SAC entry within 60 km:
 the audit found nothing to link them to, and it cannot show whether the study meant to leave them out.
+
+The independent review of c840f88 (`~/hand/nuclear/review-6.md`, outside this repository, findings 1-29) is answered by `configs/protocol_amendment_8.yaml`, the rerun it
+describes, `tests/test_holdouts_bite.py`, and the new tests in `tests/test_label_rules.py` and `tests/test_probmap.py`. One is not answered: finding 1, files fetched against robots.txt, which needs the owner. "Review finding" numbers cited here and in tests refer to those review files, which are not in the repository.

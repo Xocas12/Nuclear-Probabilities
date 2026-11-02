@@ -1,0 +1,21 @@
+scope,model,variant,features,positives,a_pr_auc,b_pr_auc,delta,low,high,excludes_zero,block_low,block_high,block_excludes_zero
+"Warsaw Pact, pooled, exercise-based","LightGBM, all permitted",all permitted,33,123,0.2788,0.1724,0.1063,0.0531,0.1745,True,-0.0080,0.1682,False
+"Warsaw Pact, pooled, exercise-based","LightGBM, all permitted",none flagged,25,123,0.2743,0.1724,0.1018,0.0513,0.1670,True,-0.0079,0.1556,False
+"Warsaw Pact, pooled, exercise-based","LightGBM, all permitted",strict as-of,22,123,0.2639,0.1724,0.0914,0.0434,0.1558,True,-0.0272,0.1522,False
+"Warsaw Pact, pooled, exercise-based","LightGBM, all permitted",no national power,26,123,0.2329,0.1724,0.0604,0.0145,0.1192,True,-0.0391,0.1263,False
+"Warsaw Pact, pooled, exercise-based","LightGBM, all permitted",no source markers,20,123,0.2056,0.1724,0.0331,-0.0075,0.0810,False,-0.0825,0.0832,False
+single document: SAC 1956 (not a state model),"logistic, all permitted",all permitted,33,1042,0.8475,0.8241,0.0234,0.0136,0.0337,True,0.0068,0.0436,True
+single document: SAC 1956 (not a state model),"logistic, all permitted",none flagged,25,1042,0.8367,0.8241,0.0127,0.0050,0.0206,True,-0.0018,0.0307,False
+single document: SAC 1956 (not a state model),"logistic, all permitted",strict as-of,22,1042,0.8368,0.8241,0.0127,0.0050,0.0207,True,-0.0016,0.0293,False
+single document: SAC 1956 (not a state model),"logistic, all permitted",no national power,26,1042,0.8402,0.8241,0.0161,0.0035,0.0288,True,-0.0032,0.0406,False
+single document: SAC 1956 (not a state model),"logistic, all permitted",no source markers,20,1042,0.8313,0.8241,0.0073,-0.0059,0.0202,False,-0.0095,0.0288,False
+"global, plan documents only","LightGBM, all permitted",all permitted,33,1055,0.8420,0.8204,0.0216,0.0106,0.0326,True,0.0050,0.0411,True
+"global, plan documents only","LightGBM, all permitted",none flagged,25,1055,0.8261,0.8204,0.0057,-0.0040,0.0163,False,-0.0089,0.0227,False
+"global, plan documents only","LightGBM, all permitted",strict as-of,22,1055,0.8254,0.8204,0.0050,-0.0052,0.0159,False,-0.0116,0.0248,False
+"global, plan documents only","LightGBM, all permitted",no national power,26,1055,0.8406,0.8204,0.0201,0.0086,0.0316,True,0.0038,0.0394,True
+"global, plan documents only","LightGBM, all permitted",no source markers,20,1055,0.8278,0.8204,0.0074,-0.0051,0.0195,False,-0.0095,0.0277,False
+"global, all attacker documents","LightGBM, all permitted",all permitted,33,1172,0.7872,0.7551,0.0320,0.0195,0.0438,True,0.0111,0.0556,True
+"global, all attacker documents","LightGBM, all permitted",none flagged,25,1172,0.7761,0.7551,0.0210,0.0093,0.0322,True,0.0004,0.0429,True
+"global, all attacker documents","LightGBM, all permitted",strict as-of,22,1172,0.7705,0.7551,0.0153,0.0039,0.0269,True,-0.0068,0.0400,False
+"global, all attacker documents","LightGBM, all permitted",no national power,26,1172,0.7834,0.7551,0.0282,0.0153,0.0401,True,0.0083,0.0520,True
+"global, all attacker documents","LightGBM, all permitted",no source markers,20,1172,0.7598,0.7551,0.0047,-0.0104,0.0195,False,-0.0201,0.0337,False

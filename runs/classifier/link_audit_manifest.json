@@ -1,0 +1,10 @@
+{
+  "git_commit": "110174e2f00f1ada0797bc3ed2b17780b5eea07b",
+  "git_dirty": false,
+  "outputs": {
+    "runs/classifier/link_audit_coverage.csv": "2ad524efc5e3ff4c2c5ee81b0c9b71f14dd276332d61fb2b68c06f767fcc7d02",
+    "runs/classifier/link_audit_dgz.csv": "54f77192a58328dfdf616625f27f25ed8a7327445db2dbe027ad930da5d14594",
+    "runs/classifier/link_audit_floors.csv": "35a4bd7fa2f2b5dfe2ad217304322b54c1a1c2f0f13e719f64e9124b680835fe",
+    "runs/classifier/link_audit_temporal.csv": "7d9484ee99eea3594d869d1707ae67fe25acc8dc0cfcd5a2f2c410fcc6555c98"
+  }
+}

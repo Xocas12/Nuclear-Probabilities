@@ -135,6 +135,31 @@ class Spy:
         return M()
 
 
+def test_every_bag_fits_each_town_on_its_own_label():
+    """A bag may drop unlabeled rows but never reorders or replaces the labels it fits on."""
+    d = toy()
+    d["row"] = np.arange(len(d))
+    pairs: list = []
+
+    class Pair:
+        def __call__(self, seed: int = 0):
+            class M:
+                def fit(self, x, y):
+                    pairs.append((x["row"].to_numpy(), np.asarray(y)))
+                    return self
+
+            return M()
+
+    cfit.fit_bagged(cfit.Spec("pair", Pair(), ["log_pop", "row"]), d, n_bags=5)
+    assert len(pairs) == 5
+    listed = d["listed"].to_numpy()
+    for rows, y in pairs:
+        assert np.array_equal(y, listed[rows])
+    # And the bagged logistic ranks the toy's listed towns, which follow population, above chance.
+    fitted = cfit.fit_bagged(cfit.Spec("pop", cfit.population_rule, ["log_pop"]), d, n_bags=5)
+    assert average_precision_score(listed, fitted.score(d)) > 2 * listed.mean()
+
+
 def test_leave_one_document_out_never_trains_on_the_group_it_scores():
     d = toy()
     seen: list = []

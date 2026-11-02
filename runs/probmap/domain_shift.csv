@@ -1,0 +1,13 @@
+comparison,measure,value,towns_a,towns_b
+training towns against modern towns,two-sample ROC-AUC,0.9673,3686,2276
+for scale: SAC 1956 towns against the other training towns,two-sample ROC-AUC,0.8936,2145,1541
+modern towns outside the 1st-99th percentile of training: log_pop,share of modern towns,0.1845,3686,2276
+modern towns outside the 1st-99th percentile of training: pop_rank_pct,share of modern towns,0.0224,3686,2276
+modern towns outside the 1st-99th percentile of training: log_pop_within_25km,share of modern towns,0.0048,3686,2276
+modern towns outside the 1st-99th percentile of training: log_pop_within_50km,share of modern towns,0.0114,3686,2276
+modern towns outside the 1st-99th percentile of training: log_pop_within_100km,share of modern towns,0.0171,3686,2276
+modern towns outside the 1st-99th percentile of training: log_km_to_100k,share of modern towns,0.0158,3686,2276
+modern towns outside the 1st-99th percentile of training: national_capital,share of modern towns,0.0092,3686,2276
+modern towns outside the 1st-99th percentile of training: regional_centre,share of modern towns,0.0000,3686,2276
+modern towns outside the 1st-99th percentile of training: log_km_to_capital,share of modern towns,0.0303,3686,2276
+modern towns outside the 1st-99th percentile of training: log_km_to_coast,share of modern towns,0.0233,3686,2276

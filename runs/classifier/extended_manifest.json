@@ -1,0 +1,18 @@
+{
+  "created": "2026-11-02T06:48:38+00:00",
+  "git_commit": "110174e2f00f1ada0797bc3ed2b17780b5eea07b",
+  "git_dirty": false,
+  "amendment_sha256": "bd422f3b69feb4fe0dbcf54101e00bba3c3758dc3c5bf976ba066bb24ee96f82",
+  "table_sha256": "d765c330d02ce9777a5e19c7a9016d7d73929e51f5257fa02420186b33e7de2b",
+  "state_years": 37,
+  "state_years_missing": {
+    "pol_regime": 0,
+    "pol_defence_pact_usa": 0,
+    "pol_defence_pact_ussr": 0,
+    "pol_log_defence_pacts": 0,
+    "econ_log_gdp_pc": 2
+  },
+  "outputs": {
+    "runs/classifier/extended.csv": "11f728484d5d946642145b9d218c1290841e67fd276e2371e63f4479f9903ca5"
+  }
+}

@@ -1,0 +1,7 @@
+attacker,documents_any_type,independent_plans,linked_positives,positives_outside_largest,allowed,reason
+Czechoslovakia,1,0,0,0,False,"0 independent plans, needs 2; 0 linked positives, needs 50; 0 positives outside its largest plan, needs 15"
+Poland,4,2,6,2,False,"6 linked positives, needs 50; 2 positives outside its largest plan, needs 15"
+US,5,3,1299,7,False,"7 positives outside its largest plan, needs 15"
+USSR,1,0,0,0,False,"0 independent plans, needs 2; 0 linked positives, needs 50; 0 positives outside its largest plan, needs 15"
+Warsaw Pact,3,0,0,0,False,"0 independent plans, needs 2; 0 linked positives, needs 50; 0 positives outside its largest plan, needs 15"
+"Warsaw Pact, pooled, exercise-based",9,0,123,73,True,meets the rule; never a war-plan model
