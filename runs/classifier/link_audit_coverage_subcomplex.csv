@@ -1,12 +1,12 @@
-country_1956,entries,linked,unlinked
-Albania,2,1,1
-Bulgaria,33,12,21
-China,23,7,16
-Czechoslovakia,135,70,65
-East Germany,196,149,47
-Hungary,56,30,26
-North Korea,8,3,5
-Poland,127,97,30
-Romania,45,24,21
-USSR,249,154,95
-all,874,547,327
+country_1956,entries,linked,towns_linked,unlinked
+Albania,2,1,1,1
+Bulgaria,33,12,12,21
+China,23,7,7,16
+Czechoslovakia,135,70,70,65
+East Germany,196,149,149,47
+Hungary,56,30,30,26
+North Korea,8,3,3,5
+Poland,127,97,97,30
+Romania,45,24,24,21
+USSR,248,154,154,94
+all,873,547,547,326
