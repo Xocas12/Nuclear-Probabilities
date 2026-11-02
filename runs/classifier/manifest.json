@@ -1,11 +1,11 @@
 {
-  "created": "2026-11-02T11:34:05+00:00",
-  "git_commit": "930a164aee6c6cd3fbe9d8a2bcf5a71d98076ef0",
+  "created": "2026-11-02T15:15:29+00:00",
+  "git_commit": "a776225fa30fe91a45931c1638e3f694ef24694b",
   "git_dirty": false,
   "protocol_sha256": "cc14e52ef3cce2f0562ea24195872a3cfa10a30571a0e13fb5dcb130914794f8",
   "table_sha256": "28c139144a8cde8a7a87610448c2f5b0d882a24c4f5a4638704ff630489a97ed",
   "inputs_sha256": {
-    "data/sources.yaml": "03723061b5f11374100d43f84f0d138812ae29e6b470bb7ba2f7835bfe1ca480",
+    "data/sources.yaml": "b00a36a6a6075b94f0d535c8193a7301a1706fe8701e21fdd768342426ce5787",
     "data/curated/labels/CATALOGUE.yaml": "9221dd472c587b8b405f3e7af4160364c68ea165bf6a0ecec9b0798faca900f1",
     "data/curated/labels/PLANS.yaml": "a8701b3a91e081b8770c8e008319b8563471abff361b6c27b85213f280b3f522",
     "data/curated/labels/SCHEMA.md": "4d5d5841a58a87b111a6f97aef4eac72ffd4a434ca2c27fffed32452ce3bf6e5",
@@ -42,7 +42,7 @@
     "data/curated/labels/wp_1977_gsa_front_lesson.csv": "abcd7d2fa54c83c2ec55421d15b638a95da56c3eb4a8784b90911a8753dabad6",
     "data/curated/labels/wp_1977_gsa_lessons.csv": "75f1a489bc004276f97efdd40c128112283ea8cb9ff3effc06a77e754309eb8f",
     "data/curated/labels/wp_1977_zealand.csv": "ac5b88f253a6421c854fa67bfdf3de2d07140c1bbca3302a77d2dbe7a4d4caa5",
-    "data/curated/labels/wp_1979_seven_days.csv": "1a5f16adae7b991e181499a8af70c823eb118ce74b75c557eb15ed921e79ea3f"
+    "data/curated/labels/wp_1979_seven_days.csv": "9bf1b6abf6a5977b76c12002125937a9495e2690ef9b313d5d815ef2af689c1c"
   },
   "bags": 50,
   "bootstrap": 2000,
@@ -88,7 +88,7 @@
     "runs/classifier/comparison.csv": "138cd4a85063beb790a9244e1378dfaee8bd0905064d53194ce6237c35096b35",
     "runs/classifier/defence.csv": "6bbd7c9522e7d9be1df1ebdefc32f6c9a57fc4025e2d88fa8da110dfee16d20f",
     "runs/classifier/family_gain.csv": "11db565e945098785b8b9be2dc896cdf190d8ec8cc12f5d6601e94c2d32fee6d",
-    "runs/classifier/held_out_scores.csv.gz": "b0a543571f5443def0706691b451008972bed39284d00ba5e2b65b21ba41ab3f",
+    "runs/classifier/held_out_scores.csv.gz": "fc3fa5803efbfed7ace74b2473f0fa25e574232ecbfa619dc8e1a7afe6fecd1a",
     "runs/classifier/lists.csv": "d8d5f9b7621f223e1537abe638626b11cb5a9e3411a8ff2c4cab172b743a80f2",
     "runs/classifier/scopes.csv": "fe2787df160234017c675689e9574722b035eca428d2a3f0dc047cab7073e28d",
     "runs/classifier/selection.csv": "12624e6cc158c75d8f5ad728a40e27d62037e0246ae6733127bfade72f9f0570",
