@@ -11,3 +11,23 @@ modern towns outside the 1st-99th percentile of training: national_capital,share
 modern towns outside the 1st-99th percentile of training: regional_centre,share of modern towns,0.0000,3686,2276
 modern towns outside the 1st-99th percentile of training: log_km_to_capital,share of modern towns,0.0303,3686,2276
 modern towns outside the 1st-99th percentile of training: log_km_to_coast,share of modern towns,0.0233,3686,2276
+"training towns against modern towns, this feature alone: log_pop","one-feature ROC-AUC, folded",0.8675,3686,2276
+"training towns against modern towns, this feature alone: pop_rank_pct","one-feature ROC-AUC, folded",0.5012,3686,2276
+"training towns against modern towns, this feature alone: log_pop_within_25km","one-feature ROC-AUC, folded",0.8207,3686,2276
+"training towns against modern towns, this feature alone: log_pop_within_50km","one-feature ROC-AUC, folded",0.7674,3686,2276
+"training towns against modern towns, this feature alone: log_pop_within_100km","one-feature ROC-AUC, folded",0.6660,3686,2276
+"training towns against modern towns, this feature alone: log_km_to_100k","one-feature ROC-AUC, folded",0.6309,3686,2276
+"training towns against modern towns, this feature alone: national_capital","one-feature ROC-AUC, folded",0.5026,3686,2276
+"training towns against modern towns, this feature alone: regional_centre","one-feature ROC-AUC, folded",0.5706,3686,2276
+"training towns against modern towns, this feature alone: log_km_to_capital","one-feature ROC-AUC, folded",0.7414,3686,2276
+"training towns against modern towns, this feature alone: log_km_to_coast","one-feature ROC-AUC, folded",0.5643,3686,2276
+"training towns against modern towns, without: log_pop","two-sample ROC-AUC, one feature left out",0.9180,3686,2276
+"training towns against modern towns, without: pop_rank_pct","two-sample ROC-AUC, one feature left out",0.9426,3686,2276
+"training towns against modern towns, without: log_pop_within_25km","two-sample ROC-AUC, one feature left out",0.9665,3686,2276
+"training towns against modern towns, without: log_pop_within_50km","two-sample ROC-AUC, one feature left out",0.9673,3686,2276
+"training towns against modern towns, without: log_pop_within_100km","two-sample ROC-AUC, one feature left out",0.9678,3686,2276
+"training towns against modern towns, without: log_km_to_100k","two-sample ROC-AUC, one feature left out",0.9674,3686,2276
+"training towns against modern towns, without: national_capital","two-sample ROC-AUC, one feature left out",0.9675,3686,2276
+"training towns against modern towns, without: regional_centre","two-sample ROC-AUC, one feature left out",0.9676,3686,2276
+"training towns against modern towns, without: log_km_to_capital","two-sample ROC-AUC, one feature left out",0.9675,3686,2276
+"training towns against modern towns, without: log_km_to_coast","two-sample ROC-AUC, one feature left out",0.9677,3686,2276
