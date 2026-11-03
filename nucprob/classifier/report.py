@@ -597,15 +597,123 @@ def _pct(v: float) -> str:
     return f"{v:.1%}"
 
 
-def _trivial(idents: pd.DataFrame) -> str:
-    pop = idents.loc["population only", "accuracy"]
-    base = idents.loc["population only", "largest_document_share"]
-    if pop >= base:
-        return ""
-    return (
-        f"; population alone does worse than that, by {100 * (base - pop):.1f} points, a gap no interval was computed "
-        "for, so the two cannot be told apart"
+IDENT = OUT / "identification"
+SETS_READ = {
+    "all permitted": "on all columns",
+    "no national power": "without national power",
+    "no source markers": "with no source markers as well",
+    "population only": "on population alone",
+}
+
+
+def _points(v: float) -> str:
+    return f"{100 * v:+.1f}"
+
+
+def _identification() -> str:
+    """The document identification check with the thirteenth amendment's intervals, split spread and
+    capacity probe; a step the run has not finished is stated as pending."""
+    iv = pd.read_csv(IDENT / "intervals.csv").set_index("columns")
+    base = iv["largest_document_share"].iloc[0]
+    acc = ", ".join(
+        f"{_pct(iv.at[k, 'accuracy'])} [{_pct(iv.at[k, 'accuracy_lo'])}, {_pct(iv.at[k, 'accuracy_hi'])}] {said}"
+        for k, said in SETS_READ.items()
     )
+    gaps = {
+        v: [k for k in SETS_READ if iv.at[k, "over_largest_verdict"] == v]
+        for v in ("above", "below", "cannot be told apart")
+    }
+
+    def names(ks: list[str]) -> str:
+        return ", ".join(f'"{k}"' for k in ks)
+
+    against = []
+    if gaps["above"]:
+        against.append(f"{names(gaps['above'])} name documents better than that")
+    for k in gaps["below"]:
+        lead = (
+            "population alone does worse than that"
+            if k == "population only"
+            else f'"{k}" does worse than that'
+        )
+        against.append(
+            f"{lead}, by {-100 * iv.at[k, 'over_largest']:.1f} points "
+            f"[{-100 * iv.at[k, 'over_largest_hi']:.1f}, {-100 * iv.at[k, 'over_largest_lo']:.1f}]: it "
+            "learns nothing usable about documents and loses a little by sometimes naming another"
+        )
+    if gaps["cannot be told apart"]:
+        against.append(f"{names(gaps['cannot be told apart'])} cannot be told apart from it")
+    rise = iv.loc["no national power"]
+    ref = iv.loc[["no national power", "no source markers"], "over_reference_verdict"]
+    if (ref == "above").all():
+        rise_text = (
+            "Removing the suspected columns made identification easier, not harder: removing national power "
+            f"raises accuracy by {_points(rise['over_reference'])} points "
+            f"[{_points(rise['over_reference_lo'])}, {_points(rise['over_reference_hi'])}] over all columns, "
+            "so the rise is not noise in the held-out rows."
+        )
+    else:
+        rise_text = (
+            "The rise when columns are removed has an interval that includes zero, so it cannot be told "
+            "from noise in the held-out rows."
+        )
+    manifest = json.loads((IDENT / "manifest.json").read_text())
+    pending = manifest["pending"]
+    if (IDENT / "splits.csv").exists():
+        sp = pd.read_csv(IDENT / "splits.csv").set_index("columns")
+        n = int(sp["splits"].iloc[0])
+        spread = ", ".join(
+            f"{_pct(sp.at[k, 'min'])} to {_pct(sp.at[k, 'max'])} {said}"
+            for k, said in SETS_READ.items()
+        )
+        spread_text = (
+            f"The intervals hold the fitted folds fixed; over {n} of the 10 further place-grouped splits the "
+            f"amendment fixed, accuracy runs from {spread} (`runs/classifier/identification/splits.csv`)."
+        )
+    else:
+        spread_text = "The intervals hold the fitted folds fixed; the spread over 10 further splits is pending."
+    if (IDENT / "capacity.csv").exists():
+        cap = pd.read_csv(IDENT / "capacity.csv").set_index("max_iter")
+        lo_it, hi_it = cap.index.min(), cap.index.max()
+        call = cap["call"].iloc[0]
+        probe = (
+            f"The thirteenth amendment stated one explanation before it was tested: {lo_it} boosting "
+            f"iterations spread over more columns. At {hi_it} iterations all columns give "
+            f"{_pct(cap.at[hi_it, 'all_permitted'])} and no source markers "
+            f"{_pct(cap.at[hi_it, 'no_source_markers'])}, a gap of {_points(cap.at[hi_it, 'difference'])} "
+            f"points [{_points(cap.at[hi_it, 'difference_lo'])}, {_points(cap.at[hi_it, 'difference_hi'])}], "
+            f"against {_points(cap.at[lo_it, 'difference'])} at {lo_it} "
+            f"(`runs/classifier/identification/capacity.csv`); capacity probe: {call}."
+        )
+    else:
+        call = "pending"
+        probe = (
+            "The thirteenth amendment stated one explanation to test, too few boosting iterations spread over "
+            "more columns; capacity probe: pending, so the rise is unexplained for now."
+        )
+    if call == "explained by capacity":
+        close = (
+            "The check gives no sign that national power marks a row's document beyond what the other "
+            "columns do."
+        )
+    else:
+        if call != "pending":
+            probe += " Why fewer columns name documents better remains unexplained."
+        close = (
+            "The check gives no sign that national power marks a row's document, but while adding columns "
+            "lowers accuracy for a reason not found, it cannot rule that out either."
+        )
+    if pending:
+        close += (
+            f" Steps of the amendment not yet run: {', '.join(pending)} (listed in "
+            "`runs/classifier/identification/manifest.json`)."
+        )
+    return f"""From the
+columns alone, with folds grouped by place, a classifier names a row's document {acc}, against
+{_pct(base)} for always naming the largest document. The intervals resample places, keeping a place's rows together
+(2,000 resamples; `runs/classifier/identification/intervals.csv`). On those intervals {"; ".join(against)}.
+{rise_text} {spread_text} {probe} {close}
+"""
 
 
 def _follows(spread: pd.DataFrame, towns_more: pd.DataFrame) -> str:
@@ -1128,7 +1236,6 @@ def report() -> str:
         values="pr_auc",
     ).reset_index()[["plan_id", "doc_type", "towns", "positives", "base_rate", RULE, g_best]]
     nearby = pd.read_csv(OUT / "block_neighbours.csv")
-    idents = pd.read_csv(OUT / "document_identification.csv").set_index("columns")
     air = pd.read_csv(OUT / "airfield_negatives.csv").set_index("towns")
     air_all, air_less = air.loc["all towns"], air.loc["negatives within 10 km left out"]
     fam_table = fam.assign(
@@ -1319,13 +1426,8 @@ Each scope's selected candidate against population plus country under spatial bl
 "None flagged" removes today's data standing in for the past. "Strict as-of" also removes the defence tables, mostly
 post-Soviet knowledge. "No national power" removes COW's values, which take one value per country and year and so
 were suspected of marking a document. "No source markers" also removes the defence and military columns, which are
-blank or filled according to the table a row came from. The check below did not confirm either suspicion. From the
-columns alone, with folds grouped by place, a classifier names a row's document {_pct(idents.loc["all permitted", "accuracy"])} of the time on all columns,
-{_pct(idents.loc["no national power", "accuracy"])} without national power, {_pct(idents.loc["no source markers", "accuracy"])} with no source markers as well and {_pct(idents.loc["population only", "accuracy"])} on population alone,
-against {_pct(idents.loc["all permitted", "largest_document_share"])} for always naming the largest document{_trivial(idents)}
-(`runs/classifier/document_identification.csv`). Removing the suspected columns made identification easier, not harder, which a
-classifier given more columns should not show; this is not explained. No interval was computed for any of these
-accuracies, so they do not show how far any set of columns tells documents apart.
+blank or filled according to the table a row came from. The check below did not confirm either suspicion.
+{_identification()}
 
 {markdown(sens_table)}
 

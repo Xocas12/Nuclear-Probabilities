@@ -84,12 +84,46 @@ def test_the_run_reproduced_the_committed_check_and_names_its_amendment():
 
 
 @needs_run
+def test_every_step_is_clean_and_the_pending_list_matches_the_outputs():
+    m = json.loads((OUT / "manifest.json").read_text())
+    assert set(m["steps"]) | set(m["pending"]) == set(ident.STEPS)
+    assert not set(m["steps"]) & set(m["pending"])
+    assert all(r["git_dirty"] is False for r in m["steps"].values())
+    assert ("capacity probe" in m["steps"]) == (OUT / "capacity.csv").exists()
+    seeds = [s for s in m["steps"] if s.startswith("split ")]
+    assert bool(seeds) == (OUT / "splits.csv").exists()
+    if seeds:
+        assert (pd.read_csv(OUT / "splits.csv")["splits"] == len(seeds)).all()
+
+
+@needs_run
 def test_report_states_the_intervals_and_the_probe_call():
     text = " ".join((ROOT / "REPORT.md").read_text(encoding="utf-8").split())
     got = pd.read_csv(OUT / "intervals.csv").set_index("columns")
     for name in ident.SETS:
         lo, hi = got.at[name, "accuracy_lo"], got.at[name, "accuracy_hi"]
         assert f"[{lo:.1%}, {hi:.1%}]" in text, name
-    call = pd.read_csv(OUT / "capacity.csv")["call"].iloc[0]
-    assert f"capacity probe: {call}" in text
+    if (OUT / "capacity.csv").exists():
+        call = pd.read_csv(OUT / "capacity.csv")["call"].iloc[0]
+        assert f"capacity probe: {call}" in text
+    else:
+        assert "capacity probe: pending" in text
+    for step in json.loads((OUT / "manifest.json").read_text())["pending"]:
+        assert step in text[text.index("Steps of the amendment not yet run") :][:600]
     assert "No interval was computed for any of these accuracies" not in text
+
+
+def test_a_checkpoint_is_reused_only_under_the_same_key(tmp_path, monkeypatch):
+    monkeypatch.setattr(ident, "WORK", tmp_path)
+    calls = []
+
+    def compute():
+        calls.append(1)
+        return {"all permitted": np.array([1, 2, 3])}
+
+    first, _ = ident.checkpoint("s", {"k": 1}, compute)
+    again, _ = ident.checkpoint("s", {"k": 1}, compute)
+    assert len(calls) == 1
+    assert (again["all permitted"] == first["all permitted"]).all()
+    ident.checkpoint("s", {"k": 2}, compute)
+    assert len(calls) == 2
