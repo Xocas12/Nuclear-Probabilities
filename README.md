@@ -58,7 +58,7 @@ resampling towns and "by blocks" resampling 300 km squares; a difference counts 
 
 The analysis was fixed in `configs/protocol.yaml` before the final models were fitted, and changed since only by
 dated amendments, `configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_12.yaml`, each saying what had
-already been read. The eleventh fixes how the sealed set is read, before any sealed place was scored. A town off an incomplete list is treated as unlabeled, not as a negative (positive-unlabeled:
+already been read. The eleventh fixes how the sealed set is read, before any sealed place was scored; the twelfth, written after that reading, restricts it to the places no committed run had scored. A town off an incomplete list is treated as unlabeled, not as a negative (positive-unlabeled:
 each of 50 bagged fits keeps all positives and draws as many unlabeled towns). Every model is compared with two baselines on the same
 towns: ranking by population (the "population rule") and population plus one intercept per country. Holdouts are
 spatial blocks of 300 km, leaving out one document at a time, and fitting before 1956 to score later and the
@@ -69,13 +69,14 @@ draws stockpiles and models together (an attacker's inventory times its stated *
 aimed at the scenario's countries, times reliability and survival of defences), and shares each scenario's delivered
 warheads among towns in proportion to the score, summarised on a 0.5-degree grid (1 degree for modern scenarios). The sealed set, 467 places in held-back
 blocks, was kept for one final scoring after independent review. The first milestone check, `runs/m1-slice/`, scored 194
-of them before the seal was drawn (`data/curated/splits/README.md`); no later run scored any before that final scoring, and the 273 others
-are blind. The sealed set was scored once, on 2026-11-03, under the eleventh amendment: on the 272 never-scored places with a SAC label, both global models beat population plus country by both intervals (+0.03 and +0.04 in PR-AUC, `runs/classifier/sealed/comparison.csv`); the SAC-only and pooled Warsaw Pact models did not.
+of them before the seal was drawn, and the other 273 were called never-scored (`data/curated/splits/README.md`). The sealed set was scored once, on 2026-11-03, under the eleventh amendment: on the 272 never-scored places with a SAC label, both global models beat population plus country by both intervals (+0.03 and +0.04 in PR-AUC, `runs/classifier/sealed/comparison.csv`); the SAC-only and pooled Warsaw Pact models did not.
+**That reading is not blind.** M2 check runs committed on 8 October, before the freeze, had scored 123 of the 273 never-scored places, which the freeze missed because it read one later commit (`scripts/scored_history.py`, `data/curated/splits/scored_in_history.csv`). Read again on the 149 places with a SAC label that no committed run scored (`configs/protocol_amendment_12.yaml`, written after the first reading was seen; nothing refitted), no model beats population plus country: the global models gain +0.02, with both intervals crossing zero. Both global models still beat the population rule by both intervals (+0.12 and +0.13). Positives lie in only 6 blocks, so these intervals are wide (`runs/classifier/sealed/blind/comparison.csv`, REPORT "The sealed set read again on blind places only").
 
 ## What the evidence cannot support
 
 - **A model of any one state's plans.** Each state is refused by the gate; the Warsaw Pact model pools exercises.
 - **Prediction for a document not in the data.** No model beat population on a left-out document.
+- **A blind gain over population plus country.** On the only blind places, no model beat it (REPORT, twelfth amendment).
 - **Causes.** These are associations between a town's traits and its presence on a list.
 - **What planners knew.** Features record what existed according to later sources.
 - **Any present-day plan.** Modern map rows apply lists of 1945-1977 to towns of today: extrapolation, with no

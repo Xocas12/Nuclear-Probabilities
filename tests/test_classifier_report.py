@@ -343,3 +343,24 @@ def test_the_sealed_reading_is_of_the_committed_amendment_models_and_table():
     assert ((prim["verdict"] != "neither") == both).all()
     text = (ROOT / "REPORT.md").read_text(encoding="utf-8")
     assert "### The sealed set, scored once" in text and "It has not been scored" not in text
+
+
+@pytest.mark.skipif(
+    not (OUT / "sealed" / "blind" / "comparison.csv").exists(), reason="blind reading not run"
+)
+def test_the_readme_says_what_the_blind_reading_found():
+    """Twelfth amendment: the blind rows are of the 150 never_scored places no committed run scored,
+    the primary row is blind against population + country, and README states its verdicts."""
+    comp = pd.read_csv(OUT / "sealed" / "blind" / "comparison.csv")
+    prim = comp[comp["primary"]]
+    assert set(prim["population"]) == {"blind"} and set(prim["against"]) == {"population + country"}
+    hist = pd.read_csv(ROOT / "data" / "curated" / "splits" / "scored_in_history.csv")
+    scores = pd.read_csv(OUT / "sealed" / "scores.csv.gz", usecols=["place_id", "never_scored"])
+    blind = scores["never_scored"] & ~scores["place_id"].isin(set(hist["place_id"]))
+    assert (prim["rows"] == int(blind.sum())).all()
+    readme = " ".join((ROOT / "README.md").read_text(encoding="utf-8").split())
+    assert "**That reading is not blind.**" in readme
+    if prim["verdict"].eq("neither").all():
+        assert "no model beats population plus country" in readme
+    else:
+        assert "no model beats population plus country" not in readme

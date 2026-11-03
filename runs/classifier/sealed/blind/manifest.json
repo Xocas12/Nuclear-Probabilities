@@ -1,0 +1,16 @@
+{
+  "created": "2026-11-03T14:01:08+00:00",
+  "git_commit": "bc7a3ad7d5849e43ade8c8d3fbfab7aa328d2b69",
+  "git_dirty": false,
+  "amendment": "configs/protocol_amendment_12.yaml",
+  "inputs": {
+    "data/curated/splits/scored_in_history.csv": "1249f7d828003e460c1d1e7b7e83d2c2753fab2ead4918b8fb66539cd7a3cec7",
+    "data/processed/classifier_table.parquet": "28c139144a8cde8a7a87610448c2f5b0d882a24c4f5a4638704ff630489a97ed",
+    "runs/classifier/sealed/scores.csv.gz": "66580f073b0cf36f29ece7cca335be0037c46d3bd87462991a595cebc9eed3b1",
+    "runs/classifier/selection.csv": "12624e6cc158c75d8f5ad728a40e27d62037e0246ae6733127bfade72f9f0570"
+  },
+  "outputs": {
+    "runs/classifier/sealed/blind/comparison.csv": "71105e53b70af4b5aad48c8d21245a32473b94615ff3906b28fbb24b2510feda",
+    "runs/classifier/sealed/blind/metrics.csv": "687af2a3628e9fb10b46466af6f8e332c5c2131edf18d4254f6ce927362f9ed2"
+  }
+}

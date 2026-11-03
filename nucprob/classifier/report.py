@@ -739,13 +739,13 @@ Scored on {lock["scored"][:10]} at commit {lock["git_commit"][:7]}, after the el
 (`configs/protocol_amendment_11.yaml`) and before any sealed score existed; `runs/classifier/sealed/LOCK.json`
 stops a second run. Each scope's models were fitted on all its usable rows and scored SAC 1956's rows in the sealed
 blocks: {int(p0["rows"])} never-scored places ({int(p0["positives"])} listed, base rate {p0["base_rate"]:.2f},
-in {int(p0["blocks"])} blocks), the primary population, and all {int(a0["rows"])} sealed places with a SAC label
+in {int(p0["blocks"])} blocks), the eleventh amendment's primary population, which turned out not to be blind (next section), and all {int(a0["rows"])} sealed places with a SAC label
 ({int(a0["positives"])} listed); 4 of the 467 sealed places have no SAC label (an entry possibly lost from the scan)
 and so no row. Primary rows, the selected candidate against population plus country on never-scored places:
 
 {chr(10).join("- " + line(r) for _, r in prim.iterrows())}
 
-So the gain over population plus country holds on blind places for {len(gains)} of {len(prim)} scopes
+So the gain over population plus country holds on never-scored places for {len(gains)} of {len(prim)} scopes
 ({"; ".join(f"'{g}'" for g in gains) if gains else "none"}), and not for {"; ".join(f"'{r.scope}' ({r.verdict})" for r in other.itertuples())}.
 {_pooled_sealed(prim)}
 The gains are small: a few hundredths of PR-AUC on a base rate above one half. Only SAC 1956 has sealed rows, so
@@ -758,6 +758,62 @@ that scope's lists, so none has an intercept of its own.
 {markdown(shown)}
 
 Every model's metrics on both populations, with a PR-AUC interval each, are in `runs/classifier/sealed/metrics.csv`.
+"""
+
+
+BLIND = OUT / "sealed" / "blind" / "comparison.csv"
+
+
+def _blind_section() -> str:
+    """The twelfth amendment's reading of the committed sealed scores on places no run scored."""
+    if not BLIND.exists():
+        return ""
+    comp = pd.read_csv(BLIND)
+    hist = pd.read_csv(CURATED / "splits" / "scored_in_history.csv")
+    prim = comp[comp["primary"]]
+    p0 = prim.iloc[0]
+    ns = comp[comp["population"].eq("never_scored") & comp["against"].eq(PLUS)].iloc[0]
+    lost = int(ns["rows"]) - int(p0["rows"])
+
+    def line(r) -> str:
+        blocks = (
+            f"[{signed(r['block_low'])}, {signed(r['block_high'])}]"
+            if r["block_measured"]
+            else f"n/a: positives in {int(r['positive_blocks'])} blocks"
+        )
+        return (
+            f"{r['scope']}, {r['model']}: {r['a_pr_auc']:.3f} against {r['b_pr_auc']:.3f}, "
+            f"{signed(r['delta'])} [{signed(r['low'])}, {signed(r['high'])}], by blocks {blocks}: {r['verdict']}"
+        )
+
+    rule = comp[comp["population"].eq("blind") & comp["against"].eq(RULE)]
+    gains = prim[prim["verdict"].eq("gain")]["scope"].tolist()
+    return f"""### The sealed set read again on blind places only (twelfth amendment)
+
+The never-scored population above is not blind. `scripts/freeze_seal.py` took what earlier runs had scored from
+one commit, `de2e54a`; three earlier commits of the M2 check (`b094d1d`, `e599d9c`, `e80681b`, all 8 October 2026)
+had committed out-of-fold scores, and maps that showed them, for places that commit no longer scored. Walking every
+commit before the sealed scoring (`scripts/scored_history.py`, written to `data/curated/splits/scored_in_history.csv`)
+finds {hist["place_id"].nunique()} of the 467 sealed places with a committed score, {lost} of them among the
+never-scored rows above. `configs/protocol_amendment_12.yaml` was written after the reading above had been seen and
+committed before this one was computed. It refits nothing and scores nothing: `python -m nucprob.classifier.sealed_reread`
+reads `runs/classifier/sealed/scores.csv.gz` as committed at fb028cc (it checks the hash) on the {int(p0["rows"])}
+never-scored places with a SAC label that no committed run scored ({int(p0["positives"])} listed, base rate
+{p0["base_rate"]:.2f}, in {int(p0["blocks"])} blocks, positives in {int(p0["positive_blocks"])}). Primary rows:
+
+{chr(10).join("- " + line(r) for _, r in prim.iterrows())}
+
+Against the population rule on the same places:
+
+{chr(10).join("- " + line(r) for _, r in rule.iterrows())}
+
+So on blind places the selected candidate beats population plus country by both intervals for {len(gains)} of
+{len(prim)} scopes{(" (" + "; ".join(f"'{g}'" for g in gains) + ")") if gains else ""}, and beats the population rule by both
+intervals for {int(rule["verdict"].eq("gain").sum())} of {len(rule)}{(" (" + "; ".join(f"'{g}'" for g in rule.loc[rule["verdict"].eq("gain"), "scope"]) + ")") if rule["verdict"].eq("gain").any() else ""}. This is the reading to quote
+as blind; the never-scored and all-sealed readings above are of places some committed run had already scored. The
+blind places' neighbours, and same-named towns elsewhere, were scored in those runs, so it is a reading of places
+no run scored, not of a region none had seen. With {int(p0["rows"])} places the intervals are wider than above, and a
+"neither" is not evidence of no effect. All rows, with every model's metrics: `runs/classifier/sealed/blind/`.
 """
 
 
@@ -1034,13 +1090,13 @@ Several are today's data standing in for the past and are flagged. Sources, lice
 
 ## Method
 
-The analysis is in `configs/protocol.yaml`, which holds four dated amendments, and six more amendments in their own
-files, `configs/protocol_amendment_5.yaml` (which only adds readings) to `configs/protocol_amendment_10.yaml`. **It is not blind.** Earlier
+The analysis is in `configs/protocol.yaml`, which holds four dated amendments, and eight more amendments in their own
+files, `configs/protocol_amendment_5.yaml` (which only adds readings) to `configs/protocol_amendment_12.yaml`. **It is not blind.** Earlier
 runs read scores on SAC's spatial folds and on the small lists, and an independent review read the full results
 before the fourth amendment; that amendment records what it changed and why. A sixth, `configs/protocol_amendment_6.yaml`, records the corrections made
 after a later review, also with results already read, a seventh, `configs/protocol_amendment_7.yaml`, adds lesson rows and three link corrections on the same terms, and an eighth, `configs/protocol_amendment_8.yaml`, makes the corrections after the review of c840f88, including sector boxes whose effect that review had already shown. It was not written blind to its own final labels either: before it was committed, two quick runs (`--quick`: 3 bags, 50 resamples, from an uncommitted tree) on the final table were made: the map's printed the held-out PR-AUC of its candidate scores and every scenario's map summary, and the classifier's wrote its held-out tables to a folder that is not committed. `data/curated/labels/SECTORS.yaml` says no box was chosen by looking at a model score; for Burza that is not so, for the reason just given, and Burza's FRG and Denmark boxes are one combined extent written twice, not a box per country. Its wording was corrected in `configs/protocol_amendment_9.yaml`, and in the file itself with the tenth amendment. The ninth amendment changes no label, model or holdout. The tenth, `configs/protocol_amendment_10.yaml`, withdraws Great Britain's 1981 districts, fetched through a path robots.txt disallows, and with them Square Leg 1980 and the UK of the 1965 map; it corrects how label files describe themselves, changes no other label, and was followed by a full refit. That refit, at 930a164, with its main step run again at a776225 after a quoting fault in `data/sources.yaml` was fixed, wrote every classifier table with the same content as the run of 110174e before it, except that `lists.csv` lost Square Leg's rows; the link audit was rerun after it began counting SAC entries rather than link rows. The last blind test is the **sealed set**, places
-held back from every model in `data/curated/splits/sealed_blocks.csv` and scored once at the end. Of its 467 places only the 273 `never_scored`
-ones are blind: an early slice scored the other 194, 193 of them under their present id and one, Kirovsk, matched by name (`data/curated/splits/README.md`). Their labels are in the committed label files, so the seal is a procedure and not a secret. {_sealed_status()} The word "brief" in the protocol means the owner's
+held back from every model in `data/curated/splits/sealed_blocks.csv` and scored once at the end. Of its 467 places an early slice scored 194, 193 of them under their present id and one, Kirovsk, matched by name, and the other 273 are called `never_scored`
+(`data/curated/splits/README.md`). That name is wrong for 123 of them, which M2 check runs committed before the freeze had scored; only the other 150 are blind (twelfth amendment, below). Their labels are in the committed label files, so the seal is a procedure and not a secret. {_sealed_status()} The word "brief" in the protocol means the owner's
 instructions for this project, which are not in this repository.
 
 - **Models.** Baselines: logistic regression on log population, and the same plus one intercept per
@@ -1075,6 +1131,7 @@ The selected candidate of each scope. "Trained on" is the smallest number of pos
 - **Target Committee of 1945**, its designated cities, left out: {pr(GLOBAL_ALL, "leave", "us_1945_target_committee", g_best)} under {g_best}, {pr(GLOBAL_ALL, "leave", "us_1945_target_committee", RULE)} for the population rule.
 
 {_sealed_section()}
+{_blind_section()}
 ### What the gains rest on
 
 Each scope's selected candidate against population plus country under spatial blocks, with columns removed.
