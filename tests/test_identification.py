@@ -108,8 +108,15 @@ def test_report_states_the_intervals_and_the_probe_call():
         assert f"capacity probe: {call}" in text
     else:
         assert "capacity probe: pending" in text
-    for step in json.loads((OUT / "manifest.json").read_text())["pending"]:
-        assert step in text[text.index("Steps of the amendment not yet run") :][:600]
+    pending = json.loads((OUT / "manifest.json").read_text())["pending"]
+    if pending:
+        said = text[text.index("Steps of the amendment not yet run") :][:400]
+        assert ("the capacity probe" in said) == ("capacity probe" in pending)
+        splits_left = sum(p.startswith("split ") for p in pending)
+        if splits_left:
+            assert f"{splits_left} of the 10 split repeats" in said
+    else:
+        assert "Steps of the amendment not yet run" not in text
     assert "No interval was computed for any of these accuracies" not in text
 
 
@@ -121,9 +128,9 @@ def test_a_checkpoint_is_reused_only_under_the_same_key(tmp_path, monkeypatch):
         calls.append(1)
         return {"all permitted": np.array([1, 2, 3])}
 
-    first, _ = ident.checkpoint("s", {"k": 1}, compute)
-    again, _ = ident.checkpoint("s", {"k": 1}, compute)
+    first, _ = ident.checkpoint("s", {"k": 1}, compute, {"git_commit": "c", "git_dirty": False})
+    again, _ = ident.checkpoint("s", {"k": 1}, compute, {"git_commit": "c", "git_dirty": False})
     assert len(calls) == 1
     assert (again["all permitted"] == first["all permitted"]).all()
-    ident.checkpoint("s", {"k": 2}, compute)
+    ident.checkpoint("s", {"k": 2}, compute, {"git_commit": "c", "git_dirty": False})
     assert len(calls) == 2

@@ -704,12 +704,14 @@ def _identification() -> str:
             "lowers accuracy for a reason not found, it cannot rule that out either."
         )
     if pending:
+        splits_left = sum(p.startswith("split ") for p in pending)
+        left = ["the capacity probe"] if "capacity probe" in pending else []
+        left += [f"{splits_left} of the 10 split repeats"] if splits_left else []
         close += (
-            f" Steps of the amendment not yet run: {', '.join(pending)} (listed in "
-            "`runs/classifier/identification/manifest.json`)."
+            f" Steps of the amendment not yet run: {' and '.join(left)} (the machine's load made each split take "
+            "most of an hour; `runs/classifier/identification/manifest.json` lists them)."
         )
-    return f"""From the
-columns alone, with folds grouped by place, a classifier names a row's document {acc}, against
+    return f"""From the columns alone, with folds grouped by place, a classifier names a row's document {acc}, against
 {_pct(base)} for always naming the largest document. The intervals resample places, keeping a place's rows together
 (2,000 resamples; `runs/classifier/identification/intervals.csv`). On those intervals {"; ".join(against)}.
 {rise_text} {spread_text} {probe} {close}
@@ -1382,7 +1384,7 @@ Several are today's data standing in for the past and are flagged. Sources, lice
 ## Method
 
 The analysis is fixed in `configs/protocol.yaml` and changed since only by dated amendments: four inside that file and
-`configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_13.yaml`. Each says what had already been read when it
+`configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_14.yaml`. Each says what had already been read when it
 was written; `configs/HISTORY.md` gives one line per amendment. **It is not blind.** Scores on SAC's spatial folds and
 on the small lists, and later the full results, had been read before amendments corrected labels, links and sector
 boxes. Burza's sector box was drawn after its effect on Burza's scores had been seen.
@@ -1426,8 +1428,7 @@ Each scope's selected candidate against population plus country under spatial bl
 "None flagged" removes today's data standing in for the past. "Strict as-of" also removes the defence tables, mostly
 post-Soviet knowledge. "No national power" removes COW's values, which take one value per country and year and so
 were suspected of marking a document. "No source markers" also removes the defence and military columns, which are
-blank or filled according to the table a row came from. The check below did not confirm either suspicion.
-{_identification()}
+blank or filled according to the table a row came from. The check below did not confirm either suspicion. {_identification()}
 
 {markdown(sens_table)}
 

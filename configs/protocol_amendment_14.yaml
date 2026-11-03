@@ -1,0 +1,29 @@
+# Fourteenth amendment, in its own file like the fifth to thirteenth. Post hoc. Written after the thirteenth
+# amendment's capacity probe was read and one fold was inspected by hand (below). It is committed before the
+# diagnostic it defines is run. No label, feature, primary model, holdout or scenario changes.
+date: 2026-11-03
+reasons: The thirteenth amendment's probe gave identical out-of-fold predictions for "all permitted" at 60 and
+  300 boosting iterations, row for row. Inspecting the second of the four place-grouped folds by hand (one fit
+  each, not committed) showed the classifier diverging there. Its raw scores reached about 88,500. Its
+  training accuracy rose to 0.98 by iteration 7, then fell to 0.33 by iteration 42 and stayed there. Its
+  held-out accuracy was 0.32. The same fold with l2_regularization 1.0 kept raw scores under 9 and gave 0.98 on
+  training rows and 0.983 on held-out places. That one figure was seen before this amendment was written. The
+  document identification check of the sixth amendment, and every accuracy the thirteenth gave intervals for,
+  therefore rest on a fit that diverged; they do not measure how far the columns name documents.
+changes:
+  module: nucprob.classifier.identification_fit writes runs/classifier/identification/divergence.csv,
+    regularised.csv and fit_manifest.json. It reads nothing the thirteenth amendment's run wrote.
+  divergence: For each of the four column sets and each fold of the original split (GroupKFold(4) by place),
+    fitted with l2_regularization 0 (as run) and 1.0, the largest absolute raw score on training rows, the best
+    and final training accuracy over the 60 iterations, and held-out accuracy. A fit is called diverged if its
+    final training accuracy is more than 0.05 below its best.
+  regularised: The four sets' out-of-fold predictions at l2_regularization 1.0, otherwise unchanged, read with
+    the thirteenth amendment's place bootstrap (2000 resamples, seed 1956) and verdict rule. 1.0 is the value
+    tried in the inspection. It was not searched, and no other value is tried.
+reporting: REPORT.md gives the regularised reading as the identification check's result. It says the sixth and
+  thirteenth amendments' figures come from a diverged fit, and keeps them in their files. If the regularised
+  columns name documents far above the largest document's share, REPORT says that gains in pooled scopes cannot
+  be told from a model learning each document's base rate, and that within-document readings (single document,
+  leave-one-document-out) are not affected by this check.
+unchanged: Every primary result. The primary models are binary LightGBM and logistic fits on another objective;
+  this amendment does not test them for divergence and does not claim they diverge.

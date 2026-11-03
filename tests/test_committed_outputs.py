@@ -27,6 +27,7 @@ MANIFESTS = [
     MAP / "manifest.json",
     CLASSIFIER / "sealed" / "blind" / "manifest.json",
     CLASSIFIER / "identification" / "manifest.json",
+    CLASSIFIER / "identification" / "fit_manifest.json",
 ]
 needs_run = pytest.mark.skipif(not (MAP / "manifest.json").exists(), reason="no committed run")
 

@@ -158,9 +158,10 @@ def step_key() -> dict:
     }
 
 
-def checkpoint(name: str, key: dict, compute) -> tuple[dict, dict] | None:
+def checkpoint(name: str, key: dict, compute, started: dict) -> tuple[dict, dict]:
     """A step's predictions, from its checkpoint under data/interim/identification/ if one with the same
-    key exists, else computed now and saved. Returns (predictions, record of the run that made them)."""
+        key exists, else computed now and saved with the record taken when this run started (the code it
+    loaded), not at the step's end. Returns (predictions, record of the run that made them)."""
     path = WORK / f"{name}.npz"
     meta = WORK / f"{name}.json"
     if path.exists() and meta.exists():
@@ -171,7 +172,7 @@ def checkpoint(name: str, key: dict, compute) -> tuple[dict, dict] | None:
     preds = compute()
     WORK.mkdir(parents=True, exist_ok=True)
     np.savez_compressed(path, **preds)
-    record = {"key": key, **start_record()}
+    record = {"key": key, **started}
     meta.write_text(json.dumps(record, indent=2))
     return preds, record
 
@@ -247,7 +248,7 @@ def main() -> None:
     }
     done, records = {}, {}
     for name in STEPS:
-        done[name], records[name] = checkpoint(name.replace(" ", "_"), key, work[name])
+        done[name], records[name] = checkpoint(name.replace(" ", "_"), key, work[name], started)
         if name == "original split":
             committed = pd.read_csv(RUNS / "classifier" / "document_identification.csv")
             committed = committed.set_index("columns")
