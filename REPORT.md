@@ -336,20 +336,11 @@ Counts of Soviet defence plants add +0.001 [-0.01, +0.01] (by blocks [-0.01, +0.
 of the SAC list, PR-AUC 0.77 against 0.77: no detectable gain. The counts are later knowledge of what existed, not what SAC
 knew, and they are matched to the town by name, so this does not show that SAC ignored industry.
 
+Under spatial blocks 6 of 18 rows gain. The table holds the global scope's rows on a left-out
+document and the defence-industry row; all 37 rows are in `runs/classifier/TABLES.md`.
+
 | scope | comparison | holdout | lists | positives | train_positives | model | against | difference | by_blocks | verdict |
 |---|---|---|---|---|---|---|---|---|---|---|
-| global, all attacker documents | political over population | spatial blocks | all lists | 1172 | 937 | 0.75 | 0.71 | +0.04 [+0.03, +0.05] | [+0.02, +0.06] | gain |
-| global, all attacker documents | political over population | spatial blocks | other than SAC | 130 | 937 | 0.27 | 0.24 | +0.03 [+0.004, +0.06] | [+0.01, +0.11] | gain |
-| global, all attacker documents | economic over population | spatial blocks | all lists | 1172 | 937 | 0.76 | 0.71 | +0.05 [+0.04, +0.06] | [+0.03, +0.07] | gain |
-| global, all attacker documents | economic over population | spatial blocks | other than SAC | 130 | 937 | 0.27 | 0.24 | +0.03 [-0.01, +0.06] | [-0.01, +0.11] | neither |
-| global, all attacker documents | national power over population | spatial blocks | all lists | 1172 | 937 | 0.76 | 0.71 | +0.05 [+0.04, +0.06] | [+0.03, +0.07] | gain |
-| global, all attacker documents | national power over population | spatial blocks | other than SAC | 130 | 937 | 0.25 | 0.24 | +0.01 [-0.02, +0.04] | [-0.02, +0.10] | neither |
-| global, all attacker documents | all three over population | spatial blocks | all lists | 1172 | 937 | 0.76 | 0.71 | +0.06 [+0.04, +0.07] | [+0.03, +0.07] | gain |
-| global, all attacker documents | all three over population | spatial blocks | other than SAC | 130 | 937 | 0.28 | 0.24 | +0.04 [+0.01, +0.07] | [+0.01, +0.13] | gain |
-| global, all attacker documents | political over primary | spatial blocks | all lists | 1172 | 937 | 0.79 | 0.79 | +0.001 [-0.002, +0.004] | [-0.002, +0.004] | neither |
-| global, all attacker documents | political over primary | spatial blocks | other than SAC | 130 | 937 | 0.28 | 0.29 | -0.003 [-0.02, +0.02] | [-0.02, +0.03] | neither |
-| global, all attacker documents | economic over primary | spatial blocks | all lists | 1172 | 937 | 0.79 | 0.79 | +0.001 [-0.001, +0.002] | [-0.001, +0.003] | neither |
-| global, all attacker documents | economic over primary | spatial blocks | other than SAC | 130 | 937 | 0.29 | 0.29 | +0.004 [-0.01, +0.02] | [-0.01, +0.01] | neither |
 | global, all attacker documents | political over population | leave one document out | all lists | 1172 | 129 | 0.66 | 0.64 | +0.02 [+0.01, +0.04] | [-0.002, +0.05] | neither |
 | global, all attacker documents | political over population | leave one document out | other than SAC | 130 | 1061 | 0.25 | 0.24 | +0.02 [-0.03, +0.05] | [-0.03, +0.10] | neither |
 | global, all attacker documents | economic over population | leave one document out | all lists | 1172 | 129 | 0.66 | 0.64 | +0.03 [+0.01, +0.04] | [+0.004, +0.05] | gain |
@@ -362,18 +353,6 @@ knew, and they are matched to the town by name, so this does not show that SAC i
 | global, all attacker documents | political over primary | leave one document out | other than SAC | 130 | 1061 | 0.24 | 0.25 | -0.02 [-0.05, +0.01] | [-0.04, +0.02] | neither |
 | global, all attacker documents | economic over primary | leave one document out | all lists | 1172 | 129 | 0.66 | 0.58 | +0.08 [+0.07, +0.09] | [+0.06, +0.10] | gain |
 | global, all attacker documents | economic over primary | leave one document out | other than SAC | 130 | 1061 | 0.25 | 0.25 | -0.01 [-0.02, +0.01] | [-0.03, +0.01] | neither |
-| Warsaw Pact, pooled, exercise-based | political over population | spatial blocks | all lists | 123 | 69 | 0.21 | 0.21 | +0.001 [-0.01, +0.01] | [-0.03, +0.01] | neither |
-| Warsaw Pact, pooled, exercise-based | economic over population | spatial blocks | all lists | 123 | 69 | 0.21 | 0.21 | +0.004 [-0.02, +0.03] | [-0.06, +0.04] | neither |
-| Warsaw Pact, pooled, exercise-based | national power over population | spatial blocks | all lists | 123 | 69 | 0.23 | 0.21 | +0.02 [-0.02, +0.05] | [-0.03, +0.09] | neither |
-| Warsaw Pact, pooled, exercise-based | all three over population | spatial blocks | all lists | 123 | 69 | 0.22 | 0.21 | +0.02 [-0.02, +0.04] | [-0.04, +0.06] | neither |
-| Warsaw Pact, pooled, exercise-based | political over primary | spatial blocks | all lists | 123 | 69 | 0.28 | 0.28 | +0.001 [-0.001, +0.004] | [-0.000, +0.004] | neither |
-| Warsaw Pact, pooled, exercise-based | economic over primary | spatial blocks | all lists | 123 | 69 | 0.27 | 0.28 | -0.01 [-0.03, +0.01] | [-0.03, +0.02] | neither |
-| Warsaw Pact, pooled, exercise-based | political over population | leave one document out | all lists | 123 | 12 | 0.20 | 0.19 | +0.005 [-0.001, +0.01] | [-0.005, +0.01] | not a reading |
-| Warsaw Pact, pooled, exercise-based | economic over population | leave one document out | all lists | 123 | 12 | 0.19 | 0.19 | -0.002 [-0.02, +0.02] | [-0.02, +0.02] | not a reading |
-| Warsaw Pact, pooled, exercise-based | national power over population | leave one document out | all lists | 123 | 12 | 0.20 | 0.19 | +0.001 [-0.02, +0.02] | [-0.02, +0.02] | not a reading |
-| Warsaw Pact, pooled, exercise-based | all three over population | leave one document out | all lists | 123 | 12 | 0.19 | 0.19 | -0.001 [-0.02, +0.02] | [-0.02, +0.02] | not a reading |
-| Warsaw Pact, pooled, exercise-based | political over primary | leave one document out | all lists | 123 | 12 | 0.19 | 0.19 | -0.002 [-0.01, +0.000] | [-0.01, +0.002] | not a reading |
-| Warsaw Pact, pooled, exercise-based | economic over primary | leave one document out | all lists | 123 | 12 | 0.19 | 0.19 | -0.004 [-0.01, +0.01] | [-0.01, +0.02] | not a reading |
 | SAC 1956, Soviet towns | defence industry over population | spatial blocks | all lists | 566 | 452 | 0.77 | 0.77 | +0.001 [-0.01, +0.01] | [-0.01, +0.01] | neither |
 
 ### Defences
@@ -456,25 +435,19 @@ It is a consequence of stated assumptions, not a forecast of any war. The viewer
 **Stockpile and allocation.** `data/curated/stockpiles/` holds cited inventories by state, year and,
 where a source splits them, delivery, with cited or expressly stated assumptions on availability,
 reliability and loss to defences. `configs/scenarios.yaml` states who is assumed to fire on whom and what
-share of the inventory goes there. Those are assumptions, not findings. **The theatre shares have no source**; these are all of them:
+share of the inventory goes there. Those are assumptions, not findings. **The theatre shares have no source**; these are all of them, as
+(low, mode, high) of a triangular draw:
 
-| scenario | attacker | low | mode | high |
+| scenario | attackers | low | mode | high |
 |---|---|---|---|---|
 | us_1956_on_bloc | US | 0.75 | 0.90 | 1.00 |
 | us_1950_stock_on_bloc | US | 0.75 | 0.90 | 1.00 |
 | ussr_1965_on_west | USSR | 0.25 | 0.50 | 1.00 |
-| modern_us_russia | US | 0.50 | 0.75 | 1.00 |
-| modern_us_russia | France | 0.50 | 0.75 | 1.00 |
-| modern_us_russia | UK | 0.50 | 0.75 | 1.00 |
-| modern_us_russia | Russia | 0.50 | 0.75 | 1.00 |
-| modern_us_russia_half | US | 0.50 | 0.75 | 1.00 |
-| modern_us_russia_half | France | 0.50 | 0.75 | 1.00 |
-| modern_us_russia_half | UK | 0.50 | 0.75 | 1.00 |
-| modern_us_russia_half | Russia | 0.50 | 0.75 | 1.00 |
+| modern_us_russia | US, France, UK, Russia | 0.50 | 0.75 | 1.00 |
+| modern_us_russia_half | US, France, UK, Russia | 0.50 | 0.75 | 1.00 |
 | modern_us_china | US | 0.10 | 0.25 | 0.50 |
 | modern_us_china | China | 0.50 | 0.75 | 1.00 |
-| modern_india_pakistan | India | 0.50 | 0.75 | 1.00 |
-| modern_india_pakistan | Pakistan | 0.50 | 0.75 | 1.00 |
+| modern_india_pakistan | India, Pakistan | 0.50 | 0.75 | 1.00 |
 
 The reliability and loss ranges of every
 historical scenario are one source's 1953 figures for Soviet bombers attacking the US (FRUS 1952-54, vol. II part 1,
@@ -522,7 +495,7 @@ what is actually unknown. "Mean width" is the mean over cells of that interval; 
 stockpile at its median, then the model at its median. Cells over one half are counted within each draw. Cells saturate because warheads can outnumber cells while not outnumbering towns:
 `ussr_1965_on_west` has 1051 median delivered warheads, 1843 towns and 355 cells, and a cell of several towns passes one half
 before each of its towns would. Where most cells are over one half the map says little beyond that. Sealed towns are not scored, so a 1956 cell holding only sealed towns is absent from the map.
-In all 7 scenarios the mean width with the model held at its median is larger than with the stockpile held at its median: the stockpile draws, not the model, make most of the width. "Delivered" in the tables below is before one more step: towns of the sealed set draw no warheads, so the 1956 map uses the share of people living in scored towns, 0.82, of what is delivered: 1377 delivered at the median and 1128 on scored towns in `us_1956_on_bloc`. Part of the spread of delivered warheads comes from cited inventories and part from the unsourced theatre shares. The theatre share alone accounts for 9% (India, `modern_india_pakistan`) to 96% (France, `modern_us_russia`) of the variance of an attacker's delivered warheads: a first-order Sobol index by the pick-freeze estimator on 20,000 draws, with standard errors up to 0.007 (`runs/probmap/share_variance.csv`). The columns `delivered_low_share_fixed` and `delivered_high_share_fixed` are the interval with every share held at its mode, from separate draws; holding a share at its mode also moves the centre, so they are not a split of the interval's width.
+In all 7 scenarios the mean width with the model held at its median is larger than with the stockpile held at its median: the stockpile draws, not the model, make most of the width. "Delivered" in the tables below is before one more step: towns of the sealed set draw no warheads, so the 1956 map uses the share of people living in scored towns, 0.82, of what is delivered: 1377 delivered at the median and 1128 on scored towns in `us_1956_on_bloc`. Part of the spread of delivered warheads comes from cited inventories and part from the unsourced theatre shares. The theatre share alone accounts for 9% (India, `modern_india_pakistan`) to 96% (France, `modern_us_russia`) of the variance of an attacker's delivered warheads: a first-order Sobol index by the pick-freeze estimator on 20,000 draws, with standard errors up to 0.007 (`runs/probmap/share_variance.csv`). In the second table each figure is the median with the 5th to 95th percentile; `on_scored_towns` is "all" where the sealed set holds nobody; `delivered_shares_at_mode` is the interval with every share held at its mode, from separate draws. Holding a share at its mode also moves the centre, so that column is not a split of the interval's width.
 
 | scenario | era | cell_deg | towns | cells | cells_over_half | mean_width_model_only | mean_width_stockpile_only | mean_interval_width |
 |---|---|---|---|---|---|---|---|---|
@@ -534,23 +507,23 @@ In all 7 scenarios the mean width with the model held at its median is larger th
 | modern_us_china | modern | 1.00 | 1008 | 715 | 356 [283, 449] | 0.03 | 0.34 | 0.34 |
 | modern_india_pakistan | modern | 1.00 | 255 | 182 | 36 [16, 68] | 0.02 | 0.36 | 0.36 |
 
-| scenario | reading | attacker | delivered_low | delivered_median | delivered_high | share_of_people_in_scored_towns | on_scored_towns_low | on_scored_towns_median | on_scored_towns_high | delivered_low_share_fixed | delivered_high_share_fixed |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| us_1956_on_bloc | historical | US | 1082 | 1377 | 1715 | 0.82 | 887 | 1128 | 1405 | 1165 | 1767 |
-| us_1950_stock_on_bloc | historical | US | 127 | 149 | 172 | 0.82 | 104 | 122 | 141 | 137 | 172 |
-| ussr_1965_on_west | historical | USSR | 481 | 1051 | 2088 | 1.00 | 481 | 1051 | 2088 | 543 | 1495 |
-| modern_us_russia | extrapolation | US | 1114 | 1583 | 2224 | 1.00 | 1114 | 1583 | 2224 | 1273 | 2128 |
-| modern_us_russia | extrapolation | France | 133 | 172 | 213 | 1.00 | 133 | 172 | 213 | 168 | 184 |
-| modern_us_russia | extrapolation | UK | 78 | 105 | 141 | 1.00 | 78 | 105 | 141 | 82 | 127 |
-| modern_us_russia | extrapolation | Russia | 1238 | 1960 | 2703 | 1.00 | 1238 | 1960 | 2703 | 1326 | 2455 |
-| modern_us_russia_half | extrapolation | US | 526 | 789 | 1111 | 1.00 | 526 | 789 | 1111 | 620 | 1060 |
-| modern_us_russia_half | extrapolation | France | 65 | 85 | 107 | 1.00 | 65 | 85 | 107 | 81 | 91 |
-| modern_us_russia_half | extrapolation | UK | 37 | 51 | 67 | 1.00 | 37 | 51 | 67 | 40 | 63 |
-| modern_us_russia_half | extrapolation | Russia | 600 | 942 | 1378 | 1.00 | 600 | 942 | 1378 | 649 | 1216 |
-| modern_us_china | extrapolation | US | 323 | 596 | 1004 | 1.00 | 323 | 596 | 1004 | 432 | 714 |
-| modern_us_china | extrapolation | China | 53 | 182 | 332 | 1.00 | 53 | 182 | 332 | 44 | 327 |
-| modern_india_pakistan | extrapolation | India | 19 | 61 | 100 | 1.00 | 19 | 61 | 100 | 23 | 101 |
-| modern_india_pakistan | extrapolation | Pakistan | 14 | 49 | 93 | 1.00 | 14 | 49 | 93 | 16 | 93 |
+| scenario | attacker | delivered | on_scored_towns | delivered_shares_at_mode |
+|---|---|---|---|---|
+| us_1956_on_bloc | US | 1377 [1082, 1715] | 1128 [887, 1405] | [1165, 1767] |
+| us_1950_stock_on_bloc | US | 149 [127, 172] | 122 [104, 141] | [137, 172] |
+| ussr_1965_on_west | USSR | 1051 [481, 2088] | all | [543, 1495] |
+| modern_us_russia | US | 1583 [1114, 2224] | all | [1273, 2128] |
+| modern_us_russia | France | 172 [133, 213] | all | [168, 184] |
+| modern_us_russia | UK | 105 [78, 141] | all | [82, 127] |
+| modern_us_russia | Russia | 1960 [1238, 2703] | all | [1326, 2455] |
+| modern_us_russia_half | US | 789 [526, 1111] | all | [620, 1060] |
+| modern_us_russia_half | France | 85 [65, 107] | all | [81, 91] |
+| modern_us_russia_half | UK | 51 [37, 67] | all | [40, 63] |
+| modern_us_russia_half | Russia | 942 [600, 1378] | all | [649, 1216] |
+| modern_us_china | US | 596 [323, 1004] | all | [432, 714] |
+| modern_us_china | China | 182 [53, 332] | all | [44, 327] |
+| modern_india_pakistan | India | 61 [19, 100] | all | [23, 101] |
+| modern_india_pakistan | Pakistan | 49 [14, 93] | all | [16, 93] |
 
 **By delivery.** Warheads available by state and delivery after the stated assumptions, and those delivered. The
 shares come from SIPRI and NRDC (`data/curated/stockpiles/delivery_mix.csv`), on bases that differ by state. For 1950
@@ -561,42 +534,42 @@ Reliability has one range for every modern delivery, because no source separates
 range separately, so the split leaves the expected delivered total unchanged and changes only how much the draws average
 out. These are totals for a whole force. No delivery is assigned to any area.
 
-| scenario | reading | attacker | stock_year | delivery | available_low | available_median | available_high | delivered_low | delivered_median | delivered_high |
-|---|---|---|---|---|---|---|---|---|---|---|
-| us_1956_on_bloc | historical | US | 1956 | bomber | 2424 | 2867 | 3456 | 1082 | 1377 | 1715 |
-| us_1950_stock_on_bloc | historical | US | 1950 | bomber | 304 | 315 | 326 | 127 | 149 | 172 |
-| ussr_1965_on_west | historical | USSR | 1965 | icbm | 561 | 1109 | 1770 | 154 | 336 | 668 |
-| ussr_1965_on_west | historical | USSR | 1965 | slbm | 140 | 277 | 442 | 38 | 84 | 167 |
-| ussr_1965_on_west | historical | USSR | 1965 | bomber | 1052 | 2080 | 3319 | 289 | 630 | 1253 |
-| modern_us_russia | extrapolation | US | 2026 | bomber | 383 | 495 | 625 | 212 | 299 | 436 |
-| modern_us_russia | extrapolation | US | 2026 | icbm | 479 | 618 | 781 | 268 | 374 | 540 |
-| modern_us_russia | extrapolation | US | 2026 | slbm | 1150 | 1484 | 1875 | 631 | 906 | 1284 |
-| modern_us_russia | extrapolation | France | 2026 | bomber | 42 | 43 | 43 | 20 | 26 | 32 |
-| modern_us_russia | extrapolation | France | 2026 | slbm | 239 | 242 | 245 | 113 | 146 | 180 |
-| modern_us_russia | extrapolation | UK | 2026 | slbm | 141 | 173 | 212 | 78 | 105 | 141 |
-| modern_us_russia | extrapolation | Russia | 2026 | bomber | 209 | 314 | 407 | 126 | 194 | 276 |
-| modern_us_russia | extrapolation | Russia | 2026 | icbm | 1047 | 1568 | 2037 | 614 | 983 | 1369 |
-| modern_us_russia | extrapolation | Russia | 2026 | slbm | 838 | 1254 | 1630 | 506 | 778 | 1076 |
-| modern_us_russia_half | extrapolation | US | 2026 | bomber | 190 | 254 | 321 | 101 | 150 | 212 |
-| modern_us_russia_half | extrapolation | US | 2026 | icbm | 237 | 318 | 401 | 123 | 187 | 264 |
-| modern_us_russia_half | extrapolation | US | 2026 | slbm | 569 | 763 | 963 | 302 | 449 | 623 |
-| modern_us_russia_half | extrapolation | France | 2026 | bomber | 21 | 21 | 22 | 10 | 13 | 16 |
-| modern_us_russia_half | extrapolation | France | 2026 | slbm | 120 | 121 | 123 | 55 | 73 | 91 |
-| modern_us_russia_half | extrapolation | UK | 2026 | slbm | 69 | 85 | 106 | 37 | 51 | 67 |
-| modern_us_russia_half | extrapolation | Russia | 2026 | bomber | 110 | 155 | 200 | 61 | 95 | 136 |
-| modern_us_russia_half | extrapolation | Russia | 2026 | icbm | 550 | 776 | 1001 | 304 | 470 | 695 |
-| modern_us_russia_half | extrapolation | Russia | 2026 | slbm | 440 | 621 | 801 | 243 | 377 | 545 |
-| modern_us_china | extrapolation | US | 2026 | bomber | 377 | 507 | 628 | 62 | 112 | 195 |
-| modern_us_china | extrapolation | US | 2026 | icbm | 472 | 634 | 784 | 75 | 142 | 244 |
-| modern_us_china | extrapolation | US | 2026 | slbm | 1132 | 1521 | 1883 | 186 | 343 | 567 |
-| modern_us_china | extrapolation | China | 2026 | bomber | 6 | 17 | 26 | 3 | 9 | 16 |
-| modern_us_china | extrapolation | China | 2026 | land_missile | 110 | 285 | 438 | 45 | 154 | 285 |
-| modern_us_china | extrapolation | China | 2026 | slbm | 13 | 33 | 52 | 5 | 18 | 33 |
-| modern_india_pakistan | extrapolation | India | 2026 | bomber | 10 | 30 | 48 | 6 | 18 | 30 |
-| modern_india_pakistan | extrapolation | India | 2026 | land_missile | 21 | 64 | 104 | 12 | 39 | 64 |
-| modern_india_pakistan | extrapolation | India | 2026 | slbm | 2 | 5 | 8 | 1 | 3 | 5 |
-| modern_india_pakistan | extrapolation | Pakistan | 2026 | bomber | 5 | 16 | 28 | 3 | 10 | 19 |
-| modern_india_pakistan | extrapolation | Pakistan | 2026 | land_missile | 20 | 66 | 111 | 12 | 40 | 75 |
+| scenario | attacker | stock_year | delivery | available | delivered |
+|---|---|---|---|---|---|
+| us_1956_on_bloc | US | 1956 | bomber | 2867 [2424, 3456] | 1377 [1082, 1715] |
+| us_1950_stock_on_bloc | US | 1950 | bomber | 315 [304, 326] | 149 [127, 172] |
+| ussr_1965_on_west | USSR | 1965 | icbm | 1109 [561, 1770] | 336 [154, 668] |
+| ussr_1965_on_west | USSR | 1965 | slbm | 277 [140, 442] | 84 [38, 167] |
+| ussr_1965_on_west | USSR | 1965 | bomber | 2080 [1052, 3319] | 630 [289, 1253] |
+| modern_us_russia | US | 2026 | bomber | 495 [383, 625] | 299 [212, 436] |
+| modern_us_russia | US | 2026 | icbm | 618 [479, 781] | 374 [268, 540] |
+| modern_us_russia | US | 2026 | slbm | 1484 [1150, 1875] | 906 [631, 1284] |
+| modern_us_russia | France | 2026 | bomber | 43 [42, 43] | 26 [20, 32] |
+| modern_us_russia | France | 2026 | slbm | 242 [239, 245] | 146 [113, 180] |
+| modern_us_russia | UK | 2026 | slbm | 173 [141, 212] | 105 [78, 141] |
+| modern_us_russia | Russia | 2026 | bomber | 314 [209, 407] | 194 [126, 276] |
+| modern_us_russia | Russia | 2026 | icbm | 1568 [1047, 2037] | 983 [614, 1369] |
+| modern_us_russia | Russia | 2026 | slbm | 1254 [838, 1630] | 778 [506, 1076] |
+| modern_us_russia_half | US | 2026 | bomber | 254 [190, 321] | 150 [101, 212] |
+| modern_us_russia_half | US | 2026 | icbm | 318 [237, 401] | 187 [123, 264] |
+| modern_us_russia_half | US | 2026 | slbm | 763 [569, 963] | 449 [302, 623] |
+| modern_us_russia_half | France | 2026 | bomber | 21 [21, 22] | 13 [10, 16] |
+| modern_us_russia_half | France | 2026 | slbm | 121 [120, 123] | 73 [55, 91] |
+| modern_us_russia_half | UK | 2026 | slbm | 85 [69, 106] | 51 [37, 67] |
+| modern_us_russia_half | Russia | 2026 | bomber | 155 [110, 200] | 95 [61, 136] |
+| modern_us_russia_half | Russia | 2026 | icbm | 776 [550, 1001] | 470 [304, 695] |
+| modern_us_russia_half | Russia | 2026 | slbm | 621 [440, 801] | 377 [243, 545] |
+| modern_us_china | US | 2026 | bomber | 507 [377, 628] | 112 [62, 195] |
+| modern_us_china | US | 2026 | icbm | 634 [472, 784] | 142 [75, 244] |
+| modern_us_china | US | 2026 | slbm | 1521 [1132, 1883] | 343 [186, 567] |
+| modern_us_china | China | 2026 | bomber | 17 [6, 26] | 9 [3, 16] |
+| modern_us_china | China | 2026 | land_missile | 285 [110, 438] | 154 [45, 285] |
+| modern_us_china | China | 2026 | slbm | 33 [13, 52] | 18 [5, 33] |
+| modern_india_pakistan | India | 2026 | bomber | 30 [10, 48] | 18 [6, 30] |
+| modern_india_pakistan | India | 2026 | land_missile | 64 [21, 104] | 39 [12, 64] |
+| modern_india_pakistan | India | 2026 | slbm | 5 [2, 8] | 3 [1, 5] |
+| modern_india_pakistan | Pakistan | 2026 | bomber | 16 [5, 28] | 10 [3, 19] |
+| modern_india_pakistan | Pakistan | 2026 | land_missile | 66 [20, 111] | 40 [12, 75] |
 
 **Check against the 1956 list.** A listing is not the same event as a strike: this compares what the map says of a
 delivered warhead with what one study listed, so it can show agreement in order and not that the probabilities are right.
@@ -630,40 +603,20 @@ There are no modern labels, so performance on modern towns cannot be measured at
 (0.5 is no separation); the single features run from 0.50 (`pop_rank_pct`) to 0.87 (`log_pop`), so the one feature the score reads is the one that separates the sets most.
 With one feature left out, the classifier's ROC-AUC stays between 0.92 (without `log_pop`) and 0.97: leaving out `log_pop` lowers it by 0.05, the most of any feature. That measures the shift; it does not show the score valid there.
 
-| comparison | measure | value | towns_a | towns_b |
-|---|---|---|---|---|
-| training towns against modern towns | two-sample ROC-AUC | 0.97 | 3686 | 2276 |
-| for scale: SAC 1956 towns against the other training towns | two-sample ROC-AUC | 0.89 | 2145 | 1541 |
-| modern towns outside the 1st-99th percentile of training: log_pop | share of modern towns | 0.18 | 3686 | 2276 |
-| modern towns outside the 1st-99th percentile of training: pop_rank_pct | share of modern towns | 0.02 | 3686 | 2276 |
-| modern towns outside the 1st-99th percentile of training: log_pop_within_25km | share of modern towns | 0.005 | 3686 | 2276 |
-| modern towns outside the 1st-99th percentile of training: log_pop_within_50km | share of modern towns | 0.01 | 3686 | 2276 |
-| modern towns outside the 1st-99th percentile of training: log_pop_within_100km | share of modern towns | 0.02 | 3686 | 2276 |
-| modern towns outside the 1st-99th percentile of training: log_km_to_100k | share of modern towns | 0.02 | 3686 | 2276 |
-| modern towns outside the 1st-99th percentile of training: national_capital | share of modern towns | 0.01 | 3686 | 2276 |
-| modern towns outside the 1st-99th percentile of training: regional_centre | share of modern towns | 0.00 | 3686 | 2276 |
-| modern towns outside the 1st-99th percentile of training: log_km_to_capital | share of modern towns | 0.03 | 3686 | 2276 |
-| modern towns outside the 1st-99th percentile of training: log_km_to_coast | share of modern towns | 0.02 | 3686 | 2276 |
-| training towns against modern towns, this feature alone: log_pop | one-feature ROC-AUC, folded | 0.87 | 3686 | 2276 |
-| training towns against modern towns, this feature alone: pop_rank_pct | one-feature ROC-AUC, folded | 0.50 | 3686 | 2276 |
-| training towns against modern towns, this feature alone: log_pop_within_25km | one-feature ROC-AUC, folded | 0.82 | 3686 | 2276 |
-| training towns against modern towns, this feature alone: log_pop_within_50km | one-feature ROC-AUC, folded | 0.77 | 3686 | 2276 |
-| training towns against modern towns, this feature alone: log_pop_within_100km | one-feature ROC-AUC, folded | 0.67 | 3686 | 2276 |
-| training towns against modern towns, this feature alone: log_km_to_100k | one-feature ROC-AUC, folded | 0.63 | 3686 | 2276 |
-| training towns against modern towns, this feature alone: national_capital | one-feature ROC-AUC, folded | 0.50 | 3686 | 2276 |
-| training towns against modern towns, this feature alone: regional_centre | one-feature ROC-AUC, folded | 0.57 | 3686 | 2276 |
-| training towns against modern towns, this feature alone: log_km_to_capital | one-feature ROC-AUC, folded | 0.74 | 3686 | 2276 |
-| training towns against modern towns, this feature alone: log_km_to_coast | one-feature ROC-AUC, folded | 0.56 | 3686 | 2276 |
-| training towns against modern towns, without: log_pop | two-sample ROC-AUC, one feature left out | 0.92 | 3686 | 2276 |
-| training towns against modern towns, without: pop_rank_pct | two-sample ROC-AUC, one feature left out | 0.94 | 3686 | 2276 |
-| training towns against modern towns, without: log_pop_within_25km | two-sample ROC-AUC, one feature left out | 0.97 | 3686 | 2276 |
-| training towns against modern towns, without: log_pop_within_50km | two-sample ROC-AUC, one feature left out | 0.97 | 3686 | 2276 |
-| training towns against modern towns, without: log_pop_within_100km | two-sample ROC-AUC, one feature left out | 0.97 | 3686 | 2276 |
-| training towns against modern towns, without: log_km_to_100k | two-sample ROC-AUC, one feature left out | 0.97 | 3686 | 2276 |
-| training towns against modern towns, without: national_capital | two-sample ROC-AUC, one feature left out | 0.97 | 3686 | 2276 |
-| training towns against modern towns, without: regional_centre | two-sample ROC-AUC, one feature left out | 0.97 | 3686 | 2276 |
-| training towns against modern towns, without: log_km_to_capital | two-sample ROC-AUC, one feature left out | 0.97 | 3686 | 2276 |
-| training towns against modern towns, without: log_km_to_coast | two-sample ROC-AUC, one feature left out | 0.97 | 3686 | 2276 |
+Per feature, on 3,686 training and 2,276 modern towns (`runs/probmap/domain_shift.csv`):
+
+| feature | modern_towns_outside_training_1_99 | roc_auc_this_feature_alone | roc_auc_without_this_feature |
+|---|---|---|---|
+| log_pop | 0.18 | 0.87 | 0.92 |
+| pop_rank_pct | 0.02 | 0.50 | 0.94 |
+| log_pop_within_25km | 0.005 | 0.82 | 0.97 |
+| log_pop_within_50km | 0.01 | 0.77 | 0.97 |
+| log_pop_within_100km | 0.02 | 0.67 | 0.97 |
+| log_km_to_100k | 0.02 | 0.63 | 0.97 |
+| national_capital | 0.01 | 0.50 | 0.97 |
+| regional_centre | 0.00 | 0.57 | 0.97 |
+| log_km_to_capital | 0.03 | 0.74 | 0.97 |
+| log_km_to_coast | 0.02 | 0.56 | 0.97 |
 
 ## What the evidence cannot support
 

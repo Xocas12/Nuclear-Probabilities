@@ -10,6 +10,7 @@ cards it names. tests/test_classifier_report.py fails if any of the three differ
 import functools
 import json
 
+import numpy as np
 import pandas as pd
 
 from nucprob.classifier.evaluate import MIN_TRAIN_POSITIVES
@@ -230,6 +231,10 @@ def tables() -> str:
     ]
     parts += ["## Feature families, US 1956 complexes", "", markdown(fam[keep]), ""]
     parts += ["## Defences, associations only", "", markdown(pd.read_csv(OUT / "defence.csv")), ""]
+    extended = _extended_rows()
+    if extended is not None:
+        parts += ["## Economic and political data, every row", ""]
+        parts += [markdown(extended[EXTENDED_COLUMNS]), ""]
     return "\n".join(parts)
 
 
@@ -328,21 +333,86 @@ def _population_note(model: str) -> str:
 
 
 def _theatre_table() -> pd.DataFrame:
-    """Every theatre share as configs/scenarios.yaml states it. None has a source."""
+    """Every theatre share as configs/scenarios.yaml states it, one row per scenario and range. None
+    has a source."""
     rows = []
     for sc in load_scenarios():
         for a in sc["attackers"]:
             low, mode, high = a["theatre_share"]
-            rows.append(
-                {
-                    "scenario": sc["id"],
-                    "attacker": a["state"],
-                    "low": low,
-                    "mode": mode,
-                    "high": high,
-                }
-            )
-    return pd.DataFrame(rows)
+            rows.append({"scenario": sc["id"], "attacker": a["state"], "range": (low, mode, high)})
+    t = pd.DataFrame(rows)
+    t = t.groupby(["scenario", "range"], sort=False, as_index=False)["attacker"].agg(", ".join)
+    return pd.DataFrame(
+        {
+            "scenario": t["scenario"],
+            "attackers": t["attacker"],
+            "low": [r[0] for r in t["range"]],
+            "mode": [r[1] for r in t["range"]],
+            "high": [r[2] for r in t["range"]],
+        }
+    )
+
+
+def _median_range(d: pd.DataFrame, prefix: str) -> pd.Series:
+    """'median [low, high]' from the columns <prefix>_median, _low and _high, as whole warheads."""
+    return d.apply(
+        lambda r: (
+            f"{r[prefix + '_median']:.0f} [{r[prefix + '_low']:.0f}, {r[prefix + '_high']:.0f}]"
+        ),
+        axis=1,
+    )
+
+
+def _delivered_table(d: pd.DataFrame) -> pd.DataFrame:
+    """runs/probmap/delivered.csv with each interval in one column. Warheads on scored towns differ
+    from those delivered only where the sealed set holds people, so elsewhere the column says so."""
+    return pd.DataFrame(
+        {
+            "scenario": d["scenario"],
+            "attacker": d["attacker"],
+            "delivered": _median_range(d, "delivered"),
+            "on_scored_towns": np.where(
+                d["share_of_people_in_scored_towns"] < 1,
+                _median_range(d, "on_scored_towns"),
+                "all",
+            ),
+            "delivered_shares_at_mode": d.apply(
+                lambda r: (
+                    f"[{r['delivered_low_share_fixed']:.0f}, {r['delivered_high_share_fixed']:.0f}]"
+                ),
+                axis=1,
+            ),
+        }
+    )
+
+
+def _by_delivery_table(b: pd.DataFrame) -> pd.DataFrame:
+    """runs/probmap/by_delivery.csv with each interval in one column."""
+    return pd.DataFrame(
+        {
+            "scenario": b["scenario"],
+            "attacker": b["attacker"],
+            "stock_year": b["stock_year"],
+            "delivery": b["delivery"],
+            "available": _median_range(b, "available"),
+            "delivered": _median_range(b, "delivered"),
+        }
+    )
+
+
+SHIFT_COLUMNS = {
+    "share of modern towns": "modern_towns_outside_training_1_99",
+    "one-feature ROC-AUC, folded": "roc_auc_this_feature_alone",
+    "two-sample ROC-AUC, one feature left out": "roc_auc_without_this_feature",
+}
+
+
+def _shift_table(shift: pd.DataFrame) -> pd.DataFrame:
+    """runs/probmap/domain_shift.csv's per-feature rows, one row per feature."""
+    per = shift[shift["measure"].isin(SHIFT_COLUMNS)]
+    t = per.pivot(index="feature", columns="measure", values="value")
+    t = t.reindex(per["feature"].drop_duplicates())[list(SHIFT_COLUMNS)]
+    return t.rename(columns=SHIFT_COLUMNS).rename_axis(None, axis=1).reset_index()
 
 
 def _map_section() -> str:
@@ -415,7 +485,8 @@ It is a consequence of stated assumptions, not a forecast of any war. The viewer
 **Stockpile and allocation.** `data/curated/stockpiles/` holds cited inventories by state, year and,
 where a source splits them, delivery, with cited or expressly stated assumptions on availability,
 reliability and loss to defences. `configs/scenarios.yaml` states who is assumed to fire on whom and what
-share of the inventory goes there. Those are assumptions, not findings. **The theatre shares have no source**; these are all of them:
+share of the inventory goes there. Those are assumptions, not findings. **The theatre shares have no source**; these are all of them, as
+(low, mode, high) of a triangular draw:
 
 {markdown(_theatre_table())}
 
@@ -459,11 +530,11 @@ what is actually unknown. "Mean width" is the mean over cells of that interval; 
 stockpile at its median, then the model at its median. Cells over one half are counted within each draw. Cells saturate because warheads can outnumber cells while not outnumbering towns:
 `ussr_1965_on_west` has {west_d["delivered_median"]:.0f} median delivered warheads, {int(west["towns"])} towns and {int(west["cells"])} cells, and a cell of several towns passes one half
 before each of its towns would. Where most cells are over one half the map says little beyond that. Sealed towns are not scored, so a 1956 cell holding only sealed towns is absent from the map.
-{_width_source(s, model_wider)} "Delivered" in the tables below is before one more step: towns of the sealed set draw no warheads, so the 1956 map uses the share of people living in scored towns, {float(bloc_d["share_of_people_in_scored_towns"]):.2f}, of what is delivered: {bloc_d["delivered_median"]:.0f} delivered at the median and {bloc_d["on_scored_towns_median"]:.0f} on scored towns in `us_1956_on_bloc`. Part of the spread of delivered warheads comes from cited inventories and part from the unsourced theatre shares. The theatre share alone accounts for {v.min():.0%} ({v_low["attacker"]}, `{v_low["scenario"]}`) to {v.max():.0%} ({v_high["attacker"]}, `{v_high["scenario"]}`) of the variance of an attacker's delivered warheads: a first-order Sobol index by the pick-freeze estimator on {int(variance["draws"].iloc[0]):,} draws, with standard errors up to {variance["standard_error"].max():.3f} (`runs/probmap/share_variance.csv`). The columns `delivered_low_share_fixed` and `delivered_high_share_fixed` are the interval with every share held at its mode, from separate draws; holding a share at its mode also moves the centre, so they are not a split of the interval's width.
+{_width_source(s, model_wider)} "Delivered" in the tables below is before one more step: towns of the sealed set draw no warheads, so the 1956 map uses the share of people living in scored towns, {float(bloc_d["share_of_people_in_scored_towns"]):.2f}, of what is delivered: {bloc_d["delivered_median"]:.0f} delivered at the median and {bloc_d["on_scored_towns_median"]:.0f} on scored towns in `us_1956_on_bloc`. Part of the spread of delivered warheads comes from cited inventories and part from the unsourced theatre shares. The theatre share alone accounts for {v.min():.0%} ({v_low["attacker"]}, `{v_low["scenario"]}`) to {v.max():.0%} ({v_high["attacker"]}, `{v_high["scenario"]}`) of the variance of an attacker's delivered warheads: a first-order Sobol index by the pick-freeze estimator on {int(variance["draws"].iloc[0]):,} draws, with standard errors up to {variance["standard_error"].max():.3f} (`runs/probmap/share_variance.csv`). In the second table each figure is the median with the 5th to 95th percentile; `on_scored_towns` is "all" where the sealed set holds nobody; `delivered_shares_at_mode` is the interval with every share held at its mode, from separate draws. Holding a share at its mode also moves the centre, so that column is not a split of the interval's width.
 
 {markdown(scen)}
 
-{markdown(d)}
+{markdown(_delivered_table(d))}
 
 **By delivery.** Warheads available by state and delivery after the stated assumptions, and those delivered. The
 shares come from SIPRI and NRDC (`data/curated/stockpiles/delivery_mix.csv`), on bases that differ by state. For 1950
@@ -474,7 +545,7 @@ Reliability has one range for every modern delivery, because no source separates
 range separately, so the split leaves the expected delivered total unchanged and changes only how much the draws average
 out. These are totals for a whole force. No delivery is assigned to any area.
 
-{markdown(by_delivery)}
+{markdown(_by_delivery_table(by_delivery))}
 
 **Check against the 1956 list.** A listing is not the same event as a strike: this compares what the map says of a
 delivered warhead with what one study listed, so it can show agreement in order and not that the probabilities are right.
@@ -497,7 +568,9 @@ There are no modern labels, so performance on modern towns cannot be measured at
 (0.5 is no separation); the single features run from {alone.iloc[0]["value"]:.2f} (`{alone.iloc[0]["feature"]}`) to {alone.iloc[-1]["value"]:.2f} (`{alone.iloc[-1]["feature"]}`){", so the one feature the score reads is the one that separates the sets most" if alone.iloc[-1]["feature"] == "log_pop" else ""}.
 With one feature left out, the classifier's ROC-AUC stays between {dropped.iloc[0]["value"]:.2f} (without `{dropped.iloc[0]["feature"]}`) and {dropped.iloc[-1]["value"]:.2f}{_carried(dropped, two.iloc[0]["value"])}
 
-{markdown(shift[["comparison", "measure", "value", "towns_a", "towns_b"]])}
+Per feature, on {int(two.iloc[0]["towns_a"]):,} training and {int(two.iloc[0]["towns_b"]):,} modern towns (`runs/probmap/domain_shift.csv`):
+
+{markdown(_shift_table(shift))}
 """
 
 
@@ -603,16 +676,31 @@ def _defence_summary() -> str:
     )
 
 
-def _extended_section() -> str:
+EXTENDED_COLUMNS = [
+    "scope",
+    "comparison",
+    "holdout",
+    "lists",
+    "positives",
+    "train_positives",
+    "model",
+    "against",
+    "difference",
+    "by_blocks",
+    "verdict",
+]
+
+
+def _extended_rows() -> pd.DataFrame | None:
+    """runs/classifier/extended.csv as the report reads it, or None before it is run."""
     path = OUT / "extended.csv"
     d = pd.read_csv(path) if path.exists() else pd.DataFrame()
     if "verdict" not in d:
-        return "The economic and political readings have not been run.\n"
+        return None
     # A scope with no SAC rows repeats its "all lists" row under "other than SAC".
     no_sac = d["scope"].str.startswith("Warsaw")
     d = d[~(no_sac & d["lists"].eq("other than SAC"))].reset_index(drop=True)
-    vpk = d[d["comparison"] == "defence industry over population"].iloc[0]
-    d = d.assign(
+    return d.assign(
         difference=d.apply(interval, axis=1),
         by_blocks=d.apply(
             lambda r: f"[{signed(r['block_low'])}, {signed(r['block_high'])}]", axis=1
@@ -620,6 +708,13 @@ def _extended_section() -> str:
         model=d["a_pr_auc"],
         against=d["b_pr_auc"],
     )
+
+
+def _extended_section() -> str:
+    d = _extended_rows()
+    if d is None:
+        return "The economic and political readings have not been run.\n"
+    vpk = d[d["comparison"] == "defence industry over population"].iloc[0]
     counts = d["verdict"].value_counts()
     lopo = d[(d["holdout"] == "leave one document out") & (d["verdict"] != "not a reading")]
     lopo_gains = int((lopo["verdict"] == "gain").sum())
@@ -648,21 +743,12 @@ def _extended_section() -> str:
         rule[name] = r["b_pr_auc"]
     glob = lopo[lopo["scope"] == "global, all attacker documents"]
     best = {k: glob.loc[glob["lists"] == k, "a_pr_auc"].max() for k in rule}
-    table = d[
-        [
-            "scope",
-            "comparison",
-            "holdout",
-            "lists",
-            "positives",
-            "train_positives",
-            "model",
-            "against",
-            "difference",
-            "by_blocks",
-            "verdict",
-        ]
-    ]
+    spatial = d[(d["holdout"] == "spatial blocks") & (d["verdict"] != "not a reading")]
+    spatial = spatial[spatial["comparison"] != "defence industry over population"]
+    shown = (d["scope"] == "global, all attacker documents") & (
+        d["holdout"] == "leave one document out"
+    )
+    table = d.loc[shown | (d["comparison"] == "defence industry over population"), EXTENDED_COLUMNS]
     return f"""The primary model holds almost no economic or political data. `configs/protocol_amendment_5.yaml` fixed, before
 any of these columns was fitted, a separate reading of the target state's regime (Regimes of the World), its defence pacts
 (COW Formal Alliances) and its GDP per capita (Maddison), each as of the document's year, and of the Soviet defence-industry
@@ -678,6 +764,9 @@ may be just that. "Model" and "against" are PR-AUC with and without the columns.
 Counts of Soviet defence plants add {interval(vpk)} (by blocks {block_interval(vpk)}) to population on Soviet towns
 of the SAC list, PR-AUC {vpk["a_pr_auc"]:.2f} against {vpk["b_pr_auc"]:.2f}: no detectable gain. The counts are later knowledge of what existed, not what SAC
 knew, and they are matched to the town by name, so this does not show that SAC ignored industry.
+
+Under spatial blocks {int((spatial["verdict"] == "gain").sum())} of {len(spatial)} rows gain. The table holds the global scope's rows on a left-out
+document and the defence-industry row; all {len(d)} rows are in `runs/classifier/TABLES.md`.
 
 {markdown(table)}
 """
