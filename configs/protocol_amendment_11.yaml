@@ -1,0 +1,28 @@
+# Eleventh amendment, in its own file like the fifth to tenth. Committed and pushed before the sealed set is
+# scored, and before any score of a sealed place exists. Every other result had been read, and the independent
+# review of 930a164 had found no fault in the models or the labels (its faults were stale outputs and two YAML
+# files that did not parse, answered in 2f59d89..0f61a58). The sealed set is the one blind reading left.
+date: 2026-11-03
+reasons: protocol.yaml says the sealed set is scored once, after the models are final, with never_scored places
+  as the primary population, and that it waits for an independent review. It does not say which comparison is
+  read or with what interval, and nucprob.classifier.sealed as committed before this amendment printed bare
+  metrics. This fixes the reading before the scores exist.
+changes:
+  primary: For each scope that fits a model, its selected candidate (runs/classifier/selection.csv, chosen on
+    spatial blocks before this amendment) against population + country, on the SAC 1956 rows of the 273
+    never_scored places. PR-AUC, read as a difference, with the protocol's 95% paired stratified bootstrap
+    (2000 resamples, seed 1956; towns resampled within class) and the block bootstrap of the third amendment
+    (whole 300 km blocks, same resamples and seed). A gain or a loss is claimed only if both intervals exclude
+    zero, read from the unrounded bounds, as for every other comparison.
+  also_reported: The same comparison against the population rule; the same two comparisons on all 467 sealed
+    places; and every model's PR-AUC, ROC-AUC, Brier score, log-loss and precision at k on both populations,
+    with its own percentile interval for PR-AUC from the stratified bootstrap. Every row is reported whichever
+    way it falls.
+  fits: Each model is fitted once per scope on every usable row of that scope (no sealed place), with the 50
+    bags of the primary analysis and the committed seeds. No refit, no tuning and no second scoring follows;
+    nucprob.classifier.sealed takes a lock before it scores and refuses to run while the lock exists.
+  not_read_as: Sealed places lie in whole 300 km blocks that hold no training place, but a training town in a
+    neighbouring block may be near; the reading is spatially held out, not distant. Only SAC 1956 has sealed
+    rows, so the reading speaks to that list. Brier score and log-loss are of bagged positive-unlabeled scores,
+    not calibrated probabilities.
+unchanged: No label, feature, model, gate threshold, selection rule, holdout, seed or scenario changes.

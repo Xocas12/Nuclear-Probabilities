@@ -303,3 +303,38 @@ def test_the_table_keeps_documents_apart_and_never_trains_on_a_mirror():
     both = pivot.dropna()
     assert (both["wp_1961_burza"] <= both["wp_1967_lato67"] + 1e-9).all()
     assert (both["wp_1961_burza"] < both["wp_1967_lato67"]).any()
+
+
+def test_the_sealed_reading_is_the_eleventh_amendments():
+    """Selected candidate against population + country on never_scored places is the one primary row;
+    a gain needs both intervals clear of zero; every model gets a row in each population."""
+    rng = np.random.default_rng(0)
+    n = 400
+    y = (rng.uniform(size=n) < 0.3).astype(int)
+    sealed = pd.DataFrame(
+        {
+            "listed": y,
+            "plan_id": "sac",
+            "block": rng.integers(0, 40, n),
+            "never_scored": rng.uniform(size=n) < 0.6,
+        }
+    )
+    good = y + rng.normal(0, 0.3, n)
+    noise = rng.normal(0, 1, n)
+    scores = {
+        ("s", "LightGBM, all permitted"): good,
+        ("s", "population + country"): noise,
+        ("s", "population rule"): good,
+    }
+    met, comp = csealed.read(sealed, scores, {"s": "LightGBM, all permitted"}, n=200)
+    assert len(met) == 3 * 2 and set(met["population"]) == set(csealed.POPULATIONS)
+    assert (met["pr_auc_low"] <= met["pr_auc"]).all() and (
+        met["pr_auc"] <= met["pr_auc_high"]
+    ).all()
+    assert comp["primary"].sum() == 1
+    primary = comp[comp["primary"]].iloc[0]
+    assert (primary["population"], primary["against"]) == ("never_scored", "population + country")
+    assert primary["rows"] == sealed["never_scored"].sum()
+    assert primary["verdict"] == "gain"
+    same = comp[(comp["against"] == "population rule")]
+    assert (same["delta"] == 0).all() and (same["verdict"] == "neither").all()
