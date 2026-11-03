@@ -134,6 +134,16 @@ seal is a procedure and not a secret. It has been scored once; see below.
   14% of held-out rows have a training town within 25 km and 36% within 50 km (`runs/classifier/block_neighbours.csv`).
 - **Reading.** Mean per-list PR-AUC, weighted by positives, on lists with 2 or more. Neither interval includes
   the variance of refitting a model.
+- **Fit checks.** The document identification classifier (Results, "What the gains rest on") diverged, so
+  the fifteenth amendment, fixed before it was run, refitted the primary models to see whether they do too: every
+  bag of the four models on each scope's whole rows, the five folds of the first spatial grid, each left-out
+  document and both temporal directions, 8,832 bag fits in all. A test checks that the refitting code draws and fits
+  bags exactly as the primary run's code does. Of the 8,832, 0 were called diverged. A LightGBM fit is called diverged if its training log
+  loss ends more than 0.01 above its lowest value or a raw score passes 50; a logistic fit if its
+  solver stops at its iteration cap or a decision value passes 50. LightGBM's training loss never ended above its lowest value, and its largest raw score was 8.8; no logistic solver stopped at its cap of 5,000 iterations, and the
+  largest decision value was 25.6 (`runs/classifier/divergence/summary.csv`). This shows
+  whether the fits converged, not that the models are right. The grids shifted by 100 and 200 km and the fits
+  that keep a left-out document's towns were not refitted.
 - **Which model.** Each scope's candidate was chosen on spatial blocks alone, and the spatial differences below are read on the same rows, so
   they are optimistic by the choice between two candidates. The left-out and temporal rows are not read where the model was chosen. The protocol's "nothing is chosen on a held-out set" concerns model settings.
 

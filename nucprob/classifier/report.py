@@ -13,6 +13,7 @@ import json
 import numpy as np
 import pandas as pd
 
+from nucprob.classifier.divergence import LOSS_RISE, MAX_RAW
 from nucprob.classifier.evaluate import MIN_TRAIN_POSITIVES
 from nucprob.paths import CURATED, ROOT, RUNS
 from nucprob.plans import protocol
@@ -997,6 +998,62 @@ def _blind_line(r, auc: bool = True) -> str:
     )
 
 
+DIVERGENCE = OUT / "divergence"
+
+
+def _divergence_fits() -> pd.DataFrame | None:
+    path = DIVERGENCE / "fits.csv"
+    return pd.read_csv(path) if path.exists() else None
+
+
+def _fit_check() -> str:
+    """The Method bullet on the fifteenth amendment's divergence check, from runs/classifier/divergence/."""
+    fits = _divergence_fits()
+    if fits is None:
+        return "- **Fit checks.** The fifteenth amendment's test of the primary fits for divergence has not been run."
+    n, bad = len(fits), int(fits["diverged"].sum())
+    lgb = fits[fits["kind"] == "lightgbm"]
+    lr = fits[fits["kind"] == "logistic"]
+    rise = (lgb["loss_final"] - lgb["loss_min"]).max()
+    hits = int(lr["solver_hit_max_iter"].sum())
+    solver = (
+        "no logistic solver stopped at its cap of 5,000 iterations"
+        if hits == 0
+        else f"{hits:,} logistic fits stopped at the solver's cap of 5,000 iterations"
+    )
+    return f"""- **Fit checks.** The document identification classifier (Results, "What the gains rest on") diverged, so
+  the fifteenth amendment, fixed before it was run, refitted the primary models to see whether they do too: every
+  bag of the four models on each scope's whole rows, the five folds of the first spatial grid, each left-out
+  document and both temporal directions, {n:,} bag fits in all. A test checks that the refitting code draws and fits
+  bags exactly as the primary run's code does. Of the {n:,}, {bad:,} were called diverged. A LightGBM fit is called diverged if its training log
+  loss ends more than {LOSS_RISE} above its lowest value or a raw score passes {MAX_RAW:.0f}; a logistic fit if its
+  solver stops at its iteration cap or a decision value passes {MAX_RAW:.0f}. LightGBM's training loss {_rise_words(rise)}, and its largest raw score was {lgb["max_abs_raw"].max():.1f}; {solver}, and the
+  largest decision value was {lr["max_abs_raw"].max():.1f} (`runs/classifier/divergence/summary.csv`). This shows
+  whether the fits converged, not that the models are right. The grids shifted by 100 and 200 km and the fits
+  that keep a left-out document's towns were not refitted."""
+
+
+def _rise_words(rise: float) -> str:
+    if rise <= 0:
+        return "never ended above its lowest value"
+    return f"ended at most {rise:.2g} above its lowest value"
+
+
+def _main_divergence() -> str:
+    """A main-result bullet only if some primary fit was called diverged (the fifteenth amendment's rule)."""
+    fits = _divergence_fits()
+    if fits is None or not fits["diverged"].any():
+        return ""
+    bad = fits[fits["diverged"].astype(bool)]
+    where = bad.groupby(["scope", "holdout", "model"], sort=False).size()
+    named = "; ".join(f"{s}, {h}, {m} ({k} bags)" for (s, h, m), k in where.items())
+    return (
+        f"- **Some primary fits diverged**: {len(bad):,} of {len(fits):,} bag fits, in {named}"
+        " (`runs/classifier/divergence/summary.csv`). The results of those rows rest on them; the fifteenth"
+        " amendment does not refit or correct them.\n"
+    )
+
+
 def _main_lead() -> str:
     """The report's first sentences, which follow the blind reading where one exists."""
     inside = (
@@ -1351,7 +1408,7 @@ requirements or policy study); "war plan" means that type only.
 - **Verdicts in the primary table, against population plus country:** {v.get("gain", 0)} {WORDS["gain"]}, {v.get("loss", 0)} {WORDS["loss"]}, {v.get("neither", 0)} {WORDS["neither"]}, {v.get("not a reading", 0)} {WORDS["not a reading"]}. A gain or a
   loss needs both intervals to exclude zero. Gains appear under {_holdout_list(verdict_gains)}; losses under {_holdout_list(verdict_losses)}. A row with under {MIN_TRAIN_POSITIVES} positives in training, or a
   constant score, is not a reading.
-- **No state has its own model.** The US has {int(us_gate["linked_positives"])} linked positives, but only {int(us_gate["positives_outside_largest"])} outside the SAC study, and the state gate asks {_rule_outside()}.
+{_main_divergence()}- **No state has its own model.** The US has {int(us_gate["linked_positives"])} linked positives, but only {int(us_gate["positives_outside_largest"])} outside the SAC study, and the state gate asks {_rule_outside()}.
 
 ## Question
 
@@ -1434,6 +1491,7 @@ seal is a procedure and not a secret. {_sealed_status()}
   {nearby.iloc[0]["within_25km"]:.0%} of held-out rows have a training town within 25 km and {nearby.iloc[0]["within_50km"]:.0%} within 50 km (`runs/classifier/block_neighbours.csv`).
 - **Reading.** Mean per-list PR-AUC, weighted by positives, on lists with 2 or more. Neither interval includes
   the variance of refitting a model.
+{_fit_check()}
 - **Which model.** Each scope's candidate was chosen on spatial blocks alone, and the spatial differences below are read on the same rows, so
   they are optimistic by the choice between two candidates. The left-out and temporal rows are not read where the model was chosen. The protocol's "nothing is chosen on a held-out set" concerns model settings.
 

@@ -1,0 +1,53 @@
+scope,holdout,model,fits,diverged,solver_hit_max_iter,largest_abs_raw,largest_loss_rise
+"global, all attacker documents",whole scope,population rule,50,0,0,4.32873,0
+"global, all attacker documents",whole scope,population + country,50,0,0,6.78006,0
+"global, all attacker documents",whole scope,"logistic, all permitted",50,0,0,7.30704,0
+"global, all attacker documents",whole scope,"LightGBM, all permitted",50,0,0,6.92478,0
+"global, all attacker documents","spatial blocks, first grid",population rule,250,0,0,4.62061,0
+"global, all attacker documents","spatial blocks, first grid",population + country,250,0,0,7.15963,0
+"global, all attacker documents","spatial blocks, first grid","logistic, all permitted",250,0,0,10.8135,0
+"global, all attacker documents","spatial blocks, first grid","LightGBM, all permitted",250,0,0,7.17639,0
+"global, all attacker documents",leave one document out,population rule,550,0,0,5.11648,0
+"global, all attacker documents",leave one document out,population + country,550,0,0,8.45948,0
+"global, all attacker documents",leave one document out,"logistic, all permitted",550,0,0,15.6616,0
+"global, all attacker documents",leave one document out,"LightGBM, all permitted",550,0,0,8.7299,0
+"global, all attacker documents",temporal,population rule,51,0,0,5.39758,0
+"global, all attacker documents",temporal,population + country,51,0,0,8.86024,0
+"global, all attacker documents",temporal,"logistic, all permitted",51,0,0,10.2224,0
+"global, all attacker documents",temporal,"LightGBM, all permitted",51,0,0,8.23899,0
+"global, plan documents only",whole scope,population rule,50,0,0,5.40122,0
+"global, plan documents only",whole scope,population + country,50,0,0,8.89952,0
+"global, plan documents only",whole scope,"logistic, all permitted",50,0,0,9.42911,0
+"global, plan documents only",whole scope,"LightGBM, all permitted",50,0,0,7.08024,0
+"global, plan documents only","spatial blocks, first grid",population rule,250,0,0,6.22075,0
+"global, plan documents only","spatial blocks, first grid",population + country,250,0,0,9.22524,0
+"global, plan documents only","spatial blocks, first grid","logistic, all permitted",250,0,0,13.4373,0
+"global, plan documents only","spatial blocks, first grid","LightGBM, all permitted",250,0,0,7.36707,0
+"global, plan documents only",leave one document out,population rule,250,0,0,6.96066,0
+"global, plan documents only",leave one document out,population + country,250,0,0,9.14795,0
+"global, plan documents only",leave one document out,"logistic, all permitted",250,0,0,25.6453,0
+"global, plan documents only",leave one document out,"LightGBM, all permitted",250,0,0,8.81828,0
+"global, plan documents only",temporal,population rule,51,0,0,5.39758,0
+"global, plan documents only",temporal,population + country,51,0,0,8.86024,0
+"global, plan documents only",temporal,"logistic, all permitted",51,0,0,9.38195,0
+"global, plan documents only",temporal,"LightGBM, all permitted",51,0,0,6.92529,0
+"Warsaw Pact, pooled, exercise-based",whole scope,population rule,50,0,0,2.89729,0
+"Warsaw Pact, pooled, exercise-based",whole scope,population + country,50,0,0,3.89143,0
+"Warsaw Pact, pooled, exercise-based",whole scope,"logistic, all permitted",50,0,0,9.69007,0
+"Warsaw Pact, pooled, exercise-based",whole scope,"LightGBM, all permitted",50,0,0,8.25158,0
+"Warsaw Pact, pooled, exercise-based","spatial blocks, first grid",population rule,250,0,0,3.16692,0
+"Warsaw Pact, pooled, exercise-based","spatial blocks, first grid",population + country,250,0,0,3.99459,0
+"Warsaw Pact, pooled, exercise-based","spatial blocks, first grid","logistic, all permitted",250,0,0,10.5285,0
+"Warsaw Pact, pooled, exercise-based","spatial blocks, first grid","LightGBM, all permitted",250,0,0,8.73028,0
+"Warsaw Pact, pooled, exercise-based",leave one document out,population rule,400,0,0,4.59886,0
+"Warsaw Pact, pooled, exercise-based",leave one document out,population + country,400,0,0,4.80399,0
+"Warsaw Pact, pooled, exercise-based",leave one document out,"logistic, all permitted",400,0,0,10.8947,0
+"Warsaw Pact, pooled, exercise-based",leave one document out,"LightGBM, all permitted",400,0,0,8.65848,0
+single document: SAC 1956 (not a state model),whole scope,population rule,1,0,0,6.9637,0
+single document: SAC 1956 (not a state model),whole scope,population + country,1,0,0,9.09979,0
+single document: SAC 1956 (not a state model),whole scope,"logistic, all permitted",1,0,0,12.141,0
+single document: SAC 1956 (not a state model),whole scope,"LightGBM, all permitted",1,0,0,5.62645,0
+single document: SAC 1956 (not a state model),"spatial blocks, first grid",population rule,5,0,0,7.11141,0
+single document: SAC 1956 (not a state model),"spatial blocks, first grid",population + country,5,0,0,9.74701,0
+single document: SAC 1956 (not a state model),"spatial blocks, first grid","logistic, all permitted",5,0,0,13.2428,0
+single document: SAC 1956 (not a state model),"spatial blocks, first grid","LightGBM, all permitted",5,0,0,5.89365,0

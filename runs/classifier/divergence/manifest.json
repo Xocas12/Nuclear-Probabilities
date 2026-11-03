@@ -1,0 +1,15 @@
+{
+  "created": "2026-11-03T18:47:39+00:00",
+  "git_commit": "28ac389a691aed3699c047fc932c2fd23f468061",
+  "git_dirty": false,
+  "amendment": "configs/protocol_amendment_15.yaml",
+  "table_sha256": "28c139144a8cde8a7a87610448c2f5b0d882a24c4f5a4638704ff630489a97ed",
+  "bags": 50,
+  "seed": 1956,
+  "loss_rise": 0.01,
+  "max_abs_raw": 50.0,
+  "outputs": {
+    "runs/classifier/divergence/fits.csv": "c424714e0d83c915f7f19eb796bbc0abc06c11a1734da9c6852aa80ab911c9b0",
+    "runs/classifier/divergence/summary.csv": "fe7489594f4a87ebf7f8de4df856b973d0df959a28b795dc8184e9d082c9b9f7"
+  }
+}

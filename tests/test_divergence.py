@@ -121,3 +121,16 @@ def test_report_states_the_divergence_counts():
     n, bad = len(fits), int(fits["diverged"].sum())
     assert f"{n:,} bag fits" in text
     assert f"{bad:,} were called diverged" in text
+
+
+@needs_run
+def test_report_states_the_largest_scores_from_the_fits():
+    fits = pd.read_csv(dv.OUT / "fits.csv")
+    text = " ".join((ROOT / "REPORT.md").read_text(encoding="utf-8").split())
+    lgb, lr = fits[fits["kind"] == "lightgbm"], fits[fits["kind"] == "logistic"]
+    assert f"its largest raw score was {lgb['max_abs_raw'].max():.1f}" in text
+    assert f"largest decision value was {lr['max_abs_raw'].max():.1f}" in text
+    if not fits["diverged"].any():
+        assert "Some primary fits diverged" not in text
+    else:
+        assert "Some primary fits diverged" in text
