@@ -504,13 +504,12 @@ towns with 10,000 or more people, without France's territories outside Europe (`
 **No United Kingdom in 1965.** The only UK table held, Great Britain's 1981 districts, came through a path of
 `www.nomisweb.co.uk` that robots.txt disallows, and was withdrawn (`configs/protocol_amendment_10.yaml`). So the
 1965 map covers Denmark, the FRG, the Netherlands, Belgium and Italy, and its unsourced theatre share falls on them
-alone, so its continental cells read higher than they would if the UK were among the targets. The reading of British
-units counted three ways, made before the withdrawal, was withdrawn with them and is no result.
+alone, so its continental cells read higher than they would if the UK were among the targets.
 Warheads are shared out per row, so how a country's towns are cut into rows also moves the map: the rows are municipalities,
 and how much that matters was not measured.
 
 **Score.** The selection rule in `configs/protocol.yaml` selected **{best["model"]}**, by highest PR-AUC on a left-out document
-({best["lopo_pr_auc"]:.2f}). The candidates use only features that exist in every era without any present-day
+({best["lopo_pr_auc"]:.2f}). The candidates ("portable" in the table) use only features that exist in every era without any present-day
 facility data: population, its rank within the country, population within 25, 50 and 100 km, distance to a town of
 100,000, national capital or regional centre, distance to the capital and distance to a coast. So the map's score holds no defence,
 military or national-power term. It is fitted on all attacker documents, exercises included, and is not one
@@ -531,7 +530,11 @@ what is actually unknown. "Mean width" is the mean over cells of that interval; 
 stockpile at its median, then the model at its median. Cells over one half are counted within each draw. Cells saturate because warheads can outnumber cells while not outnumbering towns:
 `ussr_1965_on_west` has {west_d["delivered_median"]:.0f} median delivered warheads, {int(west["towns"])} towns and {int(west["cells"])} cells, and a cell of several towns passes one half
 before each of its towns would. Where most cells are over one half the map says little beyond that. Sealed towns are not scored, so a 1956 cell holding only sealed towns is absent from the map.
-{_width_source(s, model_wider)} "Delivered" in the tables below is before one more step: towns of the sealed set draw no warheads, so the 1956 map uses the share of people living in scored towns, {float(bloc_d["share_of_people_in_scored_towns"]):.2f}, of what is delivered: {bloc_d["delivered_median"]:.0f} delivered at the median and {bloc_d["on_scored_towns_median"]:.0f} on scored towns in `us_1956_on_bloc`. Part of the spread of delivered warheads comes from cited inventories and part from the unsourced theatre shares. The theatre share alone accounts for {v.min():.0%} ({v_low["attacker"]}, `{v_low["scenario"]}`) to {v.max():.0%} ({v_high["attacker"]}, `{v_high["scenario"]}`) of the variance of an attacker's delivered warheads: a first-order Sobol index by the pick-freeze estimator on {int(variance["draws"].iloc[0]):,} draws, with standard errors up to {variance["standard_error"].max():.3f} (`runs/probmap/share_variance.csv`). In the second table each figure is the median with the 5th to 95th percentile; `on_scored_towns` is "all" where the sealed set holds nobody; `delivered_shares_at_mode` is the interval with every share held at its mode, from separate draws. Holding a share at its mode also moves the centre, so that column is not a split of the interval's width.
+{_width_source(s, model_wider)}
+
+"Delivered" in the tables below is before one more step: towns of the sealed set draw no warheads, so the 1956 map uses the share of people living in scored towns, {float(bloc_d["share_of_people_in_scored_towns"]):.2f}, of what is delivered: {bloc_d["delivered_median"]:.0f} delivered at the median and {bloc_d["on_scored_towns_median"]:.0f} on scored towns in `us_1956_on_bloc`. Part of the spread of delivered warheads comes from cited inventories and part from the unsourced theatre shares. The theatre share alone accounts for {v.min():.0%} ({v_low["attacker"]}, `{v_low["scenario"]}`) to {v.max():.0%} ({v_high["attacker"]}, `{v_high["scenario"]}`) of the variance of an attacker's delivered warheads: a first-order Sobol index by the pick-freeze estimator on {int(variance["draws"].iloc[0]):,} draws, with standard errors up to {variance["standard_error"].max():.3f} (`runs/probmap/share_variance.csv`).
+
+In the second table each figure is the median with the 5th to 95th percentile; `on_scored_towns` is "all" where the sealed set holds nobody; `delivered_shares_at_mode` is the interval with every share held at its mode, from separate draws. Holding a share at its mode also moves the centre, so that column is not a split of the interval's width.
 
 {markdown(scen)}
 
@@ -552,9 +555,9 @@ out. These are totals for a whole force. No delivery is assigned to any area.
 delivered warhead with what one study listed, so it can show agreement in order and not that the probabilities are right.
 The `us_1956_on_bloc` scenario, with {spatial["median_warheads_on_scored_towns"]:.0f} warheads
 on scored towns, against whether SAC listed a town in each 0.5-degree cell. {int(spatial["cells_listed"])} of {int(spatial["cells"])} cells hold a listed town, a
-base rate of {spatial["base_rate"]:.2f}. Scored by models that never saw the cell's block: PR-AUC {spatial["pr_auc"]:.3f}, ROC-AUC {spatial["roc_auc"]:.3f},
-Brier {spatial["brier"]:.3f} against {spatial["brier_of_base_rate"]:.3f} for the base rate. By models with no SAC row at all: PR-AUC {left["pr_auc"]:.3f}, ROC-AUC {left["roc_auc"]:.3f},
-Brier {left["brier"]:.3f}{" (no interval was computed for its difference from the reading above, so the two cannot be told apart)" if left["pr_auc"] != spatial["pr_auc"] else ""}. That second reading looks like transfer, and it is not evidence of it: with a one-feature monotone score,
+base rate of {spatial["base_rate"]:.2f}. Scored by models that never saw the cell's block: PR-AUC {spatial["pr_auc"]:.2f}, ROC-AUC {spatial["roc_auc"]:.2f},
+Brier {spatial["brier"]:.2f} against {spatial["brier_of_base_rate"]:.2f} for the base rate. By models with no SAC row at all: PR-AUC {left["pr_auc"]:.2f}, ROC-AUC {left["roc_auc"]:.2f},
+Brier {left["brier"]:.2f}{" (no interval was computed for its difference from the reading above, so the two cannot be told apart)" if left["pr_auc"] != spatial["pr_auc"] else ""}. That second reading looks like transfer, and it is not evidence of it: with a one-feature monotone score,
 the order of towns barely depends on which rows trained it, so agreement is largely built in. Across cells the map's mean
 probability is {spatial["mean_p"]:.2f} and the share listed {spatial["base_rate"]:.2f}, beside a mean interval width of {bloc_width:.2f} for this scenario. The reliability table:
 
@@ -1132,13 +1135,13 @@ def _blind_section() -> str:
 
     rule = comp[comp["population"].eq("blind") & comp["against"].eq(RULE)]
     gains = prim[prim["verdict"].eq("gain")]["scope"].tolist()
-    return f"""### The sealed set read again on blind places only (twelfth amendment)
+    return f"""### The sealed set read again on blind places only
 
 The never-scored population above is not blind. The list of places earlier runs had scored was read from the
 outputs of one commit, and earlier commits of a milestone check had committed scores, and maps showing them, for
 places that commit no longer scored. Walking every commit before the sealed scoring (`scripts/scored_history.py`,
 written to `data/curated/splits/scored_in_history.csv`) finds {hist["place_id"].nunique()} of the 467 sealed places with a
-committed score, {lost} of them among the never-scored rows above. `configs/protocol_amendment_12.yaml` was written
+committed score: {lost} of the never-scored rows above and all but {194 + lost - hist["place_id"].nunique()} of the 194 the early check had scored. That one counts as scored only because it shares its name and country with another town the early check scored (Kirovsk, `scored_before_freeze.csv`), and the walk finds no score for it. Of the 273 never-scored places, {int(ns["rows"])} have a SAC label. `configs/protocol_amendment_12.yaml` was written
 after the reading above had been seen and committed before this one was computed. It refits nothing and scores
 nothing: `python -m nucprob.classifier.sealed_reread` reads the committed sealed scores (it checks their hash) on the
 {int(p0["rows"])} never-scored places with a SAC label that no committed run scored ({int(p0["positives"])} listed, base rate
@@ -1203,8 +1206,8 @@ def _seal_sentence() -> str:
     lost = int(ns["rows"]) - int(p0["rows"])
     return (
         f"{card} Of the other 273, committed outputs of earlier runs held scores for {lost} more, which the drawing of "
-        f"the set missed (`data/curated/splits/scored_in_history.csv`). The {int(p0['rows'])} remaining places with a "
-        "SAC label are the **blind places**."
+        f"the set missed (`data/curated/splits/scored_in_history.csv`). Of the remaining {273 - lost}, the "
+        f"{int(p0['rows'])} with a SAC label are the **blind places**."
     )
 
 
@@ -1377,10 +1380,14 @@ base rate of {sac_rate:.2f}, the others together {rest_rate:.2f}. On a list that
 list is unlabeled, not a negative, so PR-AUC there understates true precision: read such figures against each other and
 the base rate, not as how often a model is right. Intervals are 95%. "By blocks" resamples whole 300 km squares of towns;
 the other interval resamples single towns. Verdicts use the unrounded bounds; a bound that would print as 0.00 is shown to
-three decimals with its sign, an exact zero as 0.00, and a comparison whose scores never differ as "constant". Where the positives lie in fewer than {MIN_POSITIVE_BLOCKS} blocks, resampling blocks measures nothing, and the block interval is shown as "n/a" with the count. That rule was set after the row it changes had been seen (7 positives in 2 blocks, verdict "neither" before and after; `configs/protocol_amendment_9.yaml`), so it is not blind. "Document" is the general word here: most of the lists are studies, exercises, lessons and a war
-game, and few are war plans (see "How much evidence there is, by side"). "Leave one document out" is the holdout `configs/protocol.yaml` calls leave one plan out.
+three decimals with its sign, an exact zero as 0.00, and a comparison whose scores never differ as "constant". Where the positives lie in fewer than {MIN_POSITIVE_BLOCKS} blocks, resampling blocks measures nothing, and the block interval is shown as "n/a" with the count.
 
-**Terms.** SAC is the US Strategic Air Command, whose 1956 study supplies the largest list. COW is the Correlates of War project. "All permitted"
+**Terms.** "Document" is the general word here: most of the lists are studies, exercises, lessons and a war
+game, and few are war plans (see "How much evidence there is, by side"). "Leave one document out" is the holdout `configs/protocol.yaml` calls leave one plan out.
+A **scope** is the set of documents a model is fitted on: all attacker documents, plan documents only, the pooled Warsaw Pact
+documents, or SAC's 1956 study alone. SAC is the US Strategic Air Command, whose 1956 study supplies the largest list. The study
+groups its targets into **complexes**, mostly a town and its surroundings, some of which hold named **subcomplexes** with their own
+aim points and installations (`data/curated/sac1956/README.md`). COW is the Correlates of War project. "All permitted"
 means every feature the protocol allows a model to read as of a document's date: population, administration, geography, the one
 industry column, transport, military sites, defences and national power (`data/FEATURES_CLASSIFIER.md`). The **population rule** is a baseline: a
 logistic regression on log population. The **state gate** is the rule deciding whether a state gets its own model. The **selection rule** decides which model is chosen. A
@@ -1440,11 +1447,15 @@ town within 10 km, or up to 75 km if the name matches closely; other lists link 
 concerns one sector keeps only that sector's towns (`data/curated/labels/SECTORS.yaml`). Some boxes follow a boundary a document states; the
 others are derived from the list's own linked targets plus a fixed margin, because no boundary was read, and they say nothing about the plan's real scope. That file says which is which and gives a reason for each list
 read over its whole universe. Corrected link errors are listed in
-`configs/protocol_amendment_6.yaml`, `configs/protocol_amendment_7.yaml` and `configs/protocol_amendment_8.yaml`. SAC's lists, about nine positives in ten of what is trained on, were transcribed from the scan by two
+`configs/protocol_amendment_6.yaml`, `configs/protocol_amendment_7.yaml` and `configs/protocol_amendment_8.yaml`.
+
+**Transcription.** SAC's lists, about nine positives in ten of what is trained on, were transcribed from the scan by two
 independent passes of vision-language models (Claude agents), with disagreements resolved against the page
 (`data/curated/sac1956/README.md`). A blind audit of a random 5% of rows, 743 lines, found 0 errors in the final reading (95% interval 0 to 0.51%),
 by auditors whose own error rate was 1.3%, so the audit's reading is itself uncertain. On the low-resolution Part II pages, where 270 airfield rows can be compared with a second printing, the confirmed misread
-rate was 3 in 216, well above that bound. **Links** lose entries too: {int(every["unlinked"])} of SAC's {int(every["entries"]):,} complex entries link to no town of the universe ({int(sub["unlinked"])} of its {int(sub["entries"])} subcomplex entries; `runs/classifier/link_audit_coverage_subcomplex.csv`), and the share varies by country: China {int(coverage.loc["China", "unlinked"])} of {int(coverage.loc["China", "entries"])}, North Korea {int(coverage.loc["North Korea", "unlinked"])} of {int(coverage.loc["North Korea", "entries"])}, North Vietnam {int(coverage.loc["North Vietnam", "unlinked"])} of {int(coverage.loc["North Vietnam", "entries"])}, Albania {int(coverage.loc["Albania", "unlinked"])} of {int(coverage.loc["Albania", "entries"])} (`runs/classifier/link_audit_coverage.csv`). These count entries, not towns: an entry whose cover name stands for a town and its closed city (Kapustin Yar and Znamensk, for example) links to both, so the linked complex entries give {int(every["towns_linked"] - every["linked"])} and the subcomplex entries {int(sub["towns_linked"] - sub["linked"])} more linked towns than entries.
+rate was 3 in 216, well above that bound.
+
+**Links** lose entries too: {int(every["unlinked"])} of SAC's {int(every["entries"]):,} complex entries link to no town of the universe ({int(sub["unlinked"])} of its {int(sub["entries"])} subcomplex entries; `runs/classifier/link_audit_coverage_subcomplex.csv`), and the share varies by country: China {int(coverage.loc["China", "unlinked"])} of {int(coverage.loc["China", "entries"])}, North Korea {int(coverage.loc["North Korea", "unlinked"])} of {int(coverage.loc["North Korea", "entries"])}, North Vietnam {int(coverage.loc["North Vietnam", "unlinked"])} of {int(coverage.loc["North Vietnam", "entries"])}, Albania {int(coverage.loc["Albania", "unlinked"])} of {int(coverage.loc["Albania", "entries"])} (`runs/classifier/link_audit_coverage.csv`). These count entries, not towns. An entry whose cover name stands for a town and its closed city (Kapustin Yar and Znamensk, for example) links to both, so linked complex entries give {int(every["towns_linked"] - every["linked"])} more towns than their number, and linked subcomplex entries {int(sub["towns_linked"] - sub["linked"])} more than theirs.
 
 **Documents.** `data/curated/labels/PLANS.yaml` records each list's attacker, author, date, type and evidence
 grade. The grades: A, a primary document or its published translation read here; B, a primary document read here that names only part of the
@@ -1477,7 +1488,9 @@ The analysis is fixed in `configs/protocol.yaml` and changed since only by dated
 `configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_{_last_amendment()}.yaml`. Each says what had already been read when it
 was written; `configs/HISTORY.md` gives one line per amendment. **It is not blind.** Scores on SAC's spatial folds and
 on the small lists, and later the full results, had been read before amendments corrected labels, links and sector
-boxes. Burza's sector box was drawn after its effect on Burza's scores had been seen.
+boxes. Burza's sector box was drawn after its effect on Burza's scores had been seen. The rule that a block interval needs
+positives in {MIN_POSITIVE_BLOCKS} blocks was set after the row it changes had been seen (7 positives in 2 blocks, verdict "neither"
+before and after; `configs/protocol_amendment_9.yaml`).
 
 The one blind test uses the **sealed set**: {_seal_sentence()} Their labels are in the committed label files, so the
 seal is a procedure and not a secret. {_sealed_status()}
@@ -1535,7 +1548,7 @@ Soviet towns on the 1939 census, earlier than the document and missing for towns
 
 ### Which families add anything (US 1956 complexes)
 
-Each family with population and country, LightGBM, spatial blocks, single rows only. A gain needs both intervals to exclude zero, as everywhere. Airfield counts are in transport, not
+Each family with population and country, LightGBM, spatial blocks, one bag per fit rather than 50. A gain needs both intervals to exclude zero, as everywhere. Airfield counts are in transport, not
 military, and industry is the single power-plant column, so a zero there says little about industry. Over a country term national
 power can add nothing within one list; over population alone it does the country term's work. Transport here is
 largely today's data.

@@ -53,7 +53,11 @@ def test_the_readme_states_the_comparison_as_committed():
     c = pd.read_csv(RERUN / "comparison.csv")
     d = c["pr_auc_mean_diff"].abs()
     text = " ".join((ROOT / "README.md").read_text(encoding="utf-8").split())
-    assert f"{int((d == 0).sum())} of the {len(c)} rows match" in text
+    every = (c[[k for k in c.columns if k.endswith("_diff")]] == 0).all(axis=1)
+    assert (
+        f"{int((d == 0).sum())} of the {len(c)} rows have the same PR-AUC and {int(every.sum())} the same value on every metric"
+        in text
+    )
     assert f"largest PR-AUC difference is {d.max():.4f}" in text
     # Every row that moved has the airfield count among its features.
     moved = c.loc[d > 0, "model"]

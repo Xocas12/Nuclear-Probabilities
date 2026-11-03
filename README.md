@@ -132,7 +132,7 @@ tests that those features join and is no part of the results above (`data/FEATUR
 sites in 1985 is not in the tree, since most of those sites are still in use; the target reads it back from the commit
 that added it and checks its sha256. A shallow clone cannot run it. The pinned record is not overwritten: the rerun
 goes to `runs/m4-us-check-rerun/`, whose `comparison.csv` sets each metric beside the pinned one. 21 of the 36 rows
-match; the largest PR-AUC difference is 0.0023, all in rows with OurAirports' airfield count, a live list fetched
+have the same PR-AUC and 18 the same value on every metric; the largest PR-AUC difference is 0.0023, all in rows with OurAirports' airfield count, a live list fetched
 again on 1 November after the record was made.
 
 `make viewer` builds from the committed outputs alone. A clean clone's tests run without data; those that need
