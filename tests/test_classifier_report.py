@@ -276,17 +276,17 @@ def test_what_the_map_follows_is_stated_scenario_by_scenario():
 
 
 @needs_run
-def test_no_sentence_says_removed_columns_identify_documents_when_removing_them_helps():
-    ident = pd.read_csv(OUT / "document_identification.csv").set_index("columns")
-    text = (ROOT / "REPORT.md").read_text(encoding="utf-8")
-    if ident.at["no national power", "accuracy"] > ident.at["all permitted", "accuracy"]:
-        assert "nearly identify" not in text
-        assert "made identification easier" in " ".join(text.split())
-    if (
-        ident.at["population only", "accuracy"]
-        < ident.at["population only", "largest_document_share"]
-    ):
-        assert "population alone does worse than that" in text
+def test_the_identification_sentences_follow_the_regularised_reading():
+    reg = pd.read_csv(OUT / "identification" / "regularised.csv").set_index("columns")
+    text = " ".join((ROOT / "REPORT.md").read_text(encoding="utf-8").split())
+    nmc = reg.loc["no national power", "over_reference_verdict"]
+    assert ("those columns do help name the document" in text) == (nmc == "below")
+    assert ("made identification easier" in text) == (nmc == "above")
+    assert "did not confirm either suspicion" not in text
+    pop = reg.loc["population only", "over_largest_verdict"]
+    assert ("population alone does worse than that" in text) == (pop == "below")
+    if reg.at["all permitted", "over_largest_lo"] > 0.10:
+        assert "a pooled gain under spatial blocks cannot be told from that" in text
 
 
 def test_the_readme_names_every_committed_amendment():

@@ -9,6 +9,7 @@ import pandas as pd
 import pytest
 
 from nucprob.classifier import identification as ident
+from nucprob.classifier import identification_fit as fit
 from nucprob.paths import ROOT
 
 OUT = ident.OUT
@@ -97,27 +98,53 @@ def test_every_step_is_clean_and_the_pending_list_matches_the_outputs():
 
 
 @needs_run
-def test_report_states_the_intervals_and_the_probe_call():
+def test_report_states_the_regularised_intervals_and_what_was_not_run():
     text = " ".join((ROOT / "REPORT.md").read_text(encoding="utf-8").split())
-    got = pd.read_csv(OUT / "intervals.csv").set_index("columns")
+    reg = pd.read_csv(OUT / "regularised.csv").set_index("columns")
     for name in ident.SETS:
-        lo, hi = got.at[name, "accuracy_lo"], got.at[name, "accuracy_hi"]
+        lo, hi = reg.at[name, "accuracy_lo"], reg.at[name, "accuracy_hi"]
         assert f"[{lo:.1%}, {hi:.1%}]" in text, name
+    iv = pd.read_csv(OUT / "intervals.csv").set_index("columns")
+    lo, hi = iv.at["all permitted", "accuracy_lo"], iv.at["all permitted", "accuracy_hi"]
+    assert f"{lo:.1%} to {hi:.1%} on all columns" in text
     if (OUT / "capacity.csv").exists():
         call = pd.read_csv(OUT / "capacity.csv")["call"].iloc[0]
         assert f"capacity probe: {call}" in text
-    else:
-        assert "capacity probe: pending" in text
     pending = json.loads((OUT / "manifest.json").read_text())["pending"]
-    if pending:
-        said = text[text.index("Steps of the amendment not yet run") :][:400]
-        assert ("the capacity probe" in said) == ("capacity probe" in pending)
-        splits_left = sum(p.startswith("split ") for p in pending)
-        if splits_left:
-            assert f"{splits_left} of the 10 split repeats" in said
-    else:
-        assert "Steps of the amendment not yet run" not in text
+    splits_left = sum(p.startswith("split ") for p in pending)
+    if splits_left:
+        assert f"{splits_left} of the 10 split repeats" in text
+    if not pending:
+        assert "were not run; they would describe the diverged fit" not in text
     assert "No interval was computed for any of these accuracies" not in text
+
+
+@needs_run
+def test_divergence_record_follows_its_rule_and_report_counts_it():
+    div = pd.read_csv(OUT / "divergence.csv")
+    assert len(div) == len(ident.SETS) * 4 * len(fit.L2)
+    rule = div["train_accuracy_best"] - div["train_accuracy_final"] > fit.DIVERGED_DROP
+    assert (div["diverged"] == rule).all()
+    text = " ".join((ROOT / "REPORT.md").read_text(encoding="utf-8").split())
+    as_run = div[div["l2_regularization"] == 0]
+    assert (
+        f"Of those {len(as_run)} fits (four column sets, four folds), {int(as_run['diverged'].sum())} diverged"
+        in text
+    )
+    m = json.loads((OUT / "fit_manifest.json").read_text())
+    assert m["amendment"] == "configs/protocol_amendment_14.yaml"
+    assert m["l2_regularization"] == fit.REGULARISED
+
+
+def test_a_fit_on_separable_documents_does_not_diverge():
+    rng = np.random.default_rng(0)
+    y = np.repeat(np.arange(3), 60)
+    X = pd.DataFrame({"a": y + rng.normal(0, 0.1, len(y)), "b": rng.normal(size=len(y))})
+    train, test = np.arange(0, len(y), 2), np.arange(1, len(y), 2)
+    record, held = fit.fit_fold(X, y, train, test, 1.0)
+    assert not record["diverged"]
+    assert record["test_accuracy"] > 0.9
+    assert len(held) == len(test)
 
 
 def test_a_checkpoint_is_reused_only_under_the_same_key(tmp_path, monkeypatch):

@@ -610,15 +610,8 @@ def _points(v: float) -> str:
     return f"{100 * v:+.1f}"
 
 
-def _identification() -> str:
-    """The document identification check with the thirteenth amendment's intervals, split spread and
-    capacity probe; a step the run has not finished is stated as pending."""
-    iv = pd.read_csv(IDENT / "intervals.csv").set_index("columns")
-    base = iv["largest_document_share"].iloc[0]
-    acc = ", ".join(
-        f"{_pct(iv.at[k, 'accuracy'])} [{_pct(iv.at[k, 'accuracy_lo'])}, {_pct(iv.at[k, 'accuracy_hi'])}] {said}"
-        for k, said in SETS_READ.items()
-    )
+def _verdicts_against_largest(iv: pd.DataFrame) -> str:
+    """Each set against always naming the largest document, on the place-bootstrap verdicts."""
     gaps = {
         v: [k for k in SETS_READ if iv.at[k, "over_largest_verdict"] == v]
         for v in ("above", "below", "cannot be told apart")
@@ -643,78 +636,91 @@ def _identification() -> str:
         )
     if gaps["cannot be told apart"]:
         against.append(f"{names(gaps['cannot be told apart'])} cannot be told apart from it")
-    rise = iv.loc["no national power"]
-    ref = iv.loc[["no national power", "no source markers"], "over_reference_verdict"]
-    if (ref == "above").all():
-        rise_text = (
-            "Removing the suspected columns made identification easier, not harder: removing national power "
-            f"raises accuracy by {_points(rise['over_reference'])} points "
-            f"[{_points(rise['over_reference_lo'])}, {_points(rise['over_reference_hi'])}] over all columns, "
-            "so the rise is not noise in the held-out rows."
+    return "; ".join(against)
+
+
+def _accuracies(iv: pd.DataFrame) -> str:
+    return ", ".join(
+        f"{_pct(iv.at[k, 'accuracy'])} [{_pct(iv.at[k, 'accuracy_lo'])}, {_pct(iv.at[k, 'accuracy_hi'])}] {said}"
+        for k, said in SETS_READ.items()
+    )
+
+
+def _identification() -> str:
+    """The document identification check: the regularised reading of the fourteenth amendment, then what
+    the diverged fit of the sixth and thirteenth amendments gave, and their steps still pending."""
+    reg = pd.read_csv(IDENT / "regularised.csv").set_index("columns")
+    div = pd.read_csv(IDENT / "divergence.csv")
+    iv = pd.read_csv(IDENT / "intervals.csv").set_index("columns")
+    base = reg["largest_document_share"].iloc[0]
+    as_run = div[div["l2_regularization"] == 0]
+    regd = div[div["l2_regularization"] > 0]
+    nmc = reg.loc["no national power"]
+    if nmc["over_reference_verdict"] == "below":
+        suspicion = (
+            "Removing national power lowers accuracy by "
+            f"{-100 * nmc['over_reference']:.1f} points [{-100 * nmc['over_reference_hi']:.1f}, "
+            f"{-100 * nmc['over_reference_lo']:.1f}], so those columns do help name the document."
+        )
+    elif nmc["over_reference_verdict"] == "above":
+        suspicion = (
+            "Removing national power made identification easier even with the fit regularised."
         )
     else:
-        rise_text = (
-            "The rise when columns are removed has an interval that includes zero, so it cannot be told "
-            "from noise in the held-out rows."
+        suspicion = (
+            "Removing national power changes accuracy by "
+            f"{_points(nmc['over_reference'])} points [{_points(nmc['over_reference_lo'])}, "
+            f"{_points(nmc['over_reference_hi'])}], which cannot be told from no change: the other columns "
+            "name the document as well without them."
         )
+    how = (
+        "almost always"
+        if reg.at["all permitted", "accuracy_lo"] > 0.9
+        else "far more often than by naming the largest document"
+    )
+    consequence = (
+        f" So the columns name a row's document {how}. In a pooled scope a model can learn each "
+        "document's base rate from them, and a pooled gain under spatial blocks cannot be told from that. "
+        "Single-document and leave-one-document-out readings do not rest on this check."
+        if reg.at["all permitted", "over_largest_lo"] > 0.10
+        else ""
+    )
     manifest = json.loads((IDENT / "manifest.json").read_text())
     pending = manifest["pending"]
-    if (IDENT / "splits.csv").exists():
-        sp = pd.read_csv(IDENT / "splits.csv").set_index("columns")
-        n = int(sp["splits"].iloc[0])
-        spread = ", ".join(
-            f"{_pct(sp.at[k, 'min'])} to {_pct(sp.at[k, 'max'])} {said}"
-            for k, said in SETS_READ.items()
-        )
-        spread_text = (
-            f"The intervals hold the fitted folds fixed; over {n} of the 10 further place-grouped splits the "
-            f"amendment fixed, accuracy runs from {spread} (`runs/classifier/identification/splits.csv`)."
-        )
-    else:
-        spread_text = "The intervals hold the fitted folds fixed; the spread over 10 further splits is pending."
+    splits_left = sum(p.startswith("split ") for p in pending)
+    left = ["the capacity probe"] if "capacity probe" in pending else []
+    left += [f"{splits_left} of the 10 split repeats"] if splits_left else []
     if (IDENT / "capacity.csv").exists():
         cap = pd.read_csv(IDENT / "capacity.csv").set_index("max_iter")
-        lo_it, hi_it = cap.index.min(), cap.index.max()
-        call = cap["call"].iloc[0]
+        hi_it = cap.index.max()
         probe = (
-            f"The thirteenth amendment stated one explanation before it was tested: {lo_it} boosting "
-            f"iterations spread over more columns. At {hi_it} iterations all columns give "
-            f"{_pct(cap.at[hi_it, 'all_permitted'])} and no source markers "
-            f"{_pct(cap.at[hi_it, 'no_source_markers'])}, a gap of {_points(cap.at[hi_it, 'difference'])} "
-            f"points [{_points(cap.at[hi_it, 'difference_lo'])}, {_points(cap.at[hi_it, 'difference_hi'])}], "
-            f"against {_points(cap.at[lo_it, 'difference'])} at {lo_it} "
-            f"(`runs/classifier/identification/capacity.csv`); capacity probe: {call}."
+            f" At {hi_it} iterations its all-columns predictions were the same, row for row, as at "
+            f"{cap.index.min()} (capacity probe: {cap['call'].iloc[0]}), which is how the divergence was found."
         )
     else:
-        call = "pending"
-        probe = (
-            "The thirteenth amendment stated one explanation to test, too few boosting iterations spread over "
-            "more columns; capacity probe: pending, so the rise is unexplained for now."
-        )
-    if call == "explained by capacity":
-        close = (
-            "The check gives no sign that national power marks a row's document beyond what the other "
-            "columns do."
-        )
-    else:
-        if call != "pending":
-            probe += " Why fewer columns name documents better remains unexplained."
-        close = (
-            "The check gives no sign that national power marks a row's document, but while adding columns "
-            "lowers accuracy for a reason not found, it cannot rule that out either."
-        )
-    if pending:
-        splits_left = sum(p.startswith("split ") for p in pending)
-        left = ["the capacity probe"] if "capacity probe" in pending else []
-        left += [f"{splits_left} of the 10 split repeats"] if splits_left else []
-        close += (
-            f" Steps of the amendment not yet run: {' and '.join(left)} (the machine's load made each split take "
-            "most of an hour; `runs/classifier/identification/manifest.json` lists them)."
-        )
-    return f"""From the columns alone, with folds grouped by place, a classifier names a row's document {acc}, against
-{_pct(base)} for always naming the largest document. The intervals resample places, keeping a place's rows together
-(2,000 resamples; `runs/classifier/identification/intervals.csv`). On those intervals {"; ".join(against)}.
-{rise_text} {spread_text} {probe} {close}
+        probe = " Capacity probe: pending."
+    rest = (
+        f" Of its steps, {' and '.join(left)} were not run; they would describe the diverged fit"
+        " (`runs/classifier/identification/manifest.json`)."
+        if left
+        else ""
+    )
+    return f"""From the columns alone, with folds grouped by place, a gradient-boosted classifier with L2
+regularisation 1.0 names a row's document {_accuracies(reg)}, against {_pct(base)} for always naming the largest
+document. The intervals resample places, keeping a place's rows together (2,000 resamples;
+`runs/classifier/identification/regularised.csv`). On those intervals {_verdicts_against_largest(reg)}.
+{suspicion}{consequence}
+
+The figures this check first gave were {_pct(iv.at["all permitted", "accuracy"])} on all columns and {_pct(iv.at["no source markers", "accuracy"])} with no source markers. They came from
+the same classifier without regularisation. Of those {len(as_run)} fits (four column sets, four folds),
+{int(as_run["diverged"].sum())} diverged: raw scores reached {as_run["max_abs_raw_score"].max():,.0f}, and
+training accuracy fell more than 5 points below its best by the last iteration. With regularisation
+{int(regd["diverged"].sum())} of {len(regd)} did, and the largest raw score was {regd["max_abs_raw_score"].max():.0f}
+(`runs/classifier/identification/divergence.csv`). The earlier figures measured the failed fit, not the columns.
+This was found after the thirteenth amendment had fixed intervals for them, {_pct(iv.at["all permitted", "accuracy_lo"])}
+to {_pct(iv.at["all permitted", "accuracy_hi"])} on all columns (`runs/classifier/identification/intervals.csv`).{probe}
+The regularised reading is post hoc (`configs/protocol_amendment_14.yaml`). One regularisation value was tried, and
+it was not searched.{rest}
 """
 
 
@@ -1428,7 +1434,7 @@ Each scope's selected candidate against population plus country under spatial bl
 "None flagged" removes today's data standing in for the past. "Strict as-of" also removes the defence tables, mostly
 post-Soviet knowledge. "No national power" removes COW's values, which take one value per country and year and so
 were suspected of marking a document. "No source markers" also removes the defence and military columns, which are
-blank or filled according to the table a row came from. The check below did not confirm either suspicion. {_identification()}
+blank or filled according to the table a row came from. {_identification()}
 
 {markdown(sens_table)}
 
