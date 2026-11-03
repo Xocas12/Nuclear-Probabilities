@@ -61,6 +61,7 @@ classifier:
 	$(PY) -m nucprob.classifier.table
 	$(PY) -m nucprob.classifier.run
 	$(PY) -m nucprob.classifier.sensitivity
+	$(PY) -m nucprob.classifier.identification
 	$(PY) -m nucprob.classifier.extended
 	$(PY) -m nucprob.classifier.defence_targets
 	$(PY) -m nucprob.classifier.link_audit

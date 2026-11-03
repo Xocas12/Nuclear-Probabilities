@@ -26,6 +26,7 @@ MANIFESTS = [
     RUNS / "evidence" / "manifest.json",
     MAP / "manifest.json",
     CLASSIFIER / "sealed" / "blind" / "manifest.json",
+    CLASSIFIER / "identification" / "manifest.json",
 ]
 needs_run = pytest.mark.skipif(not (MAP / "manifest.json").exists(), reason="no committed run")
 
@@ -50,6 +51,7 @@ def test_no_table_stands_outside_a_manifest():
         MAP / "cells",
         RUNS / "evidence",
         CLASSIFIER / "sealed" / "blind",
+        CLASSIFIER / "identification",
     ):
         for f in [*folder.glob("*.csv"), *folder.glob("*.csv.gz")]:
             assert str(f.relative_to(ROOT)) in listed, f
