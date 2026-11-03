@@ -328,7 +328,9 @@ def test_committed_scenarios_respond_to_their_stockpile():
 @needs_run
 def test_every_modern_scenario_is_labelled_as_extrapolation():
     text = (OUT / "viewer" / "index.html").read_text(encoding="utf-8")
-    assert 'EXTRAPOLATION. ":"HISTORICAL. ' in text  # the banner's two branches, on `era`
+    # the banner's two branches, on `era`
+    assert 's.era=="modern"?"EXTRAPOLATION. ' in text
+    assert '":"HISTORICAL. ")+s.evidence' in text
     assert "http://" not in text and "https://" not in text
     data = viewer_data(text)
     eras = {sc["id"]: sc["era"] for sc in rn.load_scenarios()}

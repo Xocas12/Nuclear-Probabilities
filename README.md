@@ -124,4 +124,4 @@ held bytes came from (`data/sources_obtained.yaml` names it where that is a mirr
 from a refused path. Great Britain's 1981 district totals, fetched earlier from `www.nomisweb.co.uk` through a disallowed
 path, were withdrawn with everything built from them (tenth amendment). Earlier transcriptions read `en.wikipedia.org` through
 disallowed paths; those copies are not held, and the pages are registered through allowed ones in
-`data/curated/features/cited_pages.csv`. Sources that could not be obtained are listed with `held` in `data/sources.yaml`.
+`data/curated/features/cited_pages.csv`. `www.bbc.co.uk` refuses this project's agent: the one BBC page cited (`plandoc_bbc_2012_r5m`, behind the excluded list `wp_1959_r5m_operation_atom`) is registered but not fetched or held. Sources that could not be obtained are listed with `held` in `data/sources.yaml`.

@@ -137,7 +137,7 @@ plandoc_halperin_rm4900,www.ellsberg.net,rules,True,,labels,2026-11-01,True,url,
 plandoc_nsa_ebb38_doc6,nsarchive2.gwu.edu,rules,True,,labels,2026-11-01,True,url,rules,True
 plandoc_nsa_ebb488_doc16,nsarchive2.gwu.edu,rules,True,,labels,2026-11-01,True,url,rules,True
 plandoc_php_warplan_dossier,www.files.ethz.ch,rules,True,,labels,2026-11-01,True,url,rules,True
-plandoc_palka_2022,web.archive.org,no_rule_http_404,True,,labels,2026-11-01,True,obtained_from,unreachable,False
+plandoc_palka_2022,web.archive.org,no_rule_http_404,True,,labels,2026-11-01,True,obtained_from,rules,True
 plandoc_nielsen_2016,rucforsk.ruc.dk,rules,True,,labels,2026-11-01,True,url,rules,True
 plandoc_php_report_001061,phpisn.ethz.ch,no_rule_http_404,True,,labels,2026-11-01,True,url,no_rule_http_404,True
 plandoc_php_situationreport_101061,phpisn.ethz.ch,no_rule_http_404,True,,labels,2026-11-01,True,url,no_rule_http_404,True
@@ -161,6 +161,8 @@ plandoc_loc_sn83016244_00517170665_1955061501_0438,tile.loc.gov,no_rule_http_404
 plandoc_loc_sn83045462_00280607095_1955061601_0004,tile.loc.gov,no_rule_http_404,True,,labels,2026-11-01,True,url,no_rule_http_404,True
 plandoc_loc_sn84020662_00414185277_1955061701_0442,tile.loc.gov,no_rule_http_404,True,,labels,2026-11-01,True,url,no_rule_http_404,True
 plandoc_canada_1956_extract,,no_url,,,labels,unknown,False,,,
+plandoc_wiki_seven_days,en.wikipedia.org,rules,True,,labels,2026-11-02,False,url,rules,True
+plandoc_bbc_2012_r5m,www.bbc.co.uk,rules,False,ClaudeBot; anthropic-ai,labels,unknown,False,url,rules,False
 plandoc_campbell_1980,www.duncancampbell.org,rules,True,,labels,2026-11-01,True,url,rules,True
 plandoc_campbell_1981,www.duncancampbell.org,rules,True,,labels,2026-11-01,True,url,rules,True
 fas_status,fas.org,rules,True,,map,2026-11-01,True,url,rules,True
