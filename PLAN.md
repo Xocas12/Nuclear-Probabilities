@@ -10,6 +10,12 @@ results have been brought up to date since. It predates the work: what exists an
 right. "The US war plan of 1956" above is the SAC requirements study, not a war plan. Models by regime
 type were not built.
 
+**Dropped methods.** SHAP, ALE curves, EBM, GPBoost, the hierarchical model and the M8 driver profiles below
+were not built. Attribution is by family ablation and column-removal repeats (REPORT, "Which families add
+anything" and "What the gains rest on"), and spatial autocorrelation is handled by spatial blocks and block
+bootstrap intervals, not by a Gaussian-process effect. With no state passing the gate, profiles by country
+or regime type would have rested on one document.
+
 - **Phase order.** The phases follow the order asked for: features, then strike plans, then
   models, then the map.
 - **Phases 1 and 2 run side by side.** Both hang off one shared table of places.

@@ -16,6 +16,14 @@ list. A list's base rate is what no information scores: 0.49 for SAC, 0.07 for t
 Where a list is incomplete a town off it is unlabeled, so PR-AUC understates precision there. Each interval is 95%, the first
 resampling towns and "by blocks" resampling 300 km squares; a difference counts only if both exclude zero.
 
+- **On the only blind test**, no model beats population plus country. The **sealed set** is 463 towns scored against SAC's list,
+  in 300 km blocks kept out of every fit and scored once at the end; 149 of them had been scored by no earlier run
+  (74 listed). There the two global models differ from population plus country by +0.02 and +0.02 in PR-AUC, with intervals
+  [-0.02, +0.05], by blocks [-0.02, +0.12]; [-0.02, +0.05], by blocks [-0.02, +0.11].
+  2 of 4 models beat the population rule by both intervals (+0.12, +0.13).
+  Positives lie in only 6 of 10 blocks, so these intervals are wide and "neither" is not evidence of no effect.
+  On 272 sealed places including ones earlier runs had scored, 2 of 4 models gained over population plus country.
+  **That reading is not blind.** (`runs/classifier/sealed/blind/comparison.csv`; REPORT, "The sealed set".)
 - **Inside SAC's list**, under spatial cross-validation, the selected model beats population plus a country term by
   +0.02 [+0.01, +0.03], by blocks [+0.01, +0.04]: both intervals exclude zero. Without the columns flagged as later data, with or without the defence tables, it is +0.01 [+0.01, +0.02], by blocks [-0.002, +0.03]: at least one interval reaches zero, so it cannot be told from no difference. Those repeats still use the 1959 Soviet census and other late inputs
   (REPORT, "Inputs later than the document"). The analysis is not blind: earlier results had been read (REPORT, Method).
@@ -58,25 +66,32 @@ resampling towns and "by blocks" resampling 300 km squares; a difference counts 
 
 The analysis was fixed in `configs/protocol.yaml` before the final models were fitted, and changed since only by
 dated amendments, `configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_12.yaml`, each saying what had
-already been read. The eleventh fixes how the sealed set is read, before any sealed place was scored; the twelfth, written after that reading, restricts it to the places no committed run had scored. A town off an incomplete list is treated as unlabeled, not as a negative (positive-unlabeled:
-each of 50 bagged fits keeps all positives and draws as many unlabeled towns). Every model is compared with two baselines on the same
-towns: ranking by population (the "population rule") and population plus one intercept per country. Holdouts are
-spatial blocks of 300 km, leaving out one document at a time, and fitting before 1956 to score later and the
-reverse. PR-AUC is the primary metric, with paired bootstrap intervals over towns and over blocks, and calibration
-is reported. A state gets its own model only if it passes the gate in the protocol (two independent plans, 50
-positives, 15 outside its largest plan); every state fails it. The map takes the model the protocol's rule selects,
-draws stockpiles and models together (an attacker's inventory times its stated **theatre share**, the part assumed
-aimed at the scenario's countries, times reliability and survival of defences), and shares each scenario's delivered
-warheads among towns in proportion to the score, summarised on a 0.5-degree grid (1 degree for modern scenarios). The sealed set, 467 places in held-back
-blocks, was kept for one final scoring after independent review. The first milestone check, `runs/m1-slice/`, scored 194
-of them before the seal was drawn, and the other 273 were called never-scored (`data/curated/splits/README.md`). The sealed set was scored once, on 2026-11-03, under the eleventh amendment: on the 272 never-scored places with a SAC label, both global models beat population plus country by both intervals (+0.03 and +0.04 in PR-AUC, `runs/classifier/sealed/comparison.csv`); the SAC-only and pooled Warsaw Pact models did not.
-**That reading is not blind.** M2 check runs committed on 8 October, before the freeze, had scored 123 of the 273 never-scored places, which the freeze missed because it read one later commit (`scripts/scored_history.py`, `data/curated/splits/scored_in_history.csv`). Read again on the 149 places with a SAC label that no committed run scored (`configs/protocol_amendment_12.yaml`, written after the first reading was seen; nothing refitted), no model beats population plus country: the global models gain +0.02, with both intervals crossing zero. Both global models still beat the population rule by both intervals (+0.12 and +0.13). Positives lie in only 6 blocks, so these intervals are wide (`runs/classifier/sealed/blind/comparison.csv`, REPORT "The sealed set read again on blind places only").
+already been read (one line each in `configs/HISTORY.md`). Results had been read before most of them, so the analysis
+is not blind except on the sealed set.
+
+A town off an incomplete list is treated as unlabeled, not as a negative (positive-unlabeled: each of 50 bagged fits
+keeps all positives and draws as many unlabeled towns). Every model is compared with two baselines on the same towns:
+ranking by population (the "population rule") and population plus one intercept per country. Holdouts are spatial
+blocks of 300 km, leaving out one document at a time, and fitting before 1956 to score later and the reverse. PR-AUC
+is the primary metric, with paired bootstrap intervals over towns and over blocks, and calibration is reported. A
+state gets its own model only if it passes the gate in the protocol (two independent plans, 50 positives, 15 outside
+its largest plan); every state fails it.
+
+The **sealed set** is the towns of the blocks in `data/curated/splits/sealed_blocks.csv`. No model was fitted on
+them, and they were scored once, after the models were final. Some had been scored by earlier milestone runs before
+the set was drawn; the places no committed run had scored are the **blind places**, the one blind test
+(`data/curated/splits/README.md`).
+
+The map takes the model the protocol's rule selects, draws stockpiles and models together (an attacker's inventory
+times its stated **theatre share**, the part assumed aimed at the scenario's countries, times reliability and
+survival of defences), and shares each scenario's delivered warheads among towns in proportion to the score,
+summarised on a 0.5-degree grid (1 degree for modern scenarios).
 
 ## What the evidence cannot support
 
 - **A model of any one state's plans.** Each state is refused by the gate; the Warsaw Pact model pools exercises.
 - **Prediction for a document not in the data.** No model beat population on a left-out document.
-- **A blind gain over population plus country.** On the only blind places, no model beat it (REPORT, twelfth amendment).
+- **A blind gain over population plus country.** On the only blind places, no model beat it (REPORT, "The sealed set read again on blind places only").
 - **Causes.** These are associations between a town's traits and its presence on a list.
 - **What planners knew.** Features record what existed according to later sources.
 - **Any present-day plan.** Modern map rows apply lists of 1945-1977 to towns of today: extrapolation, with no

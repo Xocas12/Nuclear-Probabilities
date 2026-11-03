@@ -16,7 +16,8 @@ not score it, and `never_scored` if the M1 slice did not score it either. No lab
 Before the freeze the sealed blocks were drawn from the labels, so correcting a label could move
 a block a check run had read into the sealed set. The M1 slice also drew its blocks before the
 other countries existed, so M2 sealed towns M1 had scored: of the 467 sealed places, 194 are such
-towns, all in the USSR. Only the 273 `never_scored` places are blind. Issue #3 also names
+towns, all in the USSR. The freeze took the other 273, the `never_scored` places, to be blind; 123 of
+them are not, and only the remaining 150 are (next section). Issue #3 also names
 Meuselwitz, Schmölln and Liaoyang, sealed towns, in describing a geocoding error; they stay in.
 
 ## What the freeze missed (twelfth amendment)

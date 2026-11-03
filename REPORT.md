@@ -11,7 +11,7 @@ base rate of 0.49, the others together 0.07. On a list that does not claim to be
 list is unlabeled, not a negative, so PR-AUC there understates true precision: read such figures against each other and
 the base rate, not as how often a model is right. Intervals are 95%. "By blocks" resamples whole 300 km squares of towns;
 the other interval resamples single towns. Verdicts use the unrounded bounds; a bound that would print as 0.00 is shown to
-three decimals with its sign, an exact zero as 0.00, and a comparison whose scores never differ as "constant". Where the positives lie in fewer than 5 blocks, resampling blocks measures nothing, and the block interval is shown as "n/a" with the count. That rule was set in the ninth amendment after the review of 1e98ebc had shown the row it changes (7 positives in 2 blocks, verdict "neither" before and after), so it is not blind. "Document" is the general word here: most of the lists are studies, exercises, lessons and a war
+three decimals with its sign, an exact zero as 0.00, and a comparison whose scores never differ as "constant". Where the positives lie in fewer than 5 blocks, resampling blocks measures nothing, and the block interval is shown as "n/a" with the count. That rule was set after the row it changes had been seen (7 positives in 2 blocks, verdict "neither" before and after; `configs/protocol_amendment_9.yaml`), so it is not blind. "Document" is the general word here: most of the lists are studies, exercises, lessons and a war
 game, and few are war plans (see "How much evidence there is, by side"). "Leave one document out" is the holdout `configs/protocol.yaml` calls leave one plan out.
 
 **Terms.** SAC is the US Strategic Air Command, whose 1956 study supplies the largest list. COW is the Correlates of War project. "All permitted"
@@ -19,17 +19,27 @@ means every feature the protocol allows a model to read as of a document's date:
 industry column, transport, military sites, defences and national power (`data/FEATURES_CLASSIFIER.md`). The **population rule** is a baseline: a
 logistic regression on log population. The **state gate** is the rule deciding whether a state gets its own model. The **selection rule** decides which model is chosen. A
 **sector box** (`data/curated/labels/SECTORS.yaml`) is the area a list covers: a town outside it is not a negative of that list.
+The **sealed set** is the towns of the 300 km blocks in `data/curated/splits/sealed_blocks.csv`, kept out of every fit
+and scored once at the end; its **blind places** are those no committed run had scored before then (Method).
 **Burza** is the Polish front exercise of 1961 whose list is `wp_1961_burza`. A **theatre share** is the stated share of an attacker's
 inventory assumed to be aimed at a scenario's countries. A **folded** ROC-AUC is the larger of the ROC-AUC and one minus it, so that
 0.5 means no separation whichever way a feature points. **Pick-freeze** is the estimator of a first-order Sobol index: the share of a
-quantity's variance that one input explains alone, from pairs of draws sharing that input. Reviews are named by the commit they read,
-such as "the review of c840f88". "Plan" alone means a document of a type the protocol counts as a plan (war plan, target selection,
+quantity's variance that one input explains alone, from pairs of draws sharing that input. "Plan" alone means a document of a type the protocol counts as a plan (war plan, target selection,
 requirements or policy study); "war plan" means that type only.
 
 ## Main result
 
-The models describe one document's list a little better than population and country do. That modest
-gain has not been shown to reach other documents.
+Under cross-validation inside SAC's 1956 study, the models describe that list a little better than population and a country term do. On the only blind test, 149 places of the sealed set that no run had scored, that gain is not seen: no selected model beats population plus country there. No gain has been shown to reach a document the models did not see.
+
+- **On the blind places** of the sealed set (149 towns with a SAC label, 74 listed, base rate
+  0.50, positives in 6 of 10 blocks), each scope's selected model against population plus country:
+  - global, all attacker documents, LightGBM, all permitted: +0.02 [-0.02, +0.05], by blocks [-0.02, +0.12]: neither
+  - global, plan documents only, LightGBM, all permitted: +0.02 [-0.02, +0.05], by blocks [-0.02, +0.11]: neither
+  - Warsaw Pact, pooled, exercise-based, LightGBM, all permitted: -0.15 [-0.25, -0.04], by blocks [-0.25, +0.15]: neither
+  - single document: SAC 1956 (not a state model), logistic, all permitted: -0.01 [-0.06, +0.02], by blocks [-0.04, +0.02]: neither
+
+  Against the population rule, 2 of 4 scopes gain by both intervals: global, all attacker documents +0.12 [+0.05, +0.20]; global, plan documents only +0.13 [+0.05, +0.20]. With positives in so few blocks the intervals are wide, and "neither" is not evidence of no
+  effect. On the 272 never-scored places, a larger set that includes places earlier runs had already scored, 2 of 4 models (global, all attacker documents; global, plan documents only) did gain over population plus country; that reading is not blind ("The sealed set, scored once").
 
 - **Inside SAC's 1956 study**, under spatial cross-validation, logistic, all permitted scores 0.85 against 0.82
   for population plus a country term: +0.02 [+0.01, +0.03], by blocks [+0.01, +0.04]. Without the features flagged as today's data, and equally without the defence tables as well, the difference is +0.01 [+0.01, +0.02], by blocks [-0.002, +0.03]: at least one interval reaches zero, so it cannot be told from no difference.
@@ -106,14 +116,14 @@ Several are today's data standing in for the past and are flagged. Sources, lice
 
 ## Method
 
-The analysis is in `configs/protocol.yaml`, which holds four dated amendments, and eight more amendments in their own
-files, `configs/protocol_amendment_5.yaml` (which only adds readings) to `configs/protocol_amendment_12.yaml`. **It is not blind.** Earlier
-runs read scores on SAC's spatial folds and on the small lists, and an independent review read the full results
-before the fourth amendment; that amendment records what it changed and why. A sixth, `configs/protocol_amendment_6.yaml`, records the corrections made
-after a later review, also with results already read, a seventh, `configs/protocol_amendment_7.yaml`, adds lesson rows and three link corrections on the same terms, and an eighth, `configs/protocol_amendment_8.yaml`, makes the corrections after the review of c840f88, including sector boxes whose effect that review had already shown. It was not written blind to its own final labels either: before it was committed, two quick runs (`--quick`: 3 bags, 50 resamples, from an uncommitted tree) on the final table were made: the map's printed the held-out PR-AUC of its candidate scores and every scenario's map summary, and the classifier's wrote its held-out tables to a folder that is not committed. `data/curated/labels/SECTORS.yaml` says no box was chosen by looking at a model score; for Burza that is not so, for the reason just given, and Burza's FRG and Denmark boxes are one combined extent written twice, not a box per country. Its wording was corrected in `configs/protocol_amendment_9.yaml`, and in the file itself with the tenth amendment. The ninth amendment changes no label, model or holdout. The tenth, `configs/protocol_amendment_10.yaml`, withdraws Great Britain's 1981 districts, fetched through a path robots.txt disallows, and with them Square Leg 1980 and the UK of the 1965 map; it corrects how label files describe themselves, changes no other label, and was followed by a full refit. That refit, at 930a164, with its main step run again at a776225 after a quoting fault in `data/sources.yaml` was fixed, wrote every classifier table with the same content as the run of 110174e before it, except that `lists.csv` lost Square Leg's rows; the link audit was rerun after it began counting SAC entries rather than link rows. The last blind test is the **sealed set**, places
-held back from every model in `data/curated/splits/sealed_blocks.csv` and scored once at the end. Of its 467 places an early slice scored 194, 193 of them under their present id and one, Kirovsk, matched by name, and the other 273 are called `never_scored`
-(`data/curated/splits/README.md`). That name is wrong for 123 of them, which M2 check runs committed before the freeze had scored; only the other 150 are blind (twelfth amendment, below). Their labels are in the committed label files, so the seal is a procedure and not a secret. It has been scored once; see below. The word "brief" in the protocol means the owner's
-instructions for this project, which are not in this repository.
+The analysis is fixed in `configs/protocol.yaml` and changed since only by dated amendments: four inside that file and
+`configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_12.yaml`. Each says what had already been read when it
+was written; `configs/HISTORY.md` gives one line per amendment. **It is not blind.** Scores on SAC's spatial folds and
+on the small lists, and later the full results, had been read before amendments corrected labels, links and sector
+boxes. Burza's sector box was drawn after its effect on Burza's scores had been seen.
+
+The one blind test uses the **sealed set**: the 467 places of the sealed blocks, held out of every fit. An early check had scored 194 of them before the blocks were drawn (`data/curated/splits/README.md`). Of the other 273, committed outputs of earlier runs held scores for 123 more, which the drawing of the set missed (`data/curated/splits/scored_in_history.csv`). The 149 remaining places with a SAC label are the **blind places**. Their labels are in the committed label files, so the
+seal is a procedure and not a secret. It has been scored once; see below.
 
 - **Models.** Baselines: logistic regression on log population, and the same plus one intercept per
   country. Candidates: L2 logistic regression and LightGBM (gradient-boosted trees) with fixed settings. Nothing was tuned.
@@ -155,30 +165,20 @@ The selected candidate of each scope. "Trained on" is the smallest number of pos
 | Warsaw Pact, pooled (exercise-based, not a war-plan model) | LightGBM, all permitted | Leave one document out | all lists | 123 | 12 | 0.07 | 0.19 | 0.21 | -0.02 [-0.07, +0.03] | [-0.10, +0.05] | not a reading | 0.22 | -0.03 [-0.08, +0.02] |
 | SAC 1956 alone (one document, not a state model) | logistic, all permitted | Spatial blocks | all lists | 1042 | 833 | 0.49 | 0.85 | 0.82 | +0.02 [+0.01, +0.03] | [+0.01, +0.04] | gain | 0.77 | +0.08 [+0.06, +0.10] |
 
-- **SAC's weight.** On lists other than SAC under spatial blocks, the global model against population plus country
-  is +0.08 [+0.03, +0.13], by blocks [-0.02, +0.13].
-- **The pooled Warsaw Pact model** (123 positives across 10 lists, mostly exercises and lessons; never a war-plan model):
-  under spatial blocks +0.11 [+0.05, +0.17], by blocks [-0.01, +0.17]; on a left-out document -0.02 [-0.07, +0.03], by blocks [-0.10, +0.05].
+- **The pooled Warsaw Pact model** has 123 positives across 10 lists, mostly exercises and lessons; it is never a war-plan model.
 - **Keeping a left-out document's towns in training**, as the earlier run did, lets a town bring its label from another document
-  into the fit. For this model it gives -0.01 [-0.07, +0.07], by blocks [-0.13, +0.07], against the -0.02 [-0.07, +0.03], by blocks [-0.10, +0.05] above with them removed.
+  into the fit. For the pooled Warsaw Pact model it gives -0.01 [-0.07, +0.07], by blocks [-0.13, +0.07], against the -0.02 [-0.07, +0.03], by blocks [-0.10, +0.05] in the table with them removed.
 - **SAC itself**, left out of the global model: 0.62 under LightGBM, all permitted, 0.77 for the population rule, on a base rate of 0.49.
 - **Target Committee of 1945**, its designated cities, left out: 0.11 under LightGBM, all permitted, 0.55 for the population rule.
 
 ### The sealed set, scored once
 
-Scored on 2026-11-03 at commit 6258036, after the eleventh amendment fixed the reading
-(`configs/protocol_amendment_11.yaml`) and before any sealed score existed; `runs/classifier/sealed/LOCK.json`
-stops a second run. Each scope's models were fitted on all its usable rows and scored SAC 1956's rows in the sealed
+Scored on 2026-11-03, after `configs/protocol_amendment_11.yaml` fixed the reading and before any sealed
+score existed; `runs/classifier/sealed/LOCK.json` records the commit and stops a second run. Each scope's models were fitted on all its usable rows and scored SAC 1956's rows in the sealed
 blocks: 272 never-scored places (152 listed, base rate 0.56,
 in 28 blocks), the eleventh amendment's primary population, which turned out not to be blind (next section), and all 463 sealed places with a SAC label
 (250 listed); 4 of the 467 sealed places have no SAC label (an entry possibly lost from the scan)
-and so no row. Primary rows, the selected candidate against population plus country on never-scored places:
-
-- global, all attacker documents, LightGBM, all permitted: 0.867 against 0.838, +0.03 [+0.01, +0.06], by blocks [+0.01, +0.10]: gain
-- global, plan documents only, LightGBM, all permitted: 0.875 against 0.839, +0.04 [+0.01, +0.06], by blocks [+0.01, +0.11]: gain
-- Warsaw Pact, pooled, exercise-based, LightGBM, all permitted: 0.567 against 0.695, -0.13 [-0.19, -0.06], by blocks [-0.18, +0.06]: neither
-- single document: SAC 1956 (not a state model), logistic, all permitted: 0.847 against 0.840, +0.01 [-0.02, +0.03], by blocks [-0.02, +0.04]: neither
-
+and so no row. The primary rows are the selected candidate against population plus country on never-scored places.
 So the gain over population plus country holds on never-scored places for 2 of 4 scopes
 ('global, all attacker documents'; 'global, plan documents only'), and not for 'Warsaw Pact, pooled, exercise-based' (neither); 'single document: SAC 1956 (not a state model)' (neither).
 The pooled Warsaw Pact model ranks these places worse than population does (-0.13); the town interval calls that a loss and the block interval does not, so by the rule it is neither. It was trained on towns in six Western countries and is applied here to Eastern bloc places.
@@ -212,32 +212,31 @@ Every model's metrics on both populations, with a PR-AUC interval each, are in `
 
 ### The sealed set read again on blind places only (twelfth amendment)
 
-The never-scored population above is not blind. `scripts/freeze_seal.py` took what earlier runs had scored from
-one commit, `de2e54a`; three earlier commits of the M2 check (`b094d1d`, `e599d9c`, `e80681b`, all 8 October 2026)
-had committed out-of-fold scores, and maps that showed them, for places that commit no longer scored. Walking every
-commit before the sealed scoring (`scripts/scored_history.py`, written to `data/curated/splits/scored_in_history.csv`)
-finds 316 of the 467 sealed places with a committed score, 123 of them among the
-never-scored rows above. `configs/protocol_amendment_12.yaml` was written after the reading above had been seen and
-committed before this one was computed. It refits nothing and scores nothing: `python -m nucprob.classifier.sealed_reread`
-reads `runs/classifier/sealed/scores.csv.gz` as committed at fb028cc (it checks the hash) on the 149
-never-scored places with a SAC label that no committed run scored (74 listed, base rate
+The never-scored population above is not blind. The list of places earlier runs had scored was read from the
+outputs of one commit, and earlier commits of a milestone check had committed scores, and maps showing them, for
+places that commit no longer scored. Walking every commit before the sealed scoring (`scripts/scored_history.py`,
+written to `data/curated/splits/scored_in_history.csv`) finds 316 of the 467 sealed places with a
+committed score, 123 of them among the never-scored rows above. `configs/protocol_amendment_12.yaml` was written
+after the reading above had been seen and committed before this one was computed. It refits nothing and scores
+nothing: `python -m nucprob.classifier.sealed_reread` reads the committed sealed scores (it checks their hash) on the
+149 never-scored places with a SAC label that no committed run scored (74 listed, base rate
 0.50, in 10 blocks, positives in 6). Primary rows:
 
-- global, all attacker documents, LightGBM, all permitted: 0.840 against 0.823, +0.02 [-0.02, +0.05], by blocks [-0.02, +0.12]: neither
-- global, plan documents only, LightGBM, all permitted: 0.842 against 0.826, +0.02 [-0.02, +0.05], by blocks [-0.02, +0.11]: neither
-- Warsaw Pact, pooled, exercise-based, LightGBM, all permitted: 0.568 against 0.716, -0.15 [-0.25, -0.04], by blocks [-0.25, +0.15]: neither
-- single document: SAC 1956 (not a state model), logistic, all permitted: 0.813 against 0.826, -0.01 [-0.06, +0.02], by blocks [-0.04, +0.02]: neither
+- global, all attacker documents, LightGBM, all permitted: 0.84 against 0.82, +0.02 [-0.02, +0.05], by blocks [-0.02, +0.12]: neither
+- global, plan documents only, LightGBM, all permitted: 0.84 against 0.83, +0.02 [-0.02, +0.05], by blocks [-0.02, +0.11]: neither
+- Warsaw Pact, pooled, exercise-based, LightGBM, all permitted: 0.57 against 0.72, -0.15 [-0.25, -0.04], by blocks [-0.25, +0.15]: neither
+- single document: SAC 1956 (not a state model), logistic, all permitted: 0.81 against 0.83, -0.01 [-0.06, +0.02], by blocks [-0.04, +0.02]: neither
 
 Against the population rule on the same places:
 
-- global, all attacker documents, LightGBM, all permitted: 0.840 against 0.716, +0.12 [+0.05, +0.20], by blocks [+0.02, +0.26]: gain
-- global, plan documents only, LightGBM, all permitted: 0.842 against 0.716, +0.13 [+0.05, +0.20], by blocks [+0.02, +0.27]: gain
-- Warsaw Pact, pooled, exercise-based, LightGBM, all permitted: 0.568 against 0.716, -0.15 [-0.25, -0.04], by blocks [-0.25, +0.15]: neither
-- single document: SAC 1956 (not a state model), logistic, all permitted: 0.813 against 0.716, +0.10 [+0.02, +0.17], by blocks [-0.02, +0.24]: neither
+- global, all attacker documents, LightGBM, all permitted: 0.84 against 0.72, +0.12 [+0.05, +0.20], by blocks [+0.02, +0.26]: gain
+- global, plan documents only, LightGBM, all permitted: 0.84 against 0.72, +0.13 [+0.05, +0.20], by blocks [+0.02, +0.27]: gain
+- Warsaw Pact, pooled, exercise-based, LightGBM, all permitted: 0.57 against 0.72, -0.15 [-0.25, -0.04], by blocks [-0.25, +0.15]: neither
+- single document: SAC 1956 (not a state model), logistic, all permitted: 0.81 against 0.72, +0.10 [+0.02, +0.17], by blocks [-0.02, +0.24]: neither
 
 So on blind places the selected candidate beats population plus country by both intervals for 0 of
 4 scopes, and beats the population rule by both
-intervals for 2 of 4 ('global, all attacker documents'; 'global, plan documents only'). This is the reading to quote
+intervals for 2 of 4 ('global, all attacker documents'; 'global, plan documents only'). This is the reading the main result quotes
 as blind; the never-scored and all-sealed readings above are of places some committed run had already scored. The
 blind places' neighbours, and same-named towns elsewhere, were scored in those runs, so it is a reading of places
 no run scored, not of a region none had seen. With 149 places the intervals are wider than above, and a
@@ -252,10 +251,10 @@ were suspected of marking a document. "No source markers" also removes the defen
 blank or filled according to the table a row came from. The check below did not confirm either suspicion. From the
 columns alone, with folds grouped by place, a classifier names a row's document 50.6% of the time on all columns,
 64.9% without national power, 65.7% with no source markers as well and 44.1% on population alone,
-against 44.4% for always naming the largest document; population alone does worse than that
+against 44.4% for always naming the largest document; population alone does worse than that, by 0.3 points, a gap no interval was computed for, so the two cannot be told apart
 (`runs/classifier/document_identification.csv`). Removing the suspected columns made identification easier, not harder, which a
-classifier given more columns should not show; this is not explained. So the accuracy shows that the remaining columns tell documents apart, and
-the changes between column sets do not measure how much any set does so.
+classifier given more columns should not show; this is not explained. No interval was computed for any of these
+accuracies, so they do not show how far any set of columns tells documents apart.
 
 | scope | model | variant | features | a_pr_auc | b_pr_auc | difference | by_blocks |
 |---|---|---|---|---|---|---|---|
@@ -279,9 +278,6 @@ the changes between column sets do not measure how much any set does so.
 | global, all attacker documents | LightGBM, all permitted | strict as-of | 22 | 0.77 | 0.76 | +0.02 [+0.004, +0.03] | [-0.01, +0.04] |
 | global, all attacker documents | LightGBM, all permitted | no national power | 26 | 0.78 | 0.76 | +0.03 [+0.02, +0.04] | [+0.01, +0.05] |
 | global, all attacker documents | LightGBM, all permitted | no source markers | 20 | 0.76 | 0.76 | +0.005 [-0.01, +0.02] | [-0.02, +0.03] |
-
-For the Warsaw Pact pool, the gain over population and country is +0.06 [+0.01, +0.12], by blocks [-0.04, +0.13] without national power and
-+0.03 [-0.01, +0.08], by blocks [-0.08, +0.08] without any source marker.
 
 **SAC's negatives beside its own airfields.** SAC's town list is complete, but it lists airfields apart, so a town off it may lie beside a
 listed airfield. 88 of its 1103 negatives lie within 5 km of one and 174 within 10 km. Without those within 10 km the SAC gain above is +0.02 [+0.02, +0.03], by blocks [+0.01, +0.04], against +0.02 [+0.01, +0.03], by blocks [+0.01, +0.04] with them.
@@ -398,8 +394,8 @@ feature, controlling log population and an intercept per list and country; inter
 
 | document | doc_type | attacker | total | naming_defences | share |
 |---|---|---|---|---|---|
-| us_1956_sac_complexes, category 284: radar installations | requirements_study | US | 2087 | 7 | 0.00 |
-| us_1956_sac_complexes, category 210: guided missiles, upper bound | requirements_study | US | 2087 | 5 | 0.00 |
+| us_1956_sac_complexes, category 284: radar installations | requirements_study | US | 2087 | 7 | 0.003 |
+| us_1956_sac_complexes, category 210: guided missiles, upper bound | requirements_study | US | 2087 | 5 | 0.002 |
 | us_1945_target_committee | target_selection | US | 21 | 0 | 0.00 |
 | us_1958_taiwan_strait | policy_study | US | 2 | 0 | 0.00 |
 | us_1963_jcs_china_vulnerability | policy_study | US | 0 | 0 |  |
@@ -444,58 +440,11 @@ large towns to be hit too.
 | nato_1962_pl_exercise_mirror | mirror | 126 | 27 | 0.21 | 0.44 | 0.51 |
 | nato_1965_hu_wargame_mirror | mirror | 120 | 13 | 0.11 | 0.41 | 0.38 |
 
-### All metrics
+### Other metrics
 
-The protocol's secondary metrics, as positive-weighted means over scored lists. Brier and log-loss are on raw scores, which
-are not probabilities where a list is incomplete. Precision is at k equal to the list's positives. A list is scored only with 2
-or more positives, so the positives here leave out `us_1958_taiwan_strait` with 1 that the table of models against baselines counts.
-
-| scope | holdout | model | positives | pr_auc | roc_auc | brier | log_loss | precision_at_k | base_rate |
-|---|---|---|---|---|---|---|---|---|---|
-| global, all attacker documents | spatial blocks | population rule | 1171 | 0.71 | 0.75 | 0.22 | 0.63 | 0.65 | 0.44 |
-| global, all attacker documents | spatial blocks | population + country | 1171 | 0.76 | 0.79 | 0.17 | 0.51 | 0.67 | 0.44 |
-| global, all attacker documents | spatial blocks | logistic, all permitted | 1171 | 0.73 | 0.78 | 0.19 | 0.56 | 0.66 | 0.44 |
-| global, all attacker documents | spatial blocks | LightGBM, all permitted | 1171 | 0.79 | 0.83 | 0.15 | 0.47 | 0.70 | 0.44 |
-| global, all attacker documents | leave-one-document-out | population rule | 1171 | 0.71 | 0.76 | 0.35 | 1.09 | 0.66 | 0.44 |
-| global, all attacker documents | leave-one-document-out | population + country | 1171 | 0.71 | 0.75 | 0.35 | 1.11 | 0.65 | 0.44 |
-| global, all attacker documents | leave-one-document-out | logistic, all permitted | 1171 | 0.63 | 0.66 | 0.40 | 1.89 | 0.56 | 0.44 |
-| global, all attacker documents | leave-one-document-out | LightGBM, all permitted | 1171 | 0.58 | 0.58 | 0.33 | 1.33 | 0.50 | 0.44 |
-| global, all attacker documents | temporal: fit up to 1956, score later | population rule | 123 | 0.22 | 0.69 | 0.17 | 0.52 | 0.25 | 0.07 |
-| global, all attacker documents | temporal: fit up to 1956, score later | population + country | 123 | 0.22 | 0.69 | 0.20 | 0.67 | 0.25 | 0.07 |
-| global, all attacker documents | temporal: fit up to 1956, score later | logistic, all permitted | 123 | 0.18 | 0.60 | 0.47 | 1.62 | 0.19 | 0.07 |
-| global, all attacker documents | temporal: fit up to 1956, score later | LightGBM, all permitted | 123 | 0.26 | 0.72 | 0.19 | 0.63 | 0.28 | 0.07 |
-| global, all attacker documents | temporal reversed: fit after 1956, score earlier | population rule | 1048 | 0.77 | 0.77 | 0.35 | 1.01 | 0.70 | 0.48 |
-| global, all attacker documents | temporal reversed: fit after 1956, score earlier | population + country | 1048 | 0.76 | 0.77 | 0.35 | 1.04 | 0.70 | 0.48 |
-| global, all attacker documents | temporal reversed: fit after 1956, score earlier | logistic, all permitted | 1048 | 0.68 | 0.66 | 0.41 | 1.80 | 0.60 | 0.48 |
-| global, all attacker documents | temporal reversed: fit after 1956, score earlier | LightGBM, all permitted | 1048 | 0.61 | 0.55 | 0.32 | 1.22 | 0.51 | 0.48 |
-| global, plan documents only | spatial blocks | population rule | 1054 | 0.76 | 0.76 | 0.21 | 0.60 | 0.70 | 0.48 |
-| global, plan documents only | spatial blocks | population + country | 1054 | 0.82 | 0.81 | 0.17 | 0.52 | 0.72 | 0.48 |
-| global, plan documents only | spatial blocks | logistic, all permitted | 1054 | 0.84 | 0.83 | 0.17 | 0.50 | 0.74 | 0.48 |
-| global, plan documents only | spatial blocks | LightGBM, all permitted | 1054 | 0.84 | 0.84 | 0.16 | 0.49 | 0.74 | 0.48 |
-| global, plan documents only | leave-one-document-out | population rule | 1054 | 0.77 | 0.77 | 0.44 | 1.80 | 0.70 | 0.48 |
-| global, plan documents only | leave-one-document-out | population + country | 1054 | 0.77 | 0.77 | 0.36 | 1.19 | 0.70 | 0.48 |
-| global, plan documents only | leave-one-document-out | logistic, all permitted | 1054 | 0.59 | 0.59 | 0.34 | 0.97 | 0.50 | 0.48 |
-| global, plan documents only | leave-one-document-out | LightGBM, all permitted | 1054 | 0.64 | 0.63 | 0.45 | 2.29 | 0.54 | 0.48 |
-| global, plan documents only | temporal: fit up to 1956, score later | population rule | 6 | 0.17 | 0.58 | 0.21 | 0.65 | 0.00 | 0.11 |
-| global, plan documents only | temporal: fit up to 1956, score later | population + country | 6 | 0.17 | 0.58 | 0.26 | 0.86 | 0.00 | 0.11 |
-| global, plan documents only | temporal: fit up to 1956, score later | logistic, all permitted | 6 | 0.16 | 0.56 | 0.33 | 1.05 | 0.00 | 0.11 |
-| global, plan documents only | temporal: fit up to 1956, score later | LightGBM, all permitted | 6 | 0.17 | 0.55 | 0.22 | 0.72 | 0.00 | 0.11 |
-| global, plan documents only | temporal reversed: fit after 1956, score earlier | population rule | 1048 | 0.77 | 0.77 | 0.24 | 0.67 | 0.70 | 0.48 |
-| global, plan documents only | temporal reversed: fit after 1956, score earlier | population + country | 1048 | 0.78 | 0.77 | 0.24 | 0.66 | 0.70 | 0.48 |
-| global, plan documents only | temporal reversed: fit after 1956, score earlier | logistic, all permitted | 1048 | 0.49 | 0.49 | 0.30 | 0.83 | 0.46 | 0.48 |
-| global, plan documents only | temporal reversed: fit after 1956, score earlier | LightGBM, all permitted | 1048 | 0.48 | 0.50 | 0.25 | 0.69 | 0.56 | 0.48 |
-| Warsaw Pact, pooled, exercise-based | spatial blocks | population rule | 123 | 0.19 | 0.63 | 0.07 | 0.26 | 0.20 | 0.07 |
-| Warsaw Pact, pooled, exercise-based | spatial blocks | population + country | 123 | 0.17 | 0.65 | 0.07 | 0.27 | 0.17 | 0.07 |
-| Warsaw Pact, pooled, exercise-based | spatial blocks | logistic, all permitted | 123 | 0.23 | 0.66 | 0.11 | 0.39 | 0.27 | 0.07 |
-| Warsaw Pact, pooled, exercise-based | spatial blocks | LightGBM, all permitted | 123 | 0.28 | 0.76 | 0.08 | 0.27 | 0.30 | 0.07 |
-| Warsaw Pact, pooled, exercise-based | leave-one-document-out | population rule | 123 | 0.22 | 0.69 | 0.06 | 0.25 | 0.25 | 0.07 |
-| Warsaw Pact, pooled, exercise-based | leave-one-document-out | population + country | 123 | 0.21 | 0.64 | 0.07 | 0.26 | 0.24 | 0.07 |
-| Warsaw Pact, pooled, exercise-based | leave-one-document-out | logistic, all permitted | 123 | 0.15 | 0.54 | 0.08 | 0.41 | 0.17 | 0.07 |
-| Warsaw Pact, pooled, exercise-based | leave-one-document-out | LightGBM, all permitted | 123 | 0.19 | 0.65 | 0.07 | 0.33 | 0.24 | 0.07 |
-| single document: SAC 1956 (not a state model) | spatial blocks | population rule | 1042 | 0.77 | 0.76 | 0.20 | 0.58 | 0.70 | 0.49 |
-| single document: SAC 1956 (not a state model) | spatial blocks | population + country | 1042 | 0.82 | 0.81 | 0.18 | 0.52 | 0.73 | 0.49 |
-| single document: SAC 1956 (not a state model) | spatial blocks | logistic, all permitted | 1042 | 0.85 | 0.84 | 0.16 | 0.49 | 0.75 | 0.49 |
-| single document: SAC 1956 (not a state model) | spatial blocks | LightGBM, all permitted | 1042 | 0.85 | 0.84 | 0.17 | 0.50 | 0.74 | 0.49 |
+The protocol's secondary metrics (Brier, log-loss, precision at k) for every scope and holdout are in
+`runs/classifier/TABLES.md`. Brier and log-loss there are on raw scores, which are not probabilities where a list
+is incomplete.
 
 ## Probability map
 
@@ -547,7 +496,8 @@ and how much that matters was not measured.
 
 **Score.** The selection rule in `configs/protocol.yaml` selected **population rule**, by highest PR-AUC on a left-out document
 (0.71). The candidates use only features that exist in every era without any present-day
-facility data: population, administrative rank, distance to a coast. So the map's score holds no defence,
+facility data: population, its rank within the country, population within 25, 50 and 100 km, distance to a town of
+100,000, national capital or regional centre, distance to the capital and distance to a coast. So the map's score holds no defence,
 military or national-power term. It is fitted on all attacker documents, exercises included, and is not one
 state's model, because no state passes the gate with enough outside its largest document.
 
@@ -654,7 +604,7 @@ The `us_1956_on_bloc` scenario, with 1128 warheads
 on scored towns, against whether SAC listed a town in each 0.5-degree cell. 796 of 1370 cells hold a listed town, a
 base rate of 0.58. Scored by models that never saw the cell's block: PR-AUC 0.839, ROC-AUC 0.793,
 Brier 0.197 against 0.243 for the base rate. By models with no SAC row at all: PR-AUC 0.845, ROC-AUC 0.795,
-Brier 0.204 (a higher PR-AUC than with SAC's rows; no interval was computed for the difference). That second reading looks like transfer, and it is not evidence of it: with a one-feature monotone score,
+Brier 0.204 (no interval was computed for its difference from the reading above, so the two cannot be told apart). That second reading looks like transfer, and it is not evidence of it: with a one-feature monotone score,
 the order of towns barely depends on which rows trained it, so agreement is largely built in. Across cells the map's mean
 probability is 0.48 and the share listed 0.58, beside a mean interval width of 0.14 for this scenario. The reliability table:
 
@@ -686,7 +636,7 @@ With one feature left out, the classifier's ROC-AUC stays between 0.92 (without 
 | for scale: SAC 1956 towns against the other training towns | two-sample ROC-AUC | 0.89 | 2145 | 1541 |
 | modern towns outside the 1st-99th percentile of training: log_pop | share of modern towns | 0.18 | 3686 | 2276 |
 | modern towns outside the 1st-99th percentile of training: pop_rank_pct | share of modern towns | 0.02 | 3686 | 2276 |
-| modern towns outside the 1st-99th percentile of training: log_pop_within_25km | share of modern towns | 0.00 | 3686 | 2276 |
+| modern towns outside the 1st-99th percentile of training: log_pop_within_25km | share of modern towns | 0.005 | 3686 | 2276 |
 | modern towns outside the 1st-99th percentile of training: log_pop_within_50km | share of modern towns | 0.01 | 3686 | 2276 |
 | modern towns outside the 1st-99th percentile of training: log_pop_within_100km | share of modern towns | 0.02 | 3686 | 2276 |
 | modern towns outside the 1st-99th percentile of training: log_km_to_100k | share of modern towns | 0.02 | 3686 | 2276 |
@@ -721,6 +671,7 @@ With one feature left out, the classifier's ROC-AUC stays between 0.92 (without 
 - **That SAC's list is free of error.** See how it was transcribed, under Data, and `data/ISSUES.md` for what has been corrected.
 - **A state's own model.** Each state is refused. A model of Warsaw Pact war plans in particular has no basis: 6 linked positives, none from a plan read at source. The pooled model is exercise-based.
 - **Prediction for a plan not in the data.** See the main result. The map's score carries this limit into every cell.
+- **A blind gain over population plus country.** On the only blind places, 149 towns of SAC's list, no selected model beat it by both intervals (Results, "The sealed set read again on blind places only").
 - **Causes.** These are associations between a town's traits and its presence on a list. No design here separates one trait's effect from another's or from the planners' reasons.
 - **What planners knew.** Features record what existed according to later sources.
 - **Any statement about a present-day plan.** Modern map rows extrapolate from lists of 1945 to 1977.

@@ -364,3 +364,66 @@ def test_the_readme_says_what_the_blind_reading_found():
         assert "no model beats population plus country" in readme
     else:
         assert "no model beats population plus country" not in readme
+
+
+@pytest.mark.skipif(not report.BLIND.exists(), reason="blind reading not run")
+def test_the_main_result_and_the_limits_quote_the_blind_reading():
+    """The review of dcb3c75: the headline led with a gain the blind reading does not show. The main result
+    states every primary blind row, and both documents list the missing blind gain as a limit."""
+    text = (ROOT / "REPORT.md").read_text(encoding="utf-8")
+    main = text[text.index("## Main result") : text.index("## Question")]
+    prim = report._blind_rows(report.PLUS)
+    for _, r in prim.iterrows():
+        assert f"[{report.signed(r['low'])}, {report.signed(r['high'])}]" in main, r["scope"]
+    cannot = text[text.index("## What the evidence cannot support") :]
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    results = readme[readme.index(report.README_START) : readme.index(report.README_END)]
+    if not prim["verdict"].eq("gain").any():
+        assert "no selected model beats population plus country there" in main
+        assert "A blind gain over population plus country" in cannot
+        assert "A blind gain over population plus country" in readme
+        assert results.index("On the only blind test") < results.index("Inside SAC's list")
+
+
+def test_the_splits_card_does_not_call_never_scored_places_blind():
+    card = " ".join(
+        (ROOT / "data" / "curated" / "splits" / "README.md").read_text(encoding="utf-8").split()
+    )
+    assert "Only the 273 `never_scored` places are blind" not in card
+    # The sizes the report takes from the card.
+    for figure in ("of the 467 sealed places, 194", "273 `never_scored`", "123 of them"):
+        assert figure in card, figure
+
+
+def test_reader_facing_text_has_no_commit_names_or_run_on_lines():
+    """Process history lives in configs/HISTORY.md, the amendments and the git log (review of dcb3c75)."""
+    import re
+
+    for name in ("README.md", "REPORT.md"):
+        text = (ROOT / name).read_text(encoding="utf-8")
+        assert not re.findall(r"(?<![\w/.-])[0-9a-f]{7}(?![\w/.-])", text), name
+        assert max(len(line) for line in text.splitlines()) < 1500, name
+    assert (ROOT / "configs" / "HISTORY.md").exists()
+
+
+def test_a_nonzero_value_never_prints_as_an_exact_zero():
+    assert report._cell(0.003) == "0.003"
+    assert report._cell(-0.002) == "-0.002"
+    assert report._cell(0.0) == "0.00"
+    assert report._cell(0.00002) not in ("0.00", "0.000")
+    assert report._cell(0.4438) == "0.44"
+
+
+@needs_run
+def test_tables_headings_are_not_truncated_holdout_labels():
+    tables = (OUT / "TABLES.md").read_text(encoding="utf-8")
+    assert "### PR-AUC by list: temporal: fit up\n" not in tables
+    assert "### PR-AUC by list: fit up to 1956, score later" in tables
+
+
+def test_no_committed_us_check_output_holds_county_coordinates():
+    """Section E: no output finer than admin-1 beyond historical labels. The US check's county scores
+    are written to data/interim/, not committed."""
+    for f in (RUNS / "m4-us-check").glob("*.csv"):
+        cols = set(pd.read_csv(f, nrows=0).columns)
+        assert not {"lat", "lon", "fips"} & cols, f.name
