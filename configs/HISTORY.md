@@ -19,6 +19,7 @@ and the git log the order. Reviews are named by the commit they read.
 | 10 | 2026-11-02 | Withdraws Great Britain's 1981 districts (fetched through a path robots.txt disallows), Square Leg 1980 and the UK of the 1965 map; full refit | The runs pinned at 110174e and de8a502, the review of 46021d7 |
 | 11 | 2026-11-03 | Fixes how the sealed set is read, before any sealed score existed | Every result except the sealed set |
 | 12 | 2026-11-03 | Restricts the sealed reading to places no committed run had scored (the blind places); refits and rescores nothing | The sealed reading under 11 |
+| 13 | 2026-11-03 | Intervals and a split spread for the document identification check, and a stated test of one explanation for its rise; no primary result is read again | document_identification.csv without intervals |
 
 After the tenth amendment's refit (930a164; its main step run again at a776225 after a quoting fault in
 `data/sources.yaml` was fixed) every classifier table had the same content as the run of 110174e, except that

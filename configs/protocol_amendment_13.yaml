@@ -1,0 +1,31 @@
+# Thirteenth amendment, in its own file like the fifth to twelfth. Written after runs/classifier/
+# document_identification.csv had been read (four accuracies with no interval, and a rise when columns are removed
+# that REPORT calls unexplained). It is committed and pushed before anything it defines is computed. No label,
+# feature, model, holdout or scenario changes; no primary result is refitted or read again.
+date: 2026-11-03
+reasons: The document identification check (sixth amendment) reports accuracies of 0.506, 0.649, 0.657 and 0.441
+  against 0.444 for always naming the largest document, with no interval, and REPORT draws readings from gaps of
+  0.003 and 0.06. Without an interval none of those gaps can be read.
+changes:
+  module: nucprob.classifier.identification writes runs/classifier/identification/. It first recomputes
+    document_identification.csv's four rows with the same code and checks they are equal to 4 decimals; if they
+    are not, it stops.
+  interval: For each column set, the out-of-fold predictions of that run are resampled by place (a place's rows
+    together, since folds are grouped by place), 2000 resamples, seed 1956. Reported per set, 95% percentile
+    intervals of (a) accuracy, (b) accuracy minus the share of the full-sample largest document in the resample,
+    (c) accuracy minus that of "all permitted", the same resample for every set. A difference is read as above or
+    below zero only if its interval excludes zero on unrounded bounds; otherwise "cannot be told apart".
+  split_spread: The bootstrap holds the fitted folds fixed. Each set is fitted again on 10 further place-grouped
+    4-fold splits (GroupKFold with shuffle, seeds 0-9); the minimum, median and maximum accuracy are reported
+    beside the interval. This is a spread, not an interval, and is not used to call a difference.
+  capacity_probe: Exploratory, stated before it is run. The classifier has 60 boosting iterations for 15
+    documents. If the rise when columns are removed comes from too few iterations spread over more columns,
+    "all permitted" should gain more than "no source markers" when iterations rise to 300 (other settings
+    unchanged, the original split). The rise is called explained by capacity only if, at 300 iterations,
+    "no source markers" minus "all permitted" has a place-bootstrap interval (as above) that includes zero
+    while the same difference at 60 iterations excludes it. Any other outcome leaves the rise unexplained and is
+    reported as such.
+reporting: REPORT.md states the intervals in the paragraph that now says none was computed, with the verdicts
+  from the rules above, and the probe's result whichever way it falls.
+unchanged: Everything in the first twelve amendments. document_identification.csv and the sensitivity manifest
+  are not rewritten.
