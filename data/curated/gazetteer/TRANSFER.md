@@ -54,10 +54,9 @@ precedence; a row with blank `lat` records why a town could not be placed:
   Dutch rural municipalities placed at their seat, Canadian towns later merged, US unincorporated
   places, Japanese towns later merged (approximate centres) and one Italian comune; the
   `admin1` column tells apart towns of one name.
-- `uk_districts_1981_seats.csv` gives each of the 456 districts of 1981 (454 in Great Britain, 2 in
-  Northern Ireland) the town where its council had its headquarters, checked against Wikipedia
-  (card: `uk_districts_1981_seats.md`). It is read by nothing since the tenth amendment withdrew
-  Great Britain's table.
+- `uk_districts_1981_seats.csv`, the council seats of the 1981 districts, was removed from the tree:
+  its district names came from Nomis output that robots.txt disallows, and nothing has read it since the
+  tenth amendment withdrew Great Britain's table.
 
 The pop-stat page for Austria has no seat column, and it underlines today's Land capitals
 (St. Pölten, capital of Lower Austria only since 1986, and Dornbirn instead of Bregenz).

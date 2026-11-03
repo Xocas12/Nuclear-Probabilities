@@ -37,9 +37,10 @@ SCRIPT_URLS = {
 PAST_ROUTES = {
     # weurope_military_sites_1965 and us_military_sites_1985 (their cards)
     "past:wikipedia_index_raw": "https://en.wikipedia.org/w/index.php?title=Thor&action=raw",
-    # uk_districts_1981_seats (its card, Method 1)
+    # uk_districts_1981_seats, a table of 1981 district seats removed from the tree with the Nomis district
+    # names it was built on (tenth amendment; git history before this change holds its card, Method 1)
     "past:wikipedia_special_export": "https://en.wikipedia.org/wiki/Special:Export/Bolsover",
-    # uk_districts_1981_seats (Method 3), gazetteer TOWNS_INSTRUCTIONS.md before 2026-11-02, and
+    # uk_districts_1981_seats (Method 3 of the removed card), gazetteer TOWNS_INSTRUCTIONS.md before 2026-11-02, and
     # one wargame page in data/notes/warsaw_pact.md
     "past:wikipedia_api": "https://en.wikipedia.org/w/api.php?action=parse&page=Thor&prop=wikitext",
 }

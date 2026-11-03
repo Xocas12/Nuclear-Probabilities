@@ -123,8 +123,8 @@ def located_places() -> pd.DataFrame:
 
 
 def test_no_two_towns_of_a_region_share_a_point_across_first_order_units():
-    # A UK row is a district at its council's seat, and a few seats lay outside the district
-    # (uk_districts_1981_seats.md); those are the only points meant to be shared across units.
+    # A row placed at a district council's seat may share its point with a neighbouring unit (Great
+    # Britain's 1981 district seats, withdrawn by the tenth amendment, were the case this excludes).
     t = located_places()
     t = t[t["match_method"] != "district seat"]
     n = t.groupby(["region", "lat", "lon"])["admin1"].transform("nunique")

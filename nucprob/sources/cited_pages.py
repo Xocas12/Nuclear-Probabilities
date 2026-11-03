@@ -37,7 +37,6 @@ TABLES = {
     "weurope_military_sites_1965": FEATURES,
     # Gazetteer tables read from Wikipedia, some through paths robots.txt disallows (README, "Robots"):
     # their pages are registered here through paths it allows.
-    "uk_districts_1981_seats": GAZETTEER,
     "frg_1961_wikipedia": GAZETTEER,
     "closed_cities_1956": GAZETTEER,
 }
