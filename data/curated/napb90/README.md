@@ -95,8 +95,8 @@ fallout comes from the same attack, and the doses come from NAPB-90's wind model
 | `fallout_checks.csv` | failed check | column sums against TOTAL STATE, figures that differ from Annex A, rows without a match |
 | `FALLOUT_REPORT.md` | | counts by band, and a cross-table of blast band by fallout band |
 
-**How it was made.** I chose the table pages by ink density, then checked them against the
-county list of Annex A; that check found three pages the filter had missed, and I read those
+**How it was made.** The table pages were chosen by ink density, then checked them against the
+county list of Annex A; that check found three pages the filter had missed, and those were read
 by hand (Delaware B-38, West Virginia B-56). Annex B was transcribed once
 (`data/interim/napb90_b/`, nine pages per worker, each worker checking column sums). There is
 no second pass. Every county prints its population and area again, so the check is against

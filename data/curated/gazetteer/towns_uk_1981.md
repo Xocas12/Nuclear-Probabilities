@@ -15,10 +15,10 @@ by no analysis: none of Square Leg's points is in Northern Ireland. What follows
 - **Great Britain (454 rows): 1981 local government districts, not urban areas.** These are the 1974/75 districts: London boroughs, metropolitan and non-metropolitan districts, and Scottish districts and islands areas. A district such as "Kirklees" or "Wychavon" is a local authority area. It is not a town. Large cities line up well with their districts. Rural districts contain several small towns.
 - **Northern Ireland (22 rows): towns.** Each town is the built-up rectangle drawn by the NI Census Office.
 
-The preferred source, OPCS *Census 1981: Key Statistics for Urban Areas* (HMSO 1984), is only in print. I could not reach any machine-readable copy or faithful tabulation of it:
+The preferred source, OPCS *Census 1981: Key Statistics for Urban Areas* (HMSO 1984), is only in print. No machine-readable copy or faithful tabulation of it could be reached:
 - web.archive.org, archive.today, Vision of Britain and HathiTrust were all blocked or down.
 - The old citypopulation.de UK pages were checked through Common Crawl captures from 2009/10, 2013 and 2014 (raw files in `commoncrawl_*`). They only ever carried 1991 and 2001 figures for Great Britain.
-- de.wikipedia's UK list does have 1981 figures for built-up areas. It only covers places of 50k+ in 2021, has gaps, and its source is unclear: for example, Mansfield is 71,325 there against 72,108 in the KS Urban Areas table cited on en.wiki. I did not use it.
+- de.wikipedia's UK list does have 1981 figures for built-up areas. It only covers places of 50k+ in 2021, has gaps, and its source is unclear: for example, Mansfield is 71,325 there against 72,108 in the KS Urban Areas table cited on en.wiki. It was not used.
 
 ## Sources
 1. **Great Britain:** OPCS/GRO(S) 1981 Census Small Area Statistics, Nomis dataset NM_66_1. Geography type 496 is "pre-1996 local authority districts" and type 498 is counties/regions.

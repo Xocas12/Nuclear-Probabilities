@@ -26,11 +26,15 @@ features:
 dataset:
 	$(PY) -m nucprob.dataset
 
-# The M2 check run (runs/m2-check/): every feature family, every bloc country with a universe.
+# The M2 check run (runs/m2-check/): every feature family, every bloc country with a universe. It is a
+# historical record on the labels of its date, pinned in runs/milestone_hashes.json, and feeds no result;
+# rerunning it overwrites that record, so these targets refuse unless RERUN_M2=1 is given.
 train:
+	@test "$(RERUN_M2)" = 1 || { echo "runs/m2-check is a pinned record; use RERUN_M2=1 to overwrite it"; exit 1; }
 	$(PY) -m nucprob.model.check
 
 map:
+	@test "$(RERUN_M2)" = 1 || { echo "runs/m2-check is a pinned record; use RERUN_M2=1 to overwrite it"; exit 1; }
 	$(PY) -m nucprob.viz.map --run m2-check
 
 # Milestone M2, end to end (PLAN section 9). The M1 slice is kept in runs/m1-slice/ as run.

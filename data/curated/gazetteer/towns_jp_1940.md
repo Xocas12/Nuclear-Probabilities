@@ -35,9 +35,9 @@ which is a two-page scan spread.
 - `admin1` is the prefecture. `admin1_seat` = 1 for the 47 prefectural capitals. `capital` = 1 for Tokyo-shi.
 
 ## Method and checks
-The scans have no text layer, so I OCRed them with tesseract. A figure was accepted only when at
+The scans have no text layer, so they were OCRed with tesseract. A figure was accepted only when at
 least two independent readings agreed: total = male + female, total = ordinary-household members +
-quasi-household members, or two OCR passes giving the same number. I read the remaining ~30 rows by
+quasi-household members, or two OCR passes giving the same number. The remaining ~30 rows were read by
 eye from the scan (they are noted in `notes`). Three duplicate scan pages were dropped.
 - **Cities:** for every prefecture, the city rows add up exactly to the printed "All shi" (市部)
   row. All 168 cities together = 27,577,539. The census's All-Japan "All shi" row is 27,494,237,

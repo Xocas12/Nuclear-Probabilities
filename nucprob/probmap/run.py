@@ -538,7 +538,13 @@ def main() -> None:
         cells, rec = run_scenario(
             sc, universes[sc["universe"]], matrices[sc["universe"]], n_draws, rng
         )
-        cells.to_csv(out_dir / "cells" / f"{sc['id']}.csv.gz", index=False, float_format="%.4f")
+        # mtime 0: a rerun with the same content writes the same bytes, so the manifest's hashes hold.
+        cells.to_csv(
+            out_dir / "cells" / f"{sc['id']}.csv.gz",
+            index=False,
+            float_format="%.4f",
+            compression={"method": "gzip", "mtime": 0},
+        )
         summaries.append(rec["summary"])
         warheads += rec["warheads"]
         by_delivery += rec["by_delivery"]

@@ -27,7 +27,7 @@ File: `towns_it_1961.csv`, 814 rows. Each row is a comune (municipality) with a 
 
 ## How it was read
 
-The PDF is a scan with a poor embedded OCR layer. I read Tav. 7 twice: once from the embedded layer (`pdftotext -layout`) and once by re-running tesseract on the page images. Both readings are in `data/raw/italy/`. The `notes` column says how each row was confirmed:
+The PDF is a scan with a poor embedded OCR layer. Tav. 7 was read twice: once from the embedded layer (`pdftotext -layout`) and once by re-running tesseract on the page images. Both readings are in `data/raw/italy/`. The `notes` column says how each row was confirmed:
 
 | Confirmation | Rows |
 |---|---|
@@ -48,7 +48,7 @@ The build scripts are in `data/raw/italy/build_scripts_1961/`.
 - **Totals.** The rows sum to 30,352,248, which is 60.0% of the 1961 resident population of 50,623,569.
 - **Largest cities and capitals.** The national capital is present: Roma, 2,188,160. Milano, Napoli, Torino, Genova and Palermo are present, and so are all 92 province seats.
 - **Completeness.** Every comune listed above 10,000 in 1961 in the 1991-boundary series is either in the table or is explained in the doubts below.
-- **Single-reading rows.** I checked a sample of rows that only one reading confirmed against the page image (Fivizzano, Maddaloni, Castellana Grotte, Paceco, among others). All were correct.
+- **Single-reading rows.** A sample of rows that only one reading confirmed was checked against the page image (Fivizzano, Maddaloni, Castellana Grotte, Paceco, among others). All were correct.
 
 ## Doubts and notes
 
@@ -62,4 +62,4 @@ The build scripts are in `data/raw/italy/build_scripts_1961/`.
   - Taggia: M+F = 10,891, but MF is printed as 10,896.
   - Terranuova Bracciolini: the name is misprinted "Terrnauova", and M+F = 10,021, but MF is printed as 10,076.
 - **One page has its numbers shifted by a row** (PDF p. 80, Pavia). Vigevano (57,069) and Voghera (35,747) were assigned from the page image.
-- **Two comuni with the same figure.** Spinea and Santo Stino di Livenza (both Venezia province) are both 10,565. This is correct: I checked it on the page image and against Tav. 4.
+- **Two comuni with the same figure.** Spinea and Santo Stino di Livenza (both Venezia province) are both 10,565. This is correct: it was checked on the page image and against Tav. 4.
