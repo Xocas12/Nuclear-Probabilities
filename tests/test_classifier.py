@@ -338,3 +338,44 @@ def test_the_sealed_reading_is_the_eleventh_amendments():
     assert primary["verdict"] == "gain"
     same = comp[(comp["against"] == "population rule")]
     assert (same["delta"] == 0).all() and (same["verdict"] == "neither").all()
+
+
+def test_the_blind_reading_reads_the_committed_scores_on_places_no_run_scored():
+    """Twelfth amendment: blind is never_scored minus every place a committed run scored, it comes
+    first and carries the primary row, and too few positive blocks call no gain or loss."""
+    from nucprob.classifier import sealed_reread as rr
+
+    scores = pd.DataFrame(
+        {"place_id": ["a", "b", "c", "d"], "never_scored": [True, True, False, True]}
+    )
+    full = pd.DataFrame(
+        {
+            "place_id": ["a", "z", "b", "c", "d"],
+            "sealed": [True, False, True, True, True],
+            "never_scored": [True, False, True, False, True],
+            "plan_id": [rr.SAC] * 5,
+        }
+    )
+    sealed = rr.sealed_rows(full, scores)
+    pops = rr.populations(sealed, pd.DataFrame({"place_id": ["b", "c"]}))
+    assert list(pops) == ["blind", "never_scored", "all sealed"]
+    assert pops["blind"].tolist() == [True, False, False, True]
+    assert pops["never_scored"].tolist() == [True, True, False, True]
+    with pytest.raises(rr.NotTheCommittedScores):
+        rr.sealed_rows(full, scores.iloc[::-1])
+    comp = pd.DataFrame({"positive_blocks": [4, 5], "verdict": ["gain", "gain"]})
+    assert rr.measured(comp)["verdict"].tolist() == ["neither", "gain"]
+
+    rng = np.random.default_rng(0)
+    n = 300
+    y = (rng.uniform(size=n) < 0.3).astype(int)
+    frame = pd.DataFrame({"listed": y, "plan_id": "sac", "block": rng.integers(0, 30, n)})
+    good, noise = y + rng.normal(0, 0.3, n), rng.normal(0, 1, n)
+    s = {("s", "m"): good, ("s", "population + country"): noise, ("s", "population rule"): good}
+    blind = rng.uniform(size=n) < 0.5
+    _, c = csealed.read(
+        frame, s, {"s": "m"}, n=100, populations={"blind": blind, "all": ~blind | blind}
+    )
+    primary = c[c["primary"]]
+    assert len(primary) == 1 and primary.iloc[0]["population"] == "blind"
+    assert primary.iloc[0]["rows"] == blind.sum()

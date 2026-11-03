@@ -64,19 +64,23 @@ def read(
     scores: dict[tuple[str, str], np.ndarray],
     selected: dict[str, str],
     n: int = N_BOOT,
+    populations: dict[str, np.ndarray] | None = None,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """The amendment's reading of scores already made: (metrics, comparison). `scores` maps
-    (scope, model) to one score per row of `sealed`; `selected` maps scope to its candidate."""
+    (scope, model) to one score per row of `sealed`; `selected` maps scope to its candidate.
+    `populations` maps a name to a row mask; by default the eleventh amendment's two, never_scored
+    and all sealed. The first population's comparison with population + country is the primary."""
+    if populations is None:
+        populations = {
+            "never_scored": sealed["never_scored"].astype(bool).to_numpy(),
+            "all sealed": np.ones(len(sealed), bool),
+        }
+    first = next(iter(populations))
     rows, comp = [], []
     y_all = sealed["listed"].to_numpy(int)
     doc_all = sealed["plan_id"].to_numpy()
     block_all = sealed["block"].to_numpy()
-    for population in POPULATIONS:
-        keep = (
-            sealed["never_scored"].astype(bool).to_numpy()
-            if population == "never_scored"
-            else (np.ones(len(sealed), bool))
-        )
+    for population, keep in populations.items():
         y, doc, block = y_all[keep], doc_all[keep], block_all[keep]
         for (scope, model), s in scores.items():
             m = metrics(y, s[keep])
@@ -100,7 +104,7 @@ def read(
                     {
                         "scope": scope,
                         "population": population,
-                        "primary": population == "never_scored" and against == BASELINES[0],
+                        "primary": population == first and against == BASELINES[0],
                         "model": cand,
                         "against": against,
                         "positives": int(y.sum()),
