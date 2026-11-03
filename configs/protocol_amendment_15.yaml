@@ -1,0 +1,37 @@
+# Fifteenth amendment, in its own file like the fifth to fourteenth. A diagnostic, committed and pushed before it
+# is run. Nothing it measures had been computed when it was written. No label, feature, primary model, holdout,
+# comparison or scenario changes.
+date: 2026-11-03
+reasons: The fourteenth amendment found the document identification classifier (a multiclass
+  HistGradientBoosting fit) diverging in 9 of 16 fits, and said it had not tested the primary binary fits.
+  Every primary result rests on those fits. This amendment tests them with stated rules.
+changes:
+  module: nucprob.classifier.divergence writes runs/classifier/divergence/fits.csv, summary.csv and
+    manifest.json. It refits; it reads no committed score.
+  fits: For each of the four scopes of runs/classifier/scopes.csv and each of the four models of the primary
+    analysis (population rule, population + country, logistic all permitted, LightGBM all permitted), every
+    bag of (a) the fit on the whole scope, (b) the five spatial-block fits of the first grid (offset 0 km),
+    (c) every leave-one-document-out fit with the left-out document's towns removed from training, and (d) the
+    two temporal fits. The bags are drawn exactly as nucprob.classifier.fit.fit_bagged draws them (seed 1956,
+    50 bags; one plain fit where every list is complete), and a test checks that the refitted bags score
+    exactly as fit_bagged does. The second and third spatial grids and the towns-kept leave-one-document-out
+    fits are not refitted; they use the same models on overlapping rows.
+  lightgbm: training binary log loss on the bag's own rows at each of the 300 iterations (an evaluation set
+    does not change the trees; a test checks it), its minimum and final value, and the largest absolute raw
+    score on those rows. A fit is called diverged if its final training log loss exceeds its minimum by more
+    than 0.01, or if any raw score exceeds 50 in absolute value. A raw score of 50 is a probability within
+    2e-22 of 0 or 1, which no list here can support.
+  logistic: whether the solver stopped before max_iter (5000), the largest absolute coefficient, and the largest
+    absolute decision value on training rows. A fit is called diverged if the solver hit max_iter or any decision
+    value exceeds 50 in absolute value. The primary logistic fits carry an L2 penalty (C 1), so their
+    coefficients stay finite even on separable rows; for them the check is mainly whether the solver
+    converged. A trial on separable toy data with almost no penalty (C 1e12), before this was committed,
+    gave a largest decision value of 13.
+  summary: per scope, holdout kind and model, the number of fits and of diverged fits, and the largest raw or
+    decision value seen.
+reporting: REPORT.md states the counts whatever they are. If any fit is called diverged, REPORT's main result
+  names the scopes, holdouts and models whose results rest on it, and says that this amendment does not refit or
+  correct them. If none is, REPORT says the primary fits were tested under these rules and none diverged, and
+  says what that does not show (it does not show the models are well specified, and the spatial grids at 100 and
+  200 km and the towns-kept fits were not refitted).
+unchanged: Every primary result and every earlier amendment's output.

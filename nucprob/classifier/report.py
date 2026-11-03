@@ -1129,6 +1129,12 @@ def _cannot_pooled() -> str:
     )
 
 
+def _last_amendment() -> int:
+    return max(
+        int(p.stem.rsplit("_", 1)[1]) for p in (ROOT / "configs").glob("protocol_amendment_*.yaml")
+    )
+
+
 def _seal_sentence() -> str:
     """How many sealed places are blind: the card's sizes and the counts of the committed reading."""
     card = "the 467 places of the sealed blocks, held out of every fit. An early check had scored 194 of them before the blocks were drawn (`data/curated/splits/README.md`)."
@@ -1411,7 +1417,7 @@ Several are today's data standing in for the past and are flagged. Sources, lice
 ## Method
 
 The analysis is fixed in `configs/protocol.yaml` and changed since only by dated amendments: four inside that file and
-`configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_14.yaml`. Each says what had already been read when it
+`configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_{_last_amendment()}.yaml`. Each says what had already been read when it
 was written; `configs/HISTORY.md` gives one line per amendment. **It is not blind.** Scores on SAC's spatial folds and
 on the small lists, and later the full results, had been read before amendments corrected labels, links and sector
 boxes. Burza's sector box was drawn after its effect on Burza's scores had been seen.
