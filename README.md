@@ -57,7 +57,7 @@ resampling towns and "by blocks" resampling 300 km squares; a difference counts 
 ## Method
 
 The analysis was fixed in `configs/protocol.yaml` before the final models were fitted, and changed since only by
-dated amendments, `configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_11.yaml`, each saying what had
+dated amendments, `configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_12.yaml`, each saying what had
 already been read. The eleventh fixes how the sealed set is read, before any sealed place was scored. A town off an incomplete list is treated as unlabeled, not as a negative (positive-unlabeled:
 each of 50 bagged fits keeps all positives and draws as many unlabeled towns). Every model is compared with two baselines on the same
 towns: ranking by population (the "population rule") and population plus one intercept per country. Holdouts are
@@ -88,7 +88,7 @@ are blind. The sealed set was scored once, on 2026-11-03, under the eleventh ame
   (the area each list covers; a town outside it is not a negative of that list).
 - `data/curated/stockpiles/`: cited inventories and assumptions. `data/sources.yaml` and `data/sources_amendment_5.yaml`: every source's provenance;
   `data/curated/features/cited_pages.csv`: the pages cited row by row in the site tables.
-- `configs/protocol.yaml` and `configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_11.yaml`: the analysis and its amendments. `configs/scenarios.yaml`: scenarios.
+- `configs/protocol.yaml` and `configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_12.yaml`: the analysis and its amendments. `configs/scenarios.yaml`: scenarios.
 - `runs/classifier/`, `runs/probmap/`: committed outputs. `REPORT.md` is generated from them.
 - `runs/m1-slice/`, `runs/m2-check/`: earlier milestone checks, on the labels of their date. They were not
   rerun after later label corrections and feed no result above. `runs/m4-transfer-check/`: the transfer check, rerun on the corrected labels; it reads whole countries, not sectors, and feeds no result above.

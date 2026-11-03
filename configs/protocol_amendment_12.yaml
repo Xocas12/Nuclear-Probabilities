@@ -1,0 +1,31 @@
+# Twelfth amendment, in its own file like the fifth to eleventh. Written after the sealed set was scored and read
+# under the eleventh amendment (fb028cc): the reading it fixes is post hoc and is reported as such. It is committed
+# and pushed before the reading it defines is computed. No model is refitted and nothing is scored again.
+date: 2026-11-03
+reasons: The eleventh amendment read the sealed set on its never_scored places as the blind population.
+  never_scored comes from data/curated/splits/scored_before_freeze.csv, which scripts/freeze_seal.py read from the
+  run outputs at a single commit, de2e54a. Three earlier commits of runs/m2-check (b094d1d, e599d9c, e80681b,
+  all 8 October 2026, on a place table since rebuilt) committed out-of-fold scores, and a map showing them, for
+  places de2e54a's version no longer scored. Walking every commit before 6258036 (scripts/scored_history.py,
+  written to data/curated/splits/scored_in_history.csv) finds 123 of the 273 never_scored places among them,
+  matched by id or by 1956 name and country as nucprob.dataset.held_out matches. Those scores were in the repo,
+  and were shown on a committed map, for three weeks before the sealed reading: the 123 places are not blind,
+  and the eleventh amendment's primary population is not the blind set it was declared to be.
+changes:
+  blind_population: `blind` = never_scored and not in data/curated/splits/scored_in_history.csv (150 places, by
+    the scan). The set is fixed by the git history, not by labels or scores, so it cannot have been chosen on the
+    result; it was chosen after the result was seen, and is reported as a correction made then.
+  reading: The eleventh amendment's comparisons, unchanged in every other respect, on the SAC 1956 rows of the
+    blind places: each scope's selected candidate against population + country (primary) and against the
+    population rule, PR-AUC difference, 95% paired stratified bootstrap and 300 km block bootstrap (2000
+    resamples, seed 1956), a gain or loss only if both intervals exclude zero on unrounded bounds. Every model's
+    metrics on the same rows. The scores are those in runs/classifier/sealed/scores.csv.gz as committed at fb028cc;
+    nucprob.classifier.sealed_reread reads them and checks their hash, and writes runs/classifier/sealed/blind/.
+  reporting: REPORT.md and README.md report the blind reading beside the eleventh amendment's reading, which stays
+    as it was, and say that the never_scored and all-sealed readings are not blind. A blind row with positives in
+    fewer than 5 blocks shows its block interval as n/a and calls no gain or loss, as the ninth amendment rules.
+not_read_as: The blind places' neighbours, and towns of the same names elsewhere, were scored in those early runs;
+  the reading is of places no committed run scored, not of a region no run has seen. With 150 places in fewer
+  blocks the intervals are wider; a "neither" here is not evidence of no effect.
+unchanged: No label, feature, model, gate threshold, selection rule, holdout definition, seed or scenario changes.
+  sealed and never_scored keep their meanings in nucprob.dataset; blind is added beside them in the reading only.
