@@ -8,7 +8,8 @@ other family and without each family, and without the anachronisms; spatial-bloc
 cross-validation on three shifted grids outside the sealed test, plus random 5-fold for the
 main models. A check that the US pipeline joins end to end, outside the classifier protocol.
 
-Writes runs/m4-us-check/: metrics.csv, oof_predictions.csv, importance.csv, manifest.json.
+Writes runs/m4-us-check/: metrics.csv, importance.csv, manifest.json; county scores go to
+data/interim/m4-us-check/oof_predictions.csv, which is not committed.
 """
 
 import datetime as dt
@@ -20,7 +21,7 @@ import pandas as pd
 from nucprob.model.cv import cross_validate, git_commit, summarise
 from nucprob.model.splits import BLOCK_KM, assign_blocks, folds
 from nucprob.model.zoo import lightgbm, logistic
-from nucprob.paths import PROCESSED, RUNS
+from nucprob.paths import DATA, PROCESSED, RUNS
 from nucprob.sources.fetch import sha256
 from nucprob.us1985.dataset import TARGETS
 from nucprob.us1985.features import FEATURES
@@ -29,6 +30,7 @@ K = 5
 SHIFTS_KM = (0.0, 100.0, 200.0)
 RANDOM_SEEDS = (0, 1, 2)
 OUT = RUNS / "m4-us-check"
+LOCAL = DATA / "interim" / "m4-us-check"
 
 
 def families(cols: list[str]) -> dict[str, list[str]]:
@@ -95,9 +97,12 @@ def main() -> None:
         )
     table = summarise(rows, ["target", "scheme", "model"])
     table.to_csv(OUT / "metrics.csv", index=False, float_format="%.4f")
+    # County scores with coordinates are finer than the admin-1 limit of the brief's section E, so they are
+    # written outside git (data/interim/ is ignored) and only the metrics are committed.
     cols = ["fips", "census_name", "state", "lat", "lon", "pop", "band", *TARGETS]
+    LOCAL.mkdir(parents=True, exist_ok=True)
     pd.concat([df[cols], *oofs], axis=1).to_csv(
-        OUT / "oof_predictions.csv", index=False, float_format="%.4f"
+        LOCAL / "oof_predictions.csv", index=False, float_format="%.4f"
     )
     pd.concat(imps).to_csv(OUT / "importance.csv", index=False, float_format="%.4f")
     manifest = {

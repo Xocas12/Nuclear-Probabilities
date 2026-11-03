@@ -15,6 +15,5 @@
   "runs/m4-transfer-check/scores.csv": "0e3e3d3050dd476b002d89674cf295ec02a78b272cdb51e6a745b7b220b4cdaa",
   "runs/m4-us-check/importance.csv": "a43e3692854754a48d2844f188482d4ac4fda38e22971567d095358641a47e7c",
   "runs/m4-us-check/manifest.json": "b9228c32f898bb846ffbd76c4b9ef7b08ce435fff11c3a0afe6fcd466b057657",
-  "runs/m4-us-check/metrics.csv": "d1926588ac73100e4a2b5f278230fa0ab55c64dc9b6116ce4ae7fa0da8cb64c6",
-  "runs/m4-us-check/oof_predictions.csv": "04c04c889daebc70bb246440c3a845a254db780b7946700435dcf2336fb67ec4"
+  "runs/m4-us-check/metrics.csv": "d1926588ac73100e4a2b5f278230fa0ab55c64dc9b6116ce4ae7fa0da8cb64c6"
 }
