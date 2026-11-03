@@ -103,7 +103,6 @@ def test_the_state_gate_still_refuses_what_it_refused():
     "card, table",
     [
         ("bloc_air_defence_1956.md", "bloc_air_defence_1956.csv"),
-        ("uk_military_sites_1980.md", "uk_military_sites_1980.csv"),
         ("us_military_sites_1985.md", "us_military_sites_1985.csv"),
         ("weurope_military_sites_1965.md", "weurope_military_sites_1965.csv"),
         ("README.md", "military_sites_1956.csv"),

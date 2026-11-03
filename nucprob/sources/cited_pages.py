@@ -33,7 +33,6 @@ TABLES = {
     "bloc_air_defence_1956": FEATURES,
     "military_sites_1956": FEATURES,
     "weurope_military_sites_1965": FEATURES,
-    "uk_military_sites_1980": FEATURES,
     "us_military_sites_1985": FEATURES,
     # Gazetteer tables read from Wikipedia, some through paths robots.txt disallows (README, "Robots"):
     # their pages are registered here through paths it allows.

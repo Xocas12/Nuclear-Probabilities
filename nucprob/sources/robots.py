@@ -30,13 +30,12 @@ OUT = RUNS / "qa" / "robots.csv"
 # Fetches made by record-keeping scripts, not registered as sources: one URL for each kind of path.
 SCRIPT_URLS = {
     "script:weurope_military_1965_fetch": "https://en.wikipedia.org/wiki/Nike?action=raw",
-    "script:uk_military_1980_fetch": "https://en.wikipedia.org/wiki/Thor?action=raw",
 }
 # Routes that earlier work used and its cards record, one URL for each kind of path. They are listed so
 # that their refusal stays visible; no code uses them now. The pages behind the tables they fed are
 # registered through allowed paths in data/curated/features/cited_pages.csv; their copies are not held.
 PAST_ROUTES = {
-    # weurope_military_sites_1965, uk_military_sites_1980 and us_military_sites_1985 (their cards)
+    # weurope_military_sites_1965 and us_military_sites_1985 (their cards)
     "past:wikipedia_index_raw": "https://en.wikipedia.org/w/index.php?title=Thor&action=raw",
     # uk_districts_1981_seats (its card, Method 1)
     "past:wikipedia_special_export": "https://en.wikipedia.org/wiki/Special:Export/Bolsover",

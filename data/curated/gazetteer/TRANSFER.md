@@ -79,8 +79,8 @@ region in the same way (`COMMON`, 20 features):
 - Natural Earth rail, ports and major rivers.
 
 Three military distances (naval base, strike or bomber base, nuclear site) come from the
-curated tables `../features/weurope_military_sites_1965.csv` and
-`../features/uk_military_sites_1980.csv`. They are blank wherever no table covers a town:
+curated table `../features/weurope_military_sites_1965.csv`. A UK table of 1980 was built for Square Leg 1980 and
+removed after the tenth amendment withdrew that list (git history holds it). They are blank wherever no table covers a town:
 - the US 1955, Canada 1956 and Japan 1945, which have no military table;
 - Italy outside the 1965 table's scope. The table covers Italy north of the Po and the
   Venetian plain only: Lombardy, Veneto, Friuli-Venezia Giulia, Trentino-Alto Adige and the
