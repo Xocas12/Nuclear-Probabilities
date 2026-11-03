@@ -631,6 +631,8 @@ nuclear-probabilities/
 
 Phases 1 and 2 run side by side. Transcribing the labels is the long pole, so it starts first.
 
+**Progress (3 Nov 2026).** The sealed set was scored once under `configs/protocol_amendment_11.yaml`, committed before the scores existed (`runs/classifier/sealed/`, REPORT.md "The sealed set, scored once").
+
 **Progress (1 Nov 2026).** The protocol is committed and M6 and part of M7 run under it: global, US and
 pooled Warsaw Pact models (`REPORT.md`, `runs/classifier/`). This repo's brief supersedes the zoo of
 section 5.4: two candidates with fixed settings, no tuning. The sealed set waits for review.

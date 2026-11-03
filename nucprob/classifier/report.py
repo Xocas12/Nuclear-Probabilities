@@ -8,6 +8,7 @@ cards it names. tests/test_classifier_report.py fails if any of the three differ
 """
 
 import functools
+import json
 
 import pandas as pd
 
@@ -683,6 +684,83 @@ def _sealed_not_done() -> str:
     return "- The sealed set (`python -m nucprob.classifier.sealed`) is reserved until the models have been reviewed.\n"
 
 
+def _pooled_sealed(prim: pd.DataFrame) -> str:
+    r = prim[prim["scope"].str.startswith("Warsaw Pact, pooled")]
+    if r.empty or not (r.iloc[0]["high"] < 0 and not r.iloc[0]["block_excludes_zero"]):
+        return ""
+    r = r.iloc[0]
+    return (
+        f"The pooled Warsaw Pact model ranks these places worse than population does ({signed(r['delta'])}); "
+        "the town interval calls that a loss and the block interval does not, so by the rule it is neither. "
+        "It was trained on towns in six Western countries and is applied here to Eastern bloc places."
+    )
+
+
+def _sealed_section() -> str:
+    """The one blind reading (configs/protocol_amendment_11.yaml), from runs/classifier/sealed/."""
+    if not SEALED.exists():
+        return ""
+    comp = pd.read_csv(SEALED.parent / "comparison.csv")
+    lock = json.loads((SEALED.parent / "LOCK.json").read_text(encoding="utf-8"))
+    prim = comp[comp["primary"]]
+    allp = comp[comp["population"].eq("all sealed") & comp["against"].eq(PLUS)]
+    p0, a0 = prim.iloc[0], allp.iloc[0]
+
+    def line(r) -> str:
+        return (
+            f"{r['scope']}, {r['model']}: {r['a_pr_auc']:.3f} against {r['b_pr_auc']:.3f}, "
+            f"{signed(r['delta'])} [{signed(r['low'])}, {signed(r['high'])}], by blocks "
+            f"[{signed(r['block_low'])}, {signed(r['block_high'])}]: {r['verdict']}"
+        )
+
+    shown = comp.assign(
+        difference=[
+            f"{signed(r.delta)} [{signed(r.low)}, {signed(r.high)}]" for r in comp.itertuples()
+        ],
+        by_blocks=[f"[{signed(r.block_low)}, {signed(r.block_high)}]" for r in comp.itertuples()],
+    )[
+        [
+            "scope",
+            "population",
+            "model",
+            "against",
+            "a_pr_auc",
+            "b_pr_auc",
+            "difference",
+            "by_blocks",
+            "verdict",
+        ]
+    ]
+    gains = prim[prim["verdict"].eq("gain")]["scope"].tolist()
+    other = prim[~prim["verdict"].eq("gain")]
+    return f"""### The sealed set, scored once
+
+Scored on {lock["scored"][:10]} at commit {lock["git_commit"][:7]}, after the eleventh amendment fixed the reading
+(`configs/protocol_amendment_11.yaml`) and before any sealed score existed; `runs/classifier/sealed/LOCK.json`
+stops a second run. Each scope's models were fitted on all its usable rows and scored SAC 1956's rows in the sealed
+blocks: {int(p0["rows"])} never-scored places ({int(p0["positives"])} listed, base rate {p0["base_rate"]:.2f},
+in {int(p0["blocks"])} blocks), the primary population, and all {int(a0["rows"])} sealed places with a SAC label
+({int(a0["positives"])} listed); 4 of the 467 sealed places have no SAC label (an entry possibly lost from the scan)
+and so no row. Primary rows, the selected candidate against population plus country on never-scored places:
+
+{chr(10).join("- " + line(r) for _, r in prim.iterrows())}
+
+So the gain over population plus country holds on blind places for {len(gains)} of {len(prim)} scopes
+({"; ".join(f"'{g}'" for g in gains) if gains else "none"}), and not for {"; ".join(f"'{r.scope}' ({r.verdict})" for r in other.itertuples())}.
+{_pooled_sealed(prim)}
+The gains are small: a few hundredths of PR-AUC on a base rate above one half. Only SAC 1956 has sealed rows, so
+this tests models on that list's places, which most of every global model's training positives come from; it says
+nothing about the other documents. A sealed block holds no training place, but a training town in a neighbouring
+block may be close. In the pooled Warsaw Pact scope, population plus country scores these places as the population
+rule does: none of the sealed places' countries (USSR, Poland, Czechoslovakia, China, East Germany, North Korea) is in
+that scope's lists, so none has an intercept of its own.
+
+{markdown(shown)}
+
+Every model's metrics on both populations, with a PR-AUC interval each, are in `runs/classifier/sealed/metrics.csv`.
+"""
+
+
 def _msites() -> int:
     return sum(1 for _ in open(CURATED / "sac1956" / "msites.csv", encoding="utf-8")) - 1
 
@@ -996,6 +1074,7 @@ The selected candidate of each scope. "Trained on" is the smallest number of pos
 - **SAC itself**, left out of the global model: {pr(GLOBAL_ALL, "leave", SAC, g_best)} under {g_best}, {pr(GLOBAL_ALL, "leave", SAC, RULE)} for the population rule, on a base rate of {sac_rate:.2f}.
 - **Target Committee of 1945**, its designated cities, left out: {pr(GLOBAL_ALL, "leave", "us_1945_target_committee", g_best)} under {g_best}, {pr(GLOBAL_ALL, "leave", "us_1945_target_committee", RULE)} for the population rule.
 
+{_sealed_section()}
 ### What the gains rest on
 
 Each scope's selected candidate against population plus country under spatial blocks, with columns removed.

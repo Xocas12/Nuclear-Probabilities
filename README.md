@@ -68,9 +68,9 @@ positives, 15 outside its largest plan); every state fails it. The map takes the
 draws stockpiles and models together (an attacker's inventory times its stated **theatre share**, the part assumed
 aimed at the scenario's countries, times reliability and survival of defences), and shares each scenario's delivered
 warheads among towns in proportion to the score, summarised on a 0.5-degree grid (1 degree for modern scenarios). The sealed set, 467 places in held-back
-blocks, is for one final scoring after independent review. The first milestone check, `runs/m1-slice/`, scored 194
-of them before the seal was drawn (`data/curated/splits/README.md`); no run since has scored any, and the 273 others
-are blind. The sealed set has not been scored.
+blocks, was kept for one final scoring after independent review. The first milestone check, `runs/m1-slice/`, scored 194
+of them before the seal was drawn (`data/curated/splits/README.md`); no later run scored any before that final scoring, and the 273 others
+are blind. The sealed set was scored once, on 2026-11-03, under the eleventh amendment: on the 272 never-scored places with a SAC label, both global models beat population plus country by both intervals (+0.03 and +0.04 in PR-AUC, `runs/classifier/sealed/comparison.csv`); the SAC-only and pooled Warsaw Pact models did not.
 
 ## What the evidence cannot support
 

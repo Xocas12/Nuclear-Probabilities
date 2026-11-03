@@ -308,3 +308,38 @@ def test_the_readme_count_of_war_plan_positives_is_the_runs():
     n = int(war.drop_duplicates("plan_id")["positives"].sum())
     readme = " ".join((ROOT / "README.md").read_text(encoding="utf-8").split())
     assert f"war plans give {n} linked positives" in readme
+
+
+@pytest.mark.skipif(not (OUT / "sealed" / "LOCK.json").exists(), reason="sealed set not scored")
+def test_the_sealed_reading_is_of_the_committed_amendment_models_and_table():
+    """The sealed set was scored once, after the eleventh amendment was committed, on the table the
+    committed classifier run used, with the selected candidates of that run."""
+    import subprocess
+
+    lock = json.loads((OUT / "sealed" / "LOCK.json").read_text())
+    amendment = ROOT / "configs" / "protocol_amendment_11.yaml"
+    assert lock["amendment_11_sha256"] == sha256(amendment)
+    assert lock["protocol_sha256"] == sha256(ROOT / "configs" / "protocol.yaml")
+    committed = subprocess.run(
+        ["git", "show", f"{lock['git_commit']}:configs/protocol_amendment_11.yaml"],
+        cwd=ROOT,
+        capture_output=True,
+        check=True,
+    ).stdout
+    assert (
+        committed == amendment.read_bytes()
+    )  # the reading was fixed in a commit before the scores
+    assert lock["table_sha256"] == json.loads((OUT / "manifest.json").read_text())["table_sha256"]
+    comp = pd.read_csv(OUT / "sealed" / "comparison.csv")
+    sel = pd.read_csv(OUT / "selection.csv")
+    chosen = dict(sel.loc[sel["selected"], ["scope", "model"]].to_numpy())
+    assert dict(comp[["scope", "model"]].drop_duplicates().to_numpy()) == chosen
+    prim = comp[comp["primary"]]
+    assert set(prim["scope"]) == set(chosen) and len(prim) == len(chosen)
+    assert set(prim["population"]) == {"never_scored"} and set(prim["against"]) == {
+        "population + country"
+    }
+    both = prim["excludes_zero"] & prim["block_excludes_zero"]
+    assert ((prim["verdict"] != "neither") == both).all()
+    text = (ROOT / "REPORT.md").read_text(encoding="utf-8")
+    assert "### The sealed set, scored once" in text and "It has not been scored" not in text

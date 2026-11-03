@@ -1,0 +1,17 @@
+scope,population,primary,model,against,positives,rows,blocks,positive_blocks,base_rate,a_pr_auc,b_pr_auc,delta,low,high,excludes_zero,block_low,block_high,block_excludes_zero,verdict
+"global, all attacker documents",never_scored,True,"LightGBM, all permitted",population + country,152,272,28,17,0.5588,0.8673,0.8384,0.0288,0.0055,0.0556,True,0.0060,0.1050,True,gain
+"global, all attacker documents",never_scored,False,"LightGBM, all permitted",population rule,152,272,28,17,0.5588,0.8673,0.6950,0.1723,0.1192,0.2204,True,0.0852,0.2504,True,gain
+"global, plan documents only",never_scored,True,"LightGBM, all permitted",population + country,152,272,28,17,0.5588,0.8745,0.8394,0.0351,0.0120,0.0606,True,0.0145,0.1142,True,gain
+"global, plan documents only",never_scored,False,"LightGBM, all permitted",population rule,152,272,28,17,0.5588,0.8745,0.6950,0.1796,0.1248,0.2292,True,0.0883,0.2647,True,gain
+"Warsaw Pact, pooled, exercise-based",never_scored,True,"LightGBM, all permitted",population + country,152,272,28,17,0.5588,0.5669,0.6950,-0.1281,-0.1931,-0.0588,True,-0.1829,0.0609,False,neither
+"Warsaw Pact, pooled, exercise-based",never_scored,False,"LightGBM, all permitted",population rule,152,272,28,17,0.5588,0.5669,0.6950,-0.1281,-0.1931,-0.0588,True,-0.1829,0.0609,False,neither
+single document: SAC 1956 (not a state model),never_scored,True,"logistic, all permitted",population + country,152,272,28,17,0.5588,0.8466,0.8397,0.0069,-0.0184,0.0327,False,-0.0209,0.0406,False,neither
+single document: SAC 1956 (not a state model),never_scored,False,"logistic, all permitted",population rule,152,272,28,17,0.5588,0.8466,0.6950,0.1516,0.0988,0.2008,True,0.0581,0.2224,True,gain
+"global, all attacker documents",all sealed,False,"LightGBM, all permitted",population + country,250,463,47,37,0.5400,0.8653,0.8207,0.0445,0.0242,0.0652,True,0.0178,0.0936,True,gain
+"global, all attacker documents",all sealed,False,"LightGBM, all permitted",population rule,250,463,47,37,0.5400,0.8653,0.7360,0.1293,0.0898,0.1652,True,0.0723,0.1880,True,gain
+"global, plan documents only",all sealed,False,"LightGBM, all permitted",population + country,250,463,47,37,0.5400,0.8657,0.8246,0.0411,0.0218,0.0600,True,0.0188,0.0848,True,gain
+"global, plan documents only",all sealed,False,"LightGBM, all permitted",population rule,250,463,47,37,0.5400,0.8657,0.7360,0.1297,0.0903,0.1668,True,0.0716,0.1873,True,gain
+"Warsaw Pact, pooled, exercise-based",all sealed,False,"LightGBM, all permitted",population + country,250,463,47,37,0.5400,0.6392,0.7360,-0.0967,-0.1548,-0.0407,True,-0.1771,0.0593,False,neither
+"Warsaw Pact, pooled, exercise-based",all sealed,False,"LightGBM, all permitted",population rule,250,463,47,37,0.5400,0.6392,0.7360,-0.0967,-0.1548,-0.0407,True,-0.1771,0.0593,False,neither
+single document: SAC 1956 (not a state model),all sealed,False,"logistic, all permitted",population + country,250,463,47,37,0.5400,0.8453,0.8248,0.0205,0.0005,0.0397,True,0.0001,0.0540,True,gain
+single document: SAC 1956 (not a state model),all sealed,False,"logistic, all permitted",population rule,250,463,47,37,0.5400,0.8453,0.7360,0.1093,0.0718,0.1465,True,0.0489,0.1638,True,gain
