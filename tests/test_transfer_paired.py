@@ -1,4 +1,4 @@
-"""The transfer check's paired bootstrap, and the claims TRANSFER.md and PLAN.md make from it."""
+"""The transfer check's paired bootstrap, and the claims TRANSFER.md and PROGRESS.md (PLAN.md's former log) make from it."""
 
 import re
 
@@ -95,7 +95,7 @@ def test_transfer_card_quotes_pr_auc_and_precision_with_intervals():
 
 
 def test_plan_claims_no_gain_the_intervals_do_not_show():
-    text = (ROOT / "PLAN.md").read_text(encoding="utf-8")
+    text = (ROOT / "PROGRESS.md").read_text(encoding="utf-8")
     note = text[text.index("- **Transfer check**") :]
     note = note[: note.index("This is a check, not a result.")]
     assert "gain a little" not in note

@@ -6,7 +6,8 @@ as they stood at a document's date and labelled from target lists of US and Wars
 Three of those lists are registered as war plans, all Warsaw Pact. Only one, Czechoslovak, was read at source, and it links no
 designated town; the two Polish ones are known from a scholar's table and paraphrase of files not read. The largest list, the US Strategic Air
 Command's (SAC) 1956 study, is a requirements study, and the searches recorded in `data/notes/` found no declassified Soviet war plan naming places. The results are in
-**[REPORT.md](REPORT.md)**. [PLAN.md](PLAN.md) is the original design.
+**[REPORT.md](REPORT.md)**. [PLAN.md](PLAN.md) is the original design;
+[PROGRESS.md](PROGRESS.md) is the dated work log, kept as history.
 
 ## What was found
 
@@ -15,12 +16,19 @@ PR-AUC, the area under the precision-recall curve, measures how many of a model'
 list. A list's base rate is what no information scores: 0.49 for SAC, 0.07 for the other lists.
 Where a list is incomplete a town off it is unlabeled, so PR-AUC understates precision there. Each interval is 95%, the first
 resampling towns and "by blocks" resampling 300 km squares; a difference counts only if both exclude zero.
+A **scope** is the set of lists a model is fitted on: two global scopes (every attacker's documents, or plan documents
+only), a pooled Warsaw Pact scope, and SAC's 1956 study alone. A **linked positive** is a listed place matched to a town
+of the place universe. The **population rule** ranks towns by population alone; **population plus country** adds a
+term for each target country.
 
 - **On the only blind test**, no model beats population plus country. The **sealed set** is 463 towns scored against SAC's list,
   in 300 km blocks kept out of every fit and scored once at the end; 149 of them had been scored by no earlier run
-  (74 listed). There the two global models differ from population plus country by +0.02 and +0.02 in PR-AUC, with intervals
-  [-0.02, +0.05], by blocks [-0.02, +0.12]; [-0.02, +0.05], by blocks [-0.02, +0.11].
-  2 of 4 models beat the population rule by both intervals (+0.12, +0.13).
+  (74 listed). Against population plus country there:
+  - global, all attacker documents: +0.02 [-0.02, +0.05], by blocks [-0.02, +0.12]: neither
+  - global, plan documents only: +0.02 [-0.02, +0.05], by blocks [-0.02, +0.11]: neither
+  - Warsaw Pact, pooled, exercise-based: -0.15 [-0.25, -0.04], by blocks [-0.25, +0.15]: neither
+  - single document: SAC 1956 (not a state model): -0.01 [-0.06, +0.02], by blocks [-0.04, +0.02]: neither
+  Against the population rule, 2 of 4 gain by both intervals: global, all attacker documents +0.12 [+0.05, +0.20], by blocks [+0.02, +0.26]; global, plan documents only +0.13 [+0.05, +0.20], by blocks [+0.02, +0.27].
   Positives lie in only 6 of 10 blocks, so these intervals are wide and "neither" is not evidence of no effect.
   On 272 sealed places including ones earlier runs had scored, 2 of 4 models gained over population plus country.
   **That reading is not blind.** (`runs/classifier/sealed/blind/comparison.csv`; REPORT, "The sealed set".)
@@ -31,15 +39,17 @@ resampling towns and "by blocks" resampling 300 km squares; a difference counts 
   by blocks [-0.17, -0.08] over all lists, which SAC dominates. On lists other than SAC it is +0.02 [-0.03, +0.07], by blocks [-0.08, +0.07]: at least one interval reaches zero, so it cannot be told from no difference.
   So no model has been shown to do better than population on an unseen document.
 - **No state gets its own model.** The US has 1299 linked positives, but only 7 outside one document and the
-  pre-committed gate asks for 15. The USSR has 0 positives in a plan document, and 50 town-list pairs from staff-academy lessons.
+  pre-committed gate asks for 15. The USSR has 0 positives in a document registered as a war plan, and 50 town-list pairs from staff-academy lessons.
   A pooled Warsaw Pact model is allowed and is always labelled exercise-based. Refusals: `runs/classifier/state_gate.csv`.
 - **Economic and political data** (regime, defence pacts, GDP per capita, Soviet defence plants), read apart under an
   amendment committed before fitting: on a left-out document 0 of the 6 rows on lists other
-  than SAC gain, and the highest model over all lists scores 0.66 against 0.71 for the population rule. Plant counts add
+  than SAC gain. The highest of these models over all lists, picked after the fact and with no paired interval fixed in
+  advance, scores 0.66 against 0.71 for the population rule. Plant counts add
   +0.001 [-0.01, +0.01] on Soviet towns.
-- **The map.** Because of that transfer result the selection rule chose population as the score. On the 1956 towns the score moves only
+- **The map.** Because of that transfer result the pre-committed selection rule (highest PR-AUC on a left-out
+  document) chose population as the score. On the 1956 towns the score moves only
   6.9-fold over a 620-fold range of population, so a cell's probability also depends on how many
-  towns it holds. In every scenario the stockpile draws, more than the model's, make the width of its intervals, and those rest on cited inventories and on theatre shares with no source. The 1965 map has no United Kingdom: its only census table came through a path robots.txt disallows and was withdrawn. Modern scenarios use Natural Earth's map-label towns and are
+  towns it holds. In every scenario the stockpile draws, more than the model's, make the width of its intervals, and those rest on cited inventories and on theatre shares (the assumed part of each force sent to this theatre) with no source. The 1965 map has no United Kingdom: its only census table came through a path robots.txt disallows and was withdrawn. Modern scenarios use Natural Earth's map-label towns and are
   extrapolation: a classifier told them from the training towns at ROC-AUC 0.97 on ten features, where 0.5 would mean no shift, with
   18% outside the training's 1st-99th percentile on the one feature the score reads, and no modern label exists to test them.
 <!-- end of results -->

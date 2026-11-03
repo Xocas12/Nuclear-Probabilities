@@ -42,7 +42,6 @@ WORK = DATA / "interim" / "divergence"
 SEED = 1956  # fit_bagged's default
 LOSS_RISE = 0.01
 MAX_RAW = 50.0
-MAX_ITER = 5000
 
 
 def bags(spec: Spec, train: pd.DataFrame, n_bags: int = N_BAGS, seed: int = SEED):

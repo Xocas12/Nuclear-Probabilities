@@ -107,9 +107,12 @@ def test_report_states_the_regularised_intervals_and_what_was_not_run():
     iv = pd.read_csv(OUT / "intervals.csv").set_index("columns")
     lo, hi = iv.at["all permitted", "accuracy_lo"], iv.at["all permitted", "accuracy_hi"]
     assert f"{lo:.1%} to {hi:.1%} on all columns" in text
-    if (OUT / "capacity.csv").exists():
-        call = pd.read_csv(OUT / "capacity.csv")["call"].iloc[0]
-        assert f"capacity probe: {call}" in text
+    # The review of c27c1b8: the capacity probe's call was quoted without a definition, inside the
+    # account of the withdrawn fit. REPORT now states that fit's divergence count instead.
+    div = pd.read_csv(OUT / "divergence.csv")
+    as_run = div[div["l2_regularization"] == 0]
+    assert f"{int(as_run['diverged'].sum())} of its {len(as_run)} fits" in text
+    assert "(capacity probe:" not in text
     pending = json.loads((OUT / "manifest.json").read_text())["pending"]
     splits_left = sum(p.startswith("split ") for p in pending)
     if splits_left:
@@ -128,7 +131,7 @@ def test_divergence_record_follows_its_rule_and_report_counts_it():
     text = " ".join((ROOT / "REPORT.md").read_text(encoding="utf-8").split())
     as_run = div[div["l2_regularization"] == 0]
     assert (
-        f"Of those {len(as_run)} fits (four column sets, four folds), {int(as_run['diverged'].sum())} diverged"
+        f"{int(as_run['diverged'].sum())} of its {len(as_run)} fits (four column sets, four folds) diverged"
         in text
     )
     m = json.loads((OUT / "fit_manifest.json").read_text())

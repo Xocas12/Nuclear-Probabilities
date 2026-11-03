@@ -77,7 +77,7 @@ def test_every_comparison_row_recomputes_from_the_held_out_scores():
 
 
 def test_numbers_keep_two_decimals_and_a_constant_is_not_shown_as_a_measurement():
-    assert report.signed(0.0234) == "+0.02" and report.signed(-0.0004) == "-0.000"
+    assert report.signed(0.0234) == "+0.02" and report.signed(-0.0004) == "-0.0004"
     assert report.signed(0.0) == "0.00"
     flat = {"delta": 0.0, "low": 0.0, "high": 0.0, "block_low": 0.0, "block_high": 0.0}
     assert report.constant(flat) and "constant" in report.interval(flat)
@@ -410,6 +410,15 @@ def test_reader_facing_text_has_no_commit_names_or_run_on_lines():
         assert not re.findall(r"(?<![\w/.-])[0-9a-f]{7}(?![\w/.-])", text), name
         assert max(len(line) for line in text.splitlines()) < 1500, name
     assert (ROOT / "configs" / "HISTORY.md").exists()
+
+
+def test_a_signed_bound_off_zero_never_prints_as_zero():
+    """The review of c27c1b8: bounds printed "+0.000" and "-0.000"."""
+    assert report.signed(0.0003) == "+0.0003"
+    assert report.signed(-0.00004) == "-0.00004"
+    assert report.signed(0.003) == "+0.003"
+    assert report.signed(0.0) == "0.00"
+    assert report.signed(0.12) == "+0.12"
 
 
 def test_a_nonzero_value_never_prints_as_an_exact_zero():
