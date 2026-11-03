@@ -20,14 +20,15 @@ from shapely import STRtree
 from nucprob.features.geography import log_km, nearest_km
 from nucprob.geo import Points, haversine_km
 from nucprob.paths import CURATED, PROCESSED, RAW, ROOT
-from nucprob.sources import naturalearth, terrain
+from nucprob.sources import history, naturalearth, terrain
 from nucprob.us1985 import places as us_places
 
 YEAR = 1985
 NE = RAW / "naturalearth"
 CENSUS = ("census_us_estimates_1980s", "census_us_boundaries_1990")
 CAPITALS = ("curated:features/us_capitals_1985.csv",)
-MILITARY = ("curated:features/us_military_sites_1985.csv",)
+# Not in the working tree (section E): read back from git history by nucprob.sources.history.
+MILITARY = ("history:data/curated/features/us_military_sites_1985.csv",)
 WRI = ("wri_gppd",)
 WRI_NOTE = (
     "plants still operating in the database's year whose commissioning year is 1985 or earlier"
@@ -206,13 +207,8 @@ def transport(c: pd.DataFrame, geoms: list) -> pd.DataFrame:
 
 
 def military(c: pd.DataFrame, geoms: list) -> pd.DataFrame:
-    path = CURATED / "features" / "us_military_sites_1985.csv"
     out = pd.DataFrame(index=c.index)
-    if not path.exists():
-        for name in [*MILITARY_ROLES, "military_sites_county"]:
-            out[name] = np.nan
-        return out
-    s = pd.read_csv(path)
+    s = pd.read_csv(history.restore(history.US_MILITARY_SITES_1985))
     s = s[s["in_role_1985"].astype(str).str.lower().isin(["true", "1", "yes"])]
     s = s[s["lat"].notna() & s["lon"].notna()]
     for name, roles in MILITARY_ROLES.items():

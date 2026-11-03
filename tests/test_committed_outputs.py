@@ -3,6 +3,7 @@ fails here: tables through the hash each run recorded, documents through their r
 
 import json
 import subprocess
+from pathlib import Path
 
 import pandas as pd
 import pytest
@@ -11,6 +12,7 @@ from nucprob.classifier import report
 from nucprob.paths import PROCESSED, ROOT, RUNS
 from nucprob.plans import protocol
 from nucprob.probmap import viewer
+from nucprob.sources import history
 from nucprob.sources.fetch import sha256
 
 CLASSIFIER = RUNS / "classifier"
@@ -111,7 +113,9 @@ def test_the_state_gate_still_refuses_what_it_refused():
 def test_each_site_table_card_gives_the_table_hash_and_points_to_its_licences(card, table):
     folder = ROOT / "data" / "curated" / "features"
     text = (folder / card).read_text(encoding="utf-8")
-    assert sha256(folder / table) in text
+    pinned = {Path(p.path).name: p for p in history.PINNED}
+    path = history.restore(pinned[table]) if table in pinned else folder / table
+    assert sha256(path) in text
     assert "cited_pages.csv" in text
     pages = pd.read_csv(folder / "cited_pages.csv", dtype=str, keep_default_na=False)
     assert pages["licence"].str.len().min() > 0

@@ -1,5 +1,5 @@
-"""Build data/curated/features/us_military_sites_1985.csv (documented in
-data/curated/features/us_military_sites_1985.md).
+"""Build us_military_sites_1985.csv, which is no longer committed (see its card,
+data/curated/features/us_military_sites_1985.md). The Wikipedia copies it reads are not held.
 
 Reads the Wikipedia wikitext saved under data/raw/us_military/wikipedia/ and the 1990 county
 boundaries (data/raw/census/co99_d90); the rows, years and decisions are in
@@ -27,7 +27,7 @@ from shapely.geometry import Point, shape
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 RAW = ROOT / "data/raw/us_military/wikipedia"
-OUT = ROOT / "data/curated/features/us_military_sites_1985.csv"
+OUT = ROOT / "data/interim/history/us_military_sites_1985.csv"  # not committed (its card)
 STUDY = date(1985, 6, 30)
 ST = {
     "01": "AL",

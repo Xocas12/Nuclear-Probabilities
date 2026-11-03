@@ -16,6 +16,7 @@ from nucprob.sources.fetch import load_manifest, sha256
 
 LABELS = CURATED / "labels"
 TILE_MANIFEST = CURATED / "features" / "terrain_tiles_manifest.sha256"
+US_TILE_MANIFEST = CURATED / "features" / "terrain_tiles_us1985.sha256"
 CHECKED_ROLES = {"train", "test-expectation"}
 # A list with no source_url column, and the source that stands for it.
 NO_URL_COLUMN = {"cd_1987_napb90_counties": "fema_napb90"}
@@ -113,9 +114,11 @@ def test_tile_manifest_is_the_one_registered():
 def test_tiles_match_the_manifest():
     terrain = RAW / "terrain"
     listed = {}
-    for line in TILE_MANIFEST.read_text(encoding="utf-8").splitlines():
-        digest, tile = line.split("  ")
-        listed[tile] = digest
+    # The registered manifest (the 1956 places), then the tiles the US county check adds.
+    for manifest in (TILE_MANIFEST, US_TILE_MANIFEST):
+        for line in manifest.read_text(encoding="utf-8").splitlines():
+            digest, tile = line.split("  ")
+            assert listed.setdefault(tile, digest) == digest, tile
     present = {p.relative_to(terrain).as_posix() for p in terrain.glob("*/*/*.png")}
     assert present == set(listed)
     for tile, digest in listed.items():

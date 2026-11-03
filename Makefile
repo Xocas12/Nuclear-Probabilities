@@ -80,8 +80,14 @@ viewer:
 
 # The check of FEMA's 1987 NAPB-90 risk bands on US counties (runs/m4-us-check/), a civil-defence reading outside
 # the classifier: a check that the US features join, not a result.
+# Its site table of 1985 is read back from git history (nucprob/sources/history.py), not from the tree.
+# runs/m4-us-check/ is pinned, so the check writes runs/m4-us-check-rerun/ with a comparison against it.
 us1985:
-	$(PY) -m nucprob.us1985.check
+	$(PY) -m nucprob.sources.history
+	$(PY) -m nucprob.us1985.places
+	$(PY) -m nucprob.us1985.features
+	$(PY) -m nucprob.us1985.dataset
+	$(PY) -m nucprob.us1985.check --rerun
 
 test:
 	$(UV) run pytest -q

@@ -1,0 +1,37 @@
+target,scheme,model,pr_auc_mean_pinned,pr_auc_mean_rerun,pr_auc_mean_diff,roc_auc_mean_pinned,roc_auc_mean_rerun,roc_auc_mean_diff,brier_mean_pinned,brier_mean_rerun,brier_mean_diff,log_loss_mean_pinned,log_loss_mean_rerun,log_loss_mean_diff,precision_at_k_mean_pinned,precision_at_k_mean_rerun,precision_at_k_mean_diff
+medium_plus,random,"LightGBM, all features",0.8055,0.8052,-0.0003,0.8675,0.8681,0.0006,0.1362,0.1364,0.0002,0.4233,0.4233,0.0000,0.7082,0.7047,-0.0035
+medium_plus,random,"logistic, all features",0.7439,0.7438,-0.0001,0.8113,0.8113,0.0000,0.1575,0.1575,0.0000,0.4877,0.4877,0.0000,0.6499,0.6499,0.0000
+medium_plus,random,population rule,0.7073,0.7073,0.0000,0.7740,0.7740,0.0000,0.1715,0.1715,0.0000,0.5240,0.5240,0.0000,0.6235,0.6235,0.0000
+medium_plus,spatial blocks,"LightGBM, all but administrative",0.7679,0.7690,0.0011,0.8324,0.8335,0.0011,0.1514,0.1508,-0.0006,0.4701,0.4686,-0.0015,0.6760,0.6733,-0.0027
+medium_plus,spatial blocks,"LightGBM, all but geography",0.7678,0.7671,-0.0007,0.8335,0.8325,-0.0010,0.1513,0.1518,0.0005,0.4693,0.4709,0.0016,0.6702,0.6725,0.0023
+medium_plus,spatial blocks,"LightGBM, all but industry",0.7550,0.7561,0.0011,0.8236,0.8245,0.0009,0.1563,0.1557,-0.0006,0.4812,0.4796,-0.0016,0.6639,0.6658,0.0019
+medium_plus,spatial blocks,"LightGBM, all but military",0.7225,0.7227,0.0002,0.7922,0.7923,0.0001,0.1663,0.1661,-0.0002,0.5110,0.5103,-0.0007,0.6328,0.6343,0.0015
+medium_plus,spatial blocks,"LightGBM, all but transport",0.7636,0.7636,0.0000,0.8282,0.8282,0.0000,0.1531,0.1531,0.0000,0.4757,0.4757,0.0000,0.6725,0.6725,0.0000
+medium_plus,spatial blocks,"LightGBM, all features",0.7681,0.7686,0.0005,0.8329,0.8332,0.0003,0.1513,0.1511,-0.0002,0.4700,0.4694,-0.0006,0.6768,0.6757,-0.0011
+medium_plus,spatial blocks,"LightGBM, no anachronisms",0.7543,0.7543,0.0000,0.8226,0.8226,0.0000,0.1568,0.1568,0.0000,0.4826,0.4826,0.0000,0.6635,0.6635,0.0000
+medium_plus,spatial blocks,"LightGBM, population + administrative",0.6897,0.6897,0.0000,0.7646,0.7646,0.0000,0.1783,0.1783,0.0000,0.5390,0.5390,0.0000,0.6061,0.6061,0.0000
+medium_plus,spatial blocks,"LightGBM, population + geography",0.6867,0.6867,0.0000,0.7650,0.7650,0.0000,0.1780,0.1780,0.0000,0.5401,0.5401,0.0000,0.6088,0.6088,0.0000
+medium_plus,spatial blocks,"LightGBM, population + industry",0.7035,0.7035,0.0000,0.7740,0.7740,0.0000,0.1734,0.1734,0.0000,0.5288,0.5288,0.0000,0.6104,0.6104,0.0000
+medium_plus,spatial blocks,"LightGBM, population + military",0.7492,0.7492,0.0000,0.8185,0.8185,0.0000,0.1584,0.1584,0.0000,0.4868,0.4868,0.0000,0.6544,0.6544,0.0000
+medium_plus,spatial blocks,"LightGBM, population + transport",0.6951,0.6962,0.0011,0.7661,0.7679,0.0018,0.1778,0.1771,-0.0007,0.5389,0.5368,-0.0021,0.5978,0.5947,-0.0031
+medium_plus,spatial blocks,"LightGBM, population family",0.6886,0.6886,0.0000,0.7637,0.7637,0.0000,0.1783,0.1783,0.0000,0.5390,0.5390,0.0000,0.5963,0.5963,0.0000
+medium_plus,spatial blocks,"logistic, all features",0.7214,0.7214,0.0000,0.7984,0.7984,0.0000,0.1650,0.1651,0.0001,0.5090,0.5090,0.0000,0.6364,0.6364,0.0000
+medium_plus,spatial blocks,population rule,0.7051,0.7051,0.0000,0.7707,0.7707,0.0000,0.1728,0.1728,0.0000,0.5270,0.5270,0.0000,0.6250,0.6250,0.0000
+very_high,random,"LightGBM, all features",0.7561,0.7575,0.0014,0.8869,0.8877,0.0008,0.1056,0.1052,-0.0004,0.3457,0.3443,-0.0014,0.6838,0.6818,-0.0020
+very_high,random,"logistic, all features",0.7151,0.7151,0.0000,0.8590,0.8590,0.0000,0.1149,0.1150,0.0001,0.3759,0.3759,0.0000,0.6501,0.6501,0.0000
+very_high,random,population rule,0.6473,0.6473,0.0000,0.8038,0.8038,0.0000,0.1316,0.1316,0.0000,0.4257,0.4257,0.0000,0.5789,0.5789,0.0000
+very_high,spatial blocks,"LightGBM, all but administrative",0.7373,0.7350,-0.0023,0.8769,0.8761,-0.0008,0.1121,0.1124,0.0003,0.3643,0.3652,0.0009,0.6684,0.6632,-0.0052
+very_high,spatial blocks,"LightGBM, all but geography",0.7378,0.7366,-0.0012,0.8741,0.8732,-0.0009,0.1125,0.1129,0.0004,0.3666,0.3678,0.0012,0.6655,0.6621,-0.0034
+very_high,spatial blocks,"LightGBM, all but industry",0.7221,0.7224,0.0003,0.8632,0.8622,-0.0010,0.1165,0.1167,0.0002,0.3776,0.3789,0.0013,0.6438,0.6438,0.0000
+very_high,spatial blocks,"LightGBM, all but military",0.6877,0.6895,0.0018,0.8372,0.8377,0.0005,0.1253,0.1253,0.0000,0.4057,0.4054,-0.0003,0.6142,0.6113,-0.0029
+very_high,spatial blocks,"LightGBM, all but transport",0.7401,0.7401,0.0000,0.8767,0.8767,0.0000,0.1122,0.1122,0.0000,0.3638,0.3638,0.0000,0.6581,0.6581,0.0000
+very_high,spatial blocks,"LightGBM, all features",0.7423,0.7422,-0.0001,0.8761,0.8768,0.0007,0.1113,0.1112,-0.0001,0.3627,0.3619,-0.0008,0.6672,0.6655,-0.0017
+very_high,spatial blocks,"LightGBM, no anachronisms",0.7203,0.7203,0.0000,0.8619,0.8619,0.0000,0.1168,0.1168,0.0000,0.3785,0.3785,0.0000,0.6484,0.6484,0.0000
+very_high,spatial blocks,"LightGBM, population + administrative",0.6558,0.6558,0.0000,0.8115,0.8115,0.0000,0.1336,0.1336,0.0000,0.4294,0.4294,0.0000,0.5890,0.5890,0.0000
+very_high,spatial blocks,"LightGBM, population + geography",0.6464,0.6464,0.0000,0.8149,0.8149,0.0000,0.1339,0.1339,0.0000,0.4295,0.4295,0.0000,0.5851,0.5851,0.0000
+very_high,spatial blocks,"LightGBM, population + industry",0.6721,0.6721,0.0000,0.8220,0.8220,0.0000,0.1286,0.1286,0.0000,0.4191,0.4191,0.0000,0.6136,0.6136,0.0000
+very_high,spatial blocks,"LightGBM, population + military",0.7099,0.7099,0.0000,0.8564,0.8564,0.0000,0.1194,0.1194,0.0000,0.3864,0.3864,0.0000,0.6410,0.6410,0.0000
+very_high,spatial blocks,"LightGBM, population + transport",0.6448,0.6459,0.0011,0.8036,0.8044,0.0008,0.1351,0.1347,-0.0004,0.4376,0.4363,-0.0013,0.5948,0.5913,-0.0035
+very_high,spatial blocks,"LightGBM, population family",0.6416,0.6416,0.0000,0.8026,0.8026,0.0000,0.1361,0.1361,0.0000,0.4384,0.4384,0.0000,0.5839,0.5839,0.0000
+very_high,spatial blocks,"logistic, all features",0.7008,0.7008,0.0000,0.8473,0.8472,-0.0001,0.1222,0.1222,0.0000,0.3975,0.3975,0.0000,0.6318,0.6324,0.0006
+very_high,spatial blocks,population rule,0.6461,0.6461,0.0000,0.8010,0.8010,0.0000,0.1351,0.1351,0.0000,0.4376,0.4376,0.0000,0.5822,0.5822,0.0000

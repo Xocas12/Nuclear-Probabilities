@@ -9,6 +9,7 @@ import yaml
 
 from nucprob.features.registry import FEATURES
 from nucprob.paths import CURATED, ROOT, SOURCES
+from nucprob.sources import history
 from nucprob.us1985.features import FEATURES as US_FEATURES
 
 FEATURE_CODE = [
@@ -46,6 +47,13 @@ def test_no_feature_reads_a_label_source():
     for name, feature in [*FEATURES.items(), *US_FEATURES.items()]:
         assert feature.sources, f"{name} names no source"
         for ref in feature.sources:
+            if ref.startswith("history:"):
+                # A table read back from git history (nucprob.sources.history): it must be pinned
+                # there, and it is held to the same rule as a curated table.
+                path = Path(ref.removeprefix("history:"))
+                assert path.as_posix() in {p.path for p in history.PINNED}, f"{name}: {path}"
+                assert not LABEL_FOLDERS & set(path.parts), f"{name} reads a label transcription"
+                continue
             if ref.startswith("curated:"):
                 path = CURATED / ref.removeprefix("curated:")
                 assert path.exists(), f"{name}: {path} missing"
