@@ -23,6 +23,7 @@ MANIFESTS = [
     CLASSIFIER / "link_audit_manifest.json",
     RUNS / "evidence" / "manifest.json",
     MAP / "manifest.json",
+    CLASSIFIER / "sealed" / "blind" / "manifest.json",
 ]
 needs_run = pytest.mark.skipif(not (MAP / "manifest.json").exists(), reason="no committed run")
 
@@ -41,7 +42,13 @@ def test_no_table_stands_outside_a_manifest():
     listed = set()
     for path in MANIFESTS:
         listed |= set(json.loads(path.read_text())["outputs"])
-    for folder in (CLASSIFIER, MAP, MAP / "cells", RUNS / "evidence"):
+    for folder in (
+        CLASSIFIER,
+        MAP,
+        MAP / "cells",
+        RUNS / "evidence",
+        CLASSIFIER / "sealed" / "blind",
+    ):
         for f in [*folder.glob("*.csv"), *folder.glob("*.csv.gz")]:
             assert str(f.relative_to(ROOT)) in listed, f
 

@@ -9,9 +9,12 @@ amendment's primary population was not blind. This fits nothing and scores nothi
 runs/classifier/sealed/scores.csv.gz, refuses unless the file is the one committed at fb028cc, and
 applies the eleventh amendment's reading to three populations, blind first: blind (never_scored and
 in no committed run's scores), never_scored and all sealed. It writes runs/classifier/sealed/blind/
-metrics.csv and comparison.csv. A comparison whose positives lie in fewer than 5 blocks of 300 km has
+metrics.csv, comparison.csv and manifest.json (commit, input and output hashes). A comparison whose positives lie in fewer than 5 blocks of 300 km has
 no block interval that measures anything (ninth amendment), so it calls no gain or loss.
 """
+
+import datetime as dt
+import json
 
 import numpy as np
 import pandas as pd
@@ -20,6 +23,7 @@ from nucprob.classifier.report import MIN_POSITIVE_BLOCKS
 from nucprob.classifier.run import SAC
 from nucprob.classifier.sealed import OUT, read
 from nucprob.dataset import SPLITS
+from nucprob.outputs import hashes, start_record
 from nucprob.paths import PROCESSED
 from nucprob.sources.fetch import sha256
 
@@ -61,6 +65,7 @@ def measured(comp: pd.DataFrame) -> pd.DataFrame:
 
 
 def main() -> None:
+    record = start_record()
     path = OUT / "scores.csv.gz"
     if sha256(path) != SCORES_SHA256:
         raise NotTheCommittedScores(f"{path} is not the file committed at fb028cc")
@@ -76,6 +81,16 @@ def main() -> None:
     BLIND.mkdir(parents=True, exist_ok=True)
     met.to_csv(BLIND / "metrics.csv", index=False, float_format="%.4f")
     comp.to_csv(BLIND / "comparison.csv", index=False, float_format="%.4f")
+    inputs = [path, PROCESSED / "classifier_table.parquet", OUT.parent / "selection.csv"]
+    inputs.append(SPLITS / "scored_in_history.csv")
+    manifest = {
+        "created": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
+        **record,
+        "amendment": "configs/protocol_amendment_12.yaml",
+        "inputs": hashes(inputs),
+        "outputs": hashes([BLIND / "metrics.csv", BLIND / "comparison.csv"]),
+    }
+    (BLIND / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     show = ["scope", "population", "against", "rows", "positives", "positive_blocks", "delta"]
     print(comp[[*show, "low", "high", "block_low", "block_high", "verdict"]].round(3).to_string())
 
