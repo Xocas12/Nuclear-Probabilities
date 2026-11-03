@@ -631,7 +631,7 @@ def _verdicts_against_largest(iv: pd.DataFrame) -> str:
         )
         against.append(
             f"{lead}, by {-100 * iv.at[k, 'over_largest']:.1f} points "
-            f"[{-100 * iv.at[k, 'over_largest_hi']:.1f}, {-100 * iv.at[k, 'over_largest_lo']:.1f}]: it "
+            f"[{-100 * iv.at[k, 'over_largest_hi']:.2f}, {-100 * iv.at[k, 'over_largest_lo']:.2f}]: it "
             "learns nothing usable about documents and loses a little by sometimes naming another"
         )
     if gaps["cannot be told apart"]:
@@ -679,7 +679,7 @@ def _identification() -> str:
         else "far more often than by naming the largest document"
     )
     consequence = (
-        f" So the columns name a row's document {how}. In a pooled scope a model can learn each "
+        f" The columns name a row's document {how}. In a pooled scope a model can learn each "
         "document's base rate from them, and a pooled gain under spatial blocks cannot be told from that. "
         "Single-document and leave-one-document-out readings do not rest on this check."
         if reg.at["all permitted", "over_largest_lo"] > 0.10
@@ -705,6 +705,14 @@ def _identification() -> str:
         if left
         else ""
     )
+    if (IDENT / "splits.csv").exists():
+        sp = pd.read_csv(IDENT / "splits.csv").set_index("columns")
+        rest += (
+            f" Over {int(sp.at['all permitted', 'splits'])} further place-grouped splits the unregularised fit "
+            f"named documents on all columns from {_pct(sp.at['all permitted', 'min'])} to "
+            f"{_pct(sp.at['all permitted', 'max'])} of the time, a spread that also marks an unstable fit "
+            "(`runs/classifier/identification/splits.csv`)."
+        )
     return f"""From the columns alone, with folds grouped by place, a gradient-boosted classifier with L2
 regularisation 1.0 names a row's document {_accuracies(reg)}, against {_pct(base)} for always naming the largest
 document. The intervals resample places, keeping a place's rows together (2,000 resamples;
@@ -1105,6 +1113,19 @@ def _cannot_blind() -> str:
         "- **A blind gain over population plus country.** On the only blind places, "
         f"{int(prim.iloc[0]['rows'])} towns of SAC's list, no selected model beat it by both intervals (Results, "
         '"The sealed set read again on blind places only").'
+    )
+
+
+def _cannot_pooled() -> str:
+    """A limit from the regularised identification check, if the columns name documents."""
+    reg = pd.read_csv(IDENT / "regularised.csv").set_index("columns")
+    if reg.at["all permitted", "over_largest_lo"] <= 0.10:
+        return ""
+    return (
+        "- **A pooled gain as more than each document's base rate.** The columns name a row's document "
+        f"{_pct(reg.at['all permitted', 'accuracy'])} of the time against {_pct(reg.at['all permitted', 'largest_document_share'])} "
+        "for naming the largest, so a model fitted on pooled lists can learn which document a row belongs to "
+        '(Results, "What the gains rest on").'
     )
 
 
@@ -1510,6 +1531,7 @@ is incomplete.
 - **A state's own model.** Each state is refused. A model of Warsaw Pact war plans in particular has no basis: {war_positives} linked positives, none from a plan read at source. The pooled model is exercise-based.
 - **Prediction for a plan not in the data.** See the main result. The map's score carries this limit into every cell.
 {_cannot_blind()}
+{_cannot_pooled()}
 - **Causes.** These are associations between a town's traits and its presence on a list. No design here separates one trait's effect from another's or from the planners' reasons.
 - **What planners knew.** Features record what existed according to later sources.
 - **Any statement about a present-day plan.** Modern map rows extrapolate from lists of 1945 to 1977.

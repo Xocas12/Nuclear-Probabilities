@@ -287,6 +287,12 @@ def test_the_identification_sentences_follow_the_regularised_reading():
     assert ("population alone does worse than that" in text) == (pop == "below")
     if reg.at["all permitted", "over_largest_lo"] > 0.10:
         assert "a pooled gain under spatial blocks cannot be told from that" in text
+        assert "A pooled gain as more than each document's base rate" in text
+    readme = " ".join((ROOT / "README.md").read_text(encoding="utf-8").split())
+    if reg.at["all permitted", "accuracy_lo"] > 0.9:
+        assert "The columns name a row's document almost every time" in readme
+    else:
+        assert "almost every time" not in readme
 
 
 def test_the_readme_names_every_committed_amendment():

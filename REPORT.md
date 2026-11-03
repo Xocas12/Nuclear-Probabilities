@@ -248,13 +248,23 @@ Each scope's selected candidate against population plus country under spatial bl
 "None flagged" removes today's data standing in for the past. "Strict as-of" also removes the defence tables, mostly
 post-Soviet knowledge. "No national power" removes COW's values, which take one value per country and year and so
 were suspected of marking a document. "No source markers" also removes the defence and military columns, which are
-blank or filled according to the table a row came from. The check below did not confirm either suspicion. From the
-columns alone, with folds grouped by place, a classifier names a row's document 50.6% of the time on all columns,
-64.9% without national power, 65.7% with no source markers as well and 44.1% on population alone,
-against 44.4% for always naming the largest document; population alone does worse than that, by 0.3 points, a gap no interval was computed for, so the two cannot be told apart
-(`runs/classifier/document_identification.csv`). Removing the suspected columns made identification easier, not harder, which a
-classifier given more columns should not show; this is not explained. No interval was computed for any of these
-accuracies, so they do not show how far any set of columns tells documents apart.
+blank or filled according to the table a row came from. From the columns alone, with folds grouped by place, a gradient-boosted classifier with L2
+regularisation 1.0 names a row's document 98.1% [97.8%, 98.5%] on all columns, 81.4% [80.2%, 82.6%] without national power, 76.7% [75.4%, 78.1%] with no source markers as well, 44.2% [42.6%, 45.9%] on population alone, against 44.4% for always naming the largest
+document. The intervals resample places, keeping a place's rows together (2,000 resamples;
+`runs/classifier/identification/regularised.csv`). On those intervals "all permitted", "no national power", "no source markers" name documents better than that; population alone does worse than that, by 0.2 points [0.04, 0.31]: it learns nothing usable about documents and loses a little by sometimes naming another.
+Removing national power lowers accuracy by 16.8 points [15.6, 17.9], so those columns do help name the document. The columns name a row's document almost always. In a pooled scope a model can learn each document's base rate from them, and a pooled gain under spatial blocks cannot be told from that. Single-document and leave-one-document-out readings do not rest on this check.
+
+The figures this check first gave were 50.6% on all columns and 65.7% with no source markers. They came from
+the same classifier without regularisation. Of those 16 fits (four column sets, four folds),
+9 diverged: raw scores reached 111,423, and
+training accuracy fell more than 5 points below its best by the last iteration. With regularisation
+0 of 16 did, and the largest raw score was 9
+(`runs/classifier/identification/divergence.csv`). The earlier figures measured the failed fit, not the columns.
+This was found after the thirteenth amendment had fixed intervals for them, 49.0%
+to 52.0% on all columns (`runs/classifier/identification/intervals.csv`). At 300 iterations its all-columns predictions were the same, row for row, as at 60 (capacity probe: not explained), which is how the divergence was found.
+The regularised reading is post hoc (`configs/protocol_amendment_14.yaml`). One regularisation value was tried, and
+it was not searched. Over 10 further place-grouped splits the unregularised fit named documents on all columns from 54.5% to 88.6% of the time, a spread that also marks an unstable fit (`runs/classifier/identification/splits.csv`).
+
 
 | scope | model | variant | features | a_pr_auc | b_pr_auc | difference | by_blocks |
 |---|---|---|---|---|---|---|---|
@@ -625,6 +635,7 @@ Per feature, on 3,686 training and 2,276 modern towns (`runs/probmap/domain_shif
 - **A state's own model.** Each state is refused. A model of Warsaw Pact war plans in particular has no basis: 6 linked positives, none from a plan read at source. The pooled model is exercise-based.
 - **Prediction for a plan not in the data.** See the main result. The map's score carries this limit into every cell.
 - **A blind gain over population plus country.** On the only blind places, 149 towns of SAC's list, no selected model beat it by both intervals (Results, "The sealed set read again on blind places only").
+- **A pooled gain as more than each document's base rate.** The columns name a row's document 98.1% of the time against 44.4% for naming the largest, so a model fitted on pooled lists can learn which document a row belongs to (Results, "What the gains rest on").
 - **Causes.** These are associations between a town's traits and its presence on a list. No design here separates one trait's effect from another's or from the planners' reasons.
 - **What planners knew.** Features record what existed according to later sources.
 - **Any statement about a present-day plan.** Modern map rows extrapolate from lists of 1945 to 1977.

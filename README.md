@@ -92,6 +92,8 @@ summarised on a 0.5-degree grid (1 degree for modern scenarios).
 - **A model of any one state's plans.** Each state is refused by the gate; the Warsaw Pact model pools exercises.
 - **Prediction for a document not in the data.** No model beat population on a left-out document.
 - **A blind gain over population plus country.** On the only blind places, no model beat it (REPORT, "The sealed set read again on blind places only").
+- **A pooled gain as more than each document's base rate.** The columns name a row's document almost every time
+  (REPORT, "What the gains rest on"), so a model fitted on pooled lists can learn which list a row comes from.
 - **Causes.** These are associations between a town's traits and its presence on a list.
 - **What planners knew.** Features record what existed according to later sources.
 - **Any present-day plan.** Modern map rows apply lists of 1945-1977 to towns of today: extrapolation, with no

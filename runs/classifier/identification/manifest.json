@@ -1,0 +1,65 @@
+{
+  "created": "2026-11-03T17:56:13+00:00",
+  "git_commit": "34879e61bcdb77057cbe249d44d765b7dd11d7cc",
+  "git_dirty": false,
+  "amendment": "configs/protocol_amendment_13.yaml",
+  "table_sha256": "28c139144a8cde8a7a87610448c2f5b0d882a24c4f5a4638704ff630489a97ed",
+  "resamples": 2000,
+  "seed": 1956,
+  "steps": {
+    "original split": {
+      "git_commit": "34879e61bcdb77057cbe249d44d765b7dd11d7cc",
+      "git_dirty": false
+    },
+    "capacity probe": {
+      "git_commit": "34879e61bcdb77057cbe249d44d765b7dd11d7cc",
+      "git_dirty": false
+    },
+    "split 0": {
+      "git_commit": "34879e61bcdb77057cbe249d44d765b7dd11d7cc",
+      "git_dirty": false
+    },
+    "split 1": {
+      "git_commit": "34879e61bcdb77057cbe249d44d765b7dd11d7cc",
+      "git_dirty": false
+    },
+    "split 2": {
+      "git_commit": "34879e61bcdb77057cbe249d44d765b7dd11d7cc",
+      "git_dirty": false
+    },
+    "split 3": {
+      "git_commit": "34879e61bcdb77057cbe249d44d765b7dd11d7cc",
+      "git_dirty": false
+    },
+    "split 4": {
+      "git_commit": "34879e61bcdb77057cbe249d44d765b7dd11d7cc",
+      "git_dirty": false
+    },
+    "split 5": {
+      "git_commit": "34879e61bcdb77057cbe249d44d765b7dd11d7cc",
+      "git_dirty": false
+    },
+    "split 6": {
+      "git_commit": "34879e61bcdb77057cbe249d44d765b7dd11d7cc",
+      "git_dirty": false
+    },
+    "split 7": {
+      "git_commit": "34879e61bcdb77057cbe249d44d765b7dd11d7cc",
+      "git_dirty": false
+    },
+    "split 8": {
+      "git_commit": "34879e61bcdb77057cbe249d44d765b7dd11d7cc",
+      "git_dirty": false
+    },
+    "split 9": {
+      "git_commit": "34879e61bcdb77057cbe249d44d765b7dd11d7cc",
+      "git_dirty": false
+    }
+  },
+  "pending": [],
+  "outputs": {
+    "runs/classifier/identification/capacity.csv": "d9851005dd640a2af3e1394e122b4e306a1e0629a89dec3f74e16d7ae5374531",
+    "runs/classifier/identification/intervals.csv": "6ae8b8bfd2faba5232ccfaae5318705b8bd41781c8ce0c175415edb9e35854dc",
+    "runs/classifier/identification/splits.csv": "5c236e1535d3d392ad2004a6ed788000ad2422df2e6d23eea3fea0f1dda1f147"
+  }
+}

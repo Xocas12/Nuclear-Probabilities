@@ -1,0 +1,33 @@
+columns,fold,l2_regularization,max_abs_raw_score,train_accuracy_best,train_accuracy_final,test_accuracy,diverged
+all permitted,0,0.0000,107407.8723,0.9746,0.6416,0.6385,True
+all permitted,0,1.0000,8.1889,0.9837,0.9837,0.9785,False
+all permitted,1,0.0000,88545.5130,0.9788,0.3280,0.3187,True
+all permitted,1,1.0000,8.1328,0.9826,0.9826,0.9834,False
+all permitted,2,0.0000,53373.2080,0.9785,0.4720,0.4636,True
+all permitted,2,1.0000,8.2141,0.9832,0.9832,0.9810,False
+all permitted,3,0.0000,111423.3952,0.9672,0.6030,0.6026,True
+all permitted,3,1.0000,8.2314,0.9826,0.9826,0.9826,False
+no national power,0,0.0000,43027.5822,0.8005,0.5585,0.5269,True
+no national power,0,1.0000,8.5512,0.8369,0.8369,0.8114,False
+no national power,1,0.0000,41701.2535,0.8025,0.6673,0.6540,True
+no national power,1,1.0000,8.6580,0.8364,0.8364,0.8187,False
+no national power,2,0.0000,20.5101,0.8389,0.8389,0.8154,False
+no national power,2,1.0000,8.5308,0.8364,0.8364,0.8055,False
+no national power,3,0.0000,58379.3871,0.7823,0.6041,0.6002,True
+no national power,3,1.0000,8.7128,0.8356,0.8356,0.8195,False
+no source markers,0,0.0000,82625.8693,0.7792,0.5941,0.5476,True
+no source markers,0,1.0000,8.6160,0.7859,0.7859,0.7626,False
+no source markers,1,0.0000,10.4360,0.7843,0.7843,0.7707,False
+no source markers,1,1.0000,8.6557,0.7834,0.7834,0.7732,False
+no source markers,2,0.0000,27678.5354,0.7724,0.5683,0.5406,True
+no source markers,2,1.0000,8.6292,0.7868,0.7868,0.7649,False
+no source markers,3,0.0000,10.3577,0.7862,0.7862,0.7690,False
+no source markers,3,1.0000,8.9056,0.7854,0.7854,0.7690,False
+population only,0,0.0000,9.5899,0.4451,0.4451,0.4392,False
+population only,0,1.0000,5.6323,0.4443,0.4443,0.4425,False
+population only,1,0.0000,9.8266,0.4439,0.4439,0.4437,False
+population only,1,1.0000,5.6715,0.4439,0.4439,0.4437,False
+population only,2,0.0000,9.1923,0.4458,0.4458,0.4354,False
+population only,2,1.0000,5.5288,0.4447,0.4447,0.4379,False
+population only,3,0.0000,9.8195,0.4436,0.4436,0.4445,False
+population only,3,1.0000,5.6272,0.4436,0.4436,0.4445,False
