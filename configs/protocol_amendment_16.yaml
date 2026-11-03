@@ -1,0 +1,32 @@
+# Sixteenth amendment, in its own file like the fifth to fifteenth. Committed and pushed before the refit it
+# governs is run. Nothing the refit computes had been computed when this was written. A quick check of the
+# table's content (which rows and columns change) was made first; no model was fitted on the new table.
+date: 2026-11-03
+reasons: The review of c27c1b8 (finding 1) found 29 rows of data/curated/features/weurope_military_sites_1965.csv
+  resting on "general knowledge", with no cited text for the fact. Each was cited from an allowed Wikipedia page
+  that states it, corrected to what that page states, or dropped (scripts/weurope_military_1965_spec.py, CITED and
+  DROPPED). Six of the 29 feed features. RAF Wildenrath and CRC Nieuw-Milligen are now cited and unchanged.
+  CRC Glons is dated 1972 by its source, so it is not in being in 1965. CRC Semmerzake and the Belgian naval base at
+  Ostend have no source and are dropped. Aviano has a source only as a base of rotating fighter squadrons, so it
+  is an air base, not a strike base. The other 23 rows (headquarters, garrisons, ports, ordinary air bases)
+  feed no feature.
+table: The rebuilt classifier table differs from the one every classifier run so far used
+  (sha256 28c139144a8cde8a7a87610448c2f5b0d882a24c4f5a4638704ff630489a97ed) only in log_km_to_naval_base,
+  log_km_to_air_defence and log_air_defence_sites_50km on rows of wp_1967_lato67 and wp_1977_gsa_lessons, and in
+  log_km_to_lra_base on rows of wp_1965_hu_wargame. No label, place, SAC row or other column changes.
+changes:
+  refit: make classifier is run again in full on the new table (run, sensitivity, identification,
+    identification_fit, divergence, extended, defence_targets, link_audit), with every rule of the protocol and
+    of the earlier amendments unchanged. Its outputs replace the earlier ones.
+  sealed: The sealed set is not scored again (its lock forbids it). Its scores, and the twelfth amendment's
+    blind reading of them, stay those of the models fitted on the earlier table. The run they were scored with is
+    kept as runs/classifier/sealed/fitted_run/ (that run's manifest.json and selection.csv, copied before the
+    refit). Where the refit selects a different model for a scope than that run did, REPORT says the sealed and
+    blind rows of that scope are of the earlier selection.
+  map: The map's score is the selection rule's choice. If the refit's choice for the map is the same model as
+    before (the population rule), the map is not run again, since the population rule reads no changed column;
+    otherwise make probmap is run again.
+reporting: REPORT states this correction in Data and, in a "Changed by the sixteenth amendment" paragraph of
+  Results, every primary-comparison row of the four scopes whose verdict differs from the earlier run's, whichever
+  way it moves. The earlier run's comparison.csv is kept in fitted_run/ for that comparison.
+unchanged: Labels, places, holdouts, models, the selection rule, the gate, and the sealed and blind readings.

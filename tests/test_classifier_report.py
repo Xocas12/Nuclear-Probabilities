@@ -319,7 +319,8 @@ def test_the_readme_count_of_war_plan_positives_is_the_runs():
 @pytest.mark.skipif(not (OUT / "sealed" / "LOCK.json").exists(), reason="sealed set not scored")
 def test_the_sealed_reading_is_of_the_committed_amendment_models_and_table():
     """The sealed set was scored once, after the eleventh amendment was committed, on the table the
-    committed classifier run used, with the selected candidates of that run."""
+    committed classifier run of that day used, with the selected candidates of that run (kept in
+    sealed/fitted_run/ by the sixteenth amendment)."""
     import subprocess
 
     lock = json.loads((OUT / "sealed" / "LOCK.json").read_text())
@@ -335,9 +336,13 @@ def test_the_sealed_reading_is_of_the_committed_amendment_models_and_table():
     assert (
         committed == amendment.read_bytes()
     )  # the reading was fixed in a commit before the scores
-    assert lock["table_sha256"] == json.loads((OUT / "manifest.json").read_text())["table_sha256"]
+    # The sixteenth amendment refits on a corrected table and keeps the run the sealed set was scored
+    # with in sealed/fitted_run/: the lock must name that run's table, and the sealed rows its selection.
+    fitted = OUT / "sealed" / "fitted_run"
+    assert lock["table_sha256"] == json.loads((fitted / "manifest.json").read_text())["table_sha256"]
+    assert lock["table_sha256"] == "28c139144a8cde8a7a87610448c2f5b0d882a24c4f5a4638704ff630489a97ed"
     comp = pd.read_csv(OUT / "sealed" / "comparison.csv")
-    sel = pd.read_csv(OUT / "selection.csv")
+    sel = pd.read_csv(fitted / "selection.csv")
     chosen = dict(sel.loc[sel["selected"], ["scope", "model"]].to_numpy())
     assert dict(comp[["scope", "model"]].drop_duplicates().to_numpy()) == chosen
     prim = comp[comp["primary"]]

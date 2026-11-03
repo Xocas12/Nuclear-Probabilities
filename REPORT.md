@@ -125,7 +125,7 @@ Several are today's data standing in for the past and are flagged. Sources, lice
 ## Method
 
 The analysis is fixed in `configs/protocol.yaml` and changed since only by dated amendments: four inside that file and
-`configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_15.yaml`. Each says what had already been read when it
+`configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_16.yaml`. Each says what had already been read when it
 was written; `configs/HISTORY.md` gives one line per amendment. **It is not blind.** Scores on SAC's spatial folds and
 on the small lists, and later the full results, had been read before amendments corrected labels, links and sector
 boxes. Burza's sector box was drawn after its effect on Burza's scores had been seen. The rule that a block interval needs
