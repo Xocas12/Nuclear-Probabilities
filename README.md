@@ -158,7 +158,7 @@ tables are not redistributed (its terms), so `data/curated/stockpiles/delivery_m
 `data/curated/features/bloc_air_defence_1956.csv` was made by hand from cited pages
 (`scripts/bloc_air_defence_1956/README.md`). **Robots.** `make data` asks each host's robots.txt before every download and reports a refused source as not
 obtained; `python -m nucprob.sources.robots` records the answer of the day for every source in `runs/qa/robots.csv`, judged on the URL the
-held bytes came from (`data/sources_obtained.yaml` names it where that is a mirror or an archived capture). No held file came
+held bytes came from (the `obtained_from` field in `data/sources.yaml` names it where that is a mirror or an archived capture). No held file came
 from a refused path. Great Britain's 1981 district totals, fetched earlier from `www.nomisweb.co.uk` through a disallowed
 path, were withdrawn with everything built from them (`configs/protocol_amendment_10.yaml`). Earlier transcriptions read `en.wikipedia.org` through
 disallowed paths; those copies are not held, and the pages are registered through allowed ones in
