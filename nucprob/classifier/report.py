@@ -318,6 +318,12 @@ def _row(comp, scope, holdout, model, against, which="all lists"):
     ].iloc[0]
 
 
+# Counts of the sealed set fixed when it was drawn (data/curated/splits/README.md). They are not in a committed
+# output, so a test checks them against the built table and scored_before_freeze.csv.
+SEALED_PLACES = 467
+EARLY_SCORED = 194
+AMENDMENT_11_SET = SEALED_PLACES - EARLY_SCORED
+
 SAC_SCOPE = "single document: SAC 1956 (not a state model)"
 GLOBAL_ALL = "global, all attacker documents"
 
@@ -713,12 +719,10 @@ document. The intervals resample places, keeping a place's rows together (2,000 
 `runs/classifier/identification/regularised.csv`). On those intervals {_verdicts_against_largest(reg)}.
 {suspicion}{consequence}
 
-An earlier, unregularised version of this check is withdrawn: {int(as_run["diverged"].sum())} of its {len(as_run)} fits (four column sets,
-four folds) diverged, against {int(regd["diverged"].sum())} of {len(regd)} with regularisation
-(`runs/classifier/identification/divergence.csv`). Its intervals, fixed in advance by the thirteenth amendment at
-{_pct(iv.at["all permitted", "accuracy_lo"])} to {_pct(iv.at["all permitted", "accuracy_hi"])} on all columns (`runs/classifier/identification/intervals.csv`), measured that failed fit and not the
-columns. The regularised reading above replaces it and is post hoc (`configs/protocol_amendment_14.yaml`); one
-regularisation value was tried, and none was searched.{rest}
+This reading is post hoc (`configs/protocol_amendment_14.yaml`; one regularisation value was tried). The version fixed in
+advance had none: {int(as_run["diverged"].sum())} of its {len(as_run)} fits (four column sets, four folds) diverged, against {int(regd["diverged"].sum())} of {len(regd)} here
+(`runs/classifier/identification/divergence.csv`), so its intervals, {_pct(iv.at["all permitted", "accuracy_lo"])} to {_pct(iv.at["all permitted", "accuracy_hi"])} on all columns
+(`runs/classifier/identification/intervals.csv`), measured a failed fit; it is withdrawn.{rest}
 """
 
 
@@ -944,10 +948,10 @@ def _sealed_section() -> str:
     other = prim[~prim["verdict"].eq("gain")]
     return f"""### The sealed set, scored once
 
-Scored on {lock["scored"][:10]}, after `configs/protocol_amendment_11.yaml` fixed the reading and before any sealed
+This first reading is not blind: earlier runs had scored some of its places (previous section). Scored on {lock["scored"][:10]}, after `configs/protocol_amendment_11.yaml` fixed the reading and before any sealed
 score existed; `runs/classifier/sealed/LOCK.json` records the commit and stops a second run. Each scope's models were fitted on all its usable rows and scored SAC 1956's rows in the sealed
 blocks: the eleventh amendment's set, {int(p0["rows"])} places the early check had not scored ({int(p0["positives"])} listed, base rate {p0["base_rate"]:.2f},
-in {int(p0["blocks"])} blocks; `never_scored` in the outputs, although other runs had scored some of them, next section), and all {int(a0["rows"])} sealed places with a SAC label
+in {int(p0["blocks"])} blocks; `never_scored` in the outputs, although other runs had scored some of them), and all {int(a0["rows"])} sealed places with a SAC label
 ({int(a0["positives"])} listed); 4 of the 467 sealed places have no SAC label (an entry possibly lost from the scan)
 and so no row. The primary rows are the selected candidate against population plus country on the eleventh amendment's set.
 So the gain over population plus country holds on that set for {len(gains)} of {len(prim)} scopes
@@ -956,9 +960,7 @@ So the gain over population plus country holds on that set for {len(gains)} of {
 The gains are small: a few hundredths of PR-AUC on a base rate above one half. Only SAC 1956 has sealed rows, so
 this tests models on that list's places, which most of every global model's training positives come from; it says
 nothing about the other documents. A sealed block holds no training place, but a training town in a neighbouring
-block may be close. In the pooled Warsaw Pact scope, population plus country scores these places as the population
-rule does: none of the sealed places' countries (USSR, Poland, Czechoslovakia, China, East Germany, North Korea) is in
-that scope's lists, so none has an intercept of its own.
+block may be close.{_country_rule_sentence()}
 
 {markdown(shown)}
 
@@ -975,6 +977,38 @@ def _blind_rows(against: str) -> pd.DataFrame:
     return comp[comp["population"].eq("blind") & comp["against"].eq(against)]
 
 
+@functools.cache
+def _country_is_rule() -> frozenset[str]:
+    """Scopes whose population-plus-country model ranks every sealed place exactly as their population rule does:
+    no sealed place's country has an intercept in that scope's lists, so that baseline is the population rule."""
+    s = pd.read_csv(OUT / "sealed" / "scores.csv.gz")
+    scopes = {c.split(" | ")[0] for c in s.columns if " | " in c}
+    return frozenset(
+        sc
+        for sc in scopes
+        if s[f"{sc} | {PLUS}"].rank(method="min").eq(s[f"{sc} | {RULE}"].rank(method="min")).all()
+    )
+
+
+def _country_rule_sentence() -> str:
+    """Which scopes' population-plus-country rows on the sealed set are the population rule, and why."""
+    same = sorted(_country_is_rule())
+    if not same:
+        return ""
+    return (
+        f" In {'; '.join(repr(x) for x in same)}, population plus country ranks every sealed place as the population "
+        f"rule does, so its rows against population plus country are comparisons with the population rule: none of the "
+        f"sealed places' countries (the Soviet bloc's and China's) is in that scope's lists, so none has an intercept of its own."
+    )
+
+
+def _rule_note(scope: str, against: str = PLUS) -> str:
+    """A flag on a sealed row against population plus country that is in fact a comparison with population."""
+    if against != PLUS or scope not in _country_is_rule():
+        return ""
+    return " (here population plus country ranks every place as the population rule does: this scope's lists hold no town of these countries)"
+
+
 def _blind_line(r, auc: bool = True) -> str:
     blocks = (
         f"[{signed(r['block_low'])}, {signed(r['block_high'])}]"
@@ -985,6 +1019,7 @@ def _blind_line(r, auc: bool = True) -> str:
     return (
         f"{r['scope']}, {r['model']}: {scores}"
         f"{signed(r['delta'])} [{signed(r['low'])}, {signed(r['high'])}], by blocks {blocks}: {r['verdict']}"
+        f"{_rule_note(r['scope'], r['against'])}"
     )
 
 
@@ -1120,34 +1155,66 @@ def _blind_section() -> str:
     ns = comp[comp["population"].eq("never_scored") & comp["against"].eq(PLUS)].iloc[0]
     lost = int(ns["rows"]) - int(p0["rows"])
 
-    rule = comp[comp["population"].eq("blind") & comp["against"].eq(RULE)]
-    gains = prim[prim["verdict"].eq("gain")]["scope"].tolist()
-    return f"""### The sealed set read again on blind places only
+    rule = comp[comp["population"].eq("blind") & comp["against"].eq(RULE)].set_index("scope")
+    rows = pd.DataFrame(
+        [
+            {
+                "scope": r["scope"],
+                "model": r["model"],
+                "a_pr_auc": r["a_pr_auc"],
+                "against population + country": _blind_cell(r),
+                "against population rule": _blind_cell(rule.loc[r["scope"]]),
+            }
+            for _, r in prim.iterrows()
+        ]
+    )
+    same = sorted(_country_is_rule() & set(prim["scope"]))
+    same_text = (
+        f" In {'; '.join(repr(x) for x in same)} the two baselines rank every place alike, so its two columns are one"
+        ' comparison ("The sealed set, scored once").'
+        if same
+        else ""
+    )
+    return f"""### The sealed set on blind places
 
-The eleventh amendment's set above is not blind. The list of places earlier runs had scored was read from the
-outputs of one commit, and earlier commits of a milestone check had committed scores, and maps showing them, for
-places that commit no longer scored. Walking every commit before the sealed scoring (`scripts/scored_history.py`,
-written to `data/curated/splits/scored_in_history.csv`) finds {hist["place_id"].nunique()} of the 467 sealed places with a
-committed score: {lost} of that set's rows above and all but {194 + lost - hist["place_id"].nunique()} of the 194 the early check had scored. That one counts as scored only because it shares its name and country with another town the early check scored (Kirovsk, `scored_before_freeze.csv`), and the walk finds no score for it. Of the set's 273 places, {int(ns["rows"])} have a SAC label. `configs/protocol_amendment_12.yaml` was written
-after the reading above had been seen and committed before this one was computed. It refits nothing and scores
-nothing: `python -m nucprob.classifier.sealed_reread` reads the committed sealed scores (it checks their hash) on the
-{int(p0["rows"])} places of that set with a SAC label that no committed run scored ({int(p0["positives"])} listed, base rate
-{p0["base_rate"]:.2f}, in {int(p0["blocks"])} blocks, positives in {int(p0["positive_blocks"])}). Primary rows:
+These are the blind places' results: {int(p0["rows"])} places of the sealed set with a SAC label that no committed run had
+scored ({int(p0["positives"])} listed, base rate {p0["base_rate"]:.2f}, in {int(p0["blocks"])} blocks, positives in {int(p0["positive_blocks"])}). `a_pr_auc` is the selected
+candidate's PR-AUC; each other cell is its difference from that baseline, the block interval and the verdict.{same_text}
 
-{chr(10).join("- " + _blind_line(r) for _, r in prim.iterrows())}
+{markdown(rows)}
 
-Against the population rule on the same places:
+With {int(p0["rows"])} places, and positives in {int(p0["positive_blocks"])} blocks, the intervals are wide and a "neither" is not evidence of no effect. The
+blind places' neighbours, and same-named towns elsewhere, were scored in earlier runs, so this is a reading of places no
+run scored, not of a region none had seen. All rows, with every model's metrics: `runs/classifier/sealed/blind/`.
 
-{chr(10).join("- " + _blind_line(r) for _, r in rule.iterrows())}
-
-So on blind places the selected candidate beats population plus country by both intervals for {len(gains)} of
-{len(prim)} scopes{(" (" + "; ".join(f"'{g}'" for g in gains) + ")") if gains else ""}, and beats the population rule by both
-intervals for {int(rule["verdict"].eq("gain").sum())} of {len(rule)}{(" (" + "; ".join(f"'{g}'" for g in rule.loc[rule["verdict"].eq("gain"), "scope"]) + ")") if rule["verdict"].eq("gain").any() else ""}. This is the reading the main result quotes
-as blind; the eleventh amendment's and all-sealed readings above are of places some committed run had already scored. The
-blind places' neighbours, and same-named towns elsewhere, were scored in those runs, so it is a reading of places
-no run scored, not of a region none had seen. With {int(p0["rows"])} places the intervals are wider than above, and a
-"neither" is not evidence of no effect. All rows, with every model's metrics: `runs/classifier/sealed/blind/`.
+How the blind places were found. The sealed scoring (next section) read as unscored the {AMENDMENT_11_SET} sealed places the early
+check had not scored, from the outputs of one commit; earlier commits of a milestone check had committed scores, and
+maps showing them, for places that commit no longer scored. Walking every commit before the sealed scoring
+(`scripts/scored_history.py`, written to `data/curated/splits/scored_in_history.csv`) finds {hist["place_id"].nunique()} of the {SEALED_PLACES} sealed
+places with a committed score: {lost} of the {int(ns["rows"])} of that set with a SAC label, and all but {EARLY_SCORED + lost - hist["place_id"].nunique()} of the {EARLY_SCORED} the early check had
+scored. That one counts as scored only because it shares its name and country with another town the early check
+scored (Kirovsk, `scored_before_freeze.csv`); the walk finds no score for it. `configs/protocol_amendment_12.yaml`
+restricted the reading to the rest after the next section's reading had been seen; it refits and rescores nothing.
+`python -m nucprob.classifier.sealed_reread` reads the committed sealed scores, checking their hash.
 """
+
+
+def _blind_cell(r) -> str:
+    blocks = (
+        f"[{signed(r['block_low'])}, {signed(r['block_high'])}]"
+        if r["block_measured"]
+        else f"n/a: positives in {int(r['positive_blocks'])} blocks"
+    )
+    return f"{signed(r['delta'])} [{signed(r['low'])}, {signed(r['high'])}], by blocks {blocks}: {r['verdict']}"
+
+
+def _undated_sites() -> int:
+    """Rows of the West European site table with no from_year that it holds as in role in 1965: they count for
+    every document, including those of 1961 and 1964 (nucprob.classifier.features.sites_as_of)."""
+    s = pd.read_csv(CURATED / "features" / "weurope_military_sites_1965.csv")
+    undated = pd.to_numeric(s["from_year"], errors="coerce").isna()
+    in_role = s["in_role_1965"].astype(str).str.lower().isin(["true", "1", "yes"])
+    return int((undated & in_role & s["lat"].notna() & s["lon"].notna()).sum())
 
 
 def _cannot_blind() -> str:
@@ -1159,7 +1226,7 @@ def _cannot_blind() -> str:
     return (
         "- **A blind gain over population plus country.** On the only blind places, "
         f"{int(prim.iloc[0]['rows'])} towns of SAC's list, no selected model beat it by both intervals (Results, "
-        '"The sealed set read again on blind places only").'
+        '"The sealed set on blind places").'
     )
 
 
@@ -1366,8 +1433,8 @@ the list's share of positives, its **base rate**, so a PR-AUC means nothing with
 base rate of {sac_rate:.2f}, the others together {rest_rate:.2f}. On a list that does not claim to be complete, a town off the
 list is unlabeled, not a negative, so PR-AUC there understates true precision: read such figures against each other and
 the base rate, not as how often a model is right. Intervals are 95%. "By blocks" resamples whole 300 km squares of towns;
-the other interval resamples single towns. Verdicts use the unrounded bounds; a bound that would print as 0.00 is shown to
-three decimals with its sign, an exact zero as 0.00, and a comparison whose scores never differ as "constant". Where the positives lie in fewer than {MIN_POSITIVE_BLOCKS} blocks, resampling blocks measures nothing, and the block interval is shown as "n/a" with the count.
+the other interval resamples single towns. Verdicts use the unrounded bounds; a bound that would print as 0.00 is shown with its
+sign and the decimals it needs (three or more), an exact zero as 0.00, and a comparison whose scores never differ as "constant". Where the positives lie in fewer than {MIN_POSITIVE_BLOCKS} blocks, resampling blocks measures nothing, and the block interval is shown as "n/a" with the count.
 
 **Terms.** "Document" is the general word here: most of the lists are studies, exercises, lessons and a war
 game, and few are war plans (see "How much evidence there is, by side"). "Leave one document out" is the holdout `configs/protocol.yaml` calls leave one plan out.
@@ -1423,7 +1490,7 @@ town census exists between 1939 and 1959 (below). Western European towns use 196
 **Inputs later than the document.** Removing the flagged columns does not remove all of these. The 1959 Soviet census is
 in every population column. For the June 1956 document Hungary's towns are interpolated from the 1949 and 1960 censuses and
 the Czech lands' from 1950 and 1961 (`data/curated/gazetteer/README.md`), and Kurchatov carries a 1990 figure
-(`data/curated/gazetteer/closed_cities_1956.csv`). The Western European site table runs to 1966, and 23 undated sites it
+(`data/curated/gazetteer/closed_cities_1956.csv`). The Western European site table runs to 1966, and {_undated_sites()} undated sites it
 holds as in role in 1965 also count for the documents of 1961 and 1964.
 
 **Labels.** A positive is a town linked to a row the document designates (`selected = 1` in
@@ -1512,8 +1579,8 @@ The selected candidate of each scope. "Trained on" is the smallest number of pos
 - **SAC itself**, left out of the global model: {pr(GLOBAL_ALL, "leave", SAC, g_best)} under {g_best}, {pr(GLOBAL_ALL, "leave", SAC, RULE)} for the population rule, on a base rate of {sac_rate:.2f}.
 - **Target Committee of 1945**, its designated cities, left out: {pr(GLOBAL_ALL, "leave", "us_1945_target_committee", g_best)} under {g_best}, {pr(GLOBAL_ALL, "leave", "us_1945_target_committee", RULE)} for the population rule.
 
-{_sealed_section()}
 {_blind_section()}
+{_sealed_section()}
 ### What the gains rest on
 
 Each scope's selected candidate against population plus country under spatial blocks, with columns removed.
@@ -1683,8 +1750,17 @@ term for each target country.
   document) chose population as the score. On the 1956 towns the score moves only
   {spread["score_ratio"]:.1f}-fold over a {spread["population_ratio"]:.0f}-fold range of population, so a cell's probability also depends on how many
   towns it holds. {_readme_width(scen)} The 1965 map has no United Kingdom: its only census table came through a path robots.txt disallows and was withdrawn. Modern scenarios use Natural Earth's map-label towns and are
-  extrapolation: a classifier told them from the training towns at ROC-AUC {shift.iloc[0]["value"]:.2f} on ten features, where 0.5 would mean no shift, with
+  extrapolation: a classifier told them from the training towns at ROC-AUC {shift.iloc[0]["value"]:.2f} (ROC-AUC: the chance that it ranks a random modern
+  town above a random training town; 0.5 would mean no shift) on {_shift_features(shift)} features both sets have (population, its rank, population within 25-100 km,
+  distances to a town of 100,000, the capital and the coast, capital and regional-centre status), with
   {log_pop["value"]:.0%} outside the training's 1st-99th percentile on the one feature the score reads, and no modern label exists to test them."""
+
+
+def _shift_features(shift: pd.DataFrame) -> int:
+    """The features the domain-shift classifier reads: those domain_shift.csv gives a percentile share for."""
+    prefix = "modern towns outside the 1st-99th percentile of training: "
+    rows = shift["comparison"][shift["comparison"].str.startswith(prefix)]
+    return rows.str.removeprefix(prefix).nunique()
 
 
 def _readme_blind() -> str:
@@ -1702,10 +1778,11 @@ def _readme_blind() -> str:
     )
     earlier = pd.read_csv(SEALED.parent / "comparison.csv")
     earlier = earlier[earlier["primary"]]
-    return f"""- **On the only blind test**, {first}. The **sealed set** is {int(pd.read_csv(BLIND)["rows"].max())} towns scored against SAC's list,
-  in 300 km blocks kept out of every fit and scored once at the end; {int(p0["rows"])} of them had been scored by no earlier run
-  ({int(p0["positives"])} listed). Against population plus country there:
-{"".join(f"  - {r.scope}: {signed(r.delta)} [{signed(r.low)}, {signed(r.high)}], by blocks [{signed(r.block_low)}, {signed(r.block_high)}]: {r.verdict}{chr(10)}" for r in prim.itertuples())}  Against the population rule, {len(rule_gains)} of {len(rule)} gain by both intervals{(": " + "; ".join(f"{r.scope} {signed(r.delta)} [{signed(r.low)}, {signed(r.high)}], by blocks [{signed(r.block_low)}, {signed(r.block_high)}]" for r in rule_gains.itertuples())) if len(rule_gains) else ""}.
+    return f"""- **On the only blind test**, {first}. The **sealed set** is the {SEALED_PLACES} towns of 300 km blocks kept out of
+  every fit and scored once at the end; {int(pd.read_csv(BLIND)["rows"].max())} of them have a SAC label and are scored against SAC's list,
+  and {int(p0["rows"])} of those had been scored by no earlier run ({int(p0["positives"])} listed). Against population plus country there:
+{"".join(f"  - {r.scope}: {signed(r.delta)} [{signed(r.low)}, {signed(r.high)}], by blocks [{signed(r.block_low)}, {signed(r.block_high)}]: {r.verdict}{_rule_note(r.scope)}{chr(10)}" for r in prim.itertuples())}
+  Against the population rule, {len(rule_gains)} of {len(rule)} gain by both intervals{(": " + "; ".join(f"{r.scope} {signed(r.delta)} [{signed(r.low)}, {signed(r.high)}], by blocks [{signed(r.block_low)}, {signed(r.block_high)}]" for r in rule_gains.itertuples())) if len(rule_gains) else ""}.
   Positives lie in only {int(p0["positive_blocks"])} of {int(p0["blocks"])} blocks, so these intervals are wide and "neither" is not evidence of no effect.
   On {int(earlier.iloc[0]["rows"])} sealed places including ones earlier runs had scored, {int(earlier["verdict"].eq("gain").sum())} of {len(earlier)} models gained over population plus country.
   **That reading is not blind.** (`runs/classifier/sealed/blind/comparison.csv`; REPORT, "The sealed set".)

@@ -49,9 +49,6 @@ def splitbase(item):
     return parts[0], (parts[1] if len(parts) > 1 else ""), tail.strip()
 
 
-PARA_DATE = re.compile(r"^(?:In\s+)?(\d{1,2}\.\d{1,2}\.\d{2,4}|\d{1,2}\.\d{2,4}|\d{4})\b")
-
-
 def pvo_events(x):
     ev = []
     for p in x["paras"]:

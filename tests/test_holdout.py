@@ -1,6 +1,7 @@
 """The held-out set of the 1956 bloc is frozen and independent of the labels."""
 
 import pandas as pd
+import pytest
 
 from nucprob.dataset import SPLITS, held_out
 from nucprob.labels.sac1956 import NAME_LINK, name_score, simple
@@ -80,7 +81,7 @@ def test_the_places_scored_in_history_are_sealed_ones_the_scan_found():
     }
     path = PROCESSED / "dataset_sac1956.parquet"
     if not path.exists():
-        return
+        pytest.skip("data/processed/dataset_sac1956.parquet is not built (make dataset)")
     d = pd.read_parquet(path, columns=["place_id", "sealed", "never_scored"])
     assert set(h["place_id"]) <= set(d.loc[d["sealed"], "place_id"])
     ns = set(d.loc[d["never_scored"], "place_id"])

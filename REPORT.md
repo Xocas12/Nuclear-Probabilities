@@ -10,8 +10,8 @@ the list's share of positives, its **base rate**, so a PR-AUC means nothing with
 base rate of 0.49, the others together 0.07. On a list that does not claim to be complete, a town off the
 list is unlabeled, not a negative, so PR-AUC there understates true precision: read such figures against each other and
 the base rate, not as how often a model is right. Intervals are 95%. "By blocks" resamples whole 300 km squares of towns;
-the other interval resamples single towns. Verdicts use the unrounded bounds; a bound that would print as 0.00 is shown to
-three decimals with its sign, an exact zero as 0.00, and a comparison whose scores never differ as "constant". Where the positives lie in fewer than 5 blocks, resampling blocks measures nothing, and the block interval is shown as "n/a" with the count.
+the other interval resamples single towns. Verdicts use the unrounded bounds; a bound that would print as 0.00 is shown with its
+sign and the decimals it needs (three or more), an exact zero as 0.00, and a comparison whose scores never differ as "constant". Where the positives lie in fewer than 5 blocks, resampling blocks measures nothing, and the block interval is shown as "n/a" with the count.
 
 **Terms.** "Document" is the general word here: most of the lists are studies, exercises, lessons and a war
 game, and few are war plans (see "How much evidence there is, by side"). "Leave one document out" is the holdout `configs/protocol.yaml` calls leave one plan out.
@@ -39,7 +39,7 @@ Under cross-validation inside SAC's 1956 study, the models describe that list a 
   0.50, positives in 6 of 10 blocks), each scope's selected model against population plus country:
   - global, all attacker documents, LightGBM, all permitted: +0.02 [-0.02, +0.05], by blocks [-0.02, +0.12]: neither
   - global, plan documents only, LightGBM, all permitted: +0.02 [-0.02, +0.05], by blocks [-0.02, +0.11]: neither
-  - Warsaw Pact, pooled, exercise-based, LightGBM, all permitted: -0.15 [-0.25, -0.04], by blocks [-0.25, +0.15]: neither
+  - Warsaw Pact, pooled, exercise-based, LightGBM, all permitted: -0.15 [-0.25, -0.04], by blocks [-0.25, +0.15]: neither (here population plus country ranks every place as the population rule does: this scope's lists hold no town of these countries)
   - single document: SAC 1956 (not a state model), logistic, all permitted: -0.01 [-0.06, +0.02], by blocks [-0.04, +0.02]: neither
 
   Against the population rule, 2 of 4 scopes gain by both intervals: global, all attacker documents +0.12 [+0.05, +0.20]; global, plan documents only +0.13 [+0.05, +0.20]. With positives in so few blocks the intervals are wide, and "neither" is not evidence of no
@@ -192,12 +192,39 @@ The selected candidate of each scope. "Trained on" is the smallest number of pos
 - **SAC itself**, left out of the global model: 0.62 under LightGBM, all permitted, 0.77 for the population rule, on a base rate of 0.49.
 - **Target Committee of 1945**, its designated cities, left out: 0.11 under LightGBM, all permitted, 0.55 for the population rule.
 
+### The sealed set on blind places
+
+These are the blind places' results: 149 places of the sealed set with a SAC label that no committed run had
+scored (74 listed, base rate 0.50, in 10 blocks, positives in 6). `a_pr_auc` is the selected
+candidate's PR-AUC; each other cell is its difference from that baseline, the block interval and the verdict. In 'Warsaw Pact, pooled, exercise-based' the two baselines rank every place alike, so its two columns are one comparison ("The sealed set, scored once").
+
+| scope | model | a_pr_auc | against population + country | against population rule |
+|---|---|---|---|---|
+| global, all attacker documents | LightGBM, all permitted | 0.84 | +0.02 [-0.02, +0.05], by blocks [-0.02, +0.12]: neither | +0.12 [+0.05, +0.20], by blocks [+0.02, +0.26]: gain |
+| global, plan documents only | LightGBM, all permitted | 0.84 | +0.02 [-0.02, +0.05], by blocks [-0.02, +0.11]: neither | +0.13 [+0.05, +0.20], by blocks [+0.02, +0.27]: gain |
+| Warsaw Pact, pooled, exercise-based | LightGBM, all permitted | 0.57 | -0.15 [-0.25, -0.04], by blocks [-0.25, +0.15]: neither | -0.15 [-0.25, -0.04], by blocks [-0.25, +0.15]: neither |
+| single document: SAC 1956 (not a state model) | logistic, all permitted | 0.81 | -0.01 [-0.06, +0.02], by blocks [-0.04, +0.02]: neither | +0.10 [+0.02, +0.17], by blocks [-0.02, +0.24]: neither |
+
+With 149 places, and positives in 6 blocks, the intervals are wide and a "neither" is not evidence of no effect. The
+blind places' neighbours, and same-named towns elsewhere, were scored in earlier runs, so this is a reading of places no
+run scored, not of a region none had seen. All rows, with every model's metrics: `runs/classifier/sealed/blind/`.
+
+How the blind places were found. The sealed scoring (next section) read as unscored the 273 sealed places the early
+check had not scored, from the outputs of one commit; earlier commits of a milestone check had committed scores, and
+maps showing them, for places that commit no longer scored. Walking every commit before the sealed scoring
+(`scripts/scored_history.py`, written to `data/curated/splits/scored_in_history.csv`) finds 316 of the 467 sealed
+places with a committed score: 123 of the 272 of that set with a SAC label, and all but 1 of the 194 the early check had
+scored. That one counts as scored only because it shares its name and country with another town the early check
+scored (Kirovsk, `scored_before_freeze.csv`); the walk finds no score for it. `configs/protocol_amendment_12.yaml`
+restricted the reading to the rest after the next section's reading had been seen; it refits and rescores nothing.
+`python -m nucprob.classifier.sealed_reread` reads the committed sealed scores, checking their hash.
+
 ### The sealed set, scored once
 
-Scored on 2026-11-03, after `configs/protocol_amendment_11.yaml` fixed the reading and before any sealed
+This first reading is not blind: earlier runs had scored some of its places (previous section). Scored on 2026-11-03, after `configs/protocol_amendment_11.yaml` fixed the reading and before any sealed
 score existed; `runs/classifier/sealed/LOCK.json` records the commit and stops a second run. Each scope's models were fitted on all its usable rows and scored SAC 1956's rows in the sealed
 blocks: the eleventh amendment's set, 272 places the early check had not scored (152 listed, base rate 0.56,
-in 28 blocks; `never_scored` in the outputs, although other runs had scored some of them, next section), and all 463 sealed places with a SAC label
+in 28 blocks; `never_scored` in the outputs, although other runs had scored some of them), and all 463 sealed places with a SAC label
 (250 listed); 4 of the 467 sealed places have no SAC label (an entry possibly lost from the scan)
 and so no row. The primary rows are the selected candidate against population plus country on the eleventh amendment's set.
 So the gain over population plus country holds on that set for 2 of 4 scopes
@@ -206,9 +233,7 @@ The pooled Warsaw Pact model ranks these places worse than population does (-0.1
 The gains are small: a few hundredths of PR-AUC on a base rate above one half. Only SAC 1956 has sealed rows, so
 this tests models on that list's places, which most of every global model's training positives come from; it says
 nothing about the other documents. A sealed block holds no training place, but a training town in a neighbouring
-block may be close. In the pooled Warsaw Pact scope, population plus country scores these places as the population
-rule does: none of the sealed places' countries (USSR, Poland, Czechoslovakia, China, East Germany, North Korea) is in
-that scope's lists, so none has an intercept of its own.
+block may be close. In 'Warsaw Pact, pooled, exercise-based', population plus country ranks every sealed place as the population rule does, so its rows against population plus country are comparisons with the population rule: none of the sealed places' countries (the Soviet bloc's and China's) is in that scope's lists, so none has an intercept of its own.
 
 | scope | population | model | against | a_pr_auc | b_pr_auc | difference | by_blocks | verdict |
 |---|---|---|---|---|---|---|---|---|
@@ -231,38 +256,6 @@ that scope's lists, so none has an intercept of its own.
 
 Every model's metrics on both populations, with a PR-AUC interval each, are in `runs/classifier/sealed/metrics.csv`.
 
-### The sealed set read again on blind places only
-
-The eleventh amendment's set above is not blind. The list of places earlier runs had scored was read from the
-outputs of one commit, and earlier commits of a milestone check had committed scores, and maps showing them, for
-places that commit no longer scored. Walking every commit before the sealed scoring (`scripts/scored_history.py`,
-written to `data/curated/splits/scored_in_history.csv`) finds 316 of the 467 sealed places with a
-committed score: 123 of that set's rows above and all but 1 of the 194 the early check had scored. That one counts as scored only because it shares its name and country with another town the early check scored (Kirovsk, `scored_before_freeze.csv`), and the walk finds no score for it. Of the set's 273 places, 272 have a SAC label. `configs/protocol_amendment_12.yaml` was written
-after the reading above had been seen and committed before this one was computed. It refits nothing and scores
-nothing: `python -m nucprob.classifier.sealed_reread` reads the committed sealed scores (it checks their hash) on the
-149 places of that set with a SAC label that no committed run scored (74 listed, base rate
-0.50, in 10 blocks, positives in 6). Primary rows:
-
-- global, all attacker documents, LightGBM, all permitted: 0.84 against 0.82, +0.02 [-0.02, +0.05], by blocks [-0.02, +0.12]: neither
-- global, plan documents only, LightGBM, all permitted: 0.84 against 0.83, +0.02 [-0.02, +0.05], by blocks [-0.02, +0.11]: neither
-- Warsaw Pact, pooled, exercise-based, LightGBM, all permitted: 0.57 against 0.72, -0.15 [-0.25, -0.04], by blocks [-0.25, +0.15]: neither
-- single document: SAC 1956 (not a state model), logistic, all permitted: 0.81 against 0.83, -0.01 [-0.06, +0.02], by blocks [-0.04, +0.02]: neither
-
-Against the population rule on the same places:
-
-- global, all attacker documents, LightGBM, all permitted: 0.84 against 0.72, +0.12 [+0.05, +0.20], by blocks [+0.02, +0.26]: gain
-- global, plan documents only, LightGBM, all permitted: 0.84 against 0.72, +0.13 [+0.05, +0.20], by blocks [+0.02, +0.27]: gain
-- Warsaw Pact, pooled, exercise-based, LightGBM, all permitted: 0.57 against 0.72, -0.15 [-0.25, -0.04], by blocks [-0.25, +0.15]: neither
-- single document: SAC 1956 (not a state model), logistic, all permitted: 0.81 against 0.72, +0.10 [+0.02, +0.17], by blocks [-0.02, +0.24]: neither
-
-So on blind places the selected candidate beats population plus country by both intervals for 0 of
-4 scopes, and beats the population rule by both
-intervals for 2 of 4 ('global, all attacker documents'; 'global, plan documents only'). This is the reading the main result quotes
-as blind; the eleventh amendment's and all-sealed readings above are of places some committed run had already scored. The
-blind places' neighbours, and same-named towns elsewhere, were scored in those runs, so it is a reading of places
-no run scored, not of a region none had seen. With 149 places the intervals are wider than above, and a
-"neither" is not evidence of no effect. All rows, with every model's metrics: `runs/classifier/sealed/blind/`.
-
 ### What the gains rest on
 
 Each scope's selected candidate against population plus country under spatial blocks, with columns removed.
@@ -275,12 +268,10 @@ document. The intervals resample places, keeping a place's rows together (2,000 
 `runs/classifier/identification/regularised.csv`). On those intervals "all permitted", "no national power", "no source markers" name documents better than that; population alone does worse than that, by 0.2 points [0.04, 0.31]: it learns nothing usable about documents and loses a little by sometimes naming another.
 Removing national power lowers accuracy by 16.8 points [15.6, 17.9], so those columns do help name the document. The columns name a row's document almost always. In a pooled scope a model can learn each document's base rate from them, and a pooled gain under spatial blocks cannot be told from that. Single-document and leave-one-document-out readings do not rest on this check.
 
-An earlier, unregularised version of this check is withdrawn: 9 of its 16 fits (four column sets,
-four folds) diverged, against 0 of 16 with regularisation
-(`runs/classifier/identification/divergence.csv`). Its intervals, fixed in advance by the thirteenth amendment at
-49.0% to 52.0% on all columns (`runs/classifier/identification/intervals.csv`), measured that failed fit and not the
-columns. The regularised reading above replaces it and is post hoc (`configs/protocol_amendment_14.yaml`); one
-regularisation value was tried, and none was searched.
+This reading is post hoc (`configs/protocol_amendment_14.yaml`; one regularisation value was tried). The version fixed in
+advance had none: 9 of its 16 fits (four column sets, four folds) diverged, against 0 of 16 here
+(`runs/classifier/identification/divergence.csv`), so its intervals, 49.0% to 52.0% on all columns
+(`runs/classifier/identification/intervals.csv`), measured a failed fit; it is withdrawn.
 
 
 | scope | model | variant | features | a_pr_auc | b_pr_auc | difference | by_blocks |
@@ -654,7 +645,7 @@ Per feature, on 3,686 training and 2,276 modern towns (`runs/probmap/domain_shif
 - **That SAC's list is free of error.** See how it was transcribed, under Data, and `data/ISSUES.md` for what has been corrected.
 - **A state's own model.** Each state is refused. A model of Warsaw Pact war plans in particular has no basis: 6 linked positives, none from a plan read at source. The pooled model is exercise-based.
 - **Prediction for a plan not in the data.** See the main result. The map's score carries this limit into every cell.
-- **A blind gain over population plus country.** On the only blind places, 149 towns of SAC's list, no selected model beat it by both intervals (Results, "The sealed set read again on blind places only").
+- **A blind gain over population plus country.** On the only blind places, 149 towns of SAC's list, no selected model beat it by both intervals (Results, "The sealed set on blind places").
 - **A pooled gain as more than each document's base rate.** The columns name a row's document 98.1% of the time against 44.4% for naming the largest, so a model fitted on pooled lists can learn which document a row belongs to (Results, "What the gains rest on").
 - **Causes.** These are associations between a town's traits and its presence on a list. No design here separates one trait's effect from another's or from the planners' reasons.
 - **What planners knew.** Features record what existed according to later sources.

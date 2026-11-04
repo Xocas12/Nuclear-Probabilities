@@ -339,8 +339,12 @@ def test_the_sealed_reading_is_of_the_committed_amendment_models_and_table():
     # The sixteenth amendment refits on a corrected table and keeps the run the sealed set was scored
     # with in sealed/fitted_run/: the lock must name that run's table, and the sealed rows its selection.
     fitted = OUT / "sealed" / "fitted_run"
-    assert lock["table_sha256"] == json.loads((fitted / "manifest.json").read_text())["table_sha256"]
-    assert lock["table_sha256"] == "28c139144a8cde8a7a87610448c2f5b0d882a24c4f5a4638704ff630489a97ed"
+    assert (
+        lock["table_sha256"] == json.loads((fitted / "manifest.json").read_text())["table_sha256"]
+    )
+    assert (
+        lock["table_sha256"] == "28c139144a8cde8a7a87610448c2f5b0d882a24c4f5a4638704ff630489a97ed"
+    )
     comp = pd.read_csv(OUT / "sealed" / "comparison.csv")
     sel = pd.read_csv(fitted / "selection.csv")
     chosen = dict(sel.loc[sel["selected"], ["scope", "model"]].to_numpy())
@@ -482,3 +486,54 @@ def test_the_condensed_map_and_extended_tables_keep_every_figure():
     rows = report._extended_rows()
     tables = (OUT / "TABLES.md").read_text(encoding="utf-8")
     assert report.markdown(rows[report.EXTENDED_COLUMNS]) in tables
+
+
+@needs_run
+def test_a_sealed_country_baseline_that_is_the_population_rule_is_flagged():
+    """The review of 62f10e9 (finding 3): on the sealed places a scope whose population-plus-country model
+    ranks every place as its population rule does is a comparison with population; README and REPORT say so."""
+    sealed = OUT / "sealed" / "scores.csv.gz"
+    if not sealed.exists():
+        pytest.skip("no sealed scores")
+    s = pd.read_csv(sealed)
+    same = {
+        c.split(" | ")[0]
+        for c in s.columns
+        if c.endswith(" | population + country")
+        and s[c].rank().equals(s[c.replace("population + country", "population rule")].rank())
+    }
+    assert report._country_is_rule() == same
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    text = (ROOT / "REPORT.md").read_text(encoding="utf-8")
+    for scope in same:
+        line = next(x for x in readme.splitlines() if x.startswith(f"  - {scope}:"))
+        assert "ranks every place as the population rule does" in line
+        assert f"In '{scope}' the two baselines rank every place alike" in text
+
+
+def test_the_undated_site_count_is_read_from_the_site_table():
+    """The review of 62f10e9 (finding 10): the count of undated West European sites that count for every
+    document is computed from the table, not typed."""
+    sites = pd.read_csv(ROOT / "data" / "curated" / "features" / "weurope_military_sites_1965.csv")
+    undated = sites["from_year"].isna() & sites["in_role_1965"].astype(str).str.lower().eq("true")
+    assert report._undated_sites() == int(undated.sum())
+    text = (ROOT / "REPORT.md").read_text(encoding="utf-8")
+    assert f"and {int(undated.sum())} undated sites it\nholds as in role in 1965" in text
+
+
+def test_readme_defines_its_terms_before_use():
+    """The review of 62f10e9 (finding 5): abbreviations and named checks in README are spelled out."""
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    for term, definition in [
+        ("ROC-AUC", "ROC-AUC: the chance that"),
+        ("COW", "Correlates of War project's (COW)"),
+        ("FAS", "Federation of\n  American Scientists (FAS)"),
+        ("NRDC", "Natural Resources Defense Council (NRDC)"),
+        ("OWID", "Our World in Data (OWID)"),
+        ("SIPRI", "Stockholm\n  International Peace Research Institute (SIPRI)"),
+        ("requirements study", "requirements study (an estimate"),
+    ]:
+        assert definition in readme, term
+        assert readme.index(definition) <= readme.index(term) + len(definition), term
+    assert "tenth amendment" not in readme
+    assert "The **sealed set** is the 467 towns" in readme
