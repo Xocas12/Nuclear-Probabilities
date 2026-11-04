@@ -456,8 +456,10 @@ def test_no_committed_us_check_output_holds_county_coordinates():
 @needs_run
 def test_the_condensed_map_and_extended_tables_keep_every_figure():
     """REPORT folds each interval into one column and the theatre shares into one row per range; no
-    figure of the map's outputs is lost, and TABLES.md keeps every economic and political row."""
+    figure of the map's outputs is lost. TABLES.md keeps every economic and political row, every
+    delivery row and every feature's domain-shift row."""
     text = (ROOT / "REPORT.md").read_text(encoding="utf-8")
+    tables = (OUT / "TABLES.md").read_text(encoding="utf-8")
     m = report.MAP
     d = pd.read_csv(m / "delivered.csv")
     for _, r in d.iterrows():
@@ -472,7 +474,7 @@ def test_the_condensed_map_and_extended_tables_keep_every_figure():
         avail = f"{r['available_median']:.0f} [{r['available_low']:.0f}, {r['available_high']:.0f}]"
         sent = f"{r['delivered_median']:.0f} [{r['delivered_low']:.0f}, {r['delivered_high']:.0f}]"
         row = f"| {r['scenario']} | {r['attacker']} | {r['stock_year']} | {r['delivery']} | {avail} | {sent} |"
-        assert row in text, row
+        assert row in tables, row
     theatre = report._theatre_table()
     stated = sum(len(a.split(", ")) for a in theatre["attackers"])
     assert stated == sum(len(sc["attackers"]) for sc in report.load_scenarios())
@@ -482,9 +484,8 @@ def test_the_condensed_map_and_extended_tables_keep_every_figure():
     for feature, g in per.groupby("feature", sort=False):
         values = g.set_index("measure")["value"].reindex(list(report.SHIFT_COLUMNS))
         row = "| " + " | ".join([feature, *(report._cell(float(v)) for v in values)]) + " |"
-        assert row in text, row
+        assert row in tables, row
     rows = report._extended_rows()
-    tables = (OUT / "TABLES.md").read_text(encoding="utf-8")
     assert report.markdown(rows[report.EXTENDED_COLUMNS]) in tables
 
 

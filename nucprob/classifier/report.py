@@ -257,6 +257,21 @@ def tables() -> str:
     if extended is not None:
         parts += ["## Economic and political data, every row", ""]
         parts += [markdown(extended[EXTENDED_COLUMNS]), ""]
+    if (MAP / "by_delivery.csv").exists():
+        shift = pd.read_csv(MAP / "domain_shift.csv")
+        shift["feature"] = shift["comparison"].str.split(": ").str[-1]
+        two = shift[shift["measure"] == "two-sample ROC-AUC"].iloc[0]
+        parts += ["## Probability map: warheads available and delivered, by state and delivery", ""]
+        parts += ["Median with the 5th to 95th percentile (`runs/probmap/by_delivery.csv`).", ""]
+        parts += [markdown(_by_delivery_table(pd.read_csv(MAP / "by_delivery.csv"))), ""]
+        parts += ["## Probability map: domain shift, feature by feature", ""]
+        parts += [
+            f"On {int(two['towns_a']):,} training and {int(two['towns_b']):,} modern towns "
+            "(`runs/probmap/domain_shift.csv`).",
+            "",
+            markdown(_shift_table(shift)),
+            "",
+        ]
     return "\n".join(parts)
 
 
@@ -448,7 +463,6 @@ def _map_section() -> str:
         return "The probability map has not been run.\n"
     s = pd.read_csv(MAP / "scenarios.csv")
     d = pd.read_csv(MAP / "delivered.csv")
-    by_delivery = pd.read_csv(MAP / "by_delivery.csv")
     choice = pd.read_csv(MAP / "model_choice.csv")
     val = pd.read_csv(MAP / "validation.csv")
     rel = pd.read_csv(MAP / "reliability.csv")
@@ -575,9 +589,8 @@ scenario's range runs between them. A share measured on strategic or deployed fo
 Soviet row of 1965 spreads NRDC's strategic shares over a stockpile that also holds tactical weapons with no known split.
 Reliability has one range for every modern delivery, because no source separates them. Each delivery draws from that
 range separately, so the split leaves the expected delivered total unchanged and changes only how much the draws average
-out. These are totals for a whole force. No delivery is assigned to any area.
-
-{markdown(_by_delivery_table(by_delivery))}
+out. These are totals for a whole force. No delivery is assigned to any area. The table by state and delivery is in
+`runs/classifier/TABLES.md` ("Probability map: warheads available and delivered").
 
 **Check against the 1956 list.** A listing is not the same event as a strike: this compares what the map says of a
 delivered warhead with what one study listed, so it can show agreement in order and not that the probabilities are right.
@@ -600,9 +613,7 @@ There are no modern labels, so performance on modern towns cannot be measured at
 (0.5 is no separation); the single features run from {alone.iloc[0]["value"]:.2f} (`{alone.iloc[0]["feature"]}`) to {alone.iloc[-1]["value"]:.2f} (`{alone.iloc[-1]["feature"]}`){", so the one feature the score reads is the one that separates the sets most" if alone.iloc[-1]["feature"] == "log_pop" else ""}.
 With one feature left out, the classifier's ROC-AUC stays between {dropped.iloc[0]["value"]:.2f} (without `{dropped.iloc[0]["feature"]}`) and {dropped.iloc[-1]["value"]:.2f}{_carried(dropped, two.iloc[0]["value"])}
 
-Per feature, on {int(two.iloc[0]["towns_a"]):,} training and {int(two.iloc[0]["towns_b"]):,} modern towns (`runs/probmap/domain_shift.csv`):
-
-{markdown(_shift_table(shift))}
+Every feature's three figures are in `runs/classifier/TABLES.md` ("Probability map: domain shift").
 """
 
 
