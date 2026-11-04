@@ -966,19 +966,21 @@ def _sealed_section() -> str:
     other = prim[~prim["verdict"].eq("gain")]
     return f"""### The sealed set, scored once
 
-This first reading is not blind: earlier runs had scored some of its places (previous section). Scored on {lock["scored"][:10]}, after `configs/protocol_amendment_11.yaml` fixed the reading and before any sealed
-score existed; `runs/classifier/sealed/LOCK.json` records the commit and stops a second run. Each scope's models were fitted on all its usable rows and scored SAC 1956's rows in the sealed
-blocks: the {int(p0["rows"])} labelled places the early check had not scored (the set `configs/protocol_amendment_11.yaml` fixed; {int(p0["positives"])} listed, base rate {p0["base_rate"]:.2f},
-in {int(p0["blocks"])} blocks; `never_scored` in the outputs, although other runs had scored some of them), and all {int(a0["rows"])} sealed places with a SAC label
-({int(a0["positives"])} listed); {SEALED_PLACES - pd.read_csv(OUT / "sealed" / "scores.csv.gz", usecols=["place_id"])["place_id"].nunique()} of the {SEALED_PLACES} sealed places have no SAC label (an entry possibly lost from the scan)
-and so no row. The primary rows are the selected candidate against population plus country on those places.
-So the gain over population plus country holds on that set for {len(gains)} of {len(prim)} scopes
-({"; ".join(f"'{g}'" for g in gains) if gains else "none"}), and not for {"; ".join(f"'{r.scope}' ({r.verdict})" for r in other.itertuples())}.
+This reading is not blind: earlier runs had scored some of these places (previous section). It was made once, on {lock["scored"][:10]},
+after `configs/protocol_amendment_11.yaml` fixed how it would be read; `runs/classifier/sealed/LOCK.json` records the commit and
+stops a second run. Each scope's models were fitted on all its usable rows and scored SAC 1956's rows in the sealed blocks, on two sets:
+
+- the {int(p0["rows"])} labelled places the early check had not scored (`never_scored` in the outputs, although other runs had scored
+  some of them; {int(p0["positives"])} listed, base rate {p0["base_rate"]:.2f}, in {int(p0["blocks"])} blocks). The primary rows are on this set.
+- all {int(a0["rows"])} sealed places with a SAC label ({int(a0["positives"])} listed). {SEALED_PLACES - pd.read_csv(OUT / "sealed" / "scores.csv.gz", usecols=["place_id"])["place_id"].nunique()} of the {SEALED_PLACES} sealed places have no SAC label,
+  possibly an entry lost from the scan, and so no row.
+
+Against population plus country the selected candidate gains in {len(gains)} of {len(prim)} scopes
+({"; ".join(f"'{g}'" for g in gains) if gains else "none"}), and not in {"; ".join(f"'{r.scope}' ({r.verdict})" for r in other.itertuples())}.
 {_pooled_sealed(prim)}
-The gains are small: a few hundredths of PR-AUC on a base rate above one half. Only SAC 1956 has sealed rows, so
-this tests models on that list's places, which most of every global model's training positives come from; it says
-nothing about the other documents. A sealed block holds no training place, but a training town in a neighbouring
-block may be close.{_country_rule_sentence()}
+The gains are a few hundredths of PR-AUC on a base rate above one half. Only SAC 1956 has sealed rows, so this tests the
+models on that list's places, the source of most of every global model's training positives, and says nothing about the
+other documents. A sealed block holds no training place, but a training town in a neighbouring block may be close.{_country_rule_sentence()}
 
 {markdown(shown)}
 
