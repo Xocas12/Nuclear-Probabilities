@@ -943,7 +943,7 @@ def _sealed_section() -> str:
     p0, a0 = prim.iloc[0], allp.iloc[0]
 
     shown = comp.assign(
-        population=comp["population"].replace({"never_scored": "amendment 11 set"}),
+        population=comp["population"].replace({"never_scored": "not in the early check"}),
         difference=[
             f"{point(r.delta, r.low, r.high)} [{signed(r.low)}, {signed(r.high)}]"
             for r in comp.itertuples()
@@ -968,10 +968,10 @@ def _sealed_section() -> str:
 
 This first reading is not blind: earlier runs had scored some of its places (previous section). Scored on {lock["scored"][:10]}, after `configs/protocol_amendment_11.yaml` fixed the reading and before any sealed
 score existed; `runs/classifier/sealed/LOCK.json` records the commit and stops a second run. Each scope's models were fitted on all its usable rows and scored SAC 1956's rows in the sealed
-blocks: the eleventh amendment's set, {int(p0["rows"])} places the early check had not scored ({int(p0["positives"])} listed, base rate {p0["base_rate"]:.2f},
+blocks: the {int(p0["rows"])} labelled places the early check had not scored (the set `configs/protocol_amendment_11.yaml` fixed; {int(p0["positives"])} listed, base rate {p0["base_rate"]:.2f},
 in {int(p0["blocks"])} blocks; `never_scored` in the outputs, although other runs had scored some of them), and all {int(a0["rows"])} sealed places with a SAC label
 ({int(a0["positives"])} listed); {SEALED_PLACES - pd.read_csv(OUT / "sealed" / "scores.csv.gz", usecols=["place_id"])["place_id"].nunique()} of the {SEALED_PLACES} sealed places have no SAC label (an entry possibly lost from the scan)
-and so no row. The primary rows are the selected candidate against population plus country on the eleventh amendment's set.
+and so no row. The primary rows are the selected candidate against population plus country on those places.
 So the gain over population plus country holds on that set for {len(gains)} of {len(prim)} scopes
 ({"; ".join(f"'{g}'" for g in gains) if gains else "none"}), and not for {"; ".join(f"'{r.scope}' ({r.verdict})" for r in other.itertuples())}.
 {_pooled_sealed(prim)}
@@ -1204,10 +1204,10 @@ With {int(p0["rows"])} places, and positives in {int(p0["positive_blocks"])} blo
 blind places' neighbours, and same-named towns elsewhere, were scored in earlier runs, so this is a reading of places no
 run scored, not of a region none had seen. All rows, with every model's metrics: `runs/classifier/sealed/blind/`.
 
-How the blind places were found. "The early check" is the M1 slice and M2 check together, read at commit `de2e54a`
-(`data/curated/splits/scored_before_freeze.csv`): {EARLY_SCORED} of the {SEALED_PLACES} sealed places had a score there. The sealed
-scoring (next section) took the other {AMENDMENT_11_SET} as unscored; {int(ns["rows"])} of those have a SAC label. Earlier commits of
-the M2 check had scored places that `de2e54a` no longer scored, so a walk over every commit before the sealed
+How the blind places were found. "The early check" is the M1 slice and M2 check together, as read when the sealed blocks
+were drawn (`data/curated/splits/scored_before_freeze.csv`): {EARLY_SCORED} of the {SEALED_PLACES} sealed places had a score there. The sealed
+scoring (next section) took the other {AMENDMENT_11_SET} as unscored; {int(ns["rows"])} of those have a SAC label. Earlier versions of
+the M2 check had scored places that the version read then no longer scored, so a walk over every commit before the sealed
 scoring (`scripts/scored_history.py`, output `data/curated/splits/scored_in_history.csv`) looked for any committed
 score. It found one for {lost} of the {int(ns["rows"])}; the other {int(ns["rows"]) - lost} are the blind places.
 `configs/protocol_amendment_12.yaml` made that restriction after the next section's reading had been seen; it refits
