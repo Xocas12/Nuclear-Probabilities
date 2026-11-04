@@ -53,7 +53,7 @@ describes, `tests/test_holdouts_bite.py`, and the new tests in `tests/test_label
 
 The robots finding, answered on 2 November 2026 except for one source. The 37 GeoNames dumps were fetched again from a CC BY 4.0
 mirror whose robots.txt allows them, with the recorded hashes; the Demoscope page and the Pałka article are held as Wayback
-captures with the recorded hashes (`data/sources_obtained.yaml`). The Wikipedia fetch scripts and the transcription instructions
+captures with the recorded hashes (`obtained_from` in `data/sources.yaml`). The Wikipedia fetch scripts and the transcription instructions
 now use an allowed path, and the pages of `uk_districts_1981_seats.csv` (since removed from the tree), `frg_1961_wikipedia.csv` and `closed_cities_1956.csv`
 are registered through allowed paths in `data/curated/features/cited_pages.csv`. Those three tables, and the use of
 `Special:Export` and `/w/api.php`, were not in the earlier audit. The last source, the UK 1981 census district totals from

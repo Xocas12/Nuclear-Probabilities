@@ -9,7 +9,7 @@ rule, and the two names that the project's automated agents answer to. Unavailab
 that nothing may be assumed, so nothing is fetched.
 
 Files already in data/raw/ are not touched here. Each row is judged on the URL the held bytes came
-from: `obtained_from` in data/sources_obtained.yaml where it has one (a licensed mirror or an archived capture), else
+from: `obtained_from` in data/sources.yaml where it has one (a licensed mirror or an archived capture), else
 its `url`. The publisher's own answer is kept beside it (`publisher_status`, `publisher_allowed`), so
 a source obtained from a mirror because its publisher refuses stays visible. The table says which
 files came from a URL that disallows them, so that the decision about them is visible.

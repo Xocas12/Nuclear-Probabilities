@@ -10,8 +10,8 @@ reached is reported and the rest continue; `mirror` names an archived copy to tr
 `volatile: <why>` marks a source whose bytes change with no change in what is used (a live
 database, a landing page): a difference is still reported, but is not a problem.
 Nothing is downloaded that the host's robots.txt does not allow (nucprob.sources.robots): such a
-source is reported as not obtained, and its mirror is not tried. data/sources_obtained.yaml gives,
-for some sources, `obtained_from`: the URL the held bytes were actually fetched from when that is not
+source is reported as not obtained, and its mirror is not tried. Some entries give `obtained_from`
+(with `obtained`, the date, and `obtained_note`): the URL the held bytes were actually fetched from when that is not
 the publisher's `url` (a licensed mirror or an archived capture, used where the publisher's robots.txt
 refuses or cannot be read). It is downloaded in place of `url`, under the same robots check and the
 same sha256 check. `--refresh` downloads again and records the new hash. Entries with `fetch: false` are
@@ -29,7 +29,7 @@ from pathlib import Path
 import requests
 import yaml
 
-from nucprob.paths import OBTAINED, RAW, REGISTRIES
+from nucprob.paths import RAW, REGISTRIES
 from nucprob.sources import robots
 
 HEADER_LINES = 4  # the comment block at the top of sources.yaml, kept on rewrite
@@ -49,27 +49,18 @@ def _read(path: Path) -> list[dict]:
 
 
 def obtained() -> dict[str, dict]:
-    """data/sources_obtained.yaml by id; empty if the file is absent."""
-    if not OBTAINED.exists():
-        return {}
-    return {s["id"]: s for s in _read(OBTAINED)}
+    """The registered sources that give `obtained_from`, by id."""
+    return {s["id"]: s for s in load_manifest()["sources"] if s.get("obtained_from")}
 
 
 def load_manifest() -> dict:
-    """Every registered source, with `obtained_from` added where sources_obtained.yaml gives one."""
-    routes = obtained()
-    sources = [dict(s) for path in REGISTRIES for s in _read(path)]
-    for s in sources:
-        if s["id"] in routes:
-            s["obtained_from"] = routes[s["id"]]["obtained_from"]
-    return {"sources": sources}
+    """Every registered source, from every registry."""
+    return {"sources": [dict(s) for path in REGISTRIES for s in _read(path)]}
 
 
 def save_manifest(manifest: dict) -> None:
     """Rewrite only a registry with a changed entry: the primary run records one file's hash."""
-    by_id = {
-        s["id"]: {k: v for k, v in s.items() if k != "obtained_from"} for s in manifest["sources"]
-    }
+    by_id = {s["id"]: s for s in manifest["sources"]}
     for path in REGISTRIES:
         old = _read(path)
         new = [by_id[s["id"]] for s in old]

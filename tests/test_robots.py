@@ -116,26 +116,26 @@ def test_scripts_use_allowed_routes_and_past_routes_stay_listed_as_refused():
         assert "/wiki/" in code, path.name
 
 
-def test_obtained_from_entries_name_registered_sources_with_their_recorded_hash():
-    registry = {s["id"]: s for s in fetch.load_manifest()["sources"]}
+def test_obtained_from_entries_give_a_url_date_and_note_and_cover_geonames():
     routes = fetch.obtained()
-    assert routes, "data/sources_obtained.yaml is empty or missing"
+    assert routes, "no source in data/sources.yaml gives obtained_from"
     for sid, entry in routes.items():
-        assert sid in registry, sid
-        assert entry["sha256"] == registry[sid]["sha256"], sid
-        assert registry[sid]["obtained_from"] == entry["obtained_from"]
-        assert entry["obtained_from"].startswith("https://") and entry["note"], sid
+        assert entry["obtained_from"].startswith("https://"), sid
+        assert entry["obtained_from"] != entry.get("url"), sid
+        assert str(entry["obtained"])[:2] == "20" and entry["obtained_note"], sid
+        assert entry["sha256"], sid  # the held bytes' hash is the one the source records
+    registry = {s["id"] for s in fetch.load_manifest()["sources"]}
     geonames = {s for s in registry if s.startswith("geonames_")}
     assert geonames <= set(routes)
+    assert not (ROOT / "data" / "sources_obtained.yaml").exists()  # folded into sources.yaml
 
 
 def test_held_copies_have_the_hash_of_their_obtained_from_entry():
     from nucprob.paths import RAW
 
-    registry = {s["id"]: s for s in fetch.load_manifest()["sources"]}
     checked = 0
     for sid, entry in fetch.obtained().items():
-        path = RAW / registry[sid]["path"]
+        path = RAW / entry["path"]
         if path.exists():
             assert fetch.sha256(path) == entry["sha256"], sid
             checked += 1
@@ -144,10 +144,14 @@ def test_held_copies_have_the_hash_of_their_obtained_from_entry():
 
 
 def test_the_fetcher_downloads_obtained_from_in_place_of_the_publisher_url(monkeypatch, tmp_path):
-    entry = {"id": "s", "url": "https://pub.example/x.zip", "path": "x.zip"}
+    entry = {
+        "id": "s",
+        "url": "https://pub.example/x.zip",
+        "path": "x.zip",
+        "obtained_from": "https://m.example/x",
+    }
     monkeypatch.setattr(fetch, "_read", lambda path: [dict(entry)])
     monkeypatch.setattr(fetch, "REGISTRIES", (tmp_path / "r.yaml",))
-    monkeypatch.setattr(fetch, "obtained", lambda: {"s": {"obtained_from": "https://m.example/x"}})
     monkeypatch.setattr(fetch, "RAW", tmp_path)
     monkeypatch.setattr(fetch, "save_manifest", lambda m: None)
     asked = []
@@ -161,14 +165,17 @@ def test_the_fetcher_downloads_obtained_from_in_place_of_the_publisher_url(monke
     assert asked == ["https://m.example/x"]
 
 
-def test_saving_the_registry_does_not_write_obtained_from_into_it(monkeypatch, tmp_path):
+def test_saving_the_registry_keeps_obtained_from_and_records_the_hash(monkeypatch, tmp_path):
     reg = tmp_path / "sources.yaml"
-    reg.write_text("# a\n# b\n# c\n# d\nsources:\n- id: s\n  url: https://pub.example/x\n")
+    reg.write_text(
+        "# a\n# b\n# c\n# d\nsources:\n- id: s\n  url: https://pub.example/x\n"
+        "  obtained_from: https://m.example/x\n"
+    )
     monkeypatch.setattr(fetch, "REGISTRIES", (reg,))
-    monkeypatch.setattr(fetch, "obtained", lambda: {"s": {"obtained_from": "https://m.example/x"}})
     manifest = fetch.load_manifest()
     assert manifest["sources"][0]["obtained_from"] == "https://m.example/x"
     manifest["sources"][0]["sha256"] = "0" * 64
     fetch.save_manifest(manifest)
     text = reg.read_text()
-    assert "obtained_from" not in text and "0" * 64 in text
+    assert "obtained_from: https://m.example/x" in text and "0" * 64 in text
+    assert text.startswith("# a\n# b\n# c\n# d\n")

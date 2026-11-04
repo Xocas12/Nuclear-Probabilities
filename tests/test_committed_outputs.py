@@ -9,7 +9,7 @@ import pandas as pd
 import pytest
 
 from nucprob.classifier import report
-from nucprob.paths import PROCESSED, ROOT, RUNS
+from nucprob.paths import CURATED, PROCESSED, ROOT, RUNS
 from nucprob.plans import protocol
 from nucprob.probmap import viewer
 from nucprob.sources import history
@@ -128,5 +128,29 @@ def test_the_sealed_sizes_in_the_report_are_those_of_the_table():
     path = PROCESSED / "dataset_sac1956.parquet"
     if not path.exists():
         pytest.skip("no built tables")
-    d = pd.read_parquet(path, columns=["sealed", "never_scored"])
+    d = pd.read_parquet(path, columns=["place_id", "sealed", "never_scored"])
     assert (int(d["sealed"].sum()), int(d["never_scored"].sum())) == (467, 273)
+    # The review of c27c1b8: the report's hard-coded sealed counts are checked here.
+    assert int(d["sealed"].sum()) == report.SEALED_PLACES
+    assert int(d["never_scored"].sum()) == report.AMENDMENT_11_SET
+    # The early check's places are matched by name and country, not id (Kirovsk), so one of the 194
+    # has no id of its own in scored_before_freeze.csv: the count is of sealed places not in the set.
+    assert int((d["sealed"] & ~d["never_scored"]).sum()) == report.EARLY_SCORED
+    early = set(pd.read_csv(CURATED / "splits" / "scored_before_freeze.csv")["place_id"])
+    assert int(d.loc[d["sealed"], "place_id"].isin(early).sum()) == report.EARLY_SCORED - 1
+
+
+def test_the_report_figures_from_data_cards_are_those_of_the_cards():
+    """The review of c27c1b8 (trivia 15): figures the report takes from a card or a curated table, not from a
+    run, are computed from that file or checked against its text here."""
+    aud = report._audit()
+    card = " ".join((CURATED / "sac1956" / "README.md").read_text(encoding="utf-8").split())
+    assert f"{aud['wrong']} of {aud['lines']}, 95% interval 0 to {100 * aud['upper']:.2f}%" in card
+    assert (
+        "own error rate was 1.3%" in card and "3 in 216" in card and "216 of the 270 rows" in card
+    )
+    nrdc, owid = report._stockpile_1950_us()
+    text = " ".join((ROOT / "REPORT.md").read_text(encoding="utf-8").split())
+    assert f"{nrdc} loaded, more than the {owid} OWID gives" in text
+    assert f"{aud['lines']} lines, found {aud['wrong']} errors" in text
+    assert "auditors whose own error rate was 1.3%" in text and "rate was 3 in 216" in text

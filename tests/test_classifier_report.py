@@ -489,6 +489,35 @@ def test_the_condensed_map_and_extended_tables_keep_every_figure():
 
 
 @needs_run
+@pytest.mark.skipif(
+    not (OUT / "sealed" / "fitted_run" / "comparison.csv").exists(), reason="no earlier run kept"
+)
+def test_the_sixteenth_amendment_paragraph_lists_every_moved_verdict():
+    """configs/protocol_amendment_16.yaml: REPORT names every primary row whose verdict differs between the
+    run the sealed set was scored with and the refit, and says whether any scope's selection changed."""
+    fitted = OUT / "sealed" / "fitted_run"
+    was_table = json.loads((fitted / "manifest.json").read_text())["table_sha256"]
+    now_table = json.loads((OUT / "manifest.json").read_text())["table_sha256"]
+    text = " ".join((ROOT / "REPORT.md").read_text(encoding="utf-8").split())
+    if was_table == now_table:
+        assert "### Changed by the sixteenth amendment" not in text
+        return
+    assert "### Changed by the sixteenth amendment" in text
+    now = report.primary_table(
+        pd.read_csv(OUT / "comparison.csv"), pd.read_csv(OUT / "selection.csv")
+    )
+    was = report.primary_table(
+        pd.read_csv(fitted / "comparison.csv"), pd.read_csv(fitted / "selection.csv")
+    )
+    both = now.merge(was, on=["Scope", "Holdout", "Lists"], suffixes=("", "_was"))
+    moved = both[both["Verdict"] != both["Verdict_was"]]
+    if moved.empty:
+        assert f"None of the {len(both)} primary rows" in text
+    for _, r in moved.iterrows():
+        assert f"{r['Scope']}, {r['Holdout']}, {r['Lists']}: {r['Verdict_was']} before" in text
+
+
+@needs_run
 def test_a_sealed_country_baseline_that_is_the_population_rule_is_flagged():
     """The review of 62f10e9 (finding 3): on the sealed places a scope whose population-plus-country model
     ranks every place as its population rule does is a comparison with population; README and REPORT say so."""

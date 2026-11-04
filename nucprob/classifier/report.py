@@ -489,6 +489,7 @@ def _map_section() -> str:
             "lopo_pr_auc_without_sac": "left_out_document_without_sac",
         }
     )
+    us50 = _stockpile_1950_us()
     return f"""The map answers: if a stated number of warheads were delivered, and each fell on a town in
 proportion to the score of a model of these lists, how likely is it that an area sees at least one?
 It is a consequence of stated assumptions, not a forecast of any war. The viewer is
@@ -553,7 +554,7 @@ In the second table each figure is the median with the 5th to 95th percentile; `
 
 **By delivery.** Warheads available by state and delivery after the stated assumptions, and those delivered. The
 shares come from SIPRI and NRDC (`data/curated/stockpiles/delivery_mix.csv`), on bases that differ by state. For 1950
-NRDC has all on bombers, 330 loaded, more than the 299 OWID gives for the whole stockpile: the sources conflict, and the
+NRDC has all on bombers, {us50[0]} loaded, more than the {us50[1]} OWID gives for the whole stockpile: the sources conflict, and the
 scenario's range runs between them. A share measured on strategic or deployed forces is applied to the whole inventory range, so a
 Soviet row of 1965 spreads NRDC's strategic shares over a stockpile that also holds tactical weapons with no known split.
 Reliability has one range for every modern delivery, because no source separates them. Each delivery draws from that
@@ -952,7 +953,7 @@ This first reading is not blind: earlier runs had scored some of its places (pre
 score existed; `runs/classifier/sealed/LOCK.json` records the commit and stops a second run. Each scope's models were fitted on all its usable rows and scored SAC 1956's rows in the sealed
 blocks: the eleventh amendment's set, {int(p0["rows"])} places the early check had not scored ({int(p0["positives"])} listed, base rate {p0["base_rate"]:.2f},
 in {int(p0["blocks"])} blocks; `never_scored` in the outputs, although other runs had scored some of them), and all {int(a0["rows"])} sealed places with a SAC label
-({int(a0["positives"])} listed); 4 of the 467 sealed places have no SAC label (an entry possibly lost from the scan)
+({int(a0["positives"])} listed); {SEALED_PLACES - pd.read_csv(OUT / "sealed" / "scores.csv.gz", usecols=["place_id"])["place_id"].nunique()} of the {SEALED_PLACES} sealed places have no SAC label (an entry possibly lost from the scan)
 and so no row. The primary rows are the selected candidate against population plus country on the eleventh amendment's set.
 So the gain over population plus country holds on that set for {len(gains)} of {len(prim)} scopes
 ({"; ".join(f"'{g}'" for g in gains) if gains else "none"}), and not for {"; ".join(f"'{r.scope}' ({r.verdict})" for r in other.itertuples())}.
@@ -1217,6 +1218,82 @@ def _undated_sites() -> int:
     return int((undated & in_role & s["lat"].notna() & s["lon"].notna()).sum())
 
 
+def _audit() -> dict:
+    """The SAC transcription audit (data/curated/sac1956/audit.csv): lines read again, lines where the final
+    reading was wrong, and the upper end of the 95% Wilson interval of that error rate."""
+    a = pd.read_csv(CURATED / "sac1956" / "audit.csv")
+    n, wrong, z = len(a), int((~a["outcome"].isin(["agree", "curated right"])).sum()), 1.959964
+    p = wrong / n
+    centre, half = p + z * z / (2 * n), z * np.sqrt(p * (1 - p) / n + z * z / (4 * n * n))
+    return {"lines": n, "wrong": wrong, "upper": (centre + half) / (1 + z * z / n)}
+
+
+def _stockpile_1950_us() -> tuple[int, int]:
+    """NRDC's US bomber loading of 1950 and OWID's US stockpile of that year (data/curated/stockpiles/)."""
+    s = pd.read_csv(CURATED / "stockpiles" / "stockpiles.csv")
+    s = s[(s["scenario_year"] == 1950) & (s["state"] == "US")]
+    nrdc = s[s["source_id"] == "nrdc_table_us"]["central"].iloc[0]
+    owid = s[s["source_id"] == "owid_warhead_stockpiles"]["central"].iloc[0]
+    return int(nrdc), int(owid)
+
+
+FITTED_RUN = OUT / "sealed" / "fitted_run"
+
+
+def _amendment_16() -> str:
+    """The sixteenth amendment's paragraph: every primary verdict that moved between the run the sealed set was
+    scored with (sealed/fitted_run/) and the refit on the corrected West European site table."""
+    if not (FITTED_RUN / "comparison.csv").exists():
+        return ""
+    now_sel = pd.read_csv(OUT / "selection.csv")
+    was_sel = pd.read_csv(FITTED_RUN / "selection.csv")
+    now = primary_table(pd.read_csv(OUT / "comparison.csv"), now_sel)
+    was = primary_table(pd.read_csv(FITTED_RUN / "comparison.csv"), was_sel)
+    key = ["Scope", "Holdout", "Lists"]
+    both = now.merge(was, on=key, suffixes=("", "_was"))
+    moved = both[both["Verdict"] != both["Verdict_was"]]
+    pick = lambda s: s[s["selected"]].set_index("scope")["model"]  # noqa: E731
+    sel_now, sel_was = pick(now_sel), pick(was_sel)
+    changed = [s for s in sel_now.index if sel_was.get(s) != sel_now[s]]
+    fitted = json.loads((FITTED_RUN / "manifest.json").read_text())["table_sha256"]
+    current = json.loads((OUT / "manifest.json").read_text())["table_sha256"]
+    if fitted == current:
+        return ""
+    if moved.empty:
+        verdicts_text = (
+            f"None of the {len(both)} primary rows (each scope's selected candidate against population plus "
+            "country, by holdout and list set) changes verdict."
+        )
+    else:
+        verdicts_text = (
+            f"{len(moved)} of the {len(both)} primary rows change verdict:\n\n"
+            + "\n".join(
+                f"- {r['Scope']}, {r['Holdout']}, {r['Lists']}: {r['Verdict_was']} before "
+                f"({r['Difference, country_was']}), {r['Verdict']} now ({r['Difference, country']})"
+                for _, r in moved.iterrows()
+            )
+            + "\n"
+        )
+    if changed:
+        sel_text = (
+            " The refit selects a different model than the earlier run for "
+            + "; ".join(f"'{s}' ({sel_was.get(s)} before, {sel_now[s]} now)" for s in changed)
+            + ": the sealed and blind rows of those scopes are of the earlier selection."
+        )
+    else:
+        sel_text = (
+            " Every scope selects the same model as before, so the sealed and blind rows are of the models this "
+            "refit selects, fitted on the earlier table."
+        )
+    return f"""### Changed by the sixteenth amendment
+
+`configs/protocol_amendment_16.yaml` corrected 29 West European site rows that had no cited text (Data, "Military and
+defence sites of 1965") and refitted every classifier step on the corrected table. Four columns change, on rows of
+three Warsaw Pact documents. The sealed set was not scored again: its scores, and the blind reading of them, are of
+the fit on the earlier table (`runs/classifier/sealed/fitted_run/`). {verdicts_text}{sel_text}
+"""
+
+
 def _cannot_blind() -> str:
     if not BLIND.exists():
         return ""
@@ -1251,7 +1328,7 @@ def _last_amendment() -> int:
 
 def _seal_sentence() -> str:
     """How many sealed places are blind: the card's sizes and the counts of the committed reading."""
-    card = "the 467 places of the sealed blocks, held out of every fit. An early check had scored 194 of them before the blocks were drawn (`data/curated/splits/README.md`)."
+    card = f"the {SEALED_PLACES} places of the sealed blocks, held out of every fit. An early check had scored {EARLY_SCORED} of them before the blocks were drawn (`data/curated/splits/README.md`)."
     if not BLIND.exists():
         return card
     comp = pd.read_csv(BLIND)
@@ -1259,8 +1336,8 @@ def _seal_sentence() -> str:
     p0 = _blind_rows(PLUS).iloc[0]
     lost = int(ns["rows"]) - int(p0["rows"])
     return (
-        f"{card} Of the other 273, committed outputs of earlier runs held scores for {lost} more, which the drawing of "
-        f"the set missed (`data/curated/splits/scored_in_history.csv`). Of the remaining {273 - lost}, the "
+        f"{card} Of the other {AMENDMENT_11_SET}, committed outputs of earlier runs held scores for {lost} more, which the drawing of "
+        f"the set missed (`data/curated/splits/scored_in_history.csv`). Of the remaining {AMENDMENT_11_SET - lost}, the "
         f"{int(p0['rows'])} with a SAC label are the **blind places**."
     )
 
@@ -1421,6 +1498,7 @@ def report() -> str:
         ]
     ]
 
+    aud = _audit()
     return f"""# What made a place a nuclear target? Report
 
 Generated by `python -m nucprob.classifier.report` from `runs/classifier/` and `runs/probmap/`. Results
@@ -1487,6 +1565,12 @@ North Korea, North Vietnam and Mongolia have only the UN's 1956 model estimates 
 town census exists between 1939 and 1959 (below). Western European towns use 1961 populations for documents up to
 1977: stale, not later.
 
+**Military and defence sites of 1965.** The West European site table (`data/curated/features/weurope_military_sites_1965.md`)
+had 29 rows whose fact rested on general knowledge. Each was cited from a Wikipedia page fetched through a path robots.txt
+allows, corrected to what that page states, or dropped (15 cited, 6 corrected, 8 dropped; 323 rows remain). Six fed
+features: CRC Glons is dated 1972 by its source and leaves 1965, CRC Semmerzake and the Belgian naval base at Ostend are
+dropped, and Aviano is an air base, not a strike base, because no page found dates a strike role there in 1965.
+
 **Inputs later than the document.** Removing the flagged columns does not remove all of these. The 1959 Soviet census is
 in every population column. For the June 1956 document Hungary's towns are interpolated from the 1949 and 1960 censuses and
 the Czech lands' from 1950 and 1961 (`data/curated/gazetteer/README.md`), and Kurchatov carries a 1990 figure
@@ -1505,7 +1589,7 @@ read over its whole universe. Corrected link errors are listed in
 
 **Transcription.** SAC's lists, about nine positives in ten of what is trained on, were transcribed from the scan by two
 independent passes of vision-language models (Claude agents), with disagreements resolved against the page
-(`data/curated/sac1956/README.md`). A blind audit of a random 5% of rows, 743 lines, found 0 errors in the final reading (95% interval 0 to 0.51%),
+(`data/curated/sac1956/README.md`). A blind audit of a random 5% of rows, {aud["lines"]} lines, found {aud["wrong"]} errors in the final reading (95% interval 0 to {100 * aud["upper"]:.2f}%),
 by auditors whose own error rate was 1.3%, so the audit's reading is itself uncertain. On the low-resolution Part II pages, where 270 airfield rows can be compared with a second printing, the confirmed misread
 rate was 3 in 216, well above that bound.
 
@@ -1581,6 +1665,7 @@ The selected candidate of each scope. "Trained on" is the smallest number of pos
 
 {_blind_section()}
 {_sealed_section()}
+{_amendment_16()}
 ### What the gains rest on
 
 Each scope's selected candidate against population plus country under spatial blocks, with columns removed.

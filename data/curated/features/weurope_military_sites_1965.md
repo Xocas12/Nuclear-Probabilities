@@ -1,6 +1,6 @@
 ## Western European military sites of 1965 (`weurope_military_sites_1965.csv`)
 
-- **What it is.** 331 rows: military installations in the FRG, the Netherlands, Belgium, Denmark,
+- **What it is.** 323 rows: military installations in the FRG, the Netherlands, Belgium, Denmark,
   Austria and northern Italy as they stood in mid-1965 (30 June 1965), plus AFCENT's HQ at
   Fontainebleau (France), kept because it commanded the Central Region. Each row is one role at
   one site. A base with two roles has two rows. Ramstein, for example, has a 4 ATAF/17th AF HQ row
@@ -62,26 +62,27 @@
 | role | DE | NL | BE | DK | AT | IT | FR | in 1965 | rows |
 |---|---|---|---|---|---|---|---|---|---|
 | nato_hq | 4 |  |  | 1 |  | 2 | 1 | 8 | 8 |
-| national_hq | 8 | 1 | 1 | 3 | 1 | 1 |  | 15 | 15 |
-| corps_hq | 7 | 1 |  |  |  | 3 |  | 11 | 11 |
-| division_hq | 20 |  |  | 1 |  | 5 |  | 26 | 26 |
-| air_base_strike | 14 | 1 | 1 |  |  | 2 |  | 18 | 18 |
-| air_base | 15 | 4 | 4 | 3 | 2 | 4 |  | 31 | 32 |
+| national_hq | 6 | 1 |  | 3 | 1 | 1 |  | 12 | 12 |
+| corps_hq | 7 |  |  |  |  | 3 |  | 10 | 10 |
+| division_hq | 22 |  |  | 1 |  | 5 |  | 28 | 28 |
+| air_base_strike | 14 | 1 | 1 |  |  | 1 |  | 17 | 17 |
+| air_base | 15 | 4 | 3 | 3 | 2 | 5 |  | 31 | 32 |
 | air_base_support | 7 | 6 | 3 | 3 | 3 | 1 |  | 23 | 23 |
 | nike_site | 59 |  |  | 5 |  | 13 |  | 77 | 77 |
 | hawk_site | 21 |  |  |  |  |  |  | 20 | 21 |
-| ssm_site | 18 |  |  |  |  | 5 |  | 21 | 23 |
+| ssm_site | 17 |  |  |  |  | 5 |  | 20 | 22 |
 | nuclear_storage | 26 |  |  |  |  | 1 |  | 23 | 27 |
-| naval_base | 8 | 1 | 1 | 3 |  | 1 |  | 14 | 14 |
+| naval_base | 8 | 1 |  | 3 |  | 1 |  | 13 | 13 |
 | army_garrison | 13 |  |  |  | 1 | 4 |  | 18 | 18 |
-| radar_station | 8 | 1 | 2 | 2 | 1 |  |  | 14 | 14 |
-| military_port | 2 | 1 | 1 |  |  |  |  | 4 | 4 |
-| **total** | 230 | 16 | 13 | 21 | 8 | 42 | 1 | 323 | 331 |
+| radar_station | 8 | 1 | 1 | 2 | 1 |  |  | 12 | 13 |
+| military_port | 2 |  |  |  |  |  |  | 2 | 2 |
+| **total** | 229 | 14 | 8 | 21 | 8 | 42 | 1 | 314 | 323 |
 
 What each role covers:
 - **air_base_strike:** bases whose aircraft had a nuclear strike role. These are the F-104G
   wings of the Luftwaffe, Netherlands, Belgium and Italy; the RCAF CF-104s; the USAF
-  F-100/F-105s; the RAF Canberras; the French F-100Ds at Lahr and Bremgarten; and Aviano.
+  F-100/F-105s; the RAF Canberras; and the French F-100Ds at Lahr and Bremgarten. Aviano is an `air_base`: no allowed page found dates a
+  strike role there in 1965 (below).
 - **air_base** and **air_base_support:** other combat flying units, and
   transport/training/naval/army aviation respectively.
 - **nike_site:** one row per battery position, or per group HQ where no battery is located. The
@@ -117,15 +118,39 @@ What each role covers:
   Waldheide, Mutlangen, Görisried, Horressen, Eschborn, Landsberg-Leeder, Gießen and Meyn
   (all 1969 or later).
 
+### Rows that rested on general knowledge (resolved 2026-11-03)
+
+29 rows gave "UNCERTAIN: ... from general knowledge": the fact had no cited text, only the town's page for the
+point. The review of c27c1b8 asked that each be cited or dropped. Each was looked for in Wikipedia pages fetched
+through `/wiki/<title>?action=raw`, which robots.txt allows (`CITED` and `DROPPED` at the end of
+`scripts/weurope_military_1965_spec.py`; the build checks each row's quoted pattern against its cited page):
+- **Cited as they stood (15):** the HQs of the 14th ACR at Fulda (Downs Barracks, 1951-1972), the British 1st,
+  2nd and 4th Divisions (Verden, Lübbecke, Herford), the Belgian I Corps (Köln-Weiden, in the 1952 order of
+  battle), the FFA (Baden-Baden), the Danish Western Command (Viborg) and the Italian III, IV and V Corps
+  (Milano, Bolzano, Vittorio Veneto); RAF Wildenrath's Canberra strike role to 1970; Rivolto (Frecce Tricolori
+  from 1961); Cameri (21º Gruppo from April 1964); the US Army port of embarkation at Bremerhaven; and CRC
+  Nieuw-Milligen (a Command & Reporting Centre from 1960).
+- **Corrected to what the source states (6):** Luftwaffengruppe Nord and Süd become the 6. and 2.
+  Luftwaffendivision HQs at Münster and Karlsruhe (1963-1970; the 3. Luftwaffendivision was at Kalkar);
+  Skrydstrup's and Baumholder's uncited units become "Royal Danish Air Force station" (opened 1953) and "US
+  Army garrison" (from the 1950s); Aviano becomes an air base of rotating USAF fighter squadrons, not a strike
+  base; CRC Glons is dated 1972 by its source, so it is not in role in 1965.
+- **Dropped (8):** the Dutch I Corps HQ at Apeldoorn, the Belgian defence ministry at Evere (the cited quarter
+  was built 1971-1976), Bierset's 1965 wing, the British Corporal regiments at Dortmund (type and years
+  uncited), the Belgian naval base at Ostend, CRC Semmerzake, and the ports of Rotterdam and Antwerp.
+
+Six of these rows feed features (`air_base_strike`, `naval_base`, `radar_station`). The changes move
+`log_km_to_naval_base`, `log_km_to_air_defence` and `log_air_defence_sites_50km` on rows of LATO-67 and the 1977
+staff-academy lessons, and `log_km_to_lra_base` on rows of the 1965 Hungarian war game. No other column or
+document changes. `configs/protocol_amendment_16.yaml` refits the classifier on the corrected table; the
+`table_sha256` of `runs/classifier/manifest.json` names the table the committed fit used.
+
 ### Uncertainties and gaps
 
-- **74 rows have a `decision` starting with `UNCERTAIN`:**
-  - HQ towns, units or years taken from general knowledge: several BAOR, Dutch, Belgian, Italian
-    and Danish HQs; Luftwaffengruppe Nord/Süd; the 14th ACR at Fulda.
+- **45 rows have a `decision` starting with `UNCERTAIN`:**
   - The US HAWK battalions of the second HAWK line. The source gives 1970s–80s designations and
     no dates.
-  - The radar/CRC sites in BE and NL, and the dates of SOC 2 and SOC 3.
-  - The military ports.
+  - The dates of SOC 2 and SOC 3.
   - The SAS listed above.
   - Mace Site VIII. Its closure is undated, and a separate source says the Bitburg Mace B became
     operational in June 1964.
@@ -151,4 +176,4 @@ What each role covers:
   was used instead. This applies, for example, to 1. Panzerdivision (Oldenburg today, Hannover
   in 1965) and 10. Panzerdivision.
 
-**Provenance.** The pages this table cites are in `cited_pages.csv` in this folder: for each, the licence, retrieval date, status and sha256, with `python -m nucprob.sources.cited_pages` to fill in what is missing. Each is the page as fetched on that date, not as first read: the table was made from earlier copies, and nothing shows the two agree. Licences: Wikipedia CC BY-SA 4.0; ww2.dk states no open licence, so its pages are cited and not kept; the few others were not assessed. sha256 of this table: `1121c9a5f6914c923c085e2f9344a0be378783a8e0f3c90909afe9f3edaec881`.
+**Provenance.** The pages this table cites are in `cited_pages.csv` in this folder: for each, the licence, retrieval date, status and sha256, with `python -m nucprob.sources.cited_pages` to fill in what is missing. Each is the page as fetched on that date, not as first read: the table was made from earlier copies, and nothing shows the two agree. Licences: Wikipedia CC BY-SA 4.0; ww2.dk states no open licence, so its pages are cited and not kept; the few others were not assessed. sha256 of this table: `2137b174ea39135f1924bd841423a0614ec40e7c87faa6e1f1d3afd369c31e2c`.

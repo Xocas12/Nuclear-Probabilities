@@ -3988,3 +3988,156 @@ for site, role, unit, town, page, unitpage, chk in [
         chk,
         [unitpage] + ([page] if isinstance(page, str) else []),
     )
+
+
+# =====================================================================================
+# Rows that were flagged "from general knowledge" (review of c27c1b8, finding 1), resolved on
+# 2026-11-03. Each was cited from a page fetched through an allowed path that states the fact,
+# corrected to what that page states, or dropped when no such page was found. The build checks each
+# `chk` against the cited pages. Rows in DROPPED stay out of the table; the reason is the card's.
+# =====================================================================================
+CITED = {
+    "Luftwaffengruppe Nord / 3. Luftwaffendivision HQ": dict(
+        site="6. Luftwaffendivision HQ Münster",
+        role="division_hq",
+        unit="6. Luftwaffendivision",
+        fr=1963,
+        un=1970,
+        note="Point is Münster town. The list of Luftwaffe divisions places the 6. Luftwaffendivision in Münster "
+        "1963-1970 (the 3. was at Kalkar from 1963); the Luftwaffengruppe Nord HQ, this row's earlier reading, "
+        "has no cited location.",
+        chk=r"1963–1970 \|\| Münster \|\| 6\. Luftwaffendivision",
+        add=["de:Luftwaffendivision"],
+    ),
+    "Luftwaffengruppe Süd HQ Karlsruhe": dict(
+        site="2. Luftwaffendivision HQ Karlsruhe",
+        role="division_hq",
+        unit="2. Luftwaffendivision",
+        fr=1963,
+        un=1970,
+        note="Point is Karlsruhe town. The list of Luftwaffe divisions places the 2. Luftwaffendivision in Karlsruhe "
+        "1963-1970; the Luftwaffengruppe Süd HQ, this row's earlier reading, has no cited location.",
+        chk=r"1963–1970 \|\| Karlsruhe \|\| \[\[2\. Luftwaffendivision\]\]",
+        add=["de:Luftwaffendivision"],
+    ),
+    "14th Armored Cavalry Regiment HQ Fulda": dict(
+        chk=r"1951 zog das Hauptquartier des 14th Armored Cavalry Regiment in die Kaserne ein",
+        add=["de:Downs Barracks"],
+        note="Fulda Gap border surveillance; point is the town. Downs Barracks: HQ from 1951, relieved by the "
+        "11th ACR in 1972.",
+    ),
+    "2nd Division HQ Lübbecke": dict(
+        chk=r"In the early 1960s the division, with its headquarters at \[\[Lubbecke\]\]",
+    ),
+    "4th Division HQ Herford": dict(
+        chk=r"on 1 April 1956, the 4th Infantry Division was reformed at \[\[Herford\]\]",
+        note="Point is the town. The cited text dates the HQ at Herford from 1956; the end year is not cited.",
+    ),
+    "1st Division HQ Verden": dict(
+        chk=r"The division was located at \[\[Verden an der Aller\]\]",
+        add=["en:1st Infantry Division (United Kingdom)"],
+    ),
+    "I (BE) Corps HQ Köln": dict(
+        chk=r"I&nbsp;\(BE\) Corps, Köln-Weiden|I \(BE\) Corps, Köln-Weiden",
+        note="Belgian forces in Germany (FBA); the cited order of battle is of 1952 (Köln-Weiden). Point is Cologne.",
+    ),
+    "FFA / 2e Corps d'armée HQ Baden-Baden": dict(
+        chk=r"Verlegung nach Baden-Baden",
+        note="Point is the town. The cited list moves the FFA HQ to Baden-Baden in 1945; the 2e Corps is not cited.",
+    ),
+    "Vestre Landsdelskommando HQ Viborg": dict(
+        chk=r"flyttet til \[\[Viborg\]\]",
+    ),
+    "III Corpo d'Armata HQ Milano": dict(
+        chk=r"\[\[quartier generale\]\] a \[\[Milano\]\]",
+        add=["it:III Corpo d'armata (Esercito Italiano)"],
+    ),
+    "IV Corpo d'Armata Alpino HQ Bolzano": dict(
+        chk=r"\[\[quartier generale\]\] a \[\[Bolzano\]\]",
+        add=["it:4º Corpo d'armata alpino"],
+    ),
+    "V Corpo d'Armata HQ Vittorio Veneto": dict(
+        chk=r"\[\[quartier generale\]\] a \[\[Vittorio Veneto\]\]",
+        add=["it:5º Corpo d'armata"],
+    ),
+    "RAF Wildenrath": dict(
+        chk=r"From the late 1950s to 1970, Wildenrath was home to.{0,200}Tactical nuclear weapon",
+    ),
+    "Flyvestation Skrydstrup": dict(
+        unit="Royal Danish Air Force station",
+        chk=r"blev indviet \[\[1\. maj\]\] \[\[1953\]\]",
+        note="Opened 1 May 1953. Its squadrons of 1965 are not cited.",
+    ),
+    "Aviano Air Base": dict(
+        role="air_base",
+        unit="USAF rotational fighter squadrons",
+        chk=r"Aviano ospitava a rotazione squadriglie di caccia",
+        add=["it:Base aerea di Aviano"],
+        note="The cited text has rotational fighter squadrons at Aviano from 1950 to 1990; no allowed page found "
+        "dates a nuclear strike role there in 1965, so the row is an air base, not a strike base (it was "
+        "air_base_strike until 2026-11-03).",
+    ),
+    "Aeroporto di Rivolto": dict(
+        chk=r"Fondata nel 1961 con sede presso l’\[\[aeroporto di Rivolto\]\]",
+        add=["it:Frecce Tricolori"],
+    ),
+    "Aeroporto di Cameri": dict(
+        chk=r"trasferito sulla \[\[Aeroporto di Cameri\|Base di Cameri\]\]",
+        add=["it:21º Gruppo"],
+        note="Point is Cameri town. The cited history moves the 21º Gruppo to Cameri in April 1964, with a "
+        "temporary move to Grosseto in late 1965.",
+    ),
+    "Baumholder (US garrison and training area)": dict(
+        unit="US Army garrison",
+        chk=r"eine der größten US-Garnisonen in Deutschland, die sich seit den 1950er Jahren",
+        note="Also Nike C/5-6 ADA (separate row). Point is the town. Its units of 1965 are not cited.",
+    ),
+    "CRC Glons": dict(
+        unit="NATO air-defence radar centre",
+        fr=1972,
+        inr=False,
+        chk=r"un centre radar de l'\[\[OTAN\]\] est installé depuis 1972",
+        add=["fr:Glons"],
+        note="Point is the village. The cited text dates the radar centre to 1972, so it is not in being in 1965 "
+        "(it was counted in role until 2026-11-03).",
+    ),
+    "CRC Nieuw-Milligen": dict(
+        fr=1960,
+        chk=r"in 1960 gewijzigd in ''Command & Reporting Centre",
+        add=["nl:Air Operations Control Station Nieuw Milligen"],
+        note="Point is the village. Navigatiestation Veluwe from 1950, a Command & Reporting Centre from 1960.",
+    ),
+    "Port of Bremerhaven": dict(
+        chk=r"the US Army established in Bremerhaven a ''US Army Port of Embarkation''",
+    ),
+}
+DROPPED = {
+    "1 Legerkorps HQ Apeldoorn": "no allowed page found that places the corps HQ",
+    "Belgian Ministry of Defence / General Staff (Evere, Brussels)": "the cited Evere quarter was built only in 1971-1976",
+    "Vliegbasis Bierset": "no allowed page found that names its 1965 unit",
+    "British Corporal regiments, Dortmund": "the missile type and years are not in the cited text",
+    "Haven van Oostende (Belgian Navy)": "no allowed page found that places the Belgian Navy at Ostend in 1965",
+    "CRC Semmerzake": "no allowed page found that dates a radar centre there",
+    "Port of Rotterdam": "no allowed page found that states a military role",
+    "Port of Antwerp": "no allowed page found that states a military role",
+}
+
+
+def _resolve():
+    missing = (set(CITED) | set(DROPPED)) - {s["site"] for s in R}
+    assert not missing, missing
+    keep = []
+    for s in R:
+        if s["site"] in DROPPED:
+            continue
+        fix = CITED.get(s["site"])
+        if fix is not None:
+            fix = dict(fix)
+            s["src"] = list(dict.fromkeys(s["src"] + fix.pop("add", [])))
+            s.update(fix)
+            s["dec"] = ""
+        keep.append(s)
+    R[:] = keep
+
+
+_resolve()
