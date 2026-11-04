@@ -111,6 +111,8 @@ on both figures. Each of the six was checked on the scan:
   very high column.
 - Grant WI is the reverse case: A's area is unreadable and B prints 1,144.
 
+Rebuild the three files from the transcription with `uv run python scripts/napb90_b_assemble.py`.
+
 Every county figure here matches Annex A except the six above. The 18 column sums that do not
 match TOTAL STATE (e.g. Missouri very high +60,000, Florida low area −9,000) are therefore
 slips in FEMA's totals, not misreadings.

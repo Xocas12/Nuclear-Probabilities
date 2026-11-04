@@ -35,6 +35,18 @@ def land_paths() -> list[list[list[float]]]:
     return rings
 
 
+# What a scenario's map stands on. Only a score fitted on the attacker's own list for that year is "Historical";
+# the 1950 stockpile on the 1956 score is a counterfactual, and the 1965 Soviet map applies a score fitted mostly on
+# SAC's list to a Soviet stockpile, with no Soviet war plan behind it (review of bde7e54, finding 7).
+NOT_HISTORICAL = {"us_1950_stock_on_bloc": "Counterfactual", "ussr_1965_on_west": "Illustration"}
+
+
+def shift_label(sc: dict) -> str:
+    if sc["era"] == "modern":
+        return "Extrapolation"
+    return NOT_HISTORICAL.get(sc["id"], "Historical")
+
+
 def payload() -> dict:
     summary = pd.read_csv(OUT / "scenarios.csv").set_index("scenario")
     spread = pd.read_csv(OUT / "score_spread.csv").set_index("scenario")
@@ -53,7 +65,7 @@ def payload() -> dict:
                 "evidence": sc["evidence"],
                 "note": sc["note"],
                 "deg": sc["cell_deg"],
-                "shift_label": "Extrapolation" if sc["era"] == "modern" else "Historical",
+                "shift_label": shift_label(sc),
                 "towns": int(s["towns"]),
                 "population_ratio": round(float(spread.loc[sc["id"], "population_ratio"])),
                 "score_ratio": round(float(spread.loc[sc["id"], "score_ratio"]), 1),
@@ -129,7 +141,7 @@ const X=(v,lon)=>(lon-v.c)*v.k*v.sc,Y=(v,lat)=>map.height-(lat-v.a)*v.sc;
 function draw(){const s=D.scenarios[sel.value],v=view=frame(s),b=+band.value;g.fillStyle=css("--surface");g.fillRect(0,0,map.width,map.height);
 g.fillStyle=css("--land");for(const ring of D.land){g.beginPath();ring.forEach((p,i)=>i?g.lineTo(X(v,p[0]),Y(v,p[1])):g.moveTo(X(v,p[0]),Y(v,p[1])));g.closePath();g.fill()}
 for(const q of s.cells){g.fillStyle=col(q[b]);const w=s.deg*v.k*v.sc,h=s.deg*v.sc;g.fillRect(X(v,q[1])+.5,Y(v,q[0]+s.deg)+.5,w-1,h-1);if(q[5]){g.strokeStyle=css("--ink");g.lineWidth=1;g.strokeRect(X(v,q[1])+1,Y(v,q[0]+s.deg)+1,w-2,h-2)}}
-document.getElementById("banner").textContent=(s.era=="modern"?"EXTRAPOLATION. A score from Cold War lists applied to present-day towns from a map-label set. A classifier tells them from the training towns at ROC-AUC "+D.shift[0].value+" on ten features, where 0.5 is no shift. Not a statement about any present plan. ":"HISTORICAL. ")+s.evidence;
+document.getElementById("banner").textContent=(s.era=="modern"?"EXTRAPOLATION. A score from Cold War lists applied to present-day towns from a map-label set. A classifier tells them from the training towns at ROC-AUC "+D.shift[0].value+" on ten features, where 0.5 is no shift. Not a statement about any present plan. ":s.shift_label.toUpperCase()+". ")+s.evidence;
 document.getElementById("info").textContent=`${s.note} ${s.towns} towns on a ${s.deg}-degree grid. Across them population runs over a ${s.population_ratio}-fold range and the median score over a ${s.score_ratio}-fold range.`+(s.cells.some(q=>q[5])?" Outlined cells hold a town of the sealed set: towns in 300 km blocks kept out of every model fit for a final test (REPORT.md, Method), so they get no score here; a cell with only sealed towns is absent.":"");
 document.getElementById("del").innerHTML="<tr><th>Attacker</th><th>5th</th><th>median</th><th>95th</th><th>median on scored towns</th></tr>"+s.delivered.map(d=>`<tr><td>${d.attacker}</td><td>${Math.round(d.delivered_low)}</td><td>${Math.round(d.delivered_median)}</td><td>${Math.round(d.delivered_high)}</td><td>${Math.round(d.on_scored_towns_median)}</td></tr>`).join("");
 document.getElementById("tab").innerHTML="<tr><th>Cell (S, W corner)</th><th>median</th><th>5th</th><th>95th</th></tr>"+s.cells.map(q=>`<tr><td>${q[0]}, ${q[1]}</td><td>${q[2]}</td><td>${q[3]}</td><td>${q[4]}</td></tr>`).join("")}

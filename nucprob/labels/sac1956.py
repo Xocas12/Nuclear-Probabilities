@@ -332,7 +332,6 @@ def build(radius_km: float = RADIUS_KM) -> tuple[pd.DataFrame, pd.DataFrame, pd.
     # Entries SAC printed under an open town's name for the closed town next to it.
     credited = pd.concat([links_cx, cover_links(links_cx, located)], ignore_index=True)
 
-    # Labels per settlement.
     g = credited[credited["place_id"].notna()].groupby("place_id")
     top = credited[(credited["level"] == "complex") & credited["place_id"].notna()]
     top_prio = top.assign(p=top["priority"].str.rstrip("A").astype(float)).groupby("place_id")

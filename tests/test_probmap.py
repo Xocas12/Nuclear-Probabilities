@@ -330,7 +330,7 @@ def test_every_modern_scenario_is_labelled_as_extrapolation():
     text = (OUT / "viewer" / "index.html").read_text(encoding="utf-8")
     # the banner's two branches, on `era`
     assert 's.era=="modern"?"EXTRAPOLATION. ' in text
-    assert '":"HISTORICAL. ")+s.evidence' in text
+    assert '":s.shift_label.toUpperCase()+". ")+s.evidence' in text
     assert "http://" not in text and "https://" not in text
     data = viewer_data(text)
     eras = {sc["id"]: sc["era"] for sc in rn.load_scenarios()}
@@ -338,7 +338,12 @@ def test_every_modern_scenario_is_labelled_as_extrapolation():
     for item in data["scenarios"]:
         assert item["era"] == eras[item["id"]]
         modern = item["era"] == "modern"
-        assert item["shift_label"] == ("Extrapolation" if modern else "Historical"), item["id"]
+        want = "Extrapolation" if modern else "Historical"
+        if item["id"] == "us_1950_stock_on_bloc":
+            want = "Counterfactual"
+        if item["id"] == "ussr_1965_on_west":
+            want = "Illustration"  # no Soviet war plan behind it; never shown as historical
+        assert item["shift_label"] == want, item["id"]
         assert ("extrapolation" in item["evidence"].lower()) == modern, item["id"]
     shift = pd.read_csv(OUT / "domain_shift.csv")
     assert (shift["measure"] == "two-sample ROC-AUC").sum() == 2

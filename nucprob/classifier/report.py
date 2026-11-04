@@ -62,6 +62,22 @@ def signed(v: float) -> str:
     return f"{v:+.{digits}f}"
 
 
+def _decimals(text: str) -> int:
+    return len(text.split(".")[1]) if "." in text else 0
+
+
+def point(v: float, *bounds: float) -> str:
+    """An estimate printed to no more decimals than its interval supports: those of the coarser printed bound,
+    and at least two. A bound near zero takes extra decimals to show its side of zero; the estimate does not
+    inherit them unless both bounds need them. An estimate that rounds to zero keeps its sign (an exact zero
+    prints as 0.00)."""
+    if v == 0:
+        return "0.00"
+    shown = [_decimals(signed(b)) for b in bounds if not pd.isna(b)]
+    digits = max(2, min(shown)) if shown else 2
+    return f"{v:+.{digits}f}"
+
+
 def constant(r) -> bool:
     """A comparison whose two scores never differ on these rows: a family constant within them."""
     return all(r.get(c) == 0 for c in ("delta", "low", "high", "block_low", "block_high"))
@@ -70,7 +86,7 @@ def constant(r) -> bool:
 def interval(r) -> str:
     if constant(r):
         return "none: constant on these rows"
-    return f"{signed(r['delta'])} [{signed(r['low'])}, {signed(r['high'])}]"
+    return f"{point(r['delta'], r['low'], r['high'])} [{signed(r['low'])}, {signed(r['high'])}]"
 
 
 # Fewer blocks than this holding the positives, and resampling blocks cannot measure anything: with 7
@@ -504,7 +520,7 @@ share of the inventory goes there. Those are assumptions, not findings. **The th
 {markdown(_theatre_table())}
 
 The reliability and loss ranges of every
-historical scenario are one source's 1953 figures for Soviet bombers attacking the US (FRUS 1952-54, vol. II part 1,
+historical scenario are one source's 1953 figures for Soviet bombers attacking the US (Foreign Relations of the United States, FRUS, 1952-54, vol. II part 1,
 document 66), standing in for SAC's bombers in 1956 and Soviet missiles and bombers in 1965, because no source for those
 forces was found. A delivered warhead falls on a town with
 probability equal to the town's share of the scenario's total score, and an area's probability is
@@ -553,8 +569,8 @@ In the second table each figure is the median with the 5th to 95th percentile; `
 {markdown(_delivered_table(d))}
 
 **By delivery.** Warheads available by state and delivery after the stated assumptions, and those delivered. The
-shares come from SIPRI and NRDC (`data/curated/stockpiles/delivery_mix.csv`), on bases that differ by state. For 1950
-NRDC has all on bombers, {us50[0]} loaded, more than the {us50[1]} OWID gives for the whole stockpile: the sources conflict, and the
+shares come from SIPRI and the Natural Resources Defense Council (NRDC; `data/curated/stockpiles/delivery_mix.csv`), on bases that differ by state. For 1950
+NRDC has all on bombers, {us50[0]} loaded, more than the {us50[1]} Our World in Data (OWID) gives for the whole stockpile: the sources conflict, and the
 scenario's range runs between them. A share measured on strategic or deployed forces is applied to the whole inventory range, so a
 Soviet row of 1965 spreads NRDC's strategic shares over a stockpile that also holds tactical weapons with no known split.
 Reliability has one range for every modern delivery, because no source separates them. Each delivery draws from that
@@ -910,7 +926,7 @@ def _pooled_sealed(prim: pd.DataFrame) -> str:
         return ""
     r = r.iloc[0]
     return (
-        f"The pooled Warsaw Pact model ranks these places worse than population does ({signed(r['delta'])}); "
+        f"The pooled Warsaw Pact model ranks these places worse than population does ({point(r['delta'], r['low'], r['high'])}); "
         "the town interval calls that a loss and the block interval does not, so by the rule it is neither. "
         "It was trained on towns in six Western countries and is applied here to Eastern bloc places."
     )
@@ -929,7 +945,8 @@ def _sealed_section() -> str:
     shown = comp.assign(
         population=comp["population"].replace({"never_scored": "amendment 11 set"}),
         difference=[
-            f"{signed(r.delta)} [{signed(r.low)}, {signed(r.high)}]" for r in comp.itertuples()
+            f"{point(r.delta, r.low, r.high)} [{signed(r.low)}, {signed(r.high)}]"
+            for r in comp.itertuples()
         ],
         by_blocks=[f"[{signed(r.block_low)}, {signed(r.block_high)}]" for r in comp.itertuples()],
     )[
@@ -1019,7 +1036,7 @@ def _blind_line(r, auc: bool = True) -> str:
     scores = f"{r['a_pr_auc']:.2f} against {r['b_pr_auc']:.2f}, " if auc else ""
     return (
         f"{r['scope']}, {r['model']}: {scores}"
-        f"{signed(r['delta'])} [{signed(r['low'])}, {signed(r['high'])}], by blocks {blocks}: {r['verdict']}"
+        f"{point(r['delta'], r['low'], r['high'])} [{signed(r['low'])}, {signed(r['high'])}], by blocks {blocks}: {r['verdict']}"
         f"{_rule_note(r['scope'], r['against'])}"
     )
 
@@ -1114,7 +1131,7 @@ def _main_blind() -> str:
         + (
             ": "
             + "; ".join(
-                f"{r.scope} {signed(r.delta)} [{signed(r.low)}, {signed(r.high)}]"
+                f"{r.scope} {point(r.delta, r.low, r.high)} [{signed(r.low)}, {signed(r.high)}]"
                 for r in gained.itertuples()
             )
             + "."
@@ -1150,7 +1167,6 @@ def _blind_section() -> str:
     if not BLIND.exists():
         return ""
     comp = pd.read_csv(BLIND)
-    hist = pd.read_csv(CURATED / "splits" / "scored_in_history.csv")
     prim = comp[comp["primary"]]
     p0 = prim.iloc[0]
     ns = comp[comp["population"].eq("never_scored") & comp["against"].eq(PLUS)].iloc[0]
@@ -1184,19 +1200,18 @@ candidate's PR-AUC; each other cell is its difference from that baseline, the bl
 
 {markdown(rows)}
 
-With {int(p0["rows"])} places, and positives in {int(p0["positive_blocks"])} blocks, the intervals are wide and a "neither" is not evidence of no effect. The
+With {int(p0["rows"])} places, and positives in {int(p0["positive_blocks"])} blocks, the intervals are wide. The
 blind places' neighbours, and same-named towns elsewhere, were scored in earlier runs, so this is a reading of places no
 run scored, not of a region none had seen. All rows, with every model's metrics: `runs/classifier/sealed/blind/`.
 
-How the blind places were found. The sealed scoring (next section) read as unscored the {AMENDMENT_11_SET} sealed places the early
-check had not scored, from the outputs of one commit; earlier commits of a milestone check had committed scores, and
-maps showing them, for places that commit no longer scored. Walking every commit before the sealed scoring
-(`scripts/scored_history.py`, written to `data/curated/splits/scored_in_history.csv`) finds {hist["place_id"].nunique()} of the {SEALED_PLACES} sealed
-places with a committed score: {lost} of the {int(ns["rows"])} of that set with a SAC label, and all but {EARLY_SCORED + lost - hist["place_id"].nunique()} of the {EARLY_SCORED} the early check had
-scored. That one counts as scored only because it shares its name and country with another town the early check
-scored (Kirovsk, `scored_before_freeze.csv`); the walk finds no score for it. `configs/protocol_amendment_12.yaml`
-restricted the reading to the rest after the next section's reading had been seen; it refits and rescores nothing.
-`python -m nucprob.classifier.sealed_reread` reads the committed sealed scores, checking their hash.
+How the blind places were found. "The early check" is the M1 slice and M2 check together, read at commit `de2e54a`
+(`data/curated/splits/scored_before_freeze.csv`): {EARLY_SCORED} of the {SEALED_PLACES} sealed places had a score there. The sealed
+scoring (next section) took the other {AMENDMENT_11_SET} as unscored; {int(ns["rows"])} of those have a SAC label. Earlier commits of
+the M2 check had scored places that `de2e54a` no longer scored, so a walk over every commit before the sealed
+scoring (`scripts/scored_history.py`, output `data/curated/splits/scored_in_history.csv`) looked for any committed
+score. It found one for {lost} of the {int(ns["rows"])}; the other {int(ns["rows"]) - lost} are the blind places.
+`configs/protocol_amendment_12.yaml` made that restriction after the next section's reading had been seen; it refits
+and rescores nothing. `python -m nucprob.classifier.sealed_reread` reads the committed sealed scores, checking their hash.
 """
 
 
@@ -1206,7 +1221,7 @@ def _blind_cell(r) -> str:
         if r["block_measured"]
         else f"n/a: positives in {int(r['positive_blocks'])} blocks"
     )
-    return f"{signed(r['delta'])} [{signed(r['low'])}, {signed(r['high'])}], by blocks {blocks}: {r['verdict']}"
+    return f"{point(r['delta'], r['low'], r['high'])} [{signed(r['low'])}, {signed(r['high'])}], by blocks {blocks}: {r['verdict']}"
 
 
 def _undated_sites() -> int:
@@ -1512,7 +1527,7 @@ base rate of {sac_rate:.2f}, the others together {rest_rate:.2f}. On a list that
 list is unlabeled, not a negative, so PR-AUC there understates true precision: read such figures against each other and
 the base rate, not as how often a model is right. Intervals are 95%. "By blocks" resamples whole 300 km squares of towns;
 the other interval resamples single towns. Verdicts use the unrounded bounds; a bound that would print as 0.00 is shown with its
-sign and the decimals it needs (three or more), an exact zero as 0.00, and a comparison whose scores never differ as "constant". Where the positives lie in fewer than {MIN_POSITIVE_BLOCKS} blocks, resampling blocks measures nothing, and the block interval is shown as "n/a" with the count.
+sign and the decimals it needs (three or more), an exact zero as 0.00, an estimate with the decimals of its coarser printed bound (at least two), and a comparison whose scores never differ as "constant". Where the positives lie in fewer than {MIN_POSITIVE_BLOCKS} blocks, resampling blocks measures nothing, and the block interval is shown as "n/a" with the count. In the tables, `a_pr_auc` is the PR-AUC of the model named in the row and `b_pr_auc` that of the score it is compared against; `by_blocks` is the block interval; `towns_without_1939` counts towns with no 1939 census figure; `cell_deg` is a map cell's side in degrees.
 
 **Terms.** "Document" is the general word here: most of the lists are studies, exercises, lessons and a war
 game, and few are war plans (see "How much evidence there is, by side"). "Leave one document out" is the holdout `configs/protocol.yaml` calls leave one plan out.
@@ -1580,7 +1595,7 @@ holds as in role in 1965 also count for the documents of 1961 and 1964.
 **Labels.** A positive is a town linked to a row the document designates (`selected = 1` in
 `data/curated/labels/SCHEMA.md`). A rejected town, such as Tokyo in the Target Committee's list, is a negative. A town
 named only in rows that neither designate nor reject it, such as areas "appropriate for study" or a
-facility in the 1963 JCS vulnerability table, is left out of that list. SAC targets link to the nearest
+facility in the 1963 Joint Chiefs of Staff (JCS) vulnerability table, is left out of that list. SAC targets link to the nearest
 town within 10 km, or up to 75 km if the name matches closely; other lists link within 15 km. A list that
 concerns one sector keeps only that sector's towns (`data/curated/labels/SECTORS.yaml`). Some boxes follow a boundary a document states; the
 others are derived from the list's own linked targets plus a fixed margin, because no boundary was read, and they say nothing about the plan's real scope. That file says which is which and gives a reason for each list
@@ -1743,7 +1758,7 @@ is incomplete.
 {_map_section()}
 ## What the evidence cannot support
 
-- **Any statement about Soviet targeting.** The USSR is refused its own model: {usr["reason"]}.
+- **Any statement about Soviet war plans.** The USSR is refused its own model: {usr["reason"]}. The Soviet rows that are used come from General Staff Academy lessons and Warsaw Pact exercises, and say what those taught or rehearsed.
 - **That SAC's list is free of error.** See how it was transcribed, under Data, and `data/ISSUES.md` for what has been corrected.
 - **A state's own model.** Each state is refused. A model of Warsaw Pact war plans in particular has no basis: {war_positives} linked positives, none from a plan read at source. The pooled model is exercise-based.
 - **Prediction for a plan not in the data.** See the main result. The map's score carries this limit into every cell.
@@ -1866,8 +1881,8 @@ def _readme_blind() -> str:
     return f"""- **On the only blind test**, {first}. The **sealed set** is the {SEALED_PLACES} towns of 300 km blocks kept out of
   every fit and scored once at the end; {int(pd.read_csv(BLIND)["rows"].max())} of them have a SAC label and are scored against SAC's list,
   and {int(p0["rows"])} of those had been scored by no earlier run ({int(p0["positives"])} listed). Against population plus country there:
-{"".join(f"  - {r.scope}: {signed(r.delta)} [{signed(r.low)}, {signed(r.high)}], by blocks [{signed(r.block_low)}, {signed(r.block_high)}]: {r.verdict}{_rule_note(r.scope)}{chr(10)}" for r in prim.itertuples())}
-  Against the population rule, {len(rule_gains)} of {len(rule)} gain by both intervals{(": " + "; ".join(f"{r.scope} {signed(r.delta)} [{signed(r.low)}, {signed(r.high)}], by blocks [{signed(r.block_low)}, {signed(r.block_high)}]" for r in rule_gains.itertuples())) if len(rule_gains) else ""}.
+{"".join(f"  - {r.scope}: {point(r.delta, r.low, r.high)} [{signed(r.low)}, {signed(r.high)}], by blocks [{signed(r.block_low)}, {signed(r.block_high)}]: {r.verdict}{_rule_note(r.scope)}{chr(10)}" for r in prim.itertuples())}
+  Against the population rule, {len(rule_gains)} of {len(rule)} gain by both intervals{(": " + "; ".join(f"{r.scope} {point(r.delta, r.low, r.high)} [{signed(r.low)}, {signed(r.high)}], by blocks [{signed(r.block_low)}, {signed(r.block_high)}]" for r in rule_gains.itertuples())) if len(rule_gains) else ""}.
   Positives lie in only {int(p0["positive_blocks"])} of {int(p0["blocks"])} blocks, so these intervals are wide and "neither" is not evidence of no effect.
   On {int(earlier.iloc[0]["rows"])} sealed places including ones earlier runs had scored, {int(earlier["verdict"].eq("gain").sum())} of {len(earlier)} models gained over population plus country.
   **That reading is not blind.** (`runs/classifier/sealed/blind/comparison.csv`; REPORT, "The sealed set".)
