@@ -1,9 +1,9 @@
 {
-  "created": "2026-11-05T09:30:33+00:00",
-  "git_commit": "31d0ab3c6bc5917a79bbe694da59ab92a5ebec5d",
+  "created": "2026-11-05T15:53:53+00:00",
+  "git_commit": "4c5210f98c4ec6c9f877d56759fcc656b3315257",
   "git_dirty": false,
   "protocol_sha256": "cc14e52ef3cce2f0562ea24195872a3cfa10a30571a0e13fb5dcb130914794f8",
-  "scenarios_sha256": "c197f60a3e8402f36496bcaafb87a84f5252a55b1f42aa8f95b81cab2c6f5f68",
+  "scenarios_sha256": "fc4da6f0e45bf9ab5e7c21150c43f0d26e92c7a5be0994e9e3875f2b19965cbd",
   "stockpiles_sha256": "3bf14fcf852b646261150fe895ee3c49f82b18e28dd26e948f82c77733ae5f41",
   "delivery_mix_sha256": "4cf794f52c9c99da34b94120e53daff74d6df78f74acc8aa1933d4147959424e",
   "table_sha256": "2376ae4cda66262f164010ba12cf06e4ce578fdb205b313022f71d25c23fd2b3",
