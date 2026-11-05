@@ -1,0 +1,28 @@
+# Eighteenth amendment, in its own file like the fifth to seventeenth. Committed before the check it governs is
+# run. Every value is a folded block scalar, as in the twelfth. What had been read: the review of 736fdb5 reran the
+# block bootstrap of one comparison (Warsaw Pact, pooled, exercise-based; spatial blocks; LightGBM, all permitted
+# against population + country; all lists) with seeds 1 to 20 and found the lower bound below zero under 9 of
+# them (seed 6: -0.0151), against +0.0021 under the protocol's seed 1956. No other comparison had been rerun with
+# another seed when this was written.
+date: >-
+  2026-11-05
+reasons: >-
+  The protocol fixes one bootstrap seed (1956) and 2,000 resamples. A verdict whose bound lies near zero can
+  then turn on the seed's draws rather than on the data, and the protocol says nothing of such a verdict.
+check: >-
+  nucprob.classifier.seed_check reads the committed held-out scores (runs/classifier/held_out_scores.csv.gz),
+  refits nothing, and for every comparison of the primary table (each scope's selected candidate against
+  population + country and against the population rule, each holdout and list set) repeats the town and the
+  block bootstrap of the protocol, 2,000 resamples each, under seeds 1 to 20. It writes
+  runs/classifier/seed_check.csv (one row per comparison and seed) and seed_check_summary.csv.
+rule: >-
+  The protocol's verdict stays the one under seed 1956. A comparison is seed-stable when all 20 other seeds give
+  that verdict, and seed-dependent otherwise; this holds for gains, losses and neither alike. REPORT prints,
+  beside every seed-dependent verdict of the primary table, how many of the 20 seeds give each verdict, and
+  README states no seed-dependent verdict without saying so.
+not_covered: >-
+  The feature-family comparisons (family_gain.csv) and the sealed readings: their per-place scores of the
+  family fits are not kept, and the sealed set's lock allows one reading. REPORT states that they rest on seed
+  1956 alone.
+unchanged: >-
+  Every fit, score, interval under seed 1956, selection, the gate, the map and the sealed readings.
