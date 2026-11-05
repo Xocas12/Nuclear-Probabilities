@@ -143,7 +143,7 @@ def test_the_corrected_links_are_described_whole():
     assert "row 17" in text and "row 57" in text and "Kiel" in text
     assert "four towns" in text
     # README gives the rule and sends the reader to REPORT for the rows
-    assert 'REPORT ("Changed by the corrected Warsaw Pact links") gives the rows' in _flat(
+    assert 'REPORT ("Corrections made after results were read") gives the rows' in _flat(
         ROOT / "README.md"
     )
     rep = _flat(ROOT / "REPORT.md")
@@ -155,23 +155,21 @@ def _estimates(text: str) -> list[tuple[str, str, str]]:
 
 
 def test_a_negative_bound_rounded_to_zero_in_the_csv_keeps_its_sign():
-    assert report.signed(-0.0) == "-0.000"
-    assert report.signed(0.0) == "0.000"
+    assert report.signed(-0.0) == "-0.00"
+    assert report.signed(0.0) == "0.00"
 
 
-def test_no_estimate_prints_as_minus_zero_or_equal_to_a_bound():
+def test_every_printed_difference_and_bound_has_two_decimals():
+    """Differences and their bounds print at two decimals everywhere: a bound moves by about 0.005 between bootstrap
+    seeds, so a third decimal would print noise. A signed zero is a value within 0.005 of zero, on the sign's side."""
     for name in ("README.md", "REPORT.md", "runs/classifier/TABLES.md"):
         text = (ROOT / name).read_text(encoding="utf-8")
-        # a signed zero has exactly three decimals (a value within 0.0005 of zero, on the sign's side)
         signed_zeros = set(re.findall(r"(?<![\d.])[+-]0\.0+(?![0-9])", text))
-        assert signed_zeros <= {"+0.000", "-0.000"}, (name, signed_zeros)
-        # no estimate itself prints as a signed zero unless it lies within 0.0005 of zero
-        for est, _, _ in _estimates(text):
-            assert est not in ("+0.00", "-0.00"), (name, est)
+        assert signed_zeros <= {"+0.00", "-0.00"}, (name, signed_zeros)
         found = _estimates(text)
         assert found, name
-        for est, lo, hi in found:
-            assert est not in (lo, hi), (name, est, lo, hi)
+        for triple in found:
+            assert all(len(x.split(".")[1]) == 2 for x in triple), (name, triple)
 
 
 def test_a_constant_comparison_is_called_constant():

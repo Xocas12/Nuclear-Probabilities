@@ -78,9 +78,9 @@ def test_every_comparison_row_recomputes_from_the_held_out_scores():
             assert a - b == pytest.approx(r["delta"], abs=2e-3)
 
 
-def test_differences_keep_three_decimals_and_a_constant_is_not_shown_as_a_measurement():
-    assert report.signed(0.0234) == "+0.023" and report.signed(-0.0004) == "-0.000"
-    assert report.signed(0.0) == "0.000"
+def test_differences_keep_two_decimals_and_a_constant_is_not_shown_as_a_measurement():
+    assert report.signed(0.0234) == "+0.02" and report.signed(-0.004) == "-0.00"
+    assert report.signed(0.0) == "0.00"
     flat = {"delta": 0.0, "low": 0.0, "high": 0.0, "block_low": 0.0, "block_high": 0.0}
     assert report.constant(flat) and "constant" in report.interval(flat)
     assert not report.constant(flat | {"high": 0.001})
@@ -377,22 +377,31 @@ def test_the_readme_says_what_the_blind_reading_found():
     blind = scores["never_scored"] & ~scores["place_id"].isin(set(hist["place_id"]))
     assert (prim["rows"] == int(blind.sum())).all()
     readme = " ".join((ROOT / "README.md").read_text(encoding="utf-8").split())
-    assert "**The whole sealed set is not a blind test.**" in readme
+    assert "The whole sealed set is not a blind test" in readme
     if prim["verdict"].eq("neither").all():
-        assert "no model beats population plus country" in readme
+        assert "no selected model beats population plus country" in readme
     else:
-        assert "no model beats population plus country" not in readme
+        assert "no selected model beats population plus country" not in readme
 
 
 @pytest.mark.skipif(not report.BLIND.exists(), reason="blind reading not run")
 def test_the_main_result_and_the_limits_quote_the_blind_reading():
-    """The headline must not lead with a gain the blind reading does not show. The main result
-    states every primary blind row, and both documents list the missing blind gain as a limit."""
+    """The headline must not lead with a gain the blind reading does not show. The main result gives the
+    blind verdicts and points to the one table that states every primary blind row; both documents list the
+    missing blind gain as a limit."""
     text = (ROOT / "REPORT.md").read_text(encoding="utf-8")
     main = text[text.index("## Main result") : text.index("## Question")]
     prim = report._blind_rows(report.PLUS)
+    blind = text[text.index("### The sealed set on blind places") :]
+    blind = blind[: blind.index("\n### ", 5)]
     for _, r in prim.iterrows():
-        assert f"[{report.signed(r['low'])}, {report.signed(r['high'])}]" in main, r["scope"]
+        assert f"[{report.signed(r['low'])}, {report.signed(r['high'])}]" in blind, r["scope"]
+    counts = prim["verdict"].value_counts()
+    assert (
+        f"{counts.get('neither', 0)} of {len(prim)} scopes' selected models cannot be told"
+        in " ".join(main.split())
+    )
+    assert 'table under "The sealed set on blind places"' in " ".join(main.split())
     cannot = text[text.index("## What the evidence cannot support") :]
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     results = readme[readme.index(report.README_START) : readme.index(report.README_END)]
@@ -426,15 +435,15 @@ def test_reader_facing_text_has_no_commit_names_or_run_on_lines():
 
 
 def test_a_signed_zero_is_defined_wherever_it_is_printed():
-    """A bound off zero may print as +0.000 or -0.000, its sign giving its side; both documents say so."""
-    assert report.signed(0.0003) == "+0.000" and report.signed(-0.00004) == "-0.000"
-    assert report.signed(0.003) == "+0.003" and report.signed(0.12) == "+0.120"
+    """A bound off zero may print as +0.00 or -0.00, its sign giving its side; both documents say so."""
+    assert report.signed(0.003) == "+0.00" and report.signed(-0.00004) == "-0.00"
+    assert report.signed(0.006) == "+0.01" and report.signed(0.12) == "+0.12"
     for name, rule in (
-        ("README.md", "one printed +0.000 or -0.000 lies within 0.0005 of zero on that side"),
-        ("REPORT.md", "A difference within 0.0005 of zero prints as +0.000 or -0.000"),
+        ("README.md", "one printed +0.00 or -0.00 lies within 0.005 of zero on that side"),
+        ("REPORT.md", "A difference within 0.005 of zero prints as +0.00 or -0.00"),
     ):
         text = " ".join((ROOT / name).read_text(encoding="utf-8").split())
-        if re.search(r"(?<![\d.])[+-]0\.000(?![0-9])", text):
+        if re.search(r"(?<![\d.])[+-]0\.00(?![0-9])", text):
             assert rule in text, name
 
 
@@ -505,7 +514,8 @@ def test_the_condensed_map_and_extended_tables_keep_every_figure():
 )
 def test_the_sixteenth_amendment_paragraph_lists_every_moved_verdict():
     """configs/protocol_amendment_16.yaml: REPORT names every primary row whose verdict differs between the
-    run the sealed set was scored with and the refit, and says whether any scope's selection changed."""
+    run the sealed set was scored with and the refit, and says whether any scope's selection changed (its row of
+    the corrections table)."""
     fitted = OUT / "sealed" / "fitted_run"
     # Once the seventeenth amendment refits again, the sixteenth's refit is the run kept in before_amendment_17/.
     after_16 = report.BEFORE_17 if (report.BEFORE_17 / "comparison.csv").exists() else OUT
@@ -513,9 +523,9 @@ def test_the_sixteenth_amendment_paragraph_lists_every_moved_verdict():
     now_table = json.loads((after_16 / "manifest.json").read_text())["table_sha256"]
     text = " ".join((ROOT / "REPORT.md").read_text(encoding="utf-8").split())
     if was_table == now_table:
-        assert "### Changed by the corrected West European site table" not in text
+        assert "| 16 |" not in text
         return
-    assert "### Changed by the corrected West European site table" in text
+    assert "### Corrections made after results were read" in text
     now = report.primary_table(
         pd.read_csv(after_16 / "comparison.csv"), pd.read_csv(after_16 / "selection.csv")
     )
@@ -524,11 +534,14 @@ def test_the_sixteenth_amendment_paragraph_lists_every_moved_verdict():
     )
     both = now.merge(was, on=["Scope", "Holdout", "Lists"], suffixes=("", "_was"))
     moved = both[both["Verdict"] != both["Verdict_was"]]
-    if moved.empty:
-        assert f"None of the {len(both)} primary rows" in text
+    row = re.search(r"\| 16 \|[^|]*\| (\d+) of (\d+) \| ([^|]*) \|", text)
+    assert row and (int(row[1]), int(row[2])) == (len(moved), len(both))
     for _, r in moved.iterrows():
         holdout = r["Holdout"][0].lower() + r["Holdout"][1:]
-        assert f"{r['Scope']}, {holdout}, {r['Lists']}: {r['Verdict_was']} before" in text
+        assert (
+            f"Amendment 16: {r['Scope']}, {holdout}, {r['Lists']}: {r['Verdict_was']} before"
+            in text
+        )
 
 
 @needs_run
@@ -550,7 +563,11 @@ def test_a_sealed_country_baseline_that_is_the_population_rule_is_flagged():
     text = " ".join((ROOT / "REPORT.md").read_text(encoding="utf-8").split())
     lines = readme.splitlines()
     for scope in same:
-        i = next(i for i, x in enumerate(lines) if x.startswith(f"  - {scope}:"))
+        # README gives the blind rows per scope only in REPORT's table; any line of its own must carry the flag.
+        i = next((i for i, x in enumerate(lines) if x.startswith(f"  - {scope}:")), None)
+        assert f"In '{scope}' the two baselines rank every place alike" in text
+        if i is None:
+            continue
         bullet = [lines[i]]
         for x in lines[i + 1 :]:  # its wrapped continuation lines
             if not x.startswith("    ") or x.lstrip().startswith("- "):
@@ -602,7 +619,7 @@ def test_the_sensitivity_and_family_rows_keep_their_intervals_in_tables_and_verd
             if report.constant(r):
                 continue
             v = report.both_verdict(r)
-            assert f"| {report.point(r['delta'], r['low'], r['high'])} {v} |" in text
+            assert f"| {report.point(r['delta'])} {v} |" in text
     fam = pd.read_csv(OUT / "family_gain.csv")
     measured = fam[~fam.apply(report.constant, axis=1)]
     assert (measured.apply(report.both_verdict, axis=1) == measured["verdict"]).all()

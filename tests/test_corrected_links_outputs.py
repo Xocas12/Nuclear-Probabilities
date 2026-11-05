@@ -32,29 +32,33 @@ def test_the_committed_outputs_are_of_the_corrected_links():
     assert len(row) == 1 and "pending" not in row[0]
 
 
-def test_the_changed_paragraph_lists_every_moved_primary_row():
-    sel_now = pd.read_csv(report.OUT / "selection.csv")
+def test_the_corrections_section_lists_every_row_the_seventeenth_amendment_moved():
+    # The run after the seventeenth amendment: kept in before_amendment_19/ once the nineteenth refits.
+    after = report.BEFORE_19 if (report.BEFORE_19 / "comparison.csv").exists() else report.OUT
+    sel_now = pd.read_csv(after / "selection.csv")
     sel_was = pd.read_csv(report.BEFORE_17 / "selection.csv")
-    now = report.primary_table(pd.read_csv(report.OUT / "comparison.csv"), sel_now)
+    now = report.primary_table(pd.read_csv(after / "comparison.csv"), sel_now)
     was = report.primary_table(pd.read_csv(report.BEFORE_17 / "comparison.csv"), sel_was)
     both = now.merge(was, on=["Scope", "Holdout", "Lists"], suffixes=("", "_was"))
     moved = both[both["Verdict"] != both["Verdict_was"]]
     text = (ROOT / "REPORT.md").read_text(encoding="utf-8")
-    section = text[text.index("### Changed by the corrected Warsaw Pact links") :]
+    section = text[text.index("### Corrections made after results were read") :]
     section = section[: section.index("\n### ", 5)]
-    # each bullet with its wrapped continuation lines, up to the next bullet or blank line
+    # each bullet of the seventeenth amendment with its wrapped continuation lines
     bullets = [
         " ".join(part.split("\n\n")[0].split())
         for part in re.split(r"\n(?=- )", section)
-        if part.startswith("- ")
+        if part.startswith("- Amendment 17:")
     ]
     assert len(bullets) == len(moved)
-    assert f"{len(moved)} of the {len(both)} primary rows" in " ".join(section.split())
+    flat = " ".join(section.split())
+    assert re.search(rf"\| 17 \|[^|]*\| {len(moved)} of {len(both)} \|", flat)
     for _, r in moved.iterrows():
         assert any(
             r["Scope"] in b
             and r["Lists"] in b
-            and f"{r['Verdict']} now ({r['Difference, country']}, by blocks {r['By blocks']})" in b
+            and f"{r['Verdict']} after ({r['Difference, country']}, by blocks {r['By blocks']})"
+            in b
             for b in bullets
         ), (r["Scope"], r["Holdout"], r["Lists"])
 

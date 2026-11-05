@@ -1,15 +1,17 @@
 # nuclear-probabilities
 
-What made a place a nuclear target, as far as declassified lists can show? And given a stated stockpile, how likely is
-it that an area is struck? This is historical analysis on public sources. Towns are described, as far as the sources
-allow, as they stood at a document's date (several inputs are later; see Data), and labelled from target lists of US
-and Warsaw Pact documents, 1945-1977. Three of those lists are registered as war plans, all Warsaw Pact. Only one,
-Czechoslovak, was read at source, and it links no designated town; the two Polish ones are known from a scholar's
-table and paraphrase of files not read. The largest list, the US Strategic Air Command's (SAC) 1956 study, is a
-requirements study (an estimate of the weapons needed against a list of targets, not an order to strike them), and the
-searches recorded in `data/notes/` found no declassified Soviet war plan naming places. The results are in
-**[REPORT.md](REPORT.md)**. [PLAN.md](PLAN.md) is the design as first written, with its results lines updated later
-and some of its source notes out of date; [PROGRESS.md](PROGRESS.md) is the dated work log, kept as history.
+What made a place a nuclear target, as far as declassified target lists can show? And given a stated stockpile, how
+likely is it that an area is struck? This is historical analysis on public sources. Towns are described, as far as the
+sources allow, as they stood at a document's date (several inputs are later; see Data), and labelled from the target
+lists of 26 US and Warsaw Pact documents of 1945-1977, each recorded with its type in the project's register of
+documents. Three are war plans, all Warsaw Pact: one, Czechoslovak, was read at source and names no town that could be
+matched; the two Polish ones are known only from a scholar's table and paraphrase. The largest list, the US Strategic
+Air Command's (SAC) 1956 study, is a requirements study (an estimate of the weapons needed against a list of targets,
+not an order to strike them). The searches recorded in `data/notes/` found no declassified Soviet war plan naming
+places.
+
+The full results are in **[REPORT.md](REPORT.md)**. [PLAN.md](PLAN.md) is the design as first written, kept as
+history; [PROGRESS.md](PROGRESS.md) is the dated work log.
 
 ## What was found
 
@@ -18,189 +20,162 @@ and some of its source notes out of date; [PROGRESS.md](PROGRESS.md) is the date
 Dutch towns (their census volume came through a path robots.txt disallows) and holds sites possibly in use today at
 their 0.5-degree cell centres. REPORT, Data, says more.
 
-### Short answers
+### Terms
 
-**Terms.** Spatial cross-validation cuts the map into 300 km squares, deals them into 5 folds, and scores each fold's
-towns with a model fitted on the other four; it is done on three shifted grids and a town's score is the mean. PR-AUC,
-the area under the precision-recall curve, measures how many of a model's top-ranked towns are on a list. A list's
-base rate is what no information scores: 0.49 for SAC, 0.07 for the other lists. Where a list is incomplete a town off
-it is unlabeled, so PR-AUC understates precision there. The classifier's intervals are 95%, the first resampling towns
-and "by blocks" resampling 300 km squares; a difference counts only if both exclude zero. Differences have three
-decimals; one printed +0.000 or -0.000 lies within 0.0005 of zero on that side. A **scope** is the set of lists a
-model is fitted on: two global scopes (every attacker's documents, or plan documents only), a pooled Warsaw Pact
-scope, and SAC's 1956 study alone. A **linked positive** is a listed place matched to a town of the place universe.
-The **population rule** ranks towns by population alone; **population plus country** adds a term for each target
-country.
+A **list** is one document's targets. `data/curated/labels/PLANS.yaml` registers each list with its attacker, date,
+document type and evidence grade; a list is "registered as a war plan" when that type is war plan. A **linked
+positive** is a listed place matched to a town of the place universe, the towns a model scores. The **population
+rule** ranks towns by population alone; **population plus country** adds a term for each target country. The two
+candidate models read every feature the protocol permits: a logistic regression and LightGBM, a gradient-boosted
+decision-tree model with fixed settings. A town off an incomplete list is unlabeled, not a negative, so each model is
+fitted 50 times, each fit (a **bag**) on all listed towns and as many unlisted ones drawn at random, and the 50 scores
+are averaged. A scope's **selected model** is the candidate with the higher PR-AUC under spatial blocks. A **scope**
+is the set of lists a model is fitted on: every attacker's documents, plan documents only, the pooled Warsaw Pact
+documents, or SAC 1956 alone, which is one document and not a state model. The **sealed set** is the 467 towns of 300
+km blocks kept out of every fit and scored once at the end; its **blind places** are those no earlier run had scored.
+
+**PR-AUC**, the area under the precision-recall curve, measures how many of a model's top-ranked towns are listed. A
+ranking with no information scores the list's **base rate**: 0.49 for SAC, 0.07 for the other lists. On an incomplete
+list PR-AUC understates precision. **Spatial cross-validation** scores each town with a model fitted without the 300
+km square it lies in (5 folds, on three shifted grids, scores averaged). Intervals are 95% paired bootstrap intervals,
+resampling towns and, "by blocks", 300 km squares; a difference is a **gain** or a loss only if both exclude zero, and
+otherwise **neither**. Differences have two decimals, as a bound moves by about 0.005 between bootstrap seeds; one
+printed +0.00 or -0.00 lies within 0.005 of zero on that side.
+
+### Short answers
 
 **What made a place a target?** The lists show what listed towns had in common, not why they were chosen. On the one
 large list, SAC's 1956 study of the Soviet bloc, a listed town stood out mostly by its size. Under spatial
-cross-validation, ranking towns by population alone (the population rule) gives a PR-AUC of 0.77 where a ranking with
-no information gives 0.49; population plus a term for each country gives 0.82, and the selected model with every
-permitted feature 0.85 (+0.023 [+0.014, +0.034] over population plus country, by blocks [+0.007, +0.044]). Added one
-at a time to a fit on population and country, no family of town traits adds more than 0.041. Of the families that
-describe the towns as of 1956, military sites, geography, air and missile defence sites and administrative status add
-0.009 to 0.020 each where they gain. The defence sites are known mostly from post-Soviet sources: they record what
+cross-validation, ranking towns by population alone (the population rule) gives a PR-AUC of 0.77 (base rate 0.49);
+population plus a term for each country gives 0.82, and the selected model (logistic, all permitted) 0.85: +0.02
+[+0.01, +0.03] over population plus country, by blocks [+0.01, +0.04]. No family of town traits adds more than 0.04
+(table below). Of the families that describe the towns as of 1956, military sites, geography, air and missile defence
+sites and administrative status gain. The defence sites are known mostly from post-Soviet sources: they record what
 existed in 1956, not what SAC knew. Transport adds the most but rests largely on today's data. Without the columns
-flagged as today's data, the selected model's gain over population and country is +0.013 [+0.005, +0.021], by blocks
-[-0.002, +0.031], and also without the defence tables +0.013 [+0.005, +0.021], by blocks [-0.002, +0.029]. In both, at
-least one interval reaches zero, so it cannot be told from no difference. Those repeats still use the 1959 Soviet
-census and other late inputs (REPORT, "Inputs later than the document"), and the analysis is not blind: earlier
-results had been read (REPORT, Method). None of this has been shown to carry over to a document the models did not
-see. On the one blind test, places no run had scored, no model beat population plus country.
+flagged as today's data, the selected model's gain over population and country is, with or without the defence tables,
++0.01 [+0.01, +0.02], by blocks [-0.00, +0.03]: at least one interval reaches zero, so it cannot be told from no
+difference. Several inputs still postdate 1956 (REPORT, "Inputs later than the document"), and the analysis is not
+blind: earlier results had been read. Nothing here has been shown to carry over to a document the models did not see.
+On the one blind test, places no run had scored, no model beat population plus country.
 
 **How likely is an area to be struck?** Only under stated assumptions, and only as a historical illustration. If the
 cited US stockpile of 1956 were sent against the Soviet bloc and each delivered warhead fell on a town in proportion
 to the map's score, 600 [440, 740] of 1370 half-degree cells would have a probability over one half of receiving at
 least one warhead; with the 1950 stockpile, 6 [3, 9] of 1370. The brackets are the 5th to 95th percentiles of 200
-draws, so 90% intervals. Most of their width comes from the stockpile and from the share of each force assumed sent to
-the theatre, which has no source. Against SAC's own list, with spatial blocks held out, the 1956 map ranks the cells
-that hold a listed town at PR-AUC 0.84 where 58% of cells hold one, and its mean cell probability is 0.48. The score
-was fitted on these lists, so this is agreement with the training list, not a test. Present-day scenarios apply lists
-of 1945-1977 to today's towns: they are extrapolation, with no label to test them.
+draws, so 90% intervals. Most of the width comes from the stockpile and from the share of each force assumed sent to
+the theatre, which has no source. With spatial blocks held out, the 1956 map ranks the cells holding a town on SAC's
+list at PR-AUC 0.84 where 58% of cells hold one, and its mean cell probability is 0.48: agreement with the list it was
+fitted on, not a test. Present-day scenarios apply lists of 1945-1977 to today's towns and are extrapolation.
 
 ### Results in brief
 
-- **On the only blind test**, no model beats population plus country. The **sealed set** is the 467 towns of 300 km
-  blocks kept out of every fit and scored once at the end; 463 of them have a SAC label and are scored against SAC's
-  list, and 149 of those had been scored by no earlier run (74 listed). Against population plus country there:
-  - global, all attacker documents: +0.017 [-0.016, +0.055], by blocks [-0.019, +0.116]: neither
-  - global, plan documents only: +0.016 [-0.019, +0.053], by blocks [-0.015, +0.106]: neither
-  - Warsaw Pact, pooled, exercise-based: -0.148 [-0.247, -0.039], by blocks [-0.251, +0.147]: neither (here population
-    plus country ranks every place as the population rule does: this scope's lists hold no town of these countries)
-  - single document: SAC 1956 (not a state model): -0.013 [-0.055, +0.024], by blocks [-0.042, +0.016]: neither
-  Against the population rule, 2 of 4 gain by both intervals: global, all attacker documents +0.124 [+0.047, +0.201],
-  by blocks [+0.020, +0.262]; global, plan documents only +0.126 [+0.049, +0.200], by blocks [+0.020, +0.271].
-  Positives lie in only 6 of 10 blocks, so these intervals are wide and "neither" is not evidence of no effect.
-- **The whole sealed set is not a blind test.** On 272 sealed places, including ones earlier runs had scored, 2 of 4
-  models gained over population plus country. Which sealed places count as blind was decided after that reading had
-  been seen, and the set may be read once, so only the protocol's bootstrap seed was used
-  (`runs/classifier/sealed/blind/comparison.csv`; REPORT, "The sealed set").
-- **What the lists favour beyond population, on SAC's 1956 study alone.** The table adds each family of features, one
-  at a time, to a LightGBM fit on log population and a country term (spatial blocks, one bag per fit), which scores
-  0.81 on all countries (0.77 on Soviet towns alone). That fit is not the population rule: it is a fitted model that
-  may bend population's effect, and the population rule, a plain ranking by population, scores 0.77 on the same rows.
-  Families measured as of the document come first. "National power over population alone" is added to a fit on log
-  population with no country term (0.79), so it can only do what the country term does.
+- **On the only blind test**, the 149 places of the sealed set that no earlier run had scored (74 on SAC's list), no
+  selected model beats population plus country; against the population rule 2 of 4 gain. Positives lie in 6 of 10
+  blocks, so the intervals are wide and "neither" is not evidence of no effect. The whole sealed set is not a blind
+  test: on the 272 sealed places the early checks had not scored, some of which other runs had, 2 of 4 models gained.
+  Which places count as blind was decided after the reading of all sealed places had been seen (REPORT, "The sealed
+  set").
+- **What SAC's list favours beyond population.** Each family of features is added alone to a LightGBM fit on log
+  population and a country term, which scores 0.81 on all countries (0.77 on Soviet towns). That fit is not the
+  population rule, which scores 0.77 on the same rows: it may bend population's effect. A cell is the change in PR-AUC
+  with its two intervals. National power has one value per country and year, so it is also read over population alone.
 
 | Family added | All countries | Soviet towns only |
 |---|---|---|
-| military sites of the document's date | +0.015 [+0.008, +0.022], by blocks [+0.007, +0.024]: gain | +0.020 [+0.008, +0.032], by blocks [+0.007, +0.034]: gain |
-| geography (elevation, relief, distance to the coast) | +0.010 [+0.003, +0.017], by blocks [+0.002, +0.019]: gain | +0.015 [+0.003, +0.026], by blocks [+0.004, +0.026]: gain |
-| air and missile defence sites of the document's date | +0.009 [+0.004, +0.015], by blocks [+0.002, +0.017]: gain | +0.015 [+0.004, +0.025], by blocks [+0.002, +0.030]: gain |
-| administrative status (capital, regional centre, distance to the capital) | +0.002 [-0.002, +0.006], by blocks [-0.004, +0.009]: neither | +0.012 [+0.004, +0.020], by blocks [+0.003, +0.021]: gain |
-| national power (the Correlates of War project's (COW) National Material Capabilities) over population alone | +0.023 [+0.015, +0.030], by blocks [+0.009, +0.034]: gain | constant on these towns |
-| national power over population and country | +0.002 [-0.000, +0.004], by blocks [-0.001, +0.005]: neither | constant on these towns |
-| transport (railways, ports, airfields; largely today's data) | +0.024 [+0.014, +0.034], by blocks [+0.010, +0.038]: gain | +0.041 [+0.026, +0.056], by blocks [+0.026, +0.056]: gain |
-| industry (one column, today's power plants) | +0.003 [+0.000, +0.005], by blocks [-0.000, +0.005]: neither | +0.003 [-0.001, +0.006], by blocks [-0.002, +0.007]: neither |
+| military sites of the document's date | +0.01 [+0.01, +0.02]; blocks [+0.01, +0.02]: gain | +0.02 [+0.01, +0.03]; blocks [+0.01, +0.03]: gain |
+| geography (elevation, relief, distance to the coast) | +0.01 [+0.00, +0.02]; blocks [+0.00, +0.02]: gain | +0.01 [+0.00, +0.03]; blocks [+0.00, +0.03]: gain |
+| air and missile defence sites of the document's date | +0.01 [+0.00, +0.01]; blocks [+0.00, +0.02]: gain | +0.01 [+0.00, +0.03]; blocks [+0.00, +0.03]: gain |
+| administrative status (capital, regional centre, distance to the capital) | +0.00 [-0.00, +0.01]; blocks [-0.00, +0.01]: neither | +0.01 [+0.00, +0.02]; blocks [+0.00, +0.02]: gain |
+| national power (the Correlates of War project's (COW) National Material Capabilities), over population alone | +0.02 [+0.02, +0.03]; blocks [+0.01, +0.03]: gain | constant on these towns |
+| national power (COW), over population and country | +0.00 [-0.00, +0.00]; blocks [-0.00, +0.01]: neither | constant on these towns |
+| transport (railways, ports, airfields; largely today's data) | +0.02 [+0.01, +0.03]; blocks [+0.01, +0.04]: gain | +0.04 [+0.03, +0.06]; blocks [+0.03, +0.06]: gain |
+| industry (one column, today's power plants) | +0.00 [+0.00, +0.01]; blocks [-0.00, +0.01]: neither | +0.00 [-0.00, +0.01]; blocks [-0.00, +0.01]: neither |
 
-  Each gain is at most 0.041 of PR-AUC. These are associations within one requirements study, not causes and not a
-  reading on any other document. A family that gains helps rank towns; it does not say in which direction. For
-  defences: listed Soviet towns had fewer defence sites within 50 km than log population and country predict (odds
-  ratio per tenfold 0.33 [0.19, 0.50]); REPORT ("Defences") gives why this does not show that SAC avoided defended
-  places. 5 of the 10 gains have a block lower bound under 0.005 (geography (all countries, +0.002), defence (all
-  countries, +0.002), administration (USSR, +0.003), geography (USSR, +0.004), defence (USSR, +0.002)), and none of
-  these readings was repeated under other bootstrap seeds, since the family fits' scores are not kept. Intervals:
-  `runs/classifier/family_gain.csv`.
-- **On lists other than SAC's**, under the same spatial cross-validation, the global model on all attacker documents
-  (exercises included) against population plus country is +0.105 [+0.053, +0.153], by blocks [+0.017, +0.146]: both
-  intervals exclude zero. Of its 132 positives, 119 come from Warsaw Pact exercises (54), staff-academy lessons (50),
-  a war game (12) and the disputed 1970 map (3); 6 come from documents registered as war plans and 7 from US
-  target-selection and policy studies. It is mostly a reading on exercises and lessons, not on war plans. Without the
-  corrected links of two Polish exercise lists it is neither (+0.077 [+0.026, +0.130], by blocks [-0.020, +0.121]),
-  and those corrections were adopted after one of the two lists had been rescored with them, so this verdict was not
-  fixed before its result was seen (REPORT, "Changed by the corrected Warsaw Pact links"). The held-out blocks'
-  documents are also in training, so this is not a reading on an unseen document (next point).
-- **On a document the model has not seen**, the richer model against ranking towns by population is -0.133 [-0.156,
-  -0.110], by blocks [-0.174, -0.088] over all lists, which SAC dominates. On lists other than SAC it is +0.022
-  [-0.026, +0.065], by blocks [-0.087, +0.064]: at least one interval reaches zero, so it cannot be told from no
-  difference. So no model has been shown to do better than population on an unseen document.
-- **Bootstrap seed.** The bootstrap resamples are drawn with one fixed seed, the number 1956 (not the document year).
-  Every primary comparison was repeated under seeds 1 to 20 with nothing refitted: 30 of 34 keep their verdict under
-  all 20. The 4 that do not are listed in REPORT ("Bootstrap seed") and are not read as findings either way; a reading
-  above that is one of them says so.
-- **No state gets its own model.** The US has 1299 linked positives, but only 7 outside one document and the
-  pre-committed gate asks for 15. The USSR has 0 positives in a document registered as a war plan, and 50 town-list
-  pairs from staff-academy lessons. A pooled Warsaw Pact model is allowed and is always labelled exercise-based.
-  Refusals: `runs/classifier/state_gate.csv`.
-- **Economic and political data** (regime, defence pacts, GDP per capita, Soviet defence plants), read apart under an
-  amendment committed before fitting: on a left-out document 0 of the 6 rows on lists other than SAC gain. The highest
-  of these models over all lists, picked after the fact and with no paired interval fixed in advance, scores 0.66
-  against 0.71 for the population rule. Plant counts add +0.001 [-0.006, +0.006] on Soviet towns.
-- **The map's score.** Because of the transfer result above, the pre-committed selection rule (highest PR-AUC on a
-  left-out document) chose population as the score. On the 1956 towns the score moves only 6.8-fold over a 620-fold
-  range of population, so a cell's probability also depends on how many towns it holds. In every scenario the
-  stockpile draws, more than the model's, make the width of its intervals, and those rest on cited inventories and on
-  theatre shares (the assumed part of each force sent to this theatre) with no source. The 1965 map has no United
-  Kingdom: its only census table came through a path robots.txt disallows and was withdrawn. Modern scenarios use
-  Natural Earth's map-label towns. A classifier told them from the training towns at ROC-AUC 0.97 (ROC-AUC: the chance
-  that it ranks a random modern town above a random training town; 0.5 would mean no shift) on 10 features both sets
-  have (population, its rank, population within 25-100 km, distances to a town of 100,000, the capital and the coast,
-  capital and regional-centre status), with 18% outside the training's 1st-99th percentile on the one feature the
-  score reads.
+  Each gain is an association within one requirements study, not a cause, and says nothing of its direction. 5 of the
+  10 gains have a block lower bound under 0.005, and the family fits were not repeated under other bootstrap seeds.
+  Listed Soviet towns had fewer defence sites within 50 km than population and country predict (odds ratio per tenfold
+  0.33 [0.19, 0.50]); REPORT, "Defences", gives why that does not show SAC avoided defended places.
+- **On lists other than SAC's**, under spatial cross-validation, the global model on all attacker documents (exercises
+  included) against population plus country is +0.11 [+0.05, +0.15], by blocks [+0.02, +0.15]: both intervals exclude
+  zero. Of its 132 positives, 119 come from Warsaw Pact exercises (54), staff-academy lessons (50), a war game (12)
+  and the disputed 1970 map (3); 6 come from documents registered as war plans and 7 from US studies: it is mostly a
+  reading on exercises and lessons. Before the corrected links of two Polish exercise lists, Lato-67 (the Coastal
+  Front directive of exercise Lato, 1967) and Burza (the Maritime Front exercise of 1961), it was neither (+0.08
+  [+0.03, +0.13], by blocks [-0.02, +0.12]); that correction was adopted after one of the lists had been rescored with
+  it, so this verdict was not fixed before its result was seen (REPORT, "Corrections made after results were read").
+  The held-out blocks' documents are also in training, so this is not a reading on an unseen document.
+- **On a document the model has not seen**, left out one at a time, documents are ranked worse by the selected model
+  than by the population rule over all lists (-0.13 [-0.16, -0.11], by blocks [-0.17, -0.09]), and on lists other than
+  SAC's the two cannot be told apart (+0.02 [-0.03, +0.06], by blocks [-0.09, +0.06]). No model has been shown to beat
+  population on an unseen document.
+- **Bootstrap seed.** The resamples are drawn with one fixed seed, the number 1956 (not the document year). Every
+  primary comparison was repeated under seeds 1 to 20 with nothing refitted: 30 of 34 keep their verdict under all 20.
+  The 4 that do not are listed in REPORT ("Bootstrap seed") and are read as neither a finding nor its absence.
+- **No state gets its own model.** The gate fixed in advance asks for 2 independent plans, 50 positives and 15 outside
+  the largest plan. The US has 1299 linked positives but only 7 outside SAC's study. The USSR has none in a document
+  registered as a war plan; its 50 town-list pairs are staff-academy lessons. A pooled Warsaw Pact model, labelled
+  exercise-based, is fitted instead (`runs/classifier/state_gate.csv`).
+- **Economic and political data** (regime, defence pacts, GDP per capita, Soviet defence plants), read under an
+  amendment committed before fitting: on a left-out document 0 of the 6 rows on lists other than SAC's gain, and the
+  best of these models over all lists, picked after the fact, scores 0.66 against 0.71 for the population rule. Soviet
+  defence-plant counts add +0.00 [-0.01, +0.01] on Soviet towns.
+- **The map's score.** The selection rule fixed in advance (highest PR-AUC on a left-out document) chose the
+  population rule. On the 1956 towns the score moves 6.8-fold over a 620-fold range of population, so a cell's
+  probability also depends on how many towns it holds. In every scenario the stockpile draws, more than the model's,
+  make the width of its intervals, and those rest on cited inventories and on theatre shares (the assumed part of each
+  force sent to this theatre) with no source. The 1965 map has no United Kingdom: its only census table came through a
+  path robots.txt disallows and was withdrawn. Modern scenarios use Natural Earth's map-label towns: a classifier
+  tells them from the training towns at ROC-AUC 0.97 (ROC-AUC: the chance that it ranks a random modern town above a
+  random training town; 0.5 would mean no shift), and 18% lie outside the training's 1st-99th percentile of the one
+  feature the score reads.
 <!-- end of results -->
 
 ## Data
 
-- **Labels.** The 26 lists registered in `data/curated/labels/PLANS.yaml`, each row quoting its page. `PLANS.yaml`
-  keeps four things apart for every list: the attacker, the date, the document type (war plan, target selection,
-  requirements study, policy study, exercise, war game, staff-academy lesson, written `training` in the tables,
-  civil-defence list, a mirror: one side's guess at the other's targets, a document disputed between plan and
-  exercise, or a reconstruction by journalists, which is excluded) and an evidence grade. Only types the protocol
-  counts as plans count towards a state's model; exercises and lessons are labelled as such wherever they are used.
-  Soviet and Warsaw Pact evidence is thin: no Soviet war plan naming places was found, and the three registered Warsaw
-  Pact war plans give 6 linked positives between them, none from a plan read at source (REPORT, "What the evidence
-  cannot support"). In two Polish exercise lists, Lato-67 (the Coastal Front directive of exercise Lato, 1967) and
-  Burza (the Maritime Front exercise of 1961), a row that gives a place as an offset from a town is linked to the
-  town at that offset, and a row that gives a direction but no distance is left unlinked; REPORT ("Changed by the
-  corrected Warsaw Pact links") gives the rows.
+- **Labels.** The 26 lists of `data/curated/labels/PLANS.yaml`, each row quoting its page. Each list keeps its
+  attacker, date, document type (war plan, target selection, requirements study, policy study, exercise, war game,
+  staff-academy lesson, civil-defence list, a mirror (one side's guess at the other's targets), a document disputed
+  between plan and exercise, or a reconstruction by journalists, which is excluded) and evidence grade apart. Only
+  plan types count towards a state's model; exercises and lessons are labelled as such wherever they are used. Soviet
+  and Warsaw Pact evidence is thin: no Soviet war plan naming places was found, and the three Warsaw Pact war plans
+  give 6 linked positives between them, none from a plan read at source. In the smaller lists a row that gives a place
+  as an offset from a town is linked to the town at that offset, and a row that gives a direction but no distance is
+  left unlinked; REPORT ("Corrections made after results were read") gives the rows this rule corrected.
 - **Places and features.** Towns, mostly of 10,000 or more, from censuses as near each document's date as could be
   found (the town tables of the smaller lists' countries were transcribed by language-model agents to the
   specification `data/curated/gazetteer/TOWNS_INSTRUCTIONS.md`, each with a card of its source and checks), with
   population, rank, distances to coast, capital and other towns, and, where a source exists for that date, military
-  sites, air and missile defences and the Correlates of War project's (COW) National Material Capabilities. A feature
-  should not postdate its document, but some do. Railways, ports and airfields taken from today's data are flagged and
-  the results are repeated without them; other late inputs are not flagged and stay in those repeats: the 1959 Soviet
-  census in every population column of the 1956 list (named in the `later` column of `data/FEATURES.md`), Hungary's
-  and the Czech lands' towns interpolated with 1960 and 1961 censuses, East Germany's and Poland's with end-1956
-  figures and Slovakia's with 1958 ones, Kurchatov's 1990 figure, North Korean, North Vietnamese and Mongolian towns
-  chosen by their size today, and undated West European sites counted for 1961 and 1964 (REPORT, "Inputs later than
-  the document"). Only a separate USSR rerun on the 1939 census avoids the 1959 census.
+  sites, air and missile defences and the Correlates of War project's (COW) National Material Capabilities. Some
+  inputs postdate their document: railways, ports and airfields from today's data are flagged and the results repeated
+  without them. Other late inputs are not flagged and stay in those repeats: the 1959 Soviet census for the 1956 list,
+  Hungary's and the Czech lands' towns interpolated with 1960 and 1961 censuses, East Germany's and Poland's with
+  end-1956 figures and Slovakia's with 1958 ones, North Korean, North Vietnamese and Mongolian towns chosen by their
+  size today, Kurchatov's 1990 figure, and others listed in REPORT ("Inputs later than the document"). Sites that may
+  be in use today are held at the centre of their 0.5-degree cell.
 - **Stockpiles.** `data/curated/stockpiles/`: inventories by state and year from the Federation of American Scientists
-  (FAS), its Status of World Nuclear Forces table of 2026, the Natural Resources Defense Council (NRDC) and Our World
-  in Data (OWID), a series citing FAS, and 2026 shares by delivery, rounded, from the Stockholm International Peace
-  Research Institute (SIPRI). The Bulletin of the Atomic Scientists' Nuclear Notebook was not read: its site's
-  robots.txt disallows this project's agent (`data/curated/stockpiles/README.md`). Every other assumption is stated
-  beside its source or marked as having none. The historical scenarios' reliability and losses to defences are a
-  stand-in: US government estimates of 1953-55 for Soviet bombers attacking the US (Foreign Relations of the United
-  States, FRUS), applied to US bombers in 1950 and 1956 and to Soviet forces in 1965 because no opened source covers
-  those.
-- **Provenance.** `data/sources.yaml`: every source's URL, licence, retrieval date and sha256. `data/ISSUES.md`
-  answers the repository's issues and pull requests.
+  (FAS), the Natural Resources Defense Council (NRDC) and Our World in Data (OWID), and rounded 2026 shares by
+  delivery from the Stockholm International Peace Research Institute (SIPRI). The Bulletin of the Atomic Scientists'
+  Nuclear Notebook was not read: its robots.txt disallows this project's agent. Reliability and losses to defences in
+  the historical scenarios are a stand-in, US estimates of 1953-55 for Soviet bombers attacking the US (Foreign
+  Relations of the United States, FRUS), because no opened source covers the forces modelled.
+- **Provenance.** `data/sources.yaml` gives every source's URL, licence, retrieval date and sha256, or says why one is
+  missing. `data/ISSUES.md` answers the repository's issues and pull requests.
 
 ## Method
 
-The analysis was fixed in `configs/protocol.yaml` before the final models were fitted. It was changed afterwards
-only by dated amendments, each of which says what results had already been read; `configs/HISTORY.md` lists them.
-Results had been read before most of them, so the analysis is not blind except on the sealed set.
-
-A town off an incomplete list is treated as unlabeled, not as a negative (positive-unlabeled: each of 50 bagged fits
-keeps all positives and draws as many unlabeled towns). Every model is compared with two baselines on the same towns:
-ranking by population (the "population rule") and population plus one intercept per country. Holdouts are spatial
-blocks of 300 km, leaving out one document at a time, and fitting on documents up to 1956 to score later ones, and the
-reverse. PR-AUC is the primary metric, with paired bootstrap intervals over towns and over blocks, and calibration is
-reported. A state gets its own model only if it passes the gate in the protocol (two independent plans, 50 positives,
-15 outside its largest plan); every state fails it.
-
-The **sealed set** is the towns of the blocks in `data/curated/splits/sealed_blocks.csv`. No model was fitted on them,
-and they were scored once, after the models were final. Two test models run before this classifier had already
-scored some of them; the places no committed run had scored are the **blind places**, the one blind test
-(`data/curated/splits/README.md`). Which places count as blind was decided after the reading of all sealed places
-had been seen; no model was refitted for it.
+The analysis was fixed in `configs/protocol.yaml` before the final models were fitted and changed afterwards only by
+dated amendments (`configs/protocol_amendment_*.yaml`), each saying what results had already been read;
+`configs/HISTORY.md` lists them. Results had been read before most of them, so the analysis is blind only on the
+sealed set. Towns off an incomplete list are unlabeled, not negatives (bagged positive-unlabeled learning, see Terms).
+Every model is compared with the population rule and with population plus country on the same towns, under spatial
+blocks, leaving one document out, and fitting on documents up to 1956 to score later ones and the reverse. PR-AUC is
+primary; calibration is reported. A state gets its own model only if it passes the gate in the protocol; every state
+fails it.
 
 The map takes the model the protocol's rule selects, draws stockpiles and models together (an attacker's inventory
 times its stated **theatre share**, the part assumed aimed at the scenario's countries, times reliability and survival
 of defences), and shares each scenario's delivered warheads among towns in proportion to the score, summarised on a
-0.5-degree grid (1 degree for modern scenarios).
+0.5-degree grid (1 degree for modern scenarios). It allocates nothing by any objective.
 
 ## What the evidence cannot support
 
@@ -208,8 +183,8 @@ REPORT ("What the evidence cannot support") gives each limit with its numbers. I
 
 - **A model of any one state's plans.** Every state fails the gate, the Warsaw Pact model pools exercises, and no
   Soviet war plan naming places was found.
-- **Prediction for an unseen document**, or **a blind gain over population plus country**: no model beat population
-  on a left-out document, nor population plus country on the blind places.
+- **Prediction for an unseen document**, or **a blind gain over population plus country**: no model beat population on
+  a left-out document, nor population plus country on the blind places.
 - **A pooled gain as more than telling the lists apart.** The columns name a row's document almost every time.
 - **Causes, or what planners knew.** The results are associations, and the features say what existed according to
   later sources.
@@ -218,20 +193,14 @@ REPORT ("What the evidence cannot support") gives each limit with its numbers. I
 
 ## Layout
 
-- `data/curated/labels/`: target lists, the registry `PLANS.yaml` (attacker, date, type, grade), `SECTORS.yaml` (the
-  area each list covers; a town outside it is not a negative of that list).
-- `data/curated/stockpiles/`: cited inventories and assumptions. `data/sources.yaml` and
-  `data/sources_amendment_5.yaml`: every source's provenance; `data/curated/features/cited_pages.csv`: the pages cited
-  row by row in the site tables.
-- `configs/protocol.yaml` and `configs/protocol_amendment_*.yaml`: the analysis and its amendments.
-  `configs/scenarios.yaml`: scenarios.
-- `runs/classifier/`, `runs/probmap/`: committed outputs. `REPORT.md` is generated from them.
-- `runs/m1-slice/`, `runs/m2-check/`: two early checks (M1: Soviet towns only, population and administrative features;
-  M2: the first full 1956 feature table over the whole bloc; PROGRESS.md), on the labels of their date. They were not
-  rerun after later label corrections and feed no result above; `make check RERUN_M2=1` would rerun M2 and overwrite
-  its pinned record. `runs/m4-transfer-check/`: the transfer check (does a
-  model fitted on SAC's 1956 bloc towns rank the targets of the smaller lists?), rerun on the corrected labels; it
-  reads whole countries, not sectors, and feeds no result above.
+- `data/curated/labels/`: target lists, the register `PLANS.yaml`, and `SECTORS.yaml` (the area each list covers; a
+  town outside it is not a negative of that list).
+- `data/curated/stockpiles/`: cited inventories and assumptions. `data/sources.yaml`, `data/sources_amendment_5.yaml`:
+  provenance; `data/curated/features/cited_pages.csv`: pages cited row by row in the site tables.
+- `configs/`: the protocol, its amendments and the scenarios.
+- `runs/classifier/`, `runs/probmap/`: committed outputs; `REPORT.md` and this file's results are generated from them.
+- `runs/m1-slice/`, `runs/m2-check/`, `runs/m4-transfer-check/`, `runs/m4-us-check/`: earlier checks kept as records;
+  they feed no result above (PROGRESS.md).
 
 ## Running it
 
@@ -239,47 +208,29 @@ Requires [uv](https://docs.astral.sh/uv/) and GNU make.
 
 ```
 make setup
-make data       # sources of data/sources.yaml into data/raw/; see "Not all rebuildable" below
+make data       # sources of data/sources.yaml into data/raw/
 make places labels features dataset
 make transfer evidence qa
-make classifier # table, models, repeats and audits; several hours on 3 cores
+make classifier # several hours on 3 cores
 make probmap    # about half an hour
-make report     # REPORT.md, TABLES.md and README's results, from both runs
-make viewer     # one self-contained page: runs/probmap/viewer/index.html
+make report     # REPORT.md, TABLES.md and README's results
+make viewer     # one self-contained page: runs/probmap/viewer/index.html, from committed outputs alone
 make test lint
 ```
 
-`make test` alone is a partial run on a fresh checkout: the tests that compare committed outputs with tables built
-from `data/raw/` (git-ignored) skip when those tables are absent, and the run lists them at its end. `make test-full`
-builds the tables (`places` to `qa` and the classifier table; no model is fitted) and then counts any skip as a
-failure; it needs `make data` first and a full, not shallow, clone.
+`make test` on a fresh checkout skips the tests that need tables built from `data/raw/` and lists them at its end;
+`make test-full` builds those tables first and counts any skip as a failure (it needs `make data` and a full clone).
+`make us1985` repeats a side check on US counties of 1985 (`data/FEATURES_US.md`, which gives its result), reading its
+site table from the commit that added it; `scripts/us_military_1985_spec.py` keeps that table's row specification.
 
-`make us1985` repeats a separate check on US counties against FEMA's 1987 risk bands, `runs/m4-us-check/`, which tests
-that those features join and is no part of the results above (`data/FEATURES_US.md`). Its table of US military sites
-in 1985 is not in the tree, since most of those sites are still in use; the target reads it back from the commit that
-added it and checks its sha256. The tree does keep that table's row specification, `scripts/us_military_1985_spec.py`:
-each site's name, 1985 role, unit, town and cited page, with one coordinate (Savannah River Site); the builder beside
-it would take the others from those pages. It lists features as of 1985, not targets, and ranks nothing. A shallow
-clone cannot run it. The pinned record is not overwritten: the rerun goes to `runs/m4-us-check-rerun/`, whose
-`comparison.csv` sets each metric beside the pinned one. 21 of the 36 rows have the same PR-AUC and 18 the same value
-on every metric; the largest PR-AUC difference is 0.0023, all in rows with OurAirports' airfield count, a live list
-fetched again on 1 November after the record was made.
-
-`make viewer` builds from the committed outputs alone. A clean clone's tests run without data; those that need built
-tables skip.
-
-**Not all rebuildable.** COW's data is not committed (no licence stated), so rebuilding needs its download. SIPRI's
-tables are not redistributed (its terms), so `data/curated/stockpiles/delivery_mix.csv` holds rounded shares only.
-`data/curated/features/bloc_air_defence_1956.csv` was built by one-off scripts from saved pages of a site with no open
-licence; the scripts are kept as a record in `scripts/bloc_air_defence_1956/` but cannot run from this repository
-alone, since those pages are not committed, so each row is
-checked against the pages its `source` column cites. **Robots.** `make data` asks each host's robots.txt before every
-download and reports a refused source as not obtained; `python -m nucprob.sources.robots` records the answer of the
-day for every source in `runs/qa/robots.csv`, judged on the URL the held bytes came from (the `obtained_from` field in
-`data/sources.yaml` names it where that is a mirror or an archived capture). No held file came from a refused path.
-Great Britain's 1981 district totals, fetched earlier from `www.nomisweb.co.uk` through a disallowed path, were
-withdrawn with everything built from them. Earlier transcriptions read `en.wikipedia.org` through disallowed paths;
-those copies are not held, and the pages are registered through allowed ones in
-`data/curated/features/cited_pages.csv`. `www.bbc.co.uk` refuses this project's agent: the one BBC page cited
-(`plandoc_bbc_2012_r5m`, behind the excluded list `wp_1959_r5m_operation_atom`) is registered but not fetched or held.
-Sources that could not be obtained are listed with `held` in `data/sources.yaml`.
+**Not all rebuildable.** COW's data and SIPRI's tables are not redistributed (no licence stated; SIPRI's terms), so
+rebuilding needs their downloads, and `data/curated/stockpiles/delivery_mix.csv` holds rounded shares only.
+`data/curated/features/bloc_air_defence_1956.csv` was built from saved pages of a site with no open licence; the
+scripts in `scripts/bloc_air_defence_1956/` are kept as a record, and each row cites its page. **Robots.** `make data`
+asks each host's robots.txt before every download; `python -m nucprob.sources.robots` records each source's answer in
+`runs/qa/robots.csv`, judged on the URL the held bytes came from. Sources fetched earlier through disallowed paths
+(Great Britain's 1981 districts from `www.nomisweb.co.uk`, the Netherlands' 1960 census volume) were withdrawn with
+everything built from them; Earlier transcriptions read `en.wikipedia.org` through disallowed paths; those copies are
+not held, and the pages are registered through allowed ones in `data/curated/features/cited_pages.csv`.
+`www.bbc.co.uk` refuses this project's agent, so the one BBC page cited is registered but not held. Sources that could
+not be obtained are marked `held` in `data/sources.yaml`.

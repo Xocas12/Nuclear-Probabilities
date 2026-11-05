@@ -128,42 +128,42 @@ Lists too small to score (`us_1958_taiwan_strait` with 1 positive) are left out 
 
 | holdout | lists | model | against | positives | train_positives_min | base_rate | a_pr_auc | b_pr_auc | candidate minus baseline | block interval | verdict |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| spatial blocks | all lists | logistic, all permitted | population rule | 1174 | 939 | 0.44 | 0.73 | 0.71 | +0.019 [+0.001, +0.037] | [-0.014, +0.053] | neither |
-| spatial blocks | all lists | logistic, all permitted | population + country | 1174 | 939 | 0.44 | 0.73 | 0.75 | -0.028 [-0.044, -0.011] | [-0.057, +0.002] | neither |
-| spatial blocks | all lists | LightGBM, all permitted | population rule | 1174 | 939 | 0.44 | 0.79 | 0.71 | +0.080 [+0.064, +0.096] | [+0.058, +0.101] | gain |
-| spatial blocks | all lists | LightGBM, all permitted | population + country | 1174 | 939 | 0.44 | 0.79 | 0.75 | +0.033 [+0.021, +0.044] | [+0.010, +0.056] | gain |
-| spatial blocks | lists other than SAC | logistic, all permitted | population rule | 132 | 939 | 0.07 | 0.16 | 0.21 | -0.056 [-0.093, -0.021] | [-0.168, -0.005] | loss |
-| spatial blocks | lists other than SAC | logistic, all permitted | population + country | 132 | 939 | 0.07 | 0.16 | 0.19 | -0.031 [-0.067, +0.001] | [-0.155, +0.019] | neither |
-| spatial blocks | lists other than SAC | LightGBM, all permitted | population rule | 132 | 939 | 0.07 | 0.29 | 0.21 | +0.081 [+0.028, +0.127] | [+0.002, +0.124] | gain |
-| spatial blocks | lists other than SAC | LightGBM, all permitted | population + country | 132 | 939 | 0.07 | 0.29 | 0.19 | +0.105 [+0.053, +0.153] | [+0.017, +0.146] | gain |
-| leave one document out | all lists | logistic, all permitted | population rule | 1174 | 131 | 0.44 | 0.59 | 0.71 | -0.124 [-0.151, -0.099] | [-0.176, -0.070] | loss |
-| leave one document out | all lists | logistic, all permitted | population + country | 1174 | 131 | 0.44 | 0.59 | 0.71 | -0.123 [-0.150, -0.098] | [-0.176, -0.069] | loss |
-| leave one document out | all lists | LightGBM, all permitted | population rule | 1174 | 131 | 0.44 | 0.58 | 0.71 | -0.133 [-0.156, -0.110] | [-0.174, -0.088] | loss |
-| leave one document out | all lists | LightGBM, all permitted | population + country | 1174 | 131 | 0.44 | 0.58 | 0.71 | -0.132 [-0.155, -0.109] | [-0.173, -0.086] | loss |
-| leave one document out | lists other than SAC | logistic, all permitted | population rule | 132 | 1061 | 0.07 | 0.14 | 0.22 | -0.080 [-0.135, -0.048] | [-0.181, -0.010] | loss |
-| leave one document out | lists other than SAC | logistic, all permitted | population + country | 132 | 1061 | 0.07 | 0.14 | 0.22 | -0.075 [-0.125, -0.036] | [-0.176, -0.005] | loss |
-| leave one document out | lists other than SAC | LightGBM, all permitted | population rule | 132 | 1061 | 0.07 | 0.24 | 0.22 | +0.022 [-0.026, +0.065] | [-0.087, +0.064] | neither |
-| leave one document out | lists other than SAC | LightGBM, all permitted | population + country | 132 | 1061 | 0.07 | 0.24 | 0.22 | +0.027 [-0.022, +0.079] | [-0.087, +0.078] | neither |
-| leave one document out, towns kept in training | all lists | logistic, all permitted | population rule | 1174 | 132 | 0.44 | 0.58 | 0.71 | -0.130 [-0.156, -0.105] | [-0.183, -0.074] | loss |
-| leave one document out, towns kept in training | all lists | logistic, all permitted | population + country | 1174 | 132 | 0.44 | 0.58 | 0.70 | -0.116 [-0.144, -0.090] | [-0.170, -0.060] | loss |
-| leave one document out, towns kept in training | all lists | LightGBM, all permitted | population rule | 1174 | 132 | 0.44 | 0.59 | 0.71 | -0.120 [-0.142, -0.098] | [-0.163, -0.073] | loss |
-| leave one document out, towns kept in training | all lists | LightGBM, all permitted | population + country | 1174 | 132 | 0.44 | 0.59 | 0.70 | -0.106 [-0.130, -0.082] | [-0.150, -0.058] | loss |
-| leave one document out, towns kept in training | lists other than SAC | logistic, all permitted | population rule | 132 | 1124 | 0.07 | 0.18 | 0.22 | -0.040 [-0.081, -0.004] | [-0.151, +0.010] | neither |
-| leave one document out, towns kept in training | lists other than SAC | logistic, all permitted | population + country | 132 | 1124 | 0.07 | 0.18 | 0.23 | -0.043 [-0.085, -0.005] | [-0.164, +0.011] | neither |
-| leave one document out, towns kept in training | lists other than SAC | LightGBM, all permitted | population rule | 132 | 1124 | 0.07 | 0.27 | 0.22 | +0.043 [-0.012, +0.100] | [-0.063, +0.104] | neither |
-| leave one document out, towns kept in training | lists other than SAC | LightGBM, all permitted | population + country | 132 | 1124 | 0.07 | 0.27 | 0.23 | +0.040 [-0.013, +0.097] | [-0.069, +0.094] | neither |
-| temporal: fit up to 1956, score later | all lists | logistic, all permitted | population rule | 126 | 1048 | 0.07 | 0.17 | 0.21 | -0.034 [-0.065, -0.011] | [-0.092, +0.020] | neither |
-| temporal: fit up to 1956, score later | all lists | logistic, all permitted | population + country | 126 | 1048 | 0.07 | 0.17 | 0.21 | -0.034 [-0.065, -0.011] | [-0.092, +0.020] | neither |
-| temporal: fit up to 1956, score later | all lists | LightGBM, all permitted | population rule | 126 | 1048 | 0.07 | 0.26 | 0.21 | +0.051 [+0.014, +0.088] | [-0.002, +0.082] | neither |
-| temporal: fit up to 1956, score later | all lists | LightGBM, all permitted | population + country | 126 | 1048 | 0.07 | 0.26 | 0.21 | +0.051 [+0.014, +0.088] | [-0.002, +0.082] | neither |
-| temporal reversed: fit after 1956, score earlier | all lists | logistic, all permitted | population rule | 1048 | 126 | 0.48 | 0.62 | 0.77 | -0.150 [-0.180, -0.122] | [-0.201, -0.096] | loss |
-| temporal reversed: fit after 1956, score earlier | all lists | logistic, all permitted | population + country | 1048 | 126 | 0.48 | 0.62 | 0.75 | -0.135 [-0.166, -0.106] | [-0.186, -0.080] | loss |
-| temporal reversed: fit after 1956, score earlier | all lists | LightGBM, all permitted | population rule | 1048 | 126 | 0.48 | 0.62 | 0.77 | -0.149 [-0.174, -0.124] | [-0.189, -0.100] | loss |
-| temporal reversed: fit after 1956, score earlier | all lists | LightGBM, all permitted | population + country | 1048 | 126 | 0.48 | 0.62 | 0.75 | -0.134 [-0.162, -0.107] | [-0.176, -0.082] | loss |
-| temporal reversed: fit after 1956, score earlier | lists other than SAC | logistic, all permitted | population rule | 6 | 126 | 0.01 | 0.12 | 0.55 | -0.436 [-0.806, -0.178] | n/a: positives in 4 blocks | neither |
-| temporal reversed: fit after 1956, score earlier | lists other than SAC | logistic, all permitted | population + country | 6 | 126 | 0.01 | 0.12 | 0.55 | -0.436 [-0.806, -0.178] | n/a: positives in 4 blocks | neither |
-| temporal reversed: fit after 1956, score earlier | lists other than SAC | LightGBM, all permitted | population rule | 6 | 126 | 0.01 | 0.16 | 0.55 | -0.396 [-0.863, +0.132] | n/a: positives in 4 blocks | neither |
-| temporal reversed: fit after 1956, score earlier | lists other than SAC | LightGBM, all permitted | population + country | 6 | 126 | 0.01 | 0.16 | 0.55 | -0.396 [-0.863, +0.132] | n/a: positives in 4 blocks | neither |
+| spatial blocks | all lists | logistic, all permitted | population rule | 1174 | 939 | 0.44 | 0.73 | 0.71 | +0.02 [+0.00, +0.04] | [-0.01, +0.05] | neither |
+| spatial blocks | all lists | logistic, all permitted | population + country | 1174 | 939 | 0.44 | 0.73 | 0.75 | -0.03 [-0.04, -0.01] | [-0.06, +0.00] | neither |
+| spatial blocks | all lists | LightGBM, all permitted | population rule | 1174 | 939 | 0.44 | 0.79 | 0.71 | +0.08 [+0.06, +0.10] | [+0.06, +0.10] | gain |
+| spatial blocks | all lists | LightGBM, all permitted | population + country | 1174 | 939 | 0.44 | 0.79 | 0.75 | +0.03 [+0.02, +0.04] | [+0.01, +0.06] | gain |
+| spatial blocks | lists other than SAC | logistic, all permitted | population rule | 132 | 939 | 0.07 | 0.16 | 0.21 | -0.06 [-0.09, -0.02] | [-0.17, -0.00] | loss |
+| spatial blocks | lists other than SAC | logistic, all permitted | population + country | 132 | 939 | 0.07 | 0.16 | 0.19 | -0.03 [-0.07, +0.00] | [-0.15, +0.02] | neither |
+| spatial blocks | lists other than SAC | LightGBM, all permitted | population rule | 132 | 939 | 0.07 | 0.29 | 0.21 | +0.08 [+0.03, +0.13] | [+0.00, +0.12] | gain |
+| spatial blocks | lists other than SAC | LightGBM, all permitted | population + country | 132 | 939 | 0.07 | 0.29 | 0.19 | +0.11 [+0.05, +0.15] | [+0.02, +0.15] | gain |
+| leave one document out | all lists | logistic, all permitted | population rule | 1174 | 131 | 0.44 | 0.59 | 0.71 | -0.12 [-0.15, -0.10] | [-0.18, -0.07] | loss |
+| leave one document out | all lists | logistic, all permitted | population + country | 1174 | 131 | 0.44 | 0.59 | 0.71 | -0.12 [-0.15, -0.10] | [-0.18, -0.07] | loss |
+| leave one document out | all lists | LightGBM, all permitted | population rule | 1174 | 131 | 0.44 | 0.58 | 0.71 | -0.13 [-0.16, -0.11] | [-0.17, -0.09] | loss |
+| leave one document out | all lists | LightGBM, all permitted | population + country | 1174 | 131 | 0.44 | 0.58 | 0.71 | -0.13 [-0.16, -0.11] | [-0.17, -0.09] | loss |
+| leave one document out | lists other than SAC | logistic, all permitted | population rule | 132 | 1061 | 0.07 | 0.14 | 0.22 | -0.08 [-0.13, -0.05] | [-0.18, -0.01] | loss |
+| leave one document out | lists other than SAC | logistic, all permitted | population + country | 132 | 1061 | 0.07 | 0.14 | 0.22 | -0.07 [-0.13, -0.04] | [-0.18, -0.01] | loss |
+| leave one document out | lists other than SAC | LightGBM, all permitted | population rule | 132 | 1061 | 0.07 | 0.24 | 0.22 | +0.02 [-0.03, +0.06] | [-0.09, +0.06] | neither |
+| leave one document out | lists other than SAC | LightGBM, all permitted | population + country | 132 | 1061 | 0.07 | 0.24 | 0.22 | +0.03 [-0.02, +0.08] | [-0.09, +0.08] | neither |
+| leave one document out, towns kept in training | all lists | logistic, all permitted | population rule | 1174 | 132 | 0.44 | 0.58 | 0.71 | -0.13 [-0.16, -0.11] | [-0.18, -0.07] | loss |
+| leave one document out, towns kept in training | all lists | logistic, all permitted | population + country | 1174 | 132 | 0.44 | 0.58 | 0.70 | -0.12 [-0.14, -0.09] | [-0.17, -0.06] | loss |
+| leave one document out, towns kept in training | all lists | LightGBM, all permitted | population rule | 1174 | 132 | 0.44 | 0.59 | 0.71 | -0.12 [-0.14, -0.10] | [-0.16, -0.07] | loss |
+| leave one document out, towns kept in training | all lists | LightGBM, all permitted | population + country | 1174 | 132 | 0.44 | 0.59 | 0.70 | -0.11 [-0.13, -0.08] | [-0.15, -0.06] | loss |
+| leave one document out, towns kept in training | lists other than SAC | logistic, all permitted | population rule | 132 | 1124 | 0.07 | 0.18 | 0.22 | -0.04 [-0.08, -0.00] | [-0.15, +0.01] | neither |
+| leave one document out, towns kept in training | lists other than SAC | logistic, all permitted | population + country | 132 | 1124 | 0.07 | 0.18 | 0.23 | -0.04 [-0.09, -0.01] | [-0.16, +0.01] | neither |
+| leave one document out, towns kept in training | lists other than SAC | LightGBM, all permitted | population rule | 132 | 1124 | 0.07 | 0.27 | 0.22 | +0.04 [-0.01, +0.10] | [-0.06, +0.10] | neither |
+| leave one document out, towns kept in training | lists other than SAC | LightGBM, all permitted | population + country | 132 | 1124 | 0.07 | 0.27 | 0.23 | +0.04 [-0.01, +0.10] | [-0.07, +0.09] | neither |
+| temporal: fit up to 1956, score later | all lists | logistic, all permitted | population rule | 126 | 1048 | 0.07 | 0.17 | 0.21 | -0.03 [-0.06, -0.01] | [-0.09, +0.02] | neither |
+| temporal: fit up to 1956, score later | all lists | logistic, all permitted | population + country | 126 | 1048 | 0.07 | 0.17 | 0.21 | -0.03 [-0.06, -0.01] | [-0.09, +0.02] | neither |
+| temporal: fit up to 1956, score later | all lists | LightGBM, all permitted | population rule | 126 | 1048 | 0.07 | 0.26 | 0.21 | +0.05 [+0.01, +0.09] | [-0.00, +0.08] | neither |
+| temporal: fit up to 1956, score later | all lists | LightGBM, all permitted | population + country | 126 | 1048 | 0.07 | 0.26 | 0.21 | +0.05 [+0.01, +0.09] | [-0.00, +0.08] | neither |
+| temporal reversed: fit after 1956, score earlier | all lists | logistic, all permitted | population rule | 1048 | 126 | 0.48 | 0.62 | 0.77 | -0.15 [-0.18, -0.12] | [-0.20, -0.10] | loss |
+| temporal reversed: fit after 1956, score earlier | all lists | logistic, all permitted | population + country | 1048 | 126 | 0.48 | 0.62 | 0.75 | -0.14 [-0.17, -0.11] | [-0.19, -0.08] | loss |
+| temporal reversed: fit after 1956, score earlier | all lists | LightGBM, all permitted | population rule | 1048 | 126 | 0.48 | 0.62 | 0.77 | -0.15 [-0.17, -0.12] | [-0.19, -0.10] | loss |
+| temporal reversed: fit after 1956, score earlier | all lists | LightGBM, all permitted | population + country | 1048 | 126 | 0.48 | 0.62 | 0.75 | -0.13 [-0.16, -0.11] | [-0.18, -0.08] | loss |
+| temporal reversed: fit after 1956, score earlier | lists other than SAC | logistic, all permitted | population rule | 6 | 126 | 0.01 | 0.12 | 0.55 | -0.44 [-0.81, -0.18] | n/a: positives in 4 blocks | neither |
+| temporal reversed: fit after 1956, score earlier | lists other than SAC | logistic, all permitted | population + country | 6 | 126 | 0.01 | 0.12 | 0.55 | -0.44 [-0.81, -0.18] | n/a: positives in 4 blocks | neither |
+| temporal reversed: fit after 1956, score earlier | lists other than SAC | LightGBM, all permitted | population rule | 6 | 126 | 0.01 | 0.16 | 0.55 | -0.40 [-0.86, +0.13] | n/a: positives in 4 blocks | neither |
+| temporal reversed: fit after 1956, score earlier | lists other than SAC | LightGBM, all permitted | population + country | 6 | 126 | 0.01 | 0.16 | 0.55 | -0.40 [-0.86, +0.13] | n/a: positives in 4 blocks | neither |
 
 ### PR-AUC by list: spatial blocks
 
@@ -258,42 +258,42 @@ Lists too small to score (`us_1958_taiwan_strait` with 1 positive) are left out 
 
 | holdout | lists | model | against | positives | train_positives_min | base_rate | a_pr_auc | b_pr_auc | candidate minus baseline | block interval | verdict |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| spatial blocks | all lists | logistic, all permitted | population rule | 1055 | 844 | 0.48 | 0.84 | 0.76 | +0.073 [+0.054, +0.090] | [+0.046, +0.097] | gain |
-| spatial blocks | all lists | logistic, all permitted | population + country | 1055 | 844 | 0.48 | 0.84 | 0.82 | +0.016 [+0.005, +0.026] | [+0.000, +0.035] | gain |
-| spatial blocks | all lists | LightGBM, all permitted | population rule | 1055 | 844 | 0.48 | 0.84 | 0.76 | +0.078 [+0.062, +0.095] | [+0.056, +0.099] | gain |
-| spatial blocks | all lists | LightGBM, all permitted | population + country | 1055 | 844 | 0.48 | 0.84 | 0.82 | +0.022 [+0.011, +0.033] | [+0.005, +0.041] | gain |
-| spatial blocks | lists other than SAC | logistic, all permitted | population rule | 13 | 844 | 0.06 | 0.30 | 0.35 | -0.053 [-0.194, +0.054] | [-0.183, +0.064] | neither |
-| spatial blocks | lists other than SAC | logistic, all permitted | population + country | 13 | 844 | 0.06 | 0.30 | 0.31 | -0.015 [-0.148, +0.100] | [-0.143, +0.123] | neither |
-| spatial blocks | lists other than SAC | LightGBM, all permitted | population rule | 13 | 844 | 0.06 | 0.28 | 0.35 | -0.074 [-0.213, +0.069] | [-0.331, +0.017] | neither |
-| spatial blocks | lists other than SAC | LightGBM, all permitted | population + country | 13 | 844 | 0.06 | 0.28 | 0.31 | -0.036 [-0.158, +0.094] | [-0.217, +0.027] | neither |
-| leave one document out | all lists | logistic, all permitted | population rule | 1055 | 12 | 0.48 | 0.59 | 0.77 | -0.173 [-0.205, -0.140] | [-0.240, -0.103] | not a reading |
-| leave one document out | all lists | logistic, all permitted | population + country | 1055 | 12 | 0.48 | 0.59 | 0.77 | -0.173 [-0.205, -0.140] | [-0.240, -0.103] | not a reading |
-| leave one document out | all lists | LightGBM, all permitted | population rule | 1055 | 12 | 0.48 | 0.64 | 0.77 | -0.125 [-0.149, -0.101] | [-0.176, -0.074] | not a reading |
-| leave one document out | all lists | LightGBM, all permitted | population + country | 1055 | 12 | 0.48 | 0.64 | 0.77 | -0.125 [-0.149, -0.101] | [-0.176, -0.074] | not a reading |
-| leave one document out | lists other than SAC | logistic, all permitted | population rule | 13 | 1049 | 0.06 | 0.36 | 0.36 | -0.001 [-0.181, +0.123] | [-0.165, +0.153] | neither |
-| leave one document out | lists other than SAC | logistic, all permitted | population + country | 13 | 1049 | 0.06 | 0.36 | 0.36 | -0.001 [-0.181, +0.123] | [-0.165, +0.153] | neither |
-| leave one document out | lists other than SAC | LightGBM, all permitted | population rule | 13 | 1049 | 0.06 | 0.17 | 0.36 | -0.193 [-0.409, +0.004] | [-0.633, +0.003] | neither |
-| leave one document out | lists other than SAC | LightGBM, all permitted | population + country | 13 | 1049 | 0.06 | 0.17 | 0.36 | -0.193 [-0.409, +0.004] | [-0.633, +0.003] | neither |
-| leave one document out, towns kept in training | all lists | logistic, all permitted | population rule | 1055 | 13 | 0.48 | 0.73 | 0.77 | -0.033 [-0.056, -0.009] | [-0.073, +0.001] | not a reading |
-| leave one document out, towns kept in training | all lists | logistic, all permitted | population + country | 1055 | 13 | 0.48 | 0.73 | 0.76 | -0.029 [-0.053, -0.006] | [-0.070, +0.004] | not a reading |
-| leave one document out, towns kept in training | all lists | LightGBM, all permitted | population rule | 1055 | 13 | 0.48 | 0.65 | 0.77 | -0.120 [-0.143, -0.097] | [-0.165, -0.074] | not a reading |
-| leave one document out, towns kept in training | all lists | LightGBM, all permitted | population + country | 1055 | 13 | 0.48 | 0.65 | 0.76 | -0.117 [-0.139, -0.094] | [-0.162, -0.071] | not a reading |
-| leave one document out, towns kept in training | lists other than SAC | logistic, all permitted | population rule | 13 | 1049 | 0.06 | 0.36 | 0.36 | +0.000 [-0.181, +0.125] | [-0.165, +0.153] | neither |
-| leave one document out, towns kept in training | lists other than SAC | logistic, all permitted | population + country | 13 | 1049 | 0.06 | 0.36 | 0.36 | +0.000 [-0.181, +0.125] | [-0.165, +0.153] | neither |
-| leave one document out, towns kept in training | lists other than SAC | LightGBM, all permitted | population rule | 13 | 1049 | 0.06 | 0.17 | 0.36 | -0.188 [-0.405, +0.018] | [-0.633, +0.013] | neither |
-| leave one document out, towns kept in training | lists other than SAC | LightGBM, all permitted | population + country | 13 | 1049 | 0.06 | 0.17 | 0.36 | -0.188 [-0.405, +0.018] | [-0.633, +0.013] | neither |
-| temporal: fit up to 1956, score later | all lists | logistic, all permitted | population rule | 7 | 1048 | 0.11 | 0.16 | 0.17 | -0.010 [-0.099, +0.074] | n/a: positives in 2 blocks | neither |
-| temporal: fit up to 1956, score later | all lists | logistic, all permitted | population + country | 7 | 1048 | 0.11 | 0.16 | 0.17 | -0.010 [-0.099, +0.074] | n/a: positives in 2 blocks | neither |
-| temporal: fit up to 1956, score later | all lists | LightGBM, all permitted | population rule | 7 | 1048 | 0.11 | 0.17 | 0.17 | -0.003 [-0.110, +0.144] | n/a: positives in 2 blocks | neither |
-| temporal: fit up to 1956, score later | all lists | LightGBM, all permitted | population + country | 7 | 1048 | 0.11 | 0.17 | 0.17 | -0.003 [-0.110, +0.144] | n/a: positives in 2 blocks | neither |
-| temporal reversed: fit after 1956, score earlier | all lists | logistic, all permitted | population rule | 1048 | 7 | 0.48 | 0.49 | 0.77 | -0.284 [-0.310, -0.256] | [-0.320, -0.242] | not a reading |
-| temporal reversed: fit after 1956, score earlier | all lists | logistic, all permitted | population + country | 1048 | 7 | 0.48 | 0.49 | 0.78 | -0.297 [-0.321, -0.270] | [-0.332, -0.256] | not a reading |
-| temporal reversed: fit after 1956, score earlier | all lists | LightGBM, all permitted | population rule | 1048 | 7 | 0.48 | 0.48 | 0.77 | -0.287 [-0.308, -0.266] | [-0.326, -0.250] | not a reading |
-| temporal reversed: fit after 1956, score earlier | all lists | LightGBM, all permitted | population + country | 1048 | 7 | 0.48 | 0.48 | 0.78 | -0.299 [-0.319, -0.279] | [-0.337, -0.262] | not a reading |
-| temporal reversed: fit after 1956, score earlier | lists other than SAC | logistic, all permitted | population rule | 6 | 7 | 0.01 | 0.01 | 0.55 | -0.543 [-0.983, -0.294] | n/a: positives in 4 blocks | not a reading |
-| temporal reversed: fit after 1956, score earlier | lists other than SAC | logistic, all permitted | population + country | 6 | 7 | 0.01 | 0.01 | 0.55 | -0.543 [-0.983, -0.294] | n/a: positives in 4 blocks | not a reading |
-| temporal reversed: fit after 1956, score earlier | lists other than SAC | LightGBM, all permitted | population rule | 6 | 7 | 0.01 | 0.01 | 0.55 | -0.542 [-0.989, -0.295] | n/a: positives in 4 blocks | not a reading |
-| temporal reversed: fit after 1956, score earlier | lists other than SAC | LightGBM, all permitted | population + country | 6 | 7 | 0.01 | 0.01 | 0.55 | -0.542 [-0.989, -0.295] | n/a: positives in 4 blocks | not a reading |
+| spatial blocks | all lists | logistic, all permitted | population rule | 1055 | 844 | 0.48 | 0.84 | 0.76 | +0.07 [+0.05, +0.09] | [+0.05, +0.10] | gain |
+| spatial blocks | all lists | logistic, all permitted | population + country | 1055 | 844 | 0.48 | 0.84 | 0.82 | +0.02 [+0.01, +0.03] | [+0.00, +0.04] | gain |
+| spatial blocks | all lists | LightGBM, all permitted | population rule | 1055 | 844 | 0.48 | 0.84 | 0.76 | +0.08 [+0.06, +0.10] | [+0.06, +0.10] | gain |
+| spatial blocks | all lists | LightGBM, all permitted | population + country | 1055 | 844 | 0.48 | 0.84 | 0.82 | +0.02 [+0.01, +0.03] | [+0.01, +0.04] | gain |
+| spatial blocks | lists other than SAC | logistic, all permitted | population rule | 13 | 844 | 0.06 | 0.30 | 0.35 | -0.05 [-0.19, +0.05] | [-0.18, +0.06] | neither |
+| spatial blocks | lists other than SAC | logistic, all permitted | population + country | 13 | 844 | 0.06 | 0.30 | 0.31 | -0.02 [-0.15, +0.10] | [-0.14, +0.12] | neither |
+| spatial blocks | lists other than SAC | LightGBM, all permitted | population rule | 13 | 844 | 0.06 | 0.28 | 0.35 | -0.07 [-0.21, +0.07] | [-0.33, +0.02] | neither |
+| spatial blocks | lists other than SAC | LightGBM, all permitted | population + country | 13 | 844 | 0.06 | 0.28 | 0.31 | -0.04 [-0.16, +0.09] | [-0.22, +0.03] | neither |
+| leave one document out | all lists | logistic, all permitted | population rule | 1055 | 12 | 0.48 | 0.59 | 0.77 | -0.17 [-0.20, -0.14] | [-0.24, -0.10] | not a reading |
+| leave one document out | all lists | logistic, all permitted | population + country | 1055 | 12 | 0.48 | 0.59 | 0.77 | -0.17 [-0.20, -0.14] | [-0.24, -0.10] | not a reading |
+| leave one document out | all lists | LightGBM, all permitted | population rule | 1055 | 12 | 0.48 | 0.64 | 0.77 | -0.13 [-0.15, -0.10] | [-0.18, -0.07] | not a reading |
+| leave one document out | all lists | LightGBM, all permitted | population + country | 1055 | 12 | 0.48 | 0.64 | 0.77 | -0.13 [-0.15, -0.10] | [-0.18, -0.07] | not a reading |
+| leave one document out | lists other than SAC | logistic, all permitted | population rule | 13 | 1049 | 0.06 | 0.36 | 0.36 | -0.00 [-0.18, +0.12] | [-0.17, +0.15] | neither |
+| leave one document out | lists other than SAC | logistic, all permitted | population + country | 13 | 1049 | 0.06 | 0.36 | 0.36 | -0.00 [-0.18, +0.12] | [-0.17, +0.15] | neither |
+| leave one document out | lists other than SAC | LightGBM, all permitted | population rule | 13 | 1049 | 0.06 | 0.17 | 0.36 | -0.19 [-0.41, +0.00] | [-0.63, +0.00] | neither |
+| leave one document out | lists other than SAC | LightGBM, all permitted | population + country | 13 | 1049 | 0.06 | 0.17 | 0.36 | -0.19 [-0.41, +0.00] | [-0.63, +0.00] | neither |
+| leave one document out, towns kept in training | all lists | logistic, all permitted | population rule | 1055 | 13 | 0.48 | 0.73 | 0.77 | -0.03 [-0.06, -0.01] | [-0.07, +0.00] | not a reading |
+| leave one document out, towns kept in training | all lists | logistic, all permitted | population + country | 1055 | 13 | 0.48 | 0.73 | 0.76 | -0.03 [-0.05, -0.01] | [-0.07, +0.00] | not a reading |
+| leave one document out, towns kept in training | all lists | LightGBM, all permitted | population rule | 1055 | 13 | 0.48 | 0.65 | 0.77 | -0.12 [-0.14, -0.10] | [-0.16, -0.07] | not a reading |
+| leave one document out, towns kept in training | all lists | LightGBM, all permitted | population + country | 1055 | 13 | 0.48 | 0.65 | 0.76 | -0.12 [-0.14, -0.09] | [-0.16, -0.07] | not a reading |
+| leave one document out, towns kept in training | lists other than SAC | logistic, all permitted | population rule | 13 | 1049 | 0.06 | 0.36 | 0.36 | +0.00 [-0.18, +0.12] | [-0.17, +0.15] | neither |
+| leave one document out, towns kept in training | lists other than SAC | logistic, all permitted | population + country | 13 | 1049 | 0.06 | 0.36 | 0.36 | +0.00 [-0.18, +0.12] | [-0.17, +0.15] | neither |
+| leave one document out, towns kept in training | lists other than SAC | LightGBM, all permitted | population rule | 13 | 1049 | 0.06 | 0.17 | 0.36 | -0.19 [-0.40, +0.02] | [-0.63, +0.01] | neither |
+| leave one document out, towns kept in training | lists other than SAC | LightGBM, all permitted | population + country | 13 | 1049 | 0.06 | 0.17 | 0.36 | -0.19 [-0.40, +0.02] | [-0.63, +0.01] | neither |
+| temporal: fit up to 1956, score later | all lists | logistic, all permitted | population rule | 7 | 1048 | 0.11 | 0.16 | 0.17 | -0.01 [-0.10, +0.07] | n/a: positives in 2 blocks | neither |
+| temporal: fit up to 1956, score later | all lists | logistic, all permitted | population + country | 7 | 1048 | 0.11 | 0.16 | 0.17 | -0.01 [-0.10, +0.07] | n/a: positives in 2 blocks | neither |
+| temporal: fit up to 1956, score later | all lists | LightGBM, all permitted | population rule | 7 | 1048 | 0.11 | 0.17 | 0.17 | -0.00 [-0.11, +0.14] | n/a: positives in 2 blocks | neither |
+| temporal: fit up to 1956, score later | all lists | LightGBM, all permitted | population + country | 7 | 1048 | 0.11 | 0.17 | 0.17 | -0.00 [-0.11, +0.14] | n/a: positives in 2 blocks | neither |
+| temporal reversed: fit after 1956, score earlier | all lists | logistic, all permitted | population rule | 1048 | 7 | 0.48 | 0.49 | 0.77 | -0.28 [-0.31, -0.26] | [-0.32, -0.24] | not a reading |
+| temporal reversed: fit after 1956, score earlier | all lists | logistic, all permitted | population + country | 1048 | 7 | 0.48 | 0.49 | 0.78 | -0.30 [-0.32, -0.27] | [-0.33, -0.26] | not a reading |
+| temporal reversed: fit after 1956, score earlier | all lists | LightGBM, all permitted | population rule | 1048 | 7 | 0.48 | 0.48 | 0.77 | -0.29 [-0.31, -0.27] | [-0.33, -0.25] | not a reading |
+| temporal reversed: fit after 1956, score earlier | all lists | LightGBM, all permitted | population + country | 1048 | 7 | 0.48 | 0.48 | 0.78 | -0.30 [-0.32, -0.28] | [-0.34, -0.26] | not a reading |
+| temporal reversed: fit after 1956, score earlier | lists other than SAC | logistic, all permitted | population rule | 6 | 7 | 0.01 | 0.01 | 0.55 | -0.54 [-0.98, -0.29] | n/a: positives in 4 blocks | not a reading |
+| temporal reversed: fit after 1956, score earlier | lists other than SAC | logistic, all permitted | population + country | 6 | 7 | 0.01 | 0.01 | 0.55 | -0.54 [-0.98, -0.29] | n/a: positives in 4 blocks | not a reading |
+| temporal reversed: fit after 1956, score earlier | lists other than SAC | LightGBM, all permitted | population rule | 6 | 7 | 0.01 | 0.01 | 0.55 | -0.54 [-0.99, -0.30] | n/a: positives in 4 blocks | not a reading |
+| temporal reversed: fit after 1956, score earlier | lists other than SAC | LightGBM, all permitted | population + country | 6 | 7 | 0.01 | 0.01 | 0.55 | -0.54 [-0.99, -0.30] | n/a: positives in 4 blocks | not a reading |
 
 ### PR-AUC by list: spatial blocks
 
@@ -360,18 +360,18 @@ Lists too small to score (`us_1958_taiwan_strait` with 1 positive) are left out 
 
 | holdout | lists | model | against | positives | train_positives_min | base_rate | a_pr_auc | b_pr_auc | candidate minus baseline | block interval | verdict |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| spatial blocks | all lists | logistic, all permitted | population rule | 125 | 68 | 0.07 | 0.24 | 0.18 | +0.060 [+0.008, +0.113] | [-0.051, +0.123] | neither |
-| spatial blocks | all lists | logistic, all permitted | population + country | 125 | 68 | 0.07 | 0.24 | 0.17 | +0.069 [+0.022, +0.123] | [-0.036, +0.113] | neither |
-| spatial blocks | all lists | LightGBM, all permitted | population rule | 125 | 68 | 0.07 | 0.27 | 0.18 | +0.090 [+0.039, +0.160] | [-0.019, +0.156] | neither |
-| spatial blocks | all lists | LightGBM, all permitted | population + country | 125 | 68 | 0.07 | 0.27 | 0.17 | +0.100 [+0.053, +0.165] | [+0.002, +0.155] | gain |
-| leave one document out | all lists | logistic, all permitted | population rule | 125 | 12 | 0.07 | 0.17 | 0.21 | -0.035 [-0.088, +0.020] | [-0.118, +0.045] | not a reading |
-| leave one document out | all lists | logistic, all permitted | population + country | 125 | 12 | 0.07 | 0.17 | 0.20 | -0.027 [-0.082, +0.030] | [-0.113, +0.060] | not a reading |
-| leave one document out | all lists | LightGBM, all permitted | population rule | 125 | 12 | 0.07 | 0.19 | 0.21 | -0.016 [-0.069, +0.036] | [-0.090, +0.054] | not a reading |
-| leave one document out | all lists | LightGBM, all permitted | population + country | 125 | 12 | 0.07 | 0.19 | 0.20 | -0.008 [-0.064, +0.048] | [-0.087, +0.075] | not a reading |
-| leave one document out, towns kept in training | all lists | logistic, all permitted | population rule | 125 | 75 | 0.07 | 0.27 | 0.21 | +0.063 [+0.007, +0.125] | [-0.039, +0.131] | neither |
-| leave one document out, towns kept in training | all lists | logistic, all permitted | population + country | 125 | 75 | 0.07 | 0.27 | 0.21 | +0.054 [+0.002, +0.119] | [-0.048, +0.116] | neither |
-| leave one document out, towns kept in training | all lists | LightGBM, all permitted | population rule | 125 | 75 | 0.07 | 0.22 | 0.21 | +0.013 [-0.049, +0.082] | [-0.078, +0.111] | neither |
-| leave one document out, towns kept in training | all lists | LightGBM, all permitted | population + country | 125 | 75 | 0.07 | 0.22 | 0.21 | +0.004 [-0.058, +0.080] | [-0.083, +0.085] | neither |
+| spatial blocks | all lists | logistic, all permitted | population rule | 125 | 68 | 0.07 | 0.24 | 0.18 | +0.06 [+0.01, +0.11] | [-0.05, +0.12] | neither |
+| spatial blocks | all lists | logistic, all permitted | population + country | 125 | 68 | 0.07 | 0.24 | 0.17 | +0.07 [+0.02, +0.12] | [-0.04, +0.11] | neither |
+| spatial blocks | all lists | LightGBM, all permitted | population rule | 125 | 68 | 0.07 | 0.27 | 0.18 | +0.09 [+0.04, +0.16] | [-0.02, +0.16] | neither |
+| spatial blocks | all lists | LightGBM, all permitted | population + country | 125 | 68 | 0.07 | 0.27 | 0.17 | +0.10 [+0.05, +0.16] | [+0.00, +0.15] | gain |
+| leave one document out | all lists | logistic, all permitted | population rule | 125 | 12 | 0.07 | 0.17 | 0.21 | -0.03 [-0.09, +0.02] | [-0.12, +0.04] | not a reading |
+| leave one document out | all lists | logistic, all permitted | population + country | 125 | 12 | 0.07 | 0.17 | 0.20 | -0.03 [-0.08, +0.03] | [-0.11, +0.06] | not a reading |
+| leave one document out | all lists | LightGBM, all permitted | population rule | 125 | 12 | 0.07 | 0.19 | 0.21 | -0.02 [-0.07, +0.04] | [-0.09, +0.05] | not a reading |
+| leave one document out | all lists | LightGBM, all permitted | population + country | 125 | 12 | 0.07 | 0.19 | 0.20 | -0.01 [-0.06, +0.05] | [-0.09, +0.08] | not a reading |
+| leave one document out, towns kept in training | all lists | logistic, all permitted | population rule | 125 | 75 | 0.07 | 0.27 | 0.21 | +0.06 [+0.01, +0.12] | [-0.04, +0.13] | neither |
+| leave one document out, towns kept in training | all lists | logistic, all permitted | population + country | 125 | 75 | 0.07 | 0.27 | 0.21 | +0.05 [+0.00, +0.12] | [-0.05, +0.12] | neither |
+| leave one document out, towns kept in training | all lists | LightGBM, all permitted | population rule | 125 | 75 | 0.07 | 0.22 | 0.21 | +0.01 [-0.05, +0.08] | [-0.08, +0.11] | neither |
+| leave one document out, towns kept in training | all lists | LightGBM, all permitted | population + country | 125 | 75 | 0.07 | 0.22 | 0.21 | +0.00 [-0.06, +0.08] | [-0.08, +0.08] | neither |
 
 ### PR-AUC by list: spatial blocks
 
@@ -430,10 +430,10 @@ Lists too small to score (`us_1958_taiwan_strait` with 1 positive) are left out 
 
 | holdout | lists | model | against | positives | train_positives_min | base_rate | a_pr_auc | b_pr_auc | candidate minus baseline | block interval | verdict |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| spatial blocks | all lists | logistic, all permitted | population rule | 1042 | 833 | 0.49 | 0.85 | 0.77 | +0.080 [+0.062, +0.096] | [+0.052, +0.103] | gain |
-| spatial blocks | all lists | logistic, all permitted | population + country | 1042 | 833 | 0.49 | 0.85 | 0.82 | +0.023 [+0.014, +0.034] | [+0.007, +0.044] | gain |
-| spatial blocks | all lists | LightGBM, all permitted | population rule | 1042 | 833 | 0.49 | 0.85 | 0.77 | +0.077 [+0.060, +0.094] | [+0.052, +0.100] | gain |
-| spatial blocks | all lists | LightGBM, all permitted | population + country | 1042 | 833 | 0.49 | 0.85 | 0.82 | +0.021 [+0.010, +0.032] | [+0.004, +0.041] | gain |
+| spatial blocks | all lists | logistic, all permitted | population rule | 1042 | 833 | 0.49 | 0.85 | 0.77 | +0.08 [+0.06, +0.10] | [+0.05, +0.10] | gain |
+| spatial blocks | all lists | logistic, all permitted | population + country | 1042 | 833 | 0.49 | 0.85 | 0.82 | +0.02 [+0.01, +0.03] | [+0.01, +0.04] | gain |
+| spatial blocks | all lists | LightGBM, all permitted | population rule | 1042 | 833 | 0.49 | 0.85 | 0.77 | +0.08 [+0.06, +0.09] | [+0.05, +0.10] | gain |
+| spatial blocks | all lists | LightGBM, all permitted | population + country | 1042 | 833 | 0.49 | 0.85 | 0.82 | +0.02 [+0.01, +0.03] | [+0.00, +0.04] | gain |
 
 ### PR-AUC by list: spatial blocks
 
@@ -466,21 +466,21 @@ Lists too small to score (`us_1958_taiwan_strait` with 1 positive) are left out 
 
 | rows | family | base | base_pr_auc | with_family_pr_auc | gain | by_blocks | verdict |
 |---|---|---|---|---|---|---|---|
-| all countries | national_power over population | population only | 0.79 | 0.81 | +0.023 [+0.015, +0.030] | [+0.009, +0.034] | gain |
-| all countries | administration | base | 0.81 | 0.81 | +0.002 [-0.002, +0.006] | [-0.004, +0.009] | neither |
-| all countries | geography | base | 0.81 | 0.82 | +0.010 [+0.003, +0.017] | [+0.002, +0.019] | gain |
-| all countries | industry | base | 0.81 | 0.81 | +0.003 [+0.000, +0.005] | [-0.000, +0.005] | neither |
-| all countries | transport | base | 0.81 | 0.83 | +0.024 [+0.014, +0.034] | [+0.010, +0.038] | gain |
-| all countries | military | base | 0.81 | 0.83 | +0.015 [+0.008, +0.022] | [+0.007, +0.024] | gain |
-| all countries | defence | base | 0.81 | 0.82 | +0.009 [+0.004, +0.015] | [+0.002, +0.017] | gain |
-| all countries | national_power | base | 0.81 | 0.81 | +0.002 [-0.000, +0.004] | [-0.001, +0.005] | neither |
+| all countries | national_power over population | population only | 0.79 | 0.81 | +0.02 [+0.02, +0.03] | [+0.01, +0.03] | gain |
+| all countries | administration | base | 0.81 | 0.81 | +0.00 [-0.00, +0.01] | [-0.00, +0.01] | neither |
+| all countries | geography | base | 0.81 | 0.82 | +0.01 [+0.00, +0.02] | [+0.00, +0.02] | gain |
+| all countries | industry | base | 0.81 | 0.81 | +0.00 [+0.00, +0.01] | [-0.00, +0.01] | neither |
+| all countries | transport | base | 0.81 | 0.83 | +0.02 [+0.01, +0.03] | [+0.01, +0.04] | gain |
+| all countries | military | base | 0.81 | 0.83 | +0.01 [+0.01, +0.02] | [+0.01, +0.02] | gain |
+| all countries | defence | base | 0.81 | 0.82 | +0.01 [+0.00, +0.01] | [+0.00, +0.02] | gain |
+| all countries | national_power | base | 0.81 | 0.81 | +0.00 [-0.00, +0.00] | [-0.00, +0.01] | neither |
 | USSR | national_power over population | population only | 0.77 | 0.77 | none: constant on these rows | none | constant |
-| USSR | administration | base | 0.77 | 0.78 | +0.012 [+0.004, +0.020] | [+0.003, +0.021] | gain |
-| USSR | geography | base | 0.77 | 0.78 | +0.015 [+0.003, +0.026] | [+0.004, +0.026] | gain |
-| USSR | industry | base | 0.77 | 0.77 | +0.003 [-0.001, +0.006] | [-0.002, +0.007] | neither |
-| USSR | transport | base | 0.77 | 0.81 | +0.041 [+0.026, +0.056] | [+0.026, +0.056] | gain |
-| USSR | military | base | 0.77 | 0.79 | +0.020 [+0.008, +0.032] | [+0.007, +0.034] | gain |
-| USSR | defence | base | 0.77 | 0.78 | +0.015 [+0.004, +0.025] | [+0.002, +0.030] | gain |
+| USSR | administration | base | 0.77 | 0.78 | +0.01 [+0.00, +0.02] | [+0.00, +0.02] | gain |
+| USSR | geography | base | 0.77 | 0.78 | +0.01 [+0.00, +0.03] | [+0.00, +0.03] | gain |
+| USSR | industry | base | 0.77 | 0.77 | +0.00 [-0.00, +0.01] | [-0.00, +0.01] | neither |
+| USSR | transport | base | 0.77 | 0.81 | +0.04 [+0.03, +0.06] | [+0.03, +0.06] | gain |
+| USSR | military | base | 0.77 | 0.79 | +0.02 [+0.01, +0.03] | [+0.01, +0.03] | gain |
+| USSR | defence | base | 0.77 | 0.78 | +0.01 [+0.00, +0.03] | [+0.00, +0.03] | gain |
 | USSR | national_power | base | 0.77 | 0.77 | none: constant on these rows | none | constant |
 
 ## What the gains rest on, every row
@@ -489,26 +489,26 @@ Each scope's selected candidate (a) against population plus country (b) under sp
 
 | scope | model | variant | features | a_pr_auc | b_pr_auc | difference | by_blocks |
 |---|---|---|---|---|---|---|---|
-| Warsaw Pact, pooled, exercise-based | LightGBM, all permitted | all permitted | 33 | 0.27 | 0.17 | +0.100 [+0.053, +0.165] | [+0.002, +0.155] |
-| Warsaw Pact, pooled, exercise-based | LightGBM, all permitted | none flagged | 25 | 0.28 | 0.17 | +0.106 [+0.059, +0.171] | [-0.003, +0.152] |
-| Warsaw Pact, pooled, exercise-based | LightGBM, all permitted | strict as-of | 22 | 0.27 | 0.17 | +0.097 [+0.050, +0.161] | [-0.026, +0.147] |
-| Warsaw Pact, pooled, exercise-based | LightGBM, all permitted | no national power | 26 | 0.23 | 0.17 | +0.065 [+0.027, +0.120] | [-0.024, +0.102] |
-| Warsaw Pact, pooled, exercise-based | LightGBM, all permitted | no source markers | 20 | 0.20 | 0.17 | +0.028 [-0.009, +0.073] | [-0.073, +0.085] |
-| single document: SAC 1956 (not a state model) | logistic, all permitted | all permitted | 33 | 0.85 | 0.82 | +0.023 [+0.014, +0.034] | [+0.007, +0.044] |
-| single document: SAC 1956 (not a state model) | logistic, all permitted | none flagged | 25 | 0.84 | 0.82 | +0.013 [+0.005, +0.021] | [-0.002, +0.031] |
-| single document: SAC 1956 (not a state model) | logistic, all permitted | strict as-of | 22 | 0.84 | 0.82 | +0.013 [+0.005, +0.021] | [-0.002, +0.029] |
-| single document: SAC 1956 (not a state model) | logistic, all permitted | no national power | 26 | 0.84 | 0.82 | +0.016 [+0.004, +0.029] | [-0.003, +0.041] |
-| single document: SAC 1956 (not a state model) | logistic, all permitted | no source markers | 20 | 0.83 | 0.82 | +0.007 [-0.006, +0.020] | [-0.009, +0.029] |
-| global, plan documents only | LightGBM, all permitted | all permitted | 33 | 0.84 | 0.82 | +0.022 [+0.011, +0.033] | [+0.005, +0.041] |
-| global, plan documents only | LightGBM, all permitted | none flagged | 25 | 0.83 | 0.82 | +0.006 [-0.004, +0.016] | [-0.009, +0.023] |
-| global, plan documents only | LightGBM, all permitted | strict as-of | 22 | 0.83 | 0.82 | +0.005 [-0.005, +0.016] | [-0.012, +0.025] |
-| global, plan documents only | LightGBM, all permitted | no national power | 26 | 0.84 | 0.82 | +0.020 [+0.009, +0.032] | [+0.004, +0.039] |
-| global, plan documents only | LightGBM, all permitted | no source markers | 20 | 0.83 | 0.82 | +0.007 [-0.005, +0.019] | [-0.009, +0.028] |
-| global, all attacker documents | LightGBM, all permitted | all permitted | 33 | 0.79 | 0.75 | +0.033 [+0.021, +0.044] | [+0.010, +0.056] |
-| global, all attacker documents | LightGBM, all permitted | none flagged | 25 | 0.77 | 0.75 | +0.020 [+0.009, +0.031] | [-0.001, +0.043] |
-| global, all attacker documents | LightGBM, all permitted | strict as-of | 22 | 0.77 | 0.75 | +0.013 [+0.002, +0.025] | [-0.011, +0.039] |
-| global, all attacker documents | LightGBM, all permitted | no national power | 26 | 0.78 | 0.75 | +0.029 [+0.016, +0.041] | [+0.008, +0.051] |
-| global, all attacker documents | LightGBM, all permitted | no source markers | 20 | 0.76 | 0.75 | +0.002 [-0.013, +0.017] | [-0.024, +0.031] |
+| Warsaw Pact, pooled, exercise-based | LightGBM, all permitted | all permitted | 33 | 0.27 | 0.17 | +0.10 [+0.05, +0.16] | [+0.00, +0.15] |
+| Warsaw Pact, pooled, exercise-based | LightGBM, all permitted | none flagged | 25 | 0.28 | 0.17 | +0.11 [+0.06, +0.17] | [-0.00, +0.15] |
+| Warsaw Pact, pooled, exercise-based | LightGBM, all permitted | strict as-of | 22 | 0.27 | 0.17 | +0.10 [+0.05, +0.16] | [-0.03, +0.15] |
+| Warsaw Pact, pooled, exercise-based | LightGBM, all permitted | no national power | 26 | 0.23 | 0.17 | +0.06 [+0.03, +0.12] | [-0.02, +0.10] |
+| Warsaw Pact, pooled, exercise-based | LightGBM, all permitted | no source markers | 20 | 0.20 | 0.17 | +0.03 [-0.01, +0.07] | [-0.07, +0.08] |
+| single document: SAC 1956 (not a state model) | logistic, all permitted | all permitted | 33 | 0.85 | 0.82 | +0.02 [+0.01, +0.03] | [+0.01, +0.04] |
+| single document: SAC 1956 (not a state model) | logistic, all permitted | none flagged | 25 | 0.84 | 0.82 | +0.01 [+0.01, +0.02] | [-0.00, +0.03] |
+| single document: SAC 1956 (not a state model) | logistic, all permitted | strict as-of | 22 | 0.84 | 0.82 | +0.01 [+0.01, +0.02] | [-0.00, +0.03] |
+| single document: SAC 1956 (not a state model) | logistic, all permitted | no national power | 26 | 0.84 | 0.82 | +0.02 [+0.00, +0.03] | [-0.00, +0.04] |
+| single document: SAC 1956 (not a state model) | logistic, all permitted | no source markers | 20 | 0.83 | 0.82 | +0.01 [-0.01, +0.02] | [-0.01, +0.03] |
+| global, plan documents only | LightGBM, all permitted | all permitted | 33 | 0.84 | 0.82 | +0.02 [+0.01, +0.03] | [+0.01, +0.04] |
+| global, plan documents only | LightGBM, all permitted | none flagged | 25 | 0.83 | 0.82 | +0.01 [-0.00, +0.02] | [-0.01, +0.02] |
+| global, plan documents only | LightGBM, all permitted | strict as-of | 22 | 0.83 | 0.82 | +0.01 [-0.01, +0.02] | [-0.01, +0.02] |
+| global, plan documents only | LightGBM, all permitted | no national power | 26 | 0.84 | 0.82 | +0.02 [+0.01, +0.03] | [+0.00, +0.04] |
+| global, plan documents only | LightGBM, all permitted | no source markers | 20 | 0.83 | 0.82 | +0.01 [-0.01, +0.02] | [-0.01, +0.03] |
+| global, all attacker documents | LightGBM, all permitted | all permitted | 33 | 0.79 | 0.75 | +0.03 [+0.02, +0.04] | [+0.01, +0.06] |
+| global, all attacker documents | LightGBM, all permitted | none flagged | 25 | 0.77 | 0.75 | +0.02 [+0.01, +0.03] | [-0.00, +0.04] |
+| global, all attacker documents | LightGBM, all permitted | strict as-of | 22 | 0.77 | 0.75 | +0.01 [+0.00, +0.03] | [-0.01, +0.04] |
+| global, all attacker documents | LightGBM, all permitted | no national power | 26 | 0.78 | 0.75 | +0.03 [+0.02, +0.04] | [+0.01, +0.05] |
+| global, all attacker documents | LightGBM, all permitted | no source markers | 20 | 0.76 | 0.75 | +0.00 [-0.01, +0.02] | [-0.02, +0.03] |
 
 ## Defences, associations only
 
@@ -526,43 +526,43 @@ Each scope's selected candidate (a) against population plus country (b) under sp
 
 | scope | comparison | holdout | lists | positives | train_positives | model | against | difference | by_blocks | verdict |
 |---|---|---|---|---|---|---|---|---|---|---|
-| global, all attacker documents | political over population | spatial blocks | all lists | 1174 | 939 | 0.75 | 0.70 | +0.044 [+0.033, +0.056] | [+0.017, +0.067] | gain |
-| global, all attacker documents | political over population | spatial blocks | other than SAC | 132 | 939 | 0.24 | 0.22 | +0.021 [-0.015, +0.057] | [-0.009, +0.110] | neither |
-| global, all attacker documents | economic over population | spatial blocks | all lists | 1174 | 939 | 0.76 | 0.70 | +0.053 [+0.042, +0.065] | [+0.031, +0.071] | gain |
-| global, all attacker documents | economic over population | spatial blocks | other than SAC | 132 | 939 | 0.24 | 0.22 | +0.021 [-0.008, +0.052] | [-0.006, +0.100] | neither |
-| global, all attacker documents | national power over population | spatial blocks | all lists | 1174 | 939 | 0.75 | 0.70 | +0.051 [+0.040, +0.063] | [+0.032, +0.068] | gain |
-| global, all attacker documents | national power over population | spatial blocks | other than SAC | 132 | 939 | 0.25 | 0.22 | +0.034 [+0.001, +0.064] | [+0.001, +0.125] | gain |
-| global, all attacker documents | all three over population | spatial blocks | all lists | 1174 | 939 | 0.76 | 0.70 | +0.056 [+0.043, +0.068] | [+0.031, +0.075] | gain |
-| global, all attacker documents | all three over population | spatial blocks | other than SAC | 132 | 939 | 0.25 | 0.22 | +0.036 [+0.002, +0.070] | [-0.001, +0.131] | neither |
-| global, all attacker documents | political over primary | spatial blocks | all lists | 1174 | 939 | 0.79 | 0.79 | +0.001 [-0.001, +0.004] | [-0.002, +0.004] | neither |
-| global, all attacker documents | political over primary | spatial blocks | other than SAC | 132 | 939 | 0.28 | 0.29 | -0.009 [-0.025, +0.013] | [-0.041, +0.015] | neither |
-| global, all attacker documents | economic over primary | spatial blocks | all lists | 1174 | 939 | 0.79 | 0.79 | -0.000 [-0.002, +0.002] | [-0.002, +0.002] | neither |
-| global, all attacker documents | economic over primary | spatial blocks | other than SAC | 132 | 939 | 0.29 | 0.29 | -0.003 [-0.015, +0.010] | [-0.023, +0.012] | neither |
-| global, all attacker documents | political over population | leave one document out | all lists | 1174 | 131 | 0.66 | 0.63 | +0.025 [+0.007, +0.041] | [+0.000, +0.053] | gain |
-| global, all attacker documents | political over population | leave one document out | other than SAC | 132 | 1061 | 0.24 | 0.23 | +0.009 [-0.028, +0.050] | [-0.024, +0.088] | neither |
-| global, all attacker documents | economic over population | leave one document out | all lists | 1174 | 131 | 0.66 | 0.63 | +0.027 [+0.010, +0.043] | [+0.004, +0.054] | gain |
-| global, all attacker documents | economic over population | leave one document out | other than SAC | 132 | 1061 | 0.24 | 0.23 | +0.007 [-0.020, +0.043] | [-0.017, +0.069] | neither |
-| global, all attacker documents | national power over population | leave one document out | all lists | 1174 | 131 | 0.59 | 0.63 | -0.041 [-0.062, -0.020] | [-0.070, -0.003] | loss |
-| global, all attacker documents | national power over population | leave one document out | other than SAC | 132 | 1061 | 0.20 | 0.23 | -0.024 [-0.061, +0.017] | [-0.055, +0.037] | neither |
-| global, all attacker documents | all three over population | leave one document out | all lists | 1174 | 131 | 0.64 | 0.63 | +0.007 [-0.012, +0.027] | [-0.027, +0.050] | neither |
-| global, all attacker documents | all three over population | leave one document out | other than SAC | 132 | 1061 | 0.23 | 0.23 | +0.005 [-0.034, +0.045] | [-0.016, +0.062] | neither |
-| global, all attacker documents | political over primary | leave one document out | all lists | 1174 | 131 | 0.58 | 0.58 | +0.002 [-0.001, +0.006] | [-0.002, +0.007] | neither |
-| global, all attacker documents | political over primary | leave one document out | other than SAC | 132 | 1061 | 0.23 | 0.24 | -0.014 [-0.043, +0.018] | [-0.040, +0.030] | neither |
-| global, all attacker documents | economic over primary | leave one document out | all lists | 1174 | 131 | 0.66 | 0.58 | +0.080 [+0.069, +0.091] | [+0.062, +0.100] | gain |
-| global, all attacker documents | economic over primary | leave one document out | other than SAC | 132 | 1061 | 0.24 | 0.24 | -0.004 [-0.019, +0.012] | [-0.024, +0.013] | neither |
-| Warsaw Pact, pooled, exercise-based | political over population | spatial blocks | all lists | 125 | 68 | 0.20 | 0.20 | +0.002 [-0.009, +0.016] | [-0.023, +0.017] | neither |
-| Warsaw Pact, pooled, exercise-based | economic over population | spatial blocks | all lists | 125 | 68 | 0.21 | 0.20 | +0.008 [-0.020, +0.035] | [-0.034, +0.039] | neither |
-| Warsaw Pact, pooled, exercise-based | national power over population | spatial blocks | all lists | 125 | 68 | 0.23 | 0.20 | +0.025 [-0.013, +0.055] | [-0.014, +0.075] | neither |
-| Warsaw Pact, pooled, exercise-based | all three over population | spatial blocks | all lists | 125 | 68 | 0.22 | 0.20 | +0.022 [-0.013, +0.051] | [-0.020, +0.068] | neither |
-| Warsaw Pact, pooled, exercise-based | political over primary | spatial blocks | all lists | 125 | 68 | 0.27 | 0.27 | +0.001 [-0.001, +0.003] | [-0.002, +0.003] | neither |
-| Warsaw Pact, pooled, exercise-based | economic over primary | spatial blocks | all lists | 125 | 68 | 0.27 | 0.27 | -0.003 [-0.026, +0.019] | [-0.034, +0.031] | neither |
-| Warsaw Pact, pooled, exercise-based | political over population | leave one document out | all lists | 125 | 12 | 0.19 | 0.18 | +0.004 [-0.001, +0.013] | [-0.005, +0.007] | not a reading |
-| Warsaw Pact, pooled, exercise-based | economic over population | leave one document out | all lists | 125 | 12 | 0.18 | 0.18 | -0.003 [-0.020, +0.015] | [-0.023, +0.021] | not a reading |
-| Warsaw Pact, pooled, exercise-based | national power over population | leave one document out | all lists | 125 | 12 | 0.19 | 0.18 | +0.003 [-0.015, +0.021] | [-0.017, +0.020] | not a reading |
-| Warsaw Pact, pooled, exercise-based | all three over population | leave one document out | all lists | 125 | 12 | 0.19 | 0.18 | +0.004 [-0.011, +0.023] | [-0.014, +0.021] | not a reading |
-| Warsaw Pact, pooled, exercise-based | political over primary | leave one document out | all lists | 125 | 12 | 0.19 | 0.19 | -0.000 [-0.004, +0.003] | [-0.006, +0.001] | not a reading |
-| Warsaw Pact, pooled, exercise-based | economic over primary | leave one document out | all lists | 125 | 12 | 0.19 | 0.19 | +0.002 [-0.005, +0.009] | [-0.003, +0.012] | not a reading |
-| SAC 1956, Soviet towns | defence industry over population | spatial blocks | all lists | 566 | 452 | 0.77 | 0.77 | +0.001 [-0.006, +0.006] | [-0.006, +0.007] | neither |
+| global, all attacker documents | political over population | spatial blocks | all lists | 1174 | 939 | 0.75 | 0.70 | +0.04 [+0.03, +0.06] | [+0.02, +0.07] | gain |
+| global, all attacker documents | political over population | spatial blocks | other than SAC | 132 | 939 | 0.24 | 0.22 | +0.02 [-0.01, +0.06] | [-0.01, +0.11] | neither |
+| global, all attacker documents | economic over population | spatial blocks | all lists | 1174 | 939 | 0.76 | 0.70 | +0.05 [+0.04, +0.06] | [+0.03, +0.07] | gain |
+| global, all attacker documents | economic over population | spatial blocks | other than SAC | 132 | 939 | 0.24 | 0.22 | +0.02 [-0.01, +0.05] | [-0.01, +0.10] | neither |
+| global, all attacker documents | national power over population | spatial blocks | all lists | 1174 | 939 | 0.75 | 0.70 | +0.05 [+0.04, +0.06] | [+0.03, +0.07] | gain |
+| global, all attacker documents | national power over population | spatial blocks | other than SAC | 132 | 939 | 0.25 | 0.22 | +0.03 [+0.00, +0.06] | [+0.00, +0.12] | gain |
+| global, all attacker documents | all three over population | spatial blocks | all lists | 1174 | 939 | 0.76 | 0.70 | +0.06 [+0.04, +0.07] | [+0.03, +0.08] | gain |
+| global, all attacker documents | all three over population | spatial blocks | other than SAC | 132 | 939 | 0.25 | 0.22 | +0.04 [+0.00, +0.07] | [-0.00, +0.13] | neither |
+| global, all attacker documents | political over primary | spatial blocks | all lists | 1174 | 939 | 0.79 | 0.79 | +0.00 [-0.00, +0.00] | [-0.00, +0.00] | neither |
+| global, all attacker documents | political over primary | spatial blocks | other than SAC | 132 | 939 | 0.28 | 0.29 | -0.01 [-0.02, +0.01] | [-0.04, +0.01] | neither |
+| global, all attacker documents | economic over primary | spatial blocks | all lists | 1174 | 939 | 0.79 | 0.79 | -0.00 [-0.00, +0.00] | [-0.00, +0.00] | neither |
+| global, all attacker documents | economic over primary | spatial blocks | other than SAC | 132 | 939 | 0.29 | 0.29 | -0.00 [-0.02, +0.01] | [-0.02, +0.01] | neither |
+| global, all attacker documents | political over population | leave one document out | all lists | 1174 | 131 | 0.66 | 0.63 | +0.02 [+0.01, +0.04] | [+0.00, +0.05] | gain |
+| global, all attacker documents | political over population | leave one document out | other than SAC | 132 | 1061 | 0.24 | 0.23 | +0.01 [-0.03, +0.05] | [-0.02, +0.09] | neither |
+| global, all attacker documents | economic over population | leave one document out | all lists | 1174 | 131 | 0.66 | 0.63 | +0.03 [+0.01, +0.04] | [+0.00, +0.05] | gain |
+| global, all attacker documents | economic over population | leave one document out | other than SAC | 132 | 1061 | 0.24 | 0.23 | +0.01 [-0.02, +0.04] | [-0.02, +0.07] | neither |
+| global, all attacker documents | national power over population | leave one document out | all lists | 1174 | 131 | 0.59 | 0.63 | -0.04 [-0.06, -0.02] | [-0.07, -0.00] | loss |
+| global, all attacker documents | national power over population | leave one document out | other than SAC | 132 | 1061 | 0.20 | 0.23 | -0.02 [-0.06, +0.02] | [-0.06, +0.04] | neither |
+| global, all attacker documents | all three over population | leave one document out | all lists | 1174 | 131 | 0.64 | 0.63 | +0.01 [-0.01, +0.03] | [-0.03, +0.05] | neither |
+| global, all attacker documents | all three over population | leave one document out | other than SAC | 132 | 1061 | 0.23 | 0.23 | +0.00 [-0.03, +0.05] | [-0.02, +0.06] | neither |
+| global, all attacker documents | political over primary | leave one document out | all lists | 1174 | 131 | 0.58 | 0.58 | +0.00 [-0.00, +0.01] | [-0.00, +0.01] | neither |
+| global, all attacker documents | political over primary | leave one document out | other than SAC | 132 | 1061 | 0.23 | 0.24 | -0.01 [-0.04, +0.02] | [-0.04, +0.03] | neither |
+| global, all attacker documents | economic over primary | leave one document out | all lists | 1174 | 131 | 0.66 | 0.58 | +0.08 [+0.07, +0.09] | [+0.06, +0.10] | gain |
+| global, all attacker documents | economic over primary | leave one document out | other than SAC | 132 | 1061 | 0.24 | 0.24 | -0.00 [-0.02, +0.01] | [-0.02, +0.01] | neither |
+| Warsaw Pact, pooled, exercise-based | political over population | spatial blocks | all lists | 125 | 68 | 0.20 | 0.20 | +0.00 [-0.01, +0.02] | [-0.02, +0.02] | neither |
+| Warsaw Pact, pooled, exercise-based | economic over population | spatial blocks | all lists | 125 | 68 | 0.21 | 0.20 | +0.01 [-0.02, +0.03] | [-0.03, +0.04] | neither |
+| Warsaw Pact, pooled, exercise-based | national power over population | spatial blocks | all lists | 125 | 68 | 0.23 | 0.20 | +0.03 [-0.01, +0.05] | [-0.01, +0.08] | neither |
+| Warsaw Pact, pooled, exercise-based | all three over population | spatial blocks | all lists | 125 | 68 | 0.22 | 0.20 | +0.02 [-0.01, +0.05] | [-0.02, +0.07] | neither |
+| Warsaw Pact, pooled, exercise-based | political over primary | spatial blocks | all lists | 125 | 68 | 0.27 | 0.27 | +0.00 [-0.00, +0.00] | [-0.00, +0.00] | neither |
+| Warsaw Pact, pooled, exercise-based | economic over primary | spatial blocks | all lists | 125 | 68 | 0.27 | 0.27 | -0.00 [-0.03, +0.02] | [-0.03, +0.03] | neither |
+| Warsaw Pact, pooled, exercise-based | political over population | leave one document out | all lists | 125 | 12 | 0.19 | 0.18 | +0.00 [-0.00, +0.01] | [-0.00, +0.01] | not a reading |
+| Warsaw Pact, pooled, exercise-based | economic over population | leave one document out | all lists | 125 | 12 | 0.18 | 0.18 | -0.00 [-0.02, +0.01] | [-0.02, +0.02] | not a reading |
+| Warsaw Pact, pooled, exercise-based | national power over population | leave one document out | all lists | 125 | 12 | 0.19 | 0.18 | +0.00 [-0.01, +0.02] | [-0.02, +0.02] | not a reading |
+| Warsaw Pact, pooled, exercise-based | all three over population | leave one document out | all lists | 125 | 12 | 0.19 | 0.18 | +0.00 [-0.01, +0.02] | [-0.01, +0.02] | not a reading |
+| Warsaw Pact, pooled, exercise-based | political over primary | leave one document out | all lists | 125 | 12 | 0.19 | 0.19 | -0.00 [-0.00, +0.00] | [-0.01, +0.00] | not a reading |
+| Warsaw Pact, pooled, exercise-based | economic over primary | leave one document out | all lists | 125 | 12 | 0.19 | 0.19 | +0.00 [-0.00, +0.01] | [-0.00, +0.01] | not a reading |
+| SAC 1956, Soviet towns | defence industry over population | spatial blocks | all lists | 566 | 452 | 0.77 | 0.77 | +0.00 [-0.01, +0.01] | [-0.01, +0.01] | neither |
 
 ## Probability map: warheads available and delivered, by state and delivery
 

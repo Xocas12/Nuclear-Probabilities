@@ -21,14 +21,8 @@ def test_readme_says_the_blind_places_were_set_apart_after_the_sealed_reading():
         "The blind places were set apart after the reading of all sealed places had been seen"
         in report
     )
-    assert (
-        "the sealed scores are of the fit made before the corrected West European site table"
-        in report
-    )
-    # README says it in the results and in Method
-    assert (
-        "Which sealed places count as blind was decided after that reading had been seen" in readme
-    )
+    assert "the sealed scores are of the fit made before the corrections of the data" in report
+    # README says it once, in the results
     assert (
         "Which places count as blind was decided after the reading of all sealed places had been seen"
         in readme
@@ -151,7 +145,7 @@ def test_link_errors_are_stated_while_the_results_are_of_the_earlier_links():
     assert ("results in README and REPORT are of the earlier links" in history) == pending
 
 
-def test_the_seventeenth_amendment_paragraph_appears_only_after_its_refit(tmp_path, monkeypatch):
+def test_the_seventeenth_amendment_row_appears_only_after_its_refit(tmp_path, monkeypatch):
     import json
     import shutil
 
@@ -162,34 +156,40 @@ def test_the_seventeenth_amendment_paragraph_appears_only_after_its_refit(tmp_pa
         json.loads((report.OUT / "manifest.json").read_text())["table_sha256"]
         != report.TABLE_BEFORE_17
     )
-    assert (report._amendment_17() != "") == landed
+
+    def row17() -> str:
+        text = report._corrections()
+        return next((x for x in text.splitlines() if x.startswith("| 17 |")), "")
+
+    assert (row17() != "") == landed
     kept = report.BEFORE_17
     assert (
         json.loads((kept / "manifest.json").read_text())["table_sha256"] == report.TABLE_BEFORE_17
     )
+    # The run the seventeenth amendment is compared with: the next kept run, or the committed outputs.
+    after = report.BEFORE_19 if (report.BEFORE_19 / "comparison.csv").exists() else report.OUT
     fake = tmp_path / "before"
     shutil.copytree(kept, fake)
     for name in (
         "comparison.csv",
         "selection.csv",
-    ):  # a kept run equal to the outputs: nothing moved
-        shutil.copy(report.OUT / name, fake / name)
+    ):  # a kept run equal to the run after it: nothing moved
+        shutil.copy(after / name, fake / name)
     manifest = json.loads((fake / "manifest.json").read_text())
     manifest["table_sha256"] = "0" * 64
     (fake / "manifest.json").write_text(json.dumps(manifest))
     monkeypatch.setattr(report, "BEFORE_17", fake)
-    text = report._amendment_17()
-    assert "### Changed by the corrected Warsaw Pact links" in text
-    assert "changes verdict." in text  # same comparison: nothing moved
+    text = report._corrections()
+    assert "### Corrections made after results were read" in text
+    assert "| 0 of " in row17()  # same comparison: nothing moved
+    assert "Amendment 17:" not in text
     comp = pd.read_csv(fake / "comparison.csv")
     for col in ("delta", "low", "high", "block_low", "block_high"):
         comp[col] = -comp[col]
     comp[["low", "high"]] = comp[["high", "low"]].to_numpy()
     comp[["block_low", "block_high"]] = comp[["block_high", "block_low"]].to_numpy()
     comp.to_csv(fake / "comparison.csv", index=False)
-    assert (
-        "change verdict; each difference is followed by its interval by blocks:"
-        in report._amendment_17()
-    )
-    # The sixteenth amendment's paragraph keeps comparing its own two runs.
-    assert "### Changed by the corrected West European site table" in report._amendment_16()
+    assert "| 0 of " not in row17()
+    assert "- Amendment 17:" in report._corrections()
+    # The sixteenth amendment's row keeps comparing its own two runs.
+    assert "\n| 16 |" in report._corrections()

@@ -47,18 +47,20 @@ def test_the_difference_is_rerun_minus_pinned():
     assert d.iloc[0] == pytest.approx(0.01) and (d.iloc[1:] == 0).all()
 
 
-def test_the_readme_states_the_comparison_as_committed():
+def test_the_rerun_card_states_the_comparison_as_committed():
     from nucprob.paths import ROOT
 
     c = pd.read_csv(RERUN / "comparison.csv")
     d = c["pr_auc_mean_diff"].abs()
-    text = " ".join((ROOT / "README.md").read_text(encoding="utf-8").split())
+    text = " ".join((RERUN / "README.md").read_text(encoding="utf-8").split())
+    assert "data/FEATURES_US.md" in (ROOT / "README.md").read_text(encoding="utf-8")
     every = (c[[k for k in c.columns if k.endswith("_diff")]] == 0).all(axis=1)
     assert (
         f"{int((d == 0).sum())} of the {len(c)} rows have the same PR-AUC and {int(every.sum())} the same value on every metric"
         in text
     )
-    assert f"largest PR-AUC difference is {d.max():.4f}" in text
+    # A score difference at the report's precision for scores: a nonzero value that would print 0.00 takes a third.
+    assert f"largest PR-AUC difference is {d.max():.3f}" in text
     # Every row that moved has the airfield count among its features.
     moved = c.loc[d > 0, "model"]
     models = json.loads((RERUN / "manifest.json").read_text(encoding="utf-8"))["models"]

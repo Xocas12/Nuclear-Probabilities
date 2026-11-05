@@ -54,31 +54,27 @@ def _cell(v) -> str:
     return str(v)
 
 
-DIFF_DIGITS = 3
+DIFF_DIGITS = 2
 
 
 def signed(v: float) -> str:
-    """A difference or a bound: three decimals, with its sign. A value within 0.0005 of zero prints as +0.000
-    or -0.000, the sign giving its side of zero, which decides a verdict; an exact zero prints as 0.000."""
+    """A difference or a bound: two decimals, with its sign. A value within 0.005 of zero prints as +0.00 or -0.00,
+    the sign giving its side of zero, which decides a verdict; an exact zero prints as 0.00. Two decimals because a
+    bound moves by about 0.005 between bootstrap seeds (runs/classifier/seed_check.csv): a third would be noise."""
     if v == 0 and not np.signbit(v):
-        return "0.000"
+        return "0." + "0" * DIFF_DIGITS
     return f"{v:+.{DIFF_DIGITS}f}"
 
 
-def point(v: float, *bounds: float) -> str:
-    """An estimate of a difference, printed as its bounds are (signed); the bounds are ignored."""
+def point(v: float) -> str:
+    """An estimate of a difference, printed as its bounds are (signed)."""
     return signed(v)
 
 
 def estimate_interval(v: float, low: float, high: float) -> tuple[str, str, str]:
-    """The estimate and its bounds as printed. Where the estimate would print equal to a bound it differs from,
-    all three take a fourth decimal."""
-    est, lo, hi = signed(v), signed(low), signed(high)
-    if (est == lo and v != low) or (est == hi and v != high):
-        est, lo, hi = (
-            "0.0000" if x == 0 and not np.signbit(x) else f"{x:+.4f}" for x in (v, low, high)
-        )
-    return est, lo, hi
+    """The estimate and its bounds as printed, all at two decimals. An estimate within 0.005 of a bound may print
+    equal to it; the verdict is read from the unrounded bounds."""
+    return signed(v), signed(low), signed(high)
 
 
 def constant(r) -> bool:
@@ -203,11 +199,7 @@ def verdict_grid(d: pd.DataFrame, index: str, columns: str) -> pd.DataFrame:
     """One cell per row of `d`: its estimate and verdict. The intervals behind each cell are in TABLES.md."""
     cells = d.assign(
         cell=d.apply(
-            lambda r: (
-                "constant"
-                if constant(r)
-                else f"{point(r['delta'], r['low'], r['high'])} {both_verdict(r)}"
-            ),
+            lambda r: "constant" if constant(r) else f"{point(r['delta'])} {both_verdict(r)}",
             axis=1,
         )
     )
@@ -1267,7 +1259,7 @@ def _pooled_sealed(prim: pd.DataFrame) -> str:
         return ""
     r = r.iloc[0]
     return (
-        f"The pooled Warsaw Pact model ranks these places worse than population does ({point(r['delta'], r['low'], r['high'])}); "
+        f"The pooled Warsaw Pact model ranks these places worse than population does ({point(r['delta'])}); "
         "the town interval calls that a loss and the block interval does not, so by the rule it is neither. "
         f"It was trained on towns in {_count_word(len(_sealed_fit_countries()))} Western countries "
         f"({', '.join(_sealed_fit_countries())}) and is applied here to Eastern bloc places."
@@ -1508,14 +1500,17 @@ def _main_blind() -> str:
             else "."
         )
     )
+    counts = prim["verdict"].value_counts()
+    verdict_text = (
+        f"{counts.get('neither', 0)} of {len(prim)} scopes' selected models cannot be told from population plus country "
+        + ("and none beats it" if not counts.get("gain", 0) else f"and {counts['gain']} beat it")
+    )
     return f"""- **On the blind places** of the sealed set ({int(p0["rows"])} towns with a SAC label, {int(p0["positives"])} listed, base rate
-  {p0["base_rate"]:.2f}, positives in {int(p0["positive_blocks"])} of {int(p0["blocks"])} blocks), each scope's selected model against population plus country:
-{chr(10).join("  - " + _blind_line(r, auc=False) for _, r in prim.iterrows())}
-
-  {rule_text} With positives in so few blocks the intervals are wide, and "neither" is not evidence of no
-  effect. {_earlier_sealed()} The blind places were set apart after the reading of all sealed places had been seen
-  (`configs/protocol_amendment_12.yaml`, which refits nothing), and the sealed scores are of the fit made before the
-  corrected West European site table ("Changed by the corrected West European site table").
+  {p0["base_rate"]:.2f}, positives in {int(p0["positive_blocks"])} of {int(p0["blocks"])} blocks), {verdict_text} (table under "The sealed set on blind places"). {rule_text} With positives in so few
+  blocks the intervals are wide, and "neither" is not evidence of no effect. {_earlier_sealed()} The blind places were
+  set apart after the reading of all sealed places had been seen (`configs/protocol_amendment_12.yaml`, which refits
+  nothing), and the sealed scores are of the fit made before the corrections of the data ("Corrections made after
+  results were read").
 """
 
 
@@ -1632,128 +1627,161 @@ BEFORE_17 = OUT / "before_amendment_17"
 BEFORE_19 = OUT / "before_amendment_19"
 
 
-def _moved(was_dir, now_dir) -> tuple[str, str]:
-    """Which primary verdicts and selections differ between two runs' comparison.csv and selection.csv."""
+def _moved(was_dir, now_dir) -> tuple[pd.DataFrame, int, list[str]]:
+    """Primary rows whose verdict differs between two runs, how many primary rows both have, and the scopes
+    whose selected model differs, as "scope (model before, model now)"."""
     now_sel = pd.read_csv(now_dir / "selection.csv")
     was_sel = pd.read_csv(was_dir / "selection.csv")
     now = primary_table(pd.read_csv(now_dir / "comparison.csv"), now_sel)
     was = primary_table(pd.read_csv(was_dir / "comparison.csv"), was_sel)
-    key = ["Scope", "Holdout", "Lists"]
-    both = now.merge(was, on=key, suffixes=("", "_was"))
-    moved = both[both["Verdict"] != both["Verdict_was"]]
+    both = now.merge(was, on=["Scope", "Holdout", "Lists"], suffixes=("", "_was"))
     pick = lambda s: s[s["selected"]].set_index("scope")["model"]  # noqa: E731
     sel_now, sel_was = pick(now_sel), pick(was_sel)
-    changed = [s for s in sel_now.index if sel_was.get(s) != sel_now[s]]
-    if moved.empty:
-        verdicts_text = (
-            f"None of the {len(both)} primary rows (each scope's selected candidate against population plus "
-            "country, by holdout and list set) changes verdict."
-        )
-    else:
-        verdicts_text = (
-            f"{len(moved)} of the {len(both)} primary rows (each scope's selected candidate against population "
-            "plus country, by holdout and list set) change verdict; each difference is followed by its interval "
-            "by blocks:\n\n"
-            + "\n".join(
-                f"- {r['Scope']}, {r['Holdout'][0].lower() + r['Holdout'][1:]}, {r['Lists']}: "
-                f"{r['Verdict_was']} before ({r['Difference, country_was']}, by blocks {r['By blocks_was']}), "
-                f"{r['Verdict']} now ({r['Difference, country']}, by blocks {r['By blocks']})"
-                for _, r in moved.iterrows()
-            )
-            + "\n\n"
-        )
-    if changed:
-        sel_text = (
-            " The refit selects a different model than the earlier run for "
-            + "; ".join(f"'{s}' ({sel_was.get(s)} before, {sel_now[s]} now)" for s in changed)
-            + ": the sealed and blind rows of those scopes are of the earlier selection."
-        )
-    else:
-        sel_text = (
-            " Every scope selects the same model as before, so the sealed and blind rows are of the models this "
-            "refit selects, fitted on the earlier table."
-        )
-    if not moved.empty:
-        sel_text = sel_text.lstrip()  # a new paragraph after the list
-    return verdicts_text, sel_text
+    changed = [
+        f"{s} ({sel_was.get(s)} before, {sel_now[s]} now)"
+        for s in sel_now.index
+        if sel_was.get(s) != sel_now[s]
+    ]
+    return both[both["Verdict"] != both["Verdict_was"]], len(both), changed
 
 
 def _table_of(run_dir) -> str:
     return json.loads((run_dir / "manifest.json").read_text())["table_sha256"]
 
 
-def _amendment_16() -> str:
-    """The sixteenth amendment's paragraph: every primary verdict that moved between the run the sealed set was
-    scored with (sealed/fitted_run/) and the refit on the corrected West European site table. Once a later
-    amendment refits again, the sixteenth's refit is the run kept in before_amendment_17/."""
-    if not (FITTED_RUN / "comparison.csv").exists():
-        return ""
-    after_16 = BEFORE_17 if (BEFORE_17 / "comparison.csv").exists() else OUT
-    if _table_of(FITTED_RUN) == _table_of(after_16):
-        return ""
-    verdicts_text, sel_text = _moved(FITTED_RUN, after_16)
-    return f"""### Changed by the corrected West European site table
-
-`configs/protocol_amendment_16.yaml` corrected 29 West European site rows that had no cited text (Data, "Military and
-defence sites of 1965") and refitted every classifier step on the corrected table. Four columns change, on rows of
-three documents, two Warsaw Pact and one a Soviet lesson list: distance to a naval base, distance to an air defence site and air defence sites within
-50 km on rows of Lato-67 and the 1977 staff-academy lessons, and distance to a long-range aviation base on rows of
-the 1965 Hungarian war game (the amendment's `table` field). The sealed set was not scored again: its scores, and the blind reading of them, are of
-the fit on the earlier table (`runs/classifier/sealed/fitted_run/`). {verdicts_text}{sel_text}
-"""
+# Site tables whose rows with no recorded end year the nineteenth amendment holds at their 0.5-degree cell centres
+# (scripts/coarsen_site_coordinates.py): table -> end-year column, None where every row is held.
+HELD_SITE_TABLES = {
+    "military_sites_1956.csv": "until_year",
+    "bloc_air_defence_1956.csv": "until_year",
+    "weurope_military_sites_1965.csv": "until_year",
+    "sac_bases_1956.csv": None,
+}
 
 
-def _amendment_19() -> str:
-    """The nineteenth amendment's paragraph: every primary verdict that moved between the run kept in
-    before_amendment_19/ and the refit without the Dutch towns and with sites at cell centres. Empty until then."""
-    if not (BEFORE_19 / "comparison.csv").exists() or _table_of(BEFORE_19) == _table_of(OUT):
+def _held_sites() -> tuple[int, float]:
+    """Rows held at a cell centre by the nineteenth amendment, and the most such a row can have moved: the distance
+    from its cell's centre to the cell's farthest corner, largest for the cell nearest the equator."""
+    n, worst = 0, 0.0
+    for name, end in HELD_SITE_TABLES.items():
+        d = pd.read_csv(CURATED / "features" / name)
+        if end is not None:
+            d = d[d[end].isna()]
+        d = d.dropna(subset=["lat", "lon"])
+        n += len(d)
+        lat = np.floor(2 * d["lat"].to_numpy()) / 2 + 0.25
+        corner = np.radians(np.abs(lat) - 0.25)  # the corner nearer the equator is the farther one
+        centre = np.radians(np.abs(lat))
+        dlon = np.radians(0.25)
+        a = (
+            np.sin((centre - corner) / 2) ** 2
+            + np.cos(centre) * np.cos(corner) * np.sin(dlon / 2) ** 2
+        )
+        km = 2 * 6371.0 * np.arcsin(np.sqrt(a))
+        worst = max(worst, float(km.max()) if len(km) else 0.0)
+    return n, worst
+
+
+def _unscored_after_19() -> list[str]:
+    """Documents scored before the nineteenth amendment and not after it, from the two runs' lists.csv."""
+    was, now = BEFORE_19 / "lists.csv", OUT / "lists.csv"
+    if not was.exists():
+        return []
+    ids = lambda f: set(pd.read_csv(f, usecols=["plan_id"])["plan_id"])  # noqa: E731
+    return sorted(ids(was) - ids(now))
+
+
+# The corrections adopted after results had been read, oldest first: amendment, the module name of the run before
+# it, of the run after it (None: the committed one), and what it corrected. Names, so that they resolve at call time.
+CORRECTIONS = [
+    (
+        16,
+        "FITTED_RUN",
+        "BEFORE_17",
+        "29 West European site rows that had no cited text; four distance and count columns change on rows of "
+        "Lato-67, the 1977 staff-academy lessons and the 1965 Hungarian war game",
+    ),
+    (
+        17,
+        "BEFORE_17",
+        "BEFORE_19",
+        "links of two Polish exercise lists: Lato-67's five German offset rows placed at their offsets (crediting "
+        "four towns: Walsrode, Münster, Kevelaer and Lobberich), Burza's two direction-only rows unlinked (Hamburg, Schleswig)",
+    ),
+    (
+        19,
+        "BEFORE_19",
+        None,
+        "Dutch 1960 towns withdrawn (their census volume came through a path robots.txt disallows); sites possibly "
+        "in use today held at their 0.5-degree cell centres; two headquarters rows whose only source refuses this "
+        "project's agents dropped",
+    ),
+]
+
+
+def _corrections() -> str:
+    """One section for every correction of the data adopted after results had been read: what it changed, and
+    every primary row (each scope's selected candidate against population plus country, by holdout and list set)
+    whose verdict it moved, whichever way."""
+    rows, moved_lines, selections = [], [], []
+    for number, was_name, now_name in ((c[0], c[1], c[2]) for c in CORRECTIONS):
+        was_dir = globals()[was_name]
+        now_dir = globals()[now_name] if now_name is not None else OUT
+        now_dir = now_dir if (now_dir / "comparison.csv").exists() else OUT
+        if not (was_dir / "comparison.csv").exists() or _table_of(was_dir) == _table_of(now_dir):
+            continue
+        moved, n, changed = _moved(was_dir, now_dir)
+        what = next(c[3] for c in CORRECTIONS if c[0] == number)
+        rows.append(
+            f"| {number} | {what} | {len(moved)} of {n} | {'; '.join(changed) if changed else 'none'} |"
+        )
+        moved_lines += [
+            f"- Amendment {number}: {r['Scope']}, {r['Holdout'][0].lower() + r['Holdout'][1:]}, {r['Lists']}: "
+            f"{r['Verdict_was']} before ({r['Difference, country_was']}, by blocks {r['By blocks_was']}), "
+            f"{r['Verdict']} after ({r['Difference, country']}, by blocks {r['By blocks']})"
+            for _, r in moved.iterrows()
+        ]
+        selections += changed
+    if not rows:
         return ""
-    verdicts_text, sel_text = _moved(BEFORE_19, OUT)
-    sel_text = sel_text.replace(
-        "Every scope selects the same model as before, so the sealed and blind rows are of the models this "
-        "refit selects, fitted on the earlier table.",
-        "Again every scope selects the same model as before.",
+    held, km = _held_sites()
+    gone = _unscored_after_19()
+    gone_text = (
+        f" Documents no longer scored, every linked row of which was Dutch: {', '.join(f'`{g}`' for g in gone)}."
+        if gone
+        else ""
+    )
+    nineteenth = (
+        f" The nineteenth holds {held} site rows at cell centres, which moves each by at most {km:.0f} km, and with "
+        f"them the distance and count features.{gone_text}"
+        if any(r.startswith("| 19 ") for r in rows)
+        else ""
+    )
+    moved_text = (
+        "Primary rows whose verdict moved, each difference followed by its interval by blocks:\n\n"
+        + "\n".join(moved_lines)
+        if moved_lines
+        else "No primary row's verdict moved."
     )
     return f"""
-### Changed by the nineteenth amendment
+### Corrections made after results were read
 
-`configs/protocol_amendment_19.yaml` withdrew the Netherlands' 1960 towns, whose census volume came through a path
-robots.txt disallows, so the Dutch rows of Lato-67, the 1977 staff-academy lessons and Soyuz-75 link to no town and
-Soyuz-75, all of whose rows are Dutch, is no longer scored. It held every site with no recorded end year, and every
-SAC base, at the centre of its 0.5-degree cell, which moves those sites by up to about 39 km and with them the
-distance and count features, and it dropped two Czechoslovak headquarters rows whose only source refuses this project's agents. Every
-classifier step and the map were run again; the run before it is kept in `runs/classifier/before_amendment_19/`. The
-sealed set was not scored again. {verdicts_text}{sel_text}
-"""
+Each correction below was written as a dated amendment (`configs/protocol_amendment_<n>.yaml`) after results had
+been read and before its refit, which reran every classifier step and the map; the run before it is kept
+(`runs/classifier/before_amendment_<n>/`, and `sealed/fitted_run/` for the sixteenth). The sealed set was scored once,
+before all of them, so its scores and the blind reading are of the fit on the uncorrected data. "Primary rows" are
+each scope's selected candidate against population plus country, by holdout and list set.
 
+| amendment | what it corrected | primary rows whose verdict moved | scopes whose selected model changed |
+|---|---|---|---|
+{chr(10).join(rows)}
 
-def _amendment_17() -> str:
-    """The seventeenth amendment's paragraph: every primary verdict that moved between the run kept in
-    before_amendment_17/ and the refit on the corrected links. Empty until that refit is committed."""
-    after_17 = BEFORE_19 if (BEFORE_19 / "comparison.csv").exists() else OUT
-    if not (BEFORE_17 / "comparison.csv").exists() or _table_of(BEFORE_17) == _table_of(after_17):
-        return ""
-    verdicts_text, sel_text = _moved(BEFORE_17, after_17)
-    if sel_text.strip().startswith("Every scope selects the same model as before"):
-        sel_text = sel_text.replace(
-            "Every scope selects the same model as before, so the sealed and blind rows are of the models this "
-            "refit selects, fitted on the earlier table.",
-            "Again every scope selects the same model as before.",
-        )
-    return f"""
-### Changed by the corrected Warsaw Pact links
+{moved_text}
 
-`configs/protocol_amendment_17.yaml` corrected the links of two Polish exercise lists, Lato-67 (the Coastal Front
-directive of exercise Lato, 1967) and Burza (the Maritime Front exercise of 1961). It placed Lato-67's five German offset
-rows (51-55) at their printed offsets, which credits four towns: Walsrode (rows 51 and 52), Münster, Kevelaer and
-Lobberich. It unlinked Burza's "south of Schleswig" and "north of Hamburg", which print a direction with no distance,
-so Hamburg and Schleswig are no longer Burza positives. And it gave a reason for two Lato-67 rows that had been left
-unlinked without one: row 17 (КЕЛЬ, read by the row's note as probably Kiel) and row 57 ("west of Lingen"), so Kiel
-is not credited. Every classifier step and the map were run again on the corrected table; the run before it
-is kept in `runs/classifier/before_amendment_17/`. The sealed set was not scored again. Before the amendment was
-written, the committed held-out scores had been rescored (no model refitted) with five Lato-67 towns made positive,
-one more than the links it adopted credit, and Lato-67's PR-AUC had been seen to rise, so a verdict it moves is not of
-a reading fixed before its result was seen. {verdicts_text}{sel_text}
+The seventeenth also gave reasons for two Lato-67 rows left unlinked: row 17 (КЕЛЬ, read by its note as probably
+Kiel) and row 57 ("west of Lingen"), so Kiel is not credited. Before the seventeenth was written, the committed held-out scores had been rescored (no model refitted) with five
+Lato-67 towns made positive, one more than the links it adopted credit, and Lato-67's PR-AUC had been seen to rise; a
+verdict it moves is not of a reading fixed before its result was seen.{nineteenth}
 """
 
 
@@ -1849,9 +1877,16 @@ def _further(n: int) -> str:
     return "One further document" if n == 1 else f"A further {n} documents"
 
 
+def _short_scope_names(text: str) -> str:
+    """The SAC scope as prose and tables of REPORT and README name it; Terms says once that it is not a state model."""
+    return text.replace(
+        "SAC 1956 alone (one document, not a state model)", "SAC 1956 alone"
+    ).replace("single document: SAC 1956 (not a state model)", "SAC 1956 alone")
+
+
 def report() -> str:
     """REPORT.md, each paragraph and bullet filled to README's width, with one blank line between blocks."""
-    return re.sub(r"\n{3,}", "\n\n", _wrap(_report_text()))
+    return re.sub(r"\n{3,}", "\n\n", _wrap(_short_scope_names(_report_text())))
 
 
 def _report_text() -> str:
@@ -2005,17 +2040,18 @@ the map's (section "Probability map") are the 5th to 95th percentiles of its dra
 300 km squares of towns; the other interval resamples single towns. Verdicts use the unrounded bounds.
 
 **How numbers are rounded.** Scores (PR-AUC, probabilities, shares) have two decimals; one that is not zero but would print as 0.00 takes a third (0.003), so that 0.00 means zero. A difference between two
-scores and its interval bounds have three, so that a gain and its bounds print at the same precision in README,
-here and in `runs/classifier/TABLES.md`. A difference within 0.0005 of zero prints as +0.000 or -0.000: the sign gives
-the side of zero on which the unrounded value lies, and verdicts use the unrounded bounds. An exact zero prints as
-0.000. Where an estimate would print equal to a bound it differs from, all three take a fourth decimal.
+scores and its interval bounds have two decimals as well: between bootstrap seeds a bound moves by about 0.005
+("Bootstrap seed"), so a third decimal would be noise. A difference within 0.005 of zero prints as +0.00 or -0.00: the
+sign gives the side of zero on which the unrounded value lies, and verdicts use the unrounded bounds, so a gain whose
+lower bound prints +0.00 is a gain by less than 0.005 and may not survive another seed. An exact zero prints as 0.00.
+An estimate within 0.005 of a bound may print equal to it.
 
 A comparison whose two scores never differ on its rows is shown as "constant". Where the positives lie in fewer than {MIN_POSITIVE_BLOCKS} blocks, resampling blocks measures nothing, and the block interval is shown as "n/a" with the count. In the tables, `a_pr_auc` is the PR-AUC of the model named in the row and `b_pr_auc` that of the score it is compared against; `by_blocks` is the block interval; `towns_without_1939` counts towns with no 1939 census figure; `cell_deg` is a map cell's side in degrees.
 
 **Terms.** "Document" is the general word here: most of the lists are studies, exercises, lessons and a war
 game, and few are war plans (see "How much evidence there is, by side"). "Leave one document out" is the holdout `configs/protocol.yaml` calls leave one plan out.
 A **scope** is the set of documents a model is fitted on: all attacker documents, plan documents only, the pooled Warsaw Pact
-documents, or SAC's 1956 study alone. SAC is the US Strategic Air Command, whose 1956 study supplies the largest list. The study
+documents, or SAC's 1956 study alone, written "SAC 1956 alone": a scope of one document, not a state model. SAC is the US Strategic Air Command, whose 1956 study supplies the largest list. The study
 groups its targets into **complexes**, mostly a town and its surroundings, some of which hold named **subcomplexes** with their own
 aim points and installations (`data/curated/sac1956/README.md`). COW is the Correlates of War project. In the `doc_type` column, `training` is a staff-academy lesson, `wargame` a war game and `mirror` one side's guess at the other's targets. "All permitted"
 means every feature the protocol allows a model to read as of a document's date: population, administration, geography, the one
@@ -2169,7 +2205,7 @@ The selected candidate of each scope. "Trained on" is the smallest number of pos
 
 {_blind_section()}
 {_sealed_section()}
-{_amendment_16()}{_amendment_17()}{_amendment_19()}
+{_corrections()}
 ### What the gains rest on
 
 Each scope's selected candidate against population plus country under spatial blocks, with columns removed.
@@ -2294,8 +2330,8 @@ FAMILY_WORDS = {
     "geography": "geography (elevation, relief, distance to the coast)",
     "defence": "air and missile defence sites of the document's date",
     "administration": "administrative status (capital, regional centre, distance to the capital)",
-    "national_power over population": "national power (the Correlates of War project's (COW) National Material Capabilities) over population alone",
-    "national_power": "national power over population and country",
+    "national_power over population": "national power (the Correlates of War project's (COW) National Material Capabilities), over population alone",
+    "national_power": "national power (COW), over population and country",
     "transport": "transport (railways, ports, airfields; largely today's data)",
     "industry": "industry (one column, today's power plants)",
 }
@@ -2375,7 +2411,7 @@ def family_cell(r) -> str:
     """One cell of README's family table: estimate, both intervals and verdict."""
     if constant(r):
         return "constant on these towns"
-    return f"{interval(r)}, by blocks {block_interval(r)}: {r['verdict']}"
+    return f"{interval(r)}; blocks {block_interval(r)}: {r['verdict']}"
 
 
 def _readme_families() -> str:
@@ -2383,35 +2419,32 @@ def _readme_families() -> str:
     fam = _families()
     base = fam[(fam["rows"] == "all countries") & (fam["base"] == "base")].iloc[0]
     su = fam[(fam["rows"] == "USSR") & (fam["base"] == "base")].iloc[0]
-    pop = fam[(fam["rows"] == "all countries") & (fam["base"] == "population only")].iloc[0]
     gains = fam[fam["verdict"] == "gain"]
     near = gains[gains["block_low"] < NEAR_ZERO]
-    near_text = ", ".join(
-        f"{r.family} ({r.rows}, {signed(r.block_low)})" for r in near.itertuples()
-    )
     cell = {(r["rows"], r["family"]): family_cell(r) for _, r in fam.iterrows()}
     rows = "\n".join(
         f"| {words} | {cell[('all countries', f)]} | {cell[('USSR', f)]} |"
         for f, words in FAMILY_WORDS.items()
     )
-    return f"""- **What the lists favour beyond population, on SAC's 1956 study alone.** The table adds each family of
-  features, one at a time, to a LightGBM fit on log population and a country term (spatial blocks, one bag per fit),
-  which scores {base["base_pr_auc"]:.2f} on all countries ({su["base_pr_auc"]:.2f} on Soviet towns alone). That fit is not the population rule: it is a fitted model
-  that may bend population's effect, and the population rule, a plain ranking by population, scores {_sac_rule()["b_pr_auc"]:.2f} on the
-  same rows. Families measured as of the document come first. "National power over population alone" is added to a
-  fit on log population with no country term ({pop["base_pr_auc"]:.2f}), so it can only do what the country term does.
+    near_text = (
+        f" {len(near)} of the {len(gains)} gains have a block lower bound under {NEAR_ZERO}, and the family fits were not "
+        "repeated under other bootstrap seeds."
+        if len(near)
+        else ""
+    )
+    return f"""- **What SAC's list favours beyond population.** Each family of features is added alone to a LightGBM fit on log
+  population and a country term, which scores {base["base_pr_auc"]:.2f} on all countries ({su["base_pr_auc"]:.2f} on Soviet towns). That fit is not the population
+  rule, which scores {_sac_rule()["b_pr_auc"]:.2f} on the same rows: it may bend population's effect. A cell is the change in
+  PR-AUC with its two intervals. National power has one value per country and year, so it is also read over
+  population alone.
 
 | Family added | All countries | Soviet towns only |
 |---|---|---|
 {rows}
 
-  Each gain is at most {gains["delta"].max():.3f} of PR-AUC. These are associations within one requirements study,
-  not causes and not a reading on any other document. A family that gains helps rank towns; it does not say in
-  which direction. For defences: listed Soviet towns had fewer defence sites within 50 km than log population and
-  country predict (odds ratio per tenfold {_odds_50km()}); REPORT ("Defences") gives why this does not show that SAC
-  avoided defended places. {len(near)} of the {len(gains)} gains have a block lower bound under {NEAR_ZERO} ({near_text}),
-  and none of these readings was repeated under other bootstrap seeds, since the family fits' scores are not kept.
-  Intervals: `runs/classifier/family_gain.csv`.
+  Each gain is an association within one requirements study, not a cause, and says nothing of its direction.{near_text}
+  Listed Soviet towns had fewer defence sites within 50 km than population and country predict (odds ratio per
+  tenfold {_odds_50km()}); REPORT, "Defences", gives why that does not show SAC avoided defended places.
 """
 
 
@@ -2432,14 +2465,13 @@ def _readme_short() -> str:
     rule, plus = _sac_rule(RULE), _sac_rule(PLUS)
     gains = fam[fam["verdict"] == "gain"]
     dated = gains[~gains["family"].isin(TODAYS_FAMILIES) & gains["base"].eq("base")]
-    dated_names = [f for f in FAMILY_WORDS if f in set(dated["family"])]
     words = {
         "military": "military sites",
         "geography": "geography",
         "defence": "air and missile defence sites",
         "administration": "administrative status",
     }
-    named = [words.get(f, f) for f in dated_names]
+    named = [words.get(f, f) for f in FAMILY_WORDS if f in set(dated["family"])]
     named_text = ", ".join(named[:-1]) + " and " + named[-1] if len(named) > 1 else "".join(named)
     sens = pd.read_csv(OUT / "sensitivity.csv")
     clean = sens[(sens["scope"] == SAC_SCOPE) & (sens["variant"] == "none flagged")].iloc[0]
@@ -2452,6 +2484,7 @@ def _readme_short() -> str:
     )
     scen = pd.read_csv(MAP / "scenarios.csv").set_index("scenario")
     val = pd.read_csv(MAP / "validation.csv").set_index("reading").loc["spatial blocks held out"]
+    best = _best(pd.read_csv(OUT / "selection.csv"), SAC_SCOPE)
 
     def over(name: str) -> str:
         r = scen.loc[name]
@@ -2464,26 +2497,20 @@ def _readme_short() -> str:
 
 **What made a place a target?** The lists show what listed towns had in common, not why they were chosen. On the
 one large list, SAC's 1956 study of the Soviet bloc, a listed town stood out mostly by its size. Under spatial
-cross-validation, ranking towns by population alone (the population rule) gives a PR-AUC of {rule["b_pr_auc"]:.2f} where a
-ranking with no information gives {_sac_base_rate():.2f}; population plus a term for each country gives {plus["b_pr_auc"]:.2f}, and the selected
-model with every permitted feature {plus["a_pr_auc"]:.2f} ({interval(plus)} over population plus country, by blocks
-{block_interval(plus)}).{seed_note(plus)} Added one at a time to a fit on population and country, no family of town traits adds
-more than {gains["delta"].max():.3f}. Of the families that describe the towns as of 1956, {named_text} add {dated["delta"].min():.3f} to
-{dated["delta"].max():.3f} each where they gain. The defence sites are known mostly from post-Soviet sources: they record what
-existed in 1956, not what SAC knew. Transport adds the most but rests largely on today's data. {_short_repeats(clean, strict)} Those repeats still use the 1959 Soviet census and other late inputs (REPORT, "Inputs later than the
-document"), and the analysis is not blind: earlier results had been read (REPORT, Method). None of this has been
-shown to carry over to a document the models did not see.{blind_text}
+cross-validation, ranking towns by population alone (the population rule) gives a PR-AUC of {rule["b_pr_auc"]:.2f} (base rate {_sac_base_rate():.2f});
+population plus a term for each country gives {plus["b_pr_auc"]:.2f}, and the selected model ({best}) {plus["a_pr_auc"]:.2f}: {interval(plus)} over population plus country,
+by blocks {block_interval(plus)}.{seed_note(plus)} No family of town traits adds more than {gains["delta"].max():.2f} (table below). Of the families that describe the towns as of 1956, {named_text} gain. The defence sites are known mostly from post-Soviet sources: they record what existed in 1956, not what SAC knew. Transport adds the most but rests largely on today's data. {_short_repeats(clean, strict)} Several inputs still postdate 1956 (REPORT, "Inputs later than the document"), and the
+analysis is not blind: earlier results had been read. Nothing here has been shown to carry over to a document the
+models did not see.{blind_text}
 
 **How likely is an area to be struck?** Only under stated assumptions, and only as a historical illustration. If the
 cited US stockpile of 1956 were sent against the Soviet bloc and each delivered warhead fell on a town in proportion
 to the map's score, {over("us_1956_on_bloc")} half-degree cells would have a probability over one half of
-receiving at least one warhead; with the 1950 stockpile, {over("us_1950_stock_on_bloc")}. The brackets are the 5th to
-95th percentiles of {N_DRAWS} draws, so 90% intervals. Most of their width comes from the stockpile and from the share of each force
-assumed sent to the theatre, which has no source. Against SAC's own list, with spatial blocks held out, the 1956 map
-ranks the cells that hold a listed town at PR-AUC {val["pr_auc"]:.2f} where {val["base_rate"]:.0%} of cells hold one, and its mean cell
-probability is {val["mean_p"]:.2f}. The score was fitted on these lists, so this is agreement with the training list, not a
-test. Present-day scenarios apply lists of 1945-1977 to today's towns:
-they are extrapolation, with no label to test them.
+receiving at least one warhead; with the 1950 stockpile, {over("us_1950_stock_on_bloc")}. The brackets are the 5th to 95th percentiles of {N_DRAWS} draws, so 90% intervals.
+Most of the width comes from the stockpile and from the share of each force assumed sent to the theatre, which has no
+source. With spatial blocks held out, the 1956 map ranks the cells holding a town on SAC's list at PR-AUC
+{val["pr_auc"]:.2f} where {val["base_rate"]:.0%} of cells hold one, and its mean cell probability is {val["mean_p"]:.2f}: agreement with the list it was fitted on, not a test. Present-day
+scenarios apply lists of 1945-1977 to today's towns and are extrapolation.
 
 ### Results in brief
 
@@ -2528,45 +2555,55 @@ def readme_results() -> str:
     log_pop = shift[shift["comparison"].str.endswith(": log_pop")].iloc[0]
     other = _row(comp, GLOBAL_ALL, "spatial blocks", g_best, PLUS, "lists other than SAC")
     scen = pd.read_csv(MAP / "scenarios.csv")
-    terms = f"""**Terms.** Spatial cross-validation cuts the map into 300 km squares, deals them into 5 folds, and scores each
-fold's towns with a model fitted on the other four; it is done on three shifted grids and a town's score is the mean. PR-AUC, the area under the precision-recall curve, measures how many of a model's top-ranked towns are on a
-list. A list's base rate is what no information scores: {float(sac["base_rate"]):.2f} for SAC, {float(other["base_rate"]):.2f} for the other lists.
-Where a list is incomplete a town off it is unlabeled, so PR-AUC understates precision there. The classifier's
-intervals are 95%, the first resampling towns and "by blocks" resampling 300 km squares; a difference counts only if
-both exclude zero. Differences have three decimals; one printed +0.000 or -0.000 lies within 0.0005 of zero on that
-side. A **scope** is the set of lists a model is fitted on: two global scopes (every attacker's documents, or plan
-documents only), a pooled Warsaw Pact scope, and SAC's 1956 study alone. A **linked positive** is a listed place
-matched to a town of the place universe. The **population rule** ranks towns by population alone; **population plus
-country** adds a term for each target country."""
+    gate_rule = protocol()["state_models"]
+    terms = f"""### Terms
+
+A **list** is one document's targets. `data/curated/labels/PLANS.yaml` registers each list with its attacker, date,
+document type and evidence grade; a list is "registered as a war plan" when that type is war plan. A **linked
+positive** is a listed place matched to a town of the place universe, the towns a model scores. The **population
+rule** ranks towns by population alone; **population plus country** adds a term for each target country. The two
+candidate models read every feature the protocol permits: a logistic regression and LightGBM, a gradient-boosted
+decision-tree model with fixed settings. A town off an incomplete list is unlabeled, not a negative, so each model is
+fitted 50 times, each fit (a **bag**) on all listed towns and as many unlisted ones drawn at random, and the 50 scores
+are averaged. A scope's **selected model** is the candidate with the higher PR-AUC under spatial blocks. A **scope**
+is the set of lists a model is fitted on: every attacker's documents, plan documents only, the pooled Warsaw Pact
+documents, or SAC 1956 alone, which is one document and not a state model. The **sealed set** is the {SEALED_PLACES} towns of
+300 km blocks kept out of every fit and scored once at the end; its **blind places** are those no earlier run had
+scored.
+
+**PR-AUC**, the area under the precision-recall curve, measures how many of a model's top-ranked towns are listed. A
+ranking with no information scores the list's **base rate**: {float(sac["base_rate"]):.2f} for SAC, {float(other["base_rate"]):.2f} for the other lists. On an
+incomplete list PR-AUC understates precision. **Spatial cross-validation** scores each town with a model fitted
+without the 300 km square it lies in (5 folds, on three shifted grids, scores averaged). Intervals are 95% paired
+bootstrap intervals, resampling towns and, "by blocks", 300 km squares; a difference is a **gain** or a loss only if
+both exclude zero, and otherwise **neither**. Differences have two decimals, as a bound moves by about 0.005 between
+bootstrap seeds; one printed +0.00 or -0.00 lies within 0.005 of zero on that side.
+"""
     short = _readme_short()
-    short_head, short_rest = short.split("\n", 1)
-    text = f"""{_readme_pending_19()}{short_head}\n\n{terms}\n{short_rest}{_readme_blind()}{_readme_families()}- **On lists other than SAC's**, under the same spatial cross-validation, the global model on all attacker documents
-  (exercises included) against population plus country is {interval(other)}, by blocks {block_interval(other)}: {claim(other)}.{seed_note(other)}
-  {_other_lists_basis(lists, other, g_best)} The held-out blocks' documents are also in training, so this is not a
-  reading on an unseen document (next point).
-- **On a document the model has not seen**, the richer model against ranking towns by population is {interval(lopo)},
-  by blocks {block_interval(lopo)} over all lists, which SAC dominates.{seed_note(lopo)} On lists other than SAC it is {interval(rest)},
-  by blocks {block_interval(rest)}: {claim(rest)}.{seed_note(rest)} So no model has been shown to do better than population on
-  an unseen document.
-{_readme_seeds()}- **No state gets its own model.** The US has {int(us["linked_positives"])} linked positives, but only {int(us["positives_outside_largest"])} outside one document and
-  the pre-committed gate asks for {_rule_outside()}. The USSR has 0 positives in a document registered as a war plan, and
-  {int(su_pos)} town-list pairs from staff-academy lessons. A pooled Warsaw Pact model is allowed and is always labelled
-  exercise-based. Refusals: `runs/classifier/state_gate.csv`.
-- **Economic and political data** (regime, defence pacts, GDP per capita, Soviet defence plants), read apart under
-  an amendment committed before fitting: on a left-out document {int((rest_ext["verdict"] == "gain").sum())} of the {len(rest_ext)} rows on lists other than SAC
-  gain. The highest of these models over all lists, picked after the fact and with no paired interval fixed in
-  advance, scores {glob["a_pr_auc"].max():.2f} against {lopo["b_pr_auc"]:.2f} for the population rule. Plant counts add {interval(vpk)} on
-  Soviet towns.
-- **The map's score.** Because of the transfer result above, the pre-committed selection rule (highest PR-AUC on a
-  left-out document) chose population as the score. On the 1956 towns the score moves only
-  {spread["score_ratio"]:.1f}-fold over a {spread["population_ratio"]:.0f}-fold range of population, so a cell's probability also depends on how
-  many towns it holds. {_readme_width(scen)} {_readme_1965()} Modern scenarios use Natural Earth's map-label towns. A
-  classifier told them from the training towns at ROC-AUC {shift.iloc[0]["value"]:.2f} (ROC-AUC: the chance that it ranks a random
-  modern town above a random training town; 0.5 would mean no shift) on {_shift_features(shift)} features both sets have
-  (population, its rank, population within 25-100 km, distances to a town of 100,000, the capital and the coast,
-  capital and regional-centre status), with {log_pop["value"]:.0%} outside the training's 1st-99th percentile on the
-  one feature the score reads."""
-    return _wrap(text)
+    text = f"""{_readme_pending_19()}{terms}
+{short}{_readme_blind()}{_readme_families()}- **On lists other than SAC's**, under spatial cross-validation, the global model on all attacker documents
+  (exercises included) against population plus country is {interval(other)}, by blocks {block_interval(other)}: {claim(other)}.{seed_note(other)} {_other_lists_basis(lists, other, g_best)} The held-out blocks' documents are also in training, so this is not a
+  reading on an unseen document.
+- **On a document the model has not seen**, left out one at a time, documents are ranked worse by the selected model
+  than by the population rule over all lists ({interval(lopo)}, by blocks {block_interval(lopo)}),{seed_note(lopo)} and on lists other than
+  SAC's the two cannot be told apart ({interval(rest)}, by blocks {block_interval(rest)}).{seed_note(rest)} No model has been shown to beat
+  population on an unseen document.
+{_readme_seeds()}- **No state gets its own model.** The gate fixed in advance asks for {gate_rule["min_independent_plans"]} independent plans, {gate_rule["min_positives"]} positives
+  and {_rule_outside()} outside the largest plan. The US has {int(us["linked_positives"])} linked positives but only {int(us["positives_outside_largest"])} outside SAC's study. The USSR
+  has none in a document registered as a war plan; its {int(su_pos)} town-list pairs are staff-academy lessons. A pooled
+  Warsaw Pact model, labelled exercise-based, is fitted instead (`runs/classifier/state_gate.csv`).
+- **Economic and political data** (regime, defence pacts, GDP per capita, Soviet defence plants), read under an
+  amendment committed before fitting: on a left-out document {int((rest_ext["verdict"] == "gain").sum())} of the {len(rest_ext)} rows on lists other than SAC's
+  gain, and the best of these models over all lists, picked after the fact, scores {glob["a_pr_auc"].max():.2f} against {lopo["b_pr_auc"]:.2f} for the
+  population rule. Soviet defence-plant counts add {interval(vpk)} on Soviet towns.
+- **The map's score.** The selection rule fixed in advance (highest PR-AUC on a left-out document) chose the
+  population rule. On the 1956 towns the score moves {spread["score_ratio"]:.1f}-fold over a {spread["population_ratio"]:.0f}-fold range of population,
+  so a cell's probability also depends on how many towns it holds. {_readme_width(scen)} {_readme_1965()} Modern
+  scenarios use Natural Earth's map-label towns: a classifier tells them from the training towns at ROC-AUC
+  {shift.iloc[0]["value"]:.2f} (ROC-AUC: the chance that it ranks a random modern town above a random training town; 0.5 would
+  mean no shift), and {log_pop["value"]:.0%} lie outside the training's 1st-99th percentile of the one
+  feature the score reads."""
+    return _wrap(_short_scope_names(text))
 
 
 def _readme_seeds() -> str:
@@ -2577,13 +2614,13 @@ def _readme_seeds() -> str:
     s = seed_distinct(s)
     moved = s[~s["seed_stable"].astype(bool)]
     tail = (
-        f' The {len(moved)} that do not are listed in REPORT ("Bootstrap seed") and are not read as findings '
-        "either way; a reading above that is one of them says so."
+        f' The {len(moved)} that do not are listed in REPORT ("Bootstrap seed") and are read as neither a finding nor its absence.'
         if len(moved)
         else ""
     )
-    return f"""- **Bootstrap seed.** The bootstrap resamples are drawn with one fixed seed, the number 1956 (not the document year). Every primary
-  comparison was repeated under seeds 1 to 20 with nothing refitted: {len(s) - len(moved)} of {len(s)} keep their verdict under all 20.{tail}
+    return f"""- **Bootstrap seed.** The resamples are drawn with one fixed seed, the number 1956 (not the document year). Every
+  primary comparison was repeated under seeds 1 to 20 with nothing refitted: {len(s) - len(moved)} of {len(s)}
+  keep their verdict under all 20.{tail}
 """
 
 
@@ -2614,9 +2651,8 @@ def _other_lists_basis(lists: pd.DataFrame, other, model: str) -> str:
     war = int(by_type.get("war_plan", 0))
     rest = total - sum(not_plan.values()) - war
     text = (
-        f"Of its {total} positives, {sum(not_plan.values())} come from Warsaw Pact {parts}; {war} come from documents "
-        f"registered as war plans and {rest} from US target-selection and policy studies. It is mostly a reading "
-        "on exercises and lessons, not on war plans."
+        f"Of its {total} positives, {sum(not_plan.values())} come from Warsaw Pact {parts}; {war} come from documents registered "
+        f"as war plans and {rest} from US studies: it is mostly a reading on exercises and lessons."
     )
     if (BEFORE_17 / "comparison.csv").exists():
         was = _row(
@@ -2629,10 +2665,11 @@ def _other_lists_basis(lists: pd.DataFrame, other, model: str) -> str:
         )
         if verdict(was) != verdict(other):
             text += (
-                f" Without the corrected links of two Polish exercise lists it is {verdict(was)} "
-                f"({interval(was)}, by blocks {block_interval(was)}), and those corrections were adopted after one "
-                "of the two lists had been rescored with them, so this verdict was not fixed before its result was "
-                'seen (REPORT, "Changed by the corrected Warsaw Pact links").'
+                f" Before the corrected links of two Polish exercise lists, Lato-67 (the Coastal Front directive of "
+                f"exercise Lato, 1967) and Burza (the Maritime Front exercise of 1961), it was {verdict(was)} "
+                f"({interval(was)}, by blocks {block_interval(was)}); that correction was adopted after one of the "
+                "lists had been rescored with it, so this verdict was not fixed before its result was seen "
+                '(REPORT, "Corrections made after results were read").'
             )
     return text
 
@@ -2653,35 +2690,17 @@ def _readme_blind() -> str:
     gains = prim[prim["verdict"].eq("gain")]
     rule_gains = rule[rule["verdict"].eq("gain")]
     first = (
-        "no model beats population plus country"
+        "no selected model beats population plus country"
         if gains.empty
-        else f"{len(gains)} of {len(prim)} models beat population plus country by both intervals"
+        else f"{len(gains)} of {len(prim)} selected models beat population plus country"
     )
     earlier = pd.read_csv(SEALED.parent / "comparison.csv")
     earlier = earlier[earlier["primary"]]
-    lines = "".join(
-        f"  - {r.scope}: {interval(r._asdict())}, by blocks [{signed(r.block_low)}, {signed(r.block_high)}]: "
-        f"{r.verdict}{_rule_note(r.scope)}\n"
-        for r in prim.itertuples()
-    )
-    rule_text = (
-        ": "
-        + "; ".join(
-            f"{r.scope} {interval(r._asdict())}, by blocks [{signed(r.block_low)}, {signed(r.block_high)}]"
-            for r in rule_gains.itertuples()
-        )
-        if len(rule_gains)
-        else ""
-    )
-    return f"""- **On the only blind test**, {first}. The **sealed set** is the {SEALED_PLACES} towns of 300 km blocks kept out
-  of every fit and scored once at the end; {int(pd.read_csv(BLIND)["rows"].max())} of them have a SAC label and are scored against SAC's list,
-  and {int(p0["rows"])} of those had been scored by no earlier run ({int(p0["positives"])} listed). Against population plus country there:
-{lines}  Against the population rule, {len(rule_gains)} of {len(rule)} gain by both intervals{rule_text}. Positives lie in only
-  {int(p0["positive_blocks"])} of {int(p0["blocks"])} blocks, so these intervals are wide and "neither" is not evidence of no effect.
-- **The whole sealed set is not a blind test.** On {int(earlier.iloc[0]["rows"])} sealed places, including ones earlier runs had scored,
-  {int(earlier["verdict"].eq("gain").sum())} of {len(earlier)} models gained over population plus country. Which sealed places count as blind was decided
-  after that reading had been seen, and the set may be read once, so only the protocol's bootstrap seed was used
-  (`runs/classifier/sealed/blind/comparison.csv`; REPORT, "The sealed set").
+    return f"""- **On the only blind test**, the {int(p0["rows"])} places of the sealed set that no earlier run had scored ({int(p0["positives"])} on SAC's list), {first};
+  against the population rule {len(rule_gains)} of {len(rule)} gain. Positives lie in {int(p0["positive_blocks"])} of {int(p0["blocks"])} blocks, so the intervals are
+  wide and "neither" is not evidence of no effect. The whole sealed set is not a blind test: on the {int(earlier.iloc[0]["rows"])} sealed places the
+  early checks had not scored, some of which other runs had, {int(earlier["verdict"].eq("gain").sum())} of {len(earlier)} models gained. Which places count as blind was
+  decided after the reading of all sealed places had been seen (REPORT, "The sealed set").
 """
 
 
