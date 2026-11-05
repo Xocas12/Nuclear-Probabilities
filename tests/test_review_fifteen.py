@@ -87,3 +87,39 @@ def test_a_verdict_moved_by_the_seventeenth_amendment_is_flagged_as_after_the_fa
     assert "a verdict it moves is not of a reading fixed before its result was seen" in _flat(
         ROOT / "REPORT.md"
     )
+
+
+def test_lato67_row_46_is_placed_at_its_printed_offset():
+    """Row 46 prints "south of Store Heddinge" (no distance) and "20 km SE of Køge": the point is the latter."""
+    from nucprob.geo import haversine_km
+
+    links = pd.read_csv(ROOT / "data" / "curated" / "gazetteer" / "transfer_target_links.csv")
+    row = links[(links["plan_id"] == "wp_1967_lato67") & (links["seq"] == 46)].iloc[0]
+    assert row["located_as"] == "20 km SE of Køge"
+    table = pd.read_parquet(
+        ROOT / "data" / "processed" / "classifier_table.parquet", columns=["name", "lat", "lon"]
+    )
+    koge = table[table["name"] == "Køge"].iloc[0]
+    assert abs(float(haversine_km(row["lat"], row["lon"], koge["lat"], koge["lon"])) - 20) < 0.05
+    assert row["lat"] < koge["lat"] and row["lon"] > koge["lon"]  # south-east
+
+
+def test_the_row_48_boundary_case_touches_only_a_column_no_model_reads():
+    card = _flat(ROOT / "data" / "curated" / "gazetteer" / "README.md")
+    assert "Lato-67 row 48" in card and "15.0024 km" in card
+    for path in [
+        *(ROOT / "nucprob" / "classifier").glob("*.py"),
+        *(ROOT / "nucprob" / "probmap").glob("*.py"),
+    ]:
+        if path.name != "table.py":
+            assert "n_targets" not in path.read_text(encoding="utf-8"), path
+    assert "n_targets" not in (CONFIGS / "protocol.yaml").read_text(encoding="utf-8")
+
+
+def test_late_population_inputs_are_disclosed():
+    readme, rep = _flat(ROOT / "README.md"), _flat(ROOT / "REPORT.md")
+    for text in (readme, rep):
+        assert "end-1956" in text and "1958" in text
+    assert "chosen by later size" in rep
+    assert "towns chosen by their size today" in readme
+    assert "scripts/us_military_1985_spec.py" in readme

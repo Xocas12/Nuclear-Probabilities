@@ -80,8 +80,9 @@ term for each target country.
   sites, air and missile defences and the Correlates of War project's (COW) National Material Capabilities. A feature should not postdate its
   document, but some do. Railways, ports and airfields taken from today's data are flagged and the results are repeated without them;
   other late inputs are not flagged and stay in those repeats: the 1959 Soviet census in every population column of the 1956
-  list, Hungary's and the Czech lands' towns interpolated with 1960 and 1961 censuses, Kurchatov's 1990 figure, and undated
-  West European sites counted for 1961 and 1964 (REPORT, "Inputs later than the document"). Only a separate USSR rerun on the 1939 census avoids the 1959 census.
+  list, Hungary's and the Czech lands' towns interpolated with 1960 and 1961 censuses, East Germany's and Poland's with
+  end-1956 figures and Slovakia's with 1958 ones, Kurchatov's 1990 figure, North Korean, North Vietnamese and Mongolian
+  towns chosen by their size today, and undated West European sites counted for 1961 and 1964 (REPORT, "Inputs later than the document"). Only a separate USSR rerun on the 1939 census avoids the 1959 census.
 - **Stockpiles.** `data/curated/stockpiles/`: inventories by state, year and delivery from the Nuclear Notebook of the Federation of
   American Scientists (FAS), the Natural Resources Defense Council (NRDC), Our World in Data (OWID) and the Stockholm
   International Peace Research Institute (SIPRI), with every other assumption stated beside its source or marked as having none.
@@ -165,7 +166,9 @@ failure; it needs `make data` first and a full, not shallow, clone.
 `make us1985` repeats a separate check on US counties against FEMA's 1987 risk bands, `runs/m4-us-check/`, which
 tests that those features join and is no part of the results above (`data/FEATURES_US.md`). Its table of US military
 sites in 1985 is not in the tree, since most of those sites are still in use; the target reads it back from the commit
-that added it and checks its sha256. A shallow clone cannot run it. The pinned record is not overwritten: the rerun
+that added it and checks its sha256. The tree does keep that table's row specification, `scripts/us_military_1985_spec.py`:
+each site's name, 1985 role, unit, town and cited page, with one coordinate (Savannah River Site); the
+builder beside it would take the others from those pages. It lists features as of 1985, not targets, and ranks nothing. A shallow clone cannot run it. The pinned record is not overwritten: the rerun
 goes to `runs/m4-us-check-rerun/`, whose `comparison.csv` sets each metric beside the pinned one. 21 of the 36 rows
 have the same PR-AUC and 18 the same value on every metric; the largest PR-AUC difference is 0.0023, all in rows with OurAirports' airfield count, a live list fetched
 again on 1 November after the record was made.

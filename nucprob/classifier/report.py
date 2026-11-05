@@ -1776,7 +1776,10 @@ dropped, and Aviano is an air base, not a strike base, because no page found dat
 **Inputs later than the document.** Removing the flagged columns does not remove all of these. The 1959 Soviet census is
 in every population column. For the June 1956 document Hungary's towns are interpolated from the 1949 and 1960 censuses and
 the Czech lands' from 1950 and 1961 (`data/curated/gazetteer/README.md`), and Kurchatov carries a 1990 figure
-(`data/curated/gazetteer/closed_cities_1956.csv`). The Western European site table runs to 1966, and {_undated_sites()} undated sites it
+(`data/curated/gazetteer/closed_cities_1956.csv`). East Germany's and Poland's towns are interpolated with end-1956
+figures, half a year after the document, which also set their 10,000 floor; Slovakia's with figures of 1 January 1958;
+and North Korea's, North Vietnam's and Mongolia's towns are those the UN's 2018 estimates give 300,000 or more today,
+so which towns enter there is chosen by later size. The Western European site table runs to 1966, and {_undated_sites()} undated sites it
 holds as in role in 1965 also count for the documents of 1961 and 1964.
 
 **Labels.** A positive is a town linked to a row the document designates (`selected = 1` in
