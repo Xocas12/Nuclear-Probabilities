@@ -198,17 +198,17 @@ of defences), and shares each scenario's delivered warheads among towns in propo
 
 ## What the evidence cannot support
 
-- **A model of any one state's plans.** Each state is refused by the gate; the Warsaw Pact model pools exercises.
-- **Prediction for a document not in the data.** No model beat population on a left-out document.
-- **A blind gain over population plus country.** On the only blind places, no model beat it (REPORT, "The sealed set
-  on blind places").
-- **A pooled gain as more than each document's base rate.** The columns name a row's document almost every time
-  (REPORT, "What the gains rest on"), so a model fitted on pooled lists can learn which list a row comes from.
-- **Causes.** These are associations between a town's traits and its presence on a list.
-- **What planners knew.** Features record what existed according to later sources.
-- **Any present-day plan.** Modern map rows apply lists of 1945-1977 to towns of today: extrapolation, with no modern
-  label to test it.
-- **The map's probabilities as forecasts.** They follow from stated assumptions; the theatre shares have no source.
+REPORT ("What the evidence cannot support") gives each limit with its numbers. In short:
+
+- **A model of any one state's plans.** Every state fails the gate, the Warsaw Pact model pools exercises, and no
+  Soviet war plan naming places was found.
+- **Prediction for an unseen document**, or **a blind gain over population plus country**: no model beat population
+  on a left-out document, nor population plus country on the blind places.
+- **A pooled gain as more than telling the lists apart.** The columns name a row's document almost every time.
+- **Causes, or what planners knew.** The results are associations, and the features say what existed according to
+  later sources.
+- **Forecasts or any present-day plan.** The map follows from stated assumptions, its theatre shares have no source,
+  and its modern rows apply lists of 1945-1977 to today's towns.
 
 ## Layout
 
@@ -222,7 +222,8 @@ of defences), and shares each scenario's delivered warheads among towns in propo
 - `runs/classifier/`, `runs/probmap/`: committed outputs. `REPORT.md` is generated from them.
 - `runs/m1-slice/`, `runs/m2-check/`: two early checks (M1: Soviet towns only, population and administrative features;
   M2: the first full 1956 feature table over the whole bloc; PROGRESS.md), on the labels of their date. They were not
-  rerun after later label corrections and feed no result above. `runs/m4-transfer-check/`: the transfer check (does a
+  rerun after later label corrections and feed no result above; `make check RERUN_M2=1` would rerun M2 and overwrite
+  its pinned record. `runs/m4-transfer-check/`: the transfer check (does a
   model fitted on SAC's 1956 bloc towns rank the targets of the smaller lists?), rerun on the corrected labels; it
   reads whole countries, not sectors, and feeds no result above.
 
@@ -264,7 +265,8 @@ tables skip.
 **Not all rebuildable.** COW's data is not committed (no licence stated), so rebuilding needs its download. SIPRI's
 tables are not redistributed (its terms), so `data/curated/stockpiles/delivery_mix.csv` holds rounded shares only.
 `data/curated/features/bloc_air_defence_1956.csv` was built by one-off scripts from saved pages of a site with no open
-licence; the scripts are kept as a record in `scripts/bloc_air_defence_1956/` but cannot be rerun, so each row is
+licence; the scripts are kept as a record in `scripts/bloc_air_defence_1956/` but cannot run from this repository
+alone, since those pages are not committed, so each row is
 checked against the pages its `source` column cites. **Robots.** `make data` asks each host's robots.txt before every
 download and reports a refused source as not obtained; `python -m nucprob.sources.robots` records the answer of the
 day for every source in `runs/qa/robots.csv`, judged on the URL the held bytes came from (the `obtained_from` field in

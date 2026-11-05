@@ -3,7 +3,11 @@
 `configs/protocol.yaml` was committed before any model it names was fitted. Every later change is a dated
 amendment: four inside that file (`amendments:`), and the fifth onwards in their own files. Each amendment's
 header says what had been read when it was written. This page gives one line each; the files are the record,
-and the git log the order. Reviews are named by the commit they read.
+and the git log the order. Reviews are named by the commit they read. They were outside reviews held by the owner
+and are not in this repository, so they cannot be checked here: what each one found that led to a change is stated
+in the `reasons` field of that amendment, and the commit it read can be checked out. The amendment files and the
+comments of `configs/protocol.yaml` and `data/curated/labels/` are left as committed, since the runs pin their
+sha256.
 
 | Amendment | Date | What it changed | What had been read before it |
 |---|---|---|---|

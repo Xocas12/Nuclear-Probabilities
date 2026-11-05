@@ -1,9 +1,10 @@
-import json, re, sys, collections
+import json, re, sys, collections, os
 
-sys.path.insert(0, "/tmp/pvo_fetch/scripts")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from paths import ROOT, SITE, work  # noqa: E402
 import dates
 
-d = json.load(open("/tmp/pvo_fetch/units.json"))
+d = json.load(open(work("units.json")))
 BASEH = re.compile(r"^(Bases|Base|HQ|Headquarters|Location|Locations)\b", re.I)
 SUBH = re.compile(r"^Subordinat", re.I)
 out = []
@@ -43,5 +44,5 @@ for u, x in sorted(d.items()):
             subs_all=subs,
         )
     )
-json.dump(out, open("/tmp/pvo_fetch/cand.json", "w"), ensure_ascii=False, indent=0)
+json.dump(out, open(work("cand.json"), "w"), ensure_ascii=False, indent=0)
 print(len(out), sum(1 for o in out if o["bases56"]))

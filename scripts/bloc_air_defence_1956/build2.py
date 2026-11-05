@@ -1,11 +1,11 @@
-import json, re, sys, csv, math, collections, zipfile
+import json, re, sys, csv, math, collections, zipfile, os
 
-sys.path.insert(0, "/tmp/pvo_fetch/scripts")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from paths import ROOT, SITE, work  # noqa: E402
 import dates, gn
 
-ROOT = "/home/x280/work/Nuclear-Probabilities/"
-d = json.load(open("/tmp/pvo_fetch/units.json"))
-s1 = json.load(open("/tmp/pvo_fetch/step1.json"))
+d = json.load(open(work("units.json")))
+s1 = json.load(open(work("step1.json")))
 rows = s1["rows"]
 B = "https://www.ww2.dk/new/"
 PV = B + "pvo/"
@@ -46,7 +46,7 @@ def H(site, unit, town, reg, hc, y0, y1, st, dec, note, src, cc="USSR", role="pv
     )
 
 
-exec(open("/tmp/pvo_fetch/scripts/hand.py", encoding="utf8").read())
+exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "hand.py"), encoding="utf8").read())
 # ---- S-25 regiments
 s25 = []
 for u, x in sorted(d.items()):
@@ -124,7 +124,7 @@ for u, x in sorted(d.items()):
         )
     )
     s25.append((u, town, sid, st))
-json.dump(s25, open("/tmp/pvo_fetch/s25.json", "w"), ensure_ascii=False)
+json.dump(s25, open(work("s25.json"), "w"), ensure_ascii=False)
 # ---- radar
 for u, x in sorted(d.items()):
     if "/pvo/radar/" not in u or not re.search(r"\d", u.rsplit("/", 1)[1]):
@@ -269,7 +269,7 @@ for r in list(rows):
         )
 added = {r["unit"] for r in rows if r["note"].startswith("No regiment page")}
 org_gap = [g for g in org_gap if g[0] not in added]
-json.dump(org_gap, open("/tmp/pvo_fetch/org_gap.json", "w"), ensure_ascii=False)
+json.dump(org_gap, open(work("org_gap.json"), "w"), ensure_ascii=False)
 # ---- country
 CC = {
     "Germany": "East Germany",
@@ -352,7 +352,7 @@ def cands(t):
 
 
 wanted = set()
-ALIAS = json.load(open("/tmp/pvo_fetch/scripts/alias.json", encoding="utf8"))
+ALIAS = json.load(open(work("alias.json"), encoding="utf8"))
 for r in rows:
     towns = cands(r["town"])
     for t in towns:

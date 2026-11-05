@@ -35,20 +35,22 @@ few are war plans (see "How much evidence there is, by side"). "Leave one docume
 attacker documents, plan documents only, the pooled Warsaw Pact documents, or SAC's 1956 study alone. SAC is the US
 Strategic Air Command, whose 1956 study supplies the largest list. The study groups its targets into **complexes**,
 mostly a town and its surroundings, some of which hold named **subcomplexes** with their own aim points and
-installations (`data/curated/sac1956/README.md`). COW is the Correlates of War project. "All permitted" means every
-feature the protocol allows a model to read as of a document's date: population, administration, geography, the one
-industry column, transport, military sites, defences and national power (`data/FEATURES_CLASSIFIER.md`). The
-**population rule** is a baseline: a logistic regression on log population. The **state gate** is the rule deciding
-whether a state gets its own model. The **selection rule** decides which model is chosen. A **sector box**
-(`data/curated/labels/SECTORS.yaml`) is the area a list covers: a town outside it is not a negative of that list. The
-**sealed set** is the towns of the 300 km blocks in `data/curated/splits/sealed_blocks.csv`, kept out of every fit and
-scored once at the end; its **blind places** are those no committed run had scored before then (Method). **Burza** is
-the Polish front exercise of 1961 whose list is `wp_1961_burza`. A **theatre share** is the stated share of an
-attacker's inventory assumed to be aimed at a scenario's countries. A **folded** ROC-AUC is the larger of the ROC-AUC
-and one minus it, so that 0.5 means no separation whichever way a feature points. **Pick-freeze** is the estimator of
-a first-order Sobol index: the share of a quantity's variance that one input explains alone, from pairs of draws
-sharing that input. "Plan" alone means a document of a type the protocol counts as a plan (war plan, target selection,
-requirements or policy study); "war plan" means that type only.
+installations (`data/curated/sac1956/README.md`). COW is the Correlates of War project. In the `doc_type` column,
+`training` is a staff-academy lesson, `wargame` a war game and `mirror` one side's guess at the other's targets. "All
+permitted" means every feature the protocol allows a model to read as of a document's date: population,
+administration, geography, the one industry column, transport, military sites, defences and national power
+(`data/FEATURES_CLASSIFIER.md`). The **population rule** is a baseline: a logistic regression on log population. The
+**state gate** is the rule deciding whether a state gets its own model. The **selection rule** decides which model is
+chosen. A **sector box** (`data/curated/labels/SECTORS.yaml`) is the area a list covers: a town outside it is not a
+negative of that list. The **sealed set** is the towns of the 300 km blocks in
+`data/curated/splits/sealed_blocks.csv`, kept out of every fit and scored once at the end; its **blind places** are
+those no committed run had scored before then (Method). **Burza** is the Polish front exercise of 1961 whose list is
+`wp_1961_burza`. A **theatre share** is the stated share of an attacker's inventory assumed to be aimed at a
+scenario's countries. A **folded** ROC-AUC is the larger of the ROC-AUC and one minus it, so that 0.5 means no
+separation whichever way a feature points. **Pick-freeze** is the estimator of a first-order Sobol index: the share of
+a quantity's variance that one input explains alone, from pairs of draws sharing that input. "Plan" alone means a
+document of a type the protocol counts as a plan (war plan, target selection, requirements or policy study); "war
+plan" means that type only.
 
 ## Main result
 
@@ -152,7 +154,6 @@ of 119, North Korea 12 of 15, North Vietnam 6 of 8, Albania 3 of 6 (`runs/classi
 count entries, not towns. An entry whose cover name stands for a town and its closed city (Kapustin Yar and Znamensk,
 for example) links to both, so linked complex entries give 2 more towns than their number, while linked subcomplex
 entries give exactly as many towns as entries.
-
 
 **Documents.** `data/curated/labels/PLANS.yaml` records each list's attacker, author, date, type and evidence grade.
 The grades: A, a primary document or its published translation read here; B, a primary document read here that names
@@ -371,16 +372,19 @@ places' countries (the Soviet bloc's and China's) is in that scope's lists, so n
 Every model's metrics on both populations, with a PR-AUC interval each, are in `runs/classifier/sealed/metrics.csv`.
 One gain rests on a lower bound within 0.005 of zero: single document: SAC 1956 (not a state model), all sealed,
 against population + country (+0.000). It was not repeated under other bootstrap seeds, and under the 20 seeds of the
-primary check 7 of 42 verdicts moved, so such a gain may not survive another seed.
+primary check 7 of 42 verdicts moved ("Bootstrap seed", under "Models against baselines").
 
 ### Changed by the corrected West European site table
 
 `configs/protocol_amendment_16.yaml` corrected 29 West European site rows that had no cited text (Data, "Military and
 defence sites of 1965") and refitted every classifier step on the corrected table. Four columns change, on rows of
-three Warsaw Pact documents. The sealed set was not scored again: its scores, and the blind reading of them, are of
-the fit on the earlier table (`runs/classifier/sealed/fitted_run/`). None of the 17 primary rows (each scope's
-selected candidate against population plus country, by holdout and list set) changes verdict. Every scope selects the
-same model as before, so the sealed and blind rows are of the models this refit selects, fitted on the earlier table.
+three documents, two Warsaw Pact and one a Soviet lesson list: distance to a naval base, distance to an air defence
+site and air defence sites within 50 km on rows of Lato-67 and the 1977 staff-academy lessons, and distance to a
+long-range aviation base on rows of the 1965 Hungarian war game (the amendment's `table` field). The sealed set was
+not scored again: its scores, and the blind reading of them, are of the fit on the earlier table
+(`runs/classifier/sealed/fitted_run/`). None of the 17 primary rows (each scope's selected candidate against
+population plus country, by holdout and list set) changes verdict. Every scope selects the same model as before, so
+the sealed and blind rows are of the models this refit selects, fitted on the earlier table.
 
 ### Changed by the corrected Warsaw Pact links
 
@@ -402,8 +406,7 @@ plus country, by holdout and list set) change verdict; each difference is follow
 - Warsaw Pact, pooled (exercise-based, not a war-plan model), spatial blocks, all lists: neither before (+0.108
   [+0.057, +0.175], by blocks [-0.007, +0.163]), gain now (+0.100 [+0.053, +0.165], by blocks [+0.002, +0.155])
 
-Every scope selects the same model as before, so the sealed and blind rows are of the models this refit selects,
-fitted on the earlier table.
+Again every scope selects the same model as before.
 
 ### What the gains rest on
 
@@ -431,7 +434,6 @@ best; this is not the raw-score and log-loss rule used for the primary models un
 score above 50, 9 of the 16 would be called diverged: the extra fit is "all permitted" fold 2 (raw score 3,356,
 training accuracy steady at 98.3%). So the intervals of the version fixed in advance, 69.3% to 72.3% on all columns
 (`runs/classifier/identification/intervals.csv`), measured a failed fit; it is withdrawn.
-
 
 Each cell is the difference in PR-AUC and its verdict: a gain or a loss needs both intervals, spatial and by blocks,
 to exclude zero. The intervals are in `runs/classifier/TABLES.md` ("What the gains rest on, every row").
@@ -528,11 +530,12 @@ defence-industry row; all 37 rows are in `runs/classifier/TABLES.md`.
 | global, all attacker documents | economic over primary | leave one document out | all lists | 1174 | 131 | 0.66 | 0.58 | +0.080 [+0.069, +0.091] | [+0.062, +0.100] | gain |
 | global, all attacker documents | economic over primary | leave one document out | other than SAC | 132 | 1061 | 0.24 | 0.24 | -0.004 [-0.019, +0.012] | [-0.024, +0.013] | neither |
 | SAC 1956, Soviet towns | defence industry over population | spatial blocks | all lists | 566 | 452 | 0.77 | 0.77 | +0.001 [-0.006, +0.006] | [-0.006, +0.007] | neither |
- 3 gains rest on a lower bound within 0.005 of zero: global, all attacker documents, national power over population,
- spatial blocks, other than SAC (+0.001); global, all attacker documents, political over population, leave one
- document out, all lists (+0.000); global, all attacker documents, economic over population, leave one document out,
- all lists (+0.004). They were not repeated under other bootstrap seeds, and under the 20 seeds of the primary check 7
- of 42 verdicts moved, so such a gain may not survive another seed.
+
+3 gains rest on a lower bound within 0.005 of zero: global, all attacker documents, national power over population,
+spatial blocks, other than SAC (+0.001); global, all attacker documents, political over population, leave one document
+out, all lists (+0.000); global, all attacker documents, economic over population, leave one document out, all lists
+(+0.004). They were not repeated under other bootstrap seeds, and under the 20 seeds of the primary check 7 of 42
+verdicts moved ("Bootstrap seed", under "Models against baselines").
 
 ### Defences
 
@@ -652,19 +655,18 @@ so its continental cells read higher than they would if the UK were among the ta
 row, so how a country's towns are cut into rows also moves the map: the rows are municipalities, and how much that
 matters was not measured.
 
-**Score.** The selection rule in `configs/protocol.yaml` selected **population rule**, by highest PR-AUC on a left-out
-document (0.71). The candidates ("portable" in the table) use only features that exist in every era without any
-present-day facility data: population, its rank within the country, population within 25, 50 and 100 km, distance to a
-town of 100,000, distance to the capital, distance to a coast, and whether it is the national capital or a regional
-centre (ten features). So the map's score holds no defence, military or national-power term. It is fitted on all
-attacker documents, exercises included, and is not one state's model, because no state passes the gate with enough
+**Score.** The selection rule in `configs/protocol.yaml` selected **the population rule**, by highest PR-AUC on a
+left-out document (0.71). The candidates ("portable" in the table) use only features that exist in every era without
+any present-day facility data: population, its rank within the country, population within 25, 50 and 100 km, distance
+to a town of 100,000, distance to the capital, distance to a coast, and whether it is the national capital or a
+regional centre (ten features). So the map's score holds no defence, military or national-power term. It is fitted on
+all attacker documents, exercises included, and is not one state's model, because no state passes the gate with enough
 outside its largest document.
 
 The population rule won, so **the map's shares are read from town population and nothing else**. What a town produced,
 housed or defended plays no part. The selection rule chose it by PR-AUC, which depends only on the order of towns: on
 a left-out document nothing richer has been shown to order them better. The shares use the logistic's fitted values,
 and how far those values move with population was not tested by that choice.
-
 
 | model | left_out_document_pr_auc | left_out_document_without_sac | spatial_pr_auc | selected |
 |---|---|---|---|---|

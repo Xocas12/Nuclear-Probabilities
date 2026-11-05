@@ -3991,7 +3991,7 @@ for site, role, unit, town, page, unitpage, chk in [
 
 
 # =====================================================================================
-# Rows that were flagged "from general knowledge" (review of c27c1b8, finding 1), resolved on
+# Rows that were flagged "from general knowledge" (configs/protocol_amendment_16.yaml), resolved on
 # 2026-11-03. Each was cited from a page fetched through an allowed path that states the fact,
 # corrected to what that page states, or dropped when no such page was found. The build checks each
 # `chk` against the cited pages. Rows in DROPPED stay out of the table; the reason is the card's.

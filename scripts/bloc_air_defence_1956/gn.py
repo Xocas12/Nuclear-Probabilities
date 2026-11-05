@@ -1,6 +1,8 @@
 import zipfile, io, csv, re, unicodedata
 
-RAW = "/home/x280/work/Nuclear-Probabilities/data/raw/geonames/"
+from paths import ROOT
+
+RAW = ROOT + "data/raw/geonames/"
 
 
 def norm(s):

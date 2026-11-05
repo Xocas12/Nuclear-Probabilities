@@ -9,6 +9,7 @@ cards it names. tests/test_classifier_report.py fails if any of the three differ
 
 import functools
 import json
+import re
 import textwrap
 
 import numpy as np
@@ -264,6 +265,17 @@ def comparison(c: pd.DataFrame, scope: str) -> pd.DataFrame:
     return g[[*keep, "candidate minus baseline", "block interval", "verdict"]]
 
 
+def _metrics_note(lists: pd.DataFrame) -> str:
+    """Why these totals can hold fewer positives than comparison.csv: lists with positives but no per-list score."""
+    if _unscored_note(lists) == "no list":
+        return "Every list with a positive is scored."
+    return (
+        f"Lists too small to score ({_unscored_note(lists)} positive) are left out of these weighted totals, so a row "
+        "here counts up to that many positives fewer than the same scope and holdout in `comparison.csv`, which scores "
+        "all lists pooled."
+    )
+
+
 def tables() -> str:
     lists = pd.read_csv(OUT / "lists.csv")
     comp = pd.read_csv(OUT / "comparison.csv")
@@ -274,6 +286,7 @@ def tables() -> str:
     parts += ["## Model selection under spatial blocks", ""]
     parts += [markdown(pd.read_csv(OUT / "selection.csv")), ""]
     parts += ["## All metrics, positive-weighted over scored lists", ""]
+    parts += [_metrics_note(lists), ""]
     parts += [markdown(other_metrics(lists)), ""]
     for scope in lists["scope"].unique():
         parts += [f"## {scope}", "", "### Candidates against baselines", ""]
@@ -716,7 +729,7 @@ alone, so its continental cells read higher than they would if the UK were among
 Warheads are shared out per row, so how a country's towns are cut into rows also moves the map: the rows are municipalities,
 and how much that matters was not measured.
 
-**Score.** The selection rule in `configs/protocol.yaml` selected **{best["model"]}**, by highest PR-AUC on a left-out document
+**Score.** The selection rule in `configs/protocol.yaml` selected **the {best["model"]}**, by highest PR-AUC on a left-out document
 ({best["lopo_pr_auc"]:.2f}). The candidates ("portable" in the table) use only features that exist in every era without any present-day
 facility data: population, its rank within the country, population within 25, 50 and 100 km, distance to a town of
 100,000, distance to the capital, distance to a coast, and whether it is the national capital or a regional centre (ten features). So the map's score holds no defence,
@@ -1102,7 +1115,8 @@ Under spatial blocks {int((spatial["verdict"] == "gain").sum())} of {len(spatial
 document and the defence-industry row; all {len(d)} rows are in `runs/classifier/TABLES.md`.
 
 {markdown(table)}
-{near_zero_note(d, lambda r: f"{r['scope']}, {r['comparison']}, {r['holdout']}, {r['lists']}")}
+
+{near_zero_note(d, lambda r: f"{r['scope']}, {r['comparison']}, {r['holdout']}, {r['lists']}").lstrip()}
 """
 
 
@@ -1126,8 +1140,8 @@ def near_zero_note(d: pd.DataFrame, describe) -> str:
     )
     return (
         f" {'One gain rests' if one else f'{len(g)} gains rest'} on a lower bound within {NEAR_ZERO} of zero: {names}. "
-        f"{'It was' if one else 'They were'} not repeated under other bootstrap seeds{moved}, so such a gain may not "
-        "survive another seed."
+        f"{'It was' if one else 'They were'} not repeated under other bootstrap seeds{moved} "
+        '("Bootstrap seed", under "Models against baselines").'
     )
 
 
@@ -1585,7 +1599,9 @@ def _amendment_16() -> str:
 
 `configs/protocol_amendment_16.yaml` corrected 29 West European site rows that had no cited text (Data, "Military and
 defence sites of 1965") and refitted every classifier step on the corrected table. Four columns change, on rows of
-three Warsaw Pact documents. The sealed set was not scored again: its scores, and the blind reading of them, are of
+three documents, two Warsaw Pact and one a Soviet lesson list: distance to a naval base, distance to an air defence site and air defence sites within
+50 km on rows of Lato-67 and the 1977 staff-academy lessons, and distance to a long-range aviation base on rows of
+the 1965 Hungarian war game (the amendment's `table` field). The sealed set was not scored again: its scores, and the blind reading of them, are of
 the fit on the earlier table (`runs/classifier/sealed/fitted_run/`). {verdicts_text}{sel_text}
 """
 
@@ -1596,6 +1612,12 @@ def _amendment_17() -> str:
     if not (BEFORE_17 / "comparison.csv").exists() or _table_of(BEFORE_17) == _table_of(OUT):
         return ""
     verdicts_text, sel_text = _moved(BEFORE_17, OUT)
+    if sel_text.strip().startswith("Every scope selects the same model as before"):
+        sel_text = sel_text.replace(
+            "Every scope selects the same model as before, so the sealed and blind rows are of the models this "
+            "refit selects, fitted on the earlier table.",
+            "Again every scope selects the same model as before.",
+        )
     return f"""
 ### Changed by the corrected Warsaw Pact links
 
@@ -1688,8 +1710,8 @@ def _further(n: int) -> str:
 
 
 def report() -> str:
-    """REPORT.md, each paragraph and bullet filled to README's width."""
-    return _wrap(_report_text())
+    """REPORT.md, each paragraph and bullet filled to README's width, with one blank line between blocks."""
+    return re.sub(r"\n{3,}", "\n\n", _wrap(_report_text()))
 
 
 def _report_text() -> str:
@@ -1855,7 +1877,7 @@ game, and few are war plans (see "How much evidence there is, by side"). "Leave 
 A **scope** is the set of documents a model is fitted on: all attacker documents, plan documents only, the pooled Warsaw Pact
 documents, or SAC's 1956 study alone. SAC is the US Strategic Air Command, whose 1956 study supplies the largest list. The study
 groups its targets into **complexes**, mostly a town and its surroundings, some of which hold named **subcomplexes** with their own
-aim points and installations (`data/curated/sac1956/README.md`). COW is the Correlates of War project. "All permitted"
+aim points and installations (`data/curated/sac1956/README.md`). COW is the Correlates of War project. In the `doc_type` column, `training` is a staff-academy lesson, `wargame` a war game and `mirror` one side's guess at the other's targets. "All permitted"
 means every feature the protocol allows a model to read as of a document's date: population, administration, geography, the one
 industry column, transport, military sites, defences and national power (`data/FEATURES_CLASSIFIER.md`). The **population rule** is a baseline: a
 logistic regression on log population. The **state gate** is the rule deciding whether a state gets its own model. The **selection rule** decides which model is chosen. A

@@ -1,10 +1,10 @@
-import json, re, sys, csv, math, collections
+import json, re, sys, csv, math, collections, os
 
-sys.path.insert(0, "/tmp/pvo_fetch/scripts")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from paths import ROOT, SITE, work  # noqa: E402
 import dates, gn
 
-d = json.load(open("/tmp/pvo_fetch/units.json"))
-ROOT = "/home/x280/work/Nuclear-Probabilities/"
+d = json.load(open(work("units.json")))
 P_RE = re.compile(r"PVO|Air Defen[cs]e")
 V_RE = re.compile(r"Air Army|VVS|Fleet|Military District|Special Corps|Long-Range|\bDA\b")
 UNC_TAIL = re.compile(r"reportedly|uncertain|probably|possibly|certain from|maybe|\?", re.I)
@@ -265,7 +265,7 @@ for u, x in sorted(IAP.items()):
     row_unit(u, x, "pvo_fighter_base")
 json.dump(
     dict(rows=ROWS, drop=DROP, nobase=NOBASE),
-    open("/tmp/pvo_fetch/step1.json", "w"),
+    open(work("step1.json"), "w"),
     ensure_ascii=False,
     indent=0,
 )

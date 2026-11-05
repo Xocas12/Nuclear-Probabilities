@@ -3,11 +3,11 @@
 Worker: Warsaw Pact stream. Session 2026-10-03, 14:59–15:35 UTC. All downloads are in `data/raw/warsaw_pact/`; all label files are in `data/curated/labels/` (schema: `SCHEMA.md`).
 
 Conventions used in the CSVs
-- `quote` is verbatim from the opened document, in its original language where I read the original (HU, PL, RU). For scanned tables, cells are joined with ` | `. `"` is the source's ditto mark. `...` or `[...]` marks text I could not read or left out.
+- `quote` is verbatim from the opened document, in its original language where the original was read (HU, PL, RU). For scanned tables, cells are joined with ` | `. `"` is the source's ditto mark. `...` or `[...]` marks text that could not be read or was left out.
 - If the only accessible text is secondary (a scholarly paraphrase, journalism, Wikipedia), every row's `notes` starts with `SECONDARY` and/or `provenance=reconstruction`.
-- `target_country` for unit targets with no stated location: I filled it only where the document gives the unit's nationality or theatre, and I say so in `notes`. Otherwise it is blank.
+- `target_country` for unit targets with no stated location: it is filled only where the document gives the unit's nationality or theatre, and `notes` says so. Otherwise it is blank.
 - `weapons` and `yield_kt` are filled only when stated per target. Shared totals ("8 strikes, 173 kt" for two targets) go in `notes`.
-- Host note: `www.php.isn.ethz.ch` and `php.isn.ethz.ch` serve a certificate for the wrong host, and I did not bypass it. The PHP site is mirrored with valid TLS at `https://phpisn.ethz.ch/lory1.ethz.ch/...` (an HTTrack copy, Oct 2016). Its documents are at `https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/<id>/...`. All PHP facsimiles below came from there.
+- Host note: `www.php.isn.ethz.ch` and `php.isn.ethz.ch` serve a certificate for the wrong host, which was not bypassed. The PHP site is mirrored with valid TLS at `https://phpisn.ethz.ch/lory1.ethz.ch/...` (an HTTrack copy, Oct 2016). Its documents are at `https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/<id>/...`. All PHP facsimiles below came from there.
 
 ## Summary table
 
@@ -191,7 +191,7 @@ Collection page: https://phpisn.ethz.ch/lory1.ethz.ch/collections/colltopic4241.
 - Status: **obtained, no nuclear targets**.
 - The text describes the 1983 5th Army offensive idea (S of Hamburg towards Ahaus/the Dutch border in 5–7 days) and the 1985 defensive turn. The reconstructed maps (PDF pp.15–17) show axes and units only, with no nuclear strike symbols.
 - **Correction**: this document contains no NVA 5th Army nuclear target list, so `wp_1983_nva_lautsch.csv` was not written.
-- The relevant piece is Lautsch, "Nuklearkräfte in Europa in den 1980er Jahren. Einsatz der Raketentruppen der 5. Armee der NVA", *Military Power Revue* 2/2014 (ASMZ 180/12, pp.58–73). It was not obtained: archive.org has nothing, and I had no other search route.
+- The relevant piece is Lautsch, "Nuklearkräfte in Europa in den 1980er Jahren. Einsatz der Raketentruppen der 5. Armee der NVA", *Military Power Revue* 2/2014 (ASMZ 180/12, pp.58–73). It was not obtained: archive.org has nothing, and no other search route was available.
 - de.wikipedia "5. Armee (Nationale Volksarmee)" (revid 267707290; `wiki_de_5_armee_nva.json`, sha256 `6826839ef4bdb281d5b39c646f6f3b14710e611876660f0b4dd12ce940bdb3a7`) names no targets.
 
 ## 7. csla.cz "Válečné plány" pages
@@ -250,7 +250,7 @@ Collection page: https://phpisn.ethz.ch/lory1.ethz.ch/collections/colltopic4241.
 
 ## 11. R-5M "Operation Atom" 1959 (Uhl)
 - Uhl & Ivkin, "'Operation Atom'...", CWIHP Bulletin 12/13 (2001). Status: **not obtained**.
-  - archive.org item `coldwarinternati0000unse` is lending-only (access-restricted; I did not borrow or log in). wilsoncenter.org returned 404 and the digital archive returned 502.
+  - archive.org item `coldwarinternati0000unse` is lending-only (access-restricted; not borrowed, no login). wilsoncenter.org returned 404 and the digital archive returned 502.
   - Uhl, *Stalins V-2* (2001) is a book and was not obtained.
 - Secondary texts fetched:
   - de.wikipedia "R-5 (Rakete)" (revid 261773610; `wiki_de_r5_rakete.json`, sha256 `b1ded75045594b94b257a5ccb0ccf92cc9479ee2ed00ae3223372373d93136e9`), citing Uhl 2001 pp.236–245. It gives classes only: air bases and ports in the FRG, NL and BE, and US missile sites in the UK.

@@ -1,10 +1,11 @@
-import csv, re, json, sys, collections
+import csv, re, json, sys, collections, os
 
 # coverage by top-level PVO body named on Holm's pages (stats only)
-sys.path.insert(0, "/tmp/pvo_fetch/scripts")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from paths import ROOT, SITE, work  # noqa: E402
 import dates
 
-d = json.load(open("/tmp/pvo_fetch/units.json"))
+d = json.load(open(work("units.json")))
 TOP = [
     (
         "Moscow Air Defence District",

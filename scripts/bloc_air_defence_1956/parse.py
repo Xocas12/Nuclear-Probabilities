@@ -1,6 +1,6 @@
 import re, html, os, json, urllib.parse, sys
 
-OUT = "/tmp/pvo_fetch/html/site"
+from paths import SITE as OUT
 
 
 def clean(t):
@@ -37,5 +37,5 @@ for f in os.listdir(OUT):
         continue
     u = "https://" + urllib.parse.unquote(f)
     res[u] = parse(os.path.join(OUT, f))
-json.dump(res, open("/tmp/pvo_fetch/units.json", "w"), ensure_ascii=False, indent=0)
+json.dump(res, open(work("units.json"), "w"), ensure_ascii=False, indent=0)
 print(len(res))

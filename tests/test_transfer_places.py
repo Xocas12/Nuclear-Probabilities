@@ -110,7 +110,7 @@ def test_the_frg_is_in_the_universe_of_the_western_european_lists():
     assert "FRG" in countries
 
 
-# Review finding 12: a town whose coordinates come from a GeoNames entry in another first-order
+# A town whose coordinates come from a GeoNames entry in another first-order
 # unit is a different town of a similar name.
 
 

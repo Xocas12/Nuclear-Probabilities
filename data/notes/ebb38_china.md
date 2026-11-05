@@ -4,8 +4,8 @@ Source: https://nsarchive2.gwu.edu/NSAEBB/NSAEBB38/ (files in `data/raw/western/
 `western.md` section 6. Section 6 covered documents 15, 16 and 21 (none names a facility) and EBB 488 Doc 16
 (`us_1964_china_nuclear.csv`).
 
-None of the PDFs has a text layer. I rendered every page to PNG (110 dpi) and read each one as an image. Where a
-table needed it, I also read a zoomed crop. "Printed p" is the page number on the document; "PDF p" is the page in
+None of the PDFs has a text layer. Every page was rendered to PNG (110 dpi) and read as an image. Where a
+table needed it, a zoomed crop was read as well. "Printed p" is the page number on the document; "PDF p" is the page in
 the file.
 
 Test used for a CSV row: the place must be named, and the document must present it as something US (or
@@ -133,7 +133,7 @@ strike context, are recorded below but not extracted.
 - `ebb236_doc1_SIOP-62_history.pdf` (37 pp, poor OCR layer) and `ebb130_SIOP-28.pdf` (38 pp, an older and more heavily
   excised release of the same history).
 - Read as images this session: EBB 236 PDF pp21-23 and EBB 130 PDF pp22-23. `western.md` section 8 covers EBB 236
-  PDF pp18-28. I also searched the OCR text of all 37 EBB 236 pages for place names. The only geographic references
+  PDF pp18-28. The OCR text of all 37 EBB 236 pages was also searched for place names. The only geographic references
   are general ones: "Sino-Soviet Bloc", "USSR", "China", "European satellites", and the split of the target system at
   100 deg E longitude.
 - **Names no targets.** The history gives only totals: "1043 DGZs (706 in the USSR, [excised] China, [excised]

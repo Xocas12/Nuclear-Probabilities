@@ -2,8 +2,8 @@
 
 Worker: western lists. Session date: 2026-10-03 (all retrievals 2026-10-03, between 14:59 and 15:25 UTC).
 Downloads are in `data/raw/western/`. The sha256 values below were computed after download.
-Rule used throughout: no CSV row without a page reference and a verbatim quote from a document I opened.
-All PDFs below are image scans unless stated. I read them as rendered PNGs; no OCR was used.
+Rule used throughout: no CSV row without a page reference and a verbatim quote from a document opened for this project.
+All PDFs below are image scans unless stated. They were read as rendered PNGs; no OCR was used.
 
 Outputs written:
 
@@ -63,7 +63,7 @@ No CSV for: JIC 329/1, Norstad 1945, France 1959, Taiwan Strait 1958, MacArthur 
   - "25 July 1945 directive": confirmed. The document is dated 25 July 1945 on its face, but NSA lists it as "July 26, 1945".
   - **"Third shot" documents: no target named.** Doc 82 gives only readiness (the bomb ready "after 17 or 18 August") and
     Marshall's note that it "is not to be released over Japan without express authority from the President". Doc 87 discusses
-    tactical use in support of an invasion, but names no city. I found no third-shot target list in the NSA sets.
+    tactical use in support of an invasion, but names no city. No third-shot target list was found in the NSA sets.
     Wellerstein's "Neglected Niigata" (blog) was not consulted because the blog has a cookie challenge and Wayback was unreachable.
   - The 2025 posting (text, not a document) says Groves's 24 July list was "Hiroshima, Kokura, and Niigata, in that order",
     and the Doc 46E text confirms this.
@@ -73,7 +73,7 @@ No CSV for: JIC 329/1, Norstad 1945, France 1959, Taiwan Strait 1958, MacArthur 
   Niigata is 0 on 11 May and 1 later.
 - Open issues: Stimson diary (Doc 48) should be read for a primary Kyoto-rejection quote. The Nagasaki strike cable (Doc 72C)
   gives an aim point "500 feet south end of Mitsubishi Steel Works"; it was not extracted because it reports a strike, not a list.
-  Kokura as the primary target for 9 August appears only in NSA editorial text on the pages I read.
+  Kokura as the primary target for 9 August appears only in NSA editorial text on the pages read.
 
 ## 2. JIC 329/1 (Nov 1945) / Valero, Studies in Intelligence 44:3 (2000)
 
@@ -100,7 +100,7 @@ No CSV for: JIC 329/1, Norstad 1945, France 1959, Taiwan Strait 1958, MacArthur 
 - Status: **not obtained (blocked)**.
   - hal.science (hal-03384910, file 2020-pelopidas-unfit-for-purpose-cold-war-history.pdf) and Sciences Po SPIRE (which
     redirects to sciencespo.hal.science) both serve an **Anubis anti-bot proof-of-work challenge**. It was not bypassed, and
-    the challenge page I received was deleted (it is not the document).
+    the challenge page that came back was deleted (it is not the document).
   - tandfonline PDF: HTTP 403.
   - OpenAlex lists the Routledge chapter reprint (10.4324/9781003448983-1) as closed.
   - scholar.archive.org: rate-limited.
@@ -109,7 +109,7 @@ No CSV for: JIC 329/1, Norstad 1945, France 1959, Taiwan Strait 1958, MacArthur 
 ## 5. Taiwan Strait 1958: Halperin, RAND RM-4900 (unabridged), and NSA doc 21083 (Van Staaveren 1962)
 
 - URL: https://www.ellsberg.net/wp-content/uploads/2021/05/Quemoy_Study_The_1958_Taiwan_Straits_Crisis_Partial_Plus_Total_Redactions_December_1966.pdf
-- Status: **obtained, not extracted**. 237 scanned pages with no text layer; I did not read them within the time-box.
+- Status: **obtained, not extracted**. 237 scanned pages with no text layer; they were not read within the time-box.
 - File: `halperin_rm4900/Halperin_RM-4900_1966_unabridged_ellsberg2021.pdf` sha256 `f89b93d7e49e0082aaaae0a2194290c077f125b231c8c256871bc17691170914`
 - Also listed on ellsberg.net (not downloaded): /wp-content/uploads/2017/11/1958-Taiwan-Straits-Crisis-Halperin.pdf,
   /wp-content/uploads/2021/05/DE_Notes_PACAF_Report_on_Taiwan_Quemoy_Operation_date_unknown.pdf,
@@ -147,7 +147,7 @@ No CSV for: JIC 329/1, Norstad 1945, France 1959, Taiwan Strait 1958, MacArthur 
 
 - URLs: https://nsarchive2.gwu.edu/NSAEBB/NSAEBB130/ ; https://nsarchive2.gwu.edu/nukevault/ebb236/ ;
   history PDF https://nsarchive.gwu.edu/nukevault/ebb285/sidebar/SIOP-62_history.pdf (linked from EBB 236 as Doc. 1).
-- Status: **obtained (partial reading)**. I read PDF pp. 18-28 of the history.
+- Status: **obtained (partial reading)**. PDF pp. 18-28 of the history were read.
 - Files (`nsa_ebb130_ebb236/`), sha256:
   - ebb130_index.html `ef4c47dc908e1b598ec73baf2e2bf7035a9a3160f46f4de1ef756cad026e23e3`
   - ebb236_index.html `169f19600ff5a616c4e27d709bfff78d02b3c70a83112131abc1ee87772aa88f`

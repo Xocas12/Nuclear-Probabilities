@@ -1,10 +1,11 @@
-import json, re, sys, collections
+import json, re, sys, collections, os
 
-sys.path.insert(0, "/tmp/pvo_fetch/scripts")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from paths import ROOT, SITE, work  # noqa: E402
 import dates
 
-c = json.load(open("/tmp/pvo_fetch/cand.json"))
-d = json.load(open("/tmp/pvo_fetch/units.json"))
+c = json.load(open(work("cand.json")))
+d = json.load(open(work("units.json")))
 names = collections.defaultdict(list)
 for o in c:
     if not re.search(r"/iad/|/iap/|/pvo/", o["url"]):

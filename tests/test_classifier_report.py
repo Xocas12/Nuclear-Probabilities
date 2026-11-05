@@ -386,7 +386,7 @@ def test_the_readme_says_what_the_blind_reading_found():
 
 @pytest.mark.skipif(not report.BLIND.exists(), reason="blind reading not run")
 def test_the_main_result_and_the_limits_quote_the_blind_reading():
-    """The headline once led with a gain the blind reading does not show. The main result
+    """The headline must not lead with a gain the blind reading does not show. The main result
     states every primary blind row, and both documents list the missing blind gain as a limit."""
     text = (ROOT / "REPORT.md").read_text(encoding="utf-8")
     main = text[text.index("## Main result") : text.index("## Question")]
@@ -399,7 +399,7 @@ def test_the_main_result_and_the_limits_quote_the_blind_reading():
     if not prim["verdict"].eq("gain").any():
         assert "no selected model beats population plus country there" in main
         assert "A blind gain over population plus country" in cannot
-        assert "A blind gain over population plus country" in readme
+        assert "a blind gain over population plus country" in readme
         assert results.index("On the only blind test") < results.index("On lists other than SAC's")
         assert "On the one blind test, places no run had scored, no model beat" in results
 

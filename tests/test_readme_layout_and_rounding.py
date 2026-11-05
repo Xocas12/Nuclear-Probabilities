@@ -81,7 +81,7 @@ def test_family_table_puts_dated_families_before_todays_data():
 
 
 def test_generated_and_written_prose_is_wrapped():
-    """README.md:62 was one 1,362-character line of seven near-identical clauses."""
+    """No prose line of README runs past its width, nor of REPORT past 1,000 characters."""
     for name, limit in (("README.md", report.README_WIDTH), ("REPORT.md", 1000)):
         for line in (ROOT / name).read_text(encoding="utf-8").splitlines():
             if not line.lstrip().startswith("|"):
@@ -135,8 +135,8 @@ def test_lato67_and_burza_are_defined_where_readme_first_names_them():
 
 
 def test_the_corrected_links_are_described_whole():
-    """Amendment 17 also gave reasons for Lato-67 rows 17 (Kiel) and 57 (west of Lingen); five towns were made
-    positive in the rescoring seen before it, four in the links it adopted."""
+    """configs/protocol_amendment_17.yaml gives reasons for Lato-67 rows 17 (Kiel) and 57 (west of Lingen); five
+    towns were made positive in the rescoring seen before it, four in the links it adopted."""
     amendment = (ROOT / "configs" / "protocol_amendment_17.yaml").read_text(encoding="utf-8")
     assert "Kiel is not credited" in amendment and "gains four linked towns" in amendment
     text = _flat(ROOT / "REPORT.md")
@@ -231,10 +231,17 @@ def test_the_viewer_shows_the_share_of_people_in_scored_towns():
         for row in sc["delivered"]:
             want = round(float(d.loc[row["attacker"], "share_of_people_in_scored_towns"]), 2)
             assert row["share_of_people_in_scored_towns"] == want
-    assert len(data["shift"]) == 1
+    # the banner quotes the training-against-modern ROC-AUC of domain_shift.csv, not another row
+    shift = pd.read_csv(MAP / "domain_shift.csv")
+    want = shift[shift["comparison"] == "training towns against modern towns"].iloc[0]
+    assert data["shift"][0]["comparison"] == want["comparison"]
+    assert data["shift"][0]["value"] == round(float(want["value"]), 2)
     page = (MAP / "viewer" / "index.html").read_text(encoding="utf-8")
     assert "share of people in scored towns" in page
-    assert json.dumps(data["shift"]) in page or '"shift"' in page
+    assert (
+        '"shift": ' + json.dumps(data["shift"]) in page
+        or '"shift":' + json.dumps(data["shift"], separators=(",", ":")) in page
+    )
 
 
 def test_state_gate_says_what_its_positives_count():

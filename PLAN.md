@@ -10,7 +10,7 @@ results have been brought up to date since. It predates the work: what exists an
 right. "The US war plan of 1956" above is the SAC requirements study, not a war plan. Models by regime
 type were not built.
 
-**Dropped methods.** SHAP, ALE curves, EBM, GPBoost, the hierarchical model and the M8 driver profiles below
+**Dropped methods.** SHAP, ALE curves, EBM, GPBoost, the hierarchical model and the driver profiles by country and regime (milestone M8 of the old plan, PROGRESS.md) below
 were not built. Attribution is by family ablation and column-removal repeats (REPORT, "Which families add
 anything" and "What the gains rest on"), and spatial autocorrelation is handled by spatial blocks and block
 bootstrap intervals, not by a Gaussian-process effect. With no state passing the gate, profiles by country
@@ -532,8 +532,9 @@ method can be trusted alone. Several are run:
    enough places of each class, weighted by positives). Distances to fixed anchors (Moscow, a
    SAC base, the continental US) are also scored over a location-only control (latitude and
    longitude), so "reach" is not read off what is only location. The M2 check showed why: a
-   country intercept alone closed about two thirds of the pooled gap between the population
-   rule and every feature.
+   country intercept alone closed about half to two thirds of the pooled gap between the
+   population rule and every feature (0.0466 of 0.0871 for `has_dgz`, 0.54; 0.0489 of 0.0718
+   for `listed`, 0.68; `runs/m2-check/gains.csv`).
 2. **Grouped permutation importance** on the held-out folds.
 3. **SHAP** (TreeSHAP):
    - a global beeswarm;
@@ -672,7 +673,7 @@ results are in REPORT.md and `runs/`.
      Philippe (2021) for the French 1959 list.
 2. **Full transcription of the 1956 list.** About 350 pages and ~14,600 lines, in two
    independent passes. That is ~25–30 agent-hours, or ~3 hours wall-clock with 10 parallel
-   workers. It needs your go-ahead to run as a multi-agent job.
+   workers. It needed the owner's go-ahead to run as a multi-agent job.
 3. **Regime coding.** Proposed: the 4-group scheme of §5.3 as primary, alignment as a second
    axis, and the other codings as robustness checks.
 4. **Archive and print sources.** Can anyone fetch them? The items are:
