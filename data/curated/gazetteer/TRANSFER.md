@@ -190,3 +190,19 @@ This is a check that the pipeline joins end to end, not a result: it was read be
   figures are checked against the census's own totals. Villages of 10,000+ are left out.
 - **Small lists.** Most lists have fewer than 30 linked towns, and several have under five, so
   their metrics have wide uncertainty.
+
+## Places that share a point
+
+Some census units are a rural municipality around a town, or a district absorbed into it, and have no point of their
+own in GeoNames. They are placed at the point of the town whose name they carry or that absorbed them, so the two get
+identical distance and density features. No point is invented for them. The pairs in the classifier table:
+
+| Town | Unit at the same point | Country |
+|---|---|---|
+| Varel | Varel - Land * (rural municipality; the asterisk is the census table's) | FRG |
+| Ibbenbüren | Ibbenbüren, Land (rural municipality) | FRG |
+| Bielefeld | Senne II (now part of Bielefeld) | FRG |
+| Newport News | Newsome Park-Hilton Park (now part of Newport News) | USA |
+
+Before the nineteenth amendment withdrew the Dutch towns, Zwolle and Zwollerkerspel were a fifth pair.
+`tests/test_shared_points.py` fails if any other pair of places shares a point.

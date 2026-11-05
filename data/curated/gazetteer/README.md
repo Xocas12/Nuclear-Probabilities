@@ -62,6 +62,15 @@ The floor matters in two places.
   Znamensk, Kurchatov and Leninsk (Baikonur).
   - **Figures.** Most are read off Reissig (2024, *Izvestiya RAN, Ser. Geogr.* 88(5), Fig. 2),
     to about ±1,000. Kurchatov has only a 1990 figure; Leninsk's is for the end of 1959.
+  - **Pages not read.** The figures were read from the article's reprint at statehistory.ru, whose copy is
+    registered with its hash in `../features/cited_pages.csv`. Two kinds of page the rows also cite were not read
+    here, and that file records them without a hash: Reissig's earlier blog table (reissig.livejournal.com/5609.html)
+    and Demoscope's 1959 urban tables (www.demoscope.ru/weekly/ssp/). Neither host answered the project's request for its
+    robots.txt when the registry was built or when it was asked again on 2026-11-05, and RFC 9309 then allows
+    nothing, so neither page was fetched. The blog figures that the rows' notes quote, and the membership check against the 1959
+    tables, come from an earlier reading of which no copy is held, so they cannot be checked from what is held. No
+    population used in the analysis rests on them: Podgorny's 3,000, from the blog, is below the 5,000 threshold, so
+    Podgorny is not in the universe.
   - **Membership.** It was checked against the published 1959 urban tables:
     - Zarechny (Penza-19), Sillamäe, Severomorsk, Chkalovsk, Zhovti Vody and Mailuu-Suu are in
       those tables, so they are not added twice.
