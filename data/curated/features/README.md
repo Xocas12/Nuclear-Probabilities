@@ -12,9 +12,29 @@ official administrative histories).
 | `sac_bases_1956.csv` | 15 | SAC's overseas bomber, tanker and forward bases in service in 1956, with their years (the Spanish bases opened in 1957–59 and are excluded) | `log_km_to_sac_base` |
 | `military_sites_1956.csv` | 153 | The bloc's military geography with each role's years: military district, group-of-forces, army and Chinese military-region HQs (50); fleet HQs (13) and naval bases (25); Long-Range Aviation bomber airfields (27); nuclear-complex plants, mines and towns (28); test ranges (7); air defence (3) | `military_district_hq`, `fleet_hq`, `log_km_to_naval_base`, `log_km_to_lra_base`, `log_km_to_nuclear_site` |
 | `us_capitals_1985.csv` | 51 | The 50 state capitals and Washington, D.C., with the county (FIPS) each lies in, checked against the Census Bureau's county names | `state_capital`, `national_capital`, `log_km_to_state_capital`, `log_km_to_washington` (US) |
-| `us_military_sites_1985.csv`, not in the tree | 196 | US military installations, command centres and nuclear-weapons sites with their years and a decision for mid-1985 (184 in role). Most are present-day facilities, so under the brief's section E the table left the tree; the US check reads it back from commit a9ca394 (`python -m nucprob.sources.history`, checked against the sha256 in its card `us_military_sites_1985.md`) | the US military family (`nucprob/us1985/features.py`) |
+| `us_military_sites_1985.csv`, not in the tree | 196 | US military installations, command centres and nuclear-weapons sites with their years and a decision for mid-1985 (184 in role). Most are present-day facilities and no result reads it, so it is not in the tree ("Site coordinates" below); the US check reads it back from commit a9ca394 (`python -m nucprob.sources.history`, checked against the sha256 in its card `us_military_sites_1985.md`) | the US military family (`nucprob/us1985/features.py`) |
 | `weurope_military_sites_1965.csv` | 331 | Military sites in the FRG, Netherlands, Belgium, Denmark, Austria and northern Italy (plus AFCENT, Fontainebleau): NATO and national HQs, air bases (strike/other/support), Nike, HAWK and surface-to-surface missile sites, special ammunition sites, naval bases, garrisons, radars and ports, with years and a decision for mid-1965 (323 in role, 74 flagged UNCERTAIN); card in `weurope_military_sites_1965.md` | `log_km_to_naval_base`, `log_km_to_lra_base` (nuclear strike air bases), `log_km_to_nuclear_site` (special ammunition sites) for the transfer region wp_west_1965 (`nucprob/transfer/features.py`) |
 | `bloc_air_defence_1956.csv` | see its card | Soviet-bloc air defences of June 1956 (PVO HQs, fighter bases, the S-25); card in `bloc_air_defence_1956.md` | `log_km_to_sam`, `log_km_to_air_defence`, `log_air_defence_sites_50km` (`nucprob/classifier/features.py`) |
+
+## Site coordinates
+
+The site tables give coordinates because their features are distances from a town to the nearest site of a kind,
+and counts of sites within 50 km, as of a document's date. One rule covers every table:
+
+- **A site table is in the tree only if a result reads it.** The 1956 bloc tables (`military_sites_1956.csv`,
+  `bloc_air_defence_1956.csv`), SAC's bases of 1956 and the West European table of 1965 feed the classifier's
+  features as of their documents' dates. The US table of 1985 feeds only the US county check, which is no part of
+  the results; most of its rows are facilities in use today, so it is not in the tree, and `make us1985` reads it
+  back from git history into a git-ignored folder for that check.
+- **A row is a site as of its table's date**, at the coordinate its cited page gives (three or four decimals).
+  Some sites of the 1956 and 1965 tables are still in use, among them air bases that hold nuclear weapons today.
+  Their coordinates are not coarsened: the features are distances to the nearest site, so coarsening would change
+  them and every committed result built on them. Coarsening those rows would need a refit of the classifier and
+  the map; that is left to the owner.
+- **No output names a site or gives its coordinates.** Nothing under `runs/`, the viewer, README or REPORT carries
+  a site row. The only site coordinates under `runs/` are those of 1956 towns that a headquarters is placed on, in
+  the two early per-town prediction tables. `tests/test_site_coordinates.py` checks both.
+- **No table ranks sites**, and no table or output says which site a document would strike.
 
 ## Conventions
 

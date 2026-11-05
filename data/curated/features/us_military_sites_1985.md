@@ -1,8 +1,8 @@
 ## The US military sites of 1985 (`us_military_sites_1985.csv`)
 
 - **Where it is.** Not in the working tree. 125 of its 196 rows have no end year, so most of its
-  coordinates are of facilities still in use, which section E of the brief keeps out of the committed
-  tree. Only the US county check (`runs/m4-us-check/`, pinned in `runs/milestone_hashes.json`) reads
+  coordinates are of facilities still in use, and no result reads it; under the rule in `README.md`
+  ("Site coordinates") such a table is not kept in the tree. Only the US county check (`runs/m4-us-check/`, pinned in `runs/milestone_hashes.json`) reads
   it, and its Wikipedia copies are not held, so it cannot be rebuilt from its sources.
   `python -m nucprob.sources.history` (run by `make us1985`) reads it back from commit `a9ca394`,
   which added it, checks the sha256 below and writes it to `data/interim/history/`, which git ignores.
