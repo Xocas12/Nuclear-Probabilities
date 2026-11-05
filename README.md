@@ -69,7 +69,9 @@ term for each target country.
   Only types the protocol counts as plans count towards a state's model; exercises and lessons are labelled as such
   wherever they are used. Soviet and Warsaw Pact evidence is thin: no Soviet war plan naming places was found, and the
   three registered Warsaw Pact war plans give 6 linked positives between them, none from a plan read at source (REPORT,
-  "What the evidence cannot support").
+  "What the evidence cannot support"). The results are of links with two known errors on Warsaw Pact lists: Lato-67 lacks four
+  positives (offset rows left unplaced) and Burza has two it should not (Hamburg and Schleswig, from rows with a
+  direction but no distance). `configs/protocol_amendment_17.yaml` corrects them; its refit is not yet committed.
 - **Places and features.** Towns, mostly of 10,000 or more, from censuses as near each document's date as could be found, with
   population, rank, distances to coast, capital and other towns, and, where a source exists for that date, military
   sites, air and missile defences and the Correlates of War project's (COW) National Material Capabilities. A feature should not postdate its
@@ -89,7 +91,7 @@ term for each target country.
 ## Method
 
 The analysis was fixed in `configs/protocol.yaml` before the final models were fitted, and changed since only by
-dated amendments, four inside `configs/protocol.yaml` and `configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_16.yaml`, each saying what had
+dated amendments, four inside `configs/protocol.yaml` and `configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_17.yaml`, each saying what had
 already been read (one line each in `configs/HISTORY.md`). Results had been read before most of them, so the analysis
 is not blind except on the sealed set.
 

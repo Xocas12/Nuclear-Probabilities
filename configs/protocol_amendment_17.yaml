@@ -1,0 +1,39 @@
+# Seventeenth amendment, in its own file like the fifth to sixteenth. Committed and pushed before the refit it
+# governs is run. Nothing the refit computes had been computed when this was written. What had been read: the
+# in-build review of c39684a rescored the committed held-out scores (no refit) with five Lato-67 towns made
+# positive, and saw Lato-67's PR-AUC with the document left out move from 0.230 to 0.289 (LightGBM) and from
+# 0.198 to 0.212 (population rule), and under spatial blocks from 0.311 to 0.363. The links below were then
+# rebuilt (nucprob.transfer.labels) to see which towns change; no model was fitted.
+date: 2026-11-05
+reasons: The stated rule for the smaller lists (data/curated/gazetteer/README.md) is that a row printing a
+  distance and direction from a town is placed at that offset, and a row printing a direction with no distance
+  gives no point. Lato-67's Danish offset rows were placed so, its German ones (rows 51-55) were not, so they
+  linked to no town. Two Burza rows with a direction and no distance (12, "płd SZLEZWIG", south of Schleswig;
+  13, "płn HAMBURG", north of Hamburg) were linked by name at 0 km, while the same rule had left Burza row 21
+  ("south of Utrecht") and three 1977 lesson rows unlinked. Lato-67 row 17 (КЕЛЬ, a port; the Russian spelling
+  of Kehl, read by the row note as probably Kiel) and row 57 ("west of Lingen") were unlinked without a stated
+  reason.
+links:
+  placed: Lato-67 rows 51-55 in data/curated/gazetteer/transfer_target_links.csv, each at its printed offset
+    from GeoNames' point of the town, the method of the Danish rows. Rebuilt, they credit Walsrode (rows 51
+    and 52), Münster (53), Kevelaer (54) and Lobberich (55).
+  unlinked: Burza rows 12 and 13, and Lato-67 rows 17 and 57, in data/curated/gazetteer/transfer_target_unlinked.csv
+    with their reasons. Hamburg and Schleswig are no longer Burza positives. Kiel is not credited.
+  net: wp_1967_lato67 gains four linked towns; wp_1961_burza loses two. No other list, place, SAC row or
+    feature column changes.
+changes:
+  refit: nucprob.transfer.labels, nucprob.transfer.check (runs/m4-transfer-check is rewritten and its pinned
+    hashes updated, as under the sixteenth amendment), nucprob.classifier.table and make classifier in full
+    (run, sensitivity, identification, identification_fit, divergence, extended, defence_targets, link_audit),
+    with every rule of the protocol and of the earlier amendments unchanged. Their outputs replace the earlier
+    ones.
+  before: runs/classifier/comparison.csv and selection.csv of the run before this amendment are kept as
+    runs/classifier/before_amendment_17/ for the comparison under reporting.
+  sealed: The sealed set is not scored again (its lock forbids it); Burza and Lato-67 have no sealed rows. Its
+    scores and the blind reading stay those of the fit named in runs/classifier/sealed/fitted_run/.
+  map: make probmap is run again on the corrected table. The map's score is fitted to the labels even when the
+    rule selects population alone, so a label change can move it.
+reporting: Until the refit is committed, REPORT and README state these link errors and that the results are of
+  the earlier links. After it, REPORT states the correction in Data and lists every primary-comparison row of the
+  four scopes whose verdict differs from the run before this amendment, whichever way it moves.
+unchanged: Places, features, holdouts, models, the selection rule, the gate, and the sealed and blind readings.

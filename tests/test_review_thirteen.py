@@ -124,3 +124,21 @@ def test_extended_sentence_says_the_best_is_taken_per_list_set():
     ext = pd.read_csv(ROOT / "runs" / "classifier" / "extended.csv")
     glob = ext[ext["scope"] == "global, all attacker documents"]
     assert glob["comparison"].nunique() == 6
+
+
+def test_link_errors_are_stated_while_the_results_are_of_the_earlier_links():
+    import json
+
+    from nucprob.classifier.report import TABLE_BEFORE_17
+
+    manifest = json.loads((ROOT / "runs" / "classifier" / "manifest.json").read_text())
+    amendment = yaml.safe_load(
+        (ROOT / "configs" / "protocol_amendment_17.yaml").read_text(encoding="utf-8")
+    )
+    assert {"links", "changes", "reporting"} <= set(amendment)
+    report, readme = _flat(ROOT / "REPORT.md"), _flat(ROOT / "README.md")
+    history = _flat(ROOT / "configs" / "HISTORY.md")
+    pending = manifest["table_sha256"] == TABLE_BEFORE_17
+    assert ("Known link errors in these results." in report) == pending
+    assert ("its refit is not yet committed" in readme) == pending
+    assert ("results in README and REPORT are of the earlier links" in history) == pending

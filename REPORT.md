@@ -105,6 +105,14 @@ Part II pages, and on those the confirmed misread rate was 3 in 216, well above 
 
 **Links** lose entries too: 318 of SAC's 1,215 complex entries link to no town of the universe (326 of its 873 subcomplex entries; `runs/classifier/link_audit_coverage_subcomplex.csv`), and the share varies by country: China 40 of 119, North Korea 12 of 15, North Vietnam 6 of 8, Albania 3 of 6 (`runs/classifier/link_audit_coverage.csv`). These count entries, not towns. An entry whose cover name stands for a town and its closed city (Kapustin Yar and Znamensk, for example) links to both, so linked complex entries give 2 more towns than their number, while linked subcomplex entries give exactly as many towns as entries.
 
+**Known link errors in these results.** Every result here is of links that broke the rule stated for the smaller
+lists. Lato-67's German offset rows ("5 km NW of Münster" and four more) were not placed and linked to no town,
+while its Danish ones were; placed, they credit Walsrode, Münster, Kevelaer and Lobberich. Two Burza rows that print a
+direction with no distance ("south of Schleswig", "north of Hamburg") were linked to those towns, though the same rule
+left "south of Utrecht" unlinked. So Lato-67 lacks four positives and Burza has two it should not.
+`configs/protocol_amendment_17.yaml`, committed before any refit, corrects them and fixes how the refit is read; the
+refit is not yet committed.
+
 **Documents.** `data/curated/labels/PLANS.yaml` records each list's attacker, author, date, type and evidence
 grade. The grades: A, a primary document or its published translation read here; B, a primary document read here that names only part of the
 targets it counts, or a later classified history quoting one; C, a scholar's table or paraphrase of an archive file not read here; D, journalism or an
@@ -133,7 +141,7 @@ Several are today's data standing in for the past and are flagged. Sources, lice
 ## Method
 
 The analysis is fixed in `configs/protocol.yaml` and changed since only by dated amendments: four inside that file and
-`configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_16.yaml`. Each says what had already been read when it
+`configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_17.yaml`. Each says what had already been read when it
 was written; `configs/HISTORY.md` gives one line per amendment. **It is not blind.** Scores on SAC's spatial folds and
 on the small lists, and later the full results, had been read before amendments corrected labels, links and sector
 boxes. Burza's sector box was drawn after its effect on Burza's scores had been seen. The rule that a block interval needs

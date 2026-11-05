@@ -1485,6 +1485,24 @@ def _cannot_pooled() -> str:
     )
 
 
+# The classifier table every run used before the seventeenth amendment's link corrections.
+TABLE_BEFORE_17 = "2aaafd623c1668e3464067d24346ea766e7a375033eb658fd1a31e5b5e152c41"
+
+
+def _pending_17() -> str:
+    """While the outputs are of the links before `configs/protocol_amendment_17.yaml`, say which links were wrong."""
+    if json.loads((OUT / "manifest.json").read_text())["table_sha256"] != TABLE_BEFORE_17:
+        return ""
+    return """
+**Known link errors in these results.** Every result here is of links that broke the rule stated for the smaller
+lists. Lato-67's German offset rows ("5 km NW of Münster" and four more) were not placed and linked to no town,
+while its Danish ones were; placed, they credit Walsrode, Münster, Kevelaer and Lobberich. Two Burza rows that print a
+direction with no distance ("south of Schleswig", "north of Hamburg") were linked to those towns, though the same rule
+left "south of Utrecht" unlinked. So Lato-67 lacks four positives and Burza has two it should not.
+`configs/protocol_amendment_17.yaml`, committed before any refit, corrects them and fixes how the refit is read; the
+refit is not yet committed."""
+
+
 def _last_amendment() -> int:
     return max(
         int(p.stem.rsplit("_", 1)[1]) for p in (ROOT / "configs").glob("protocol_amendment_*.yaml")
@@ -1742,6 +1760,7 @@ by auditors whose own error rate was 1.3%, so the audit's reading is itself unce
 Part II pages, and on those the confirmed misread rate was 3 in 216, well above that bound.
 
 **Links** lose entries too: {int(every["unlinked"])} of SAC's {int(every["entries"]):,} complex entries link to no town of the universe ({int(sub["unlinked"])} of its {int(sub["entries"])} subcomplex entries; `runs/classifier/link_audit_coverage_subcomplex.csv`), and the share varies by country: China {int(coverage.loc["China", "unlinked"])} of {int(coverage.loc["China", "entries"])}, North Korea {int(coverage.loc["North Korea", "unlinked"])} of {int(coverage.loc["North Korea", "entries"])}, North Vietnam {int(coverage.loc["North Vietnam", "unlinked"])} of {int(coverage.loc["North Vietnam", "entries"])}, Albania {int(coverage.loc["Albania", "unlinked"])} of {int(coverage.loc["Albania", "entries"])} (`runs/classifier/link_audit_coverage.csv`). These count entries, not towns. An entry whose cover name stands for a town and its closed city (Kapustin Yar and Znamensk, for example) links to both, so linked complex entries give {int(every["towns_linked"] - every["linked"])} more towns than their number, {_subcomplex_extra(int(sub["towns_linked"] - sub["linked"]))}
+{_pending_17()}
 
 **Documents.** `data/curated/labels/PLANS.yaml` records each list's attacker, author, date, type and evidence
 grade. The grades: A, a primary document or its published translation read here; B, a primary document read here that names only part of the
