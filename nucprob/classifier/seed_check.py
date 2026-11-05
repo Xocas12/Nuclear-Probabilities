@@ -28,7 +28,7 @@ from joblib import Parallel, delayed
 from nucprob.classifier import evaluate as ev
 from nucprob.classifier.run import SAC
 from nucprob.outputs import hashes, start_record
-from nucprob.paths import ROOT, RUNS
+from nucprob.paths import RUNS
 from nucprob.sources.fetch import sha256
 
 SEEDS = tuple(range(1, 21))
