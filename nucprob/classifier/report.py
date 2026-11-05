@@ -1489,7 +1489,9 @@ def _amendment_17() -> str:
 `configs/protocol_amendment_17.yaml` placed Lato-67's German offset rows, which now credit Walsrode, Münster, Kevelaer
 and Lobberich, and unlinked two Burza rows that print a direction with no distance, so Hamburg and Schleswig are no
 longer Burza positives. Every classifier step and the map were run again on the corrected table; the run before it is
-kept in `runs/classifier/before_amendment_17/`. The sealed set was not scored again. {verdicts_text}{sel_text}
+kept in `runs/classifier/before_amendment_17/`. The sealed set was not scored again. The amendment was written after a
+review had rescored the committed held-out scores with five Lato-67 towns made positive and seen Lato-67's PR-AUC
+rise, so a verdict it moves is not of a reading fixed before its result was seen. {verdicts_text}{sel_text}
 """
 
 
@@ -2026,7 +2028,7 @@ term for each target country.
   {interval(sac)}, by blocks {block_interval(sac)}: {claim(sac)}. {_repeats(clean, strict)} Those repeats still use the 1959 Soviet census and other late inputs
   (REPORT, "Inputs later than the document"). The analysis is not blind: earlier results had been read (REPORT, Method).
 - **On lists other than SAC's**, under the same spatial cross-validation, the global model on all attacker documents
-  against population plus country is {interval(other)}, by blocks {block_interval(other)}: {claim(other)}. The held-out
+  (exercises included) against population plus country is {interval(other)}, by blocks {block_interval(other)}: {claim(other)}. {_other_lists_basis(lists, other, g_best)} The held-out
   blocks' documents are also in training, so this is not a reading on an unseen document (next point).
 - **On a document the model has not seen**, the richer model against ranking towns by population is {interval(lopo)},
   by blocks {block_interval(lopo)} over all lists, which SAC dominates. On lists other than SAC it is {interval(rest)}, by blocks {block_interval(rest)}: {claim(rest)}.
@@ -2047,6 +2049,57 @@ term for each target country.
   town above a random training town; 0.5 would mean no shift) on {_shift_features(shift)} features both sets have (population, its rank, population within 25-100 km,
   distances to a town of 100,000, the capital and the coast, capital and regional-centre status), with
   {log_pop["value"]:.0%} outside the training's 1st-99th percentile on the one feature the score reads, and no modern label exists to test them."""
+
+
+# How the doc_type values of PLANS.yaml read in prose, for the README's account of what a reading rests on.
+NOT_PLAN_TYPES = {
+    "exercise": "exercises",
+    "training": "staff-academy lessons",
+    "wargame": "a war game",
+    "disputed_plan_or_exercise": "the disputed 1970 map",
+}
+
+
+def _other_lists_basis(lists: pd.DataFrame, other, model: str) -> str:
+    """What the global reading on lists other than SAC's rests on (review of fac1986): its positives by document
+    type, from lists.csv, and its verdict before the seventeenth amendment, which was written after a review had
+    seen Lato-67 rescored with the corrected links."""
+    rows = lists[
+        (lists["scope"] == GLOBAL_ALL)
+        & (lists["holdout"] == "spatial blocks")
+        & (lists["model"] == RULE)
+        & (lists["plan_id"] != "us_1956_sac_complexes")
+    ]
+    by_type = rows.groupby("doc_type")["positives"].sum()
+    total = int(by_type.sum())
+    not_plan = {t: int(by_type.get(t, 0)) for t in NOT_PLAN_TYPES}
+    named = [f"{NOT_PLAN_TYPES[t]} ({n})" for t, n in not_plan.items() if n]
+    parts = ", ".join(named[:-1]) + " and " + named[-1] if len(named) > 1 else "".join(named)
+    war = int(by_type.get("war_plan", 0))
+    rest = total - sum(not_plan.values()) - war
+    text = (
+        f"Of its {total} positives, {sum(not_plan.values())} come from Warsaw Pact {parts}; {war} come from documents "
+        f"registered as war plans and {rest} from US target-selection and policy studies. It is mostly a reading "
+        "on exercises and lessons, not on war plans."
+    )
+    if (BEFORE_17 / "comparison.csv").exists():
+        was = _row(
+            pd.read_csv(BEFORE_17 / "comparison.csv"),
+            GLOBAL_ALL,
+            "spatial blocks",
+            model,
+            PLUS,
+            "lists other than SAC",
+        )
+        if verdict(was) != verdict(other):
+            text += (
+                f" Before the seventeenth amendment's link corrections it was {verdict(was)} "
+                f"({interval(was)}, by blocks {block_interval(was)}); that amendment was written after a review "
+                "had rescored Lato-67 with the corrected links and seen its PR-AUC rise "
+                "(`configs/protocol_amendment_17.yaml`), so the change is not of a reading fixed before its "
+                "result was seen."
+            )
+    return text
 
 
 def _shift_features(shift: pd.DataFrame) -> int:

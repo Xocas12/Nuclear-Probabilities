@@ -280,7 +280,9 @@ the fit on the earlier table (`runs/classifier/sealed/fitted_run/`). None of the
 `configs/protocol_amendment_17.yaml` placed Lato-67's German offset rows, which now credit Walsrode, Münster, Kevelaer
 and Lobberich, and unlinked two Burza rows that print a direction with no distance, so Hamburg and Schleswig are no
 longer Burza positives. Every classifier step and the map were run again on the corrected table; the run before it is
-kept in `runs/classifier/before_amendment_17/`. The sealed set was not scored again. 2 of the 17 primary rows (each scope's selected candidate against population plus country, by holdout and list set) change verdict; each difference is followed by its interval by blocks:
+kept in `runs/classifier/before_amendment_17/`. The sealed set was not scored again. The amendment was written after a
+review had rescored the committed held-out scores with five Lato-67 towns made positive and seen Lato-67's PR-AUC
+rise, so a verdict it moves is not of a reading fixed before its result was seen. 2 of the 17 primary rows (each scope's selected candidate against population plus country, by holdout and list set) change verdict; each difference is followed by its interval by blocks:
 
 - Global, all attacker documents (exercises included), spatial blocks, lists other than SAC: neither before (+0.08 [+0.03, +0.13], by blocks [-0.02, +0.12]), gain now (+0.11 [+0.05, +0.15], by blocks [+0.02, +0.15])
 - Warsaw Pact, pooled (exercise-based, not a war-plan model), spatial blocks, all lists: neither before (+0.11 [+0.06, +0.18], by blocks [-0.01, +0.16]), gain now (+0.10 [+0.05, +0.16], by blocks [+0.002, +0.15])
