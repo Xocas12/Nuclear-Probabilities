@@ -272,3 +272,9 @@ Collection page: https://phpisn.ethz.ch/lory1.ethz.ch/collections/colltopic4241.
 8. **Seven Days 1979** primary (IPN 2005 release; map images): not located. The Guardian/Telegraph 2005 articles were not opened.
 9. **CIA lesson series**: 27 more lessons to scan (e.g. 0001197591, 0001197581). Some may name places like 0001197534 does.
 10. Further PHP items noticed but not processed: "List of Nuclear Strikes" companion annexes; 1971 Siwicki/Hannover message; Balló's "Die Ungarische Volksarmee im Warschauer Pakt" (German PDF on the PHP mirror); and the Hungarian collection's other 1965 documents (arbitrator reports).
+11. **1951 Polish plan** (searched 2026-11-05): PHP published it with the 1964 plan, and the 2000 NSA press release
+    (https://nsarchive2.gwu.edu/NSAEBB/NSAEBB31/press.html) calls it the only earlier Soviet bloc war plan in the
+    public domain. A search snippet of a Kwartalnik Historyczny article (apcz.umk.pl; article not
+    opened, so neither title nor author is confirmed) gives its title as "Operational plan for the deployment of
+    the First Army and Second Army of the Polish Army in the event of military operations in 1951", and calls it
+    defensive. Neither source mentions nuclear strikes or named targets in it. It was not opened and gives no labels.
