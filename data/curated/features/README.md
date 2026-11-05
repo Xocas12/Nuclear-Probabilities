@@ -72,7 +72,7 @@ official administrative histories).
   - the Bulgarian Navy's fleet staff (Varna: the cited page says so for the Cold War, with no year).
 
   The Bulgarian Second Army's HQ was held at Plovdiv by inference from its 1912 seat. No cited page
-  states its 1956 seat, so the row is out of June 1956 (review of bde7e54, finding 9). This changes
+  states its 1956 seat, so the row is out of June 1956. This changes
   one cell, Plovdiv's `military_district_hq`, of `features_1956.parquet`, which only the pinned M1
   and M2 checks read; the classifier table has no such column, and rebuilt with the change it hashed
   as before (`2aaafd62...`).
@@ -100,4 +100,4 @@ official administrative histories).
   Xinjiang an autonomous region from October 1955; Henan's capital at Zhengzhou from 1954).
 - SAC bases: each base's history (the `basis` column).
 
-**Provenance of the site tables.** `cited_pages.csv` registers every page cited in `bloc_air_defence_1956`, `military_sites_1956`, `weurope_military_sites_1965` and `us_military_sites_1985`: licence, retrieval date, status and sha256 as fetched on that date, not as first read. sha256 of `military_sites_1956.csv`: `0d9003716067c9ead0b7af70735bf3b10722f8bb87c351194acdea33dee7c0b6`.
+**Provenance of the site tables.** `cited_pages.csv` registers every page cited in `bloc_air_defence_1956`, `military_sites_1956`, `weurope_military_sites_1965` and `us_military_sites_1985`: licence, retrieval date, status and sha256 as fetched on that date, not as first read. sha256 of `military_sites_1956.csv`: `13eb5dd413d3075560d60e1a9651ea41acf9571ed059ef4249a6981fe488e92b`.

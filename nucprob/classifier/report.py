@@ -20,6 +20,7 @@ from nucprob.paths import CURATED, ROOT, RUNS
 from nucprob.plans import protocol
 from nucprob.probmap.counts import count
 from nucprob.probmap.run import load_scenarios
+from nucprob.probmap.viewer import shift_label
 
 OUT = RUNS / "classifier"
 MAP = RUNS / "probmap"
@@ -547,7 +548,9 @@ def _map_section() -> str:
     pop_alone = float(alone.loc[alone["feature"] == "log_pop", "value"].iloc[0])
     variance = pd.read_csv(MAP / "share_variance.csv")
     universe = pd.read_csv(MAP / "modern_universe.csv").set_index("step")["places"]
+    by_id = {sc["id"]: sc for sc in load_scenarios()}
     scen = s.assign(
+        viewer_label=s["scenario"].map(lambda i: shift_label(by_id[i])),
         cells_over_half=s.apply(
             lambda r: (
                 f"{count(r['cells_over_half_median'])} "
@@ -559,6 +562,7 @@ def _map_section() -> str:
         [
             "scenario",
             "era",
+            "viewer_label",
             "cell_deg",
             "towns",
             "cells",
@@ -622,7 +626,7 @@ and how much that matters was not measured.
 **Score.** The selection rule in `configs/protocol.yaml` selected **{best["model"]}**, by highest PR-AUC on a left-out document
 ({best["lopo_pr_auc"]:.2f}). The candidates ("portable" in the table) use only features that exist in every era without any present-day
 facility data: population, its rank within the country, population within 25, 50 and 100 km, distance to a town of
-100,000, national capital or regional centre, distance to the capital and distance to a coast. So the map's score holds no defence,
+100,000, distance to the capital, distance to a coast, and whether it is the national capital or a regional centre (ten features). So the map's score holds no defence,
 military or national-power term. It is fitted on all attacker documents, exercises included, and is not one
 state's model, because no state passes the gate with enough outside its largest document.
 {_population_note(best["model"])}
@@ -643,7 +647,7 @@ stockpile at its median, then the model at its median. Cells over one half are c
 before each of its towns would. Where most cells are over one half the map says little beyond that. Sealed towns are not scored, so a 1956 cell holding only sealed towns is absent from the map.
 {_width_source(s, model_wider)}
 
-"Delivered" in the tables below is before one more step: towns of the sealed set draw no warheads, so the 1956 map uses the share of people living in scored towns, {float(bloc_d["share_of_people_in_scored_towns"]):.2f}, of what is delivered: {count(bloc_d["delivered_median"])} delivered at the median and {count(bloc_d["on_scored_towns_median"])} on scored towns in `us_1956_on_bloc`. Part of the spread of delivered warheads comes from cited inventories and part from the unsourced theatre shares. The theatre share alone accounts for {v.min():.0%} ({v_low["attacker"]}, `{v_low["scenario"]}`) to {v.max():.0%} ({v_high["attacker"]}, `{v_high["scenario"]}`) of the variance of an attacker's delivered warheads: a first-order Sobol index by the pick-freeze estimator on {int(variance["draws"].iloc[0]):,} draws, with standard errors up to {variance["standard_error"].max():.3f} (`runs/probmap/share_variance.csv`).
+"Delivered" in the tables below is before one more step: towns of the sealed set are not scored and draw no warheads, so the 1956 map cuts what is delivered by the share of people living in scored towns, {float(bloc_d["share_of_people_in_scored_towns"]):.2f}. That is a population share, not the share of score the sealed towns would hold: they have no score, and the population share is fixed before any model draw. In `us_1956_on_bloc`, of {count(bloc_d["delivered_median"])} delivered at the median, {count(bloc_d["on_scored_towns_median"])} fall on scored towns. Part of the spread of delivered warheads comes from cited inventories and part from the unsourced theatre shares. The theatre share alone accounts for {v.min():.0%} ({v_low["attacker"]}, `{v_low["scenario"]}`) to {v.max():.0%} ({v_high["attacker"]}, `{v_high["scenario"]}`) of the variance of an attacker's delivered warheads: a first-order Sobol index by the pick-freeze estimator on {int(variance["draws"].iloc[0]):,} draws, with standard errors up to {variance["standard_error"].max():.3f} (`runs/probmap/share_variance.csv`).
 
 Counts of warheads and cells are whole below 100 and to the nearest ten from 100, since the theatre shares behind them have no source. In the second table each figure is the median with the 5th to 95th percentile; `on_scored_towns` is "all" where the sealed set holds nobody; `delivered_shares_at_mode` is the interval with every share held at its mode, from separate draws. Holding a share at its mode also moves the centre, so that column is not a split of the interval's width.
 
@@ -991,8 +995,8 @@ any of these columns was fitted, a separate reading of the target state's regime
 counts on Soviet towns. None of them enters the primary model or the map. A gain needs both intervals to exclude zero.
 
 Of {len(d)} rows (`runs/classifier/extended.csv` has {len(pd.read_csv(OUT / "extended.csv"))}: the Warsaw Pact scope has no SAC rows, so its "other than SAC" rows repeat its "all lists" rows and are counted once): {int(counts.get("gain", 0))} gain, {int(counts.get("loss", 0))} lose, {int(counts.get("neither", 0))} cannot be told apart, {int(counts.get("not a reading", 0))} are not readings. On a left-out document, the reading that
-matters here, {lopo_gains} of {len(lopo)} rows gain, and {rest_gains} of the {len(lopo_rest)} on lists other than SAC. {gain_note}In the global scope the highest of these six models, picked after the fact,
-scores {best["all lists"]:.2f} over all lists against {rule["all lists"]:.2f} for the plain population rule, and {best["other than SAC"]:.2f} on lists other than SAC
+matters here, {lopo_gains} of {len(lopo)} rows gain, and {rest_gains} of the {len(lopo_rest)} on lists other than SAC. {gain_note}In the global scope the highest of its six models (population plus the political, economic, national-power or all three
+columns; the primary model plus the political or economic columns), picked after the fact for each list set, scores {best["all lists"]:.2f} over all lists against {rule["all lists"]:.2f} for the plain population rule, and {best["other than SAC"]:.2f} on lists other than SAC
 against {rule["other than SAC"]:.2f}; no paired interval against the population rule was fixed in advance, so the second gap is not a finding. The all-lists rows also rest on the fit with SAC left out, which trains on few positives. Each country-level column has one value per country and year, so within one
 list it can do no more than a country term, and in a pooled list it can identify a document: a gain under spatial blocks
 may be just that. "Model" and "against" are PR-AUC with and without the columns.
@@ -1286,7 +1290,9 @@ def _main_blind() -> str:
 {chr(10).join("  - " + _blind_line(r, auc=False) for _, r in prim.iterrows())}
 
   {rule_text} With positives in so few blocks the intervals are wide, and "neither" is not evidence of no
-  effect. {_earlier_sealed()}
+  effect. {_earlier_sealed()} The blind places were set apart after the reading of all sealed places had been seen
+  (`configs/protocol_amendment_12.yaml`, which refits nothing), and the sealed scores are of the fit made before the
+  corrected West European site table ("Changed by the corrected West European site table").
 """
 
 
@@ -1732,8 +1738,8 @@ read over its whole universe. Corrected link errors are listed in
 **Transcription.** SAC's lists, about nine positives in ten of what is trained on, were transcribed from the scan by two
 independent passes of vision-language models (Claude agents), with disagreements resolved against the page
 (`data/curated/sac1956/README.md`). A blind audit of a random 5% of rows, {aud["lines"]} lines, found {aud["wrong"]} errors in the final reading (95% interval 0 to {100 * aud["upper"]:.2f}%),
-by auditors whose own error rate was 1.3%, so the audit's reading is itself uncertain. On the low-resolution Part II pages, where 270 airfield rows can be compared with a second printing, the confirmed misread
-rate was 3 in 216, well above that bound.
+by auditors whose own error rate was 1.3%, so the audit's reading is itself uncertain. Of the 270 airfield rows that can be compared with a second printing, 216 lie on the low-resolution (about 200 dpi)
+Part II pages, and on those the confirmed misread rate was 3 in 216, well above that bound.
 
 **Links** lose entries too: {int(every["unlinked"])} of SAC's {int(every["entries"]):,} complex entries link to no town of the universe ({int(sub["unlinked"])} of its {int(sub["entries"])} subcomplex entries; `runs/classifier/link_audit_coverage_subcomplex.csv`), and the share varies by country: China {int(coverage.loc["China", "unlinked"])} of {int(coverage.loc["China", "entries"])}, North Korea {int(coverage.loc["North Korea", "unlinked"])} of {int(coverage.loc["North Korea", "entries"])}, North Vietnam {int(coverage.loc["North Vietnam", "unlinked"])} of {int(coverage.loc["North Vietnam", "entries"])}, Albania {int(coverage.loc["Albania", "unlinked"])} of {int(coverage.loc["Albania", "entries"])} (`runs/classifier/link_audit_coverage.csv`). These count entries, not towns. An entry whose cover name stands for a town and its closed city (Kapustin Yar and Znamensk, for example) links to both, so linked complex entries give {int(every["towns_linked"] - every["linked"])} more towns than their number, {_subcomplex_extra(int(sub["towns_linked"] - sub["linked"]))}
 
@@ -1776,7 +1782,7 @@ The one blind test uses the **sealed set**: {_seal_sentence()} Their labels are 
 seal is a procedure and not a secret. {_sealed_status()}
 
 - **Models.** Baselines: logistic regression on log population, and the same plus one intercept per
-  country. Candidates: L2 logistic regression and LightGBM (gradient-boosted trees) with fixed settings. Nothing was tuned.
+  country. Candidates: L2-penalised (ridge) logistic regression and LightGBM (gradient-boosted trees) with fixed settings. Nothing was tuned.
 - **Positive-unlabeled.** On a list that does not claim to be complete, a town off it is unlabeled, not a
   negative. Each of 50 fits (**bags**) keeps all positives and draws as many unlabeled towns as the list has positives.
 - **Holdouts.** Leave one document out (a document's lists and towns leave together); spatial blocks of 300 km in
@@ -1855,7 +1861,7 @@ feature, controlling log population and an intercept per list and country; inter
 - **This does not show that SAC avoided defended places.** The S-25 ring surrounds Moscow, so nearby small towns
   may be absorbed into its complex entry rather than listed by name, and air-defence sites may follow large cities.
   The table is not what SAC knew: the S-25 points, from Michael Holm's web pages on Soviet units, carry US designations, while the rest is post-Soviet knowledge.
-- **Warsaw Pact documents, NATO Europe.** Sites within 50 km {odds("Warsaw Pact", "log_air_defence_sites_50km")}, distance to a Nike or HAWK site {odds("Warsaw Pact", "log_km_to_sam")}.
+- **Warsaw Pact documents, NATO Europe.** Sites within 50 km {odds("Warsaw Pact", "log_air_defence_sites_50km")}, distance to a US surface-to-air missile site (Nike, HAWK) {odds("Warsaw Pact", "log_km_to_sam")}.
 - **Defences as targets in themselves.** Some documents name them. Counts of rows or complexes, from the documents' own
   words (`runs/classifier/defence_targets.csv`); the plans' order of strikes is not read here. The Warsaw Pact documents' shares are a finding about
   those few lists. {_defence_summary()} In SAC's Moscow region {_msites()} rows are numbered "M-n"; the study does not say what M means, so they are not counted.
@@ -2017,6 +2023,7 @@ def _readme_blind() -> str:
   Positives lie in only {int(p0["positive_blocks"])} of {int(p0["blocks"])} blocks, so these intervals are wide and "neither" is not evidence of no effect.
   On {int(earlier.iloc[0]["rows"])} sealed places including ones earlier runs had scored, {int(earlier["verdict"].eq("gain").sum())} of {len(earlier)} models gained over population plus country.
   **That reading is not blind.** (`runs/classifier/sealed/blind/comparison.csv`; REPORT, "The sealed set".)
+  The blind places were set apart after the reading of all sealed places had been seen (`configs/protocol_amendment_12.yaml`, which refits nothing), and the sealed scores are of the fit made before the corrected West European site table (REPORT, "Changed by the corrected West European site table").
 """
 
 

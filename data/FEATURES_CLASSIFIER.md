@@ -7,7 +7,7 @@
 | Family | Columns | Source | As of the document |
 |---|---|---|---|
 | population, administration, geography, industry, transport | the 20 `COMMON` columns of `nucprob/transfer/features.py` | census town tables, GeoNames, Natural Earth, Copernicus DEM, WRI, OurAirports (`data/FEATURES.md`) | the census nearest the document, which is not always at or before it: see "Later inputs" below. Power plants by commissioning year. Western European towns take plants as of the document's own year |
-| military | `log_km_to_naval_base`, `log_km_to_lra_base`, `log_km_to_nuclear_site` | curated site tables (`data/curated/features/`) | Sites in being in the document's year, for Western European towns; June 1956 for the bloc. NaN where no table covers the town (Japan, the US, Canada, Italy south of the Po) |
+| military | `log_km_to_naval_base`, `log_km_to_lra_base` (LRA: Soviet Long-Range Aviation), `log_km_to_nuclear_site` | curated site tables (`data/curated/features/`) | Sites in being in the document's year, for Western European towns; June 1956 for the bloc. NaN where no table covers the town (Japan, the US, Canada, Italy south of the Po) |
 | defence | `log_km_to_sam`, `log_km_to_air_defence`, `log_air_defence_sites_50km` | the same tables' Nike, HAWK, radar and RAF defence rows; `bloc_air_defence_1956.csv`, with its S-25 positions, for the bloc | as above. NaN for a country with no row in its table |
 | political, economic (not in the primary model) | `pol_regime`, `pol_defence_pact_usa`, `pol_defence_pact_ussr`, `pol_log_defence_pacts`; `econ_log_gdp_pc` | Regimes of the World through OWID (`owid_political_regime`), COW Formal Alliances v4.1 (`cow_alliances_v41`), Maddison Project 2023 through OWID (`owid_maddison_gdp_pc`) | The target state's last year at or before the document; pacts in force in the document's year. Missing for the GDR and North Vietnam in Maddison, never borrowed. The FRG takes Maddison's Germany. Registered in `data/sources_amendment_5.yaml`. Read apart, in `runs/classifier/extended.csv` (`configs/protocol_amendment_5.yaml`) |
 | defence industry (not in the primary model) | `log_vpk_*` | Dexter and Rodionov's guide (`data/FEATURES.md`) | Establishments active in 1956; later knowledge of what existed; Soviet towns of SAC only. Read apart, in the same file |
@@ -23,15 +23,14 @@ Limits that bear on any reading:
 - **Military expenditure** in COW is in thousands of current US dollars, so it is not comparable
   across decades. The Soviet and Chinese figures are COW's estimates.
 - **Defence tables differ in depth.** Western Europe 1965 has one row per Nike or HAWK position.
-  The 1956 table has one point per S-25 position and role (protocol, third amendment; the first
-  amendment's "one point" no longer holds). 22 positions count as in being in June 1956, all in the
+  The 1956 table has one point per S-25 position and role (`configs/protocol.yaml`, `features`). 22 positions count as in being in June 1956, all in the
   rings around Moscow and the bloc's only missile sites, so `log_km_to_sam` for a Soviet town is
   still close to its distance from Moscow. The family's readings are therefore made within a region.
   The 1956 reading is repeated without these points, through `log_km_to_air_defence_no_s25`, which
   is not a model feature.
 - **Family names.** Airfield counts (`log_airfields_10km`, `_25km`, `_50km`) are in the *transport*
   family in `nucprob/classifier/fit.py`, while the catalogue (`data/FEATURES.md`) calls
-  them *military*. The map's viewer does not name them. The *industry* family here is the single column `log_power_mw_25km`, today's power
+  them *military*. The *industry* family here is the single column `log_power_mw_25km`, today's power
   plants, so a result for "industry" says nothing about factories.
 - **Later inputs.** Some population figures postdate the document they serve
   (`data/curated/gazetteer/README.md`):

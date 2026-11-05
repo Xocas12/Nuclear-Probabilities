@@ -20,7 +20,7 @@ towns, all in the USSR. The freeze took the other 273, the `never_scored` places
 them are not, and only the remaining 150 are (next section). Issue #3 also names
 Meuselwitz, Schmölln and Liaoyang, sealed towns, in describing a geocoding error; they stay in.
 
-## What the freeze missed (twelfth amendment)
+## What the freeze missed (`configs/protocol_amendment_12.yaml`)
 
 `freeze_seal.py` read what earlier runs scored from one commit, `de2e54a`. The M2 check had been
 run and committed three times before that, on 8 October (`b094d1d`, `e599d9c`, `e80681b`), on a

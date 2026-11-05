@@ -34,6 +34,7 @@ term for each target country.
   Positives lie in only 6 of 10 blocks, so these intervals are wide and "neither" is not evidence of no effect.
   On 272 sealed places including ones earlier runs had scored, 2 of 4 models gained over population plus country.
   **That reading is not blind.** (`runs/classifier/sealed/blind/comparison.csv`; REPORT, "The sealed set".)
+  The blind places were set apart after the reading of all sealed places had been seen (`configs/protocol_amendment_12.yaml`, which refits nothing), and the sealed scores are of the fit made before the corrected West European site table (REPORT, "Changed by the corrected West European site table").
 - **Inside SAC's list**, under spatial cross-validation, the selected model beats population plus a country term by
   +0.02 [+0.01, +0.03], by blocks [+0.01, +0.04]: both intervals exclude zero. Without the columns flagged as later data, with or without the defence tables, it is +0.01 [+0.01, +0.02], by blocks [-0.002, +0.03]: at least one interval reaches zero, so it cannot be told from no difference. Those repeats still use the 1959 Soviet census and other late inputs
   (REPORT, "Inputs later than the document"). The analysis is not blind: earlier results had been read (REPORT, Method).
@@ -61,8 +62,10 @@ term for each target country.
 ## Data
 
 - **Labels.** The 26 lists registered in `data/curated/labels/PLANS.yaml`, each row quoting its page. `PLANS.yaml` keeps four things apart for
-  every list: the attacker, the date, the document type (war plan, requirements study, policy study, exercise, war game,
-  staff-academy lesson, civil-defence list, or a mirror: one side's guess at the other's targets) and an evidence grade.
+  every list: the attacker, the date, the document type (war plan, target selection, requirements study, policy study, exercise, war game,
+  staff-academy lesson, written `training` in the tables, civil-defence list, a mirror: one side's guess at the other's
+  targets, a document disputed between plan and exercise, or a reconstruction by journalists, which is excluded) and an
+  evidence grade.
   Only types the protocol counts as plans count towards a state's model; exercises and lessons are labelled as such
   wherever they are used. Soviet and Warsaw Pact evidence is thin: no Soviet war plan naming places was found, and the
   three registered Warsaw Pact war plans give 6 linked positives between them, none from a plan read at source (REPORT,
@@ -86,22 +89,23 @@ term for each target country.
 ## Method
 
 The analysis was fixed in `configs/protocol.yaml` before the final models were fitted, and changed since only by
-dated amendments, `configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_16.yaml`, each saying what had
+dated amendments, four inside `configs/protocol.yaml` and `configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_16.yaml`, each saying what had
 already been read (one line each in `configs/HISTORY.md`). Results had been read before most of them, so the analysis
 is not blind except on the sealed set.
 
 A town off an incomplete list is treated as unlabeled, not as a negative (positive-unlabeled: each of 50 bagged fits
 keeps all positives and draws as many unlabeled towns). Every model is compared with two baselines on the same towns:
 ranking by population (the "population rule") and population plus one intercept per country. Holdouts are spatial
-blocks of 300 km, leaving out one document at a time, and fitting before 1956 to score later and the reverse. PR-AUC
+blocks of 300 km, leaving out one document at a time, and fitting on documents up to 1956 to score later ones, and the reverse. PR-AUC
 is the primary metric, with paired bootstrap intervals over towns and over blocks, and calibration is reported. A
 state gets its own model only if it passes the gate in the protocol (two independent plans, 50 positives, 15 outside
 its largest plan); every state fails it.
 
 The **sealed set** is the towns of the blocks in `data/curated/splits/sealed_blocks.csv`. No model was fitted on
-them, and they were scored once, after the models were final. Some had been scored by earlier milestone runs before
+them, and they were scored once, after the models were final. Some had been scored by the two test models run before this classifier (the M1 slice and M2 check) before
 the set was drawn; the places no committed run had scored are the **blind places**, the one blind test
-(`data/curated/splits/README.md`).
+(`data/curated/splits/README.md`). That subset was defined after the reading of all sealed places had been seen
+(`configs/protocol_amendment_12.yaml`, which refits nothing).
 
 The map takes the model the protocol's rule selects, draws stockpiles and models together (an attacker's inventory
 times its stated **theatre share**, the part assumed aimed at the scenario's countries, times reliability and

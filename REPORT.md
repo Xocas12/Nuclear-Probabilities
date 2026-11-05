@@ -43,7 +43,9 @@ Under cross-validation inside SAC's 1956 study, the models describe that list a 
   - single document: SAC 1956 (not a state model), logistic, all permitted: -0.01 [-0.06, +0.02], by blocks [-0.04, +0.02]: neither
 
   Against the population rule, 2 of 4 scopes gain by both intervals: global, all attacker documents +0.12 [+0.05, +0.20]; global, plan documents only +0.13 [+0.05, +0.20]. With positives in so few blocks the intervals are wide, and "neither" is not evidence of no
-  effect. On the 272 sealed places the early check (the two test models run before this classifier) had not scored, a larger set that includes places other runs had scored, 2 of 4 models (global, all attacker documents; global, plan documents only) did gain over population plus country; that reading is not blind ("The sealed set, scored once").
+  effect. On the 272 sealed places the early check (the two test models run before this classifier) had not scored, a larger set that includes places other runs had scored, 2 of 4 models (global, all attacker documents; global, plan documents only) did gain over population plus country; that reading is not blind ("The sealed set, scored once"). The blind places were set apart after the reading of all sealed places had been seen
+  (`configs/protocol_amendment_12.yaml`, which refits nothing), and the sealed scores are of the fit made before the
+  corrected West European site table ("Changed by the corrected West European site table").
 
 - **Inside SAC's 1956 study**, under spatial cross-validation, logistic, all permitted scores 0.848 against 0.824
   for population plus a country term: +0.02 [+0.01, +0.03], by blocks [+0.01, +0.04]. Without the features flagged as today's data, and equally without the defence tables as well, the difference is +0.01 [+0.01, +0.02], by blocks [-0.002, +0.03]: at least one interval reaches zero, so it cannot be told from no difference.
@@ -98,8 +100,8 @@ read over its whole universe. Corrected link errors are listed in
 **Transcription.** SAC's lists, about nine positives in ten of what is trained on, were transcribed from the scan by two
 independent passes of vision-language models (Claude agents), with disagreements resolved against the page
 (`data/curated/sac1956/README.md`). A blind audit of a random 5% of rows, 743 lines, found 0 errors in the final reading (95% interval 0 to 0.51%),
-by auditors whose own error rate was 1.3%, so the audit's reading is itself uncertain. On the low-resolution Part II pages, where 270 airfield rows can be compared with a second printing, the confirmed misread
-rate was 3 in 216, well above that bound.
+by auditors whose own error rate was 1.3%, so the audit's reading is itself uncertain. Of the 270 airfield rows that can be compared with a second printing, 216 lie on the low-resolution (about 200 dpi)
+Part II pages, and on those the confirmed misread rate was 3 in 216, well above that bound.
 
 **Links** lose entries too: 318 of SAC's 1,215 complex entries link to no town of the universe (326 of its 873 subcomplex entries; `runs/classifier/link_audit_coverage_subcomplex.csv`), and the share varies by country: China 40 of 119, North Korea 12 of 15, North Vietnam 6 of 8, Albania 3 of 6 (`runs/classifier/link_audit_coverage.csv`). These count entries, not towns. An entry whose cover name stands for a town and its closed city (Kapustin Yar and Znamensk, for example) links to both, so linked complex entries give 2 more towns than their number, while linked subcomplex entries give exactly as many towns as entries.
 
@@ -142,7 +144,7 @@ The one blind test uses the **sealed set**: the 467 places of the sealed blocks,
 seal is a procedure and not a secret. It has been scored once; see below.
 
 - **Models.** Baselines: logistic regression on log population, and the same plus one intercept per
-  country. Candidates: L2 logistic regression and LightGBM (gradient-boosted trees) with fixed settings. Nothing was tuned.
+  country. Candidates: L2-penalised (ridge) logistic regression and LightGBM (gradient-boosted trees) with fixed settings. Nothing was tuned.
 - **Positive-unlabeled.** On a list that does not claim to be complete, a town off it is unlabeled, not a
   negative. Each of 50 fits (**bags**) keeps all positives and draws as many unlabeled towns as the list has positives.
 - **Holdouts.** Leave one document out (a document's lists and towns leave together); spatial blocks of 300 km in
@@ -342,8 +344,8 @@ any of these columns was fitted, a separate reading of the target state's regime
 counts on Soviet towns. None of them enters the primary model or the map. A gain needs both intervals to exclude zero.
 
 Of 37 rows (`runs/classifier/extended.csv` has 49: the Warsaw Pact scope has no SAC rows, so its "other than SAC" rows repeat its "all lists" rows and are counted once): 8 gain, 1 lose, 22 cannot be told apart, 6 are not readings. On a left-out document, the reading that
-matters here, 2 of 12 rows gain, and 0 of the 6 on lists other than SAC. The gains: economic over population in the global, all attacker documents scope on all lists, 0.66 against 0.64; economic over primary in the global, all attacker documents scope on all lists, 0.66 against 0.58. A comparison named "over primary" is against LightGBM on all permitted features, and one named "over population" against LightGBM on the population family, not against the plain population rule. In the global scope the highest of these six models, picked after the fact,
-scores 0.66 over all lists against 0.71 for the plain population rule, and 0.25 on lists other than SAC
+matters here, 2 of 12 rows gain, and 0 of the 6 on lists other than SAC. The gains: economic over population in the global, all attacker documents scope on all lists, 0.66 against 0.64; economic over primary in the global, all attacker documents scope on all lists, 0.66 against 0.58. A comparison named "over primary" is against LightGBM on all permitted features, and one named "over population" against LightGBM on the population family, not against the plain population rule. In the global scope the highest of its six models (population plus the political, economic, national-power or all three
+columns; the primary model plus the political or economic columns), picked after the fact for each list set, scores 0.66 over all lists against 0.71 for the plain population rule, and 0.25 on lists other than SAC
 against 0.23; no paired interval against the population rule was fixed in advance, so the second gap is not a finding. The all-lists rows also rest on the fit with SAC left out, which trains on few positives. Each country-level column has one value per country and year, so within one
 list it can do no more than a country term, and in a pooled list it can identify a document: a gain under spatial blocks
 may be just that. "Model" and "against" are PR-AUC with and without the columns.
@@ -382,7 +384,7 @@ feature, controlling log population and an intercept per list and country; inter
 - **This does not show that SAC avoided defended places.** The S-25 ring surrounds Moscow, so nearby small towns
   may be absorbed into its complex entry rather than listed by name, and air-defence sites may follow large cities.
   The table is not what SAC knew: the S-25 points, from Michael Holm's web pages on Soviet units, carry US designations, while the rest is post-Soviet knowledge.
-- **Warsaw Pact documents, NATO Europe.** Sites within 50 km 0.55 [0.24, 1.23], distance to a Nike or HAWK site 1.77 [0.98, 3.68].
+- **Warsaw Pact documents, NATO Europe.** Sites within 50 km 0.55 [0.24, 1.23], distance to a US surface-to-air missile site (Nike, HAWK) 1.77 [0.98, 3.68].
 - **Defences as targets in themselves.** Some documents name them. Counts of rows or complexes, from the documents' own
   words (`runs/classifier/defence_targets.csv`); the plans' order of strikes is not read here. The Warsaw Pact documents' shares are a finding about
   those few lists. In SAC's study 7 of the 2,087 complex and subcomplex entries that hold a coded installation hold a radar installation (the link figures above count complex entries alone). Across the Warsaw Pact lists 26 of 218 designated rows name a defence, 5 lists of 10. In SAC's Moscow region 34 rows are numbered "M-n"; the study does not say what M means, so they are not counted.
@@ -485,7 +487,7 @@ and how much that matters was not measured.
 **Score.** The selection rule in `configs/protocol.yaml` selected **population rule**, by highest PR-AUC on a left-out document
 (0.71). The candidates ("portable" in the table) use only features that exist in every era without any present-day
 facility data: population, its rank within the country, population within 25, 50 and 100 km, distance to a town of
-100,000, national capital or regional centre, distance to the capital and distance to a coast. So the map's score holds no defence,
+100,000, distance to the capital, distance to a coast, and whether it is the national capital or a regional centre (ten features). So the map's score holds no defence,
 military or national-power term. It is fitted on all attacker documents, exercises included, and is not one
 state's model, because no state passes the gate with enough outside its largest document.
 
@@ -512,19 +514,19 @@ stockpile at its median, then the model at its median. Cells over one half are c
 before each of its towns would. Where most cells are over one half the map says little beyond that. Sealed towns are not scored, so a 1956 cell holding only sealed towns is absent from the map.
 In all 7 scenarios the mean width with the model held at its median is larger than with the stockpile held at its median: the stockpile draws, not the model, make most of the width.
 
-"Delivered" in the tables below is before one more step: towns of the sealed set draw no warheads, so the 1956 map uses the share of people living in scored towns, 0.82, of what is delivered: 1380 delivered at the median and 1130 on scored towns in `us_1956_on_bloc`. Part of the spread of delivered warheads comes from cited inventories and part from the unsourced theatre shares. The theatre share alone accounts for 9% (India, `modern_india_pakistan`) to 96% (France, `modern_us_russia`) of the variance of an attacker's delivered warheads: a first-order Sobol index by the pick-freeze estimator on 20,000 draws, with standard errors up to 0.007 (`runs/probmap/share_variance.csv`).
+"Delivered" in the tables below is before one more step: towns of the sealed set are not scored and draw no warheads, so the 1956 map cuts what is delivered by the share of people living in scored towns, 0.82. That is a population share, not the share of score the sealed towns would hold: they have no score, and the population share is fixed before any model draw. In `us_1956_on_bloc`, of 1380 delivered at the median, 1130 fall on scored towns. Part of the spread of delivered warheads comes from cited inventories and part from the unsourced theatre shares. The theatre share alone accounts for 9% (India, `modern_india_pakistan`) to 96% (France, `modern_us_russia`) of the variance of an attacker's delivered warheads: a first-order Sobol index by the pick-freeze estimator on 20,000 draws, with standard errors up to 0.007 (`runs/probmap/share_variance.csv`).
 
 Counts of warheads and cells are whole below 100 and to the nearest ten from 100, since the theatre shares behind them have no source. In the second table each figure is the median with the 5th to 95th percentile; `on_scored_towns` is "all" where the sealed set holds nobody; `delivered_shares_at_mode` is the interval with every share held at its mode, from separate draws. Holding a share at its mode also moves the centre, so that column is not a split of the interval's width.
 
-| scenario | era | cell_deg | towns | cells | cells_over_half | mean_width_model_only | mean_width_stockpile_only | mean_interval_width |
-|---|---|---|---|---|---|---|---|---|
-| us_1956_on_bloc | historical | 0.50 | 2145 | 1370 | 600 [440, 740] | 0.04 | 0.13 | 0.14 |
-| us_1950_stock_on_bloc | historical | 0.50 | 2145 | 1370 | 6 [3, 9] | 0.01 | 0.02 | 0.02 |
-| ussr_1965_on_west | historical | 0.50 | 1843 | 355 | 290 [200, 330] | 0.02 | 0.31 | 0.31 |
-| modern_us_russia | modern | 1.00 | 1630 | 1170 | 1120 [1040, 1150] | 0.03 | 0.15 | 0.15 |
-| modern_us_russia_half | modern | 1.00 | 1630 | 1170 | 910 [660, 1060] | 0.03 | 0.22 | 0.22 |
-| modern_us_china | modern | 1.00 | 1008 | 715 | 360 [280, 450] | 0.03 | 0.34 | 0.34 |
-| modern_india_pakistan | modern | 1.00 | 255 | 182 | 36 [16, 68] | 0.02 | 0.36 | 0.36 |
+| scenario | era | viewer_label | cell_deg | towns | cells | cells_over_half | mean_width_model_only | mean_width_stockpile_only | mean_interval_width |
+|---|---|---|---|---|---|---|---|---|---|
+| us_1956_on_bloc | historical | Historical | 0.50 | 2145 | 1370 | 600 [440, 740] | 0.04 | 0.13 | 0.14 |
+| us_1950_stock_on_bloc | historical | Counterfactual | 0.50 | 2145 | 1370 | 6 [3, 9] | 0.01 | 0.02 | 0.02 |
+| ussr_1965_on_west | historical | Illustration | 0.50 | 1843 | 355 | 290 [200, 330] | 0.02 | 0.31 | 0.31 |
+| modern_us_russia | modern | Extrapolation | 1.00 | 1630 | 1170 | 1120 [1040, 1150] | 0.03 | 0.15 | 0.15 |
+| modern_us_russia_half | modern | Extrapolation | 1.00 | 1630 | 1170 | 910 [660, 1060] | 0.03 | 0.22 | 0.22 |
+| modern_us_china | modern | Extrapolation | 1.00 | 1008 | 715 | 360 [280, 450] | 0.03 | 0.34 | 0.34 |
+| modern_india_pakistan | modern | Extrapolation | 1.00 | 255 | 182 | 36 [16, 68] | 0.02 | 0.36 | 0.36 |
 
 | scenario | attacker | delivered | on_scored_towns | delivered_shares_at_mode |
 |---|---|---|---|---|

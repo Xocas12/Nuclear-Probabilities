@@ -93,7 +93,7 @@ The floor matters in two places.
 - `transfer_target_unlinked.csv` (14 rows): targets of the smaller lists that a reader could not tie
   to one place. Columns `plan_id`, `seq`, `name_source`, `reason`. `nucprob/transfer/labels.py`
   (`unlinked`) keeps them on their list linked to no town, rather than to the largest town of that
-  name. The Square Leg row is read by nothing since the tenth amendment withdrew that list.
+  name. The Square Leg row is read by nothing since `configs/protocol_amendment_10.yaml` withdrew that list.
 
 ## Matching to GeoNames
 
