@@ -26,11 +26,16 @@ and counts of sites within 50 km, as of a document's date. One rule covers every
   features as of their documents' dates. The US table of 1985 feeds only the US county check, which is no part of
   the results; most of its rows are facilities in use today, so it is not in the tree, and `make us1985` reads it
   back from git history into a git-ignored folder for that check.
-- **A row is a site as of its table's date**, at the coordinate its cited page gives (three or four decimals).
-  Some sites of the 1956 and 1965 tables are still in use, among them air bases that hold nuclear weapons today.
-  Their coordinates are not coarsened: the features are distances to the nearest site, so coarsening would change
-  them and every committed result built on them. Coarsening those rows would need a refit of the classifier and
-  the map; that is left to the owner.
+- **A row is a site as of its table's date.** A row with a recorded end year keeps the coordinate its cited page
+  gives (three or four decimals). A row with no recorded end year may be in use today, so
+  `configs/protocol_amendment_19.yaml` holds it at the centre of its 0.5-degree cell, the map's finest unit (latitude
+  and longitude each floor(2x)/2 + 0.25), and strips coordinate text and remarks on what the site holds today from
+  its other cells; every SAC base row is treated so, since its end year is that of the SAC role, not of the base.
+  `scripts/coarsen_site_coordinates.py` applies the rule and `--check` fails if a table needs it; distances and
+  counts are computed from the cell centres, which moves a site by at most about 39 km.
+- **Git history still holds the exact coordinates.** Every commit before the amendment's merge holds them for these
+  tables, and the US table of 1985 is in history too (`make us1985` reads it back). Removing them needs a rewrite of
+  the published history, which only the repository's owner can do.
 - **No output names a site or gives its coordinates.** Nothing under `runs/`, the viewer, README or REPORT carries
   a site row. The only site coordinates under `runs/` are those of 1956 towns that a headquarters is placed on, in
   the two early per-town prediction tables. `tests/test_site_coordinates.py` checks both.
