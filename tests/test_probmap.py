@@ -695,3 +695,57 @@ def test_the_domain_shift_is_read_feature_by_feature():
     v = pd.read_csv(OUT / "share_variance.csv")
     assert v["variance_share_theatre"].between(-0.05, 1.05).all()
     assert (v["standard_error"] < 0.05).all()
+
+
+def _cited_rows(table: pd.DataFrame, year: int, state: str, basis: str, source: str) -> pd.Series:
+    """The rows of the cited table that an inventory spec names, read without nucprob.probmap.stockpile."""
+    m = (
+        (table["scenario_year"] == year)
+        & (table["state"] == state)
+        & (table["count_basis"] == basis)
+        & (table["source_id"] == source)
+    )
+    return m
+
+
+def test_every_scenario_inventory_is_the_cited_figure():
+    """Each attacker's low and high inventory equals the central figure of the rows of stockpiles.csv that its spec
+    cites (a total, or its delivery rows summed). Fails if inventory returns any number but the cited one."""
+    table = pd.read_csv(st.TABLE)
+    checked = 0
+    for scenario in rn.load_scenarios():
+        for attacker in scenario["attackers"]:
+            for key in ("inventory_low", "inventory_high"):
+                rows = table[
+                    _cited_rows(table, attacker["stock_year"], attacker["state"], *attacker[key])
+                ]
+                total = rows[rows["delivery"] == "unspecified"]
+                want = total if len(total) else rows[rows["delivery"] != "nonstrategic"]
+                assert len(want), (scenario["id"], key)
+                got = st.inventory(table, attacker["stock_year"], attacker["state"], *attacker[key])
+                assert got == pytest.approx(float(want["central"].sum())), (scenario["id"], key)
+                checked += 1
+    assert checked >= 2
+
+
+def test_changing_the_cited_inventory_changes_what_a_scenario_delivers():
+    """End to end from the table: halve the cited rows of the 1956 US scenario and its delivered warheads halve,
+    with the same random draws. Fails if the scenario's warheads do not come from stockpiles.csv."""
+    table = pd.read_csv(st.TABLE)
+    mix = pd.read_csv(st.MIX)
+    attacker = next(s for s in rn.load_scenarios() if s["id"] == "us_1956_on_bloc")["attackers"][0]
+    cited = np.zeros(len(table), dtype=bool)
+    for key in ("inventory_low", "inventory_high"):
+        cited |= _cited_rows(
+            table, attacker["stock_year"], attacker["state"], *attacker[key]
+        ).to_numpy()
+    halved = table.copy()
+    halved.loc[cited, "central"] = halved.loc[cited, "central"] / 2
+
+    def delivered(t: pd.DataFrame) -> np.ndarray:
+        parts = st.draw_by_delivery(attacker, 500, np.random.default_rng(7), t, mix)
+        return sum(p["delivered"] for p in parts.values())
+
+    full, half = delivered(table), delivered(halved)
+    assert np.median(full) > 100
+    assert half == pytest.approx(full / 2)
