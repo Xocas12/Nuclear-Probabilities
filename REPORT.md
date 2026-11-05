@@ -137,7 +137,7 @@ Several are today's data standing in for the past and are flagged. Sources, lice
 ## Method
 
 The analysis is fixed in `configs/protocol.yaml` and changed since only by dated amendments: four inside that file and
-`configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_17.yaml`. Each says what had already been read when it
+`configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_18.yaml`. Each says what had already been read when it
 was written; `configs/HISTORY.md` gives one line per amendment. **It is not blind.** Scores on SAC's spatial folds and
 on the small lists, and later the full results, had been read before amendments corrected labels, links and sector
 boxes. Burza's sector box was drawn after its effect on Burza's scores had been seen. The rule that a block interval needs
@@ -175,28 +175,38 @@ seal is a procedure and not a secret. It has been scored once; see below.
 ### Models against baselines
 
 The selected candidate of each scope. "Trained on" is the smallest number of positives in any fit behind the row, over every grid and fold.
-"Difference, country" is the model against population plus country; "Difference, rule" against the population rule. Rows marked "not a reading" are shown and not counted.
+"Difference, country" is the model against population plus country; "Difference, rule" against the population rule. Rows marked "not a reading" are shown and not counted. "Seeds 1-20" gives the verdicts against population plus country under twenty other bootstrap seeds (below).
 **The temporal rows also change attacker:** 125 of the 126 positives dated after 1956 are on Warsaw Pact or Soviet-lesson lists, and the rest on lists too small to score (`us_1958_taiwan_strait` with 1), so "fit to 1956, score later" tests a US study against the other side's lists, and era and attacker cannot be told apart (`runs/classifier/link_audit_temporal.csv`).
 
-| Scope | Selected | Holdout | Lists | Positives | Trained on | Base rate | Model | Pop. + country | Difference, country | By blocks | Verdict | Pop. rule | Difference, rule |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Global, all attacker documents (exercises included) | LightGBM, all permitted | Spatial blocks | all lists | 1174 | 939 | 0.44 | 0.79 | 0.75 | +0.03 [+0.02, +0.04] | [+0.01, +0.06] | gain | 0.71 | +0.08 [+0.06, +0.10] |
-| Global, all attacker documents (exercises included) | LightGBM, all permitted | Spatial blocks | lists other than SAC | 132 | 939 | 0.07 | 0.29 | 0.19 | +0.11 [+0.05, +0.15] | [+0.02, +0.15] | gain | 0.21 | +0.08 [+0.03, +0.13] |
-| Global, all attacker documents (exercises included) | LightGBM, all permitted | Leave one document out | all lists | 1174 | 131 | 0.44 | 0.58 | 0.71 | -0.13 [-0.16, -0.11] | [-0.17, -0.09] | loss | 0.71 | -0.13 [-0.16, -0.11] |
-| Global, all attacker documents (exercises included) | LightGBM, all permitted | Leave one document out | lists other than SAC | 132 | 1061 | 0.07 | 0.24 | 0.22 | +0.03 [-0.02, +0.08] | [-0.09, +0.08] | neither | 0.22 | +0.02 [-0.03, +0.06] |
-| Global, all attacker documents (exercises included) | LightGBM, all permitted | Fit to 1956, score later | all lists | 126 | 1048 | 0.07 | 0.26 | 0.21 | +0.05 [+0.01, +0.09] | [-0.002, +0.08] | neither | 0.21 | +0.05 [+0.01, +0.09] |
-| Global, all attacker documents (exercises included) | LightGBM, all permitted | Fit after 1956, score earlier | all lists | 1048 | 126 | 0.48 | 0.62 | 0.75 | -0.13 [-0.16, -0.11] | [-0.18, -0.08] | loss | 0.77 | -0.15 [-0.17, -0.12] |
-| Global, all attacker documents (exercises included) | LightGBM, all permitted | Fit after 1956, score earlier | lists other than SAC | 6 | 126 | 0.01 | 0.16 | 0.55 | -0.40 [-0.86, +0.13] | n/a: positives in 4 blocks | neither | 0.55 | -0.40 [-0.86, +0.13] |
-| Global, plan documents only | LightGBM, all permitted | Spatial blocks | all lists | 1055 | 844 | 0.48 | 0.84 | 0.82 | +0.02 [+0.01, +0.03] | [+0.01, +0.04] | gain | 0.76 | +0.08 [+0.06, +0.10] |
-| Global, plan documents only | LightGBM, all permitted | Spatial blocks | lists other than SAC | 13 | 844 | 0.06 | 0.28 | 0.31 | -0.04 [-0.16, +0.09] | [-0.22, +0.03] | neither | 0.35 | -0.07 [-0.21, +0.07] |
-| Global, plan documents only | LightGBM, all permitted | Leave one document out | all lists | 1055 | 12 | 0.48 | 0.64 | 0.77 | -0.13 [-0.15, -0.10] | [-0.18, -0.07] | not a reading | 0.77 | -0.13 [-0.15, -0.10] |
-| Global, plan documents only | LightGBM, all permitted | Leave one document out | lists other than SAC | 13 | 1049 | 0.06 | 0.17 | 0.36 | -0.19 [-0.41, +0.004] | [-0.63, +0.003] | neither | 0.36 | -0.19 [-0.41, +0.004] |
-| Global, plan documents only | LightGBM, all permitted | Fit to 1956, score later | all lists | 7 | 1048 | 0.11 | 0.17 | 0.17 | -0.00 [-0.11, +0.14] | n/a: positives in 2 blocks | neither | 0.17 | -0.00 [-0.11, +0.14] |
-| Global, plan documents only | LightGBM, all permitted | Fit after 1956, score earlier | all lists | 1048 | 7 | 0.48 | 0.48 | 0.78 | -0.30 [-0.32, -0.28] | [-0.34, -0.26] | not a reading | 0.77 | -0.29 [-0.31, -0.27] |
-| Global, plan documents only | LightGBM, all permitted | Fit after 1956, score earlier | lists other than SAC | 6 | 7 | 0.01 | 0.01 | 0.55 | -0.54 [-0.99, -0.30] | n/a: positives in 4 blocks | not a reading | 0.55 | -0.54 [-0.99, -0.30] |
-| Warsaw Pact, pooled (exercise-based, not a war-plan model) | LightGBM, all permitted | Spatial blocks | all lists | 125 | 68 | 0.07 | 0.27 | 0.17 | +0.10 [+0.05, +0.16] | [+0.002, +0.15] | gain | 0.18 | +0.09 [+0.04, +0.16] |
-| Warsaw Pact, pooled (exercise-based, not a war-plan model) | LightGBM, all permitted | Leave one document out | all lists | 125 | 12 | 0.07 | 0.19 | 0.20 | -0.01 [-0.06, +0.05] | [-0.09, +0.08] | not a reading | 0.21 | -0.02 [-0.07, +0.04] |
-| SAC 1956 alone (one document, not a state model) | logistic, all permitted | Spatial blocks | all lists | 1042 | 833 | 0.49 | 0.85 | 0.82 | +0.02 [+0.01, +0.03] | [+0.01, +0.04] | gain | 0.77 | +0.08 [+0.06, +0.10] |
+| Scope | Selected | Holdout | Lists | Positives | Trained on | Base rate | Model | Pop. + country | Difference, country | By blocks | Verdict | Seeds 1-20 | Pop. rule | Difference, rule |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Global, all attacker documents (exercises included) | LightGBM, all permitted | Spatial blocks | all lists | 1174 | 939 | 0.44 | 0.79 | 0.75 | +0.03 [+0.02, +0.04] | [+0.01, +0.06] | gain | 20 gain | 0.71 | +0.08 [+0.06, +0.10] |
+| Global, all attacker documents (exercises included) | LightGBM, all permitted | Spatial blocks | lists other than SAC | 132 | 939 | 0.07 | 0.29 | 0.19 | +0.11 [+0.05, +0.15] | [+0.02, +0.15] | gain | 20 gain | 0.21 | +0.08 [+0.03, +0.13] |
+| Global, all attacker documents (exercises included) | LightGBM, all permitted | Leave one document out | all lists | 1174 | 131 | 0.44 | 0.58 | 0.71 | -0.13 [-0.16, -0.11] | [-0.17, -0.09] | loss | 20 loss | 0.71 | -0.13 [-0.16, -0.11] |
+| Global, all attacker documents (exercises included) | LightGBM, all permitted | Leave one document out | lists other than SAC | 132 | 1061 | 0.07 | 0.24 | 0.22 | +0.03 [-0.02, +0.08] | [-0.09, +0.08] | neither | 20 neither | 0.22 | +0.02 [-0.03, +0.06] |
+| Global, all attacker documents (exercises included) | LightGBM, all permitted | Fit to 1956, score later | all lists | 126 | 1048 | 0.07 | 0.26 | 0.21 | +0.05 [+0.01, +0.09] | [-0.002, +0.08] | neither | 16 gain, 4 neither | 0.21 | +0.05 [+0.01, +0.09] |
+| Global, all attacker documents (exercises included) | LightGBM, all permitted | Fit after 1956, score earlier | all lists | 1048 | 126 | 0.48 | 0.62 | 0.75 | -0.13 [-0.16, -0.11] | [-0.18, -0.08] | loss | 20 loss | 0.77 | -0.15 [-0.17, -0.12] |
+| Global, all attacker documents (exercises included) | LightGBM, all permitted | Fit after 1956, score earlier | lists other than SAC | 6 | 126 | 0.01 | 0.16 | 0.55 | -0.40 [-0.86, +0.13] | n/a: positives in 4 blocks | neither | 20 neither | 0.55 | -0.40 [-0.86, +0.13] |
+| Global, plan documents only | LightGBM, all permitted | Spatial blocks | all lists | 1055 | 844 | 0.48 | 0.84 | 0.82 | +0.02 [+0.01, +0.03] | [+0.01, +0.04] | gain | 20 gain | 0.76 | +0.08 [+0.06, +0.10] |
+| Global, plan documents only | LightGBM, all permitted | Spatial blocks | lists other than SAC | 13 | 844 | 0.06 | 0.28 | 0.31 | -0.04 [-0.16, +0.09] | [-0.22, +0.03] | neither | 20 neither | 0.35 | -0.07 [-0.21, +0.07] |
+| Global, plan documents only | LightGBM, all permitted | Leave one document out | all lists | 1055 | 12 | 0.48 | 0.64 | 0.77 | -0.13 [-0.15, -0.10] | [-0.18, -0.07] | not a reading | 20 not a reading | 0.77 | -0.13 [-0.15, -0.10] |
+| Global, plan documents only | LightGBM, all permitted | Leave one document out | lists other than SAC | 13 | 1049 | 0.06 | 0.17 | 0.36 | -0.19 [-0.41, +0.004] | [-0.63, +0.003] | neither | 20 neither | 0.36 | -0.19 [-0.41, +0.004] |
+| Global, plan documents only | LightGBM, all permitted | Fit to 1956, score later | all lists | 7 | 1048 | 0.11 | 0.17 | 0.17 | -0.00 [-0.11, +0.14] | n/a: positives in 2 blocks | neither | 20 neither | 0.17 | -0.00 [-0.11, +0.14] |
+| Global, plan documents only | LightGBM, all permitted | Fit after 1956, score earlier | all lists | 1048 | 7 | 0.48 | 0.48 | 0.78 | -0.30 [-0.32, -0.28] | [-0.34, -0.26] | not a reading | 20 not a reading | 0.77 | -0.29 [-0.31, -0.27] |
+| Global, plan documents only | LightGBM, all permitted | Fit after 1956, score earlier | lists other than SAC | 6 | 7 | 0.01 | 0.01 | 0.55 | -0.54 [-0.99, -0.30] | n/a: positives in 4 blocks | not a reading | 20 not a reading | 0.55 | -0.54 [-0.99, -0.30] |
+| Warsaw Pact, pooled (exercise-based, not a war-plan model) | LightGBM, all permitted | Spatial blocks | all lists | 125 | 68 | 0.07 | 0.27 | 0.17 | +0.10 [+0.05, +0.16] | [+0.002, +0.15] | gain | 11 gain, 9 neither | 0.18 | +0.09 [+0.04, +0.16] |
+| Warsaw Pact, pooled (exercise-based, not a war-plan model) | LightGBM, all permitted | Leave one document out | all lists | 125 | 12 | 0.07 | 0.19 | 0.20 | -0.01 [-0.06, +0.05] | [-0.09, +0.08] | not a reading | 20 not a reading | 0.21 | -0.02 [-0.07, +0.04] |
+| SAC 1956 alone (one document, not a state model) | logistic, all permitted | Spatial blocks | all lists | 1042 | 833 | 0.49 | 0.85 | 0.82 | +0.02 [+0.01, +0.03] | [+0.01, +0.04] | gain | 20 gain | 0.77 | +0.08 [+0.06, +0.10] |
+
+**Bootstrap seed.** The protocol fixes one seed (1956) for its 2,000 resamples. A review found one
+verdict of this table turning on it, and `configs/protocol_amendment_18.yaml` then fixed a repeat of every
+comparison of this table, against both baselines, under seeds 1 to 20 with nothing refitted
+(`runs/classifier/seed_check_summary.csv`, one row per comparison; `seed_check.csv`, one per seed). Of 42
+comparisons, 35 give the seed-1956 verdict under all 20 seeds. Seed-dependent: Global, all attacker documents (exercises included), spatial blocks, lists other than SAC, against population rule: gain under seed 1956, 18 gain, 2 neither under seeds 1-20; Global, all attacker documents (exercises included), fit to 1956, score later, all lists, against population rule: neither under seed 1956, 16 gain, 4 neither under seeds 1-20; Global, all attacker documents (exercises included), fit to 1956, score later, all lists, against population + country: neither under seed 1956, 16 gain, 4 neither under seeds 1-20; Global, all attacker documents (exercises included), fit to 1956, score later, lists other than SAC, against population rule: neither under seed 1956, 16 gain, 4 neither under seeds 1-20; Global, all attacker documents (exercises included), fit to 1956, score later, lists other than SAC, against population + country: neither under seed 1956, 16 gain, 4 neither under seeds 1-20; Warsaw Pact, pooled (exercise-based, not a war-plan model), spatial blocks, all lists, against population + country: gain under seed 1956, 11 gain, 9 neither under seeds 1-20; Warsaw Pact, pooled (exercise-based, not a war-plan model), spatial blocks, lists other than SAC, against population + country: gain under seed 1956, 11 gain, 9 neither under seeds 1-20. The protocol's verdict stays seed
+1956's. A seed-dependent verdict is read as neither a finding nor its absence: a gain that some seeds do not give is a
+gain only under the committed draws, and a "neither" that most seeds call a gain is not a gain by the protocol. The
+feature-family comparisons and the sealed readings rest on seed 1956 alone: the family fits' scores are not kept,
+and the sealed set's lock allows one reading.
 
 - **The pooled Warsaw Pact model** has 125 positives across 10 lists, mostly exercises and lessons; it is never a war-plan model.
 - **Keeping a left-out document's towns in training**, as the earlier run did, lets a town bring its label from another document
@@ -485,9 +495,10 @@ share of the inventory goes there. Those are assumptions, not findings. **The th
 | modern_us_china | China | 0.50 | 0.75 | 1.00 |
 | modern_india_pakistan | India, Pakistan | 0.50 | 0.75 | 1.00 |
 
-The reliability and loss ranges of every
-historical scenario are one source's 1953 figures for Soviet bombers attacking the US (Foreign Relations of the United States, FRUS, 1952-54, vol. II part 1,
-document 66), standing in for SAC's bombers in 1956 and Soviet missiles and bombers in 1965, because no source for those
+Every historical scenario takes its central reliability (0.65, from the abort, operational-loss and
+ineffective-bomb fractions) and its range of losses to defences (0.07 for mid-1953 to 0.27 for mid-1955) from one source's estimates for Soviet
+bombers attacking the US (Foreign Relations of the United States, FRUS, 1952-54, vol. II part 1, document 66); the
+reliability's spread of plus or minus 0.07 is this study's assumption, not the source's. These stand in for SAC's bombers in 1956 and Soviet missiles and bombers in 1965, because no source for those
 forces was found. A delivered warhead falls on a town with
 probability equal to the town's share of the scenario's total score, and an area's probability is
 1 - (1 - share)^warheads. Nothing is optimised, and no count of weapons by area is computed or written. One interceptor

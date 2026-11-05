@@ -405,6 +405,89 @@ def primary_table(comp: pd.DataFrame, selection: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+SEED_SUMMARY = OUT / "seed_check_summary.csv"
+SEED_KEY = ["scope", "holdout", "lists", "against"]
+SEED_VERDICTS = ("gain", "neither", "loss", "not a reading")
+
+
+def seed_summary() -> pd.DataFrame | None:
+    """The eighteenth amendment's check, if it has been run on these outputs."""
+    if not SEED_SUMMARY.exists():
+        return None
+    return pd.read_csv(SEED_SUMMARY)
+
+
+def seed_counts(s) -> str:
+    """How many of the 20 other seeds give each verdict, largest first, e.g. "11 gain, 9 neither"."""
+    counts = {v: int(s[f"seeds_{v.replace(' ', '_')}"]) for v in SEED_VERDICTS}
+    return ", ".join(f"{n} {v}" for v, n in sorted(counts.items(), key=lambda kv: -kv[1]) if n)
+
+
+def seed_of(r) -> pd.Series | None:
+    s = seed_summary()
+    if s is None:
+        return None
+    hit = s[np.logical_and.reduce([s[k] == r[k] for k in SEED_KEY])]
+    return hit.iloc[0] if len(hit) else None
+
+
+def seed_note(r) -> str:
+    """For README and REPORT prose: empty for a seed-stable verdict, else what the other seeds give."""
+    s = seed_of(r)
+    if s is None or bool(s["seed_stable"]):
+        return ""
+    return (
+        f" That verdict depends on the bootstrap seed: under 20 other seeds, {seed_counts(s)} "
+        "(`configs/protocol_amendment_18.yaml`)."
+    )
+
+
+def with_seeds(primary: pd.DataFrame) -> pd.DataFrame:
+    """The primary table with, beside its verdict, the verdicts of seeds 1-20 against population + country."""
+    s = seed_summary()
+    if s is None:
+        return primary
+    scope = {v: k for k, v in SCOPES.items()}
+    holdout = {v: k for k, v in HOLDOUTS.items()}
+    s = s[s["against"] == PLUS].set_index(["scope", "holdout", "lists"])
+    cells = []
+    for r in primary.itertuples():
+        key = (scope[r.Scope], holdout[r.Holdout], r.Lists)
+        cells.append(seed_counts(s.loc[key]) if key in s.index else "not run")
+    out = primary.copy()
+    out.insert(out.columns.get_loc("Verdict") + 1, "Seeds 1-20", cells)
+    return out
+
+
+def seed_section() -> str:
+    """REPORT's account of the eighteenth amendment's check."""
+    s = seed_summary()
+    if s is None:
+        return (
+            "**Bootstrap seed.** The repeat of these comparisons under other seeds "
+            "(`configs/protocol_amendment_18.yaml`) has not been run on these outputs."
+        )
+    label = {**SCOPES}
+    name = {**HOLDOUTS}
+    moved = s[~s["seed_stable"].astype(bool)]
+    stable = len(s) - len(moved)
+    items = "; ".join(
+        f"{label[r.scope]}, {name[r.holdout].lower()}, {r.lists}, against {r.against}: "
+        f"{r.verdict_seed_1956} under seed 1956, {seed_counts(r._asdict())} under seeds 1-20"
+        for r in moved.itertuples()
+    )
+    moved_text = f" Seed-dependent: {items}." if len(moved) else " None is seed-dependent."
+    return f"""**Bootstrap seed.** The protocol fixes one seed (1956) for its 2,000 resamples. A review found one
+verdict of this table turning on it, and `configs/protocol_amendment_18.yaml` then fixed a repeat of every
+comparison of this table, against both baselines, under seeds 1 to 20 with nothing refitted
+(`runs/classifier/seed_check_summary.csv`, one row per comparison; `seed_check.csv`, one per seed). Of {len(s)}
+comparisons, {stable} give the seed-1956 verdict under all 20 seeds.{moved_text} The protocol's verdict stays seed
+1956's. A seed-dependent verdict is read as neither a finding nor its absence: a gain that some seeds do not give is a
+gain only under the committed draws, and a "neither" that most seeds call a gain is not a gain by the protocol. The
+feature-family comparisons and the sealed readings rest on seed 1956 alone: the family fits' scores are not kept,
+and the sealed set's lock allows one reading."""
+
+
 def verdicts(table: pd.DataFrame) -> dict[str, int]:
     return table["Verdict"].value_counts().to_dict()
 
@@ -606,9 +689,10 @@ share of the inventory goes there. Those are assumptions, not findings. **The th
 
 {markdown(_theatre_table())}
 
-The reliability and loss ranges of every
-historical scenario are one source's 1953 figures for Soviet bombers attacking the US (Foreign Relations of the United States, FRUS, 1952-54, vol. II part 1,
-document 66), standing in for SAC's bombers in 1956 and Soviet missiles and bombers in 1965, because no source for those
+Every historical scenario takes its central reliability (0.65, from the abort, operational-loss and
+ineffective-bomb fractions) and its range of losses to defences (0.07 for mid-1953 to 0.27 for mid-1955) from one source's estimates for Soviet
+bombers attacking the US (Foreign Relations of the United States, FRUS, 1952-54, vol. II part 1, document 66); the
+reliability's spread of plus or minus 0.07 is this study's assumption, not the source's. These stand in for SAC's bombers in 1956 and Soviet missiles and bombers in 1965, because no source for those
 forces was found. A delivered warhead falls on a town with
 probability equal to the town's share of the scenario's total score, and an area's probability is
 1 - (1 - share)^warheads. Nothing is optimised, and no count of weapons by area is computed or written. One interceptor
@@ -1858,10 +1942,12 @@ seal is a procedure and not a secret. {_sealed_status()}
 ### Models against baselines
 
 The selected candidate of each scope. "Trained on" is the smallest number of positives in any fit behind the row, over every grid and fold.
-"Difference, country" is the model against population plus country; "Difference, rule" against the population rule. Rows marked "not a reading" are shown and not counted.
+"Difference, country" is the model against population plus country; "Difference, rule" against the population rule. Rows marked "not a reading" are shown and not counted. "Seeds 1-20" gives the verdicts against population plus country under twenty other bootstrap seeds (below).
 **The temporal rows also change attacker:** {later_pact} of the {int(later["positives"].sum())} positives dated after 1956 are on Warsaw Pact or Soviet-lesson lists, and the rest on lists too small to score ({_unscored_note(lists)}), so "fit to 1956, score later" tests a US study against the other side's lists, and era and attacker cannot be told apart (`runs/classifier/link_audit_temporal.csv`).
 
-{markdown(primary)}
+{markdown(with_seeds(primary))}
+
+{seed_section()}
 
 - **The pooled Warsaw Pact model** has {int(pool["linked_positives"])} positives across {int(scopes.loc[pooled, "lists"])} lists, mostly exercises and lessons; it is never a war-plan model.
 - **Keeping a left-out document's towns in training**, as the earlier run did, lets a town bring its label from another document
@@ -1986,6 +2072,81 @@ least one linked positive: the US's come to policy and requirements studies and 
 README_START = "<!-- results: generated by python -m nucprob.classifier.report -->"
 README_END = "<!-- end of results -->"
 
+# How a feature family reads in README's answer to its first question.
+FAMILY_WORDS = {
+    "national_power over population": "national power (the Correlates of War project's (COW) National Material Capabilities) over population alone",
+    "administration": "administrative status (capital, regional centre, distance to the capital)",
+    "geography": "geography (elevation, relief, distance to the coast)",
+    "industry": "industry (one power-plant column)",
+    "transport": "transport (railways, ports, airfields; largely today's data)",
+    "military": "military sites of the document's date",
+    "defence": "air and missile defence sites",
+    "national_power": "national power over population and country",
+}
+NEAR_ZERO = 0.005
+
+
+def _odds_50km() -> str:
+    d = pd.read_csv(OUT / "defence.csv")
+    d = d[
+        d["rows_described"].str.startswith("US 1956")
+        & (d["feature"] == "log_air_defence_sites_50km")
+    ].iloc[0]
+    return f"{d['odds_ratio_per_tenfold']:.2f} [{d['low']:.2f}, {d['high']:.2f}]"
+
+
+def _sac_base_rate() -> float:
+    comp = pd.read_csv(OUT / "comparison.csv")
+    return float(
+        _row(
+            comp,
+            SAC_SCOPE,
+            "spatial blocks",
+            _best(pd.read_csv(OUT / "selection.csv"), SAC_SCOPE),
+            PLUS,
+        )["base_rate"]
+    )
+
+
+def _readme_families() -> str:
+    """README's answer to "what made a place a target": the feature-family reading of SAC's list."""
+    fam = pd.read_csv(OUT / "family_gain.csv")
+    fam["verdict"] = fam.apply(lambda r: "not a reading" if constant(r) else r["verdict"], axis=1)
+
+    def line(rows: str) -> str:
+        g = fam[fam["rows"] == rows].sort_values("delta", ascending=False)
+        gains = g[g["verdict"] == "gain"]
+        rest = g[g["verdict"] != "gain"]
+        said = "; ".join(
+            f"{FAMILY_WORDS[r.family]} {interval(r._asdict())}, by blocks {block_interval(r._asdict())}"
+            for r in gains.itertuples()
+        )
+        other = ", ".join(f"{FAMILY_WORDS[r.family]} ({r.verdict})" for r in rest.itertuples())
+        return f"{said}. Not gaining: {other}" if other else f"{said}."
+
+    base = fam[(fam["rows"] == "all countries") & (fam["base"] == "base")].iloc[0]
+    su = fam[(fam["rows"] == "USSR") & (fam["base"] == "base")].iloc[0]
+    pop = fam[(fam["rows"] == "all countries") & (fam["base"] == "population only")].iloc[0]
+    gains = fam[fam["verdict"] == "gain"]
+    near = gains[gains["block_low"] < NEAR_ZERO]
+    near_text = ", ".join(
+        f"{r.family} ({r.rows}, {signed(r.block_low)})" for r in near.itertuples()
+    )
+    return f"""- **What the lists favour beyond population, on SAC's 1956 study alone.** Population carries most of it: ranked
+  by population alone SAC's complexes score {pop["base_pr_auc"]:.2f}, and with a country term {base["base_pr_auc"]:.2f}, on a base rate of {_sac_base_rate():.2f}.
+  Each family added to population and country (LightGBM, spatial blocks, one bag per fit):
+  {line("all countries")}.
+  Soviet towns alone, from {su["base_pr_auc"]:.2f}: {line("USSR")}.
+  Each gain is at most {gains["delta"].max():.2f} of PR-AUC. These are associations within one requirements study, not
+  causes and not a reading on any other document. A family that gains helps rank towns; it does not say in which
+  direction. For defences: listed Soviet towns had fewer defence sites within 50 km than log population and
+  country predict (odds ratio per tenfold {_odds_50km()}).
+  REPORT ("Defences") gives why this does not show that SAC avoided defended places.
+  {len(near)} of the {len(gains)} gains have a block lower bound under {NEAR_ZERO}: {near_text}. Unlike the primary comparisons
+  these were not repeated under other bootstrap seeds, since the family fits' scores are not kept
+  (`configs/protocol_amendment_18.yaml`). Intervals: `runs/classifier/family_gain.csv`.
+"""
+
 
 def readme_results() -> str:
     """What README.md says of the results, so that a figure there cannot drift from the outputs."""
@@ -2027,16 +2188,16 @@ only), a pooled Warsaw Pact scope, and SAC's 1956 study alone. A **linked positi
 of the place universe. The **population rule** ranks towns by population alone; **population plus country** adds a
 term for each target country.
 
-{_readme_blind()}- **Inside SAC's list**, under spatial cross-validation, the selected model beats population plus a country term by
-  {interval(sac)}, by blocks {block_interval(sac)}: {claim(sac)}. {_repeats(clean, strict)} Those repeats still use the 1959 Soviet census and other late inputs
+{_readme_blind()}{_readme_families()}- **Inside SAC's list**, under spatial cross-validation, the selected model beats population plus a country term by
+  {interval(sac)}, by blocks {block_interval(sac)}: {claim(sac)}.{seed_note(sac)} {_repeats(clean, strict)} Those repeats still use the 1959 Soviet census and other late inputs
   (REPORT, "Inputs later than the document"). The analysis is not blind: earlier results had been read (REPORT, Method).
 - **On lists other than SAC's**, under the same spatial cross-validation, the global model on all attacker documents
-  (exercises included) against population plus country is {interval(other)}, by blocks {block_interval(other)}: {claim(other)}. {_other_lists_basis(lists, other, g_best)} The held-out
+  (exercises included) against population plus country is {interval(other)}, by blocks {block_interval(other)}: {claim(other)}.{seed_note(other)} {_other_lists_basis(lists, other, g_best)} The held-out
   blocks' documents are also in training, so this is not a reading on an unseen document (next point).
 - **On a document the model has not seen**, the richer model against ranking towns by population is {interval(lopo)},
-  by blocks {block_interval(lopo)} over all lists, which SAC dominates. On lists other than SAC it is {interval(rest)}, by blocks {block_interval(rest)}: {claim(rest)}.
+  by blocks {block_interval(lopo)} over all lists, which SAC dominates.{seed_note(lopo)} On lists other than SAC it is {interval(rest)}, by blocks {block_interval(rest)}: {claim(rest)}.{seed_note(rest)}
   So no model has been shown to do better than population on an unseen document.
-- **No state gets its own model.** The US has {int(us["linked_positives"])} linked positives, but only {int(us["positives_outside_largest"])} outside one document and the
+{_readme_seeds()}- **No state gets its own model.** The US has {int(us["linked_positives"])} linked positives, but only {int(us["positives_outside_largest"])} outside one document and the
   pre-committed gate asks for {_rule_outside()}. The USSR has 0 positives in a document registered as a war plan, and {int(su_pos)} town-list pairs from staff-academy lessons.
   A pooled Warsaw Pact model is allowed and is always labelled exercise-based. Refusals: `runs/classifier/state_gate.csv`.
 - **Economic and political data** (regime, defence pacts, GDP per capita, Soviet defence plants), read apart under an
@@ -2052,6 +2213,25 @@ term for each target country.
   town above a random training town; 0.5 would mean no shift) on {_shift_features(shift)} features both sets have (population, its rank, population within 25-100 km,
   distances to a town of 100,000, the capital and the coast, capital and regional-centre status), with
   {log_pop["value"]:.0%} outside the training's 1st-99th percentile on the one feature the score reads, and no modern label exists to test them."""
+
+
+def _readme_seeds() -> str:
+    """README's line on the eighteenth amendment's seed check."""
+    s = seed_summary()
+    if s is None:
+        return "- **Bootstrap seed.** The repeat of the primary comparisons under other seeds has not been run.\n"
+    moved = s[~s["seed_stable"].astype(bool)]
+    label = {k: v.split(" (")[0] for k, v in SCOPES.items()}
+    items = "; ".join(
+        f"{label[r.scope]}, {r.holdout}, {r.lists}, against {r.against}: {r.verdict_seed_1956} under the protocol's seed, "
+        f"{seed_counts(r._asdict())} under seeds 1-20"
+        for r in moved.itertuples()
+    )
+    return f"""- **Bootstrap seed.** Every primary comparison was repeated under 20 other bootstrap seeds with nothing refitted
+  (`configs/protocol_amendment_18.yaml`, after a review found one verdict turning on the seed). {len(s) - len(moved)} of {len(s)}
+  keep their verdict under all 20.{f" Seed-dependent: {items}. Such a verdict, either way, holds only under the committed draws and is not read as a finding." if len(moved) else ""}
+  The feature-family readings above were not repeated (REPORT, "Bootstrap seed").
+"""
 
 
 # How the doc_type values of PLANS.yaml read in prose, for the README's account of what a reading rests on.

@@ -1,0 +1,38 @@
+{
+  "created": "2026-11-05T14:05:35+00:00",
+  "git_commit": "c0648a1c6bec9a71545e07becd5fefd8258e852f",
+  "git_dirty": false,
+  "amendment": "configs/protocol_amendment_18.yaml",
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+  ],
+  "bootstrap": 2000,
+  "inputs": {
+    "runs/classifier/comparison.csv": "9550f8fe9638417c8f8d332b3d9649ba2a060aefc7e3d2816549f060e4916bb5",
+    "runs/classifier/held_out_scores.csv.gz": "0e7ebbcad84f375bec6318efdaf52484b4718f20f5badc751c3863d50503a2fa",
+    "runs/classifier/selection.csv": "3e90d4c676600dcd3fcaec5363b43e7fa591c1c31bf5d75e5487d324a92abc42"
+  },
+  "outputs": {
+    "runs/classifier/seed_check.csv": "df19f736ad526df445c820a6ba54cee3d8ba399a4e682881b950c3b024ec9de6",
+    "runs/classifier/seed_check_summary.csv": "cb897256ec26f5ae447b93f6857121e91fad50c78a01d9676e698509c4817afa"
+  }
+}

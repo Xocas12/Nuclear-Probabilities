@@ -23,6 +23,7 @@ MANIFESTS = [
     CLASSIFIER / "extended_manifest.json",
     CLASSIFIER / "defence_targets_manifest.json",
     CLASSIFIER / "link_audit_manifest.json",
+    CLASSIFIER / "seed_check_manifest.json",
     RUNS / "evidence" / "manifest.json",
     MAP / "manifest.json",
     CLASSIFIER / "sealed" / "blind" / "manifest.json",
