@@ -12,7 +12,7 @@ assumptions: {reading: 'Attacker pairs, theatre shares and mid-points are assump
     is a stated assumption there.',
   reliability_historical: '0.65, from 0.2 abort, 0.1 operational loss and 0.1 ineffective bombs (frus_1952_54v02p1_d66):
     figures about Soviet bombers attacking the US in 1953, standing in for lack of any source on other
-    forces. +/- 0.07 is stated.', losses_historical: '0.07 to 0.27: attrition by US defences of Soviet
+    forces. The +/- 0.07 around it is this study''s assumption, not a source figure.', losses_historical: '0.07 to 0.27: attrition by US defences of Soviet
     bombers, mid-1953 to mid-1955 estimates (frus_1952_54v02p1_d66), the same stand-in. Mode is the mid-point.
     No source was found for US bombers attacking the USSR in 1956.', losses_modern: 'No published fraction
     was found. Instead interceptors: 44 US GMD (csis_gmd) and 68 Russian A-135 (wiki_a135, weak), each
@@ -26,9 +26,10 @@ scenarios:
   universe: bloc_1956
   cell_deg: 0.5
   evidence: 'Evidence: mostly the SAC 1956 requirements study, not a war plan, and it trained the score.'
-  note: 'US inventory of 1956, bombers only, on the bloc towns of the study outside the sealed set. Reliability (0.58 to 0.72) and the share lost to defences (0.07 to 0.27) are 1953 US government estimates (Foreign Relations of the United States, FRUS) for Soviet bombers
-    attacking the US, a stand-in: no source
-    was found for US bombers over the USSR.'
+  note: 'US inventory of 1956, bombers only, on the bloc towns of the study outside the sealed set. Reliability (central 0.65, a 1953 US government estimate; the +/- 0.07 around it is this study''s assumption)
+    and the share lost to defences (0.07 to 0.27, estimates for mid-1953 to mid-1955) come from Foreign Relations of the
+    United States (FRUS) 1952-54 vol. II, doc. 66, on Soviet bombers attacking the US, a stand-in: no source was found
+    for US bombers over the USSR.'
   attackers:
   - state: US
     stock_year: 1956
@@ -48,8 +49,8 @@ scenarios:
   cell_deg: 0.5
   compare_with: us_1956_on_bloc
   evidence: 'A counterfactual, not a document: same towns and score as 1956, smaller stockpile.'
-  note: Only the stockpile differs from the 1956 scenario, which supplies its reliability and losses (1953 FRUS
-    estimates for Soviet bombers attacking the US).
+  note: Only the stockpile differs from the 1956 scenario, which supplies its reliability and losses (FRUS 1952-54
+    vol. II, doc. 66, US estimates of 1953-55 for Soviet bombers attacking the US).
   attackers:
   - state: US
     stock_year: 1950
@@ -68,7 +69,9 @@ scenarios:
   evidence: 'Evidence: Warsaw Pact exercises and lessons, none a Soviet war plan. The searches recorded
     in data/notes found no declassified Soviet strategic target list.'
   note: 'Soviet inventory of 1965; the share aimed at Western Europe is a stated assumption. Towns carry
-    populations of about 1961. Reliability (0.58 to 0.72) and the share lost to defences (0.07 to 0.27) are 1953 US estimates (FRUS) for Soviet bombers attacking the US, a stand-in for Soviet forces over Western Europe.'
+    populations of about 1961. Reliability (central 0.65, a 1953 US estimate; the +/- 0.07 around it is this study''s assumption)
+    and the share lost to defences (0.07 to 0.27, estimates for mid-1953 to mid-1955) come from FRUS 1952-54 vol. II,
+    doc. 66, on Soviet bombers attacking the US, a stand-in for Soviet forces over Western Europe.'
   attackers:
   - state: USSR
     stock_year: 1965
