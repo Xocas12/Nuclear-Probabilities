@@ -1629,6 +1629,7 @@ FITTED_RUN = OUT / "sealed" / "fitted_run"
 
 
 BEFORE_17 = OUT / "before_amendment_17"
+BEFORE_19 = OUT / "before_amendment_19"
 
 
 def _moved(was_dir, now_dir) -> tuple[str, str]:
@@ -1702,12 +1703,37 @@ the fit on the earlier table (`runs/classifier/sealed/fitted_run/`). {verdicts_t
 """
 
 
+def _amendment_19() -> str:
+    """The nineteenth amendment's paragraph: every primary verdict that moved between the run kept in
+    before_amendment_19/ and the refit without the Dutch towns and with sites at cell centres. Empty until then."""
+    if not (BEFORE_19 / "comparison.csv").exists() or _table_of(BEFORE_19) == _table_of(OUT):
+        return ""
+    verdicts_text, sel_text = _moved(BEFORE_19, OUT)
+    sel_text = sel_text.replace(
+        "Every scope selects the same model as before, so the sealed and blind rows are of the models this "
+        "refit selects, fitted on the earlier table.",
+        "Again every scope selects the same model as before.",
+    )
+    return f"""
+### Changed by the nineteenth amendment
+
+`configs/protocol_amendment_19.yaml` withdrew the Netherlands' 1960 towns, whose census volume came through a path
+robots.txt disallows, so the Dutch rows of Lato-67, the 1977 staff-academy lessons and Soyuz-75 link to no town and
+Soyuz-75, all of whose rows are Dutch, is no longer scored. It held every site with no recorded end year, and every
+SAC base, at the centre of its 0.5-degree cell, which moves those sites by up to about 39 km and with them the
+distance and count features, and it dropped two Czechoslovak headquarters rows whose only source refuses this project's agents. Every
+classifier step and the map were run again; the run before it is kept in `runs/classifier/before_amendment_19/`. The
+sealed set was not scored again. {verdicts_text}{sel_text}
+"""
+
+
 def _amendment_17() -> str:
     """The seventeenth amendment's paragraph: every primary verdict that moved between the run kept in
     before_amendment_17/ and the refit on the corrected links. Empty until that refit is committed."""
-    if not (BEFORE_17 / "comparison.csv").exists() or _table_of(BEFORE_17) == _table_of(OUT):
+    after_17 = BEFORE_19 if (BEFORE_19 / "comparison.csv").exists() else OUT
+    if not (BEFORE_17 / "comparison.csv").exists() or _table_of(BEFORE_17) == _table_of(after_17):
         return ""
-    verdicts_text, sel_text = _moved(BEFORE_17, OUT)
+    verdicts_text, sel_text = _moved(BEFORE_17, after_17)
     if sel_text.strip().startswith("Every scope selects the same model as before"):
         sel_text = sel_text.replace(
             "Every scope selects the same model as before, so the sealed and blind rows are of the models this "
@@ -2143,7 +2169,7 @@ The selected candidate of each scope. "Trained on" is the smallest number of pos
 
 {_blind_section()}
 {_sealed_section()}
-{_amendment_16()}{_amendment_17()}
+{_amendment_16()}{_amendment_17()}{_amendment_19()}
 ### What the gains rest on
 
 Each scope's selected candidate against population plus country under spatial blocks, with columns removed.
