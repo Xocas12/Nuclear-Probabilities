@@ -1,4 +1,4 @@
-# Progress log, 3 October to 3 November 2026
+# Progress log, 3 October to 5 November 2026
 
 Dated notes moved out of PLAN.md section 9, newest first. They are a historical record: each figure is of its
 date, on the labels and code of that date, and many were later superseded. Current results are in REPORT.md and
@@ -7,8 +7,8 @@ date, on the labels and code of that date, and many were later superseded. Curre
 **Progress (3 Nov 2026).** The sealed set was scored once under `configs/protocol_amendment_11.yaml`, committed before the scores existed (`runs/classifier/sealed/`, REPORT.md "The sealed set, scored once").
 
 **Progress (1 Nov 2026).** The protocol is committed and M6 and part of M7 run under it: global, US and
-pooled Warsaw Pact models (`REPORT.md`, `runs/classifier/`). This repo's brief supersedes the zoo of
-section 5.4: two candidates with fixed settings, no tuning. The sealed set waits for review.
+pooled Warsaw Pact models (`REPORT.md`, `runs/classifier/`). The protocol (`configs/protocol.yaml`) replaces the
+zoo of section 5.4: two candidates with fixed settings, no tuning. The sealed set waits for review.
 
 **Progress (10 Oct 2026, evening).** M4 is done.
 - **NAPB-90 Annex B** (fallout risk by county, `data/curated/napb90/fallout_counties.csv`).

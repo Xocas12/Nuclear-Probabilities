@@ -559,42 +559,17 @@ that is reported too.
 
 ---
 
-## 7. Phase 5 — Interactive map
+## 7. Phase 5 — Map viewer
 
-- **Stack.**
-  - Python exports (GeoParquet → GeoJSON/FlatGeobuf) feed a static page.
-  - The page uses MapLibre GL JS + deck.gl (ScatterplotLayer, H3HexagonLayer).
-  - There is no server; it deploys to GitHub Pages.
-  - Prototyping in notebooks uses `lonboard`/`pydeck`.
-- **Base map.** Borders as they stood at the selected plan's date (CShapes 2.0), not today's.
-  This also removes any need for a tile server.
-- **Model level selector**: global / country / regime type / hierarchical. Switching level
-  recolours the map, so the places where country-specific logic matters stand out.
-- **Views:**
-  - **Actual**: the DGZs of the selected plan by list and category, sized by priority.
-  - **Predicted**: places coloured by calibrated P(target), with a model selector.
-  - **Errors**: false positives and false negatives highlighted.
-  - **Drivers**: pick a feature, and every place is coloured by that feature's SHAP
-    contribution. This shows where population, defence industry or airfields push
-    targeting up or down.
-  - **Surface**: the H3 probability surface from the cell model.
-  - **Compare**: Part I vs. the Part II restricted allocation, and other plans where data
-    exist.
-- **Place card** (click a place):
-  - its names, in 1956 and today;
-  - population;
-  - actual DGZs and their categories;
-  - P(target) from each model;
-  - a SHAP waterfall.
-- **Side panel.**
-  - Family-ablation bars per level, so drivers can be compared across a country and its
-    regime group; clicking a bar switches the map to that family's contribution.
-  - The transfer matrix (train on country *i*, score on country *j*) as a clustered heatmap.
-  - Countries shaded by regime type or alignment at the plan's date.
-  - Filters by country, list and probability.
-  - Name search.
-- **Context layers.** 1956 SAC bases with notional reach rings, airfields, defence plants,
-  railways.
+The first draft of this section designed an interactive per-place map (place cards, per-town predictions and
+errors, base-reach layers). It was not built and is not part of the project: the project's limits allow only an
+aggregated map, so per-place views of predictions and anything showing reach or routes are out. The first draft
+is in this file's git history.
+
+What was built is one static page, `runs/probmap/viewer/index.html`, made by `make viewer` from the committed
+outputs of `runs/probmap/`. It shows each scenario's probability of an area being struck on 0.5-degree cells (1 degree
+for modern scenarios), with its interval, labels every map as hypothetical and every modern scenario as extrapolation,
+and names the theatre shares that have no source. It has no town names, no ranked lists and no site layers.
 
 ---
 
@@ -623,7 +598,7 @@ nuclear-probabilities/
     explain/             ablation, permutation, SHAP, ALE
     viz/                 exports for the web map
   configs/protocol.yaml  frozen before any training
-  web/                   static MapLibre + deck.gl app
+  (no web/ app: the viewer is one static page written by nucprob.probmap.viewer; section 7)
   runs/                  outputs, each with a manifest (protocol hash, data hashes, git SHA)
   tests/                 parsers, coordinate and BE checks, gazetteer matching,
                          leakage guard, split integrity
