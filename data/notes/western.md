@@ -93,7 +93,7 @@ No CSV for: JIC 329/1, Norstad 1945, France 1959, Taiwan Strait 1958, MacArthur 
   (/node/4496) contain no "Norstad"/"Soviet cities"/"Atomic Bomb Production" document (text search of the pages).
   blog.nuclearsecrecy.com was not visited (cookie challenge). A Wayback CDX query for the May 2012 blog posts failed
   (connection reset, retried about 20 times in a background loop).
-- The figures in the owner's instructions (66 cities, 204 bombs, 15 first-priority cities, 21 Manchurian cities) remain **unverified**. No CSV.
+- The figures 66 cities, 204 bombs, 15 first-priority cities and 21 Manchurian cities were given to this project without a source and remain **unverified**. No CSV.
 
 ## 4. Pelopidas & Philippe, "Unfit for purpose ...", Cold War History 21(3), 2021 (doi 10.1080/14682745.2020.1832472)
 

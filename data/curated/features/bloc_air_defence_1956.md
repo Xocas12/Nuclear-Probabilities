@@ -37,7 +37,7 @@ the S-25 area row (`S-25 Berkut system, Moscow area`), whose point is central Mo
   ПВО*, *Бакинский округ ПВО* (wikitext read through `action=raw`). 726 pages were saved, with at
   least 1.2 s between requests on each stream. 17 pages came back empty while two streams ran and
   were fetched again singly. The 303 distinct URLs in `source` were all opened. `robots.txt` returned 404, so no
-  rules were published. The URL in the owner's instructions, `new/pvo/`, returned 403 (no directory listing), so
+  rules were published. The section's index URL, `new/pvo/`, returned 403 (no directory listing), so
   the crawl started from `new/pvo/pvo.htm`.
 - **Selection rule, fighter divisions and regiments.** Every page on the two lists was parsed for
   its dated `Bases` and `Subordination` lines.
@@ -81,7 +81,7 @@ the S-25 area row (`S-25 Berkut system, Moscow area`), whose point is central Mo
   them; these pages do.
 - **The site codes do not match Wikipedia's split.** Holm's codes give 22 C sites and 33 E sites,
   with the 756th uncoded; en-Wikipedia gives 24 inner and 32 outer. Holm calls E-coded sites the
-  outer ring (`sam/1284zrp.htm`). Reading C as inner is my inference.
+  outer ring (`sam/1284zrp.htm`). Reading C as inner is an inference of this card, not the source's statement.
 - **June 1956 is contested for the outer ring.**
   - en-Wikipedia says combat ready in June 1956, with site construction through 1958.
   - ru-Wikipedia says second-echelon regiments began combat duty in July 1956.
@@ -153,8 +153,8 @@ may measure Holm's coverage in part.
 - **Anti-aircraft artillery.** The AAA divisions and regiments that were much of 1956 air defence
   are not a role here. Holm names a few only in passing (the 78th, 95th and 100th).
 - **SAM pages.** The crawl was stopped once S-25 and radar were complete, leaving 184 of the 259
-  pages on the SAM lists unopened. They are not named in the S-25 corps lists, so I expect them to
-  be later S-75 and S-125 units, but that was not checked page by page.
+  pages on the SAM lists unopened. They are not named in the S-25 corps lists, so they are probably
+  later S-75 and S-125 units, but that was not checked page by page.
 - **Radar.** Companies and radar models are not given. Holm's list is regiments and brigades only.
 - **Satellites.** Polish, Czechoslovak, East German and Romanian air defence pages begin in 1959 or
   later; their predecessors are named without 1956 dates. Only Budaörs (Hungary) and the two

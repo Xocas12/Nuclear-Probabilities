@@ -44,13 +44,13 @@ eye from the scan (they are noted in `notes`). Three duplicate scan pages were d
   and the gap is exactly Okinawa's two cities (83,302), because the census's All-Japan row
   (72,539,729) leaves Okinawa out. The 47 prefecture rows sum to 73,114,308, the known 1940 total.
   Tokyo (6,778,804) and the largest cities are present.
-- **Towns:** I classified town vs village by reading every candidate row's 町/村 character on the
+- **Towns:** Town and village were told apart by reading every candidate row's 町/村 character on the
   scan, 717 rows in all. 411 towns, totalling 6.88 M. Cities plus towns = 34.46 M, or 47% of the population.
 - 168 cities is the expected number for late 1940.
 
 ## Doubts
 - Some town rows may be missing. If OCR failed so badly on a row that no reading reached 9,000, the
-  row was never flagged for review. I scanned the six worst pages by eye; other pages could still
+  row was never flagged for review. The six worst pages were checked by eye; other pages could still
   hide a few towns just over 10,000.
 - Town names are as printed, read by eye. A few printed romanizations are odd (e.g. "Kutchan" for 倶知安,
   "Hayame" for 駛馬, "Horigawa"). Two different Aichi towns are both called Shinkawa.

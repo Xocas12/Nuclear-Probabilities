@@ -32,7 +32,7 @@ The preferred source, OPCS *Census 1981: Key Statistics for Urban Areas* (HMSO 1
 
 ## Columns
 - `admin1` is the county for England and Wales (1974–96 counties, with the metropolitan counties still existing in 1981), the region or islands area for Scotland, and the district council area for NI.
-- `name` is the Nomis label. Nomis uses the later pre-1996 names. Where I know the 1981 name differed, `notes` gives it (for example North Bedfordshire for Bedford, Bracknell, West Derbyshire, Wimborne, Yeovil, Langbaurgh, Beverley, Anglesey, Preseli, Tiverton, Montgomery, Radnor, North Wolds, Eastwood, Tweeddale). These rename dates come from my memory and are unverified.
+- `name` is the Nomis label. Nomis uses the later pre-1996 names. Where the 1981 name is believed to differ, `notes` gives it (for example North Bedfordshire for Bedford, Bracknell, West Derbyshire, Wimborne, Yeovil, Langbaurgh, Beverley, Anglesey, Preseli, Tiverton, Montgomery, Radnor, North Wolds, Eastwood, Tweeddale). These rename dates were written from recall, with no source, and are unverified.
 - `capital` is 1 only on the City of Westminster. London appears as its 32 boroughs.
 - `admin1_seat` is 1 for the district that contained the county or regional council headquarters, so it is 1 for Blaby (Glenfield, Leicestershire) and Rushcliffe (West Bridgford, Nottinghamshire). Surrey (County Hall at Kingston, inside Greater London) and Mid Glamorgan (sat in Cardiff) have no seat row. Castlereagh DC has no town of 10k+ that was its seat.
 
