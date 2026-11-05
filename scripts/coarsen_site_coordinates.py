@@ -29,6 +29,7 @@ TABLES = {
 COORD = [
     re.compile(r":?\s*\{\{\s*[Cc]oord\s*\|[^}]*\}\}"),
     re.compile(r":?\s*lat\s*=\s*-?[\d.]+[^)]*?lon\w*\s*=\s*-?[\d.]+"),
+    re.compile(r":?\s*(?:long?\s*=\s*-?[\d.]+\s*\|?\s*)?lat\s*=\s*-?[\d.]+(?:\s*\|?\s*long?\s*=\s*-?[\d.]+)?"),
     re.compile(r"-?\d{1,3}\.\d{2,}\s*[,/ ]\s*-?\d{1,3}\.\d{2,}"),
     # degrees, minutes and seconds: "[46 53 10N, 142 43 09E]", "46°53′10″N 142°43′09″E"
     re.compile(r"\s*\[?\d{1,3}[° ]\s?\d{1,2}[′' ]\s?(?:\d{1,2}(?:\.\d+)?[″\"]?\s?)?[NS],?\s*\d{1,3}[° ]\s?\d{1,2}[′' ]\s?(?:\d{1,2}(?:\.\d+)?[″\"]?\s?)?[EW]\]?"),

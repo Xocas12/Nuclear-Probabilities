@@ -1413,6 +1413,9 @@ sources:
 - id: census_nl_1960
   url: https://doi.org/10.17026/DANS-XSC-VKWS
   obtained_from: https://ssh.datastations.nl/api/access/datafile/290666
+  obtained: '2026-10-10'
+  obtained_note: the host the volume was fetched from, which robots.txt disallows; recorded so that the robots table
+    judges the source on it. Nothing is fetched from it.
   path: netherlands/VT_1960_02.pdf
   licence: CBS census volume via DANS (CC-BY-4.0)
   use: 'Withdrawn. Was the Netherlands 1960 transfer universe: municipalities of 10,000+'
