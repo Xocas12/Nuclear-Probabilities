@@ -1679,6 +1679,24 @@ left "south of Utrecht" unlinked. So Lato-67 lacks four positives and Burza has 
 refit is not yet committed."""
 
 
+# The classifier table of every run before the nineteenth amendment (Dutch towns withdrawn, site coordinates of
+# sites possibly in use today held at their 0.5-degree cell centres).
+TABLE_BEFORE_19 = "2376ae4cda66262f164010ba12cf06e4ce578fdb205b313022f71d25c23fd2b3"
+
+
+def _pending_19() -> str:
+    """While the outputs are of the table before `configs/protocol_amendment_19.yaml`, say what it changes."""
+    if json.loads((OUT / "manifest.json").read_text())["table_sha256"] != TABLE_BEFORE_19:
+        return ""
+    return """
+**These results are of the table before the nineteenth amendment.** Its Dutch towns came from a census volume fetched
+through a path the host's robots.txt disallows, and its site distances were computed from cited coordinates of sites
+that may be in use today. `configs/protocol_amendment_19.yaml`, committed before any refit, withdraws the Dutch towns
+(and the Netherlands from the 1965 map), holds every site with no recorded end year at the centre of its 0.5-degree
+cell, drops two site rows whose only source refuses this project's agents, and fixes how the refit is read. The refit
+is not yet committed."""
+
+
 def _last_amendment() -> int:
     return max(
         int(p.stem.rsplit("_", 1)[1]) for p in (ROOT / "configs").glob("protocol_amendment_*.yaml")
@@ -1955,7 +1973,7 @@ by auditors whose own error rate was 1.3%, so the audit's reading is itself unce
 Part II pages, and on those the confirmed misread rate was 3 in 216, well above that bound.
 
 **Links** lose entries too: {int(every["unlinked"])} of SAC's {int(every["entries"]):,} complex entries link to no town of the universe ({int(sub["unlinked"])} of its {int(sub["entries"])} subcomplex entries; `runs/classifier/link_audit_coverage_subcomplex.csv`), and the share varies by country: China {int(coverage.loc["China", "unlinked"])} of {int(coverage.loc["China", "entries"])}, North Korea {int(coverage.loc["North Korea", "unlinked"])} of {int(coverage.loc["North Korea", "entries"])}, North Vietnam {int(coverage.loc["North Vietnam", "unlinked"])} of {int(coverage.loc["North Vietnam", "entries"])}, Albania {int(coverage.loc["Albania", "unlinked"])} of {int(coverage.loc["Albania", "entries"])} (`runs/classifier/link_audit_coverage.csv`). These count entries, not towns. An entry whose cover name stands for a town and its closed city (Kapustin Yar and Znamensk, for example) links to both, so linked complex entries give {int(every["towns_linked"] - every["linked"])} more towns than their number, {_subcomplex_extra(int(sub["towns_linked"] - sub["linked"]))}
-{_pending_17()}
+{_pending_17()}{_pending_19()}
 
 **Documents.** `data/curated/labels/PLANS.yaml` records each list's attacker, author, date, type and evidence
 grade. The grades: A, a primary document or its published translation read here; B, a primary document read here that names only part of the
@@ -2349,6 +2367,16 @@ they are extrapolation, with no label to test them.
 """
 
 
+def _readme_pending_19() -> str:
+    if not _pending_19():
+        return ""
+    return (
+        "**Pending refit.** Every figure below is of the table before `configs/protocol_amendment_19.yaml`, which "
+        "withdraws the Dutch towns (their census volume came through a path robots.txt disallows) and holds sites "
+        "possibly in use today at their 0.5-degree cell centres. REPORT, Data, says more.\n\n"
+    )
+
+
 def readme_results() -> str:
     """What README.md says of the results, so that a figure there cannot drift from the outputs."""
     comp = pd.read_csv(OUT / "comparison.csv")
@@ -2377,7 +2405,7 @@ def readme_results() -> str:
     log_pop = shift[shift["comparison"].str.endswith(": log_pop")].iloc[0]
     other = _row(comp, GLOBAL_ALL, "spatial blocks", g_best, PLUS, "lists other than SAC")
     scen = pd.read_csv(MAP / "scenarios.csv")
-    text = f"""{_readme_short()}PR-AUC, the area under the precision-recall curve, measures how many of a model's top-ranked towns are on a
+    text = f"""{_readme_pending_19()}{_readme_short()}PR-AUC, the area under the precision-recall curve, measures how many of a model's top-ranked towns are on a
 list. A list's base rate is what no information scores: {float(sac["base_rate"]):.2f} for SAC, {float(other["base_rate"]):.2f} for the other lists.
 Where a list is incomplete a town off it is unlabeled, so PR-AUC understates precision there. The classifier's
 intervals are 95%, the first resampling towns and "by blocks" resampling 300 km squares; a difference counts only if

@@ -1,0 +1,65 @@
+# Nineteenth amendment, in its own file like the fifth to eighteenth. Committed and pushed before the refit it
+# governs is run. Every value is a folded block scalar, as in the twelfth. What had been read: every result
+# committed at 12a720f and the review of that commit, which found the two faults below. Nothing the refit computes
+# had been computed when this was written.
+date: >-
+  2026-11-05
+reasons: >-
+  (1) The Netherlands' 1960 town table (data/curated/gazetteer/towns_nl_1960.csv, 220 rows) was transcribed from a
+  census volume fetched from ssh.datastations.nl/api/access/datafile/, a path that host's robots.txt disallows to
+  every agent (`User-agent: *`, `Disallow: /`). The tenth amendment withdrew Great Britain's districts for the same
+  fault; the Dutch table was kept, and the robots table checked the DOI resolver instead of the host the file came
+  from. No copy of the volume on a host that allows it was found (CBS's own site, Delpher and dataverse.nl refuse
+  or do not hold it). (2) The committed site tables gave cited coordinates of sites still in use today, among them
+  air bases that hold nuclear weapons now. The project's limits allow no coordinates of present-day facilities
+  beyond what the area map needs, and the map's finest unit is a 0.5-degree cell. (3) Two rows of
+  military_sites_1956.csv, the Czechoslovak 1st and 2nd Military District headquarters, rest on pages of a host
+  whose robots.txt refuses this project's agents; the pages were never read.
+changes:
+  netherlands_withdrawn: >-
+    towns_nl_1960.csv is removed from the tree and its held files from data/raw/; data/sources.yaml marks
+    census_nl_1960 withdrawn and names the host the volume came from in `obtained_from`. The Netherlands is
+    removed from region wp_west_1965 (nucprob/transfer/regions.py). Rows of the Warsaw Pact lists that name Dutch
+    places stay in the label files as transcribed but link to no town: in the links built at 12a720f these are
+    28 linked rows (Lato-67 9, the 1977 staff-academy lessons 17, Soyuz-75 2). The Dutch site rows of
+    weurope_military_sites_1965.csv stay, as sites near German and Belgian towns.
+  map_1965: >-
+    The Netherlands is removed from the targets of scenario ussr_1965_on_west, as the United Kingdom was by the
+    tenth amendment. Its theatre share, a stated assumption without a source, is left as it was and falls on
+    Denmark, the FRG, Belgium and Italy.
+  site_coordinates: >-
+    In every site table in the tree (military_sites_1956, bloc_air_defence_1956, weurope_military_sites_1965,
+    sac_bases_1956), a row with no recorded end year is taken to be possibly in use today, and its coordinate is
+    replaced by the centre of the 0.5-degree cell that holds it (latitude and longitude each floor(2x)/2 + 0.25).
+    Every SAC base row is treated so, since its end year is that of the SAC role, not of the base. Coordinate text
+    in those rows' coord_source and notes is removed, as are remarks on what a site holds today. Distances and
+    counts within 50 km are computed from the cell centres; the error is at most about 39 km. Rows with a
+    recorded end year keep their cited coordinates.
+  czech_hq_rows: >-
+    The two Czechoslovak Military District headquarters rows are removed from military_sites_1956.csv.
+  refit: >-
+    make places, labels, features, dataset and transfer, nucprob.classifier.table and make classifier in full
+    (run, seed_check, sensitivity, identification, identification_fit, divergence, extended, defence_targets,
+    link_audit), then make probmap, with every rule of the protocol and of the earlier amendments unchanged.
+    runs/m4-transfer-check is rewritten and its pinned hashes updated, as under the sixteenth and seventeenth.
+    Their outputs replace the earlier ones.
+  before: >-
+    runs/classifier/comparison.csv and selection.csv of the run before this amendment are kept as
+    runs/classifier/before_amendment_19/ for the comparison under reporting.
+  sealed: >-
+    The sealed set is not scored again (its lock forbids it). Its scores and the blind reading stay those of the
+    fit named in runs/classifier/sealed/fitted_run/, which used the earlier features and the Dutch towns.
+  pinned_records: >-
+    The pinned early runs (runs/m1-slice, runs/m2-check, runs/m4-us-check) are records of their date and are not
+    rerun.
+reporting: >-
+  Until the refit is committed, README and REPORT say that the results are of the table before this amendment.
+  After it, REPORT states the change in Data and lists every primary-comparison row of the scopes whose verdict
+  differs from the run before this amendment, whichever way it moves.
+not_done: >-
+  The us_military_sites_1985 table, which holds present-day facilities, was taken out of the tree earlier but is
+  still in this branch's history, and `make us1985` reads it back from there. Removing it from history needs a
+  rewrite of published history, which only the owner can do; this amendment does not touch it.
+unchanged: >-
+  Labels as transcribed, holdouts, models, the selection rule, the gate thresholds, seeds and every other
+  scenario.

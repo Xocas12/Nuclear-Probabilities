@@ -155,6 +155,13 @@ count entries, not towns. An entry whose cover name stands for a town and its cl
 for example) links to both, so linked complex entries give 2 more towns than their number, while linked subcomplex
 entries give exactly as many towns as entries.
 
+**These results are of the table before the nineteenth amendment.** Its Dutch towns came from a census volume fetched
+through a path the host's robots.txt disallows, and its site distances were computed from cited coordinates of sites
+that may be in use today. `configs/protocol_amendment_19.yaml`, committed before any refit, withdraws the Dutch towns
+(and the Netherlands from the 1965 map), holds every site with no recorded end year at the centre of its 0.5-degree
+cell, drops two site rows whose only source refuses this project's agents, and fixes how the refit is read. The refit
+is not yet committed.
+
 **Documents.** `data/curated/labels/PLANS.yaml` records each list's attacker, author, date, type and evidence grade.
 The grades: A, a primary document or its published translation read here; B, a primary document read here that names
 only part of the targets it counts, or a later classified history quoting one; C, a scholar's table or paraphrase of
@@ -187,7 +194,7 @@ cited row by row in the site tables are registered apart, in `data/curated/featu
 ## Method
 
 The analysis is fixed in `configs/protocol.yaml` and changed since only by dated amendments: four inside that file and
-`configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_18.yaml`. Each says what had already been read when
+`configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_19.yaml`. Each says what had already been read when
 it was written; `configs/HISTORY.md` gives one line per amendment. **It is not blind.** Scores on SAC's spatial folds
 and on the small lists, and later the full results, had been read before amendments corrected labels, links and sector
 boxes. Burza's sector box was drawn after its effect on Burza's scores had been seen. The rule that a block interval
