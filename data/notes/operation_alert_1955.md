@@ -1,6 +1,6 @@
 # Operation Alert 1955: target list reconstruction
 
-Goal: the full list of the ~60 cities "struck" in FCDA's Operation Alert 1955 exercise (15 June 1955).
+Searched for: the full list of the ~60 cities "struck" in FCDA's Operation Alert 1955 exercise (15 June 1955).
 FCDA says: "60 cities in the United States, Hawaii, Puerto Rico, the Canal Zone, and Alaska were struck by
 61 bombs ranging in size from 20 kilotons to 5 megatons". Ideally with yield and burst type per city.
 This follows on from `civil_defence.md` section 4 and `cd_1955_operation_alert.csv` (16 rows). That file is unchanged.

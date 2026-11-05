@@ -132,7 +132,7 @@ strike context, are recorded below but not extracted.
 
 - `ebb236_doc1_SIOP-62_history.pdf` (37 pp, poor OCR layer) and `ebb130_SIOP-28.pdf` (38 pp, an older and more heavily
   excised release of the same history).
-- Read as images this session: EBB 236 PDF pp21-23 and EBB 130 PDF pp22-23. `western.md` section 8 covers EBB 236
+- Read as images: EBB 236 PDF pp21-23 and EBB 130 PDF pp22-23. `western.md` section 8 covers EBB 236
   PDF pp18-28. The OCR text of all 37 EBB 236 pages was also searched for place names. The only geographic references
   are general ones: "Sino-Soviet Bloc", "USSR", "China", "European satellites", and the split of the target system at
   100 deg E longitude.

@@ -1,6 +1,6 @@
 # Warsaw Pact / Soviet nuclear target lists against NATO and neutral states — source notes
 
-Worker: Warsaw Pact stream. Session 2026-10-03, 14:59–15:35 UTC. All downloads are in `data/raw/warsaw_pact/`; all label files are in `data/curated/labels/` (schema: `SCHEMA.md`).
+Search of 2026-10-03, 14:59–15:35 UTC. All downloads are in `data/raw/warsaw_pact/`; all label files are in `data/curated/labels/` (schema: `SCHEMA.md`).
 
 Conventions used in the CSVs
 - `quote` is verbatim from the opened document, in its original language where the original was read (HU, PL, RU). For scanned tables, cells are joined with ` | `. `"` is the source's ditto mark. `...` or `[...]` marks text that could not be read or was left out.
@@ -156,7 +156,7 @@ Collection page: https://phpisn.ethz.ch/lory1.ethz.ch/collections/colltopic4241.
 - Uncertain readings: first row (illegible), [D]EBRZNO, [Ł]OMY, KOŻUCHÓW (listed among northern towns).
 
 ### 3d. GitHub othercriteria/the-baltic-approaches
-- Cloned at commit `ca07850239b73781559bd673c7afcf3bbbec7c3b` (2026-08-05) into the scratchpad. Not kept, because it is not a source document.
+- Cloned at commit `ca07850239b73781559bd673c7afcf3bbbec7c3b` (2026-08-05) to be read. Not kept, because it is not a source document.
 - Used `reference/php-maritime-front.md`, and the transcripts for the Pałka, Nielsen and Lautsch URLs. Its transcriptions are secondary, and corrections are listed under 3a. The PDFs it describes are not committed in the repo.
 - Not opened: "Message by the Commander of the Berlin Front (Siwicki)... Hannover" (28 Apr 1971) and the "Related Documents" page.
 

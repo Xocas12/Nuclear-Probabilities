@@ -5,7 +5,7 @@
 - URL: https://www.ellsberg.net/wp-content/uploads/2021/05/Quemoy_Study_The_1958_Taiwan_Straits_Crisis_Partial_Plus_Total_Redactions_December_1966.pdf
 - Output: `data/curated/labels/us_1958_taiwan_strait.csv` (4 rows)
 - Method: all 237 pages were skimmed as 90-dpi two-page spreads. Pages with target content were then read at 140-150 dpi.
-  Rotated tables were rotated and cropped at about 200 dpi. No OCR was used. The working notes are in the session scratchpad and are not kept.
+  Rotated tables were rotated and cropped at about 200 dpi. No OCR was used. The working notes are not kept.
 
 ## What the document is
 

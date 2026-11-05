@@ -1,6 +1,6 @@
 # Soviet and Warsaw Pact target material: second search, November 2026
 
-Search date 2026-11-01, 17:39 to about 18:07 CET. This extends `soviet_search_2026-11.md`. Nothing here has been entered in `data/curated/labels/`; every row below is a candidate and needs a second reader.
+Search date 2026-11-01, 17:39 to about 18:07 CET. This extends `soviet_search_2026-11.md`. When written, nothing here had been entered in `data/curated/labels/` and every row below was a candidate needing a second reader. The second read (`second_read_2026-11b.md`) then entered 25 rows of Lessons 27a and 24b in `wp_1977_gsa_lessons.csv` (seq 45 to 69); rows it did not enter remain candidates.
 
 ## Result in brief
 

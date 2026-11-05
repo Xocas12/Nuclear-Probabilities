@@ -4,7 +4,7 @@
 
 `data/curated/features/us_military_sites_1985.csv` lists US military installations as of mid-1985
 with coordinates; 125 of its 196 rows have no end year, so most are present-day facilities. The
-brief's section E keeps such coordinates out of the committed tree. The table feeds only the
+project keeps coordinates of present-day facilities out of the committed tree. The table feeds only the
 US county check (`runs/m4-us-check/`), whose outputs are pinned in `runs/milestone_hashes.json`,
 and its Wikipedia copies are not held, so it cannot be rebuilt from its sources. It is therefore
 read back from the commit that added it, checked against the sha256 its card states, and written

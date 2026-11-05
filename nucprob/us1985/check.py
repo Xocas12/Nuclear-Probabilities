@@ -118,7 +118,7 @@ def run(out_dir: Path, local: Path) -> None:
         )
     table = summarise(rows, ["target", "scheme", "model"])
     table.to_csv(out_dir / "metrics.csv", index=False, float_format="%.4f")
-    # County scores with coordinates are finer than the admin-1 limit of the brief's section E, so they are
+    # County scores with coordinates are finer than the project's limit for maps (first-order units or 0.5-degree cells), so they are
     # written outside git (data/interim/ is ignored) and only the metrics are committed.
     cols = ["fips", "census_name", "state", "lat", "lon", "pop", "band", *TARGETS]
     local.mkdir(parents=True, exist_ok=True)

@@ -1,6 +1,6 @@
 # Civil-defence (defender) target assumptions: source cards
 
-Worker: civil-defence sources. Retrieved 2026-10-03 (UTC) unless noted. All raw files are in
+Civil-defence sources, retrieved 2026-10-03 (UTC) unless noted. All raw files are in
 `data/raw/civil_defence/`. The SHA-256 of each file used is given on its card. Label CSVs are in
 `data/curated/labels/` (`cd_*` = defender lists, `rec_*` = outside reconstructions).
 Provenance in the label CSVs is `defender` for government or exercise assumptions. Lat/lon are always blank.
@@ -198,7 +198,7 @@ Provenance in the label CSVs is `defender` for government or exercise assumption
 ## 5. Canada 1956 evacuation (target) areas
 
 - **Files:**
-  - `Canada_HoC_Debates_1956_22-3_vol7_extract_1956_1.txt`: a copy of the session-supplied extract,
+  - `Canada_HoC_Debates_1956_22-3_vol7_extract_1956_1.txt`: a copy of an extract supplied with no source,
     origin not recorded. sha256 `d036cd97…7fd57930`.
   - `Canadiana_search_1956_evacuation_areas.html` (`53bbfc99…77e8`). Full-text search on
     parl.canadiana.ca matches the passage only in **House of Commons Debates, 22nd Parl., 3rd Sess.,

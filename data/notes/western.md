@@ -1,6 +1,6 @@
 # Western target lists (US / UK / France / NATO): source cards
 
-Worker: western lists. Session date: 2026-10-03 (all retrievals 2026-10-03, between 14:59 and 15:25 UTC).
+Western lists, all retrieved 2026-10-03 between 14:59 and 15:25 UTC.
 Downloads are in `data/raw/western/`. The sha256 values below were computed after download.
 Rule used throughout: no CSV row without a page reference and a verbatim quote from a document opened for this project.
 All PDFs below are image scans unless stated. They were read as rendered PNGs; no OCR was used.
@@ -82,7 +82,7 @@ No CSV for: JIC 329/1, Norstad 1945, France 1959, Taiwan Strait 1958, MacArthur 
   - cia.gov (new site): returns a JavaScript shell with no article text.
   - Old CSI URL https://www.cia.gov/library/center-for-the-study-of-intelligence/csi-publications/csi-studies/studies/summer00/art06.html:
     the archive.org availability API reports Wayback snapshot 20201017151038. However, web.archive.org connections were reset
-    throughout the session (proxy log: `ws_closed_mid_exchange`), and http:// gives a proxy 403.
+    throughout that day (proxy log: `ws_closed_mid_exchange`), and http:// gives a proxy 403.
   - CIA reading-room search page: no parseable results.
   - archive.org advancedsearch for "JIC 329" / "strategic vulnerability of russia": 0 hits.
 - No sha256 (nothing downloaded). No CSV.
@@ -192,6 +192,6 @@ No CSV for: JIC 329/1, Norstad 1945, France 1959, Taiwan Strait 1958, MacArthur 
 
 ## Environment notes
 
-- web.archive.org was unreachable for the whole session (TLS tunnel reset; the proxy logs `ws_closed_mid_exchange`). Items 2 and 3 depend on it.
+- web.archive.org was unreachable all that day (TLS tunnel reset; the proxy logs `ws_closed_mid_exchange`). Items 2 and 3 depend on it.
 - hal.science and SPIRE are behind Anubis; tandfonline gives 403. All were respected and not bypassed.
 - The NSA site search parameter is `s=` (https://nsarchive.gwu.edu/search?s=...); results link to /node/NNNN.

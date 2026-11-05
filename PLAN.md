@@ -5,8 +5,9 @@
 > US war plan of 1956. Fit one global model, one model per country and one per regime type.
 > Map which characteristics drive targeting.
 
-This is the plan as written at the start of the project, kept as the design record; only its lines on
-results have been brought up to date since. It predates the work: what exists and what was found is in README.md and REPORT.md, and where they differ they are
+This is the plan as written at the start of the project, kept as the design record. Its lines on results were
+brought up to date later, and some of its statements about sources and tools are out of date (for example, Wayback
+captures were later fetched where robots.txt allowed; see data/ISSUES.md). It predates the work: what exists and what was found is in README.md and REPORT.md, and where they differ they are
 right. "The US war plan of 1956" above is the SAC requirements study, not a war plan. Models by regime
 type were not built.
 
@@ -230,7 +231,8 @@ about 25–30 agent-hours, or ~3 hours with 10 parallel workers. So this step co
    - In 2016 Alex Wellerstein and the Future of Life Institute mapped 1,154 targets from this
      list (blog.nuclearsecrecy.com/misc/targets1956/). That is probably one point per city.
    - **Not yet obtained.** The live blog sits behind a browser cookie check, and
-     web.archive.org is not on this environment's allow-list.
+     web.archive.org was not reachable from this environment at the time (later, Wayback captures were fetched
+     where robots.txt allowed; data/ISSUES.md).
    - Ask them for the CSV, with credit. It gives T1 labels for the first slice at once.
 1. **Get the PDFs.** This needs network access, or an upload; see §11.
 2. **Prepare page images** at 300–400 dpi, deskewed and binarised.
@@ -294,7 +296,7 @@ book.
 | Target Committee and orders | US → Japan, 1945 | 17 study areas → 5 reserved targets → 4 in the 25 July directive, with Kyoto and the Emperor's palace rejected | **Extracted: 42 rows**, one per city per decision stage | Plan |
 | Chinese nuclear facilities | US → PRC, 1964 | Baotou plutonium reactor, Lanzhou gaseous diffusion plant | **Extracted: 2 rows** (EBB 488) | Study |
 | SIOP-62 and the 1960 target list | US → bloc, 1961 | ~4,000 targets in the database; 1,043 DGZs, 706 of them in the USSR (China and satellite counts blacked out) | **Validation table: 8 rows** | Totals to check against |
-| Norstad memo to Groves | US → USSR, Sep 1945 | Reportedly 66 cities, 21 Manchurian cities dropped | Not obtained: the blog has a cookie check and web.archive.org is not on the allow-list | Study |
+| Norstad memo to Groves | US → USSR, Sep 1945 | Reportedly 66 cities, 21 Manchurian cities dropped | Not obtained: the blog has a cookie check, and web.archive.org was not reachable at the time | Study |
 | JIC 329/1 | US → USSR, Nov 1945 | 20 named cities | Not obtained: the CIA page renders by script; the old copy is on web.archive.org | Study |
 | French Air Force staff study | France → USSR, 1959 | 20 named cities with air-defence grades | Not obtained: the open-access copies sit behind anti-bot challenges | Study |
 | Broiler → Trojan → Offtackle → Dropshot | US → USSR, 1947–49 | 24 → 70 → 104 → ~100 cities | Print only (Ross & Rosenberg facsimiles) | Plan |
@@ -682,5 +684,4 @@ results are in REPORT.md and `runs/`.
    - the Ross & Rosenberg facsimiles;
    - Andersen (2026);
    - Luňák (2007) or the Prague military archive.
-5. **Default branch.** The repo's only branch is the session branch, which GitHub made the
-   default. Create `main` from it?
+5. **Default branch.** A question for the owner, outside this plan.
