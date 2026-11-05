@@ -5,6 +5,7 @@ amendment's syntax repair kept every word of the file as committed at ae1bbb6.""
 import subprocess
 
 import pandas as pd
+import pytest
 import yaml
 
 from nucprob.classifier import report
@@ -89,6 +90,10 @@ def test_a_verdict_moved_by_the_seventeenth_amendment_is_flagged_as_after_the_fa
     )
 
 
+@pytest.mark.skipif(
+    not (ROOT / "data" / "processed" / "classifier_table.parquet").exists(),
+    reason="classifier table not built (make test-full builds it)",
+)
 def test_lato67_row_46_is_placed_at_its_printed_offset():
     """Row 46 prints "south of Store Heddinge" (no distance) and "20 km SE of Køge": the point is the latter."""
     from nucprob.geo import haversine_km
