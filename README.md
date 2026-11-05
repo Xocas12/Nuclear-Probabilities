@@ -133,7 +133,7 @@ summarised on a 0.5-degree grid (1 degree for modern scenarios).
   (the area each list covers; a town outside it is not a negative of that list).
 - `data/curated/stockpiles/`: cited inventories and assumptions. `data/sources.yaml` and `data/sources_amendment_5.yaml`: every source's provenance;
   `data/curated/features/cited_pages.csv`: the pages cited row by row in the site tables.
-- `configs/protocol.yaml` and `configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_16.yaml`: the analysis and its amendments. `configs/scenarios.yaml`: scenarios.
+- `configs/protocol.yaml` and `configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_17.yaml`: the analysis and its amendments. `configs/scenarios.yaml`: scenarios.
 - `runs/classifier/`, `runs/probmap/`: committed outputs. `REPORT.md` is generated from them.
 - `runs/m1-slice/`, `runs/m2-check/`: two early checks (M1: Soviet towns only, population and administrative features; M2: the first full 1956 feature table over the whole bloc; PROGRESS.md), on the labels of their date. They were not
   rerun after later label corrections and feed no result above. `runs/m4-transfer-check/`: the transfer check (does a model fitted on SAC's 1956 bloc towns rank the targets of the smaller lists?), rerun on the corrected labels; it reads whole countries, not sectors, and feeds no result above.
@@ -153,6 +153,11 @@ make report     # REPORT.md, TABLES.md and README's results, from both runs
 make viewer     # one self-contained page: runs/probmap/viewer/index.html
 make test lint
 ```
+
+`make test` alone is a partial run on a fresh checkout: the tests that compare committed outputs with tables built
+from `data/raw/` (git-ignored) skip when those tables are absent, and the run lists them at its end. `make test-full`
+builds the tables (`places` to `qa` and the classifier table; no model is fitted) and then counts any skip as a
+failure; it needs `make data` first and a full, not shallow, clone.
 
 `make us1985` repeats a separate check on US counties against FEMA's 1987 risk bands, `runs/m4-us-check/`, which
 tests that those features join and is no part of the results above (`data/FEATURES_US.md`). Its table of US military

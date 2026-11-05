@@ -2,7 +2,7 @@
 UV ?= uv
 PY = $(UV) run python
 
-.PHONY: us1985 setup data places labels features dataset train map check transfer evidence qa classifier probmap report viewer test lint format clean
+.PHONY: us1985 setup data places labels features dataset train map check transfer evidence qa classifier probmap report viewer test test-full lint format clean
 
 setup:
 	$(UV) sync --all-extras
@@ -92,8 +92,15 @@ us1985:
 	$(PY) -m nucprob.us1985.dataset
 	$(PY) -m nucprob.us1985.check --rerun
 
+# A plain run skips the tests whose built tables (data/processed/, from data/raw/) are absent, and lists the skips.
 test:
-	$(UV) run pytest -q
+	$(UV) run pytest -q -rs
+
+# The whole suite: builds the tables those tests read, then fails on any skip (tests/conftest.py). Needs data/raw/
+# (`make data`) and the full git history.
+test-full: places labels features dataset transfer evidence qa
+	$(PY) -m nucprob.classifier.table
+	NUCPROB_NO_SKIP=1 $(UV) run pytest -q -rs
 
 lint:
 	$(UV) run ruff check .
