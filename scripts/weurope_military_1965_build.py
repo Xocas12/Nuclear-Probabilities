@@ -10,13 +10,18 @@ Coordinates:
   * ('named', ref, regex) -> the coordinate template on the line of that article matching regex
     (e.g. one launch site in a list);
   * (lat, lon, ref, quote) -> a coordinate written in a list/table/location map of that article;
-    the build checks that `quote` occurs verbatim in the saved wikitext.
+    the build checks that `quote` occurs verbatim in the saved wikitext;
+  * ('cell', lat, lon, ref, label) -> a site with no recorded end year: the spec keeps only the centre of the
+    0.5-degree cell, and the build checks that the article gives a coordinate in that cell.
+The written table is then passed through scripts/coarsen_site_coordinates.py's rule (nineteenth amendment), which
+holds every row with no recorded end year at its cell centre.
 Each row's `chk` regex must match the text of its cited pages; the build stops if one fails.
 
-Run: .venv/bin/python -I scripts/weurope_military_1965_build.py
+Run: .venv/bin/python -I scripts/weurope_military_1965_build.py [--out PATH]
 """
 
 import csv
+import math
 import pathlib
 import re
 import sys
@@ -25,9 +30,13 @@ from collections import Counter
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 import weurope_military_1965_coords as C
 import weurope_military_1965_spec as spec
+from coarsen_site_coordinates import TABLES as HELD_TABLES
+from coarsen_site_coordinates import coarsen
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 OUT = ROOT / "data/curated/features/weurope_military_sites_1965.csv"
+if "--out" in sys.argv:
+    OUT = pathlib.Path(sys.argv[sys.argv.index("--out") + 1])
 COLS = [
     "site",
     "role",
@@ -58,6 +67,29 @@ BOX = {  # rough country boxes, to catch swapped or wrong coordinates
 def url(ref):
     d = C.load(ref)
     return d["url"]
+
+
+def cell_of(x):
+    return math.floor(2 * x) / 2 + 0.25
+
+
+DMS = re.compile(r"(\d+)°(\d+)'(?:([\d.]+)\")?\s*N[,\s]*0?(\d+)°(\d+)'(?:([\d.]+)\")?\s*E")
+LATLON = re.compile(r"long=([\d.]+)\|\s*lat=([\d.]+)")
+
+
+def points(w):
+    """Every coordinate an article's wikitext gives: templates, d°m's" pairs and location-map entries."""
+    out = [(lat, lon) for _, lat, lon, _, _ in C.coords(w)]
+    for m in DMS.finditer(w):
+        a, b, c, d, e, f = m.groups()
+        out.append(
+            (
+                float(a) + float(b) / 60 + float(c or 0) / 3600,
+                float(d) + float(e) / 60 + float(f or 0) / 3600,
+            )
+        )
+    out += [(float(lat), float(lon)) for lon, lat in LATLON.findall(w)]
+    return out
 
 
 def text(ref):
@@ -111,6 +143,15 @@ for s in spec.R:
         how = f"{ref.split(':')[0]}wiki coordinate in list ({C.load(ref)['title']}: {rx})"
         if ref not in srcs:
             srcs.append(ref)
+    elif c[0] == "cell":
+        _, lat, lon, ref, label = c
+        if not any((cell_of(a), cell_of(o)) == (lat, lon) for a, o in points(text(ref))):
+            fails.append(f"NO COORD IN CELL {s['site']} {lat},{lon} in {ref}")
+        how = f"{ref.split(':')[0]}wiki list/map entry ({C.load(ref)['title']}" + (
+            f": {label})" if label is not None else ")"
+        )
+        if ref not in srcs:
+            srcs.append(ref)
     else:
         lat, lon, ref, quote = c
         if quote not in text(ref):
@@ -155,6 +196,10 @@ with open(OUT, "w", newline="") as fh:
     wr = csv.DictWriter(fh, COLS)
     wr.writeheader()
     wr.writerows(rows)
+held, changed = coarsen(
+    OUT, *HELD_TABLES[OUT.name if OUT.name in HELD_TABLES else "weurope_military_sites_1965.csv"]
+)
+OUT.write_bytes(held.encode("utf-8"))
 print(len(rows), "rows", file=sys.stderr)
 for k, v in sorted(Counter((r["role"], r["in_role_1965"]) for r in rows).items()):
     print(f"  {k[0]:22s} {k[1]:5s} {v}", file=sys.stderr)

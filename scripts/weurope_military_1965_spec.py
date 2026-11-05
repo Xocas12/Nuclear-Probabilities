@@ -2077,6 +2077,13 @@ def dms(ref, quote):
     return (v[0], v[1], ref, quote)
 
 
+def cell(ref, lat, lon, label=None):
+    """A site possibly in use today (no recorded end year; nineteenth amendment): only the centre of the 0.5-degree
+    cell that holds the article's coordinate is kept here. The build checks that the article gives a coordinate in
+    that cell. `label` is the entry's text with its coordinate removed."""
+    return ("cell", float(lat), float(lon), ref, label)
+
+
 def pk(ref, lat, lon):
     """Point from a Positionskarte~ entry 'long=<lon>| lat=<lat>' in a de article."""
     return (float(lat), float(lon), ref, f"lat={lat}")
@@ -2330,32 +2337,35 @@ for sq, town, la, lo, nuc in NL_NIKE:
 
 # --- Belgian Nike wings in the FRG (en list: grid references of fire-control or launch areas) ---
 BE_NIKE = [
+    # (squadron, town, entry text without its coordinate, cell centre, from year)
     (
         "50th Sqn / 13th Missile Wing (also HQ 13th Wing, Missile Support Wing)",
         "Düren",
-        "Former combined IFC/LA location at 50°41'20\"N 06°30'13\" E",
+        "Former combined IFC/LA",
+        (50.75, 6.75),
         1959,
     ),
-    ("51st Sqn / 13th Missile Wing", "Blankenheim", "Former IFC at 50°26'45\"N 06°40'27\"E", 1961),
-    ("52nd Sqn / 13th Missile Wing", "Euskirchen", "Former IFC at 50°37'20\"N 06°44'37\"E", 1959),
-    ("53rd Sqn / 9th Missile Wing", "Kaster", "Former LA at 51°1'24\"N 6°29'49\"E", 1959),
-    ("55th Sqn / 9th Missile Wing", "Hombroich", "Former LA at 51°9'6\"N 6°38'35\"E", 1962),
-    ("56th Sqn / 9th Missile Wing", "Hinsbeck", "Former LA at 51°21'56\"N 6°17'25\" E", 1962),
+    ("51st Sqn / 13th Missile Wing", "Blankenheim", "Former IFC", (50.25, 6.75), 1961),
+    ("52nd Sqn / 13th Missile Wing", "Euskirchen", "Former IFC", (50.75, 6.75), 1959),
+    ("53rd Sqn / 9th Missile Wing", "Kaster", "Former LA", (51.25, 6.25), 1959),
+    ("55th Sqn / 9th Missile Wing", "Hombroich", "Former LA", (51.25, 6.75), 1962),
+    ("56th Sqn / 9th Missile Wing", "Hinsbeck", "Former LA", (51.25, 6.25), 1962),
     (
         "HQ Belgian Missile Group and 9th Missile Wing",
         "Grefrath",
-        "Group Operations Center; 56th Squadron 51°20'56\"N 6°20'02\"E",
+        "Group Operations Center; 56th Squadron",
+        (51.25, 6.25),
         1959,
     ),
 ]
-for sq, town, q, fr in BE_NIKE:
+for sq, town, q, at, fr in BE_NIKE:
     r(
         f"Nike site {town} ({sq.split(' (')[0]})",
         "nike_site",
         f"{sq}, Belgian Air Force Nike Hercules (US custodians)",
         "DE",
         town,
-        dms(NIKE_EN, q),
+        cell(NIKE_EN, *at, q),
         fr,
         "",
         True,
@@ -2564,7 +2574,7 @@ r(
     "HQ 1ª Aerobrigata Intercettori Teleguidati (17º Reparto)",
     "IT",
     "Padova",
-    pk(NIKE, "45.408056", "11.872222"),
+    cell(NIKE, 45.25, 11.75),
     1959,
     "",
     True,
@@ -3271,7 +3281,7 @@ r(
     "US Army store of spare W31 warheads for the Italian Nike sites (also SETAF)",
     "IT",
     "Longare",
-    dms(NIKE_EN, "grid 45°28'46\"N 11°35'57\"E"),
+    cell(NIKE_EN, 45.25, 11.75, ""),
     1959,
     "",
     True,
@@ -3913,7 +3923,7 @@ for site, role, unit, town, page, unitpage, chk in [
         "division_hq",
         "Infantry Division 'Folgore' (V Corps)",
         "Treviso",
-        (45.666667, 12.25, NIKE, "long=12.25| lat=45.666667"),
+        cell(NIKE, 45.75, 12.25),
         'en:Infantry Division "Folgore"',
         r"headquarters was in the city of Treviso",
     ),
