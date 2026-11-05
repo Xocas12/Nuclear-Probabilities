@@ -143,7 +143,7 @@ def test_the_readme_states_what_the_extended_run_and_the_primary_run_hold():
         & (comp["lists"] == "all lists")
     ]["b_pr_auc"].iloc[0]
     plants = d[d["comparison"] == "defence industry over population"].iloc[0]
-    readme = (ROOT / "README.md").read_text(encoding="utf-8")
-    assert f"scores {best:.2f} against {rule:.2f}" in " ".join(readme.split())
+    readme = " ".join((ROOT / "README.md").read_text(encoding="utf-8").split())
+    assert f"scores {best:.2f} against {rule:.2f}" in readme
     # The report's precision rule (nucprob.classifier.report.signed): two decimals, three near zero.
     assert f"[{signed(plants['low'])}, {signed(plants['high'])}]" in readme

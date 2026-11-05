@@ -121,7 +121,7 @@ What each role covers:
 ### Rows that rested on general knowledge (resolved 2026-11-03)
 
 29 rows gave "UNCERTAIN: ... from general knowledge": the fact had no cited text, only the town's page for the
-point. The review of c27c1b8 asked that each be cited or dropped. Each was looked for in Wikipedia pages fetched
+point. Each had to be cited or dropped (`configs/protocol_amendment_16.yaml`), and each was looked for in Wikipedia pages fetched
 through `/wiki/<title>?action=raw`, which robots.txt allows (`CITED` and `DROPPED` at the end of
 `scripts/weurope_military_1965_spec.py`; the build checks each row's quoted pattern against its cited page):
 - **Cited as they stood (15):** the HQs of the 14th ACR at Fulda (Downs Barracks, 1951-1972), the British 1st,

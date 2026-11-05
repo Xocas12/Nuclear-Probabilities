@@ -104,9 +104,10 @@ def test_no_text_cites_an_amendment_that_does_not_exist():
 
 
 def test_cards_cite_no_review_round():
-    for path in [ROOT / "data" / "FEATURES_CLASSIFIER.md", *CURATED.rglob("README.md")]:
+    """Every card under data/ (the review of a7a8f22, finding 4: two escaped a scan of README.md files only)."""
+    for path in [*(ROOT / "data").rglob("*.md")]:
         text = path.read_text(encoding="utf-8")
-        assert not re.search(r"review of [0-9a-f]{7}, finding", text), path
+        assert not re.search(r"review of [0-9a-f]{7}", text), path
         assert "milestone runs" not in text
 
 

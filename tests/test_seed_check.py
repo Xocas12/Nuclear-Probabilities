@@ -109,10 +109,12 @@ def test_report_and_readme_say_what_the_check_found():
     for r in moved.itertuples():
         counts = report.seed_counts(r._asdict())
         assert (
-            f"{report.SCOPES[r.scope]}, {report.HOLDOUTS[r.holdout].lower()}, {r.lists}, against {r.against}"
-            in rep
+            f"| {report.SCOPES[r.scope]} | {report.HOLDOUTS[r.holdout]} | {r.lists} | {r.against} | "
+            f"{r.verdict_seed_1956} | {counts} |" in rep
         )
-        assert counts in rep and counts in readme
+        assert counts in readme
+        # README groups the moved rows by scope and holdout; each row's list set and baseline is named.
+        assert f"{r.lists} against {r.against}" in readme
     assert (
         f"{len(summary) - len(moved)} of {len(summary)} keep their verdict under all 20" in readme
     )
@@ -123,6 +125,12 @@ def test_readme_answers_what_made_a_place_a_target():
     """The review of 736fdb5: README's first question had no feature-family answer."""
     readme = _flat(ROOT / "README.md")
     assert " ".join(report._readme_families().split()) in readme
-    fam = pd.read_csv(OUT / "family_gain.csv")
+    fam = report._families()
+    for f, words in report.FAMILY_WORDS.items():
+        cells = [
+            report.family_cell(fam[(fam["rows"] == rows) & (fam["family"] == f)].iloc[0])
+            for rows in ("all countries", "USSR")
+        ]
+        assert f"| {words} | {cells[0]} | {cells[1]} |" in readme, f
     for r in fam[fam["verdict"] == "gain"].itertuples():
-        assert f"{report.FAMILY_WORDS[r.family]} {report.interval(r._asdict())}" in readme
+        assert report.interval(r._asdict()) in readme

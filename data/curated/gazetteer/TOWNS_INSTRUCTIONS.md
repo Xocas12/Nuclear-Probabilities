@@ -1,5 +1,11 @@
 # Building a town table for a country and census year
 
+*What this file is.* The text below is the instruction given to the language-model agents, one per country and
+census, that transcribed the town tables listed in `TRANSFER.md`. "You" is such an agent, and the working directory
+named is the agents' own, not this repository's. It is kept as the specification those tables were built to; each
+table's card (`towns_<country>_<year>.md`) gives its source, its checks and its doubts.
+
+
 You build the place universe of one country at one census date for a historical research
 dataset (where nuclear war plans put their targets). Your prompt names the country, the
 census and the output file. Working directory: `/home/user/nuclear-probabilities`. Do not

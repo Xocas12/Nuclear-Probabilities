@@ -181,8 +181,8 @@ def headline_quotes() -> list[str]:
 
 @needs_run
 def test_the_readme_quotes_the_report_and_the_gate():
-    readme = (ROOT / "README.md").read_text(encoding="utf-8")
-    text = (ROOT / "REPORT.md").read_text(encoding="utf-8")
+    readme = " ".join((ROOT / "README.md").read_text(encoding="utf-8").split())
+    text = " ".join((ROOT / "REPORT.md").read_text(encoding="utf-8").split())
     for quoted in headline_quotes():
         assert quoted in readme and quoted in text, quoted
     gate = pd.read_csv(OUT / "state_gate.csv").set_index("attacker")
@@ -297,7 +297,7 @@ def test_the_identification_sentences_follow_the_regularised_reading():
 
 
 def test_the_readme_names_every_committed_amendment():
-    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    readme = " ".join((ROOT / "README.md").read_text(encoding="utf-8").split())
     numbers = sorted(
         int(p.stem.rsplit("_", 1)[1]) for p in (ROOT / "configs").glob("protocol_amendment_*.yaml")
     )
@@ -541,9 +541,15 @@ def test_a_sealed_country_baseline_that_is_the_population_rule_is_flagged():
     assert report._country_is_rule() == same
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     text = (ROOT / "REPORT.md").read_text(encoding="utf-8")
+    lines = readme.splitlines()
     for scope in same:
-        line = next(x for x in readme.splitlines() if x.startswith(f"  - {scope}:"))
-        assert "ranks every place as the population rule does" in line
+        i = next(i for i, x in enumerate(lines) if x.startswith(f"  - {scope}:"))
+        bullet = [lines[i]]
+        for x in lines[i + 1 :]:  # its wrapped continuation lines
+            if not x.startswith("    ") or x.lstrip().startswith("- "):
+                break
+            bullet.append(x)
+        assert "ranks every place as the population rule does" in " ".join(" ".join(bullet).split())
         assert f"In '{scope}' the two baselines rank every place alike" in text
 
 
@@ -559,7 +565,7 @@ def test_the_undated_site_count_is_read_from_the_site_table():
 
 def test_readme_defines_its_terms_before_use():
     """The review of 62f10e9 (finding 5): abbreviations and named checks in README are spelled out."""
-    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    readme = " ".join((ROOT / "README.md").read_text(encoding="utf-8").split())
     for term, definition in [
         ("ROC-AUC", "ROC-AUC: the chance that"),
         ("COW", "Correlates of War project's (COW)"),
@@ -569,6 +575,7 @@ def test_readme_defines_its_terms_before_use():
         ("SIPRI", "Stockholm\n  International Peace Research Institute (SIPRI)"),
         ("requirements study", "requirements study (an estimate"),
     ]:
+        definition = " ".join(definition.split())
         assert definition in readme, term
         assert readme.index(definition) <= readme.index(term) + len(definition), term
     assert "tenth amendment" not in readme
