@@ -107,7 +107,7 @@ def test_report_states_the_regularised_intervals_and_what_was_not_run():
     iv = pd.read_csv(OUT / "intervals.csv").set_index("columns")
     lo, hi = iv.at["all permitted", "accuracy_lo"], iv.at["all permitted", "accuracy_hi"]
     assert f"{lo:.1%} to {hi:.1%} on all columns" in text
-    # The review of c27c1b8: the capacity probe's call was quoted without a definition, inside the
+    # The capacity probe's call was quoted without a definition, inside the
     # account of the withdrawn fit. REPORT now states that fit's divergence count instead.
     div = pd.read_csv(OUT / "divergence.csv")
     as_run = div[div["l2_regularization"] == 0]

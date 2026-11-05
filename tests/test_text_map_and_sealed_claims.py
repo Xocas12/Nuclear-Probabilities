@@ -1,4 +1,4 @@
-"""Checks for the eleventh review's findings (review of 7ef717e): each reads the data or outputs a
+"""What the map, viewer and sealed-set text say, against the data: each test reads the data or outputs a
 statement rests on, so a wrong figure or a stale run fails, not only a changed word."""
 
 import json

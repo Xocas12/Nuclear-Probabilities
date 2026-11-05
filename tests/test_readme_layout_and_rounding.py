@@ -1,4 +1,4 @@
-"""Checks for the review of a7a8f22: README answers both of its questions in plain words before the details, its
+"""README answers both of its questions in plain words before the details, its
 generated text is wrapped and grouped rather than run on, no reader-facing text leans on the build's review history,
 the corrected Warsaw Pact links are described whole, estimates never print as "-0.00" or equal to a bound, constant
 comparisons are called constant, and the viewer shows the share it says it shows."""
@@ -34,9 +34,11 @@ def test_readme_answers_both_questions_before_the_details():
         "**What made a place a target?**" in short
         and "**How likely is an area to be struck?**" in short
     )
-    fam = report._families()
-    pop = fam[(fam["rows"] == "all countries") & (fam["base"] == "population only")].iloc[0]
-    assert f"population alone gives a PR-AUC of {pop['base_pr_auc']:.2f}" in short
+    # The population rule's own PR-AUC, from comparison.csv, not a fitted model on population (family_gain.csv)
+    rule, plus = report._sac_rule(report.RULE), report._sac_rule(report.PLUS)
+    assert f"(the population rule) gives a PR-AUC of {rule['b_pr_auc']:.2f}" in short
+    assert f"population plus a term for each country gives {plus['b_pr_auc']:.2f}" in short
+    assert "The brackets are the 5th to 95th percentiles" in short
     assert "cannot be told from zero" in short
     scen = pd.read_csv(MAP / "scenarios.csv").set_index("scenario")
     for name in ("us_1956_on_bloc", "us_1950_stock_on_bloc"):
@@ -77,9 +79,16 @@ def test_generated_and_written_prose_is_wrapped():
             if not line.lstrip().startswith("|"):
                 assert len(line) <= limit, (name, line[:80])
     seeds = _results()[_results().index("**Bootstrap seed.**") :]
-    seeds = seeds[: seeds.index("**No state gets its own model.**")]
-    assert " ".join(seeds.split()).count("under seeds 1-20") == len(report._seed_groups(_moved()))
-    assert "the number 1956 (not the document year)" in " ".join(seeds.split())
+    seeds = " ".join(seeds[: seeds.index("**No state gets its own model.**")].split())
+    s = report.seed_summary()
+    moved = _moved()
+    assert f"{len(s) - len(moved)} of {len(s)} keep their verdict under all 20" in seeds
+    assert f'The {len(moved)} that do not are listed in REPORT ("Bootstrap seed")' in seeds
+    assert "the number 1956 (not the document year)" in seeds
+    # REPORT lists every seed-dependent comparison, one table row each
+    rep = (ROOT / "REPORT.md").read_text(encoding="utf-8")
+    section = rep[rep.index("**Bootstrap seed.**") :]
+    assert f"These {len(moved)} are seed-dependent" in " ".join(section.split())
 
 
 def _moved() -> pd.DataFrame:
@@ -122,10 +131,13 @@ def test_the_corrected_links_are_described_whole():
     positive in the rescoring seen before it, four in the links it adopted."""
     amendment = (ROOT / "configs" / "protocol_amendment_17.yaml").read_text(encoding="utf-8")
     assert "Kiel is not credited" in amendment and "gains four linked towns" in amendment
-    for name in ("README.md", "REPORT.md"):
-        text = _flat(ROOT / name)
-        assert "row 17" in text and "row 57" in text and "Kiel" in text, name
-        assert "four towns" in text, name
+    text = _flat(ROOT / "REPORT.md")
+    assert "row 17" in text and "row 57" in text and "Kiel" in text
+    assert "four towns" in text
+    # README gives the rule and sends the reader to REPORT for the rows
+    assert 'REPORT ("Changed by the corrected Warsaw Pact links") gives the rows' in _flat(
+        ROOT / "README.md"
+    )
     rep = _flat(ROOT / "REPORT.md")
     assert "five Lato-67 towns made positive, one more than the links it adopted credit" in rep
 
@@ -134,10 +146,27 @@ def _estimates(text: str) -> list[tuple[str, str, str]]:
     return re.findall(r"([+-]\d\.\d+) \[([+-]?\d\.\d+), ([+-]?\d\.\d+)\]", text)
 
 
+def _csv_negative_zero() -> bool:
+    return any(
+        "-0.0000" in pd.read_csv(f, dtype=str).to_csv(index=False)
+        for f in (report.OUT / "family_gain.csv", report.OUT / "comparison.csv")
+    )
+
+
+def test_a_negative_bound_rounded_to_zero_in_the_csv_keeps_its_sign():
+    assert report.signed(-0.0) == "-0.0000"
+    assert report.signed(0.0) == "0.00"
+
+
 def test_no_estimate_prints_as_minus_zero_or_equal_to_a_bound():
     for name in ("README.md", "REPORT.md", "runs/classifier/TABLES.md"):
         text = (ROOT / name).read_text(encoding="utf-8")
-        assert not re.search(r"(?<![\d.])[+-]0\.0+(?![0-9])", text), name
+        # "-0.0000" is allowed only as a bound the CSV itself stores as -0.0000 (negative, under 0.00005)
+        signed_zeros = set(re.findall(r"(?<![\d.])[+-]0\.0+(?![0-9])", text))
+        assert signed_zeros <= ({"-0.0000"} if _csv_negative_zero() else set()), (
+            name,
+            signed_zeros,
+        )
         found = _estimates(text)
         assert found, name
         for est, lo, hi in found:

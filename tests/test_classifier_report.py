@@ -111,7 +111,7 @@ def test_failures_are_in_the_report_and_gains_are_not_claimed_where_an_interval_
     primary = report.primary_table(comp, pd.read_csv(OUT / "selection.csv"))
     counts = primary["Verdict"].value_counts().to_dict()
     assert sum(counts.values()) == len(primary)
-    text = (ROOT / "REPORT.md").read_text(encoding="utf-8")
+    text = " ".join((ROOT / "REPORT.md").read_text(encoding="utf-8").split())
     for name in ("gain", "loss", "neither", "not a reading"):
         assert f"{counts.get(name, 0)} {report.WORDS[name]}" in text
     for _, r in comp.iterrows():
@@ -264,7 +264,7 @@ def test_a_row_under_the_training_floor_is_counted_over_every_grid():
 @needs_run
 def test_what_the_map_follows_is_stated_scenario_by_scenario():
     """A scenario whose cells follow the count of towns more than log people is named, not covered by
-    a sentence about every scenario (the review of 46021d7)."""
+    a sentence about every scenario."""
     text = " ".join((ROOT / "REPORT.md").read_text(encoding="utf-8").split())
     spread = pd.read_csv(RUNS / "probmap" / "score_spread.csv")
     towns_more = spread[
@@ -296,15 +296,16 @@ def test_the_identification_sentences_follow_the_regularised_reading():
         assert "almost every time" not in readme
 
 
-def test_the_readme_names_every_committed_amendment():
+def test_the_readme_points_to_a_history_that_names_every_committed_amendment():
     readme = " ".join((ROOT / "README.md").read_text(encoding="utf-8").split())
     numbers = sorted(
         int(p.stem.rsplit("_", 1)[1]) for p in (ROOT / "configs").glob("protocol_amendment_*.yaml")
     )
-    assert (
-        f"`configs/protocol_amendment_{numbers[0]}.yaml` to `configs/protocol_amendment_{numbers[-1]}.yaml`"
-        in readme
-    )
+    assert "`configs/HISTORY.md` lists them" in readme
+    assert "`configs/protocol_amendment_*.yaml`" in readme
+    history = (ROOT / "configs" / "HISTORY.md").read_text(encoding="utf-8")
+    for n in numbers:
+        assert f"\n| {n} | " in history, n
     assert numbers == list(range(numbers[0], numbers[-1] + 1))
 
 
@@ -384,7 +385,7 @@ def test_the_readme_says_what_the_blind_reading_found():
 
 @pytest.mark.skipif(not report.BLIND.exists(), reason="blind reading not run")
 def test_the_main_result_and_the_limits_quote_the_blind_reading():
-    """The review of dcb3c75: the headline led with a gain the blind reading does not show. The main result
+    """The headline once led with a gain the blind reading does not show. The main result
     states every primary blind row, and both documents list the missing blind gain as a limit."""
     text = (ROOT / "REPORT.md").read_text(encoding="utf-8")
     main = text[text.index("## Main result") : text.index("## Question")]
@@ -412,7 +413,7 @@ def test_the_splits_card_does_not_call_never_scored_places_blind():
 
 
 def test_reader_facing_text_has_no_commit_names_or_run_on_lines():
-    """Process history lives in configs/HISTORY.md, the amendments and the git log (review of dcb3c75)."""
+    """Process history lives in configs/HISTORY.md, the amendments and the git log."""
     import re
 
     for name in ("README.md", "REPORT.md"):
@@ -423,7 +424,7 @@ def test_reader_facing_text_has_no_commit_names_or_run_on_lines():
 
 
 def test_a_signed_bound_off_zero_never_prints_as_zero():
-    """The review of c27c1b8: bounds printed "+0.000" and "-0.000"."""
+    """Bounds once printed "+0.000" and "-0.000"."""
     assert report.signed(0.0003) == "+0.0003"
     assert report.signed(-0.00004) == "-0.00004"
     assert report.signed(0.003) == "+0.003"
@@ -526,7 +527,7 @@ def test_the_sixteenth_amendment_paragraph_lists_every_moved_verdict():
 
 @needs_run
 def test_a_sealed_country_baseline_that_is_the_population_rule_is_flagged():
-    """The review of 62f10e9 (finding 3): on the sealed places a scope whose population-plus-country model
+    """On the sealed places a scope whose population-plus-country model
     ranks every place as its population rule does is a comparison with population; README and REPORT say so."""
     sealed = OUT / "sealed" / "scores.csv.gz"
     if not sealed.exists():
@@ -540,7 +541,7 @@ def test_a_sealed_country_baseline_that_is_the_population_rule_is_flagged():
     }
     assert report._country_is_rule() == same
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
-    text = (ROOT / "REPORT.md").read_text(encoding="utf-8")
+    text = " ".join((ROOT / "REPORT.md").read_text(encoding="utf-8").split())
     lines = readme.splitlines()
     for scope in same:
         i = next(i for i, x in enumerate(lines) if x.startswith(f"  - {scope}:"))
@@ -554,17 +555,17 @@ def test_a_sealed_country_baseline_that_is_the_population_rule_is_flagged():
 
 
 def test_the_undated_site_count_is_read_from_the_site_table():
-    """The review of 62f10e9 (finding 10): the count of undated West European sites that count for every
+    """The count of undated West European sites that count for every
     document is computed from the table, not typed."""
     sites = pd.read_csv(ROOT / "data" / "curated" / "features" / "weurope_military_sites_1965.csv")
     undated = sites["from_year"].isna() & sites["in_role_1965"].astype(str).str.lower().eq("true")
     assert report._undated_sites() == int(undated.sum())
-    text = (ROOT / "REPORT.md").read_text(encoding="utf-8")
-    assert f"and {int(undated.sum())} undated sites it\nholds as in role in 1965" in text
+    text = " ".join((ROOT / "REPORT.md").read_text(encoding="utf-8").split())
+    assert f"and {int(undated.sum())} undated sites it holds as in role in 1965" in text
 
 
 def test_readme_defines_its_terms_before_use():
-    """The review of 62f10e9 (finding 5): abbreviations and named checks in README are spelled out."""
+    """Abbreviations and named checks in README are spelled out."""
     readme = " ".join((ROOT / "README.md").read_text(encoding="utf-8").split())
     for term, definition in [
         ("ROC-AUC", "ROC-AUC: the chance that"),

@@ -1,4 +1,4 @@
-"""The report's precision rule (review of bde7e54, finding 6): an estimate never prints with more decimals
+"""The report's precision rule: an estimate never prints with more decimals
 than its interval supports, while a bound near zero keeps the decimals that show its side of zero."""
 
 from nucprob.classifier.report import point, signed
@@ -21,14 +21,14 @@ def test_exact_zero_and_missing_bounds():
 
 
 def test_an_estimate_near_zero_shows_its_sign_and_never_prints_as_minus_zero():
-    """The review of a7a8f22 (finding 8): "-0.00" was printed."""
+    """ "-0.00" was once printed."""
     assert point(-0.003, -0.11, 0.14) == "-0.003"
     for v in (-0.003, -0.0004, 0.0049, -0.00001):
         assert float(point(v, -0.2, 0.2)) != 0
 
 
 def test_an_estimate_never_prints_equal_to_a_bound_it_differs_from():
-    """The review of a7a8f22 (finding 8): "+0.01 [+0.004, +0.01]" for 0.0091 [0.0036, 0.0145]."""
+    """Once "+0.01 [+0.004, +0.01]" for 0.0091 [0.0036, 0.0145]."""
     from nucprob.classifier.report import estimate_interval
 
     assert estimate_interval(0.0091, 0.0036, 0.0145) == ("+0.009", "+0.004", "+0.015")

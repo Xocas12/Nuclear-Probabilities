@@ -2,7 +2,7 @@
 # under the eleventh amendment (fb028cc): the reading it fixes is post hoc and is reported as such. It is committed
 # and pushed before the reading it defines is computed. No model is refitted and nothing is scored again.
 # Syntax only, 2026-11-05: as committed at ae1bbb6 this file was not valid YAML (a ': ' inside plain text). Each
-# value is now a folded block scalar (>-); every word is unchanged (tests/test_review_fifteen.py checks that).
+# value is now a folded block scalar (>-); every word is unchanged (tests/test_protocol_files_and_other_lists.py checks that).
 date: 2026-11-03
 reasons: >-
   The eleventh amendment read the sealed set on its never_scored places as the blind population.

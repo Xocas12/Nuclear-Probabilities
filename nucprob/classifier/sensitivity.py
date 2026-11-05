@@ -13,7 +13,7 @@ Then the Soviet towns of the SAC list, whose population is the 1959 census for a
 the population rule and LightGBM on the 1939 census instead (earlier than the document, and missing
 for towns founded after it), against the same on 1959.
 
-Then two checks the review of 59a35e6 asked for (configs/protocol_amendment_6.yaml):
+Then two later checks (configs/protocol_amendment_6.yaml):
 - how far SAC's "complete" negatives lie beside the study's own airfield list, and the SAC gain without
   those within 10 km;
 - how well a town's columns identify its document, with folds grouped by place.

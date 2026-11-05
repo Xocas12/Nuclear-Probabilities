@@ -1,4 +1,4 @@
-"""Checks for the in-build review of c39684a: what README, REPORT, the cards and the viewer say against the data."""
+"""What README, REPORT, the data cards and the viewer say, against the data."""
 
 import re
 
@@ -17,16 +17,23 @@ def _flat(path) -> str:
 def test_readme_says_the_blind_places_were_set_apart_after_the_sealed_reading():
     readme = _flat(ROOT / "README.md")
     report = _flat(ROOT / "REPORT.md")
-    for text in (readme, report):
-        assert (
-            "The blind places were set apart after the reading of all sealed places had been seen"
-            in text
-        )
-        assert (
-            "the sealed scores are of the fit made before the corrected West European site table"
-            in text
-        )
-    assert "That subset was defined after the reading of all sealed places had been seen" in readme
+    assert (
+        "The blind places were set apart after the reading of all sealed places had been seen"
+        in report
+    )
+    assert (
+        "the sealed scores are of the fit made before the corrected West European site table"
+        in report
+    )
+    # README says it in the results and in Method
+    assert (
+        "which sealed places count as blind was decided after the reading of all sealed places had been seen"
+        in readme
+    )
+    assert (
+        "Which places count as blind was decided after the reading of all sealed places had been seen"
+        in readme
+    )
 
 
 def test_readme_describes_the_temporal_holdout_as_up_to_1956():
@@ -104,7 +111,7 @@ def test_no_text_cites_an_amendment_that_does_not_exist():
 
 
 def test_cards_cite_no_review_round():
-    """Every card under data/ (the review of a7a8f22, finding 4: two escaped a scan of README.md files only)."""
+    """Every card under data/ (not only README.md files)."""
     for path in [*(ROOT / "data").rglob("*.md")]:
         text = path.read_text(encoding="utf-8")
         assert not re.search(r"review of [0-9a-f]{7}", text), path

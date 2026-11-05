@@ -1,5 +1,5 @@
-"""Checks for the twelfth review's findings (partial review of 9177bae): each reads the output a sentence
-rests on, so a wrong count or a misstated rule fails, not only a changed word."""
+"""The identification rule, the domain shift and the scenario eras as REPORT and the viewer state them: each test
+reads the output a sentence rests on, so a wrong count or a misstated rule fails, not only a changed word."""
 
 import pandas as pd
 import pytest

@@ -131,7 +131,7 @@ def test_the_sealed_sizes_in_the_report_are_those_of_the_table():
         pytest.skip("no built tables")
     d = pd.read_parquet(path, columns=["place_id", "sealed", "never_scored"])
     assert (int(d["sealed"].sum()), int(d["never_scored"].sum())) == (467, 273)
-    # The review of c27c1b8: the report's hard-coded sealed counts are checked here.
+    # The report's hard-coded sealed counts are checked here.
     assert int(d["sealed"].sum()) == report.SEALED_PLACES
     assert int(d["never_scored"].sum()) == report.AMENDMENT_11_SET
     # The early check's places are matched by name and country, not id (Kirovsk), so one of the 194
@@ -142,7 +142,7 @@ def test_the_sealed_sizes_in_the_report_are_those_of_the_table():
 
 
 def test_the_report_figures_from_data_cards_are_those_of_the_cards():
-    """The review of c27c1b8 (trivia 15): figures the report takes from a card or a curated table, not from a
+    """Figures the report takes from a card or a curated table, not from a
     run, are computed from that file or checked against its text here."""
     aud = report._audit()
     card = " ".join((CURATED / "sac1956" / "README.md").read_text(encoding="utf-8").split())

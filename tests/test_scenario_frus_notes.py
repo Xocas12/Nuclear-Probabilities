@@ -1,4 +1,4 @@
-"""Checks for the review of 4e8c648: the historical scenario notes, which the viewer prints, date the FRUS
+"""The historical scenario notes, which the viewer prints, date the FRUS
 figures as the source does (central reliability 1953, losses mid-1953 to mid-1955) and call the +/- 0.07
 spread on reliability this study's assumption, matching README."""
 

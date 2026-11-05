@@ -83,7 +83,7 @@ def test_the_summary_covers_the_primary_table_and_is_of_the_committed_scores():
 
 
 def test_one_seed_reproduces_from_the_held_out_scores():
-    """The review's case: the pooled Warsaw Pact gain under spatial blocks, seed 6."""
+    """The case that turned on its seed: the pooled Warsaw Pact gain under spatial blocks, seed 6."""
     scores = pd.read_csv(OUT / "held_out_scores.csv.gz")
     key = ("Warsaw Pact, pooled, exercise-based", "spatial blocks", "all lists")
     part = sc.part_of(scores, *key)
@@ -112,17 +112,16 @@ def test_report_and_readme_say_what_the_check_found():
             f"| {report.SCOPES[r.scope]} | {report.HOLDOUTS[r.holdout]} | {r.lists} | {r.against} | "
             f"{r.verdict_seed_1956} | {counts} |" in rep
         )
-        assert counts in readme
-        # README groups the moved rows by scope and holdout; each row's list set and baseline is named.
-        assert f"{r.lists} against {r.against}" in readme
+    # README gives the count and sends the reader to REPORT's table for the rows
     assert (
         f"{len(summary) - len(moved)} of {len(summary)} keep their verdict under all 20" in readme
     )
+    assert f'The {len(moved)} that do not are listed in REPORT ("Bootstrap seed")' in readme
     assert "Seeds 1-20" in rep
 
 
 def test_readme_answers_what_made_a_place_a_target():
-    """The review of 736fdb5: README's first question had no feature-family answer."""
+    """README's first question once had no feature-family answer."""
     readme = _flat(ROOT / "README.md")
     assert " ".join(report._readme_families().split()) in readme
     fam = report._families()

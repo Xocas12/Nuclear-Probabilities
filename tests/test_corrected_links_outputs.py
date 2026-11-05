@@ -1,4 +1,4 @@
-"""Checks for landing the seventeenth amendment's refit (corrected Warsaw Pact links): the outputs are of the corrected
+"""The refit on the corrected Warsaw Pact links (configs/protocol_amendment_17.yaml): the outputs are of the corrected
 table, README and REPORT no longer say the refit is pending, the "Changed by" paragraph lists every moved row, and the
 transfer card's link counts are those of the rebuilt links."""
 
@@ -42,9 +42,14 @@ def test_the_changed_paragraph_lists_every_moved_primary_row():
     text = (ROOT / "REPORT.md").read_text(encoding="utf-8")
     section = text[text.index("### Changed by the corrected Warsaw Pact links") :]
     section = section[: section.index("\n### ", 5)]
-    bullets = [line for line in section.splitlines() if line.startswith("- ")]
+    # each bullet with its wrapped continuation lines, up to the next bullet or blank line
+    bullets = [
+        " ".join(part.split("\n\n")[0].split())
+        for part in re.split(r"\n(?=- )", section)
+        if part.startswith("- ")
+    ]
     assert len(bullets) == len(moved)
-    assert f"{len(moved)} of the {len(both)} primary rows" in section
+    assert f"{len(moved)} of the {len(both)} primary rows" in " ".join(section.split())
     for _, r in moved.iterrows():
         assert any(
             r["Scope"] in b

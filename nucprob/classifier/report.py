@@ -20,7 +20,7 @@ from nucprob.classifier.identification_fit import DIVERGED_DROP
 from nucprob.paths import CURATED, ROOT, RUNS
 from nucprob.plans import protocol
 from nucprob.probmap.counts import count
-from nucprob.probmap.run import load_scenarios
+from nucprob.probmap.run import N_DRAWS, load_scenarios
 from nucprob.probmap.viewer import shift_label
 
 OUT = RUNS / "classifier"
@@ -57,7 +57,8 @@ def signed(v: float) -> str:
     """Two decimals. A value that would round to zero keeps its sign and the decimals it needs (a third, or
     up to a sixth), since which side of zero a bound lies on decides a verdict. An exact zero prints as 0.00 with no sign."""
     if v == 0:
-        return "0.00"
+        # A CSV bound written as -0.0000 is negative and rounded to zero: it keeps its sign and four decimals.
+        return "-0.0000" if np.signbit(v) else "0.00"
     if abs(v) >= 0.005:
         return f"{v:+.2f}"
     digits = 3
@@ -1711,6 +1712,11 @@ def _further(n: int) -> str:
 
 
 def report() -> str:
+    """REPORT.md, each paragraph and bullet filled to README's width."""
+    return _wrap(_report_text())
+
+
+def _report_text() -> str:
     comp = pd.read_csv(OUT / "comparison.csv")
     selection = pd.read_csv(OUT / "selection.csv")
     lists = pd.read_csv(OUT / "lists.csv")
@@ -1856,9 +1862,18 @@ towns by score and ask how many of those near the top are on the list. A model w
 the list's share of positives, its **base rate**, so a PR-AUC means nothing without it: SAC's list has a
 base rate of {sac_rate:.2f}, the others together {rest_rate:.2f}. On a list that does not claim to be complete, a town off the
 list is unlabeled, not a negative, so PR-AUC there understates true precision: read such figures against each other and
-the base rate, not as how often a model is right. Intervals are 95%. "By blocks" resamples whole 300 km squares of towns;
-the other interval resamples single towns. Verdicts use the unrounded bounds; a bound that would print as 0.00 is shown with its
-sign and the decimals it needs (three or more), an exact zero as 0.00, an estimate with the decimals of its coarser printed bound (at least two) unless it would then print as 0.00 or equal to a bound it differs from, when it takes more, and a comparison whose scores never differ as "constant". Where the positives lie in fewer than {MIN_POSITIVE_BLOCKS} blocks, resampling blocks measures nothing, and the block interval is shown as "n/a" with the count. In the tables, `a_pr_auc` is the PR-AUC of the model named in the row and `b_pr_auc` that of the score it is compared against; `by_blocks` is the block interval; `towns_without_1939` counts towns with no 1939 census figure; `cell_deg` is a map cell's side in degrees.
+the base rate, not as how often a model is right. The classifier's intervals are 95% paired bootstrap intervals;
+the map's (section "Probability map") are the 5th to 95th percentiles of its draws, so 90%. "By blocks" resamples whole
+300 km squares of towns; the other interval resamples single towns. Verdicts use the unrounded bounds.
+
+**How numbers are rounded.** Most figures have two decimals. Three rules add decimals:
+- A bound that would print as 0.00 keeps its sign and as many decimals as needed (three to six) to show which side
+  of zero it lies on. A bound the CSV stores as -0.0000, negative but under 0.00005, prints as -0.0000. An exact
+  zero prints as 0.00.
+- An estimate takes the decimals of the coarser of its two printed bounds, and at least two.
+- If that would print the estimate as 0.00, or equal to a bound it differs from, it takes more decimals, up to four.
+
+A comparison whose two scores never differ on its rows is shown as "constant". Where the positives lie in fewer than {MIN_POSITIVE_BLOCKS} blocks, resampling blocks measures nothing, and the block interval is shown as "n/a" with the count. In the tables, `a_pr_auc` is the PR-AUC of the model named in the row and `b_pr_auc` that of the score it is compared against; `by_blocks` is the block interval; `towns_without_1939` counts towns with no 1939 census figure; `cell_deg` is a map cell's side in degrees.
 
 **Terms.** "Document" is the general word here: most of the lists are studies, exercises, lessons and a war
 game, and few are war plans (see "How much evidence there is, by side"). "Leave one document out" is the holdout `configs/protocol.yaml` calls leave one plan out.
@@ -2241,31 +2256,42 @@ def _readme_families() -> str:
         f"| {words} | {cell[('all countries', f)]} | {cell[('USSR', f)]} |"
         for f, words in FAMILY_WORDS.items()
     )
-    return f"""- **What the lists favour beyond population, on SAC's 1956 study alone.** Ranked by population alone, SAC's
-  complexes score {pop["base_pr_auc"]:.2f}; with a country term, {base["base_pr_auc"]:.2f} (base rate {_sac_base_rate():.2f}; Soviet towns alone, {su["base_pr_auc"]:.2f}). The
-  table gives what each family of features adds to population and country (LightGBM, spatial blocks, one bag per
-  fit), families measured as of the document first. "National power over population alone" is added to population
-  without the country term, so it can only do what the country term does.
+    return f"""- **What the lists favour beyond population, on SAC's 1956 study alone.** The table adds each family of
+  features, one at a time, to a LightGBM fit on log population and a country term (spatial blocks, one bag per fit),
+  which scores {base["base_pr_auc"]:.2f} on all countries ({su["base_pr_auc"]:.2f} on Soviet towns alone). That fit is not the population rule: it is a fitted model
+  that may bend population's effect, and the population rule, a plain ranking by population, scores {_sac_rule()["b_pr_auc"]:.2f} on the
+  same rows. Families measured as of the document come first. "National power over population alone" is added to a
+  fit on log population with no country term ({pop["base_pr_auc"]:.2f}), so it can only do what the country term does.
 
 | Family added | All countries | Soviet towns only |
 |---|---|---|
 {rows}
 
-  Each gain is at most {gains["delta"].max():.2f} of PR-AUC. These are associations within one requirements study,
+  Each gain is at most {gains["delta"].max():.3f} of PR-AUC. These are associations within one requirements study,
   not causes and not a reading on any other document. A family that gains helps rank towns; it does not say in
   which direction. For defences: listed Soviet towns had fewer defence sites within 50 km than log population and
   country predict (odds ratio per tenfold {_odds_50km()}); REPORT ("Defences") gives why this does not show that SAC
   avoided defended places. {len(near)} of the {len(gains)} gains have a block lower bound under {NEAR_ZERO} ({near_text}),
-  and none of these readings was repeated under other bootstrap seeds, since the family fits' scores are not kept
-  (`configs/protocol_amendment_18.yaml`). Intervals: `runs/classifier/family_gain.csv`.
+  and none of these readings was repeated under other bootstrap seeds, since the family fits' scores are not kept.
+  Intervals: `runs/classifier/family_gain.csv`.
 """
+
+
+def _sac_rule(against: str = RULE):
+    """The selected SAC model against a baseline under spatial blocks: its b_pr_auc is the baseline's PR-AUC."""
+    return _row(
+        pd.read_csv(OUT / "comparison.csv"),
+        SAC_SCOPE,
+        "spatial blocks",
+        _best(pd.read_csv(OUT / "selection.csv"), SAC_SCOPE),
+        against,
+    )
 
 
 def _readme_short() -> str:
     """README's plain answers to its two questions, from the committed outputs."""
     fam = _families()
-    base = fam[(fam["rows"] == "all countries") & (fam["base"] == "base")].iloc[0]
-    pop = fam[(fam["rows"] == "all countries") & (fam["base"] == "population only")].iloc[0]
+    rule, plus = _sac_rule(RULE), _sac_rule(PLUS)
     gains = fam[fam["verdict"] == "gain"]
     dated = gains[~gains["family"].isin(TODAYS_FAMILIES) & gains["base"].eq("base")]
     dated_names = [f for f in FAMILY_WORDS if f in set(dated["family"])]
@@ -2298,20 +2324,24 @@ def _readme_short() -> str:
     return f"""### Short answers
 
 **What made a place a target?** On the one large list, SAC's 1956 study of the Soviet bloc, mostly its size.
-Ranking towns by population alone gives a PR-AUC of {pop["base_pr_auc"]:.2f} where a ranking with no information gives
-{_sac_base_rate():.2f}, and a term for each country raises it to {base["base_pr_auc"]:.2f}. No other family of town traits adds more than
-{gains["delta"].max():.2f}. Of the families measured as of 1956, {named_text} add {dated["delta"].min():.2f} to {dated["delta"].max():.2f} each where they gain. Transport adds
-the most but rests largely on today's data; without the columns flagged as today's data, the selected model's gain
+Under spatial cross-validation, ranking towns by population alone (the population rule) gives a PR-AUC of
+{rule["b_pr_auc"]:.2f} where a ranking with no information gives {_sac_base_rate():.2f}; population plus a term for each country gives
+{plus["b_pr_auc"]:.2f}, and the selected model with every permitted feature {plus["a_pr_auc"]:.2f} ({interval(plus)} over population plus
+country, by blocks {block_interval(plus)}). Added one at a time to a fit on population and country, no family of
+town traits adds more than {gains["delta"].max():.3f}. Of the families measured as of 1956, {named_text} add
+{dated["delta"].min():.3f} to {dated["delta"].max():.3f} each where they gain. Transport adds the most but rests largely on today's data; without the columns flagged as today's data, the selected model's gain
 over population and country is {interval(clean)}, by blocks {block_interval(clean)}, and cannot be told from zero.
 None of this has been shown to carry over to a document the models did not see.{blind_text}
 
 **How likely is an area to be struck?** Only under stated assumptions, and only as a historical illustration. If the
 cited US stockpile of 1956 were sent against the Soviet bloc and each delivered warhead fell on a town in proportion
-to the map's score, {over("us_1956_on_bloc")} half-degree cells would have a probability over one half; with the
-1950 stockpile, {over("us_1950_stock_on_bloc")}. Most of the width of those intervals comes from the stockpile and
-from the share of each force assumed sent to the theatre, which has no source. Against SAC's own list, the 1956
-map's mean cell probability is {val["mean_p"]:.2f} where {val["base_rate"]:.0%} of cells hold a listed town; the score was fitted on
-these lists, so this is agreement, not a test. Present-day scenarios apply lists of 1945-1977 to today's towns:
+to the map's score, {over("us_1956_on_bloc")} half-degree cells would have a probability over one half of
+receiving at least one warhead; with the 1950 stockpile, {over("us_1950_stock_on_bloc")}. The brackets are the 5th to
+95th percentiles of {N_DRAWS} draws. Most of their width comes from the stockpile and from the share of each force
+assumed sent to the theatre, which has no source. Against SAC's own list, with spatial blocks held out, the 1956 map
+ranks the cells that hold a listed town at PR-AUC {val["pr_auc"]:.2f} where {val["base_rate"]:.0%} of cells hold one, and its mean cell
+probability is {val["mean_p"]:.2f}. The score was fitted on these lists, so this is agreement with the training list, not a
+test. Present-day scenarios apply lists of 1945-1977 to today's towns:
 they are extrapolation, with no label to test them.
 
 ### Results in brief
@@ -2352,8 +2382,9 @@ def readme_results() -> str:
     scen = pd.read_csv(MAP / "scenarios.csv")
     text = f"""{_readme_short()}PR-AUC, the area under the precision-recall curve, measures how many of a model's top-ranked towns are on a
 list. A list's base rate is what no information scores: {float(sac["base_rate"]):.2f} for SAC, {float(other["base_rate"]):.2f} for the other lists.
-Where a list is incomplete a town off it is unlabeled, so PR-AUC understates precision there. Each interval is 95%,
-the first resampling towns and "by blocks" resampling 300 km squares; a difference counts only if both exclude zero.
+Where a list is incomplete a town off it is unlabeled, so PR-AUC understates precision there. The classifier's
+intervals are 95%, the first resampling towns and "by blocks" resampling 300 km squares; a difference counts only if
+both exclude zero. The map's intervals are the 5th to 95th percentiles of its draws (90%).
 A **scope** is the set of lists a model is fitted on: two global scopes (every attacker's documents, or plan
 documents only), a pooled Warsaw Pact scope, and SAC's 1956 study alone. A **linked positive** is a listed place
 matched to a town of the place universe. The **population rule** ranks towns by population alone; **population plus
@@ -2413,19 +2444,15 @@ def _readme_seeds() -> str:
     if s is None:
         return "- **Bootstrap seed.** The repeat of the primary comparisons under other seeds has not been run.\n"
     moved = s[~s["seed_stable"].astype(bool)]
-    items = "".join(
-        f"  - {scope}, {holdout} ({'; '.join(which)}): {reading}\n"
-        for scope, holdout, reading, which in _seed_groups(moved)
-    )
     tail = (
-        f" The {len(moved)} that do not:\n{items}  Such a verdict, either way, holds only under the committed draws and is not\n"
-        '  read as a finding (REPORT, "Bootstrap seed").\n'
+        f' The {len(moved)} that do not are listed in REPORT ("Bootstrap seed") and are not read as findings '
+        "either way; a reading above that is one of them says so."
         if len(moved)
-        else "\n"
+        else ""
     )
-    return f"""- **Bootstrap seed.** The protocol draws its 2,000 bootstrap resamples with one fixed seed, the number 1956 (not
-  the document year). After one verdict was found to turn on that seed, `configs/protocol_amendment_18.yaml` fixed a
-  repeat of every primary comparison under seeds 1 to 20, with nothing refitted. {len(s) - len(moved)} of {len(s)} keep their verdict under all 20.{tail}"""
+    return f"""- **Bootstrap seed.** The bootstrap resamples are drawn with one fixed seed, the number 1956 (not the document year). Every primary
+  comparison was repeated under seeds 1 to 20 with nothing refitted: {len(s) - len(moved)} of {len(s)} keep their verdict under all 20.{tail}
+"""
 
 
 # How the doc_type values of PLANS.yaml read in prose, for the README's account of what a reading rests on.
@@ -2470,10 +2497,10 @@ def _other_lists_basis(lists: pd.DataFrame, other, model: str) -> str:
         )
         if verdict(was) != verdict(other):
             text += (
-                f" Before the corrected Warsaw Pact links (`configs/protocol_amendment_17.yaml`) it was {verdict(was)} "
-                f"({interval(was)}, by blocks {block_interval(was)}). Those corrections were adopted after the list of "
-                "Lato-67, a Polish exercise of 1967, had been rescored with them and its PR-AUC seen to rise, so the "
-                "change is not of a reading fixed before its result was seen."
+                f" Without the corrected links of two Polish exercise lists it is {verdict(was)} "
+                f"({interval(was)}, by blocks {block_interval(was)}), and those corrections were adopted after one "
+                "of the two lists had been rescored with them, so this verdict was not fixed before its result was "
+                'seen (REPORT, "Changed by the corrected Warsaw Pact links").'
             )
     return text
 
@@ -2520,11 +2547,9 @@ def _readme_blind() -> str:
 {lines}  Against the population rule, {len(rule_gains)} of {len(rule)} gain by both intervals{rule_text}. Positives lie in only
   {int(p0["positive_blocks"])} of {int(p0["blocks"])} blocks, so these intervals are wide and "neither" is not evidence of no effect. On {int(earlier.iloc[0]["rows"])} sealed
   places including ones earlier runs had scored, {int(earlier["verdict"].eq("gain").sum())} of {len(earlier)} models gained over population plus country.
-  **That reading is not blind.** (`runs/classifier/sealed/blind/comparison.csv`; REPORT, "The sealed set".) The
-  blind places were set apart after the reading of all sealed places had been seen
-  (`configs/protocol_amendment_12.yaml`, which refits nothing), and the sealed scores are of the fit made before the
-  corrected West European site table (REPORT, "Changed by the corrected West European site table"). The sealed
-  readings use the protocol's bootstrap seed alone: the sealed set's lock allows one reading.
+  **That reading is not blind.** Two limits apply to the blind one: which sealed places count as blind was decided
+  after the reading of all sealed places had been seen, and the set may be read once, so only the protocol's
+  bootstrap seed was used (`runs/classifier/sealed/blind/comparison.csv`; REPORT, "The sealed set").
 """
 
 
@@ -2548,8 +2573,8 @@ def _repeats(clean, strict) -> str:
     first = f"{interval(clean)}, by blocks {block_interval(clean)}: {claim(clean)}."
     second = f"{interval(strict)}, by blocks {block_interval(strict)}: {claim(strict)}."
     if first == second:
-        return f"Without the columns flagged as later data, with or without the defence tables, it is {first}"
-    return f"Without the columns flagged as later data it is {first} Also without the defence tables it is {second}"
+        return f"Without the columns flagged as today's data, with or without the defence tables, it is {first}"
+    return f"Without the columns flagged as today's data it is {first} Also without the defence tables it is {second}"
 
 
 def with_readme_results(text: str) -> str:

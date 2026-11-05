@@ -1,4 +1,4 @@
-"""Checks for the review of fac1986: README's reading on lists other than SAC's says what its positives are and that
+"""README's reading on lists other than SAC's says what its positives are and that
 its gain follows an amendment written after a rescoring was seen; every protocol file parses as YAML, and the twelfth
 amendment's syntax repair kept every word of the file as committed at ae1bbb6."""
 
@@ -83,7 +83,7 @@ def test_a_verdict_moved_by_the_seventeenth_amendment_is_flagged_as_after_the_fa
     now = report._row(pd.read_csv(report.OUT / "comparison.csv"), *args)
     was = report._row(pd.read_csv(report.BEFORE_17 / "comparison.csv"), *args)
     readme = _flat(ROOT / "README.md")
-    flagged = "so the change is not of a reading fixed before its result was seen" in readme
+    flagged = "so this verdict was not fixed before its result was seen" in readme
     assert flagged == (report.verdict(now) != report.verdict(was))
     assert "a verdict it moves is not of a reading fixed before its result was seen" in _flat(
         ROOT / "REPORT.md"
