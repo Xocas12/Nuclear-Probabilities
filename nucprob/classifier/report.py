@@ -1021,6 +1021,24 @@ def _sealed_not_done() -> str:
     return "- The sealed set (`python -m nucprob.classifier.sealed`) is reserved until the models have been reviewed.\n"
 
 
+NUMBER_WORDS = "zero one two three four five six seven eight nine ten".split()
+
+
+@functools.cache
+def _pooled_countries() -> list[str]:
+    """Countries of the towns the pooled Warsaw Pact scope was fitted and scored on, read from the place ids
+    of its spatial-block scores (`wp_west_1965:<country>:<n>`)."""
+    path = OUT / "held_out_scores.csv.gz"
+    h = pd.read_csv(path, usecols=["scope", "holdout", "place_id"])
+    ids = h.loc[
+        h["scope"].str.startswith("Warsaw Pact, pooled") & (h["holdout"] == "spatial blocks"),
+        "place_id",
+    ]
+    parts = ids.str.split(":")
+    assert (parts.str.len() == 3).all(), "pooled scope place ids no longer carry a country"
+    return sorted(parts.str[1].unique())
+
+
 def _pooled_sealed(prim: pd.DataFrame) -> str:
     r = prim[prim["scope"].str.startswith("Warsaw Pact, pooled")]
     if r.empty or not (r.iloc[0]["high"] < 0 and not r.iloc[0]["block_excludes_zero"]):
@@ -1029,8 +1047,13 @@ def _pooled_sealed(prim: pd.DataFrame) -> str:
     return (
         f"The pooled Warsaw Pact model ranks these places worse than population does ({point(r['delta'], r['low'], r['high'])}); "
         "the town interval calls that a loss and the block interval does not, so by the rule it is neither. "
-        "It was trained on towns in six Western countries and is applied here to Eastern bloc places."
+        f"It was trained on towns in {_count_word(len(_pooled_countries()))} Western countries "
+        f"({', '.join(_pooled_countries())}) and is applied here to Eastern bloc places."
     )
+
+
+def _count_word(n: int) -> str:
+    return NUMBER_WORDS[n] if n < len(NUMBER_WORDS) else str(n)
 
 
 def _sac_sealed_gap() -> str:
@@ -1888,7 +1911,7 @@ least one linked positive: the US's come to policy and requirements studies and 
 
 ## Not done
 
-{_sealed_not_done()}- `census_it_1961` (814 of the Western towns) and the Dutch census volume are not held: `towns_it_1961.csv` and `towns_nl_1960.csv` stand as their records (`data/sources.yaml`, `held`).
+{_sealed_not_done()}- `census_it_1961` ({len(pd.read_csv(CURATED / "gazetteer" / "towns_it_1961.csv"))} of the Western towns) and the Dutch census volume are not held: `towns_it_1961.csv` and `towns_nl_1960.csv` stand as their records (`data/sources.yaml`, `held`).
 - Rows of the 1970 Coastal Front map beyond the four kept (`data/notes/soviet_search_2026-11.md`), and 69 mirror candidates
   from a 1963 Polish exercise and one lesson, 65 of them map symbols with no text to quote, are not labels
   (`data/notes/second_read_2026-11b.md`). Of the 27 lesson candidates in the same search, which found no new war plan

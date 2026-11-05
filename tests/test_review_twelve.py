@@ -86,3 +86,22 @@ def test_the_viewer_says_the_score_is_fitted_on_all_documents():
     page = _text(MAP / "viewer" / "index.html")
     assert "fitted on all attacker documents together, exercises included" in page
     assert "fitted on all attacker documents, exercises included" in _text(ROOT / "REPORT.md")
+
+
+@pytest.mark.skipif(
+    not (RUNS / "classifier" / "held_out_scores.csv.gz").exists(), reason="no classifier run"
+)
+def test_report_figures_once_typed_in_the_generator_match_the_data():
+    """Review of 7ef717e, trivia: "six Western countries" and "814" were typed into report.py."""
+    h = pd.read_csv(
+        RUNS / "classifier" / "held_out_scores.csv.gz", usecols=["scope", "holdout", "place_id"]
+    )
+    pooled = h[
+        h["scope"].str.startswith("Warsaw Pact, pooled") & (h["holdout"] == "spatial blocks")
+    ]
+    countries = sorted(pooled["place_id"].str.split(":").str[1].unique())
+    italy = len(pd.read_csv(CURATED / "gazetteer" / "towns_it_1961.csv"))
+    text = _text(ROOT / "REPORT.md")
+    if "It was trained on towns in" in text:
+        assert f"Western countries ({', '.join(countries)})" in text
+    assert f"`census_it_1961` ({italy} of the Western towns)" in text
