@@ -288,28 +288,15 @@ advance had none: 8 of its 16 fits (four column sets, four folds) diverged, agai
 (`runs/classifier/identification/intervals.csv`), measured a failed fit; it is withdrawn.
 
 
-| scope | model | variant | features | a_pr_auc | b_pr_auc | difference | by_blocks |
-|---|---|---|---|---|---|---|---|
-| Warsaw Pact, pooled, exercise-based | LightGBM, all permitted | all permitted | 33 | 0.28 | 0.17 | +0.11 [+0.06, +0.18] | [-0.01, +0.16] |
-| Warsaw Pact, pooled, exercise-based | LightGBM, all permitted | none flagged | 25 | 0.27 | 0.17 | +0.10 [+0.05, +0.17] | [-0.01, +0.16] |
-| Warsaw Pact, pooled, exercise-based | LightGBM, all permitted | strict as-of | 22 | 0.27 | 0.17 | +0.10 [+0.05, +0.16] | [-0.03, +0.15] |
-| Warsaw Pact, pooled, exercise-based | LightGBM, all permitted | no national power | 26 | 0.24 | 0.17 | +0.06 [+0.02, +0.12] | [-0.04, +0.11] |
-| Warsaw Pact, pooled, exercise-based | LightGBM, all permitted | no source markers | 20 | 0.21 | 0.17 | +0.03 [-0.01, +0.08] | [-0.08, +0.08] |
-| single document: SAC 1956 (not a state model) | logistic, all permitted | all permitted | 33 | 0.85 | 0.82 | +0.02 [+0.01, +0.03] | [+0.01, +0.04] |
-| single document: SAC 1956 (not a state model) | logistic, all permitted | none flagged | 25 | 0.84 | 0.82 | +0.01 [+0.01, +0.02] | [-0.002, +0.03] |
-| single document: SAC 1956 (not a state model) | logistic, all permitted | strict as-of | 22 | 0.84 | 0.82 | +0.01 [+0.01, +0.02] | [-0.002, +0.03] |
-| single document: SAC 1956 (not a state model) | logistic, all permitted | no national power | 26 | 0.84 | 0.82 | +0.02 [+0.004, +0.03] | [-0.003, +0.04] |
-| single document: SAC 1956 (not a state model) | logistic, all permitted | no source markers | 20 | 0.83 | 0.82 | +0.01 [-0.01, +0.02] | [-0.01, +0.03] |
-| global, plan documents only | LightGBM, all permitted | all permitted | 33 | 0.84 | 0.82 | +0.02 [+0.01, +0.03] | [+0.01, +0.04] |
-| global, plan documents only | LightGBM, all permitted | none flagged | 25 | 0.83 | 0.82 | +0.01 [-0.004, +0.02] | [-0.01, +0.02] |
-| global, plan documents only | LightGBM, all permitted | strict as-of | 22 | 0.83 | 0.82 | +0.01 [-0.01, +0.02] | [-0.01, +0.02] |
-| global, plan documents only | LightGBM, all permitted | no national power | 26 | 0.84 | 0.82 | +0.02 [+0.01, +0.03] | [+0.004, +0.04] |
-| global, plan documents only | LightGBM, all permitted | no source markers | 20 | 0.83 | 0.82 | +0.01 [-0.01, +0.02] | [-0.01, +0.03] |
-| global, all attacker documents | LightGBM, all permitted | all permitted | 33 | 0.79 | 0.76 | +0.03 [+0.02, +0.04] | [+0.01, +0.06] |
-| global, all attacker documents | LightGBM, all permitted | none flagged | 25 | 0.78 | 0.76 | +0.02 [+0.01, +0.03] | [0.00, +0.04] |
-| global, all attacker documents | LightGBM, all permitted | strict as-of | 22 | 0.77 | 0.76 | +0.01 [+0.003, +0.03] | [-0.01, +0.04] |
-| global, all attacker documents | LightGBM, all permitted | no national power | 26 | 0.78 | 0.76 | +0.03 [+0.02, +0.04] | [+0.01, +0.05] |
-| global, all attacker documents | LightGBM, all permitted | no source markers | 20 | 0.76 | 0.76 | +0.00 [-0.01, +0.02] | [-0.02, +0.03] |
+Each cell is the difference in PR-AUC and its verdict: a gain or a loss needs both intervals, spatial and by blocks, to
+exclude zero. The intervals are in `runs/classifier/TABLES.md` ("What the gains rest on, every row").
+
+| scope | all permitted | none flagged | strict as-of | no national power | no source markers |
+|---|---|---|---|---|---|
+| Warsaw Pact, pooled, exercise-based | +0.11 neither | +0.10 neither | +0.10 neither | +0.06 neither | +0.03 neither |
+| single document: SAC 1956 (not a state model) | +0.02 gain | +0.01 neither | +0.01 neither | +0.02 neither | +0.01 neither |
+| global, plan documents only | +0.02 gain | +0.01 neither | +0.01 neither | +0.02 gain | +0.01 neither |
+| global, all attacker documents | +0.03 gain | +0.02 neither | +0.01 neither | +0.03 gain | +0.00 neither |
 
 **SAC's negatives beside its own airfields.** SAC's town list is complete, but it lists airfields apart, so a town off it may lie beside a
 listed airfield. 88 of its 1103 negatives lie within 5 km of one and 174 within 10 km. Without those within 10 km the SAC gain above is +0.02 [+0.02, +0.03], by blocks [+0.01, +0.04], against +0.02 [+0.01, +0.03], by blocks [+0.01, +0.04] with them.
@@ -329,26 +316,19 @@ Soviet towns on the 1939 census, earlier than the document and missing for towns
 Each family with population and country, LightGBM, spatial blocks, one bag per fit rather than 50. A gain needs both intervals to exclude zero, as everywhere. Airfield counts are in transport, not
 military, and industry is the single power-plant column, so a zero there says little about industry. Over a country term national
 power can add nothing within one list; over population alone it does the country term's work. Transport here is
-largely today's data.
+largely today's data. Each cell is the gain over the base (population and country, or population alone where the
+row says so) and its verdict; the intervals are in `runs/classifier/TABLES.md` ("Feature families, US 1956 complexes").
 
-| rows | family | base | base_pr_auc | with_family_pr_auc | gain | by_blocks | verdict |
-|---|---|---|---|---|---|---|---|
-| all countries | national_power over population | population only | 0.79 | 0.81 | +0.02 [+0.02, +0.03] | [+0.01, +0.03] | gain |
-| all countries | administration | base | 0.81 | 0.81 | +0.00 [-0.002, +0.01] | [-0.004, +0.01] | neither |
-| all countries | geography | base | 0.81 | 0.82 | +0.01 [+0.003, +0.02] | [+0.002, +0.02] | gain |
-| all countries | industry | base | 0.81 | 0.81 | +0.00 [+0.0003, +0.01] | [-0.0001, +0.01] | neither |
-| all countries | transport | base | 0.81 | 0.83 | +0.02 [+0.01, +0.03] | [+0.01, +0.04] | gain |
-| all countries | military | base | 0.81 | 0.83 | +0.01 [+0.01, +0.02] | [+0.01, +0.02] | gain |
-| all countries | defence | base | 0.81 | 0.82 | +0.01 [+0.004, +0.01] | [+0.002, +0.02] | gain |
-| all countries | national_power | base | 0.81 | 0.81 | +0.00 [0.00, +0.004] | [-0.001, +0.01] | neither |
-| USSR | national_power over population | population only | 0.77 | 0.77 | none: constant on these rows | none | not a reading |
-| USSR | administration | base | 0.77 | 0.78 | +0.01 [+0.004, +0.02] | [+0.003, +0.02] | gain |
-| USSR | geography | base | 0.77 | 0.78 | +0.01 [+0.003, +0.03] | [+0.004, +0.03] | gain |
-| USSR | industry | base | 0.77 | 0.77 | +0.00 [-0.001, +0.01] | [-0.002, +0.01] | neither |
-| USSR | transport | base | 0.77 | 0.81 | +0.04 [+0.03, +0.06] | [+0.03, +0.06] | gain |
-| USSR | military | base | 0.77 | 0.79 | +0.02 [+0.01, +0.03] | [+0.01, +0.03] | gain |
-| USSR | defence | base | 0.77 | 0.78 | +0.01 [+0.004, +0.03] | [+0.002, +0.03] | gain |
-| USSR | national_power | base | 0.77 | 0.77 | none: constant on these rows | none | not a reading |
+| family | all countries | USSR |
+|---|---|---|
+| national_power over population | +0.02 gain | not a reading |
+| administration | +0.00 neither | +0.01 gain |
+| geography | +0.01 gain | +0.01 gain |
+| industry | +0.00 neither | +0.00 neither |
+| transport | +0.02 gain | +0.04 gain |
+| military | +0.01 gain | +0.02 gain |
+| defence | +0.01 gain | +0.01 gain |
+| national_power | +0.00 neither | not a reading |
 
 ### Economic and political data
 

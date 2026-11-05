@@ -567,3 +567,22 @@ def test_readme_defines_its_terms_before_use():
         assert readme.index(definition) <= readme.index(term) + len(definition), term
     assert "tenth amendment" not in readme
     assert "The **sealed set** is the 467 towns" in readme
+
+
+@needs_run
+def test_the_sensitivity_and_family_rows_keep_their_intervals_in_tables_and_verdicts_in_report():
+    """REPORT shows each sensitivity and family row as an estimate and verdict; TABLES.md keeps both intervals.
+    The verdict is the protocol's: a gain needs both intervals to exclude zero."""
+    text = (ROOT / "REPORT.md").read_text(encoding="utf-8")
+    tables = (OUT / "TABLES.md").read_text(encoding="utf-8")
+    for name in ("sensitivity.csv", "family_gain.csv"):
+        d = pd.read_csv(OUT / name)
+        for _, r in d.iterrows():
+            assert report.interval(r) in tables, (name, r.iloc[:3].tolist())
+            if report.constant(r):
+                continue
+            v = report.both_verdict(r)
+            assert f"| {report.point(r['delta'], r['low'], r['high'])} {v} |" in text
+    fam = pd.read_csv(OUT / "family_gain.csv")
+    measured = fam[~fam.apply(report.constant, axis=1)]
+    assert (measured.apply(report.both_verdict, axis=1) == measured["verdict"]).all()

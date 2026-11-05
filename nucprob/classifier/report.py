@@ -158,6 +158,37 @@ def verdict(r) -> str:
     return "neither"
 
 
+def both_verdict(r) -> str:
+    """Gain, loss or neither by the protocol's rule (both intervals, unrounded), for rows with no training count."""
+    if constant(r):
+        return "not a reading"
+    if not block_measured(r):
+        return "neither"
+    if r["low"] > 0 and r["block_low"] > 0:
+        return "gain"
+    if r["high"] < 0 and r["block_high"] < 0:
+        return "loss"
+    return "neither"
+
+
+def verdict_grid(d: pd.DataFrame, index: str, columns: str) -> pd.DataFrame:
+    """One cell per row of `d`: its estimate and verdict. The intervals behind each cell are in TABLES.md."""
+    cells = d.assign(
+        cell=d.apply(
+            lambda r: (
+                "not a reading"
+                if constant(r)
+                else f"{point(r['delta'], r['low'], r['high'])} {both_verdict(r)}"
+            ),
+            axis=1,
+        )
+    )
+    order = list(dict.fromkeys(d[columns]))
+    grid = cells.pivot(index=index, columns=columns, values="cell")[order]
+    grid = grid.reindex(list(dict.fromkeys(d[index])))
+    return grid.reset_index().rename_axis(columns=None)
+
+
 def by_list(lists: pd.DataFrame, scope: str, holdout: str) -> pd.DataFrame:
     """PR-AUC of every list the scope holds and model. A list too small to score shows blanks."""
     g = lists[(lists["scope"] == scope) & lists["holdout"].str.startswith(holdout)]
@@ -252,6 +283,18 @@ def tables() -> str:
         "verdict",
     ]
     parts += ["## Feature families, US 1956 complexes", "", markdown(fam[keep]), ""]
+    sens = pd.read_csv(OUT / "sensitivity.csv")
+    sens = sens.assign(
+        difference=sens.apply(interval, axis=1), by_blocks=sens.apply(block_interval, axis=1)
+    )[["scope", "model", "variant", "features", "a_pr_auc", "b_pr_auc", "difference", "by_blocks"]]
+    parts += ["## What the gains rest on, every row", ""]
+    parts += [
+        "Each scope's selected candidate (a) against population plus country (b) under spatial blocks, "
+        "with columns removed (`runs/classifier/sensitivity.csv`).",
+        "",
+        markdown(sens),
+        "",
+    ]
     parts += ["## Defences, associations only", "", markdown(pd.read_csv(OUT / "defence.csv")), ""]
     extended = _extended_rows()
     if extended is not None:
@@ -1492,25 +1535,8 @@ def report() -> str:
     nearby = pd.read_csv(OUT / "block_neighbours.csv")
     air = pd.read_csv(OUT / "airfield_negatives.csv").set_index("towns")
     air_all, air_less = air.loc["all towns"], air.loc["negatives within 10 km left out"]
-    fam_table = fam.assign(
-        gain=fam.apply(interval, axis=1),
-        by_blocks=fam.apply(block_interval, axis=1),
-        verdict=fam.apply(lambda r: "not a reading" if constant(r) else r["verdict"], axis=1),
-    )[
-        [
-            "rows",
-            "family",
-            "base",
-            "base_pr_auc",
-            "with_family_pr_auc",
-            "gain",
-            "by_blocks",
-            "verdict",
-        ]
-    ]
-    sens_table = sens.assign(
-        difference=sens.apply(interval, axis=1), by_blocks=sens.apply(block_interval, axis=1)
-    )[["scope", "model", "variant", "features", "a_pr_auc", "b_pr_auc", "difference", "by_blocks"]]
+    fam_table = verdict_grid(fam, "family", "rows")
+    sens_table = verdict_grid(sens, "scope", "variant")
     su_table = su_pop.assign(
         difference=su_pop.apply(interval, axis=1), by_blocks=su_pop.apply(block_interval, axis=1)
     )[
@@ -1702,6 +1728,9 @@ post-Soviet knowledge. "No national power" removes COW's values, which take one 
 were suspected of marking a document. "No source markers" also removes the defence and military columns, which are
 blank or filled according to the table a row came from. {_identification()}
 
+Each cell is the difference in PR-AUC and its verdict: a gain or a loss needs both intervals, spatial and by blocks, to
+exclude zero. The intervals are in `runs/classifier/TABLES.md` ("What the gains rest on, every row").
+
 {markdown(sens_table)}
 
 **SAC's negatives beside its own airfields.** SAC's town list is complete, but it lists airfields apart, so a town off it may lie beside a
@@ -1719,7 +1748,8 @@ Soviet towns on the 1939 census, earlier than the document and missing for towns
 Each family with population and country, LightGBM, spatial blocks, one bag per fit rather than 50. A gain needs both intervals to exclude zero, as everywhere. Airfield counts are in transport, not
 military, and industry is the single power-plant column, so a zero there says little about industry. Over a country term national
 power can add nothing within one list; over population alone it does the country term's work. Transport here is
-largely today's data.
+largely today's data. Each cell is the gain over the base (population and country, or population alone where the
+row says so) and its verdict; the intervals are in `runs/classifier/TABLES.md` ("Feature families, US 1956 complexes").
 
 {markdown(fam_table)}
 
