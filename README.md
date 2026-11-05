@@ -35,6 +35,19 @@ term for each target country.
   On 272 sealed places including ones earlier runs had scored, 2 of 4 models gained over population plus country.
   **That reading is not blind.** (`runs/classifier/sealed/blind/comparison.csv`; REPORT, "The sealed set".)
   The blind places were set apart after the reading of all sealed places had been seen (`configs/protocol_amendment_12.yaml`, which refits nothing), and the sealed scores are of the fit made before the corrected West European site table (REPORT, "Changed by the corrected West European site table").
+- **What the lists favour beyond population, on SAC's 1956 study alone.** Population carries most of it: ranked
+  by population alone SAC's complexes score 0.79, and with a country term 0.81, on a base rate of 0.49.
+  Each family added to population and country (LightGBM, spatial blocks, one bag per fit):
+  transport (railways, ports, airfields; largely today's data) +0.02 [+0.01, +0.03], by blocks [+0.01, +0.04]; national power (the Correlates of War project's (COW) National Material Capabilities) over population alone +0.02 [+0.02, +0.03], by blocks [+0.01, +0.03]; military sites of the document's date +0.01 [+0.01, +0.02], by blocks [+0.01, +0.02]; geography (elevation, relief, distance to the coast) +0.01 [+0.003, +0.02], by blocks [+0.002, +0.02]; air and missile defence sites +0.01 [+0.004, +0.01], by blocks [+0.002, +0.02]. Not gaining: industry (one power-plant column) (neither), administrative status (capital, regional centre, distance to the capital) (neither), national power over population and country (neither).
+  Soviet towns alone, from 0.77: transport (railways, ports, airfields; largely today's data) +0.04 [+0.03, +0.06], by blocks [+0.03, +0.06]; military sites of the document's date +0.02 [+0.01, +0.03], by blocks [+0.01, +0.03]; geography (elevation, relief, distance to the coast) +0.01 [+0.003, +0.03], by blocks [+0.004, +0.03]; air and missile defence sites +0.01 [+0.004, +0.03], by blocks [+0.002, +0.03]; administrative status (capital, regional centre, distance to the capital) +0.01 [+0.004, +0.02], by blocks [+0.003, +0.02]. Not gaining: industry (one power-plant column) (neither), national power (the Correlates of War project's (COW) National Material Capabilities) over population alone (not a reading), national power over population and country (not a reading).
+  Each gain is at most 0.04 of PR-AUC. These are associations within one requirements study, not
+  causes and not a reading on any other document. A family that gains helps rank towns; it does not say in which
+  direction. For defences: listed Soviet towns had fewer defence sites within 50 km than log population and
+  country predict (odds ratio per tenfold 0.33 [0.19, 0.50]).
+  REPORT ("Defences") gives why this does not show that SAC avoided defended places.
+  5 of the 10 gains have a block lower bound under 0.005: geography (all countries, +0.002), defence (all countries, +0.002), administration (USSR, +0.003), geography (USSR, +0.004), defence (USSR, +0.002). Unlike the primary comparisons
+  these were not repeated under other bootstrap seeds, since the family fits' scores are not kept
+  (`configs/protocol_amendment_18.yaml`). Intervals: `runs/classifier/family_gain.csv`.
 - **Inside SAC's list**, under spatial cross-validation, the selected model beats population plus a country term by
   +0.02 [+0.01, +0.03], by blocks [+0.01, +0.04]: both intervals exclude zero. Without the columns flagged as later data, with or without the defence tables, it is +0.01 [+0.01, +0.02], by blocks [-0.002, +0.03]: at least one interval reaches zero, so it cannot be told from no difference. Those repeats still use the 1959 Soviet census and other late inputs
   (REPORT, "Inputs later than the document"). The analysis is not blind: earlier results had been read (REPORT, Method).
@@ -44,6 +57,10 @@ term for each target country.
 - **On a document the model has not seen**, the richer model against ranking towns by population is -0.13 [-0.16, -0.11],
   by blocks [-0.17, -0.09] over all lists, which SAC dominates. On lists other than SAC it is +0.02 [-0.03, +0.06], by blocks [-0.09, +0.06]: at least one interval reaches zero, so it cannot be told from no difference.
   So no model has been shown to do better than population on an unseen document.
+- **Bootstrap seed.** Every primary comparison was repeated under 20 other bootstrap seeds with nothing refitted
+  (`configs/protocol_amendment_18.yaml`, after a review found one verdict turning on the seed). 35 of 42
+  keep their verdict under all 20. Seed-dependent: Global, all attacker documents, spatial blocks, lists other than SAC, against population rule: gain under the protocol's seed, 18 gain, 2 neither under seeds 1-20; Global, all attacker documents, temporal: fit up to 1956, score later, all lists, against population rule: neither under the protocol's seed, 16 gain, 4 neither under seeds 1-20; Global, all attacker documents, temporal: fit up to 1956, score later, all lists, against population + country: neither under the protocol's seed, 16 gain, 4 neither under seeds 1-20; Global, all attacker documents, temporal: fit up to 1956, score later, lists other than SAC, against population rule: neither under the protocol's seed, 16 gain, 4 neither under seeds 1-20; Global, all attacker documents, temporal: fit up to 1956, score later, lists other than SAC, against population + country: neither under the protocol's seed, 16 gain, 4 neither under seeds 1-20; Warsaw Pact, pooled, spatial blocks, all lists, against population + country: gain under the protocol's seed, 11 gain, 9 neither under seeds 1-20; Warsaw Pact, pooled, spatial blocks, lists other than SAC, against population + country: gain under the protocol's seed, 11 gain, 9 neither under seeds 1-20. Such a verdict, either way, holds only under the committed draws and is not read as a finding.
+  The feature-family readings above were not repeated (REPORT, "Bootstrap seed").
 - **No state gets its own model.** The US has 1299 linked positives, but only 7 outside one document and the
   pre-committed gate asks for 15. The USSR has 0 positives in a document registered as a war plan, and 50 town-list pairs from staff-academy lessons.
   A pooled Warsaw Pact model is allowed and is always labelled exercise-based. Refusals: `runs/classifier/state_gate.csv`.
@@ -83,10 +100,13 @@ term for each target country.
   list, Hungary's and the Czech lands' towns interpolated with 1960 and 1961 censuses, East Germany's and Poland's with
   end-1956 figures and Slovakia's with 1958 ones, Kurchatov's 1990 figure, North Korean, North Vietnamese and Mongolian
   towns chosen by their size today, and undated West European sites counted for 1961 and 1964 (REPORT, "Inputs later than the document"). Only a separate USSR rerun on the 1939 census avoids the 1959 census.
-- **Stockpiles.** `data/curated/stockpiles/`: inventories by state, year and delivery from the Nuclear Notebook of the Federation of
-  American Scientists (FAS), the Natural Resources Defense Council (NRDC), Our World in Data (OWID) and the Stockholm
-  International Peace Research Institute (SIPRI), with every other assumption stated beside its source or marked as having none.
-  The historical scenarios' reliability and losses to defences are a stand-in: 1953 US government estimates for Soviet bombers
+- **Stockpiles.** `data/curated/stockpiles/`: inventories by state and year from the Federation of
+  American Scientists (FAS), its Status of World Nuclear Forces table of 2026, the Natural Resources Defense Council (NRDC)
+  and Our World in Data (OWID), a series citing FAS, and 2026 shares by delivery, rounded, from the Stockholm
+  International Peace Research Institute (SIPRI). The Bulletin of the Atomic Scientists' Nuclear Notebook was not read:
+  its site's robots.txt disallows this project's agent (`data/curated/stockpiles/README.md`). Every other assumption is
+  stated beside its source or marked as having none.
+  The historical scenarios' reliability and losses to defences are a stand-in: US government estimates of 1953-55 for Soviet bombers
   attacking the US (Foreign Relations of the United States, FRUS), applied to US bombers in 1950 and 1956 and to Soviet
   forces in 1965 because no opened source covers those.
 - **Provenance.** `data/sources.yaml`: every source's URL, licence, retrieval date and sha256. `data/ISSUES.md`
