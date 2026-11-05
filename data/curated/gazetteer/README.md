@@ -90,10 +90,15 @@ The floor matters in two places.
   where the matcher took the wrong row. Columns `place_id`, `name`, `lat`, `lon`, `geonameid`, `basis`
   (the evidence, here SAC's printed point for KOMARNO CZECH). `nucprob/places.py` (`correct_coordinates`)
   moves the point; the place keeps its id.
-- `transfer_target_unlinked.csv` (14 rows): targets of the smaller lists that a reader could not tie
+- `transfer_target_unlinked.csv` (18 rows): targets of the smaller lists that a reader could not tie
   to one place. Columns `plan_id`, `seq`, `name_source`, `reason`. `nucprob/transfer/labels.py`
   (`unlinked`) keeps them on their list linked to no town, rather than to the largest town of that
   name. The Square Leg row is read by nothing since `configs/protocol_amendment_10.yaml` withdrew that list.
+  A row that prints a direction with no distance ("south of Utrecht", "north of Hamburg") is listed here
+  (`configs/protocol_amendment_17.yaml`): no point or town can be read from it.
+- `transfer_target_links.csv`: hand-placed points of the smaller lists' targets, taking precedence over the
+  name match. A row printing a distance and direction from a town ("5 km NW of Münster") is placed at that
+  offset from GeoNames' point of the town, and the nearest town within 15 km takes the row.
 
 ## Matching to GeoNames
 

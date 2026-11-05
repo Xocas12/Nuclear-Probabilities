@@ -23,3 +23,8 @@ wp_1977_gsa_lessons,48,52.142,6.7713,12 km SW of Enschede,"offset as printed, fr
 wp_1977_gsa_lessons,60,51.5128,5.4778,8 km N of Eindhoven,"offset as printed, from the point of the town in the 1960 table"
 cd_1980_square_leg,64,51.1481,-0.1903,Gatwick Airport,"the airport (its own point), in Crawley district; the name matcher had taken a hamlet of that name in Waverley"
 cd_1980_square_leg,82,56.461,-2.97,Dundee,the row names the Tay Bridge at Dundee; the fuzzy matcher had taken Stalybridge
+wp_1967_lato67,51,52.9411,9.581,5 km S of Visselhövede,"offset as printed, from GeoNames' point of the town"
+wp_1967_lato67,52,52.813,9.7648,30 km NW of Celle,"offset as printed, from GeoNames' point of the town"
+wp_1967_lato67,53,51.9941,7.5741,5 km NW of Münster,"offset as printed, from GeoNames' point of the town"
+wp_1967_lato67,54,51.5888,6.1589,10 km S of Goch,"offset as printed, from GeoNames' point of the town"
+wp_1967_lato67,55,51.2807,6.2892,15 km NW of Mönchengladbach,"offset as printed, from GeoNames' point of the town"
