@@ -270,7 +270,12 @@ Collection page: https://phpisn.ethz.ch/lory1.ethz.ch/collections/colltopic4241.
 6. **ČSLA 1977/1989 named targets**: still none. The VHA operational plans or the "Časlav" annex 6 would be needed.
 7. **TV2 2022** and **CWIHP Bulletin 12/13 (Operation Atom)** need a working search or library access.
 8. **Seven Days 1979** primary (IPN 2005 release; map images): not located. The Guardian/Telegraph 2005 articles were not opened.
-9. **CIA lesson series**: 27 more lessons to scan (e.g. 0001197591, 0001197581). Some may name places like 0001197534 does.
+9. **CIA lesson series**: done as far as a pattern search goes. `soviet_search_2026-11.md` fetched the archive.org OCR
+   of 55 files of the series and searched them; five more lessons gave rows (`wp_1977_gsa_lessons.csv`, after the second
+   reads in `second_read_2026-11.md` and `second_read_2026-11b.md`), and 0001197593, 0001197595 and 0001197541 were read and
+   give no rows (conventional strikes, areas too broad, conventional variant). The OCR was not read line by line, so a
+   lesson naming places in words the patterns miss could remain. All of it is one fictional 1977 scenario: more rows
+   would add positives to one lesson group, not an independent plan, and cannot move the USSR's gate row.
 10. Further PHP items noticed but not processed: "List of Nuclear Strikes" companion annexes; 1971 Siwicki/Hannover message; Balló's "Die Ungarische Volksarmee im Warschauer Pakt" (German PDF on the PHP mirror); and the Hungarian collection's other 1965 documents (arbitrator reports).
 11. **1951 Polish plan** (searched 2026-11-05): PHP published it with the 1964 plan, and the 2000 NSA press release
     (https://nsarchive2.gwu.edu/NSAEBB/NSAEBB31/press.html) calls it the only earlier Soviet bloc war plan in the
