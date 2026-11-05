@@ -5,10 +5,12 @@ features).
 family of ids) or curated tables as "curated:<path under data/curated>". The leakage guard
 (tests/test_leakage.py) checks that none of them is a label source. `anachronism` marks a
 feature that uses knowledge from after 1956, a modern dataset standing in for the world of the
-plan's date; phase 4 measures how much results depend on them.
+plan's date; phase 4 measures how much results depend on them. `later` names inputs dated after
+the document that are not today's data, such as the USSR's 1959 census: those columns are not
+flagged as anachronisms, so every repeat without the flagged columns still uses them.
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 CENSUS = ("popstat_*", "demoscope_*", "geonames_*")
 CAPITALS = ("curated:features/capitals_1956.csv",)
@@ -24,6 +26,7 @@ class Feature:
     sources: tuple[str, ...]
     anachronism: bool = False
     note: str = ""
+    later: str = ""
 
 
 FEATURES = {
@@ -261,3 +264,20 @@ def by_family(names: list[str]) -> dict[str, list[str]]:
     for n in names:
         out.setdefault(FEATURES[n].family, []).append(n)
     return out
+
+
+# Columns built from the census nearest the document's date: for the USSR that is the 1959 census, three years
+# after June 1956, and several other countries' towns are interpolated with censuses of 1958-1961 (REPORT, "Inputs
+# later than the document"). They are not today's data and are kept in every repeat; the USSR rerun on the 1939
+# census is the one reading without them.
+LATER_CENSUS = "USSR 1959 census; some other countries' censuses of 1958-1961"
+for _name in [
+    "log_pop",
+    "growth_prewar",
+    "pop_rank_pct",
+    "log_pop_within_25km",
+    "log_pop_within_50km",
+    "log_pop_within_100km",
+    "log_km_to_100k",
+]:
+    FEATURES[_name] = replace(FEATURES[_name], later=LATER_CENSUS)

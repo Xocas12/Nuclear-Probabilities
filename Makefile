@@ -60,6 +60,7 @@ qa:
 classifier:
 	$(PY) -m nucprob.classifier.table
 	$(PY) -m nucprob.classifier.run
+	$(PY) -m nucprob.classifier.seed_check
 	$(PY) -m nucprob.classifier.sensitivity
 	$(PY) -m nucprob.classifier.identification
 	$(PY) -m nucprob.classifier.identification_fit
