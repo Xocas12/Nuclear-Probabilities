@@ -5,6 +5,7 @@ import fnmatch
 import re
 from pathlib import Path
 
+import pandas as pd
 import yaml
 
 from nucprob.features.registry import FEATURES
@@ -81,12 +82,20 @@ def test_a_feature_module_naming_a_warsaw_pact_list_fails_the_guard():
 
 def test_the_feature_card_names_the_inputs_later_than_their_document():
     """REPORT ("Inputs later than the document") and the gazetteer card name population figures that
-    postdate the document they serve. The classifier's feature card must not claim the contrary."""
+    postdate the document they serve. The classifier's feature card must not claim the contrary, and
+    every closed town that enters the universe with a figure later than the 1959 census is read from the
+    data and must be named in the card with its year."""
+    from nucprob.places import CLOSED, UNIVERSE
+
     card = (ROOT / "data" / "FEATURES_CLASSIFIER.md").read_text()
     gazetteer = (CURATED / "gazetteer" / "README.md").read_text()
     assert "census at or before the document" not in card
     assert "No site table runs past its own date" not in card
-    for later in ("1959 census", "1960", "1961", "Kurchatov", "1990"):
-        assert later in card, later
-    assert "Kurchatov has only a 1990 figure" in gazetteer
+    closed = pd.read_csv(CLOSED)
+    late = closed[(closed["pop_year"] > 1959) & (closed["pop_estimate"] >= UNIVERSE)]
+    assert len(late) > 0
+    for r in late.itertuples():
+        assert r.name in card and f"{r.pop_year:.0f}" in card, (r.name, r.pop_year)
+        assert f"{r.name} has only a {r.pop_year:.0f} figure" in gazetteer
+    assert "1959 census" in card
     assert "censuses of 1941, 1949, 1960" in gazetteer

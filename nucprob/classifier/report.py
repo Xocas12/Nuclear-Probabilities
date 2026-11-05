@@ -17,6 +17,7 @@ from nucprob.classifier.divergence import LOSS_RISE, MAX_RAW
 from nucprob.classifier.evaluate import MIN_TRAIN_POSITIVES
 from nucprob.paths import CURATED, ROOT, RUNS
 from nucprob.plans import protocol
+from nucprob.probmap.counts import count
 from nucprob.probmap.run import load_scenarios
 
 OUT = RUNS / "classifier"
@@ -109,6 +110,30 @@ def _positive_blocks() -> dict[tuple[str, str, str], int]:
             g["plan_id"] != SAC, "block"
         ].nunique()
     return out
+
+
+@functools.cache
+def _scored_in_sealed_blocks() -> tuple[int, int]:
+    """Places scored in any committed holdout that lie in a sealed block: (all, SAC 1956 only)."""
+    path = OUT / "held_out_scores.csv.gz"
+    blocks = ROOT / "data" / "curated" / "splits" / "sealed_blocks.csv"
+    if not path.exists() or not blocks.exists():
+        return 0, 0
+    sealed = set(pd.read_csv(blocks)["block"])
+    h = pd.read_csv(path, usecols=["plan_id", "place_id", "block"])
+    h = h[h["block"].isin(sealed)]
+    return h["place_id"].nunique(), h.loc[h["plan_id"] == SAC, "place_id"].nunique()
+
+
+def _sealed_block_sentence() -> str:
+    total, sac = _scored_in_sealed_blocks()
+    if not total:
+        return "A sealed block holds no training place, but a training town in a neighbouring block may be close."
+    return (
+        f"A sealed block is not free of training data: {total} scored places lie in sealed blocks, {sac} of them SAC 1956 "
+        "towns the early check had scored before corrected coordinates moved them there (`data/curated/splits/README.md`) "
+        f"and {total - sac} towns of other lists. A training town in a neighbouring block may also be close."
+    )
 
 
 def positive_blocks(r) -> int | None:
@@ -440,10 +465,10 @@ def _theatre_table() -> pd.DataFrame:
 
 
 def _median_range(d: pd.DataFrame, prefix: str) -> pd.Series:
-    """'median [low, high]' from the columns <prefix>_median, _low and _high, as whole warheads."""
+    """'median [low, high]' from the columns <prefix>_median, _low and _high, as counts (count())."""
     return d.apply(
         lambda r: (
-            f"{r[prefix + '_median']:.0f} [{r[prefix + '_low']:.0f}, {r[prefix + '_high']:.0f}]"
+            f"{count(r[prefix + '_median'])} [{count(r[prefix + '_low'])}, {count(r[prefix + '_high'])}]"
         ),
         axis=1,
     )
@@ -464,7 +489,7 @@ def _delivered_table(d: pd.DataFrame) -> pd.DataFrame:
             ),
             "delivered_shares_at_mode": d.apply(
                 lambda r: (
-                    f"[{r['delivered_low_share_fixed']:.0f}, {r['delivered_high_share_fixed']:.0f}]"
+                    f"[{count(r['delivered_low_share_fixed'])}, {count(r['delivered_high_share_fixed'])}]"
                 ),
                 axis=1,
             ),
@@ -524,8 +549,8 @@ def _map_section() -> str:
     scen = s.assign(
         cells_over_half=s.apply(
             lambda r: (
-                f"{r['cells_over_half_median']:.0f} "
-                f"[{r['cells_over_half_low']:.0f}, {r['cells_over_half_high']:.0f}]"
+                f"{count(r['cells_over_half_median'])} "
+                f"[{count(r['cells_over_half_low'])}, {count(r['cells_over_half_high'])}]"
             ),
             axis=1,
         ),
@@ -613,13 +638,13 @@ live there. Across 1956 cells the probability correlates {first["p_correlation_w
 bag) and stockpile. They hold fixed the allocation rule, who fires on whom and the list of towns, so they are narrower than
 what is actually unknown. "Mean width" is the mean over cells of that interval; the two columns before it hold the
 stockpile at its median, then the model at its median. Cells over one half are counted within each draw. Cells saturate because warheads can outnumber cells while not outnumbering towns:
-`ussr_1965_on_west` has {west_d["delivered_median"]:.0f} median delivered warheads, {int(west["towns"])} towns and {int(west["cells"])} cells, and a cell of several towns passes one half
+`ussr_1965_on_west` has {count(west_d["delivered_median"])} median delivered warheads, {int(west["towns"])} towns and {int(west["cells"])} cells, and a cell of several towns passes one half
 before each of its towns would. Where most cells are over one half the map says little beyond that. Sealed towns are not scored, so a 1956 cell holding only sealed towns is absent from the map.
 {_width_source(s, model_wider)}
 
-"Delivered" in the tables below is before one more step: towns of the sealed set draw no warheads, so the 1956 map uses the share of people living in scored towns, {float(bloc_d["share_of_people_in_scored_towns"]):.2f}, of what is delivered: {bloc_d["delivered_median"]:.0f} delivered at the median and {bloc_d["on_scored_towns_median"]:.0f} on scored towns in `us_1956_on_bloc`. Part of the spread of delivered warheads comes from cited inventories and part from the unsourced theatre shares. The theatre share alone accounts for {v.min():.0%} ({v_low["attacker"]}, `{v_low["scenario"]}`) to {v.max():.0%} ({v_high["attacker"]}, `{v_high["scenario"]}`) of the variance of an attacker's delivered warheads: a first-order Sobol index by the pick-freeze estimator on {int(variance["draws"].iloc[0]):,} draws, with standard errors up to {variance["standard_error"].max():.3f} (`runs/probmap/share_variance.csv`).
+"Delivered" in the tables below is before one more step: towns of the sealed set draw no warheads, so the 1956 map uses the share of people living in scored towns, {float(bloc_d["share_of_people_in_scored_towns"]):.2f}, of what is delivered: {count(bloc_d["delivered_median"])} delivered at the median and {count(bloc_d["on_scored_towns_median"])} on scored towns in `us_1956_on_bloc`. Part of the spread of delivered warheads comes from cited inventories and part from the unsourced theatre shares. The theatre share alone accounts for {v.min():.0%} ({v_low["attacker"]}, `{v_low["scenario"]}`) to {v.max():.0%} ({v_high["attacker"]}, `{v_high["scenario"]}`) of the variance of an attacker's delivered warheads: a first-order Sobol index by the pick-freeze estimator on {int(variance["draws"].iloc[0]):,} draws, with standard errors up to {variance["standard_error"].max():.3f} (`runs/probmap/share_variance.csv`).
 
-In the second table each figure is the median with the 5th to 95th percentile; `on_scored_towns` is "all" where the sealed set holds nobody; `delivered_shares_at_mode` is the interval with every share held at its mode, from separate draws. Holding a share at its mode also moves the centre, so that column is not a split of the interval's width.
+Counts of warheads and cells are whole below 100 and to the nearest ten from 100, since the theatre shares behind them have no source. In the second table each figure is the median with the 5th to 95th percentile; `on_scored_towns` is "all" where the sealed set holds nobody; `delivered_shares_at_mode` is the interval with every share held at its mode, from separate draws. Holding a share at its mode also moves the centre, so that column is not a split of the interval's width.
 
 {markdown(scen)}
 
@@ -637,7 +662,7 @@ out. These are totals for a whole force. No delivery is assigned to any area. Th
 
 **Check against the 1956 list.** A listing is not the same event as a strike: this compares what the map says of a
 delivered warhead with what one study listed, so it can show agreement in order and not that the probabilities are right.
-The `us_1956_on_bloc` scenario, with {spatial["median_warheads_on_scored_towns"]:.0f} warheads
+The `us_1956_on_bloc` scenario, with {count(spatial["median_warheads_on_scored_towns"])} warheads
 on scored towns, against whether SAC listed a town in each 0.5-degree cell. {int(spatial["cells_listed"])} of {int(spatial["cells"])} cells hold a listed town, a
 base rate of {spatial["base_rate"]:.2f}. Scored by models that never saw the cell's block: PR-AUC {spatial["pr_auc"]:.2f}, ROC-AUC {spatial["roc_auc"]:.2f},
 Brier {spatial["brier"]:.2f} against {spatial["brier_of_base_rate"]:.2f} for the base rate. By models with no SAC row at all: PR-AUC {left["pr_auc"]:.2f}, ROC-AUC {left["roc_auc"]:.2f},
@@ -797,6 +822,12 @@ advance had none: {int(as_run["diverged"].sum())} of its {len(as_run)} fits (fou
 """
 
 
+def _subcomplex_extra(n: int) -> str:
+    if n == 0:
+        return "while linked subcomplex entries give exactly as many towns as entries."
+    return f"and linked subcomplex entries {n} more towns than their number."
+
+
 def _follows(spread: pd.DataFrame, towns_more: pd.DataFrame) -> str:
     """Which scenarios' cells follow log people more than the count of towns, from score_spread.csv."""
     if towns_more.empty:
@@ -804,7 +835,8 @@ def _follows(spread: pd.DataFrame, towns_more: pd.DataFrame) -> str:
             "In every scenario the cell probability correlates more with log people than with the count of "
             "towns: the map follows people on a log scale, far less than in proportion"
         )
-    named = ", ".join(f"`{n}`" for n in towns_more["scenario"])
+    names = [f"`{n}`" for n in towns_more["scenario"]]
+    named = names[0] if len(names) == 1 else f"{', '.join(names[:-1])} and {names[-1]}"
     return (
         f"In {len(spread) - len(towns_more)} of {len(spread)} scenarios it correlates more with log people "
         f"than with the count of towns; in {named} it correlates more with the count of towns"
@@ -986,6 +1018,22 @@ def _pooled_sealed(prim: pd.DataFrame) -> str:
     )
 
 
+def _sac_sealed_gap() -> str:
+    """Connects SAC's linked positives to the positives of its scope: the difference is the sealed listed places."""
+    if not SEALED.exists():
+        return ""
+    comp = pd.read_csv(SEALED.parent / "comparison.csv")
+    sealed_pos = int(comp.loc[comp["population"].eq("all sealed"), "positives"].iloc[0])
+    scope = pd.read_csv(OUT / "comparison.csv")
+    scope_pos = scope.loc[scope["scope"].str.startswith("single document: SAC 1956"), "positives"]
+    if scope_pos.empty:
+        return ""
+    return (
+        f" Of SAC's, {sealed_pos} lie in the sealed blocks and are held out of every fit, which leaves the"
+        f" {int(scope_pos.iloc[0])} positives of the SAC rows in the tables below."
+    )
+
+
 def _sealed_section() -> str:
     """The one blind reading (configs/protocol_amendment_11.yaml), from runs/classifier/sealed/."""
     if not SEALED.exists():
@@ -1034,7 +1082,7 @@ Against population plus country the selected candidate gains in {len(gains)} of 
 {_pooled_sealed(prim)}
 The gains are a few hundredths of PR-AUC on a base rate above one half. Only SAC 1956 has sealed rows, so this tests the
 models on that list's places, the source of most of every global model's training positives, and says nothing about the
-other documents. A sealed block holds no training place, but a training town in a neighbouring block may be close.{_country_rule_sentence()}
+other documents. {_sealed_block_sentence()}{_country_rule_sentence()}
 
 {markdown(shown)}
 
@@ -1212,7 +1260,7 @@ def _earlier_sealed() -> str:
     if not gains:
         return ""
     return (
-        f"On the {int(prim.iloc[0]['rows'])} sealed places the early check had not scored, a larger set that includes places "
+        f"On the {int(prim.iloc[0]['rows'])} sealed places the early check (the two test models run before this classifier) had not scored, a larger set that includes places "
         f"other runs had scored, {len(gains)} of {len(prim)} models ({'; '.join(gains)}) did gain over population plus "
         'country; that reading is not blind ("The sealed set, scored once").'
     )
@@ -1260,7 +1308,9 @@ With {int(p0["rows"])} places, and positives in {int(p0["positive_blocks"])} blo
 blind places' neighbours, and same-named towns elsewhere, were scored in earlier runs, so this is a reading of places no
 run scored, not of a region none had seen. All rows, with every model's metrics: `runs/classifier/sealed/blind/`.
 
-How the blind places were found. "The early check" is the M1 slice and M2 check together, as read when the sealed blocks
+How the blind places were found. "The early check" is two test models run before this classifier and outside its
+protocol: the M1 slice (USSR towns only, population and administrative features, `runs/m1-slice/`) and the M2 check (every
+bloc country and feature family on the 1956 list, `runs/m2-check/`), as read when the sealed blocks
 were drawn (`data/curated/splits/scored_before_freeze.csv`): {EARLY_SCORED} of the {SEALED_PLACES} sealed places had a score there. The sealed
 scoring (next section) took the other {AMENDMENT_11_SET} as unscored; {int(ns["rows"])} of those have a SAC label. Earlier versions of
 the M2 check had scored places that the version read then no longer scored, so a walk over every commit before the sealed
@@ -1399,7 +1449,7 @@ def _last_amendment() -> int:
 
 def _seal_sentence() -> str:
     """How many sealed places are blind: the card's sizes and the counts of the committed reading."""
-    card = f"the {SEALED_PLACES} places of the sealed blocks, held out of every fit. An early check had scored {EARLY_SCORED} of them before the blocks were drawn (`data/curated/splits/README.md`)."
+    card = f"the {SEALED_PLACES} places of the sealed blocks, held out of every fit. An early check (two test models run before this classifier) had scored {EARLY_SCORED} of them before the blocks were drawn (`data/curated/splits/README.md`)."
     if not BLIND.exists():
         return card
     comp = pd.read_csv(BLIND)
@@ -1622,7 +1672,7 @@ town census exists between 1939 and 1959 (below). Western European towns use 196
 **Military and defence sites of 1965.** The West European site table (`data/curated/features/weurope_military_sites_1965.md`)
 had 29 rows whose fact rested on general knowledge. Each was cited from a Wikipedia page fetched through a path robots.txt
 allows, corrected to what that page states, or dropped (15 cited, 6 corrected, 8 dropped; 323 rows remain). Six fed
-features: CRC Glons is dated 1972 by its source and leaves 1965, CRC Semmerzake and the Belgian naval base at Ostend are
+features: the NATO air-defence Control and Reporting Centre (CRC) at Glons is dated 1972 by its source and leaves 1965, CRC Semmerzake and the Belgian naval base at Ostend are
 dropped, and Aviano is an air base, not a strike base, because no page found dates a strike role there in 1965.
 
 **Inputs later than the document.** Removing the flagged columns does not remove all of these. The 1959 Soviet census is
@@ -1647,7 +1697,7 @@ independent passes of vision-language models (Claude agents), with disagreements
 by auditors whose own error rate was 1.3%, so the audit's reading is itself uncertain. On the low-resolution Part II pages, where 270 airfield rows can be compared with a second printing, the confirmed misread
 rate was 3 in 216, well above that bound.
 
-**Links** lose entries too: {int(every["unlinked"])} of SAC's {int(every["entries"]):,} complex entries link to no town of the universe ({int(sub["unlinked"])} of its {int(sub["entries"])} subcomplex entries; `runs/classifier/link_audit_coverage_subcomplex.csv`), and the share varies by country: China {int(coverage.loc["China", "unlinked"])} of {int(coverage.loc["China", "entries"])}, North Korea {int(coverage.loc["North Korea", "unlinked"])} of {int(coverage.loc["North Korea", "entries"])}, North Vietnam {int(coverage.loc["North Vietnam", "unlinked"])} of {int(coverage.loc["North Vietnam", "entries"])}, Albania {int(coverage.loc["Albania", "unlinked"])} of {int(coverage.loc["Albania", "entries"])} (`runs/classifier/link_audit_coverage.csv`). These count entries, not towns. An entry whose cover name stands for a town and its closed city (Kapustin Yar and Znamensk, for example) links to both, so linked complex entries give {int(every["towns_linked"] - every["linked"])} more towns than their number, and linked subcomplex entries {int(sub["towns_linked"] - sub["linked"])} more than theirs.
+**Links** lose entries too: {int(every["unlinked"])} of SAC's {int(every["entries"]):,} complex entries link to no town of the universe ({int(sub["unlinked"])} of its {int(sub["entries"])} subcomplex entries; `runs/classifier/link_audit_coverage_subcomplex.csv`), and the share varies by country: China {int(coverage.loc["China", "unlinked"])} of {int(coverage.loc["China", "entries"])}, North Korea {int(coverage.loc["North Korea", "unlinked"])} of {int(coverage.loc["North Korea", "entries"])}, North Vietnam {int(coverage.loc["North Vietnam", "unlinked"])} of {int(coverage.loc["North Vietnam", "entries"])}, Albania {int(coverage.loc["Albania", "unlinked"])} of {int(coverage.loc["Albania", "entries"])} (`runs/classifier/link_audit_coverage.csv`). These count entries, not towns. An entry whose cover name stands for a town and its closed city (Kapustin Yar and Znamensk, for example) links to both, so linked complex entries give {int(every["towns_linked"] - every["linked"])} more towns than their number, {_subcomplex_extra(int(sub["towns_linked"] - sub["linked"]))}
 
 **Documents.** `data/curated/labels/PLANS.yaml` records each list's attacker, author, date, type and evidence
 grade. The grades: A, a primary document or its published translation read here; B, a primary document read here that names only part of the
@@ -1659,11 +1709,11 @@ requirements study, not a war plan. Exercises, war games and lessons may enter m
 lists and mirrors record what a defender expected, never train a model, and are scored apart.
 
 **How much evidence there is, by side.** The US has {int(us_gate["linked_positives"])} linked positives, of which
-{int(us_gate["linked_positives"] - us_gate["positives_outside_largest"])} come from one document, and no document of type war plan. For the USSR there is **no war plan at all**: {su_rows}
+{int(us_gate["linked_positives"] - us_gate["positives_outside_largest"])} come from one document, and no document of type war plan.{_sac_sealed_gap()} For the USSR there is **no war plan at all**: {su_rows}
 rows, {int(su_train["rows"].sum())} of them from General Staff Academy lessons on one fictional scenario, giving {int(su_pos)} linked town-list pairs, and one
 news report. Czechoslovakia has {int(cz["linked_positives"])} linked positives and Poland {int(pl["linked_positives"])}. The registry holds {int(plan_docs["documents"].sum())} war-plan documents with {int(plan_docs["rows"].sum())} rows between
 them, all Warsaw Pact, with {war_positives} linked positives. **Only one was read at source**, the Czechoslovak plan of 1964 (grade A), and it has {int(war_docs.loc["wp_1964_csla_plan", "positives"])} linked positives: its rows that state nuclear weapons name units and
-give no place, and the sentences that name places state no weapon. The two Polish plans of Zealand, 1965 and 1977, are grade C, known here from a scholar's table and paraphrase of files not read. They share one author and one universe of towns, so "independent" here means separate
+give no place, and the sentences that name places state no weapon. The two Polish Coastal Front plans for the Danish island of Zealand, of 1965 and 1977, are grade C, known here from a scholar's table and paraphrase of files not read. They share one author and one universe of towns, so "independent" here means separate
 documents, not separate minds. {_further(int(disputed["documents"].sum()))} with {int(disputed["rows"].sum())} rows (Coastal Front map, 1970) {"has" if int(disputed["documents"].sum()) == 1 else "have"} a disputed status,
 plan or exercise, and {"is" if int(disputed["documents"].sum()) == 1 else "are"} counted as neither. The searches recorded in `data/notes/` found no declassified Soviet strategic
 target list; that does not show none exists.

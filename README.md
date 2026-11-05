@@ -69,11 +69,17 @@ term for each target country.
   "What the evidence cannot support").
 - **Places and features.** Towns, mostly of 10,000 or more, from censuses as near each document's date as could be found, with
   population, rank, distances to coast, capital and other towns, and, where a source exists for that date, military
-  sites, air and missile defences and the Correlates of War project's (COW) National Material Capabilities. A feature may not postdate its document;
-  where one does (the 1959 Soviet census for 1956, for example) it is flagged and the results are repeated without it.
+  sites, air and missile defences and the Correlates of War project's (COW) National Material Capabilities. A feature should not postdate its
+  document, but some do. Railways, ports and airfields taken from today's data are flagged and the results are repeated without them;
+  other late inputs are not flagged and stay in those repeats: the 1959 Soviet census in every population column of the 1956
+  list, Hungary's and the Czech lands' towns interpolated with 1960 and 1961 censuses, Kurchatov's 1990 figure, and undated
+  West European sites counted for 1961 and 1964 (REPORT, "Inputs later than the document"). Only a separate USSR rerun on the 1939 census avoids the 1959 census.
 - **Stockpiles.** `data/curated/stockpiles/`: inventories by state, year and delivery from the Nuclear Notebook of the Federation of
   American Scientists (FAS), the Natural Resources Defense Council (NRDC), Our World in Data (OWID) and the Stockholm
   International Peace Research Institute (SIPRI), with every other assumption stated beside its source or marked as having none.
+  The historical scenarios' reliability and losses to defences are a stand-in: 1953 US government estimates for Soviet bombers
+  attacking the US (Foreign Relations of the United States, FRUS), applied to US bombers in 1950 and 1956 and to Soviet
+  forces in 1965 because no opened source covers those.
 - **Provenance.** `data/sources.yaml`: every source's URL, licence, retrieval date and sha256. `data/ISSUES.md`
   answers the repository's issues and pull requests.
 

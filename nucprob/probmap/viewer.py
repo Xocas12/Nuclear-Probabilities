@@ -11,6 +11,7 @@ import numpy as np
 import pandas as pd
 
 from nucprob.paths import RAW, RUNS
+from nucprob.probmap.counts import count
 from nucprob.probmap.run import load_scenarios
 
 OUT = RUNS / "probmap"
@@ -69,15 +70,21 @@ def payload() -> dict:
                 "towns": int(s["towns"]),
                 "population_ratio": round(float(spread.loc[sc["id"], "population_ratio"])),
                 "score_ratio": round(float(spread.loc[sc["id"], "score_ratio"]), 1),
-                "delivered": d[
-                    [
-                        "attacker",
-                        "delivered_low",
-                        "delivered_median",
-                        "delivered_high",
-                        "on_scored_towns_median",
-                    ]
-                ].to_dict("records"),
+                "delivered": [
+                    {
+                        "attacker": r["attacker"],
+                        **{
+                            k: count(r[k])
+                            for k in (
+                                "delivered_low",
+                                "delivered_median",
+                                "delivered_high",
+                                "on_scored_towns_median",
+                            )
+                        },
+                    }
+                    for _, r in d.iterrows()
+                ],
                 "cells": c[columns].round(2).to_numpy().tolist(),
             }
         )
@@ -122,7 +129,7 @@ details{margin:12px 0}
 <div class="warn" id="banner"></div>
 <canvas id="map" width="1400" height="700"></canvas>
 <p class="note" id="info"></p>
-<details><summary>Warheads delivered in this scenario (attacker totals, inputs to the map)</summary><table id="del"></table></details>
+<details><summary>Warheads delivered in this scenario (attacker totals, inputs to the map; whole below 100, to the nearest ten from 100)</summary><table id="del"></table></details>
 <details><summary>Cells as a table, by position</summary><div style="max-height:320px;overflow:auto"><table id="tab"></table></div></details>
 <div id="tip" role="status"></div>
 </main><script>
@@ -143,7 +150,7 @@ g.fillStyle=css("--land");for(const ring of D.land){g.beginPath();ring.forEach((
 for(const q of s.cells){g.fillStyle=col(q[b]);const w=s.deg*v.k*v.sc,h=s.deg*v.sc;g.fillRect(X(v,q[1])+.5,Y(v,q[0]+s.deg)+.5,w-1,h-1);if(q[5]){g.strokeStyle=css("--ink");g.lineWidth=1;g.strokeRect(X(v,q[1])+1,Y(v,q[0]+s.deg)+1,w-2,h-2)}}
 document.getElementById("banner").textContent=(s.era=="modern"?"EXTRAPOLATION. A score from Cold War lists applied to present-day towns from a map-label set. A classifier tells them from the training towns at ROC-AUC "+D.shift[0].value+" on ten features, where 0.5 is no shift. Not a statement about any present plan. ":s.shift_label.toUpperCase()+". ")+s.evidence;
 document.getElementById("info").textContent=`${s.note} ${s.towns} towns on a ${s.deg}-degree grid. Across them population runs over a ${s.population_ratio}-fold range and the median score over a ${s.score_ratio}-fold range.`+(s.cells.some(q=>q[5])?" Outlined cells hold a town of the sealed set: towns in 300 km blocks kept out of every model fit for a final test (REPORT.md, Method), so they get no score here; a cell with only sealed towns is absent.":"");
-document.getElementById("del").innerHTML="<tr><th>Attacker</th><th>5th</th><th>median</th><th>95th</th><th>median on scored towns</th></tr>"+s.delivered.map(d=>`<tr><td>${d.attacker}</td><td>${Math.round(d.delivered_low)}</td><td>${Math.round(d.delivered_median)}</td><td>${Math.round(d.delivered_high)}</td><td>${Math.round(d.on_scored_towns_median)}</td></tr>`).join("");
+document.getElementById("del").innerHTML="<tr><th>Attacker</th><th>5th</th><th>median</th><th>95th</th><th>median on scored towns</th></tr>"+s.delivered.map(d=>`<tr><td>${d.attacker}</td><td>${d.delivered_low}</td><td>${d.delivered_median}</td><td>${d.delivered_high}</td><td>${d.on_scored_towns_median}</td></tr>`).join("");
 document.getElementById("tab").innerHTML="<tr><th>Cell (S, W corner)</th><th>median</th><th>5th</th><th>95th</th></tr>"+s.cells.map(q=>`<tr><td>${q[0]}, ${q[1]}</td><td>${q[2]}</td><td>${q[3]}</td><td>${q[4]}</td></tr>`).join("")}
 map.addEventListener("mousemove",e=>{const s=D.scenarios[sel.value],v=view,b=map.getBoundingClientRect(),f=map.width/b.width,x=(e.clientX-b.left)*f,y=(e.clientY-b.top)*f,lon=x/(v.k*v.sc)+v.c,lat=(map.height-y)/v.sc+v.a;
 const q=s.cells.find(c=>lat>=c[0]&&lat<c[0]+s.deg&&lon>=c[1]&&lon<c[1]+s.deg);if(!q){tip.style.display="none";return}

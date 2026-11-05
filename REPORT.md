@@ -43,7 +43,7 @@ Under cross-validation inside SAC's 1956 study, the models describe that list a 
   - single document: SAC 1956 (not a state model), logistic, all permitted: -0.01 [-0.06, +0.02], by blocks [-0.04, +0.02]: neither
 
   Against the population rule, 2 of 4 scopes gain by both intervals: global, all attacker documents +0.12 [+0.05, +0.20]; global, plan documents only +0.13 [+0.05, +0.20]. With positives in so few blocks the intervals are wide, and "neither" is not evidence of no
-  effect. On the 272 sealed places the early check had not scored, a larger set that includes places other runs had scored, 2 of 4 models (global, all attacker documents; global, plan documents only) did gain over population plus country; that reading is not blind ("The sealed set, scored once").
+  effect. On the 272 sealed places the early check (the two test models run before this classifier) had not scored, a larger set that includes places other runs had scored, 2 of 4 models (global, all attacker documents; global, plan documents only) did gain over population plus country; that reading is not blind ("The sealed set, scored once").
 
 - **Inside SAC's 1956 study**, under spatial cross-validation, logistic, all permitted scores 0.848 against 0.824
   for population plus a country term: +0.02 [+0.01, +0.03], by blocks [+0.01, +0.04]. Without the features flagged as today's data, and equally without the defence tables as well, the difference is +0.01 [+0.01, +0.02], by blocks [-0.002, +0.03]: at least one interval reaches zero, so it cannot be told from no difference.
@@ -76,7 +76,7 @@ town census exists between 1939 and 1959 (below). Western European towns use 196
 **Military and defence sites of 1965.** The West European site table (`data/curated/features/weurope_military_sites_1965.md`)
 had 29 rows whose fact rested on general knowledge. Each was cited from a Wikipedia page fetched through a path robots.txt
 allows, corrected to what that page states, or dropped (15 cited, 6 corrected, 8 dropped; 323 rows remain). Six fed
-features: CRC Glons is dated 1972 by its source and leaves 1965, CRC Semmerzake and the Belgian naval base at Ostend are
+features: the NATO air-defence Control and Reporting Centre (CRC) at Glons is dated 1972 by its source and leaves 1965, CRC Semmerzake and the Belgian naval base at Ostend are
 dropped, and Aviano is an air base, not a strike base, because no page found dates a strike role there in 1965.
 
 **Inputs later than the document.** Removing the flagged columns does not remove all of these. The 1959 Soviet census is
@@ -101,7 +101,7 @@ independent passes of vision-language models (Claude agents), with disagreements
 by auditors whose own error rate was 1.3%, so the audit's reading is itself uncertain. On the low-resolution Part II pages, where 270 airfield rows can be compared with a second printing, the confirmed misread
 rate was 3 in 216, well above that bound.
 
-**Links** lose entries too: 318 of SAC's 1,215 complex entries link to no town of the universe (326 of its 873 subcomplex entries; `runs/classifier/link_audit_coverage_subcomplex.csv`), and the share varies by country: China 40 of 119, North Korea 12 of 15, North Vietnam 6 of 8, Albania 3 of 6 (`runs/classifier/link_audit_coverage.csv`). These count entries, not towns. An entry whose cover name stands for a town and its closed city (Kapustin Yar and Znamensk, for example) links to both, so linked complex entries give 2 more towns than their number, and linked subcomplex entries 0 more than theirs.
+**Links** lose entries too: 318 of SAC's 1,215 complex entries link to no town of the universe (326 of its 873 subcomplex entries; `runs/classifier/link_audit_coverage_subcomplex.csv`), and the share varies by country: China 40 of 119, North Korea 12 of 15, North Vietnam 6 of 8, Albania 3 of 6 (`runs/classifier/link_audit_coverage.csv`). These count entries, not towns. An entry whose cover name stands for a town and its closed city (Kapustin Yar and Znamensk, for example) links to both, so linked complex entries give 2 more towns than their number, while linked subcomplex entries give exactly as many towns as entries.
 
 **Documents.** `data/curated/labels/PLANS.yaml` records each list's attacker, author, date, type and evidence
 grade. The grades: A, a primary document or its published translation read here; B, a primary document read here that names only part of the
@@ -113,11 +113,11 @@ requirements study, not a war plan. Exercises, war games and lessons may enter m
 lists and mirrors record what a defender expected, never train a model, and are scored apart.
 
 **How much evidence there is, by side.** The US has 1299 linked positives, of which
-1292 come from one document, and no document of type war plan. For the USSR there is **no war plan at all**: 89
+1292 come from one document, and no document of type war plan. Of SAC's, 250 lie in the sealed blocks and are held out of every fit, which leaves the 1042 positives of the SAC rows in the tables below. For the USSR there is **no war plan at all**: 89
 rows, 88 of them from General Staff Academy lessons on one fictional scenario, giving 50 linked town-list pairs, and one
 news report. Czechoslovakia has 0 linked positives and Poland 6. The registry holds 3 war-plan documents with 36 rows between
 them, all Warsaw Pact, with 6 linked positives. **Only one was read at source**, the Czechoslovak plan of 1964 (grade A), and it has 0 linked positives: its rows that state nuclear weapons name units and
-give no place, and the sentences that name places state no weapon. The two Polish plans of Zealand, 1965 and 1977, are grade C, known here from a scholar's table and paraphrase of files not read. They share one author and one universe of towns, so "independent" here means separate
+give no place, and the sentences that name places state no weapon. The two Polish Coastal Front plans for the Danish island of Zealand, of 1965 and 1977, are grade C, known here from a scholar's table and paraphrase of files not read. They share one author and one universe of towns, so "independent" here means separate
 documents, not separate minds. One further document with 4 rows (Coastal Front map, 1970) has a disputed status,
 plan or exercise, and is counted as neither. The searches recorded in `data/notes/` found no declassified Soviet strategic
 target list; that does not show none exists.
@@ -138,7 +138,7 @@ boxes. Burza's sector box was drawn after its effect on Burza's scores had been 
 positives in 5 blocks was set after the row it changes had been seen (7 positives in 2 blocks, verdict "neither"
 before and after; `configs/protocol_amendment_9.yaml`).
 
-The one blind test uses the **sealed set**: the 467 places of the sealed blocks, held out of every fit. An early check had scored 194 of them before the blocks were drawn (`data/curated/splits/README.md`). Of the other 273, committed outputs of earlier runs held scores for 123 more, which the drawing of the set missed (`data/curated/splits/scored_in_history.csv`). Of the remaining 150, the 149 with a SAC label are the **blind places**. Their labels are in the committed label files, so the
+The one blind test uses the **sealed set**: the 467 places of the sealed blocks, held out of every fit. An early check (two test models run before this classifier) had scored 194 of them before the blocks were drawn (`data/curated/splits/README.md`). Of the other 273, committed outputs of earlier runs held scores for 123 more, which the drawing of the set missed (`data/curated/splits/scored_in_history.csv`). Of the remaining 150, the 149 with a SAC label are the **blind places**. Their labels are in the committed label files, so the
 seal is a procedure and not a secret. It has been scored once; see below.
 
 - **Models.** Baselines: logistic regression on log population, and the same plus one intercept per
@@ -215,7 +215,9 @@ With 149 places, and positives in 6 blocks, the intervals are wide. The
 blind places' neighbours, and same-named towns elsewhere, were scored in earlier runs, so this is a reading of places no
 run scored, not of a region none had seen. All rows, with every model's metrics: `runs/classifier/sealed/blind/`.
 
-How the blind places were found. "The early check" is the M1 slice and M2 check together, as read when the sealed blocks
+How the blind places were found. "The early check" is two test models run before this classifier and outside its
+protocol: the M1 slice (USSR towns only, population and administrative features, `runs/m1-slice/`) and the M2 check (every
+bloc country and feature family on the 1956 list, `runs/m2-check/`), as read when the sealed blocks
 were drawn (`data/curated/splits/scored_before_freeze.csv`): 194 of the 467 sealed places had a score there. The sealed
 scoring (next section) took the other 273 as unscored; 272 of those have a SAC label. Earlier versions of
 the M2 check had scored places that the version read then no longer scored, so a walk over every commit before the sealed
@@ -240,7 +242,7 @@ Against population plus country the selected candidate gains in 2 of 4 scopes
 The pooled Warsaw Pact model ranks these places worse than population does (-0.13); the town interval calls that a loss and the block interval does not, so by the rule it is neither. It was trained on towns in six Western countries and is applied here to Eastern bloc places.
 The gains are a few hundredths of PR-AUC on a base rate above one half. Only SAC 1956 has sealed rows, so this tests the
 models on that list's places, the source of most of every global model's training positives, and says nothing about the
-other documents. A sealed block holds no training place, but a training town in a neighbouring block may be close. In 'Warsaw Pact, pooled, exercise-based', population plus country ranks every sealed place as the population rule does, so its rows against population plus country are comparisons with the population rule: none of the sealed places' countries (the Soviet bloc's and China's) is in that scope's lists, so none has an intercept of its own.
+other documents. A sealed block is not free of training data: 16 scored places lie in sealed blocks, 11 of them SAC 1956 towns the early check had scored before corrected coordinates moved them there (`data/curated/splits/README.md`) and 5 towns of other lists. A training town in a neighbouring block may also be close. In 'Warsaw Pact, pooled, exercise-based', population plus country ranks every sealed place as the population rule does, so its rows against population plus country are comparisons with the population rule: none of the sealed places' countries (the Soviet bloc's and China's) is in that scope's lists, so none has an intercept of its own.
 
 | scope | population | model | against | a_pr_auc | b_pr_auc | difference | by_blocks | verdict |
 |---|---|---|---|---|---|---|---|---|
@@ -498,46 +500,46 @@ The population rule won, so **the map's shares are read from town population and
 6.9-fold range, and a town's share of warheads is its share of the score. So a large town gets only a few times the
 warheads of a small one, and a cell's probability depends on how many towns it holds as well as on how many people
 live there. Across 1956 cells the probability correlates 0.52 with the count of towns and 0.94 with log people.
-In 5 of 7 scenarios it correlates more with log people than with the count of towns; in `us_1950_stock_on_bloc`, `modern_india_pakistan` it correlates more with the count of towns (`runs/probmap/score_spread.csv`).
+In 5 of 7 scenarios it correlates more with log people than with the count of towns; in `us_1950_stock_on_bloc` and `modern_india_pakistan` it correlates more with the count of towns (`runs/probmap/score_spread.csv`).
 
 **Scenarios.** Intervals are the 5th to 95th percentile over 200 joint draws of model (block resample, one
 bag) and stockpile. They hold fixed the allocation rule, who fires on whom and the list of towns, so they are narrower than
 what is actually unknown. "Mean width" is the mean over cells of that interval; the two columns before it hold the
 stockpile at its median, then the model at its median. Cells over one half are counted within each draw. Cells saturate because warheads can outnumber cells while not outnumbering towns:
-`ussr_1965_on_west` has 1051 median delivered warheads, 1843 towns and 355 cells, and a cell of several towns passes one half
+`ussr_1965_on_west` has 1050 median delivered warheads, 1843 towns and 355 cells, and a cell of several towns passes one half
 before each of its towns would. Where most cells are over one half the map says little beyond that. Sealed towns are not scored, so a 1956 cell holding only sealed towns is absent from the map.
 In all 7 scenarios the mean width with the model held at its median is larger than with the stockpile held at its median: the stockpile draws, not the model, make most of the width.
 
-"Delivered" in the tables below is before one more step: towns of the sealed set draw no warheads, so the 1956 map uses the share of people living in scored towns, 0.82, of what is delivered: 1377 delivered at the median and 1128 on scored towns in `us_1956_on_bloc`. Part of the spread of delivered warheads comes from cited inventories and part from the unsourced theatre shares. The theatre share alone accounts for 9% (India, `modern_india_pakistan`) to 96% (France, `modern_us_russia`) of the variance of an attacker's delivered warheads: a first-order Sobol index by the pick-freeze estimator on 20,000 draws, with standard errors up to 0.007 (`runs/probmap/share_variance.csv`).
+"Delivered" in the tables below is before one more step: towns of the sealed set draw no warheads, so the 1956 map uses the share of people living in scored towns, 0.82, of what is delivered: 1380 delivered at the median and 1130 on scored towns in `us_1956_on_bloc`. Part of the spread of delivered warheads comes from cited inventories and part from the unsourced theatre shares. The theatre share alone accounts for 9% (India, `modern_india_pakistan`) to 96% (France, `modern_us_russia`) of the variance of an attacker's delivered warheads: a first-order Sobol index by the pick-freeze estimator on 20,000 draws, with standard errors up to 0.007 (`runs/probmap/share_variance.csv`).
 
-In the second table each figure is the median with the 5th to 95th percentile; `on_scored_towns` is "all" where the sealed set holds nobody; `delivered_shares_at_mode` is the interval with every share held at its mode, from separate draws. Holding a share at its mode also moves the centre, so that column is not a split of the interval's width.
+Counts of warheads and cells are whole below 100 and to the nearest ten from 100, since the theatre shares behind them have no source. In the second table each figure is the median with the 5th to 95th percentile; `on_scored_towns` is "all" where the sealed set holds nobody; `delivered_shares_at_mode` is the interval with every share held at its mode, from separate draws. Holding a share at its mode also moves the centre, so that column is not a split of the interval's width.
 
 | scenario | era | cell_deg | towns | cells | cells_over_half | mean_width_model_only | mean_width_stockpile_only | mean_interval_width |
 |---|---|---|---|---|---|---|---|---|
-| us_1956_on_bloc | historical | 0.50 | 2145 | 1370 | 597 [441, 744] | 0.04 | 0.13 | 0.14 |
+| us_1956_on_bloc | historical | 0.50 | 2145 | 1370 | 600 [440, 740] | 0.04 | 0.13 | 0.14 |
 | us_1950_stock_on_bloc | historical | 0.50 | 2145 | 1370 | 6 [3, 9] | 0.01 | 0.02 | 0.02 |
-| ussr_1965_on_west | historical | 0.50 | 1843 | 355 | 290 [205, 333] | 0.02 | 0.31 | 0.31 |
-| modern_us_russia | modern | 1.00 | 1630 | 1170 | 1117 [1036, 1149] | 0.03 | 0.15 | 0.15 |
-| modern_us_russia_half | modern | 1.00 | 1630 | 1170 | 912 [660, 1057] | 0.03 | 0.22 | 0.22 |
-| modern_us_china | modern | 1.00 | 1008 | 715 | 356 [283, 449] | 0.03 | 0.34 | 0.34 |
+| ussr_1965_on_west | historical | 0.50 | 1843 | 355 | 290 [200, 330] | 0.02 | 0.31 | 0.31 |
+| modern_us_russia | modern | 1.00 | 1630 | 1170 | 1120 [1040, 1150] | 0.03 | 0.15 | 0.15 |
+| modern_us_russia_half | modern | 1.00 | 1630 | 1170 | 910 [660, 1060] | 0.03 | 0.22 | 0.22 |
+| modern_us_china | modern | 1.00 | 1008 | 715 | 360 [280, 450] | 0.03 | 0.34 | 0.34 |
 | modern_india_pakistan | modern | 1.00 | 255 | 182 | 36 [16, 68] | 0.02 | 0.36 | 0.36 |
 
 | scenario | attacker | delivered | on_scored_towns | delivered_shares_at_mode |
 |---|---|---|---|---|
-| us_1956_on_bloc | US | 1377 [1082, 1715] | 1128 [887, 1405] | [1165, 1767] |
-| us_1950_stock_on_bloc | US | 149 [127, 172] | 122 [104, 141] | [137, 172] |
-| ussr_1965_on_west | USSR | 1051 [481, 2088] | all | [543, 1495] |
-| modern_us_russia | US | 1583 [1114, 2224] | all | [1273, 2128] |
-| modern_us_russia | France | 172 [133, 213] | all | [168, 184] |
-| modern_us_russia | UK | 105 [78, 141] | all | [82, 127] |
-| modern_us_russia | Russia | 1960 [1238, 2703] | all | [1326, 2455] |
-| modern_us_russia_half | US | 789 [526, 1111] | all | [620, 1060] |
-| modern_us_russia_half | France | 85 [65, 107] | all | [81, 91] |
+| us_1956_on_bloc | US | 1380 [1080, 1720] | 1130 [890, 1400] | [1160, 1770] |
+| us_1950_stock_on_bloc | US | 150 [130, 170] | 120 [100, 140] | [140, 170] |
+| ussr_1965_on_west | USSR | 1050 [480, 2090] | all | [540, 1500] |
+| modern_us_russia | US | 1580 [1110, 2220] | all | [1270, 2130] |
+| modern_us_russia | France | 170 [130, 210] | all | [170, 180] |
+| modern_us_russia | UK | 100 [78, 140] | all | [82, 130] |
+| modern_us_russia | Russia | 1960 [1240, 2700] | all | [1330, 2460] |
+| modern_us_russia_half | US | 790 [530, 1110] | all | [620, 1060] |
+| modern_us_russia_half | France | 85 [65, 110] | all | [81, 91] |
 | modern_us_russia_half | UK | 51 [37, 67] | all | [40, 63] |
-| modern_us_russia_half | Russia | 942 [600, 1378] | all | [649, 1216] |
-| modern_us_china | US | 596 [323, 1004] | all | [432, 714] |
-| modern_us_china | China | 182 [53, 332] | all | [44, 327] |
-| modern_india_pakistan | India | 61 [19, 100] | all | [23, 101] |
+| modern_us_russia_half | Russia | 940 [600, 1380] | all | [650, 1220] |
+| modern_us_china | US | 600 [320, 1000] | all | [430, 710] |
+| modern_us_china | China | 180 [53, 330] | all | [44, 330] |
+| modern_india_pakistan | India | 61 [19, 100] | all | [23, 100] |
 | modern_india_pakistan | Pakistan | 49 [14, 93] | all | [16, 93] |
 
 **By delivery.** Warheads available by state and delivery after the stated assumptions, and those delivered. The
@@ -552,7 +554,7 @@ out. These are totals for a whole force. No delivery is assigned to any area. Th
 
 **Check against the 1956 list.** A listing is not the same event as a strike: this compares what the map says of a
 delivered warhead with what one study listed, so it can show agreement in order and not that the probabilities are right.
-The `us_1956_on_bloc` scenario, with 1128 warheads
+The `us_1956_on_bloc` scenario, with 1130 warheads
 on scored towns, against whether SAC listed a town in each 0.5-degree cell. 796 of 1370 cells hold a listed town, a
 base rate of 0.58. Scored by models that never saw the cell's block: PR-AUC 0.84, ROC-AUC 0.79,
 Brier 0.20 against 0.24 for the base rate. By models with no SAC row at all: PR-AUC 0.84, ROC-AUC 0.80,

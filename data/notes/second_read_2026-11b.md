@@ -37,7 +37,7 @@ cannot be identified from the name as printed, including names only a translator
 
 ## What this does not change
 
-All these lessons belong to one scenario in one document group, `su_gsa_1977`. The rows add towns and a country to one list. They add no independent plan, so the count the state gate reads for the USSR stays where it was in plans and moves only in positives.
+All these lessons belong to one scenario in one document group, `su_gsa_1977`. The rows add towns and a country to one list. The state gate counts only plan documents, and lessons are not plans, so these rows change none of the USSR's gate row: it stays at 0 independent plans and 0 linked positives (`runs/classifier/state_gate.csv`).
 
 ## Where the rows land
 

@@ -12,6 +12,7 @@ from nucprob.classifier import evaluate as ev
 from nucprob.classifier import report
 from nucprob.classifier.run import input_hashes
 from nucprob.paths import PROCESSED, ROOT, RUNS
+from nucprob.probmap.counts import count
 from nucprob.sources.fetch import sha256
 
 OUT = RUNS / "classifier"
@@ -456,23 +457,25 @@ def test_no_committed_us_check_output_holds_county_coordinates():
 @needs_run
 def test_the_condensed_map_and_extended_tables_keep_every_figure():
     """REPORT folds each interval into one column and the theatre shares into one row per range; no
-    figure of the map's outputs is lost. TABLES.md keeps every economic and political row, every
+    figure of the map's outputs is lost (counts as count() prints them). TABLES.md keeps every economic and political row, every
     delivery row and every feature's domain-shift row."""
     text = (ROOT / "REPORT.md").read_text(encoding="utf-8")
     tables = (OUT / "TABLES.md").read_text(encoding="utf-8")
     m = report.MAP
     d = pd.read_csv(m / "delivered.csv")
     for _, r in d.iterrows():
-        cell = f"{r['delivered_median']:.0f} [{r['delivered_low']:.0f}, {r['delivered_high']:.0f}]"
-        fixed = f"[{r['delivered_low_share_fixed']:.0f}, {r['delivered_high_share_fixed']:.0f}]"
+        cell = f"{count(r['delivered_median'])} [{count(r['delivered_low'])}, {count(r['delivered_high'])}]"
+        fixed = (
+            f"[{count(r['delivered_low_share_fixed'])}, {count(r['delivered_high_share_fixed'])}]"
+        )
         assert f"| {r['scenario']} | {r['attacker']} | {cell} |" in text, cell
         assert fixed in text, fixed
         if r["share_of_people_in_scored_towns"] < 1:
-            scored = f"{r['on_scored_towns_median']:.0f} [{r['on_scored_towns_low']:.0f}, "
-            assert scored + f"{r['on_scored_towns_high']:.0f}]" in text
+            scored = f"{count(r['on_scored_towns_median'])} [{count(r['on_scored_towns_low'])}, "
+            assert scored + f"{count(r['on_scored_towns_high'])}]" in text
     for _, r in pd.read_csv(m / "by_delivery.csv").iterrows():
-        avail = f"{r['available_median']:.0f} [{r['available_low']:.0f}, {r['available_high']:.0f}]"
-        sent = f"{r['delivered_median']:.0f} [{r['delivered_low']:.0f}, {r['delivered_high']:.0f}]"
+        avail = f"{count(r['available_median'])} [{count(r['available_low'])}, {count(r['available_high'])}]"
+        sent = f"{count(r['delivered_median'])} [{count(r['delivered_low'])}, {count(r['delivered_high'])}]"
         row = f"| {r['scenario']} | {r['attacker']} | {r['stock_year']} | {r['delivery']} | {avail} | {sent} |"
         assert row in tables, row
     theatre = report._theatre_table()

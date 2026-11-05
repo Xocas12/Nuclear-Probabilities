@@ -26,7 +26,9 @@ scenarios:
   universe: bloc_1956
   cell_deg: 0.5
   evidence: 'Evidence: mostly the SAC 1956 requirements study, not a war plan, and it trained the score.'
-  note: US inventory of 1956, bombers only, all bloc towns of the study.
+  note: 'US inventory of 1956, bombers only, on the bloc towns of the study outside the sealed set. Reliability (0.58 to 0.72) and the share lost to defences (0.07 to 0.27) are 1953 US government estimates (Foreign Relations of the United States, FRUS) for Soviet bombers
+    attacking the US, a stand-in: no source
+    was found for US bombers over the USSR.'
   attackers:
   - state: US
     stock_year: 1956
@@ -46,7 +48,8 @@ scenarios:
   cell_deg: 0.5
   compare_with: us_1956_on_bloc
   evidence: 'A counterfactual, not a document: same towns and score as 1956, smaller stockpile.'
-  note: Only the stockpile differs from the 1956 scenario.
+  note: Only the stockpile differs from the 1956 scenario, which supplies its reliability and losses (1953 FRUS
+    estimates for Soviet bombers attacking the US).
   attackers:
   - state: US
     stock_year: 1950
@@ -65,8 +68,7 @@ scenarios:
   evidence: 'Evidence: Warsaw Pact exercises and lessons, none a Soviet war plan. The searches recorded
     in data/notes found no declassified Soviet strategic target list.'
   note: 'Soviet inventory of 1965; the share aimed at Western Europe is a stated assumption. Towns carry
-    populations of about 1961. The United Kingdom is left out (tenth amendment): its only table was withdrawn,
-    so the share falls on the five continental countries alone.'
+    populations of about 1961. Reliability (0.58 to 0.72) and the share lost to defences (0.07 to 0.27) are 1953 US estimates (FRUS) for Soviet bombers attacking the US, a stand-in for Soviet forces over Western Europe.'
   attackers:
   - state: USSR
     stock_year: 1965

@@ -568,40 +568,40 @@ Median with the 5th to 95th percentile (`runs/probmap/by_delivery.csv`).
 
 | scenario | attacker | stock_year | delivery | available | delivered |
 |---|---|---|---|---|---|
-| us_1956_on_bloc | US | 1956 | bomber | 2867 [2424, 3456] | 1377 [1082, 1715] |
-| us_1950_stock_on_bloc | US | 1950 | bomber | 315 [304, 326] | 149 [127, 172] |
-| ussr_1965_on_west | USSR | 1965 | icbm | 1109 [561, 1770] | 336 [154, 668] |
-| ussr_1965_on_west | USSR | 1965 | slbm | 277 [140, 442] | 84 [38, 167] |
-| ussr_1965_on_west | USSR | 1965 | bomber | 2080 [1052, 3319] | 630 [289, 1253] |
-| modern_us_russia | US | 2026 | bomber | 495 [383, 625] | 299 [212, 436] |
-| modern_us_russia | US | 2026 | icbm | 618 [479, 781] | 374 [268, 540] |
-| modern_us_russia | US | 2026 | slbm | 1484 [1150, 1875] | 906 [631, 1284] |
+| us_1956_on_bloc | US | 1956 | bomber | 2870 [2420, 3460] | 1380 [1080, 1720] |
+| us_1950_stock_on_bloc | US | 1950 | bomber | 320 [300, 330] | 150 [130, 170] |
+| ussr_1965_on_west | USSR | 1965 | icbm | 1110 [560, 1770] | 340 [150, 670] |
+| ussr_1965_on_west | USSR | 1965 | slbm | 280 [140, 440] | 84 [38, 170] |
+| ussr_1965_on_west | USSR | 1965 | bomber | 2080 [1050, 3320] | 630 [290, 1250] |
+| modern_us_russia | US | 2026 | bomber | 500 [380, 620] | 300 [210, 440] |
+| modern_us_russia | US | 2026 | icbm | 620 [480, 780] | 370 [270, 540] |
+| modern_us_russia | US | 2026 | slbm | 1480 [1150, 1880] | 910 [630, 1280] |
 | modern_us_russia | France | 2026 | bomber | 43 [42, 43] | 26 [20, 32] |
-| modern_us_russia | France | 2026 | slbm | 242 [239, 245] | 146 [113, 180] |
-| modern_us_russia | UK | 2026 | slbm | 173 [141, 212] | 105 [78, 141] |
-| modern_us_russia | Russia | 2026 | bomber | 314 [209, 407] | 194 [126, 276] |
-| modern_us_russia | Russia | 2026 | icbm | 1568 [1047, 2037] | 983 [614, 1369] |
-| modern_us_russia | Russia | 2026 | slbm | 1254 [838, 1630] | 778 [506, 1076] |
-| modern_us_russia_half | US | 2026 | bomber | 254 [190, 321] | 150 [101, 212] |
-| modern_us_russia_half | US | 2026 | icbm | 318 [237, 401] | 187 [123, 264] |
-| modern_us_russia_half | US | 2026 | slbm | 763 [569, 963] | 449 [302, 623] |
+| modern_us_russia | France | 2026 | slbm | 240 [240, 240] | 150 [110, 180] |
+| modern_us_russia | UK | 2026 | slbm | 170 [140, 210] | 100 [78, 140] |
+| modern_us_russia | Russia | 2026 | bomber | 310 [210, 410] | 190 [130, 280] |
+| modern_us_russia | Russia | 2026 | icbm | 1570 [1050, 2040] | 980 [610, 1370] |
+| modern_us_russia | Russia | 2026 | slbm | 1250 [840, 1630] | 780 [510, 1080] |
+| modern_us_russia_half | US | 2026 | bomber | 250 [190, 320] | 150 [100, 210] |
+| modern_us_russia_half | US | 2026 | icbm | 320 [240, 400] | 190 [120, 260] |
+| modern_us_russia_half | US | 2026 | slbm | 760 [570, 960] | 450 [300, 620] |
 | modern_us_russia_half | France | 2026 | bomber | 21 [21, 22] | 13 [10, 16] |
-| modern_us_russia_half | France | 2026 | slbm | 121 [120, 123] | 73 [55, 91] |
-| modern_us_russia_half | UK | 2026 | slbm | 85 [69, 106] | 51 [37, 67] |
-| modern_us_russia_half | Russia | 2026 | bomber | 155 [110, 200] | 95 [61, 136] |
-| modern_us_russia_half | Russia | 2026 | icbm | 776 [550, 1001] | 470 [304, 695] |
-| modern_us_russia_half | Russia | 2026 | slbm | 621 [440, 801] | 377 [243, 545] |
-| modern_us_china | US | 2026 | bomber | 507 [377, 628] | 112 [62, 195] |
-| modern_us_china | US | 2026 | icbm | 634 [472, 784] | 142 [75, 244] |
-| modern_us_china | US | 2026 | slbm | 1521 [1132, 1883] | 343 [186, 567] |
+| modern_us_russia_half | France | 2026 | slbm | 120 [120, 120] | 73 [55, 91] |
+| modern_us_russia_half | UK | 2026 | slbm | 85 [69, 110] | 51 [37, 67] |
+| modern_us_russia_half | Russia | 2026 | bomber | 160 [110, 200] | 95 [61, 140] |
+| modern_us_russia_half | Russia | 2026 | icbm | 780 [550, 1000] | 470 [300, 700] |
+| modern_us_russia_half | Russia | 2026 | slbm | 620 [440, 800] | 380 [240, 540] |
+| modern_us_china | US | 2026 | bomber | 510 [380, 630] | 110 [62, 200] |
+| modern_us_china | US | 2026 | icbm | 630 [470, 780] | 140 [75, 240] |
+| modern_us_china | US | 2026 | slbm | 1520 [1130, 1880] | 340 [190, 570] |
 | modern_us_china | China | 2026 | bomber | 17 [6, 26] | 9 [3, 16] |
-| modern_us_china | China | 2026 | land_missile | 285 [110, 438] | 154 [45, 285] |
+| modern_us_china | China | 2026 | land_missile | 280 [110, 440] | 150 [45, 280] |
 | modern_us_china | China | 2026 | slbm | 33 [13, 52] | 18 [5, 33] |
 | modern_india_pakistan | India | 2026 | bomber | 30 [10, 48] | 18 [6, 30] |
-| modern_india_pakistan | India | 2026 | land_missile | 64 [21, 104] | 39 [12, 64] |
+| modern_india_pakistan | India | 2026 | land_missile | 64 [21, 100] | 39 [12, 64] |
 | modern_india_pakistan | India | 2026 | slbm | 5 [2, 8] | 3 [1, 5] |
 | modern_india_pakistan | Pakistan | 2026 | bomber | 16 [5, 28] | 10 [3, 19] |
-| modern_india_pakistan | Pakistan | 2026 | land_missile | 66 [20, 111] | 40 [12, 75] |
+| modern_india_pakistan | Pakistan | 2026 | land_missile | 66 [20, 110] | 40 [12, 75] |
 
 ## Probability map: domain shift, feature by feature
 

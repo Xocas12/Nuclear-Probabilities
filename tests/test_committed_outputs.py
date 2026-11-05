@@ -146,11 +146,20 @@ def test_the_report_figures_from_data_cards_are_those_of_the_cards():
     aud = report._audit()
     card = " ".join((CURATED / "sac1956" / "README.md").read_text(encoding="utf-8").split())
     assert f"{aud['wrong']} of {aud['lines']}, 95% interval 0 to {100 * aud['upper']:.2f}%" in card
-    assert (
-        "own error rate was 1.3%" in card and "3 in 216" in card and "216 of the 270 rows" in card
-    )
+    audit = pd.read_csv(CURATED / "sac1956" / "audit.csv")
+    auditors = 100 * (audit["outcome"] == "curated right").sum() / len(audit)
+    verdicts = pd.read_csv(
+        ROOT / "data" / "interim" / "sac1956_excerpts" / "crossdoc" / "decisions.tsv",
+        sep="\t",
+        header=None,
+    )[5]
+    part2 = int((verdicts == "part2 misread").sum())
+    assert f"own error rate was {auditors:.1f}%" in card
+    assert f"{part2} in 216" in card and "216 of the 270 rows" in card
+    assert f"The two transcriptions differ on {len(verdicts)} rows" in card
     nrdc, owid = report._stockpile_1950_us()
     text = " ".join((ROOT / "REPORT.md").read_text(encoding="utf-8").split())
     assert f"{nrdc} loaded, more than the {owid} Our World in Data (OWID) gives" in text
     assert f"{aud['lines']} lines, found {aud['wrong']} errors" in text
-    assert "auditors whose own error rate was 1.3%" in text and "rate was 3 in 216" in text
+    assert f"auditors whose own error rate was {auditors:.1f}%" in text
+    assert f"rate was {part2} in 216" in text
