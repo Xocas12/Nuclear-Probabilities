@@ -1,11 +1,11 @@
 {
-  "created": "2026-11-02T15:15:29+00:00",
-  "git_commit": "a776225fa30fe91a45931c1638e3f694ef24694b",
+  "created": "2026-11-04T18:57:34+00:00",
+  "git_commit": "bde7e541e447ae2f90a9edea822f9ced354921e2",
   "git_dirty": false,
   "protocol_sha256": "cc14e52ef3cce2f0562ea24195872a3cfa10a30571a0e13fb5dcb130914794f8",
-  "table_sha256": "28c139144a8cde8a7a87610448c2f5b0d882a24c4f5a4638704ff630489a97ed",
+  "table_sha256": "2aaafd623c1668e3464067d24346ea766e7a375033eb658fd1a31e5b5e152c41",
   "inputs_sha256": {
-    "data/sources.yaml": "b00a36a6a6075b94f0d535c8193a7301a1706fe8701e21fdd768342426ce5787",
+    "data/sources.yaml": "664ca44c13dd82c3c79af68fb057b000249a1fe613f396ed8c75d0121ae753fd",
     "data/curated/labels/CATALOGUE.yaml": "9221dd472c587b8b405f3e7af4160364c68ea165bf6a0ecec9b0798faca900f1",
     "data/curated/labels/PLANS.yaml": "a8701b3a91e081b8770c8e008319b8563471abff361b6c27b85213f280b3f522",
     "data/curated/labels/SCHEMA.md": "4d5d5841a58a87b111a6f97aef4eac72ffd4a434ca2c27fffed32452ce3bf6e5",
@@ -85,13 +85,13 @@
   "quick": false,
   "outputs": {
     "runs/classifier/calibration.csv": "0e6d07ec41d2a9cad3ddcfbedc8f5d49f4d257a50210380e0657346c57a30044",
-    "runs/classifier/comparison.csv": "138cd4a85063beb790a9244e1378dfaee8bd0905064d53194ce6237c35096b35",
-    "runs/classifier/defence.csv": "6bbd7c9522e7d9be1df1ebdefc32f6c9a57fc4025e2d88fa8da110dfee16d20f",
+    "runs/classifier/comparison.csv": "779adf25af4438f09015d0c5793c38288de53e273e574f36b2fb71c407d2b3ba",
+    "runs/classifier/defence.csv": "2a73f14f4f29a28be7b5c513542861b1ba211841a157e29e81f0bb71931eb022",
     "runs/classifier/family_gain.csv": "11db565e945098785b8b9be2dc896cdf190d8ec8cc12f5d6601e94c2d32fee6d",
-    "runs/classifier/held_out_scores.csv.gz": "fc3fa5803efbfed7ace74b2473f0fa25e574232ecbfa619dc8e1a7afe6fecd1a",
-    "runs/classifier/lists.csv": "d8d5f9b7621f223e1537abe638626b11cb5a9e3411a8ff2c4cab172b743a80f2",
+    "runs/classifier/held_out_scores.csv.gz": "599173e20ba9878cfd09098d44be154a6190fed98212ec5502f53fddb60c162e",
+    "runs/classifier/lists.csv": "b65856c9222b621d5646546350e69cf0b6722d2c0746590741504c2eebe59b28",
     "runs/classifier/scopes.csv": "fe2787df160234017c675689e9574722b035eca428d2a3f0dc047cab7073e28d",
-    "runs/classifier/selection.csv": "12624e6cc158c75d8f5ad728a40e27d62037e0246ae6733127bfade72f9f0570",
+    "runs/classifier/selection.csv": "5a2a64a26b50207b922e60b63693e7a36d4c430384b75d76f02fc22fc010af27",
     "runs/classifier/state_gate.csv": "6afb6358edd84eade29aea1c834012d4d41bdf271f46d30df8e124d375fb307b"
   }
 }

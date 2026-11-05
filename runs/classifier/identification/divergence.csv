@@ -1,20 +1,20 @@
 columns,fold,l2_regularization,max_abs_raw_score,train_accuracy_best,train_accuracy_final,test_accuracy,diverged
-all permitted,0,0.0000,107407.8723,0.9746,0.6416,0.6385,True
-all permitted,0,1.0000,8.1889,0.9837,0.9837,0.9785,False
-all permitted,1,0.0000,88545.5130,0.9788,0.3280,0.3187,True
-all permitted,1,1.0000,8.1328,0.9826,0.9826,0.9834,False
-all permitted,2,0.0000,53373.2080,0.9785,0.4720,0.4636,True
-all permitted,2,1.0000,8.2141,0.9832,0.9832,0.9810,False
-all permitted,3,0.0000,111423.3952,0.9672,0.6030,0.6026,True
-all permitted,3,1.0000,8.2314,0.9826,0.9826,0.9826,False
-no national power,0,0.0000,43027.5822,0.8005,0.5585,0.5269,True
-no national power,0,1.0000,8.5512,0.8369,0.8369,0.8114,False
-no national power,1,0.0000,41701.2535,0.8025,0.6673,0.6540,True
-no national power,1,1.0000,8.6580,0.8364,0.8364,0.8187,False
-no national power,2,0.0000,20.5101,0.8389,0.8389,0.8154,False
-no national power,2,1.0000,8.5308,0.8364,0.8364,0.8055,False
-no national power,3,0.0000,58379.3871,0.7823,0.6041,0.6002,True
-no national power,3,1.0000,8.7128,0.8356,0.8356,0.8195,False
+all permitted,0,0.0000,109259.2170,0.9788,0.6567,0.6543,True
+all permitted,0,1.0000,8.1659,0.9837,0.9837,0.9785,False
+all permitted,1,0.0000,110869.7492,0.9757,0.6527,0.6523,True
+all permitted,1,1.0000,8.1120,0.9826,0.9826,0.9834,False
+all permitted,2,0.0000,3356.4378,0.9832,0.9832,0.9710,False
+all permitted,2,1.0000,8.2086,0.9832,0.9832,0.9810,False
+all permitted,3,0.0000,77309.6823,0.9630,0.5457,0.5563,True
+all permitted,3,1.0000,8.2065,0.9826,0.9826,0.9818,False
+no national power,0,0.0000,56050.4435,0.8430,0.5762,0.5914,True
+no national power,0,1.0000,9.0392,0.8634,0.8631,0.8329,False
+no national power,1,0.0000,105030.7694,0.8466,0.5228,0.5331,True
+no national power,1,1.0000,8.9893,0.8673,0.8670,0.8435,False
+no national power,2,0.0000,23.0650,0.8676,0.8676,0.8386,False
+no national power,2,1.0000,8.7400,0.8637,0.8634,0.8402,False
+no national power,3,0.0000,177526.0437,0.8119,0.4110,0.4098,True
+no national power,3,1.0000,8.6960,0.8640,0.8640,0.8452,False
 no source markers,0,0.0000,82625.8693,0.7792,0.5941,0.5476,True
 no source markers,0,1.0000,8.6160,0.7859,0.7859,0.7626,False
 no source markers,1,0.0000,10.4360,0.7843,0.7843,0.7707,False

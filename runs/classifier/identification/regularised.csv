@@ -1,5 +1,5 @@
 columns,rows,accuracy,accuracy_lo,accuracy_hi,largest_document_share,over_largest,over_largest_lo,over_largest_hi,over_reference,over_reference_lo,over_reference_hi,over_largest_verdict,over_reference_verdict
-all permitted,4833,0.9814,0.9776,0.9850,0.4438,0.5376,0.5220,0.5529,0.0000,0.0000,0.0000,above,
-no national power,4833,0.8138,0.8024,0.8260,0.4438,0.3700,0.3563,0.3832,-0.1676,-0.1787,-0.1558,above,below
-no source markers,4833,0.7674,0.7545,0.7806,0.4438,0.3236,0.3116,0.3359,-0.2139,-0.2254,-0.2012,above,below
-population only,4833,0.4422,0.4259,0.4585,0.4438,-0.0017,-0.0031,-0.0004,-0.5392,-0.5547,-0.5232,below,below
+all permitted,4833,0.9812,0.9773,0.9847,0.4438,0.5373,0.5218,0.5529,0.0000,0.0000,0.0000,above,
+no national power,4833,0.8405,0.8289,0.8527,0.4438,0.3966,0.3818,0.4112,-0.1407,-0.1515,-0.1289,above,below
+no source markers,4833,0.7674,0.7545,0.7806,0.4438,0.3236,0.3116,0.3359,-0.2137,-0.2254,-0.2011,above,below
+population only,4833,0.4422,0.4259,0.4585,0.4438,-0.0017,-0.0031,-0.0004,-0.5390,-0.5545,-0.5232,below,below

@@ -37,8 +37,8 @@ term for each target country.
 - **Inside SAC's list**, under spatial cross-validation, the selected model beats population plus a country term by
   +0.02 [+0.01, +0.03], by blocks [+0.01, +0.04]: both intervals exclude zero. Without the columns flagged as later data, with or without the defence tables, it is +0.01 [+0.01, +0.02], by blocks [-0.002, +0.03]: at least one interval reaches zero, so it cannot be told from no difference. Those repeats still use the 1959 Soviet census and other late inputs
   (REPORT, "Inputs later than the document"). The analysis is not blind: earlier results had been read (REPORT, Method).
-- **On a document the model has not seen**, the richer model against ranking towns by population is -0.13 [-0.15, -0.11],
-  by blocks [-0.17, -0.08] over all lists, which SAC dominates. On lists other than SAC it is +0.02 [-0.03, +0.07], by blocks [-0.08, +0.07]: at least one interval reaches zero, so it cannot be told from no difference.
+- **On a document the model has not seen**, the richer model against ranking towns by population is -0.14 [-0.16, -0.11],
+  by blocks [-0.18, -0.09] over all lists, which SAC dominates. On lists other than SAC it is +0.01 [-0.04, +0.06], by blocks [-0.09, +0.06]: at least one interval reaches zero, so it cannot be told from no difference.
   So no model has been shown to do better than population on an unseen document.
 - **No state gets its own model.** The US has 1299 linked positives, but only 7 outside one document and the
   pre-committed gate asks for 15. The USSR has 0 positives in a document registered as a war plan, and 50 town-list pairs from staff-academy lessons.
@@ -47,7 +47,7 @@ term for each target country.
   amendment committed before fitting: on a left-out document 0 of the 6 rows on lists other
   than SAC gain. The highest of these models over all lists, picked after the fact and with no paired interval fixed in
   advance, scores 0.66 against 0.71 for the population rule. Plant counts add
-  +0.001 [-0.01, +0.01] on Soviet towns.
+  +0.00 [-0.01, +0.01] on Soviet towns.
 - **The map.** Because of that transfer result the pre-committed selection rule (highest PR-AUC on a left-out
   document) chose population as the score. On the 1956 towns the score moves only
   6.9-fold over a 620-fold range of population, so a cell's probability also depends on how many

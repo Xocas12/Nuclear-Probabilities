@@ -22,7 +22,7 @@ and the git log the order. Reviews are named by the commit they read.
 | 13 | 2026-11-03 | Intervals and a split spread for the document identification check, and a stated test of one explanation for its rise; no primary result is read again | document_identification.csv without intervals |
 | 14 | 2026-11-03 | Post hoc: tests whether the identification classifier diverged and reads the check again with it regularised | The thirteenth amendment's capacity probe and one fold inspected by hand |
 | 15 | 2026-11-03 | Tests the primary fits (every bag of the four models on the whole scope, the first spatial grid, leave-one-document-out and temporal fits) for divergence; changes no result | The fourteenth amendment's finding; no figure of this check |
-| 16 | 2026-11-03 | Cites, corrects or drops the 29 West European site rows that rested on general knowledge; full classifier refit on the corrected table (pending: its outputs are not yet committed, and the results in README and REPORT are of the earlier fit until they are); the sealed and blind readings stay those of the earlier fit | The review of c27c1b8; a check of which table cells change, no fit |
+| 16 | 2026-11-03 | Cites, corrects or drops the 29 West European site rows that rested on general knowledge; full classifier refit on the corrected table; the sealed and blind readings stay those of the earlier fit | The review of c27c1b8; a check of which table cells change, no fit |
 
 After the tenth amendment's refit (930a164; its main step run again at a776225 after a quoting fault in
 `data/sources.yaml` was fixed) every classifier table had the same content as the run of 110174e, except that

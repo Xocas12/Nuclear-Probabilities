@@ -151,6 +151,6 @@ def test_the_report_figures_from_data_cards_are_those_of_the_cards():
     )
     nrdc, owid = report._stockpile_1950_us()
     text = " ".join((ROOT / "REPORT.md").read_text(encoding="utf-8").split())
-    assert f"{nrdc} loaded, more than the {owid} OWID gives" in text
+    assert f"{nrdc} loaded, more than the {owid} Our World in Data (OWID) gives" in text
     assert f"{aud['lines']} lines, found {aud['wrong']} errors" in text
     assert "auditors whose own error rate was 1.3%" in text and "rate was 3 in 216" in text

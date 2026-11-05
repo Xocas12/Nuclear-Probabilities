@@ -1,14 +1,14 @@
 {
-  "created": "2026-11-03T17:37:00+00:00",
-  "git_commit": "a1cdb1b3dee21e303dad18a3a881ad4236a2b596",
+  "created": "2026-11-05T00:01:08+00:00",
+  "git_commit": "bde7e541e447ae2f90a9edea822f9ced354921e2",
   "git_dirty": false,
   "amendment": "configs/protocol_amendment_14.yaml",
-  "table_sha256": "28c139144a8cde8a7a87610448c2f5b0d882a24c4f5a4638704ff630489a97ed",
+  "table_sha256": "2aaafd623c1668e3464067d24346ea766e7a375033eb658fd1a31e5b5e152c41",
   "l2_regularization": 1.0,
   "resamples": 2000,
   "seed": 1956,
   "outputs": {
-    "runs/classifier/identification/divergence.csv": "311508f763ebdfe7ecdd6f689d2c657c024fd5bfbabbf75269673eb86ecfc203",
-    "runs/classifier/identification/regularised.csv": "e2ce37ffc55dd922b61a1651293fdc96c7fa4d5725b9624b8c792e97c0b55ecd"
+    "runs/classifier/identification/divergence.csv": "6b29ccc9220c6eb7bf7dc9389eaa3d21a034b2b449f7580a4eb9ea9714cc7252",
+    "runs/classifier/identification/regularised.csv": "3b1100f7a1ea6488ca96803e4114fd1f0db6a205a37ef342128849dbdb0a1cdc"
   }
 }

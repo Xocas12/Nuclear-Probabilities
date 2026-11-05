@@ -38,7 +38,7 @@ us_1964_china_nuclear,bloc_1956,123,0,"LightGBM, common + military",,,,,,,
 wp_1961_burza,wp_west_1965,857,8,population rule,0.1069,0.7993,0.2480,0.7591,0.1250,0.0093,857.0000
 wp_1961_burza,wp_west_1965,857,8,"logistic, common",0.0564,0.7806,0.2730,0.8588,0.1250,0.0093,857.0000
 wp_1961_burza,wp_west_1965,857,8,"LightGBM, common",0.0773,0.7680,0.3076,0.9882,0.1250,0.0093,857.0000
-wp_1961_burza,wp_west_1965,857,8,"LightGBM, common + military",0.0561,0.8040,0.2733,0.8927,0.0000,0.0093,857.0000
+wp_1961_burza,wp_west_1965,857,8,"LightGBM, common + military",0.0560,0.8037,0.2733,0.8926,0.0000,0.0093,857.0000
 wp_1964_csla_plan,wp_west_1965,576,0,population rule,,,,,,,
 wp_1964_csla_plan,wp_west_1965,576,0,"logistic, common",,,,,,,
 wp_1964_csla_plan,wp_west_1965,576,0,"LightGBM, common",,,,,,,
@@ -54,7 +54,7 @@ wp_1965_hu_wargame,wp_west_1965,1446,12,"LightGBM, common + military",,,,,,,
 wp_1967_lato67,wp_west_1965,1029,42,population rule,0.1264,0.7359,0.2321,0.7083,0.1429,0.0408,1029.0000
 wp_1967_lato67,wp_west_1965,1029,42,"logistic, common",0.1778,0.7290,0.2689,0.8324,0.1905,0.0408,1029.0000
 wp_1967_lato67,wp_west_1965,1029,42,"LightGBM, common",0.1206,0.7188,0.2821,0.8948,0.1905,0.0408,1029.0000
-wp_1967_lato67,wp_west_1965,1029,42,"LightGBM, common + military",0.1174,0.7265,0.2468,0.7981,0.1667,0.0408,1029.0000
+wp_1967_lato67,wp_west_1965,1029,42,"LightGBM, common + military",0.1178,0.7285,0.2447,0.7926,0.1667,0.0408,1029.0000
 wp_1970_coastal_front_map,wp_west_1965,55,3,population rule,0.3708,0.4679,0.2685,0.7564,0.3333,0.0545,55.0000
 wp_1970_coastal_front_map,wp_west_1965,55,3,"logistic, common",0.3704,0.4551,0.3784,1.0815,0.3333,0.0545,55.0000
 wp_1970_coastal_front_map,wp_west_1965,55,3,"LightGBM, common",0.1257,0.5064,0.3657,1.1522,0.0000,0.0545,55.0000
@@ -62,15 +62,15 @@ wp_1970_coastal_front_map,wp_west_1965,55,3,"LightGBM, common + military",0.1516
 wp_1975_soyuz75,wp_west_1965,220,2,population rule,0.1303,0.9518,0.2207,0.6782,0.0000,0.0091,220.0000
 wp_1975_soyuz75,wp_west_1965,220,2,"logistic, common",0.2067,0.9427,0.1615,0.5231,0.0000,0.0091,220.0000
 wp_1975_soyuz75,wp_west_1965,220,2,"LightGBM, common",0.2333,0.9656,0.1732,0.5741,0.0000,0.0091,220.0000
-wp_1975_soyuz75,wp_west_1965,220,2,"LightGBM, common + military",0.3088,0.9633,0.1433,0.4829,0.5000,0.0091,220.0000
+wp_1975_soyuz75,wp_west_1965,220,2,"LightGBM, common + military",0.3088,0.9633,0.1429,0.4818,0.5000,0.0091,220.0000
 wp_1977_gsa_front_lesson,wp_west_1965,582,3,population rule,0.0046,0.2761,0.2618,0.8066,0.0000,0.0052,582.0000
 wp_1977_gsa_front_lesson,wp_west_1965,582,3,"logistic, common",0.0052,0.3644,0.3109,0.9791,0.0000,0.0052,582.0000
 wp_1977_gsa_front_lesson,wp_west_1965,582,3,"LightGBM, common",0.0046,0.2683,0.3585,1.1497,0.0000,0.0052,582.0000
-wp_1977_gsa_front_lesson,wp_west_1965,582,3,"LightGBM, common + military",0.0050,0.3328,0.3248,1.0591,0.0000,0.0052,582.0000
+wp_1977_gsa_front_lesson,wp_west_1965,582,3,"LightGBM, common + military",0.0050,0.3345,0.3249,1.0593,0.0000,0.0052,582.0000
 wp_1977_gsa_lessons,wp_west_1965,974,47,population rule,0.0803,0.6245,0.2366,0.7254,0.0851,0.0483,974.0000
 wp_1977_gsa_lessons,wp_west_1965,974,47,"logistic, common",0.0695,0.5825,0.2759,0.8627,0.1064,0.0483,974.0000
 wp_1977_gsa_lessons,wp_west_1965,974,47,"LightGBM, common",0.0923,0.6102,0.2869,0.9110,0.1489,0.0483,974.0000
-wp_1977_gsa_lessons,wp_west_1965,974,47,"LightGBM, common + military",0.0968,0.6314,0.2528,0.8178,0.1064,0.0483,974.0000
+wp_1977_gsa_lessons,wp_west_1965,974,47,"LightGBM, common + military",0.0971,0.6333,0.2507,0.8122,0.1064,0.0483,974.0000
 wp_1977_zealand,wp_west_1965,55,2,population rule,0.1043,0.7642,0.2648,0.7882,0.0000,0.0364,55.0000
 wp_1977_zealand,wp_west_1965,55,2,"logistic, common",0.0449,0.4151,0.3819,1.1604,0.0000,0.0364,55.0000
 wp_1977_zealand,wp_west_1965,55,2,"LightGBM, common",0.0445,0.3962,0.3719,1.1907,0.0000,0.0364,55.0000
