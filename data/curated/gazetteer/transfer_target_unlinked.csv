@@ -13,3 +13,7 @@ cd_1980_square_leg,65,Manston,"the map label gives no county: the matcher took a
 wp_1977_gsa_lessons,46,WINTERSLAG,"Pershing launchers north of Winterslag: the document prints a direction but no distance, so no point or town can be read from it"
 wp_1977_gsa_lessons,62,THE HAGUE,troops concentrating east of The Hague: a direction but no distance
 wp_1977_gsa_lessons,64,WEERT,squadron southwest of Weert: a direction but no distance
+wp_1967_lato67,17,КЕЛЬ,"port printed КЕЛЬ, the Russian spelling of Kehl on the Rhine; the row note reads it as probably Kiel (Киль), among the list's Baltic ports. Which is meant cannot be read from the row, so no town is credited"
+wp_1967_lato67,57,зап. ЛИНГЕН,"nuclear reactor west of Lingen: a direction but no distance"
+wp_1961_burza,12,płd SZLEZWIG,"nuclear weapons depot south of Schleswig: a direction but no distance"
+wp_1961_burza,13,płn HAMBURG,"airfield north of Hamburg: a direction but no distance"
