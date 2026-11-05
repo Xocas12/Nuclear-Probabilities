@@ -6,7 +6,7 @@
 
 | Family | Columns | Source | As of the document |
 |---|---|---|---|
-| population, administration, geography, industry, transport | the 20 `COMMON` columns of `nucprob/transfer/features.py` | census town tables, GeoNames, Natural Earth, Copernicus DEM, WRI, OurAirports (`data/FEATURES.md`) | census at or before the document. Power plants by commissioning year. Western European towns take plants as of the document's own year |
+| population, administration, geography, industry, transport | the 20 `COMMON` columns of `nucprob/transfer/features.py` | census town tables, GeoNames, Natural Earth, Copernicus DEM, WRI, OurAirports (`data/FEATURES.md`) | the census nearest the document, which is not always at or before it: see "Later inputs" below. Power plants by commissioning year. Western European towns take plants as of the document's own year |
 | military | `log_km_to_naval_base`, `log_km_to_lra_base`, `log_km_to_nuclear_site` | curated site tables (`data/curated/features/`) | Sites in being in the document's year, for Western European towns; June 1956 for the bloc. NaN where no table covers the town (Japan, the US, Canada, Italy south of the Po) |
 | defence | `log_km_to_sam`, `log_km_to_air_defence`, `log_air_defence_sites_50km` | the same tables' Nike, HAWK, radar and RAF defence rows; `bloc_air_defence_1956.csv`, with its S-25 positions, for the bloc | as above. NaN for a country with no row in its table |
 | political, economic (not in the primary model) | `pol_regime`, `pol_defence_pact_usa`, `pol_defence_pact_ussr`, `pol_log_defence_pacts`; `econ_log_gdp_pc` | Regimes of the World through OWID (`owid_political_regime`), COW Formal Alliances v4.1 (`cow_alliances_v41`), Maddison Project 2023 through OWID (`owid_maddison_gdp_pc`) | The target state's last year at or before the document; pacts in force in the document's year. Missing for the GDR and North Vietnam in Maddison, never borrowed. The FRG takes Maddison's Germany. Registered in `data/sources_amendment_5.yaml`. Read apart, in `runs/classifier/extended.csv` (`configs/protocol_amendment_5.yaml`) |
@@ -33,5 +33,16 @@ Limits that bear on any reading:
   family in `nucprob/classifier/fit.py`, while the catalogue (`data/FEATURES.md`) calls
   them *military*. The map's viewer does not name them. The *industry* family here is the single column `log_power_mw_25km`, today's power
   plants, so a result for "industry" says nothing about factories.
-- **Later sites.** No site table runs past its own date. A 1977 document on Western European towns
-  sees the sites of 1965: stale, not later knowledge.
+- **Later inputs.** Some population figures postdate the document they serve
+  (`data/curated/gazetteer/README.md`):
+  - the USSR's towns use the 1959 census for the June 1956 document, because no town census exists
+    between 1939 and 1959 (`configs/protocol.yaml`, `ussr_population`);
+  - for that document Hungary's towns are interpolated between the 1949 and 1960 censuses and the
+    Czech lands' between 1950 and 1961, so the later census enters each figure;
+  - Kurchatov carries only a 1990 figure (`data/curated/gazetteer/closed_cities_1956.csv`).
+  Removing the flagged columns (the `none flagged` and `strict as-of` rows) does not remove these.
+- **Site dates.** `nucprob/classifier/features.py` (`sites_as_of`) counts a dated site only from its
+  `from_year`. A site with no `from_year` counts for every document if the table holds it in role
+  in 1965, so for the documents of 1961 and 1964 those undated rows may be later than the document
+  (REPORT, "Inputs later than the document", gives their number). A 1977 document on Western European
+  towns sees the sites of 1965 and earlier: stale, not later knowledge.

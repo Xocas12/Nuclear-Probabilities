@@ -77,3 +77,16 @@ def test_a_feature_module_naming_a_warsaw_pact_list_fails_the_guard():
     assert LABEL_MARKERS.search('_LEAK = "data/curated/labels/wp_1967_lato67.csv"')
     assert LABEL_MARKERS.search('Path("nato_1965_hu_wargame_mirror.csv")')
     assert not LABEL_MARKERS.search("log_km_to_sam = distance to a Nike site")
+
+
+def test_the_feature_card_names_the_inputs_later_than_their_document():
+    """REPORT ("Inputs later than the document") and the gazetteer card name population figures that
+    postdate the document they serve. The classifier's feature card must not claim the contrary."""
+    card = (ROOT / "data" / "FEATURES_CLASSIFIER.md").read_text()
+    gazetteer = (CURATED / "gazetteer" / "README.md").read_text()
+    assert "census at or before the document" not in card
+    assert "No site table runs past its own date" not in card
+    for later in ("1959 census", "1960", "1961", "Kurchatov", "1990"):
+        assert later in card, later
+    assert "Kurchatov has only a 1990 figure" in gazetteer
+    assert "censuses of 1941, 1949, 1960" in gazetteer
