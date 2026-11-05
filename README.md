@@ -38,8 +38,11 @@ term for each target country.
 - **Inside SAC's list**, under spatial cross-validation, the selected model beats population plus a country term by
   +0.02 [+0.01, +0.03], by blocks [+0.01, +0.04]: both intervals exclude zero. Without the columns flagged as later data, with or without the defence tables, it is +0.01 [+0.01, +0.02], by blocks [-0.002, +0.03]: at least one interval reaches zero, so it cannot be told from no difference. Those repeats still use the 1959 Soviet census and other late inputs
   (REPORT, "Inputs later than the document"). The analysis is not blind: earlier results had been read (REPORT, Method).
-- **On a document the model has not seen**, the richer model against ranking towns by population is -0.14 [-0.16, -0.11],
-  by blocks [-0.18, -0.09] over all lists, which SAC dominates. On lists other than SAC it is +0.01 [-0.04, +0.06], by blocks [-0.09, +0.06]: at least one interval reaches zero, so it cannot be told from no difference.
+- **On lists other than SAC's**, under the same spatial cross-validation, the global model on all attacker documents
+  against population plus country is +0.11 [+0.05, +0.15], by blocks [+0.02, +0.15]: both intervals exclude zero. The held-out
+  blocks' documents are also in training, so this is not a reading on an unseen document (next point).
+- **On a document the model has not seen**, the richer model against ranking towns by population is -0.13 [-0.16, -0.11],
+  by blocks [-0.17, -0.09] over all lists, which SAC dominates. On lists other than SAC it is +0.02 [-0.03, +0.06], by blocks [-0.09, +0.06]: at least one interval reaches zero, so it cannot be told from no difference.
   So no model has been shown to do better than population on an unseen document.
 - **No state gets its own model.** The US has 1299 linked positives, but only 7 outside one document and the
   pre-committed gate asks for 15. The USSR has 0 positives in a document registered as a war plan, and 50 town-list pairs from staff-academy lessons.
@@ -51,7 +54,7 @@ term for each target country.
   +0.00 [-0.01, +0.01] on Soviet towns.
 - **The map.** Because of that transfer result the pre-committed selection rule (highest PR-AUC on a left-out
   document) chose population as the score. On the 1956 towns the score moves only
-  6.9-fold over a 620-fold range of population, so a cell's probability also depends on how many
+  6.8-fold over a 620-fold range of population, so a cell's probability also depends on how many
   towns it holds. In every scenario the stockpile draws, more than the model's, make the width of its intervals, and those rest on cited inventories and on theatre shares (the assumed part of each force sent to this theatre) with no source. The 1965 map has no United Kingdom: its only census table came through a path robots.txt disallows and was withdrawn. Modern scenarios use Natural Earth's map-label towns and are
   extrapolation: a classifier told them from the training towns at ROC-AUC 0.97 (ROC-AUC: the chance that it ranks a random modern
   town above a random training town; 0.5 would mean no shift) on 10 features both sets have (population, its rank, population within 25-100 km,
@@ -69,9 +72,9 @@ term for each target country.
   Only types the protocol counts as plans count towards a state's model; exercises and lessons are labelled as such
   wherever they are used. Soviet and Warsaw Pact evidence is thin: no Soviet war plan naming places was found, and the
   three registered Warsaw Pact war plans give 6 linked positives between them, none from a plan read at source (REPORT,
-  "What the evidence cannot support"). The results are of links with two known errors on Warsaw Pact lists: Lato-67 lacks four
-  positives (offset rows left unplaced) and Burza has two it should not (Hamburg and Schleswig, from rows with a
-  direction but no distance). `configs/protocol_amendment_17.yaml` corrects them; its refit is not yet committed.
+  "What the evidence cannot support"). Two Warsaw Pact link errors were corrected before the committed run (`configs/protocol_amendment_17.yaml`):
+  Lato-67's German offset rows now credit four towns, and two Burza rows with a direction but no distance no longer
+  credit Hamburg and Schleswig. What that changed is in REPORT, "Changed by the corrected Warsaw Pact links".
 - **Places and features.** Towns, mostly of 10,000 or more, from censuses as near each document's date as could be found, with
   population, rank, distances to coast, capital and other towns, and, where a source exists for that date, military
   sites, air and missile defences and the Correlates of War project's (COW) National Material Capabilities. A feature should not postdate its

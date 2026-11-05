@@ -1,58 +1,58 @@
 {
-  "created": "2026-11-04T23:59:38+00:00",
-  "git_commit": "bde7e541e447ae2f90a9edea822f9ced354921e2",
+  "created": "2026-11-05T09:02:18+00:00",
+  "git_commit": "31d0ab3c6bc5917a79bbe694da59ab92a5ebec5d",
   "git_dirty": false,
   "amendment": "configs/protocol_amendment_13.yaml",
-  "table_sha256": "2aaafd623c1668e3464067d24346ea766e7a375033eb658fd1a31e5b5e152c41",
+  "table_sha256": "2376ae4cda66262f164010ba12cf06e4ce578fdb205b313022f71d25c23fd2b3",
   "resamples": 2000,
   "seed": 1956,
   "steps": {
     "original split": {
-      "git_commit": "bde7e541e447ae2f90a9edea822f9ced354921e2",
+      "git_commit": "31d0ab3c6bc5917a79bbe694da59ab92a5ebec5d",
       "git_dirty": false
     },
     "capacity probe": {
-      "git_commit": "bde7e541e447ae2f90a9edea822f9ced354921e2",
+      "git_commit": "31d0ab3c6bc5917a79bbe694da59ab92a5ebec5d",
       "git_dirty": false
     },
     "split 0": {
-      "git_commit": "bde7e541e447ae2f90a9edea822f9ced354921e2",
+      "git_commit": "31d0ab3c6bc5917a79bbe694da59ab92a5ebec5d",
       "git_dirty": false
     },
     "split 1": {
-      "git_commit": "bde7e541e447ae2f90a9edea822f9ced354921e2",
+      "git_commit": "31d0ab3c6bc5917a79bbe694da59ab92a5ebec5d",
       "git_dirty": false
     },
     "split 2": {
-      "git_commit": "bde7e541e447ae2f90a9edea822f9ced354921e2",
+      "git_commit": "31d0ab3c6bc5917a79bbe694da59ab92a5ebec5d",
       "git_dirty": false
     },
     "split 3": {
-      "git_commit": "bde7e541e447ae2f90a9edea822f9ced354921e2",
+      "git_commit": "31d0ab3c6bc5917a79bbe694da59ab92a5ebec5d",
       "git_dirty": false
     },
     "split 4": {
-      "git_commit": "bde7e541e447ae2f90a9edea822f9ced354921e2",
+      "git_commit": "31d0ab3c6bc5917a79bbe694da59ab92a5ebec5d",
       "git_dirty": false
     },
     "split 5": {
-      "git_commit": "bde7e541e447ae2f90a9edea822f9ced354921e2",
+      "git_commit": "31d0ab3c6bc5917a79bbe694da59ab92a5ebec5d",
       "git_dirty": false
     },
     "split 6": {
-      "git_commit": "bde7e541e447ae2f90a9edea822f9ced354921e2",
+      "git_commit": "31d0ab3c6bc5917a79bbe694da59ab92a5ebec5d",
       "git_dirty": false
     },
     "split 7": {
-      "git_commit": "bde7e541e447ae2f90a9edea822f9ced354921e2",
+      "git_commit": "31d0ab3c6bc5917a79bbe694da59ab92a5ebec5d",
       "git_dirty": false
     },
     "split 8": {
-      "git_commit": "bde7e541e447ae2f90a9edea822f9ced354921e2",
+      "git_commit": "31d0ab3c6bc5917a79bbe694da59ab92a5ebec5d",
       "git_dirty": false
     },
     "split 9": {
-      "git_commit": "bde7e541e447ae2f90a9edea822f9ced354921e2",
+      "git_commit": "31d0ab3c6bc5917a79bbe694da59ab92a5ebec5d",
       "git_dirty": false
     }
   },

@@ -1427,13 +1427,16 @@ def _moved(was_dir, now_dir) -> tuple[str, str]:
         )
     else:
         verdicts_text = (
-            f"{len(moved)} of the {len(both)} primary rows change verdict:\n\n"
+            f"{len(moved)} of the {len(both)} primary rows (each scope's selected candidate against population "
+            "plus country, by holdout and list set) change verdict; each difference is followed by its interval "
+            "by blocks:\n\n"
             + "\n".join(
-                f"- {r['Scope']}, {r['Holdout']}, {r['Lists']}: {r['Verdict_was']} before "
-                f"({r['Difference, country_was']}), {r['Verdict']} now ({r['Difference, country']})"
+                f"- {r['Scope']}, {r['Holdout'][0].lower() + r['Holdout'][1:]}, {r['Lists']}: "
+                f"{r['Verdict_was']} before ({r['Difference, country_was']}, by blocks {r['By blocks_was']}), "
+                f"{r['Verdict']} now ({r['Difference, country']}, by blocks {r['By blocks']})"
                 for _, r in moved.iterrows()
             )
-            + "\n"
+            + "\n\n"
         )
     if changed:
         sel_text = (
@@ -1446,6 +1449,8 @@ def _moved(was_dir, now_dir) -> tuple[str, str]:
             " Every scope selects the same model as before, so the sealed and blind rows are of the models this "
             "refit selects, fitted on the earlier table."
         )
+    if not moved.empty:
+        sel_text = sel_text.lstrip()  # a new paragraph after the list
     return verdicts_text, sel_text
 
 
@@ -2020,6 +2025,9 @@ term for each target country.
 {_readme_blind()}- **Inside SAC's list**, under spatial cross-validation, the selected model beats population plus a country term by
   {interval(sac)}, by blocks {block_interval(sac)}: {claim(sac)}. {_repeats(clean, strict)} Those repeats still use the 1959 Soviet census and other late inputs
   (REPORT, "Inputs later than the document"). The analysis is not blind: earlier results had been read (REPORT, Method).
+- **On lists other than SAC's**, under the same spatial cross-validation, the global model on all attacker documents
+  against population plus country is {interval(other)}, by blocks {block_interval(other)}: {claim(other)}. The held-out
+  blocks' documents are also in training, so this is not a reading on an unseen document (next point).
 - **On a document the model has not seen**, the richer model against ranking towns by population is {interval(lopo)},
   by blocks {block_interval(lopo)} over all lists, which SAC dominates. On lists other than SAC it is {interval(rest)}, by blocks {block_interval(rest)}: {claim(rest)}.
   So no model has been shown to do better than population on an unseen document.

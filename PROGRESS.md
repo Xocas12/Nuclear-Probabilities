@@ -33,8 +33,8 @@ section 5.4: two candidates with fixed settings, no tuning. The sealed set waits
     Target Committee's 6 designated towns: -0.42 [-0.82, -0.11], precision@k -0.67 [-1.00, -0.17]. Canada 1956, from an extract of unrecorded origin,
     cannot be told apart (PR-AUC -0.04 [-0.12, +0.04]). ROC-AUC hid most of this.
   - On the mixed civil and military lists no gain is detectable (Square Leg, scored here at first, was withdrawn on
-    2 Nov 2026 with its universe, tenth amendment): Lato-67, with the FRG in its universe since 1 Nov 2026, -0.01 [-0.09, +0.06] and
-    +0.05 [-0.10, +0.17]. These intervals include zero.
+    2 Nov 2026 with its universe, tenth amendment): Lato-67, with the FRG in its universe since 1 Nov 2026, 0.00 [-0.08, +0.06] and
+    +0.04 [-0.09, +0.17] (of the links as corrected on 5 Nov 2026, seventeenth amendment). These intervals include zero.
   - One exception: the Polish mirror list gains in PR-AUC, +0.14 [+0.07, +0.21], with
     precision@k +0.07 [0.00, +0.22]. It records what Polish staff expected NATO to strike.
   - This is a check, not a result.

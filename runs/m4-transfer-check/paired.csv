@@ -41,15 +41,15 @@ us_1945_target_committee,japan_1945,549,6,"logistic, common",precision_at_k,0.66
 us_1945_target_committee,japan_1945,549,6,"LightGBM, common",pr_auc,0.5525,0.1363,-0.4162,-0.8187,-0.1115,True
 us_1945_target_committee,japan_1945,549,6,"LightGBM, common",roc_auc,0.9908,0.9529,-0.0379,-0.0770,-0.0064,True
 us_1945_target_committee,japan_1945,549,6,"LightGBM, common",precision_at_k,0.6667,0.0000,-0.6667,-1.0000,-0.1667,True
-wp_1961_burza,wp_west_1965,857,8,"logistic, common",pr_auc,0.1069,0.0564,-0.0505,-0.2138,0.0042,False
-wp_1961_burza,wp_west_1965,857,8,"logistic, common",roc_auc,0.7993,0.7806,-0.0187,-0.0459,0.0091,False
-wp_1961_burza,wp_west_1965,857,8,"logistic, common",precision_at_k,0.1250,0.1250,0.0000,-0.2500,0.0000,False
-wp_1961_burza,wp_west_1965,857,8,"LightGBM, common",pr_auc,0.1069,0.0771,-0.0298,-0.1828,0.0587,False
-wp_1961_burza,wp_west_1965,857,8,"LightGBM, common",roc_auc,0.7993,0.7679,-0.0314,-0.1583,0.0853,False
-wp_1961_burza,wp_west_1965,857,8,"LightGBM, common",precision_at_k,0.1250,0.1250,0.0000,-0.1250,0.0000,False
-wp_1961_burza,wp_west_1965,857,8,"LightGBM, common + military",pr_auc,0.1069,0.0560,-0.0509,-0.2473,0.0169,False
-wp_1961_burza,wp_west_1965,857,8,"LightGBM, common + military",roc_auc,0.7993,0.8038,0.0045,-0.0783,0.0994,False
-wp_1961_burza,wp_west_1965,857,8,"LightGBM, common + military",precision_at_k,0.1250,0.0000,-0.1250,-0.3750,0.0000,False
+wp_1961_burza,wp_west_1965,857,6,"logistic, common",pr_auc,0.0347,0.0305,-0.0043,-0.0291,0.0104,False
+wp_1961_burza,wp_west_1965,857,6,"logistic, common",roc_auc,0.7752,0.7654,-0.0098,-0.0401,0.0194,False
+wp_1961_burza,wp_west_1965,857,6,"logistic, common",precision_at_k,0.0000,0.0000,0.0000,0.0000,0.0000,False
+wp_1961_burza,wp_west_1965,857,6,"LightGBM, common",pr_auc,0.0347,0.0392,0.0045,-0.0350,0.0438,False
+wp_1961_burza,wp_west_1965,857,6,"LightGBM, common",roc_auc,0.7752,0.8025,0.0273,-0.0619,0.1457,False
+wp_1961_burza,wp_west_1965,857,6,"LightGBM, common",precision_at_k,0.0000,0.0000,0.0000,0.0000,0.0000,False
+wp_1961_burza,wp_west_1965,857,6,"LightGBM, common + military",pr_auc,0.0347,0.0371,0.0024,-0.0393,0.0276,False
+wp_1961_burza,wp_west_1965,857,6,"LightGBM, common + military",roc_auc,0.7752,0.8181,0.0429,-0.0292,0.1539,False
+wp_1961_burza,wp_west_1965,857,6,"LightGBM, common + military",precision_at_k,0.0000,0.0000,0.0000,0.0000,0.0000,False
 wp_1965_coastal_front_zealand,wp_west_1965,55,4,"logistic, common",pr_auc,0.0886,0.0747,-0.0138,-0.0600,0.0031,False
 wp_1965_coastal_front_zealand,wp_west_1965,55,4,"logistic, common",roc_auc,0.4951,0.4167,-0.0784,-0.2108,0.0294,False
 wp_1965_coastal_front_zealand,wp_west_1965,55,4,"logistic, common",precision_at_k,0.0000,0.0000,0.0000,0.0000,0.0000,False
@@ -65,15 +65,15 @@ wp_1965_hu_wargame,wp_west_1965,1446,12,"logistic, common",precision_at_k,0.1667
 wp_1965_hu_wargame,wp_west_1965,1446,12,"LightGBM, common",pr_auc,0.0908,0.2083,0.1175,-0.0333,0.3460,False
 wp_1965_hu_wargame,wp_west_1965,1446,12,"LightGBM, common",roc_auc,0.7879,0.8271,0.0392,-0.0128,0.1061,False
 wp_1965_hu_wargame,wp_west_1965,1446,12,"LightGBM, common",precision_at_k,0.1667,0.2500,0.0833,-0.1667,0.3333,False
-wp_1967_lato67,wp_west_1965,1029,42,"logistic, common",pr_auc,0.1264,0.1778,0.0514,-0.0234,0.1112,False
-wp_1967_lato67,wp_west_1965,1029,42,"logistic, common",roc_auc,0.7359,0.7290,-0.0069,-0.0458,0.0311,False
-wp_1967_lato67,wp_west_1965,1029,42,"logistic, common",precision_at_k,0.1429,0.1905,0.0476,-0.0714,0.1429,False
-wp_1967_lato67,wp_west_1965,1029,42,"LightGBM, common",pr_auc,0.1264,0.1197,-0.0067,-0.0858,0.0584,False
-wp_1967_lato67,wp_west_1965,1029,42,"LightGBM, common",roc_auc,0.7359,0.7189,-0.0170,-0.0644,0.0293,False
-wp_1967_lato67,wp_west_1965,1029,42,"LightGBM, common",precision_at_k,0.1429,0.1905,0.0476,-0.0952,0.1667,False
-wp_1967_lato67,wp_west_1965,1029,42,"LightGBM, common + military",pr_auc,0.1264,0.1178,-0.0086,-0.0892,0.0536,False
-wp_1967_lato67,wp_west_1965,1029,42,"LightGBM, common + military",roc_auc,0.7359,0.7285,-0.0074,-0.0524,0.0356,False
-wp_1967_lato67,wp_west_1965,1029,42,"LightGBM, common + military",precision_at_k,0.1429,0.1667,0.0238,-0.0952,0.1667,False
+wp_1967_lato67,wp_west_1965,1029,46,"logistic, common",pr_auc,0.1279,0.1891,0.0612,-0.0088,0.1252,False
+wp_1967_lato67,wp_west_1965,1029,46,"logistic, common",roc_auc,0.7031,0.7050,0.0019,-0.0370,0.0394,False
+wp_1967_lato67,wp_west_1965,1029,46,"logistic, common",precision_at_k,0.1522,0.1957,0.0435,-0.0435,0.1304,False
+wp_1967_lato67,wp_west_1965,1029,46,"LightGBM, common",pr_auc,0.1279,0.1244,-0.0035,-0.0752,0.0563,False
+wp_1967_lato67,wp_west_1965,1029,46,"LightGBM, common",roc_auc,0.7031,0.6994,-0.0037,-0.0508,0.0409,False
+wp_1967_lato67,wp_west_1965,1029,46,"LightGBM, common",precision_at_k,0.1522,0.1957,0.0435,-0.0870,0.1739,False
+wp_1967_lato67,wp_west_1965,1029,46,"LightGBM, common + military",pr_auc,0.1279,0.1233,-0.0046,-0.0773,0.0553,False
+wp_1967_lato67,wp_west_1965,1029,46,"LightGBM, common + military",roc_auc,0.7031,0.7080,0.0048,-0.0393,0.0468,False
+wp_1967_lato67,wp_west_1965,1029,46,"LightGBM, common + military",precision_at_k,0.1522,0.1957,0.0435,-0.0870,0.1522,False
 wp_1970_coastal_front_map,wp_west_1965,55,3,"logistic, common",pr_auc,0.3708,0.3704,-0.0005,-0.0081,0.0100,False
 wp_1970_coastal_front_map,wp_west_1965,55,3,"logistic, common",roc_auc,0.4679,0.4551,-0.0128,-0.1282,0.0962,False
 wp_1970_coastal_front_map,wp_west_1965,55,3,"logistic, common",precision_at_k,0.3333,0.3333,0.0000,0.0000,0.0000,False

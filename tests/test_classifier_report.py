@@ -500,15 +500,17 @@ def test_the_sixteenth_amendment_paragraph_lists_every_moved_verdict():
     """configs/protocol_amendment_16.yaml: REPORT names every primary row whose verdict differs between the
     run the sealed set was scored with and the refit, and says whether any scope's selection changed."""
     fitted = OUT / "sealed" / "fitted_run"
+    # Once the seventeenth amendment refits again, the sixteenth's refit is the run kept in before_amendment_17/.
+    after_16 = report.BEFORE_17 if (report.BEFORE_17 / "comparison.csv").exists() else OUT
     was_table = json.loads((fitted / "manifest.json").read_text())["table_sha256"]
-    now_table = json.loads((OUT / "manifest.json").read_text())["table_sha256"]
+    now_table = json.loads((after_16 / "manifest.json").read_text())["table_sha256"]
     text = " ".join((ROOT / "REPORT.md").read_text(encoding="utf-8").split())
     if was_table == now_table:
         assert "### Changed by the corrected West European site table" not in text
         return
     assert "### Changed by the corrected West European site table" in text
     now = report.primary_table(
-        pd.read_csv(OUT / "comparison.csv"), pd.read_csv(OUT / "selection.csv")
+        pd.read_csv(after_16 / "comparison.csv"), pd.read_csv(after_16 / "selection.csv")
     )
     was = report.primary_table(
         pd.read_csv(fitted / "comparison.csv"), pd.read_csv(fitted / "selection.csv")
@@ -518,7 +520,8 @@ def test_the_sixteenth_amendment_paragraph_lists_every_moved_verdict():
     if moved.empty:
         assert f"None of the {len(both)} primary rows" in text
     for _, r in moved.iterrows():
-        assert f"{r['Scope']}, {r['Holdout']}, {r['Lists']}: {r['Verdict_was']} before" in text
+        holdout = r["Holdout"][0].lower() + r["Holdout"][1:]
+        assert f"{r['Scope']}, {holdout}, {r['Lists']}: {r['Verdict_was']} before" in text
 
 
 @needs_run

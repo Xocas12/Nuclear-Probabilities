@@ -1,5 +1,5 @@
 scope,rows,places,lists,groups,positives,positives_outside_sac,exercise_based,doc_types
-"global, all attacker documents",4833,3686,15,14,1172,130,True,"{""disputed_plan_or_exercise"": 1, ""exercise"": 3, ""policy_study"": 3, ""requirements_study"": 1, ""target_selection"": 1, ""training"": 2, ""war_plan"": 3, ""wargame"": 1}"
+"global, all attacker documents",4833,3686,15,14,1174,132,True,"{""disputed_plan_or_exercise"": 1, ""exercise"": 3, ""policy_study"": 3, ""requirements_study"": 1, ""target_selection"": 1, ""training"": 2, ""war_plan"": 3, ""wargame"": 1}"
 "global, plan documents only",3014,2742,8,8,1055,13,False,"{""policy_study"": 3, ""requirements_study"": 1, ""target_selection"": 1, ""war_plan"": 3}"
-"Warsaw Pact, pooled, exercise-based",1891,992,10,9,123,123,True,"{""disputed_plan_or_exercise"": 1, ""exercise"": 3, ""training"": 2, ""war_plan"": 3, ""wargame"": 1}"
+"Warsaw Pact, pooled, exercise-based",1891,992,10,9,125,125,True,"{""disputed_plan_or_exercise"": 1, ""exercise"": 3, ""training"": 2, ""war_plan"": 3, ""wargame"": 1}"
 single document: SAC 1956 (not a state model),2145,2145,1,1,1042,0,False,"{""requirements_study"": 1}"

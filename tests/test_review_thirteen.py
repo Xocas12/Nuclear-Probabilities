@@ -150,13 +150,23 @@ def test_the_seventeenth_amendment_paragraph_appears_only_after_its_refit(tmp_pa
 
     from nucprob.classifier import report
 
-    assert report._amendment_17() == ""  # the kept run is of the table the outputs are of
+    # Empty while the outputs are of the table kept in before_amendment_17/, present once the refit is committed.
+    landed = (
+        json.loads((report.OUT / "manifest.json").read_text())["table_sha256"]
+        != report.TABLE_BEFORE_17
+    )
+    assert (report._amendment_17() != "") == landed
     kept = report.BEFORE_17
     assert (
         json.loads((kept / "manifest.json").read_text())["table_sha256"] == report.TABLE_BEFORE_17
     )
     fake = tmp_path / "before"
     shutil.copytree(kept, fake)
+    for name in (
+        "comparison.csv",
+        "selection.csv",
+    ):  # a kept run equal to the outputs: nothing moved
+        shutil.copy(report.OUT / name, fake / name)
     manifest = json.loads((fake / "manifest.json").read_text())
     manifest["table_sha256"] = "0" * 64
     (fake / "manifest.json").write_text(json.dumps(manifest))
@@ -170,6 +180,9 @@ def test_the_seventeenth_amendment_paragraph_appears_only_after_its_refit(tmp_pa
     comp[["low", "high"]] = comp[["high", "low"]].to_numpy()
     comp[["block_low", "block_high"]] = comp[["block_high", "block_low"]].to_numpy()
     comp.to_csv(fake / "comparison.csv", index=False)
-    assert "primary rows change verdict:" in report._amendment_17()
+    assert (
+        "change verdict; each difference is followed by its interval by blocks:"
+        in report._amendment_17()
+    )
     # The sixteenth amendment's paragraph keeps comparing its own two runs.
     assert "### Changed by the corrected West European site table" in report._amendment_16()

@@ -1,9 +1,9 @@
 {
-  "created": "2026-11-05T01:34:29+00:00",
-  "git_commit": "bde7e541e447ae2f90a9edea822f9ced354921e2",
+  "created": "2026-11-05T12:17:27+00:00",
+  "git_commit": "31d0ab3c6bc5917a79bbe694da59ab92a5ebec5d",
   "git_dirty": false,
   "amendment_sha256": "bd422f3b69feb4fe0dbcf54101e00bba3c3758dc3c5bf976ba066bb24ee96f82",
-  "table_sha256": "2aaafd623c1668e3464067d24346ea766e7a375033eb658fd1a31e5b5e152c41",
+  "table_sha256": "2376ae4cda66262f164010ba12cf06e4ce578fdb205b313022f71d25c23fd2b3",
   "state_years": 36,
   "state_years_missing": {
     "pol_regime": 0,
@@ -13,6 +13,6 @@
     "econ_log_gdp_pc": 2
   },
   "outputs": {
-    "runs/classifier/extended.csv": "0f67824d72cefcc6f48b96c76ea9d9bdb99125a10ab1176b4c1f4f28cbdfd4fd"
+    "runs/classifier/extended.csv": "b3132fe1cbb0977eaaf478668ec6008f1c38403926ec517e3ac692be347158a3"
   }
 }

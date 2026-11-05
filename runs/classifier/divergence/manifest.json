@@ -1,15 +1,15 @@
 {
-  "created": "2026-11-04T22:41:32+00:00",
-  "git_commit": "bde7e541e447ae2f90a9edea822f9ced354921e2",
+  "created": "2026-11-05T09:21:39+00:00",
+  "git_commit": "31d0ab3c6bc5917a79bbe694da59ab92a5ebec5d",
   "git_dirty": false,
   "amendment": "configs/protocol_amendment_15.yaml",
-  "table_sha256": "2aaafd623c1668e3464067d24346ea766e7a375033eb658fd1a31e5b5e152c41",
+  "table_sha256": "2376ae4cda66262f164010ba12cf06e4ce578fdb205b313022f71d25c23fd2b3",
   "bags": 50,
   "seed": 1956,
   "loss_rise": 0.01,
   "max_abs_raw": 50.0,
   "outputs": {
-    "runs/classifier/divergence/fits.csv": "e943f9b2130976367d0cf5d846aa051a41be618345b309dbd26f780b281ca391",
-    "runs/classifier/divergence/summary.csv": "62c429c1e48248758760320a6026c0c20bcb019d2396719ec43030e313633f8d"
+    "runs/classifier/divergence/fits.csv": "fd40c305e03a823258ee621e985d0a450aa39b3d63e515848a78869d90721063",
+    "runs/classifier/divergence/summary.csv": "5aaa3d105ade86e5ed3d25e434dae8ccea98cedb547fb78b3846082b14bb73e3"
   }
 }

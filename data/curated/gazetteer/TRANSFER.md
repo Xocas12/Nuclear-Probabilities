@@ -117,7 +117,7 @@ to the town the target names, else the town rather than its rural municipality. 
 within 15 km (an air base or Nike site in open country), stay unlinked. The link report is
 `data/processed/transfer_links.csv`. "Linked" counts rows of the list with a town; "towns listed" counts
 towns linked to a row the document designates (`selected = 1`), so the Czechoslovak plan's 7 linked rows, none of
-which states a nuclear weapon, list no town. Counts are of the rebuilt tables at 1e98ebc and of
+which states a nuclear weapon, list no town. Counts are of the tables rebuilt at 31d0ab3 (the links corrected by `configs/protocol_amendment_17.yaml`) and of
 `runs/m4-transfer-check/metrics.csv`; `tests/test_transfer_paired.py` checks the last column against that file.
 
 | List | Targets in scored countries | Located | Linked | Towns listed / universe |
@@ -125,9 +125,9 @@ which states a nuclear weapon, list no town. Counts are of the rebuilt tables at
 | Canada target areas 1956 | 13 | 13 | 13 | 13 / 137 |
 | Operation Alert 1955 (full) | 53 | 53 | 52 | 51 / 1,262 |
 | Target Committee 1945 | 42 | 40 | 40 | 6 / 549 |
-| Lato-67 (FRG, DK, NL, BE) | 57 | 49 | 46 | 42 / 1,029 |
+| Lato-67 (FRG, DK, NL, BE) | 57 | 54 | 51 | 46 / 1,029 |
 | Hungarian war game 1965 (AT, IT, FRG) | 19 | 12 | 12 | 12 / 1,446 |
-| Burza 1961 (FRG, DK, NL) | 15 | 10 | 9 | 8 / 857 |
+| Burza 1961 (FRG, DK, NL) | 15 | 8 | 7 | 6 / 857 |
 | Czechoslovak plan 1964 (FRG) | 21 | 14 | 7 | 0 / 576 |
 | General Staff Academy lesson 1977 (FRG) | 5 | 4 | 3 | 3 / 582 |
 | NATO mirror, Poland 1962 | 70 | 69 | 54 | 27 / 126 |
@@ -153,7 +153,7 @@ the number of towns listed.
 | Canada target areas 1956 | 13 / 137 | 0.85 / 0.81 | -0.04 [-0.12, +0.04] | 0.77 / 0.77 | 0.00 [-0.15, 0.00] | 0.96 / 0.97 | +0.01 [-0.03, +0.06] |
 | Operation Alert 1955 (full) | 51 / 1,262 | 0.70 / 0.32 | -0.37 [-0.45, -0.26] | 0.59 / 0.31 | -0.27 [-0.39, -0.12] | 0.98 / 0.95 | -0.03 [-0.04, -0.02] |
 | Target Committee 1945 | 6 / 549 | 0.55 / 0.14 | -0.42 [-0.82, -0.11] | 0.67 / 0.00 | -0.67 [-1.00, -0.17] | 0.99 / 0.95 | -0.04 [-0.08, -0.01] |
-| Lato-67 | 42 / 1,029 | 0.13 / 0.12 | -0.01 [-0.09, +0.06] | 0.14 / 0.19 | +0.05 [-0.10, +0.17] | 0.74 / 0.72 | -0.02 [-0.06, +0.03] |
+| Lato-67 | 46 / 1,029 | 0.13 / 0.12 | 0.00 [-0.08, +0.06] | 0.15 / 0.20 | +0.04 [-0.09, +0.17] | 0.70 / 0.70 | 0.00 [-0.05, +0.04] |
 | NATO mirror, Poland 1962 | 27 / 126 | 0.44 / 0.59 | +0.14 [+0.07, +0.21] | 0.44 / 0.52 | +0.07 [0.00, +0.22] | 0.68 / 0.74 | +0.06 [-0.01, +0.13] |
 | NATO mirror, Hungary 1965 | 13 / 120 | 0.41 / 0.28 | -0.13 [-0.24, +0.04] | 0.38 / 0.38 | 0.00 [-0.08, +0.15] | 0.69 / 0.68 | -0.02 [-0.09, +0.05] |
 | Hungarian war game 1965 (AT, IT, FRG) | 12 / 1,446 | 0.09 / 0.21 | +0.12 [-0.03, +0.35] | 0.17 / 0.25 | +0.08 [-0.17, +0.33] | 0.79 / 0.83 | +0.04 [-0.01, +0.11] |
@@ -170,8 +170,8 @@ the number of towns listed.
 - ROC-AUC differences are small on every list, which is why the ROC table alone read the city
   lists as "adds nothing".
 
-Burza shows no gain: 8 linked towns of 857 (this card reads whole countries; the classifier reads its sector), PR-AUC 0.11 for the rule and 0.08 for LightGBM
-on the common features, a difference of -0.03 [-0.18, +0.06], which includes zero. 0 of
+Burza shows no gain: 6 linked towns of 857 (this card reads whole countries; the classifier reads its sector), PR-AUC 0.03 for the rule and 0.04 for LightGBM
+on the common features, a difference of 0.00 [-0.04, +0.04], which includes zero. 0 of
 Burza's intervals exclude zero. `paired.csv` holds 120 intervals (the military model has no row on a
 list with any town outside its table's scope), so at 95% a few will exclude zero by chance.
 

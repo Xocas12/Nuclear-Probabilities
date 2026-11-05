@@ -1,11 +1,11 @@
 {
   "milestone": "M4 transfer check",
-  "created": "2026-11-04T13:45:56+00:00",
-  "git_commit": "bde7e541e447ae2f90a9edea822f9ced354921e2",
+  "created": "2026-11-05T06:44:56+00:00",
+  "git_commit": "31d0ab3c6bc5917a79bbe694da59ab92a5ebec5d",
   "data": {
-    "dataset_sac1956.parquet": "dcf7cc958ffbdc3f5170aea0348f6232a00d65c12291c49d21dfb919c1b38348",
+    "dataset_sac1956.parquet": "6899968fe6632e3216c67b88011aea4a0ace8a72630ccf7bf6dccf113397097d",
     "features_transfer.parquet": "78ae333a6185afa59e88ec2c3c91829f4cf3c2b0897c2bdf2e4346305e0c429c",
-    "labels_transfer.parquet": "f8ac10ef23beb557308c8621b2b6fed7f1043c928cea0f01f5bd27b45719a69a"
+    "labels_transfer.parquet": "581683354c1c036408ba72c1ddfb2b94eec70f5f06b49eadfa0269d559357766"
   },
   "train": {
     "rows": 2145,
