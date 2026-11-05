@@ -142,3 +142,34 @@ def test_link_errors_are_stated_while_the_results_are_of_the_earlier_links():
     assert ("Known link errors in these results." in report) == pending
     assert ("its refit is not yet committed" in readme) == pending
     assert ("results in README and REPORT are of the earlier links" in history) == pending
+
+
+def test_the_seventeenth_amendment_paragraph_appears_only_after_its_refit(tmp_path, monkeypatch):
+    import json
+    import shutil
+
+    from nucprob.classifier import report
+
+    assert report._amendment_17() == ""  # the kept run is of the table the outputs are of
+    kept = report.BEFORE_17
+    assert (
+        json.loads((kept / "manifest.json").read_text())["table_sha256"] == report.TABLE_BEFORE_17
+    )
+    fake = tmp_path / "before"
+    shutil.copytree(kept, fake)
+    manifest = json.loads((fake / "manifest.json").read_text())
+    manifest["table_sha256"] = "0" * 64
+    (fake / "manifest.json").write_text(json.dumps(manifest))
+    monkeypatch.setattr(report, "BEFORE_17", fake)
+    text = report._amendment_17()
+    assert "### Changed by the corrected Warsaw Pact links" in text
+    assert "changes verdict." in text  # same comparison: nothing moved
+    comp = pd.read_csv(fake / "comparison.csv")
+    for col in ("delta", "low", "high", "block_low", "block_high"):
+        comp[col] = -comp[col]
+    comp[["low", "high"]] = comp[["high", "low"]].to_numpy()
+    comp[["block_low", "block_high"]] = comp[["block_high", "block_low"]].to_numpy()
+    comp.to_csv(fake / "comparison.csv", index=False)
+    assert "primary rows change verdict:" in report._amendment_17()
+    # The sixteenth amendment's paragraph keeps comparing its own two runs.
+    assert "### Changed by the corrected West European site table" in report._amendment_16()

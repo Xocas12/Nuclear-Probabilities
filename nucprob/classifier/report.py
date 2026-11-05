@@ -1405,25 +1405,21 @@ def _stockpile_1950_us() -> tuple[int, int]:
 FITTED_RUN = OUT / "sealed" / "fitted_run"
 
 
-def _amendment_16() -> str:
-    """The sixteenth amendment's paragraph: every primary verdict that moved between the run the sealed set was
-    scored with (sealed/fitted_run/) and the refit on the corrected West European site table."""
-    if not (FITTED_RUN / "comparison.csv").exists():
-        return ""
-    now_sel = pd.read_csv(OUT / "selection.csv")
-    was_sel = pd.read_csv(FITTED_RUN / "selection.csv")
-    now = primary_table(pd.read_csv(OUT / "comparison.csv"), now_sel)
-    was = primary_table(pd.read_csv(FITTED_RUN / "comparison.csv"), was_sel)
+BEFORE_17 = OUT / "before_amendment_17"
+
+
+def _moved(was_dir, now_dir) -> tuple[str, str]:
+    """Which primary verdicts and selections differ between two runs' comparison.csv and selection.csv."""
+    now_sel = pd.read_csv(now_dir / "selection.csv")
+    was_sel = pd.read_csv(was_dir / "selection.csv")
+    now = primary_table(pd.read_csv(now_dir / "comparison.csv"), now_sel)
+    was = primary_table(pd.read_csv(was_dir / "comparison.csv"), was_sel)
     key = ["Scope", "Holdout", "Lists"]
     both = now.merge(was, on=key, suffixes=("", "_was"))
     moved = both[both["Verdict"] != both["Verdict_was"]]
     pick = lambda s: s[s["selected"]].set_index("scope")["model"]  # noqa: E731
     sel_now, sel_was = pick(now_sel), pick(was_sel)
     changed = [s for s in sel_now.index if sel_was.get(s) != sel_now[s]]
-    fitted = json.loads((FITTED_RUN / "manifest.json").read_text())["table_sha256"]
-    current = json.loads((OUT / "manifest.json").read_text())["table_sha256"]
-    if fitted == current:
-        return ""
     if moved.empty:
         verdicts_text = (
             f"None of the {len(both)} primary rows (each scope's selected candidate against population plus "
@@ -1450,12 +1446,45 @@ def _amendment_16() -> str:
             " Every scope selects the same model as before, so the sealed and blind rows are of the models this "
             "refit selects, fitted on the earlier table."
         )
+    return verdicts_text, sel_text
+
+
+def _table_of(run_dir) -> str:
+    return json.loads((run_dir / "manifest.json").read_text())["table_sha256"]
+
+
+def _amendment_16() -> str:
+    """The sixteenth amendment's paragraph: every primary verdict that moved between the run the sealed set was
+    scored with (sealed/fitted_run/) and the refit on the corrected West European site table. Once a later
+    amendment refits again, the sixteenth's refit is the run kept in before_amendment_17/."""
+    if not (FITTED_RUN / "comparison.csv").exists():
+        return ""
+    after_16 = BEFORE_17 if (BEFORE_17 / "comparison.csv").exists() else OUT
+    if _table_of(FITTED_RUN) == _table_of(after_16):
+        return ""
+    verdicts_text, sel_text = _moved(FITTED_RUN, after_16)
     return f"""### Changed by the corrected West European site table
 
 `configs/protocol_amendment_16.yaml` corrected 29 West European site rows that had no cited text (Data, "Military and
 defence sites of 1965") and refitted every classifier step on the corrected table. Four columns change, on rows of
 three Warsaw Pact documents. The sealed set was not scored again: its scores, and the blind reading of them, are of
 the fit on the earlier table (`runs/classifier/sealed/fitted_run/`). {verdicts_text}{sel_text}
+"""
+
+
+def _amendment_17() -> str:
+    """The seventeenth amendment's paragraph: every primary verdict that moved between the run kept in
+    before_amendment_17/ and the refit on the corrected links. Empty until that refit is committed."""
+    if not (BEFORE_17 / "comparison.csv").exists() or _table_of(BEFORE_17) == _table_of(OUT):
+        return ""
+    verdicts_text, sel_text = _moved(BEFORE_17, OUT)
+    return f"""
+### Changed by the corrected Warsaw Pact links
+
+`configs/protocol_amendment_17.yaml` placed Lato-67's German offset rows, which now credit Walsrode, Münster, Kevelaer
+and Lobberich, and unlinked two Burza rows that print a direction with no distance, so Hamburg and Schleswig are no
+longer Burza positives. Every classifier step and the map were run again on the corrected table; the run before it is
+kept in `runs/classifier/before_amendment_17/`. The sealed set was not scored again. {verdicts_text}{sel_text}
 """
 
 
@@ -1832,7 +1861,7 @@ The selected candidate of each scope. "Trained on" is the smallest number of pos
 
 {_blind_section()}
 {_sealed_section()}
-{_amendment_16()}
+{_amendment_16()}{_amendment_17()}
 ### What the gains rest on
 
 Each scope's selected candidate against population plus country under spatial blocks, with columns removed.
