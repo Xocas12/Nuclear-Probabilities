@@ -129,7 +129,7 @@ summarised on a 0.5-degree grid (1 degree for modern scenarios).
   `data/curated/features/cited_pages.csv`: the pages cited row by row in the site tables.
 - `configs/protocol.yaml` and `configs/protocol_amendment_5.yaml` to `configs/protocol_amendment_16.yaml`: the analysis and its amendments. `configs/scenarios.yaml`: scenarios.
 - `runs/classifier/`, `runs/probmap/`: committed outputs. `REPORT.md` is generated from them.
-- `runs/m1-slice/`, `runs/m2-check/`: checks from the milestones M1 and M2 of the work order (PROGRESS.md), on the labels of their date. They were not
+- `runs/m1-slice/`, `runs/m2-check/`: two early checks (M1: Soviet towns only, population and administrative features; M2: the first full 1956 feature table over the whole bloc; PROGRESS.md), on the labels of their date. They were not
   rerun after later label corrections and feed no result above. `runs/m4-transfer-check/`: the transfer check (does a model fitted on SAC's 1956 bloc towns rank the targets of the smaller lists?), rerun on the corrected labels; it reads whole countries, not sectors, and feeds no result above.
 
 ## Running it

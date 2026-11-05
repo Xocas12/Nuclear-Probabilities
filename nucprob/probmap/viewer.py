@@ -36,9 +36,11 @@ def land_paths() -> list[list[list[float]]]:
     return rings
 
 
-# What a scenario's map stands on. Only a score fitted on the attacker's own list for that year is "Historical";
-# the 1950 stockpile on the 1956 score is a counterfactual, and the 1965 Soviet map applies a score fitted mostly on
-# SAC's list to a Soviet stockpile, with no Soviet war plan behind it (review of bde7e54, finding 7).
+# What a scenario's map stands on. "Historical" means the stockpile is of the attacker's own year and the attacker
+# has a list of that year among the documents; the score itself is fitted on all attacker documents, exercises
+# included (REPORT.md, "Score"), and the page says so. The 1950 stockpile on the 1956 score is a counterfactual, and
+# the 1965 Soviet map applies a score fitted mostly on SAC's list to a Soviet stockpile, with no Soviet war plan
+# behind it.
 NOT_HISTORICAL = {"us_1950_stock_on_bloc": "Counterfactual", "ussr_1965_on_west": "Illustration"}
 
 
@@ -134,7 +136,7 @@ details{margin:12px 0}
 <div id="tip" role="status"></div>
 </main><script>
 const D=__DATA__;
-document.getElementById("method").textContent=`The score here is the ${D.score}: each delivered warhead falls on a town with chance in proportion to a score that moves only a few times over the range of population, so a cell's probability depends on how many towns it holds as well as on its people (the spread for the scenario shown is under the map). What a town produced, housed or defended plays no part.\nThese are consequences of stated assumptions, not forecasts. Theatre shares have no source.\nOn the 1956 towns the map uses only the part of delivered warheads falling on towns outside the sealed set, shown in the table. The 1965 map has no United Kingdom: its only census table was withdrawn because the path it came through is disallowed by the site's robots.txt, so the stated share falls on the five continental countries.\nThe interval runs from the 5th to the 95th percentile of draws of the model and the stockpile; it holds the allocation rule, who fires on whom and the list of towns fixed, so it is narrower than what is unknown. See REPORT.md: no score has been shown to beat population on a document it has not seen.`;
+document.getElementById("method").textContent=`The score here is the ${D.score}: each delivered warhead falls on a town with chance in proportion to a score that moves only a few times over the range of population, so a cell's probability depends on how many towns it holds as well as on its people (the spread for the scenario shown is under the map). What a town produced, housed or defended plays no part. The score is fitted on all attacker documents together, exercises included, and is no single state's model: "Historical" in the scenario list means the stockpile and a target list are of that year, not that the score is that attacker's.\nThese are consequences of stated assumptions, not forecasts. Theatre shares have no source.\nOn the 1956 towns the map uses only the part of delivered warheads falling on towns outside the sealed set, shown in the table. The 1965 map has no United Kingdom: its only census table was withdrawn because the path it came through is disallowed by the site's robots.txt, so the stated share falls on the five continental countries.\nThe interval runs from the 5th to the 95th percentile of draws of the model and the stockpile; it holds the allocation rule, who fires on whom and the list of towns fixed, so it is narrower than what is unknown. See REPORT.md: no score has been shown to beat population on a document it has not seen.`;
 const stops=[[205,226,251],[158,197,244],[109,167,236],[57,135,229],[28,92,171],[13,54,107]];
 function col(p){const x=Math.min(.9999,Math.max(0,p))*(stops.length-1),i=Math.floor(x),f=x-i,a=stops[i],b=stops[i+1];return `rgb(${a.map((v,k)=>Math.round(v+(b[k]-v)*f)).join(",")})`}
 const map=document.getElementById("map"),g=map.getContext("2d"),sel=document.getElementById("sc"),band=document.getElementById("band"),tip=document.getElementById("tip");

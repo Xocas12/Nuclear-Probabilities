@@ -113,7 +113,7 @@ requirements study, not a war plan. Exercises, war games and lessons may enter m
 lists and mirrors record what a defender expected, never train a model, and are scored apart.
 
 **How much evidence there is, by side.** The US has 1299 linked positives, of which
-1292 come from one document, and no document of type war plan. Of SAC's, 250 lie in the sealed blocks and are held out of every fit, which leaves the 1042 positives of the SAC rows in the tables below. For the USSR there is **no war plan at all**: 89
+1292 come from one document, and no document of type war plan. Of SAC's, 250 lie in the sealed blocks and are held out of every fit, which leaves the 1042 positives of the SAC rows in the tables below. For the USSR the registry holds **no war-plan document**: 89
 rows, 88 of them from General Staff Academy lessons on one fictional scenario, giving 50 linked town-list pairs, and one
 news report. Czechoslovakia has 0 linked positives and Poland 6. The registry holds 3 war-plan documents with 36 rows between
 them, all Warsaw Pact, with 6 linked positives. **Only one was read at source**, the Czechoslovak plan of 1964 (grade A), and it has 0 linked positives: its rows that state nuclear weapons name units and
@@ -152,7 +152,7 @@ seal is a procedure and not a secret. It has been scored once; see below.
 - **Reading.** Mean per-list PR-AUC, weighted by positives, on lists with 2 or more. Neither interval includes
   the variance of refitting a model.
 - **Fit checks.** The document identification classifier (Results, "What the gains rest on") diverged, so
-  the fifteenth amendment, fixed before it was run, refitted the primary models to see whether they do too: every
+  an amendment fixed before it was run (`configs/protocol_amendment_15.yaml`) refitted the primary models to see whether they do too: every
   bag of the four models on each scope's whole rows, the five folds of the first spatial grid, each left-out
   document and both temporal directions, 8,832 bag fits in all. A test checks that the refitting code draws and fits
   bags exactly as the primary run's code does. Of the 8,832, 0 were called diverged. A LightGBM fit is called diverged if its training log
@@ -265,7 +265,7 @@ other documents. A sealed block is not free of training data: 16 scored places l
 
 Every model's metrics on both populations, with a PR-AUC interval each, are in `runs/classifier/sealed/metrics.csv`.
 
-### Changed by the sixteenth amendment
+### Changed by the corrected West European site table
 
 `configs/protocol_amendment_16.yaml` corrected 29 West European site rows that had no cited text (Data, "Military and
 defence sites of 1965") and refitted every classifier step on the corrected table. Four columns change, on rows of
@@ -286,7 +286,9 @@ Removing national power lowers accuracy by 14.1 points [12.9, 15.2], so those co
 
 This reading is post hoc (`configs/protocol_amendment_14.yaml`; one regularisation value was tried). The version fixed in
 advance had none: 8 of its 16 fits (four column sets, four folds) diverged, against 0 of 16 here
-(`runs/classifier/identification/divergence.csv`), so its intervals, 69.3% to 72.3% on all columns
+(`runs/classifier/identification/divergence.csv`). By the rule fixed for this check in `configs/protocol_amendment_14.yaml`, a fit diverged if its final
+training accuracy is more than 5 points below its best; this is not the raw-score and log-loss rule used
+for the primary models under "Fit checks". By that rule's raw score above 50, 9 of the 16 would be called diverged: the extra fit is "all permitted" fold 2 (raw score 3,356, training accuracy steady at 98.3%). So the intervals of the version fixed in advance, 69.3% to 72.3% on all columns
 (`runs/classifier/identification/intervals.csv`), measured a failed fit; it is withdrawn.
 
 
@@ -575,8 +577,8 @@ probability is 0.48 and the share listed 0.58, beside a mean interval width of 0
 | SAC list left out | 3 | 274 | 0.57 | 0.76 |
 | SAC list left out | 4 | 274 | 0.84 | 0.92 |
 
-**Domain shift.** A classifier told training towns from the modern towns of the modern scenarios at ROC-AUC
-0.97, where 0.5 would mean no shift. For scale, it told SAC's towns from the other training towns at
+**Domain shift.** A classifier told the 3,686 training towns from the 2,276 modern towns in the countries the modern
+scenarios target (of the 6,091 kept worldwide) at ROC-AUC 0.97, where 0.5 would mean no shift. For scale, it told SAC's towns from the other training towns at
 0.89. 18% of modern towns lie outside the training's 1st-99th percentile on `log_pop`, the worst feature.
 There are no modern labels, so performance on modern towns cannot be measured at all. Every modern row is an
 **extrapolation**: it applies lists of 1945-1977 to towns of today, on a selective set of named places. The ROC-AUC is measured on all

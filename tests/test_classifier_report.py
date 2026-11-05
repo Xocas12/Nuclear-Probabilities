@@ -504,9 +504,9 @@ def test_the_sixteenth_amendment_paragraph_lists_every_moved_verdict():
     now_table = json.loads((OUT / "manifest.json").read_text())["table_sha256"]
     text = " ".join((ROOT / "REPORT.md").read_text(encoding="utf-8").split())
     if was_table == now_table:
-        assert "### Changed by the sixteenth amendment" not in text
+        assert "### Changed by the corrected West European site table" not in text
         return
-    assert "### Changed by the sixteenth amendment" in text
+    assert "### Changed by the corrected West European site table" in text
     now = report.primary_table(
         pd.read_csv(OUT / "comparison.csv"), pd.read_csv(OUT / "selection.csv")
     )

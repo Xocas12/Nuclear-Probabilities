@@ -15,6 +15,7 @@ import pandas as pd
 
 from nucprob.classifier.divergence import LOSS_RISE, MAX_RAW
 from nucprob.classifier.evaluate import MIN_TRAIN_POSITIVES
+from nucprob.classifier.identification_fit import DIVERGED_DROP
 from nucprob.paths import CURATED, ROOT, RUNS
 from nucprob.plans import protocol
 from nucprob.probmap.counts import count
@@ -672,8 +673,8 @@ probability is {spatial["mean_p"]:.2f} and the share listed {spatial["base_rate"
 
 {markdown(rel[["reading", "bin", "n", "mean_score", "observed"]])}
 
-**Domain shift.** A classifier told training towns from the modern towns of the modern scenarios at ROC-AUC
-{two.iloc[0]["value"]:.2f}, where 0.5 would mean no shift. For scale, it told SAC's towns from the other training towns at
+**Domain shift.** A classifier told the {int(two.iloc[0]["towns_a"]):,} training towns from the {int(two.iloc[0]["towns_b"]):,} modern towns in the countries the modern
+scenarios target (of the {int(universe.iloc[-1]):,} kept worldwide) at ROC-AUC {two.iloc[0]["value"]:.2f}, where 0.5 would mean no shift. For scale, it told SAC's towns from the other training towns at
 {two.iloc[1]["value"]:.2f}. {worst["value"]:.0%} of modern towns lie outside the training's 1st-99th percentile on `{worst["feature"]}`, the worst feature.
 There are no modern labels, so performance on modern towns cannot be measured at all. Every modern row is an
 **extrapolation**: it applies lists of 1945-1977 to towns of today, on a selective set of named places. The ROC-AUC is measured on all
@@ -701,6 +702,18 @@ def _pop_outside(outside: pd.DataFrame, worst) -> str:
         return ", the worst feature named above"
     share = float(outside.loc[outside["feature"] == "log_pop", "value"].iloc[0])
     return f": {share:.0%} of modern towns lie outside the training's 1st-99th percentile on it"
+
+
+def _raw_only(fits: pd.DataFrame) -> str:
+    """The as-run identification fits a raw score above MAX_RAW flags and the accuracy-drop rule does not."""
+    extra = fits[(fits["max_abs_raw_score"] > MAX_RAW) & ~fits["diverged"].astype(bool)]
+    if extra.empty:
+        return ""
+    named = ", ".join(
+        f'"{r.columns}" fold {int(r.fold)} (raw score {r.max_abs_raw_score:,.0f}, training accuracy steady at {_pct(r.train_accuracy_final)})'
+        for r in extra.itertuples()
+    )
+    return f": the extra {'fit is' if len(extra) == 1 else 'fits are'} {named}"
 
 
 def _pct(v: float) -> str:
@@ -817,7 +830,9 @@ document. The intervals resample places, keeping a place's rows together (2,000 
 
 This reading is post hoc (`configs/protocol_amendment_14.yaml`; one regularisation value was tried). The version fixed in
 advance had none: {int(as_run["diverged"].sum())} of its {len(as_run)} fits (four column sets, four folds) diverged, against {int(regd["diverged"].sum())} of {len(regd)} here
-(`runs/classifier/identification/divergence.csv`), so its intervals, {_pct(iv.at["all permitted", "accuracy_lo"])} to {_pct(iv.at["all permitted", "accuracy_hi"])} on all columns
+(`runs/classifier/identification/divergence.csv`). By the rule fixed for this check in `configs/protocol_amendment_14.yaml`, a fit diverged if its final
+training accuracy is more than {100 * DIVERGED_DROP:.0f} points below its best; this is not the raw-score and log-loss rule used
+for the primary models under "Fit checks". By that rule's raw score above {MAX_RAW:.0f}, {int((as_run["max_abs_raw_score"] > MAX_RAW).sum())} of the {len(as_run)} would be called diverged{_raw_only(as_run)}. So the intervals of the version fixed in advance, {_pct(iv.at["all permitted", "accuracy_lo"])} to {_pct(iv.at["all permitted", "accuracy_hi"])} on all columns
 (`runs/classifier/identification/intervals.csv`), measured a failed fit; it is withdrawn.{rest}
 """
 
@@ -1157,7 +1172,7 @@ def _fit_check() -> str:
     """The Method bullet on the fifteenth amendment's divergence check, from runs/classifier/divergence/."""
     fits = _divergence_fits()
     if fits is None:
-        return "- **Fit checks.** The fifteenth amendment's test of the primary fits for divergence has not been run."
+        return "- **Fit checks.** The test of the primary fits for divergence (`configs/protocol_amendment_15.yaml`) has not been run."
     n, bad = len(fits), int(fits["diverged"].sum())
     lgb = fits[fits["kind"] == "lightgbm"]
     lr = fits[fits["kind"] == "logistic"]
@@ -1169,7 +1184,7 @@ def _fit_check() -> str:
         else f"{hits:,} logistic fits stopped at the solver's cap of 5,000 iterations"
     )
     return f"""- **Fit checks.** The document identification classifier (Results, "What the gains rest on") diverged, so
-  the fifteenth amendment, fixed before it was run, refitted the primary models to see whether they do too: every
+  an amendment fixed before it was run (`configs/protocol_amendment_15.yaml`) refitted the primary models to see whether they do too: every
   bag of the four models on each scope's whole rows, the five folds of the first spatial grid, each left-out
   document and both temporal directions, {n:,} bag fits in all. A test checks that the refitting code draws and fits
   bags exactly as the primary run's code does. Of the {n:,}, {bad:,} were called diverged. A LightGBM fit is called diverged if its training log
@@ -1406,7 +1421,7 @@ def _amendment_16() -> str:
             " Every scope selects the same model as before, so the sealed and blind rows are of the models this "
             "refit selects, fitted on the earlier table."
         )
-    return f"""### Changed by the sixteenth amendment
+    return f"""### Changed by the corrected West European site table
 
 `configs/protocol_amendment_16.yaml` corrected 29 West European site rows that had no cited text (Data, "Military and
 defence sites of 1965") and refitted every classifier step on the corrected table. Four columns change, on rows of
@@ -1709,7 +1724,7 @@ requirements study, not a war plan. Exercises, war games and lessons may enter m
 lists and mirrors record what a defender expected, never train a model, and are scored apart.
 
 **How much evidence there is, by side.** The US has {int(us_gate["linked_positives"])} linked positives, of which
-{int(us_gate["linked_positives"] - us_gate["positives_outside_largest"])} come from one document, and no document of type war plan.{_sac_sealed_gap()} For the USSR there is **no war plan at all**: {su_rows}
+{int(us_gate["linked_positives"] - us_gate["positives_outside_largest"])} come from one document, and no document of type war plan.{_sac_sealed_gap()} For the USSR the registry holds **no war-plan document**: {su_rows}
 rows, {int(su_train["rows"].sum())} of them from General Staff Academy lessons on one fictional scenario, giving {int(su_pos)} linked town-list pairs, and one
 news report. Czechoslovakia has {int(cz["linked_positives"])} linked positives and Poland {int(pl["linked_positives"])}. The registry holds {int(plan_docs["documents"].sum())} war-plan documents with {int(plan_docs["rows"].sum())} rows between
 them, all Warsaw Pact, with {war_positives} linked positives. **Only one was read at source**, the Czechoslovak plan of 1964 (grade A), and it has {int(war_docs.loc["wp_1964_csla_plan", "positives"])} linked positives: its rows that state nuclear weapons name units and
