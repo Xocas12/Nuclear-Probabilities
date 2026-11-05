@@ -27,8 +27,7 @@ def test_readme_says_the_blind_places_were_set_apart_after_the_sealed_reading():
     )
     # README says it in the results and in Method
     assert (
-        "which sealed places count as blind was decided after the reading of all sealed places had been seen"
-        in readme
+        "Which sealed places count as blind was decided after that reading had been seen" in readme
     )
     assert (
         "Which places count as blind was decided after the reading of all sealed places had been seen"

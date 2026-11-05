@@ -338,7 +338,7 @@ def test_every_modern_scenario_is_labelled_as_extrapolation():
     for item in data["scenarios"]:
         assert item["era"] == eras[item["id"]]
         modern = item["era"] == "modern"
-        want = "Extrapolation" if modern else "Historical"
+        want = "Extrapolation" if modern else "Hypothetical"  # no map is called historical
         if item["id"] == "us_1950_stock_on_bloc":
             want = "Counterfactual"
         if item["id"] == "ussr_1965_on_west":

@@ -2,6 +2,7 @@
 is of the committed inputs."""
 
 import json
+import re
 
 import numpy as np
 import pandas as pd
@@ -77,9 +78,9 @@ def test_every_comparison_row_recomputes_from_the_held_out_scores():
             assert a - b == pytest.approx(r["delta"], abs=2e-3)
 
 
-def test_numbers_keep_two_decimals_and_a_constant_is_not_shown_as_a_measurement():
-    assert report.signed(0.0234) == "+0.02" and report.signed(-0.0004) == "-0.0004"
-    assert report.signed(0.0) == "0.00"
+def test_differences_keep_three_decimals_and_a_constant_is_not_shown_as_a_measurement():
+    assert report.signed(0.0234) == "+0.023" and report.signed(-0.0004) == "-0.000"
+    assert report.signed(0.0) == "0.000"
     flat = {"delta": 0.0, "low": 0.0, "high": 0.0, "block_low": 0.0, "block_high": 0.0}
     assert report.constant(flat) and "constant" in report.interval(flat)
     assert not report.constant(flat | {"high": 0.001})
@@ -376,7 +377,7 @@ def test_the_readme_says_what_the_blind_reading_found():
     blind = scores["never_scored"] & ~scores["place_id"].isin(set(hist["place_id"]))
     assert (prim["rows"] == int(blind.sum())).all()
     readme = " ".join((ROOT / "README.md").read_text(encoding="utf-8").split())
-    assert "**That reading is not blind.**" in readme
+    assert "**The whole sealed set is not a blind test.**" in readme
     if prim["verdict"].eq("neither").all():
         assert "no model beats population plus country" in readme
     else:
@@ -399,7 +400,8 @@ def test_the_main_result_and_the_limits_quote_the_blind_reading():
         assert "no selected model beats population plus country there" in main
         assert "A blind gain over population plus country" in cannot
         assert "A blind gain over population plus country" in readme
-        assert results.index("On the only blind test") < results.index("Inside SAC's list")
+        assert results.index("On the only blind test") < results.index("On lists other than SAC's")
+        assert "On the one blind test, places no run had scored, no model beat" in results
 
 
 def test_the_splits_card_does_not_call_never_scored_places_blind():
@@ -423,13 +425,17 @@ def test_reader_facing_text_has_no_commit_names_or_run_on_lines():
     assert (ROOT / "configs" / "HISTORY.md").exists()
 
 
-def test_a_signed_bound_off_zero_never_prints_as_zero():
-    """Bounds once printed "+0.000" and "-0.000"."""
-    assert report.signed(0.0003) == "+0.0003"
-    assert report.signed(-0.00004) == "-0.00004"
-    assert report.signed(0.003) == "+0.003"
-    assert report.signed(0.0) == "0.00"
-    assert report.signed(0.12) == "+0.12"
+def test_a_signed_zero_is_defined_wherever_it_is_printed():
+    """A bound off zero may print as +0.000 or -0.000, its sign giving its side; both documents say so."""
+    assert report.signed(0.0003) == "+0.000" and report.signed(-0.00004) == "-0.000"
+    assert report.signed(0.003) == "+0.003" and report.signed(0.12) == "+0.120"
+    for name, rule in (
+        ("README.md", "one printed +0.000 or -0.000 lies within 0.0005 of zero on that side"),
+        ("REPORT.md", "A difference within 0.0005 of zero prints as +0.000 or -0.000"),
+    ):
+        text = " ".join((ROOT / name).read_text(encoding="utf-8").split())
+        if re.search(r"(?<![\d.])[+-]0\.000(?![0-9])", text):
+            assert rule in text, name
 
 
 def test_a_nonzero_value_never_prints_as_an_exact_zero():

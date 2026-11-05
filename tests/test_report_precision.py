@@ -1,37 +1,31 @@
-"""The report's precision rule: an estimate never prints with more decimals
-than its interval supports, while a bound near zero keeps the decimals that show its side of zero."""
+"""The report's precision rule for differences: three decimals for an estimate and its bounds alike, a sign that
+always gives the side of zero, and a fourth decimal only where an estimate would print equal to a bound it
+differs from."""
 
-from nucprob.classifier.report import point, signed
+import numpy as np
 
-
-def test_estimate_takes_the_coarser_bounds_decimals():
-    assert point(-0.193, -0.41, 0.004) == "-0.19"
-    assert point(-0.193, -0.41, 0.004) == "-0.19"
-    assert point(0.021, 0.001, 0.04) == "+0.02"
+from nucprob.classifier.report import estimate_interval, point, signed
 
 
-def test_estimate_gets_more_decimals_only_when_both_bounds_need_them():
-    assert point(-0.0003, -0.004, 0.003) == "-0.0003"
-    assert signed(-0.004) == "-0.004" and signed(0.003) == "+0.003"
+def test_a_difference_and_its_bounds_have_three_decimals():
+    assert signed(0.0150) == "+0.015" and signed(-0.193) == "-0.193"
+    assert point(0.0234, 0.0137, 0.0343) == "+0.023"
+    assert estimate_interval(0.0091, 0.0036, 0.0145) == ("+0.009", "+0.004", "+0.015")
 
 
-def test_exact_zero_and_missing_bounds():
-    assert point(0.0, -0.01, 0.01) == "0.00"
-    assert point(0.1234, float("nan"), 0.2) == "+0.12"
+def test_a_value_near_zero_keeps_its_side_of_zero_in_its_sign():
+    assert signed(0.0003) == "+0.000" and signed(-0.0001) == "-0.000"
+    assert signed(-0.0) == "-0.000"  # a CSV bound stored as -0.0000: negative, rounded to zero
+    for v in (-0.0004, -0.00001, 0.0002, 0.0049):
+        assert signed(v).startswith("+" if v > 0 else "-")
+        assert np.sign(float(signed(v)) or v) == np.sign(v)
 
 
-def test_an_estimate_near_zero_shows_its_sign_and_never_prints_as_minus_zero():
-    """ "-0.00" was once printed."""
-    assert point(-0.003, -0.11, 0.14) == "-0.003"
-    for v in (-0.003, -0.0004, 0.0049, -0.00001):
-        assert float(point(v, -0.2, 0.2)) != 0
+def test_an_exact_zero_has_no_sign():
+    assert signed(0.0) == "0.000" and point(0.0, -0.01, 0.01) == "0.000"
 
 
 def test_an_estimate_never_prints_equal_to_a_bound_it_differs_from():
-    """Once "+0.01 [+0.004, +0.01]" for 0.0091 [0.0036, 0.0145]."""
-    from nucprob.classifier.report import estimate_interval
-
-    assert estimate_interval(0.0091, 0.0036, 0.0145) == ("+0.009", "+0.004", "+0.015")
-    assert estimate_interval(0.021, 0.01, 0.03) == ("+0.02", "+0.01", "+0.03")
-    est, lo, hi = estimate_interval(-0.0201, -0.0249, -0.0151)
-    assert est not in (lo, hi)
+    est, lo, hi = estimate_interval(0.0101, 0.0098, 0.03)
+    assert est not in (lo, hi) and (est, lo, hi) == ("+0.0101", "+0.0098", "+0.0300")
+    assert estimate_interval(0.0201, 0.0249, 0.03) == ("+0.020", "+0.025", "+0.030")

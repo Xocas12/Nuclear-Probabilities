@@ -53,54 +53,30 @@ def _cell(v) -> str:
     return str(v)
 
 
+DIFF_DIGITS = 3
+
+
 def signed(v: float) -> str:
-    """Two decimals. A value that would round to zero keeps its sign and the decimals it needs (a third, or
-    up to a sixth), since which side of zero a bound lies on decides a verdict. An exact zero prints as 0.00 with no sign."""
-    if v == 0:
-        # A CSV bound written as -0.0000 is negative and rounded to zero: it keeps its sign and four decimals.
-        return "-0.0000" if np.signbit(v) else "0.00"
-    if abs(v) >= 0.005:
-        return f"{v:+.2f}"
-    digits = 3
-    while abs(v) < 0.5 * 10**-digits and digits < 6:
-        digits += 1  # so that "+0.000" never stands for a value off zero
-    return f"{v:+.{digits}f}"
-
-
-def _decimals(text: str) -> int:
-    return len(text.split(".")[1]) if "." in text else 0
+    """A difference or a bound: three decimals, with its sign. A value within 0.0005 of zero prints as +0.000
+    or -0.000, the sign giving its side of zero, which decides a verdict; an exact zero prints as 0.000."""
+    if v == 0 and not np.signbit(v):
+        return "0.000"
+    return f"{v:+.{DIFF_DIGITS}f}"
 
 
 def point(v: float, *bounds: float) -> str:
-    """An estimate printed to no more decimals than its interval supports: those of the coarser printed bound,
-    and at least two. A bound near zero takes extra decimals to show its side of zero; the estimate does not
-    inherit them unless both bounds need them. An estimate that would print as 0.00 takes, as a bound does, the
-    decimals that show its side of zero, so "-0.00" is never printed (an exact zero prints as 0.00)."""
-    if v == 0:
-        return "0.00"
-    shown = [_decimals(signed(b)) for b in bounds if not pd.isna(b)]
-    digits = max(2, min(shown)) if shown else 2
-    text = f"{v:+.{digits}f}"
-    return signed(v) if float(text) == 0 else text
-
-
-def _at_least(v: float, digits: int) -> str:
-    """A bound with at least `digits` decimals, or more where signed() needs them to show its side of zero."""
-    text = signed(v)
-    if v == 0 or _decimals(text) >= digits:
-        return text
-    return f"{v:+.{digits}f}"
+    """An estimate of a difference, printed as its bounds are (signed); the bounds are ignored."""
+    return signed(v)
 
 
 def estimate_interval(v: float, low: float, high: float) -> tuple[str, str, str]:
-    """The estimate and its bounds as printed. Where the estimate would print equal to a bound it differs from
-    (0.0091 in [0.0036, 0.0145] as "+0.01 [+0.004, +0.01]"), all three take one more decimal, up to four."""
-    est, lo, hi = point(v, low, high), signed(low), signed(high)
-    digits = _decimals(est)
-    while digits < 4 and ((est == lo and v != low) or (est == hi and v != high)):
-        digits += 1
-        est = signed(v) if float(f"{v:+.{digits}f}") == 0 else f"{v:+.{digits}f}"
-        lo, hi = _at_least(low, digits), _at_least(high, digits)
+    """The estimate and its bounds as printed. Where the estimate would print equal to a bound it differs from,
+    all three take a fourth decimal."""
+    est, lo, hi = signed(v), signed(low), signed(high)
+    if (est == lo and v != low) or (est == hi and v != high):
+        est, lo, hi = (
+            "0.0000" if x == 0 and not np.signbit(x) else f"{x:+.4f}" for x in (v, low, high)
+        )
     return est, lo, hi
 
 
@@ -117,7 +93,7 @@ def interval(r) -> str:
 
 
 # Fewer blocks than this holding the positives, and resampling blocks cannot measure anything: with 7
-# positives in 2 blocks the interval collapsed onto its point. Set in iteration 9, after that row was seen.
+# positives in 2 blocks the interval collapsed onto its point. Set after that row had been read (configs/HISTORY.md).
 MIN_POSITIVE_BLOCKS = 5
 
 
@@ -1866,12 +1842,11 @@ the base rate, not as how often a model is right. The classifier's intervals are
 the map's (section "Probability map") are the 5th to 95th percentiles of its draws, so 90%. "By blocks" resamples whole
 300 km squares of towns; the other interval resamples single towns. Verdicts use the unrounded bounds.
 
-**How numbers are rounded.** Most figures have two decimals. Three rules add decimals:
-- A bound that would print as 0.00 keeps its sign and as many decimals as needed (three to six) to show which side
-  of zero it lies on. A bound the CSV stores as -0.0000, negative but under 0.00005, prints as -0.0000. An exact
-  zero prints as 0.00.
-- An estimate takes the decimals of the coarser of its two printed bounds, and at least two.
-- If that would print the estimate as 0.00, or equal to a bound it differs from, it takes more decimals, up to four.
+**How numbers are rounded.** Scores (PR-AUC, probabilities, shares) have two decimals. A difference between two
+scores and its interval bounds have three, so that a gain and its bounds print at the same precision in README,
+here and in `runs/classifier/TABLES.md`. A difference within 0.0005 of zero prints as +0.000 or -0.000: the sign gives
+the side of zero on which the unrounded value lies, and verdicts use the unrounded bounds. An exact zero prints as
+0.000. Where an estimate would print equal to a bound it differs from, all three take a fourth decimal.
 
 A comparison whose two scores never differ on its rows is shown as "constant". Where the positives lie in fewer than {MIN_POSITIVE_BLOCKS} blocks, resampling blocks measures nothing, and the block interval is shown as "n/a" with the count. In the tables, `a_pr_auc` is the PR-AUC of the model named in the row and `b_pr_auc` that of the score it is compared against; `by_blocks` is the block interval; `towns_without_1939` counts towns with no 1939 census figure; `cell_deg` is a map cell's side in degrees.
 
@@ -2305,6 +2280,7 @@ def _readme_short() -> str:
     named_text = ", ".join(named[:-1]) + " and " + named[-1] if len(named) > 1 else "".join(named)
     sens = pd.read_csv(OUT / "sensitivity.csv")
     clean = sens[(sens["scope"] == SAC_SCOPE) & (sens["variant"] == "none flagged")].iloc[0]
+    strict = sens[(sens["scope"] == SAC_SCOPE) & (sens["variant"] == "strict as-of")].iloc[0]
     blind = _blind_rows(PLUS) if BLIND.exists() else None
     blind_text = (
         " On the one blind test, places no run had scored, no model beat population plus country."
@@ -2323,21 +2299,23 @@ def _readme_short() -> str:
 
     return f"""### Short answers
 
-**What made a place a target?** On the one large list, SAC's 1956 study of the Soviet bloc, mostly its size.
-Under spatial cross-validation, ranking towns by population alone (the population rule) gives a PR-AUC of
-{rule["b_pr_auc"]:.2f} where a ranking with no information gives {_sac_base_rate():.2f}; population plus a term for each country gives
-{plus["b_pr_auc"]:.2f}, and the selected model with every permitted feature {plus["a_pr_auc"]:.2f} ({interval(plus)} over population plus
-country, by blocks {block_interval(plus)}). Added one at a time to a fit on population and country, no family of
-town traits adds more than {gains["delta"].max():.3f}. Of the families measured as of 1956, {named_text} add
-{dated["delta"].min():.3f} to {dated["delta"].max():.3f} each where they gain. Transport adds the most but rests largely on today's data; without the columns flagged as today's data, the selected model's gain
-over population and country is {interval(clean)}, by blocks {block_interval(clean)}, and cannot be told from zero.
-None of this has been shown to carry over to a document the models did not see.{blind_text}
+**What made a place a target?** The lists show what listed towns had in common, not why they were chosen. On the
+one large list, SAC's 1956 study of the Soviet bloc, a listed town stood out mostly by its size. Under spatial
+cross-validation, ranking towns by population alone (the population rule) gives a PR-AUC of {rule["b_pr_auc"]:.2f} where a
+ranking with no information gives {_sac_base_rate():.2f}; population plus a term for each country gives {plus["b_pr_auc"]:.2f}, and the selected
+model with every permitted feature {plus["a_pr_auc"]:.2f} ({interval(plus)} over population plus country, by blocks
+{block_interval(plus)}).{seed_note(plus)} Added one at a time to a fit on population and country, no family of town traits adds
+more than {gains["delta"].max():.3f}. Of the families that describe the towns as of 1956, {named_text} add {dated["delta"].min():.3f} to
+{dated["delta"].max():.3f} each where they gain. The defence sites are known mostly from post-Soviet sources: they record what
+existed in 1956, not what SAC knew. Transport adds the most but rests largely on today's data. {_short_repeats(clean, strict)} Those repeats still use the 1959 Soviet census and other late inputs (REPORT, "Inputs later than the
+document"), and the analysis is not blind: earlier results had been read (REPORT, Method). None of this has been
+shown to carry over to a document the models did not see.{blind_text}
 
 **How likely is an area to be struck?** Only under stated assumptions, and only as a historical illustration. If the
 cited US stockpile of 1956 were sent against the Soviet bloc and each delivered warhead fell on a town in proportion
 to the map's score, {over("us_1956_on_bloc")} half-degree cells would have a probability over one half of
 receiving at least one warhead; with the 1950 stockpile, {over("us_1950_stock_on_bloc")}. The brackets are the 5th to
-95th percentiles of {N_DRAWS} draws. Most of their width comes from the stockpile and from the share of each force
+95th percentiles of {N_DRAWS} draws, so 90% intervals. Most of their width comes from the stockpile and from the share of each force
 assumed sent to the theatre, which has no source. Against SAC's own list, with spatial blocks held out, the 1956 map
 ranks the cells that hold a listed town at PR-AUC {val["pr_auc"]:.2f} where {val["base_rate"]:.0%} of cells hold one, and its mean cell
 probability is {val["mean_p"]:.2f}. The score was fitted on these lists, so this is agreement with the training list, not a
@@ -2353,12 +2331,9 @@ def readme_results() -> str:
     """What README.md says of the results, so that a figure there cannot drift from the outputs."""
     comp = pd.read_csv(OUT / "comparison.csv")
     selection = pd.read_csv(OUT / "selection.csv")
-    sens = pd.read_csv(OUT / "sensitivity.csv")
     gate = pd.read_csv(OUT / "state_gate.csv").set_index("attacker")
     sac_best, g_best = _best(selection, SAC_SCOPE), _best(selection, GLOBAL_ALL)
     sac = _row(comp, SAC_SCOPE, "spatial blocks", sac_best, PLUS)
-    clean = sens[(sens["scope"] == SAC_SCOPE) & (sens["variant"] == "none flagged")].iloc[0]
-    strict = sens[(sens["scope"] == SAC_SCOPE) & (sens["variant"] == "strict as-of")].iloc[0]
     lopo = _row(comp, GLOBAL_ALL, "leave one document out", g_best, RULE)
     rest = _row(comp, GLOBAL_ALL, "leave one document out", g_best, RULE, "lists other than SAC")
     us = gate.loc["US"]
@@ -2384,17 +2359,13 @@ def readme_results() -> str:
 list. A list's base rate is what no information scores: {float(sac["base_rate"]):.2f} for SAC, {float(other["base_rate"]):.2f} for the other lists.
 Where a list is incomplete a town off it is unlabeled, so PR-AUC understates precision there. The classifier's
 intervals are 95%, the first resampling towns and "by blocks" resampling 300 km squares; a difference counts only if
-both exclude zero. The map's intervals are the 5th to 95th percentiles of its draws (90%).
-A **scope** is the set of lists a model is fitted on: two global scopes (every attacker's documents, or plan
+both exclude zero. Differences have three decimals; one printed +0.000 or -0.000 lies within 0.0005 of zero on that
+side. A **scope** is the set of lists a model is fitted on: two global scopes (every attacker's documents, or plan
 documents only), a pooled Warsaw Pact scope, and SAC's 1956 study alone. A **linked positive** is a listed place
 matched to a town of the place universe. The **population rule** ranks towns by population alone; **population plus
 country** adds a term for each target country.
 
-{_readme_blind()}{_readme_families()}- **Inside SAC's list**, under spatial cross-validation, the selected model beats population plus a country term by
-  {interval(sac)}, by blocks {block_interval(sac)}: {claim(sac)}.{seed_note(sac)} {_repeats(clean, strict)} Those repeats still use the 1959 Soviet census
-  and other late inputs (REPORT, "Inputs later than the document"). The analysis is not blind: earlier results had
-  been read (REPORT, Method).
-- **On lists other than SAC's**, under the same spatial cross-validation, the global model on all attacker documents
+{_readme_blind()}{_readme_families()}- **On lists other than SAC's**, under the same spatial cross-validation, the global model on all attacker documents
   (exercises included) against population plus country is {interval(other)}, by blocks {block_interval(other)}: {claim(other)}.{seed_note(other)}
   {_other_lists_basis(lists, other, g_best)} The held-out blocks' documents are also in training, so this is not a
   reading on an unseen document (next point).
@@ -2422,20 +2393,6 @@ country** adds a term for each target country.
   capital and regional-centre status), with {log_pop["value"]:.0%} outside the training's 1st-99th percentile on the
   one feature the score reads."""
     return _wrap(text)
-
-
-def _seed_groups(moved: pd.DataFrame) -> list[tuple[str, str, str, list[str]]]:
-    """Seed-dependent comparisons grouped by scope, holdout and what the seeds give: (scope, holdout, the
-    reading under seed 1956 and seeds 1-20, the list sets and baselines it covers)."""
-    groups: dict[tuple[str, str, str], list[str]] = {}
-    for r in moved.itertuples():
-        key = (
-            SCOPES[r.scope],
-            HOLDOUTS[r.holdout][0].lower() + HOLDOUTS[r.holdout][1:],
-            f"{r.verdict_seed_1956} under seed 1956, {seed_counts(r._asdict())} under seeds 1-20",
-        )
-        groups.setdefault(key, []).append(f"{r.lists} against {r.against}")
-    return [(*k, v) for k, v in groups.items()]
 
 
 def _readme_seeds() -> str:
@@ -2545,11 +2502,11 @@ def _readme_blind() -> str:
   of every fit and scored once at the end; {int(pd.read_csv(BLIND)["rows"].max())} of them have a SAC label and are scored against SAC's list,
   and {int(p0["rows"])} of those had been scored by no earlier run ({int(p0["positives"])} listed). Against population plus country there:
 {lines}  Against the population rule, {len(rule_gains)} of {len(rule)} gain by both intervals{rule_text}. Positives lie in only
-  {int(p0["positive_blocks"])} of {int(p0["blocks"])} blocks, so these intervals are wide and "neither" is not evidence of no effect. On {int(earlier.iloc[0]["rows"])} sealed
-  places including ones earlier runs had scored, {int(earlier["verdict"].eq("gain").sum())} of {len(earlier)} models gained over population plus country.
-  **That reading is not blind.** Two limits apply to the blind one: which sealed places count as blind was decided
-  after the reading of all sealed places had been seen, and the set may be read once, so only the protocol's
-  bootstrap seed was used (`runs/classifier/sealed/blind/comparison.csv`; REPORT, "The sealed set").
+  {int(p0["positive_blocks"])} of {int(p0["blocks"])} blocks, so these intervals are wide and "neither" is not evidence of no effect.
+- **The whole sealed set is not a blind test.** On {int(earlier.iloc[0]["rows"])} sealed places, including ones earlier runs had scored,
+  {int(earlier["verdict"].eq("gain").sum())} of {len(earlier)} models gained over population plus country. Which sealed places count as blind was decided
+  after that reading had been seen, and the set may be read once, so only the protocol's bootstrap seed was used
+  (`runs/classifier/sealed/blind/comparison.csv`; REPORT, "The sealed set").
 """
 
 
@@ -2568,13 +2525,16 @@ def _readme_width(s: pd.DataFrame) -> str:
     )
 
 
-def _repeats(clean, strict) -> str:
-    """The two repeats, once if they print the same."""
-    first = f"{interval(clean)}, by blocks {block_interval(clean)}: {claim(clean)}."
-    second = f"{interval(strict)}, by blocks {block_interval(strict)}: {claim(strict)}."
+def _short_repeats(clean, strict) -> str:
+    """The SAC gain without today's data, and also without the defence tables, once if they print the same."""
+    lead = "Without the columns flagged as today's data, the selected model's gain over population and country is"
+    first = f"{interval(clean)}, by blocks {block_interval(clean)}"
+    second = f"{interval(strict)}, by blocks {block_interval(strict)}"
     if first == second:
-        return f"Without the columns flagged as today's data, with or without the defence tables, it is {first}"
-    return f"Without the columns flagged as today's data it is {first} Also without the defence tables it is {second}"
+        return f"{lead}, with or without the defence tables, {first}: {claim(clean)}."
+    if claim(clean) == claim(strict):
+        return f"{lead} {first}, and also without the defence tables {second}. In both, {claim(clean)}."
+    return f"{lead} {first}: {claim(clean)}. Also without the defence tables it is {second}: {claim(strict)}."
 
 
 def with_readme_results(text: str) -> str:

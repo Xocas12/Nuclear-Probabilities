@@ -69,13 +69,15 @@ def test_report_gives_the_domain_shift_town_counts_of_the_file():
     ) in text
 
 
-def test_only_a_scenario_whose_attacker_has_a_list_of_its_year_is_called_historical():
-    """viewer.py claimed "Historical" meant a score fitted on the attacker's own list; it means the stockpile
-    and a training list of the attacker are of that year. The score is fitted on all documents."""
+def test_only_a_scenario_whose_attacker_has_a_list_of_its_year_has_the_own_year_label():
+    """The own-year label ("Hypothetical") means the stockpile and a training list of the attacker are of that
+    year, not a score fitted on the attacker's own list (it is fitted on all documents). No map is called
+    historical: none of them happened or is a document's plan."""
     plans = yaml.safe_load((CURATED / "labels" / "PLANS.yaml").read_text())["plans"]
     lists = {(p["attacker"], int(str(p["date"])[:4])) for p in plans if p.get("role") == "train"}
     for sc in load_scenarios():
-        if shift_label(sc) != "Historical":
+        assert shift_label(sc) != "Historical"
+        if shift_label(sc) != "Hypothetical":
             continue
         for a in sc["attackers"]:
             assert a["stock_year"] == sc["year"]

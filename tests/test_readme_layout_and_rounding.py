@@ -39,7 +39,7 @@ def test_readme_answers_both_questions_before_the_details():
     assert f"(the population rule) gives a PR-AUC of {rule['b_pr_auc']:.2f}" in short
     assert f"population plus a term for each country gives {plus['b_pr_auc']:.2f}" in short
     assert "The brackets are the 5th to 95th percentiles" in short
-    assert "cannot be told from zero" in short
+    assert "so it cannot be told from no difference" in short
     scen = pd.read_csv(MAP / "scenarios.csv").set_index("scenario")
     for name in ("us_1956_on_bloc", "us_1950_stock_on_bloc"):
         r = scen.loc[name]
@@ -52,12 +52,20 @@ def test_readme_answers_both_questions_before_the_details():
     assert "extrapolation" in short
 
 
-def test_short_answer_names_only_dated_families_as_measured_as_of_1956():
+def test_short_answer_names_only_dated_families_and_says_the_defence_tables_are_later_knowledge():
     short = " ".join(_results().split())
     short = short[: short.index("### Results in brief")]
-    sentence = short[short.index("Of the families measured as of 1956") :].split(". ")[0]
+    sentence = short[short.index("Of the families that describe the towns as of 1956") :].split(
+        ". "
+    )[0]
     assert "transport" not in sentence and "industry" not in sentence
     assert "Transport adds the most but rests largely on today's data" in short
+    if "defence" in sentence:
+        assert "The defence sites are known mostly from post-Soviet sources" in short
+    # The repeat without the defence tables is quoted, from sensitivity.csv
+    sens = pd.read_csv(report.OUT / "sensitivity.csv")
+    strict = sens[(sens["scope"] == report.SAC_SCOPE) & (sens["variant"] == "strict as-of")].iloc[0]
+    assert report.interval(strict) in short
 
 
 def test_family_table_puts_dated_families_before_todays_data():
@@ -146,27 +154,20 @@ def _estimates(text: str) -> list[tuple[str, str, str]]:
     return re.findall(r"([+-]\d\.\d+) \[([+-]?\d\.\d+), ([+-]?\d\.\d+)\]", text)
 
 
-def _csv_negative_zero() -> bool:
-    return any(
-        "-0.0000" in pd.read_csv(f, dtype=str).to_csv(index=False)
-        for f in (report.OUT / "family_gain.csv", report.OUT / "comparison.csv")
-    )
-
-
 def test_a_negative_bound_rounded_to_zero_in_the_csv_keeps_its_sign():
-    assert report.signed(-0.0) == "-0.0000"
-    assert report.signed(0.0) == "0.00"
+    assert report.signed(-0.0) == "-0.000"
+    assert report.signed(0.0) == "0.000"
 
 
 def test_no_estimate_prints_as_minus_zero_or_equal_to_a_bound():
     for name in ("README.md", "REPORT.md", "runs/classifier/TABLES.md"):
         text = (ROOT / name).read_text(encoding="utf-8")
-        # "-0.0000" is allowed only as a bound the CSV itself stores as -0.0000 (negative, under 0.00005)
+        # a signed zero has exactly three decimals (a value within 0.0005 of zero, on the sign's side)
         signed_zeros = set(re.findall(r"(?<![\d.])[+-]0\.0+(?![0-9])", text))
-        assert signed_zeros <= ({"-0.0000"} if _csv_negative_zero() else set()), (
-            name,
-            signed_zeros,
-        )
+        assert signed_zeros <= {"+0.000", "-0.000"}, (name, signed_zeros)
+        # no estimate itself prints as a signed zero unless it lies within 0.0005 of zero
+        for est, _, _ in _estimates(text):
+            assert est not in ("+0.00", "-0.00"), (name, est)
         found = _estimates(text)
         assert found, name
         for est, lo, hi in found:

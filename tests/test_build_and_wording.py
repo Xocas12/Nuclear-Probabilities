@@ -60,7 +60,7 @@ def test_readme_population_figures_are_the_population_rule_of_comparison_csv():
 def test_the_map_intervals_are_called_5th_to_95th_percentiles_not_95_percent():
     readme = _flat(ROOT / "README.md")
     assert "Each interval is 95%" not in readme
-    assert "The map's intervals are the 5th to 95th percentiles of its draws (90%)" in readme
+    assert "The brackets are the 5th to 95th percentiles of 200 draws, so 90% intervals" in readme
     rep = _flat(ROOT / "REPORT.md")
     assert (
         'the map\'s (section "Probability map") are the 5th to 95th percentiles of its draws, so 90%'
