@@ -1,5 +1,5 @@
 plan_id,seq,lat,lon,located_as,notes
-wp_1967_lato67,46,55.2827,12.3888,3 km S of Store Heddinge,"offset as printed, from GeoNames' point of the town"
+wp_1967_lato67,46,55.3306,12.4057,20 km SE of Køge,"offset as printed in the row's parenthesis (/20 км юго-вост. КОГЕ/), from GeoNames' point of the town; ""юж. СТОРЕ ХЕДДИНГЕ"" (south of Store Heddinge) prints no distance. Was placed 3 km S of Store Heddinge, a distance the source does not print (review of f7bc3d4)"
 wp_1967_lato67,47,55.53,12.1821,8 km N of Køge,"offset as printed, from GeoNames' point of the town"
 wp_1967_lato67,48,55.3231,12.1821,15 km S of Køge,"offset as printed, from GeoNames' point of the town"
 wp_1967_lato67,49,55.9279,12.3811,5 km E of Hillerød,"offset as printed, from GeoNames' point of the town"

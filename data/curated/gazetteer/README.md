@@ -98,7 +98,11 @@ The floor matters in two places.
   (`configs/protocol_amendment_17.yaml`): no point or town can be read from it.
 - `transfer_target_links.csv`: hand-placed points of the smaller lists' targets, taking precedence over the
   name match. A row printing a distance and direction from a town ("5 km NW of Münster") is placed at that
-  offset from GeoNames' point of the town, and the nearest town within 15 km takes the row.
+  offset from GeoNames' point of the town, and the nearest town within 15 km takes the row. A row printing
+  two locations, one with a distance (Lato-67 row 46, "south of Store Heddinge /20 km SE of Køge/"), is placed
+  at the one with a distance; no town lies within 15 km of it. Lato-67 row 48 ("15 km S of Køge") sits on the
+  cut: its point, kept to four decimals, is 15.0024 km from Køge's, so it links to no town. Køge is positive
+  through row 47 either way; only its `n_targets` (1 rather than 2), which no model reads, depends on this.
 
 ## Matching to GeoNames
 
