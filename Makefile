@@ -33,6 +33,7 @@ train:
 	@test "$(RERUN_M2)" = 1 || { echo "runs/m2-check is a pinned record; use RERUN_M2=1 to overwrite it"; exit 1; }
 	$(PY) -m nucprob.model.check
 
+# map writes runs/m2-check/map.html, a per-town page for local inspection that git ignores (nucprob/viz/map.py).
 map:
 	@test "$(RERUN_M2)" = 1 || { echo "runs/m2-check is a pinned record; use RERUN_M2=1 to overwrite it"; exit 1; }
 	$(PY) -m nucprob.viz.map --run m2-check

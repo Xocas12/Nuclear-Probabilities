@@ -75,3 +75,14 @@ def test_the_rule_is_written_once_and_the_1985_card_points_to_it():
     card = (FEATURES / "us_military_sites_1985.md").read_text(encoding="utf-8")
     assert '"Site coordinates"' in card
     assert "section E of the brief" not in card
+
+
+def test_no_per_town_score_map_is_committed():
+    """The per-town pages of nucprob.viz.map are finer than the 0.5-degree cells a committed map may use, so git
+    ignores them; the only committed map is the probability map's viewer."""
+    import subprocess
+
+    tracked = subprocess.run(
+        ["git", "ls-files", "runs"], cwd=ROOT, capture_output=True, text=True, check=True
+    ).stdout.split()
+    assert [p for p in tracked if p.endswith("map.html")] == []

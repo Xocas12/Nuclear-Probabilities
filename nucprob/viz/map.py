@@ -7,6 +7,10 @@ every settlement of the universe coloured by its out-of-fold P(target) (or by SA
 or by where the two disagree), the SAC entries themselves, and a card per settlement with its
 features. Land and lake outlines come from Natural Earth; there are no borders, so no modern
 ones. The page loads deck.gl from a CDN and carries its data inline.
+
+The page shows model scores town by town, finer than the 0.5-degree cells or first-order units that a committed map
+may use, so it is git-ignored: it is for looking at a run locally, not an output of the study. The two that earlier
+runs committed (runs/m1-slice/, runs/m2-check/) were removed from the tree for that reason.
 """
 
 import argparse

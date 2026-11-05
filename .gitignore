@@ -47,3 +47,5 @@ data/interim/napb90_b/*
 !data/interim/napb90_b/chunks/
 runs/classifier-quick/
 runs/probmap-quick/
+# Per-town score maps (make map): finer than the 0.5-degree cells the committed maps may use, so kept local.
+runs/*/map.html
