@@ -980,7 +980,7 @@ r(
     "",
     True,
     "",
-    "First F-104G arrived 28 Aug 1962; US weapons in a special ammunition store on the base (the last German nuclear-weapons site today).",
+    "First F-104G arrived 28 Aug 1962; US weapons in a special ammunition store on the base.",
     r"Die ersten \[\[Lockheed F-104\|Starfighter\]\] trafen am 28\. August 1962",
     ["de:Fliegerhorst Büchel", KW],
 )
@@ -1676,7 +1676,7 @@ r(
     "",
     True,
     "",
-    "A USAF munitions unit from 1962; 60 B28/B43 bombs in three bunkers 1962-1975 per the article.",
+    "A USAF munitions unit from 1962.",
     r"kwam in 1964 op in Kleine Brogel",
     ["nl:Vliegbasis Kleine-Brogel", "en:Kleine Brogel Air Base"],
 )
