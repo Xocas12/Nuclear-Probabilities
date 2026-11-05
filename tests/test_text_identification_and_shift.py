@@ -94,7 +94,7 @@ def test_the_viewer_says_the_score_is_fitted_on_all_documents():
     not (RUNS / "classifier" / "held_out_scores.csv.gz").exists(), reason="no classifier run"
 )
 def test_report_figures_once_typed_in_the_generator_match_the_data():
-    """Review of 7ef717e, trivia: "six Western countries" and "814" were typed into report.py."""
+    """ "six Western countries" and "814" were typed into report.py."""
     h = pd.read_csv(
         RUNS / "classifier" / "held_out_scores.csv.gz", usecols=["scope", "holdout", "place_id"]
     )

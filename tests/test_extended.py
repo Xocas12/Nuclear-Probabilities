@@ -125,8 +125,15 @@ def test_committed_extended_run_is_of_this_amendment_and_table_and_holds_every_r
     assert "defence industry over population" in set(d["comparison"])
     assert set(d["verdict"]) <= {"gain", "loss", "neither", "not a reading"}
     assert d.apply(lambda r: ex.verdict(r) == r["verdict"], axis=1).all()
-    if (PROCESSED / "classifier_table.parquet").exists():
-        assert m["table_sha256"] == sha256(PROCESSED / "classifier_table.parquet")
+
+
+@needs_run
+def test_committed_extended_run_is_of_the_built_table():
+    # Skips (a failure under make test-full) rather than passing when the table is not built.
+    if not (PROCESSED / "classifier_table.parquet").exists():
+        pytest.skip("classifier table not built (make test-full builds it)")
+    m = json.loads((RUNS / "classifier" / "extended_manifest.json").read_text())
+    assert m["table_sha256"] == sha256(PROCESSED / "classifier_table.parquet")
 
 
 @needs_run

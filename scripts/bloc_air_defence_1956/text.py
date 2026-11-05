@@ -15,6 +15,5 @@ for f in sys.argv[1:]:
     s = html.unescape(s)
     s = re.sub(r"[ \t\r\xa0]+", " ", s)
     s = re.sub(r"\n\s*\n+", "\n", s)
-    s = re.sub(r"(?<=[^\n])\n(?=[a-zA-Z(])", " ", s) if False else s
     print("=====", f.split("%2F", 1)[-1])
     print(s)

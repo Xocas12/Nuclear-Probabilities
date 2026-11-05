@@ -36,7 +36,7 @@ def test_count_rounds_simulated_counts_to_tens_from_one_hundred():
 
 @needs_map
 def test_the_map_ran_on_the_classifier_table_of_record():
-    """Finding 4: the map's manifest must name the same feature table as the classifier's."""
+    """the map's manifest must name the same feature table as the classifier's."""
     probmap = json.loads((MAP / "manifest.json").read_text())
     classifier = json.loads((OUT / "manifest.json").read_text())
     assert probmap["table_sha256"] == classifier["table_sha256"]
@@ -69,7 +69,7 @@ def test_the_viewer_uses_no_internal_shorthand_and_claims_no_sealed_town():
 
 
 def test_readme_does_not_say_every_late_input_is_removed():
-    """Finding 2: README must not say late features are flagged and dropped while the population
+    """README must not say late features are flagged and dropped while the population
     columns keep later censuses; it names each closed town in the universe whose only figure is late."""
     readme = _text(ROOT / "README.md")
     assert "it is flagged and the results are repeated without it" not in readme
@@ -82,7 +82,7 @@ def test_readme_does_not_say_every_late_input_is_removed():
 
 @needs_run
 def test_the_report_counts_the_scored_places_inside_sealed_blocks():
-    """Finding 3: sealed blocks do hold scored places; REPORT gives their count from the outputs."""
+    """sealed blocks do hold scored places; REPORT gives their count from the outputs."""
     sealed = set(pd.read_csv(ROOT / "data" / "curated" / "splits" / "sealed_blocks.csv")["block"])
     h = pd.read_csv(OUT / "held_out_scores.csv.gz", usecols=["plan_id", "place_id", "block"])
     inside = h[h["block"].isin(sealed)]
@@ -95,7 +95,7 @@ def test_the_report_counts_the_scored_places_inside_sealed_blocks():
 
 @needs_run
 def test_sac_positives_split_into_scope_and_sealed():
-    """Finding 10: SAC's linked positives are the SAC scope's positives plus the sealed listed places,
+    """SAC's linked positives are the SAC scope's positives plus the sealed listed places,
     and REPORT connects the two counts."""
     gate = pd.read_csv(OUT / "state_gate.csv").set_index("attacker").loc["US"]
     sac_linked = int(gate["linked_positives"] - gate["positives_outside_largest"])
@@ -112,7 +112,7 @@ def test_sac_positives_split_into_scope_and_sealed():
 
 
 def test_terms_are_defined_where_first_used():
-    """Finding 9."""
+    """REPORT says what "the early check" is where it first names it."""
     text = _text(ROOT / "REPORT.md")
     first = text.index("the early check")
     assert text[first : first + 80].startswith("the early check (the two test models")
@@ -123,7 +123,7 @@ def test_terms_are_defined_where_first_used():
 
 @needs_map
 def test_report_rounds_the_map_counts():
-    """Finding 13: delivered warheads and cells over one half are printed as count() gives them."""
+    """delivered warheads and cells over one half are printed as count() gives them."""
     text = _text(ROOT / "REPORT.md")
     d = pd.read_csv(MAP / "delivered.csv")
     bloc = d[d["scenario"] == "us_1956_on_bloc"].iloc[0]
@@ -135,10 +135,8 @@ def test_report_rounds_the_map_counts():
 
 
 def test_the_second_read_note_does_not_say_the_gate_moved():
-    """Finding 11: lessons are not plans, so the USSR's gate row cannot move with them."""
+    """Lessons are not plans, so the USSR's gate row cannot move with them. state_gate.csv is committed."""
     note = _text(ROOT / "data" / "notes" / "second_read_2026-11b.md")
     assert "moves only in positives" not in note
-    gate = OUT / "state_gate.csv"
-    if gate.exists():
-        ussr = pd.read_csv(gate).set_index("attacker").loc["USSR"]
-        assert int(ussr["linked_positives"]) == 0 and int(ussr["independent_plans"]) == 0
+    ussr = pd.read_csv(OUT / "state_gate.csv").set_index("attacker").loc["USSR"]
+    assert int(ussr["linked_positives"]) == 0 and int(ussr["independent_plans"]) == 0
