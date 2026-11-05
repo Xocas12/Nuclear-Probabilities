@@ -52,6 +52,21 @@ def shift_label(sc: dict) -> str:
     return OTHER_LABELS.get(sc["id"], OWN_YEAR)
 
 
+def withdrawn_1965() -> str:
+    """The viewer's sentence on the countries the 1965 map lacks, from the scenario's targets."""
+    sc = next(s for s in load_scenarios() if s["id"] == "ussr_1965_on_west")
+    targets = [t for a in sc["attackers"] for t in a["targets"]]
+    gone = ["United Kingdom"] + ([] if "Netherlands" in targets else ["Netherlands"])
+    one = len(gone) == 1
+    names = ", ".join(targets[:-1]) + " and " + targets[-1]
+    return (
+        f"The 1965 map has no {' and no '.join(gone)}: "
+        f"{'its only census table was' if one else 'their census tables were'} withdrawn because the path "
+        f"{'it' if one else 'each'} came through is disallowed by the site's robots.txt, so the stated share falls on "
+        f"{names}."
+    )
+
+
 def payload() -> dict:
     summary = pd.read_csv(OUT / "scenarios.csv").set_index("scenario")
     spread = pd.read_csv(OUT / "score_spread.csv").set_index("scenario")
@@ -96,6 +111,7 @@ def payload() -> dict:
             }
         )
     return {
+        "withdrawn_1965": withdrawn_1965(),
         "scenarios": items,
         "land": land_paths(),
         "shift": pd.read_csv(OUT / "domain_shift.csv").round(2).to_dict("records")[:1],
@@ -141,13 +157,13 @@ details{margin:12px 0}
 <div id="tip" role="status"></div>
 </main><script>
 const D=__DATA__;
-document.getElementById("method").textContent=`A cell's value is the probability that at least one delivered warhead falls on a town in that cell. The score here is the ${D.score}: each delivered warhead falls on a town with chance in proportion to a score that moves only a few times over the range of population, so a cell's probability depends on how many towns it holds as well as on its people (the spread for the scenario shown is under the map). What a town produced, housed or defended plays no part. The score is fitted on all attacker documents together, exercises included, and is no single state's model: every map is hypothetical, since no document sends a whole stockpile against towns in proportion to a score. "Hypothetical" in the scenario list means the stockpile and a target list are of that year, not that the score is that attacker's or that the use happened or was planned; "Counterfactual" puts a stockpile of another year on those towns.\nThese are consequences of stated assumptions, not forecasts. Theatre shares have no source.\nOn the 1956 towns the sealed set's towns draw no warheads, so delivered warheads are cut by the share of people living in the scored towns (shown in the table), a stand-in for the share of score they hold. The 1965 map has no United Kingdom: its only census table was withdrawn because the path it came through is disallowed by the site's robots.txt, so the stated share falls on the five continental countries.\nThe interval runs from the 5th to the 95th percentile of draws of the model and the stockpile; it holds the allocation rule, who fires on whom and the list of towns fixed, so it is narrower than what is unknown. See REPORT.md: no score has been shown to beat population on a document it has not seen.`;
+document.getElementById("method").textContent=`A cell's value is the probability that at least one delivered warhead falls on a town in that cell. The score here is the ${D.score}: each delivered warhead falls on a town with chance in proportion to a score that moves only a few times over the range of population, so a cell's probability depends on how many towns it holds as well as on its people (the spread for the scenario shown is under the map). What a town produced, housed or defended plays no part. The score is fitted on all attacker documents together, exercises included, and is no single state's model: every map is hypothetical, since no document sends a whole stockpile against towns in proportion to a score. "Hypothetical" in the scenario list means the stockpile and a target list are of that year, not that the score is that attacker's or that the use happened or was planned; "Counterfactual" puts a stockpile of another year on those towns.\nThese are consequences of stated assumptions, not forecasts. Theatre shares have no source.\nOn the 1956 towns the sealed set's towns draw no warheads, so delivered warheads are cut by the share of people living in the scored towns (shown in the table), a stand-in for the share of score they hold. ${D.withdrawn_1965}\nThe interval runs from the 5th to the 95th percentile of draws of the model and the stockpile; it holds the allocation rule, who fires on whom and the list of towns fixed, so it is narrower than what is unknown. See REPORT.md: no score has been shown to beat population on a document it has not seen.`;
 const stops=[[205,226,251],[158,197,244],[109,167,236],[57,135,229],[28,92,171],[13,54,107]];
 function col(p){const x=Math.min(.9999,Math.max(0,p))*(stops.length-1),i=Math.floor(x),f=x-i,a=stops[i],b=stops[i+1];return `rgb(${a.map((v,k)=>Math.round(v+(b[k]-v)*f)).join(",")})`}
 const map=document.getElementById("map"),g=map.getContext("2d"),sel=document.getElementById("sc"),band=document.getElementById("band"),tip=document.getElementById("tip");
 const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n);
 const r=document.getElementById("ramp").getContext("2d");for(let i=0;i<200;i++){r.fillStyle=col(i/199);r.fillRect(i,0,1,12)}
-D.scenarios.forEach((s,i)=>sel.add(new Option(`${s.shift_label}: ${s.label}`,i)));
+D.scenarios.forEach((s,i)=>sel.add(new Option(s.label.startsWith(s.shift_label)?s.label:`${s.shift_label}: ${s.label}`,i)));
 let view;
 function frame(s){let a=1e9,b=-1e9,c=1e9,d=-1e9;for(const q of s.cells){a=Math.min(a,q[0]);b=Math.max(b,q[0]);c=Math.min(c,q[1]);d=Math.max(d,q[1])}
 a-=2;b+=s.deg+2;c-=3;d+=s.deg+3;const k=Math.cos((a+b)/2*Math.PI/180);const sc=Math.min(map.width/((d-c)*k),map.height/(b-a));return{a,b,c,d,k,sc}}

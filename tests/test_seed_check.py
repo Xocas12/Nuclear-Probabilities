@@ -104,7 +104,9 @@ def test_one_seed_reproduces_from_the_held_out_scores():
 def test_report_and_readme_say_what_the_check_found():
     rep, readme = _flat(ROOT / "REPORT.md"), _flat(ROOT / "README.md")
     assert " ".join(report.seed_section().split()) in rep
-    summary = pd.read_csv(OUT / "seed_check_summary.csv")
+    # Repeated "lists other than SAC" rows are counted once, as in the primary table and extended.csv.
+    summary = report.seed_distinct(pd.read_csv(OUT / "seed_check_summary.csv"))
+    assert len(summary) < len(pd.read_csv(OUT / "seed_check_summary.csv"))
     moved = summary[~summary["seed_stable"].astype(bool)]
     for r in moved.itertuples():
         counts = report.seed_counts(r._asdict())

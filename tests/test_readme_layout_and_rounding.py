@@ -88,7 +88,7 @@ def test_generated_and_written_prose_is_wrapped():
                 assert len(line) <= limit, (name, line[:80])
     seeds = _results()[_results().index("**Bootstrap seed.**") :]
     seeds = " ".join(seeds[: seeds.index("**No state gets its own model.**")].split())
-    s = report.seed_summary()
+    s = report.seed_distinct(report.seed_summary())
     moved = _moved()
     assert f"{len(s) - len(moved)} of {len(s)} keep their verdict under all 20" in seeds
     assert f'The {len(moved)} that do not are listed in REPORT ("Bootstrap seed")' in seeds
@@ -100,7 +100,7 @@ def test_generated_and_written_prose_is_wrapped():
 
 
 def _moved() -> pd.DataFrame:
-    s = report.seed_summary()
+    s = report.seed_distinct(report.seed_summary())
     return s[~s["seed_stable"].astype(bool)]
 
 

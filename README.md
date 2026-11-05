@@ -8,8 +8,8 @@ Czechoslovak, was read at source, and it links no designated town; the two Polis
 table and paraphrase of files not read. The largest list, the US Strategic Air Command's (SAC) 1956 study, is a
 requirements study (an estimate of the weapons needed against a list of targets, not an order to strike them), and the
 searches recorded in `data/notes/` found no declassified Soviet war plan naming places. The results are in
-**[REPORT.md](REPORT.md)**. [PLAN.md](PLAN.md) is the original design; [PROGRESS.md](PROGRESS.md) is the dated work
-log, kept as history.
+**[REPORT.md](REPORT.md)**. [PLAN.md](PLAN.md) is the design as first written, with its results lines updated later
+and some of its source notes out of date; [PROGRESS.md](PROGRESS.md) is the dated work log, kept as history.
 
 ## What was found
 
@@ -19,6 +19,18 @@ Dutch towns (their census volume came through a path robots.txt disallows) and h
 their 0.5-degree cell centres. REPORT, Data, says more.
 
 ### Short answers
+
+**Terms.** Spatial cross-validation cuts the map into 300 km squares, deals them into 5 folds, and scores each fold's
+towns with a model fitted on the other four; it is done on three shifted grids and a town's score is the mean. PR-AUC,
+the area under the precision-recall curve, measures how many of a model's top-ranked towns are on a list. A list's
+base rate is what no information scores: 0.49 for SAC, 0.07 for the other lists. Where a list is incomplete a town off
+it is unlabeled, so PR-AUC understates precision there. The classifier's intervals are 95%, the first resampling towns
+and "by blocks" resampling 300 km squares; a difference counts only if both exclude zero. Differences have three
+decimals; one printed +0.000 or -0.000 lies within 0.0005 of zero on that side. A **scope** is the set of lists a
+model is fitted on: two global scopes (every attacker's documents, or plan documents only), a pooled Warsaw Pact
+scope, and SAC's 1956 study alone. A **linked positive** is a listed place matched to a town of the place universe.
+The **population rule** ranks towns by population alone; **population plus country** adds a term for each target
+country.
 
 **What made a place a target?** The lists show what listed towns had in common, not why they were chosen. On the one
 large list, SAC's 1956 study of the Soviet bloc, a listed town stood out mostly by its size. Under spatial
@@ -47,16 +59,6 @@ was fitted on these lists, so this is agreement with the training list, not a te
 of 1945-1977 to today's towns: they are extrapolation, with no label to test them.
 
 ### Results in brief
-
-PR-AUC, the area under the precision-recall curve, measures how many of a model's top-ranked towns are on a list. A
-list's base rate is what no information scores: 0.49 for SAC, 0.07 for the other lists. Where a list is incomplete a
-town off it is unlabeled, so PR-AUC understates precision there. The classifier's intervals are 95%, the first
-resampling towns and "by blocks" resampling 300 km squares; a difference counts only if both exclude zero. Differences
-have three decimals; one printed +0.000 or -0.000 lies within 0.0005 of zero on that side. A **scope** is the set of
-lists a model is fitted on: two global scopes (every attacker's documents, or plan documents only), a pooled Warsaw
-Pact scope, and SAC's 1956 study alone. A **linked positive** is a listed place matched to a town of the place
-universe. The **population rule** ranks towns by population alone; **population plus country** adds a term for each
-target country.
 
 - **On the only blind test**, no model beats population plus country. The **sealed set** is the 467 towns of 300 km
   blocks kept out of every fit and scored once at the end; 463 of them have a SAC label and are scored against SAC's
@@ -113,8 +115,8 @@ target country.
   [-0.026, +0.065], by blocks [-0.087, +0.064]: at least one interval reaches zero, so it cannot be told from no
   difference. So no model has been shown to do better than population on an unseen document.
 - **Bootstrap seed.** The bootstrap resamples are drawn with one fixed seed, the number 1956 (not the document year).
-  Every primary comparison was repeated under seeds 1 to 20 with nothing refitted: 35 of 42 keep their verdict under
-  all 20. The 7 that do not are listed in REPORT ("Bootstrap seed") and are not read as findings either way; a reading
+  Every primary comparison was repeated under seeds 1 to 20 with nothing refitted: 30 of 34 keep their verdict under
+  all 20. The 4 that do not are listed in REPORT ("Bootstrap seed") and are not read as findings either way; a reading
   above that is one of them says so.
 - **No state gets its own model.** The US has 1299 linked positives, but only 7 outside one document and the
   pre-committed gate asks for 15. The USSR has 0 positives in a document registered as a war plan, and 50 town-list

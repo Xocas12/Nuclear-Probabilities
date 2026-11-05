@@ -17,8 +17,9 @@ model is right. The classifier's intervals are 95% paired bootstrap intervals; t
 are the 5th to 95th percentiles of its draws, so 90%. "By blocks" resamples whole 300 km squares of towns; the other
 interval resamples single towns. Verdicts use the unrounded bounds.
 
-**How numbers are rounded.** Scores (PR-AUC, probabilities, shares) have two decimals. A difference between two scores
-and its interval bounds have three, so that a gain and its bounds print at the same precision in README, here and in
+**How numbers are rounded.** Scores (PR-AUC, probabilities, shares) have two decimals; one that is not zero but would
+print as 0.00 takes a third (0.003), so that 0.00 means zero. A difference between two scores and its interval bounds
+have three, so that a gain and its bounds print at the same precision in README, here and in
 `runs/classifier/TABLES.md`. A difference within 0.0005 of zero prints as +0.000 or -0.000: the sign gives the side of
 zero on which the unrounded value lies, and verdicts use the unrounded bounds. An exact zero prints as 0.000. Where an
 estimate would print equal to a bound it differs from, all three take a fourth decimal.
@@ -79,7 +80,7 @@ see.
   had been seen (`configs/protocol_amendment_12.yaml`, which refits nothing), and the sealed scores are of the fit
   made before the corrected West European site table ("Changed by the corrected West European site table").
 
-- **Inside SAC's 1956 study**, under spatial cross-validation, logistic, all permitted scores 0.848 against 0.824 for
+- **Inside SAC's 1956 study**, under spatial cross-validation, logistic, all permitted scores 0.85 against 0.82 for
   population plus a country term: +0.023 [+0.014, +0.034], by blocks [+0.007, +0.044]. Without the features flagged as
   today's data the difference is +0.013 [+0.005, +0.021], by blocks [-0.002, +0.031]: at least one interval reaches
   zero, so it cannot be told from no difference. Also without the defence tables, +0.013 [+0.005, +0.021], by blocks
@@ -272,18 +273,16 @@ era and attacker cannot be told apart (`runs/classifier/link_audit_temporal.csv`
 the results had been read, one verdict of this table was found to turn on that seed, and
 `configs/protocol_amendment_18.yaml` then fixed a repeat of every comparison of this table, against both baselines,
 under seeds 1 to 20 with nothing refitted (`runs/classifier/seed_check_summary.csv`, one row per comparison;
-`seed_check.csv`, one per seed). Of 42 comparisons, 35 give the seed-1956 verdict under all 20 seeds. These 7 are
-seed-dependent:
+`seed_check.csv`, one per seed). That file has 42 rows; where no SAC row is held out a "lists other than SAC" row
+repeats its "all lists" row, and is counted once here, as in the primary table. Of 34 comparisons, 30 give the
+seed-1956 verdict under all 20 seeds. These 4 are seed-dependent:
 
 | Scope | Holdout | Lists | Against | Seed 1956 | Seeds 1-20 |
 |---|---|---|---|---|---|
 | Global, all attacker documents (exercises included) | Spatial blocks | lists other than SAC | population rule | gain | 18 gain, 2 neither |
 | Global, all attacker documents (exercises included) | Fit to 1956, score later | all lists | population rule | neither | 16 gain, 4 neither |
 | Global, all attacker documents (exercises included) | Fit to 1956, score later | all lists | population + country | neither | 16 gain, 4 neither |
-| Global, all attacker documents (exercises included) | Fit to 1956, score later | lists other than SAC | population rule | neither | 16 gain, 4 neither |
-| Global, all attacker documents (exercises included) | Fit to 1956, score later | lists other than SAC | population + country | neither | 16 gain, 4 neither |
 | Warsaw Pact, pooled (exercise-based, not a war-plan model) | Spatial blocks | all lists | population + country | gain | 11 gain, 9 neither |
-| Warsaw Pact, pooled (exercise-based, not a war-plan model) | Spatial blocks | lists other than SAC | population + country | gain | 11 gain, 9 neither |
 
 The protocol's verdict stays seed 1956's. A seed-dependent verdict is read as neither a finding nor its absence: a
 gain that some seeds do not give is a gain only under the committed draws, and a "neither" that most seeds call a gain
@@ -379,7 +378,7 @@ places' countries (the Soviet bloc's and China's) is in that scope's lists, so n
 Every model's metrics on both populations, with a PR-AUC interval each, are in `runs/classifier/sealed/metrics.csv`.
 One gain rests on a lower bound within 0.005 of zero: single document: SAC 1956 (not a state model), all sealed,
 against population + country (+0.000). It was not repeated under other bootstrap seeds, and under the 20 seeds of the
-primary check 7 of 42 verdicts moved ("Bootstrap seed", under "Models against baselines").
+primary check 4 of 34 verdicts moved ("Bootstrap seed", under "Models against baselines").
 
 ### Changed by the corrected West European site table
 
@@ -426,7 +425,7 @@ classifier with L2 regularisation 1.0 names a row's document 98.1% [97.7%, 98.5%
 without national power, 76.7% [75.4%, 78.1%] with no source markers as well, 44.2% [42.6%, 45.9%] on population alone,
 against 44.4% for always naming the largest document. The intervals resample places, keeping a place's rows together
 (2,000 resamples; `runs/classifier/identification/regularised.csv`). On those intervals "all permitted", "no national
-power", "no source markers" name documents better than that; population alone does worse than that, by 0.2 points
+power", "no source markers" name documents better than that; population alone does worse than that, by 0.17 points
 [0.04, 0.31]: it learns nothing usable about documents and loses a little by sometimes naming another. Removing
 national power lowers accuracy by 14.1 points [12.9, 15.2], so those columns do help name the document. The columns
 name a row's document almost always. In a pooled scope a model can learn each document's base rate from them, and a
@@ -459,9 +458,9 @@ those within 10 km the SAC gain above is +0.025 [+0.015, +0.034], by blocks [+0.
 
 **SAC's negatives holding an aim point.** 46 unsealed negatives have a designated ground zero point, a printed aim
 point of the study, as their nearest entry, so "complete" overstates how cleanly the town list marks what SAC would
-strike. Counting them as positive moves PR-AUC, without refitting, from 0.848 to 0.846 for the logistic and from 0.824
-to 0.826 for population plus country (`runs/classifier/link_audit_dgz.csv`). They stay negatives: the document lists
-them under no town entry.
+strike. Counting them as positive changes PR-AUC, without refitting, by -0.001 for the logistic (0.85 as labelled) and
+by +0.002 for population plus country (0.82) (`runs/classifier/link_audit_dgz.csv`). They stay negatives: the document
+lists them under no town entry.
 
 **Soviet population.** The USSR's rows use the 1959 census, later than the June 1956 document, in every baseline too.
 Repeating Soviet towns on the 1939 census, earlier than the document and missing for towns founded after it, gives:
@@ -541,7 +540,7 @@ defence-industry row; all 37 rows are in `runs/classifier/TABLES.md`.
 3 gains rest on a lower bound within 0.005 of zero: global, all attacker documents, national power over population,
 spatial blocks, other than SAC (+0.001); global, all attacker documents, political over population, leave one document
 out, all lists (+0.000); global, all attacker documents, economic over population, leave one document out, all lists
-(+0.004). They were not repeated under other bootstrap seeds, and under the 20 seeds of the primary check 7 of 42
+(+0.004). They were not repeated under other bootstrap seeds, and under the 20 seeds of the primary check 4 of 34
 verdicts moved ("Bootstrap seed", under "Models against baselines").
 
 ### Defences
@@ -589,9 +588,14 @@ controlling log population and an intercept per list and country; intervals boot
 On the SAC list under spatial blocks, with isotonic calibration (a monotone remapping of scores to observed shares)
 fitted on other folds. SAC's selected model is logistic, all permitted, and the map uses the population rule.
 Calibration cannot be measured on incomplete lists, and no calibration measured on SAC carries to another document's
-base rate.
+base rate. The **Brier score** is the mean squared difference between a town's score and its label (1 listed, 0 not):
+0 is perfect, and giving every town the list's base rate 0.49 scores 0.25. The **expected calibration error** (ECE)
+sorts towns into bins by score and averages, weighted by bin size, the gap between a bin's mean score and its share of
+listed towns, so 0.03 means scores are off by about three points on average. Brier runs from 0.16 (logistic, all
+permitted) to 0.20 (population rule); every ECE is 0.04 or less, and the isotonic remapping changes no model's Brier
+by more than 0.003. On SAC's list, then, the raw scores already lie close to observed shares.
 
-| model | kind | brier | expected_calibration_error |
+| model | kind | brier | ECE |
 |---|---|---|---|
 | LightGBM, all permitted | isotonic | 0.17 | 0.03 |
 | LightGBM, all permitted | raw | 0.17 | 0.04 |
@@ -616,7 +620,8 @@ NATO's targets. A high score says only that defenders expected large towns to be
 
 ### Other metrics
 
-The protocol's secondary metrics (Brier, log-loss, precision at k) for every scope and holdout are in
+The protocol's secondary metrics (Brier; log-loss, the mean of minus the log of the score given to each town's true
+label; precision at k, the share of listed towns among the k highest scored) for every scope and holdout are in
 `runs/classifier/TABLES.md`. Brier and log-loss there are on raw scores, which are not probabilities where a list is
 incomplete.
 
@@ -657,10 +662,10 @@ which 6,091 are kept: towns with 10,000 or more people, without France's territo
 
 **No United Kingdom in 1965.** The only UK table held, Great Britain's 1981 districts, came through a path of
 `www.nomisweb.co.uk` that robots.txt disallows, and was withdrawn (`configs/protocol_amendment_10.yaml`). So the 1965
-map covers Denmark, the FRG, the Netherlands, Belgium and Italy, and its unsourced theatre share falls on them alone,
-so its continental cells read higher than they would if the UK were among the targets. Warheads are shared out per
-row, so how a country's towns are cut into rows also moves the map: the rows are municipalities, and how much that
-matters was not measured.
+map covers Denmark, the FRG, Netherlands, Belgium and Italy, and its unsourced theatre share falls on them alone, so
+its continental cells read higher than they would if the UK were among the targets. Warheads are shared out per row,
+so how a country's towns are cut into rows also moves the map: the rows are municipalities, and how much that matters
+was not measured.
 
 **Score.** The selection rule in `configs/protocol.yaml` selected **the population rule**, by highest PR-AUC on a
 left-out document (0.71). The candidates ("portable" in the table) use only features that exist in every era without
