@@ -82,7 +82,7 @@ scenarios:
     fraction_lost_to_defences: [0.07, 0.17, 0.27]
     targets: [Denmark, FRG, Netherlands, Belgium, Italy]
 - id: modern_us_russia
-  label: '2026: US, UK and France with Russia and European NATO'
+  label: '2026: the US, UK and France on Russia; Russia on the US and European NATO'
   era: modern
   year: 2026
   universe: modern
@@ -183,7 +183,7 @@ scenarios:
     targets: [USA, GBR, FRA, DEU, ITA, POL, NLD, BEL, NOR, DNK, ESP, GRC, TUR, ROU, CZE, HUN, BGR]
     stock_multiplier: 0.5
 - id: modern_us_china
-  label: '2026: the US and China'
+  label: '2026: the US on China; China on the US'
   era: modern
   year: 2026
   universe: modern
@@ -211,14 +211,15 @@ scenarios:
     fraction_lost_to_defences: *id004
     targets: [USA]
 - id: modern_india_pakistan
-  label: '2026: India and Pakistan'
+  label: '2026: India on Pakistan; Pakistan on India'
   era: modern
   year: 2026
   universe: modern
   cell_deg: 1.0
   evidence: Extrapolation from lists of 1945-1977 to towns of today. An illustration of assumptions, not
     a statement about any plan.
-  note: FAS counts neither as having deployed warheads, so the low end of each inventory is zero.
+  note: 'FAS counts neither as having deployed warheads, so each inventory is drawn from zero to its whole
+    stockpile, most often near half of it; the 5th percentile of warheads delivered is therefore above zero.'
   attackers:
   - state: India
     stock_year: 2026
