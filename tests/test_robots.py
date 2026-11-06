@@ -87,19 +87,21 @@ def test_every_held_file_came_from_a_url_robots_allows():
 
 
 def test_a_withdrawn_source_is_neither_held_nor_read():
-    """The tenth amendment withdrew Great Britain's 1981 district totals (Nomis, refused by robots):
-    no raw copy, no curated row and no region may come back without a source robots allows."""
+    """The tenth amendment withdrew Great Britain's 1981 district totals (Nomis, refused by robots), and the
+    nineteenth the Dutch census of 1960 (fetched from ssh.datastations.nl, refused by robots): no raw copy, no
+    curated row and no region may come back without a source robots allows."""
     from nucprob.paths import CURATED, RAW
     from nucprob.transfer.regions import REGIONS
 
     withdrawn = [s for s in fetch.load_manifest()["sources"] if s.get("withdrawn")]
-    assert {s["id"] for s in withdrawn} == {"census_uk_1981_nomis"}
+    assert {s["id"] for s in withdrawn} == {"census_uk_1981_nomis", "census_nl_1960"}
+    assert not (CURATED / "gazetteer" / "towns_nl_1960.csv").exists()
     for s in withdrawn:
         assert not (RAW / s["path"]).exists(), s["id"]
     uk = pd.read_csv(CURATED / "gazetteer" / "towns_uk_1981.csv", dtype=str)
     assert not uk["source"].str.contains("Nomis").any()
     tables = {stem for r in REGIONS.values() for _, _, stem in r.countries}
-    assert "towns_uk_1981" not in tables
+    assert "towns_uk_1981" not in tables and "towns_nl_1960" not in tables
 
 
 def test_scripts_use_allowed_routes_and_past_routes_stay_listed_as_refused():

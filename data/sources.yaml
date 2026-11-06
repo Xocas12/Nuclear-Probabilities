@@ -1248,7 +1248,8 @@ sources:
   url: https://download.geonames.org/export/dump/NL.zip
   path: geonames/NL.zip
   licence: CC BY 4.0 (GeoNames)
-  use: coordinates of the census towns of the Netherlands (transfer regions, nucprob/transfer/places.py)
+  use: 'coordinates of the census towns of the Netherlands; read by no analysis since the nineteenth amendment withdrew
+    those towns'
   role: universe
   retrieved: '2026-11-01'
   sha256: e241bb2fa3b6cb4c52429c1efa0962da872e701aca8f43581ffd612d41abdaa6
@@ -1411,15 +1412,22 @@ sources:
   sha256: 4c41317ed9cca66024be710504011df62b3d446cfd987c5feb09c282e2151fb3
 - id: census_nl_1960
   url: https://doi.org/10.17026/DANS-XSC-VKWS
+  obtained_from: https://ssh.datastations.nl/api/access/datafile/290666
+  obtained: '2026-10-10'
+  obtained_note: the host the volume was fetched from, which robots.txt disallows; recorded so that the robots table
+    judges the source on it. Nothing is fetched from it.
   path: netherlands/VT_1960_02.pdf
-  licence: CBS census volume via DANS (open access)
-  use: 'Netherlands 1960 transfer universe: municipalities of 10,000+ (towns_nl_1960.csv)'
+  licence: CBS census volume via DANS (CC-BY-4.0)
+  use: 'Withdrawn. Was the Netherlands 1960 transfer universe: municipalities of 10,000+'
   role: universe
   retrieved: '2026-10-10'
   sha256: 2ee84898f4050cc9d2bc0763e8af580ac82863105e045b2270731b7af3c5f706
-  volatile: DOI landing page; the table is listed in the card
-  held: 'not the document. The file in data/raw is the XHTML landing page (256 kB). The recorded sha256 is of the 11.5 MB
-    PDF named in the card, which is not held; ssh.datastations.nl robots.txt disallows the path. towns_nl_1960.csv is the record.'
+  volatile: DOI landing page
+  withdrawn: '2026-11-05, nineteenth amendment. The volume was fetched from ssh.datastations.nl/api/access/datafile/,
+    which robots.txt disallows to every agent (User-agent: *, Disallow: /). No copy on a host that allows it was found:
+    www.cbs.nl does not hold the 1960 volumes, and historisch.cbs.nl, volkstellingen.nl, www.delpher.nl and dataverse.nl
+    refuse. The held files were removed from data/raw/, towns_nl_1960.csv from the tree, and the Netherlands from
+    region wp_west_1965 and from the 1965 map.'
 - id: census_be_1961
   url: https://doc.statbel.fgov.be/publications/S210.A7/S210.A7F_Recensement_1961_Tome_01.pdf
   path: belgium/S210.A7F_Recensement_1961_Tome_01.pdf

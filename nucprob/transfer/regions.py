@@ -60,7 +60,6 @@ REGIONS = {
         (
             ("FRG", "DE", "towns_frg_1961"),
             ("Denmark", "DK", "towns_dk_1960"),
-            ("Netherlands", "NL", "towns_nl_1960"),
             ("Belgium", "BE", "towns_be_1961"),
             ("Austria", "AT", "popstat:austria:pop_1961-03-21"),
             ("Italy", "IT", "towns_it_1961"),
@@ -77,6 +76,8 @@ REGIONS = {
             "wp_1975_soyuz75",
             "wp_1977_zealand",
         ),
+        # The Netherlands (towns_nl_1960) was withdrawn by the nineteenth amendment: its census volume came through
+        # ssh.datastations.nl/api/access/datafile/, which robots.txt disallows, and no allowed copy was found.
         military="weurope_military_sites_1965.csv",
         # The 1965 table covers Italy north of the Po and the Venetian plain only: Lombardy,
         # Veneto, Friuli-Venezia Giulia, Trentino-Alto Adige and the province of Novara
