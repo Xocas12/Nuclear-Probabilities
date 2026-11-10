@@ -13,10 +13,11 @@
     unknown, or the role continued past 1991.
   - The scope is Italy north of the Po and the Venetian plain: Lombardy, Veneto,
     Friuli–Venezia Giulia, Trentino–Alto Adige and Novara. Turin-based units are left out.
-- **Coordinates.** A row with no recorded end year may be a site in use today, so it is held at the centre of
-  its 0.5-degree cell, up to about 39 km from the site, and its coordinate text is removed
-  (`configs/protocol_amendment_19.yaml`, `scripts/coarsen_site_coordinates.py`). Earlier commits of this
-  table in git history still hold the exact points; see the features README, "Site coordinates".
+- **Coordinates.** Every row is held at the centre of its 0.5-degree cell, up to about 39 km from the site, and
+  its coordinate text is removed: an end year dates the role, not the facility, which may be in use today
+  (`configs/protocol_amendment_19.yaml` for rows with no end year, `configs/protocol_amendment_20.yaml` for the
+  rest; `scripts/coarsen_site_coordinates.py`). Earlier commits of this table in git history still hold exact
+  points; see the features README, "Site coordinates".
 - **How it was built.** Every row cites Wikipedia articles, and their URLs are in `source`:
   - de, en, nl, da and it articles on bases, units, towns and lists;
   - mainly *Kernwaffen in Deutschland* (its table of FRG nuclear sites), *Nike (Rakete)* (the
@@ -43,15 +44,15 @@
   No Warsaw Pact target list, war plan or strike analysis was used. This excludes the PHP
   dossiers, "Lato-67", "Burza", the 1964 Czechoslovak plan, the 1965 Hungarian war game and
   "Seven Days to the River Rhine".
-- **Coordinates.** Each point is rounded to 3 decimals, and `coord_source` says where it came
-  from:
+- **Where the points came from.** The build reads each point from its source, then holds it at its cell centre
+  (above); `coord_source` says where it came from:
   - 239 rows use the article's title or infobox coordinate: `{{coord}}`, `{{Coordinate}}`, or
     the de/nl infobox degrees.
   - 20 rows use a named coordinate in a list. These are the Mace sites, the Danish Nike sites and
     the HAWK positions of FlaRakBtl 31/32.
   - 72 rows take a point written in an article. The de Nike location map (`Positionskarte~`)
-    gives 51 of them, and the en Nike list's grid references give the rest. For these the build
-    checks that the quoted string is in the saved page.
+    gives 51 of them, and the en Nike list's grid references give the rest. The specification keeps
+    only each point's cell centre, and the build checks that the saved page gives a point in that cell.
   - The de Nike map points are approximate. Where a site article or en grid exists, they differ
     by 2–5 km, 12 km for Düren and 34 km for Albach. Albach, Oedingen, Kleingartach and
     Mainbullau therefore use their own articles.
@@ -180,4 +181,4 @@ document changes. `configs/protocol_amendment_16.yaml` refits the classifier on 
   was used instead. This applies, for example, to 1. Panzerdivision (Oldenburg today, Hannover
   in 1965) and 10. Panzerdivision.
 
-**Provenance.** The pages this table cites are in `cited_pages.csv` in this folder: for each, the licence, retrieval date, status and sha256, with `python -m nucprob.sources.cited_pages` to fill in what is missing. Each is the page as fetched on that date, not as first read: the table was made from earlier copies, and nothing shows the two agree. Licences: Wikipedia CC BY-SA 4.0; ww2.dk states no open licence, so its pages are cited and not kept; the few others were not assessed. sha256 of this table: `c305cf5a9ffb74500b3d0457bb888951dc83924e3ef1362d56fdb119f3ae5b81`.
+**Provenance.** The pages this table cites are in `cited_pages.csv` in this folder: for each, the licence, retrieval date, status and sha256, with `python -m nucprob.sources.cited_pages` to fill in what is missing. Each is the page as fetched on that date, not as first read: the table was made from earlier copies, and nothing shows the two agree. Licences: Wikipedia CC BY-SA 4.0; ww2.dk states no open licence, so its pages are cited and not kept; the few others were not assessed. sha256 of this table: `43776a707ccb5cc97ff59276a5254b282968f4a9ba34d9102d2400fcaa491d34`.

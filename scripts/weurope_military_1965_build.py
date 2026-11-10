@@ -9,12 +9,11 @@ Coordinates:
   * 'page' / a page ref -> the article's title/infobox coordinate template, 3 decimals;
   * ('named', ref, regex) -> the coordinate template on the line of that article matching regex
     (e.g. one launch site in a list);
-  * (lat, lon, ref, quote) -> a coordinate written in a list/table/location map of that article;
-    the build checks that `quote` occurs verbatim in the saved wikitext;
-  * ('cell', lat, lon, ref, label) -> a site with no recorded end year: the spec keeps only the centre of the
-    0.5-degree cell, and the build checks that the article gives a coordinate in that cell.
-The written table is then passed through scripts/coarsen_site_coordinates.py's rule (nineteenth amendment), which
-holds every row with no recorded end year at its cell centre.
+  * ('cell', lat, lon, ref, label) -> a coordinate written in a list, table, grid reference or location map of
+    that article: the spec keeps only the centre of its 0.5-degree cell, and the build checks that the article
+    gives a coordinate in that cell (nineteenth and twentieth amendments).
+The written table is then passed through scripts/coarsen_site_coordinates.py's rule (twentieth amendment), which
+holds every row at its cell centre.
 Each row's `chk` regex must match the text of its cited pages; the build stops if one fails.
 
 Run: .venv/bin/python -I scripts/weurope_military_1965_build.py [--out PATH]
@@ -74,7 +73,7 @@ def cell_of(x):
 
 
 DMS = re.compile(r"(\d+)°(\d+)'(?:([\d.]+)\")?\s*N[,\s]*0?(\d+)°(\d+)'(?:([\d.]+)\")?\s*E")
-LATLON = re.compile(r"long=([\d.]+)\|\s*lat=([\d.]+)")
+LATLON = re.compile(r"long=\s*([\d.]+)\s*\|\s*lat=\s*([\d.]+)")
 
 
 def points(w):

@@ -146,8 +146,8 @@ fitted on, not a test. Present-day scenarios apply lists of 1945-1977 to today's
   without them. Other late inputs are not flagged and stay in those repeats: the 1959 Soviet census for the 1956 list,
   Hungary's and the Czech lands' towns interpolated with 1960 and 1961 censuses, East Germany's and Poland's with
   end-1956 figures and Slovakia's with 1958 ones, North Korean, North Vietnamese and Mongolian towns chosen by their
-  size today, Kurchatov's 1990 figure, and others listed in REPORT ("Inputs later than the document"). Sites that may
-  be in use today are held at the centre of their 0.5-degree cell.
+  size today, Kurchatov's 1990 figure, and others listed in REPORT ("Inputs later than the document"). Every site is
+  held at the centre of its 0.5-degree cell, since an end year dates a role, not the facility.
 - **Stockpiles.** `data/curated/stockpiles/`: inventories by state and year from the Federation of American Scientists
   (FAS), the Natural Resources Defense Council (NRDC) and Our World in Data (OWID), and rounded 2026 shares by
   delivery from the Stockholm International Peace Research Institute (SIPRI). The Bulletin of the Atomic Scientists'

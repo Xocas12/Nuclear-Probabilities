@@ -26,15 +26,17 @@ and counts of sites within 50 km, as of a document's date. One rule covers every
   features as of their documents' dates. The US table of 1985 feeds only the US county check, which is no part of
   the results; most of its rows are facilities in use today, so it is not in the tree, and `make us1985` reads it
   back from git history into a git-ignored folder for that check.
-- **A row is a site as of its table's date.** A row with a recorded end year keeps the coordinate its cited page
-  gives (three or four decimals). A row with no recorded end year may be in use today, so
-  `configs/protocol_amendment_19.yaml` holds it at the centre of its 0.5-degree cell, the map's finest unit (latitude
-  and longitude each floor(2x)/2 + 0.25), and strips coordinate text and remarks on what the site holds today from
-  its other cells; every SAC base row is treated so, since its end year is that of the SAC role, not of the base.
-  `scripts/coarsen_site_coordinates.py` applies the rule and `--check` fails if a table needs it; distances and
-  counts are computed from the cell centres, which moves a site by at most about 39 km.
-- **Git history still holds the exact coordinates.** Every commit before the amendment's merge holds them for these
-  tables, and the US table of 1985 is in history too (`make us1985` reads it back). Removing them needs a rewrite of
+- **A row is a site as of its table's date, held at its cell centre.** An end year records when the role of the
+  table's date ended, not when the facility closed, so whether a site is in use today cannot be told from the
+  tables. Every row is therefore held at the centre of its 0.5-degree cell, the map's finest unit (latitude and
+  longitude each floor(2x)/2 + 0.25), and coordinate text and remarks on what a site holds today are stripped from
+  its other cells: rows with no recorded end year and every SAC base row since `configs/protocol_amendment_19.yaml`,
+  the rest since `configs/protocol_amendment_20.yaml`. `scripts/coarsen_site_coordinates.py` applies the rule and
+  `--check` fails if a table needs it; distances and counts are computed from the cell centres, which moves a site
+  by at most about 39 km. The specification the 1965 table is built from and the bloc table's hand rows hold cell
+  centres too.
+- **Git history still holds the exact coordinates.** Every commit before the twentieth amendment's data change holds some of
+  them for these tables, and the US table of 1985 is in history too (`make us1985` reads it back). Removing them needs a rewrite of
   the published history, which only the repository's owner can do.
 - **No output names a site or gives its coordinates.** Nothing under `runs/`, the viewer, README or REPORT carries
   a site row. The only site coordinates under `runs/` are those of 1956 towns that a headquarters is placed on, in
@@ -125,4 +127,4 @@ and counts of sites within 50 km, as of a document's date. One rule covers every
   Xinjiang an autonomous region from October 1955; Henan's capital at Zhengzhou from 1954).
 - SAC bases: each base's history (the `basis` column).
 
-**Provenance of the site tables.** `cited_pages.csv` registers every page cited in `bloc_air_defence_1956`, `military_sites_1956`, `weurope_military_sites_1965` and `us_military_sites_1985`: licence, retrieval date, status and sha256 as fetched on that date, not as first read. sha256 of `military_sites_1956.csv`: `e18b7b743a8bbc94a5b3c315f32cebab381063072e38f95646b8b7c32e52c7da`.
+**Provenance of the site tables.** `cited_pages.csv` registers every page cited in `bloc_air_defence_1956`, `military_sites_1956`, `weurope_military_sites_1965` and `us_military_sites_1985`: licence, retrieval date, status and sha256 as fetched on that date, not as first read. sha256 of `military_sites_1956.csv`: `d266fb91ff93e0ebecf1a50b81810f4d02817010934306977b8b27920075b868`.

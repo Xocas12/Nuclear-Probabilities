@@ -52,7 +52,7 @@ r(
     "Allied Forces Central Europe (AFCENT)",
     "FR",
     "Fontainebleau",
-    (48.403, 2.702, "en:Allied Forces Central Europe", "{{Coord|48|24|10|N|2|42|8|E}}"),
+    ("cell", 48.25, 2.75, "en:Allied Forces Central Europe", "infobox coordinate"),
     1953,
     1967,
     True,
@@ -2068,25 +2068,22 @@ r(
 import re as _re  # noqa: E402
 
 
-def dms(ref, quote):
-    """(lat, lon, ref, quote) from a 'dd°mm'ss"N ddd°mm'ss"E' grid reference quoted from an article."""
-    v = [
-        float(a) + float(b) / 60 + float(c or 0) / 3600
-        for a, b, c in _re.findall(r"(\d+)°(\d+)'(?:([\d.]+)\")?", quote)[:2]
-    ]
-    return (v[0], v[1], ref, quote)
+def dms(ref, centre):
+    """A grid reference in an article, kept only as the centre (lat, lon) of the 0.5-degree cell that holds it
+    (twentieth amendment). The build checks that the article gives a grid reference in that cell."""
+    return cell(ref, *centre, "grid reference")
 
 
 def cell(ref, lat, lon, label=None):
-    """A site possibly in use today (no recorded end year; nineteenth amendment): only the centre of the 0.5-degree
-    cell that holds the article's coordinate is kept here. The build checks that the article gives a coordinate in
-    that cell. `label` is the entry's text with its coordinate removed."""
+    """Every site (nineteenth and twentieth amendments): only the centre of the 0.5-degree cell that holds the
+    article's coordinate is kept here. The build checks that the article gives a coordinate in that cell. `label`
+    is the entry's text with its coordinate removed."""
     return ("cell", float(lat), float(lon), ref, label)
 
 
 def pk(ref, lat, lon):
-    """Point from a Positionskarte~ entry 'long=<lon>| lat=<lat>' in a de article."""
-    return (float(lat), float(lon), ref, f"lat={lat}")
+    """A Positionskarte~ entry of a de article, kept as the centre of its 0.5-degree cell."""
+    return cell(ref, float(lat), float(lon), "location map entry")
 
 
 # --- Luftwaffe Nike batteries (FlaRakBtl 21-25; de Nike article table and location map) ---
@@ -2098,8 +2095,8 @@ DE_NIKE = [
         "Elsfleth",
         "Wesermarsch-Kaserne",
         "1961–1989",
-        "53.233333",
-        "8.466667",
+        "53.25",
+        "8.25",
     ),
     (
         "FlaRakBtl 24",
@@ -2107,8 +2104,8 @@ DE_NIKE = [
         "Delmenhorst",
         "Caspari-Kaserne (Deichhorst)",
         "1961–1989",
-        "53.049722",
-        "8.633889",
+        "53.25",
+        "8.75",
     ),
     (
         "FlaRakBtl 24",
@@ -2116,8 +2113,8 @@ DE_NIKE = [
         "Edewecht",
         "Fliegerhorst Oldenburg",
         "1961–1989",
-        "53.12817",
-        "7.98431",
+        "53.25",
+        "7.75",
     ),
     (
         "FlaRakBtl 24",
@@ -2125,8 +2122,8 @@ DE_NIKE = [
         "Syke",
         "Caspari-Kaserne (Delmenhorst-Deichfeld)",
         "1961–1989",
-        "52.916111",
-        "8.818611",
+        "52.75",
+        "8.75",
     ),
     (
         "FlaRakBtl 25",
@@ -2134,8 +2131,8 @@ DE_NIKE = [
         "Varrelbusch",
         "Fliegerhorst Ahlhorn",
         "1961–1988",
-        "52.890456",
-        "8.004072",
+        "52.75",
+        "8.25",
     ),
     (
         "FlaRakBtl 25",
@@ -2143,8 +2140,8 @@ DE_NIKE = [
         "Barnstorf",
         "Hülsmeyer-Kaserne",
         "1961–1988",
-        "52.710278",
-        "8.508611",
+        "52.75",
+        "8.75",
     ),
     (
         "FlaRakBtl 25",
@@ -2152,8 +2149,8 @@ DE_NIKE = [
         "Wagenfeld",
         "Auburg-Kaserne",
         "1961–1988",
-        "52.546111",
-        "8.590278",
+        "52.75",
+        "8.75",
     ),
     (
         "FlaRakBtl 25",
@@ -2161,8 +2158,8 @@ DE_NIKE = [
         "Lohne",
         "Kaserne an den Landwehren",
         "1961–1988",
-        "52.666667",
-        "8.238611",
+        "52.75",
+        "8.25",
     ),
     (
         "FlaRakBtl 21",
@@ -2170,8 +2167,8 @@ DE_NIKE = [
         "Westkirchen",
         "Münsterland-Kaserne (Warendorf)",
         "1959–1987",
-        "51.883889",
-        "8.043056",
+        "51.75",
+        "8.25",
     ),
     (
         "FlaRakBtl 21",
@@ -2179,8 +2176,8 @@ DE_NIKE = [
         "Echtrop",
         "Graf-Yorck-Kaserne",
         "1959–1987",
-        "51.497422",
-        "8.135864",
+        "51.25",
+        "8.25",
     ),
     (
         "FlaRakBtl 21",
@@ -2188,8 +2185,8 @@ DE_NIKE = [
         "Holzwickede",
         "Emscher-Kaserne",
         "1959–1987",
-        "51.502778",
-        "7.617778",
+        "51.75",
+        "7.75",
     ),
     (
         "FlaRakBtl 21",
@@ -2197,8 +2194,8 @@ DE_NIKE = [
         "Datteln",
         "Haard-Kaserne",
         "1959–1987",
-        "51.653889",
-        "7.341667",
+        "51.75",
+        "7.25",
     ),
     (
         "FlaRakBtl 22",
@@ -2206,8 +2203,8 @@ DE_NIKE = [
         "Oedingen",
         "Sauerlandkaserne",
         "1960–1988",
-        "51.154167",
-        "8.058056",
+        "51.25",
+        "8.25",
     ),
     (
         "FlaRakBtl 22",
@@ -2215,8 +2212,8 @@ DE_NIKE = [
         "Burbach",
         "Siegerland-Kaserne",
         "1960–1988",
-        "50.745556",
-        "8.080278",
+        "50.75",
+        "8.25",
     ),
     (
         "FlaRakBtl 22",
@@ -2224,8 +2221,8 @@ DE_NIKE = [
         "Waldbröl",
         "Nutscheid-Kaserne",
         "1960–1988",
-        "50.876389",
-        "7.617222",
+        "50.75",
+        "7.75",
     ),
     (
         "FlaRakBtl 22",
@@ -2233,8 +2230,8 @@ DE_NIKE = [
         "Marienheide",
         "Hermannsberg-Kaserne",
         "1960–1988",
-        "51.083611",
-        "7.531111",
+        "51.25",
+        "7.75",
     ),
     (
         "FlaRakBtl 23",
@@ -2242,8 +2239,8 @@ DE_NIKE = [
         "Albach",
         "Limes-Kaserne (Lich)",
         "1964–1987",
-        "50.27575",
-        "8.650306",
+        "50.25",
+        "8.75",
     ),
     (
         "FlaRakBtl 23",
@@ -2251,8 +2248,8 @@ DE_NIKE = [
         "Schöneck",
         "Nidder-Kaserne (Kilianstädten)",
         "1966–1987",
-        "50.201389",
-        "8.853611",
+        "50.25",
+        "8.75",
     ),
     (
         "FlaRakBtl 23",
@@ -2260,8 +2257,8 @@ DE_NIKE = [
         "Kemel",
         "Taunus-Kaserne (Kemel)",
         "1964–1987",
-        "50.165",
-        "8.016667",
+        "50.25",
+        "8.25",
     ),
     (
         "FlaRakBtl 23",
@@ -2269,8 +2266,8 @@ DE_NIKE = [
         "Obersayn",
         "Wäller-Kaserne (Westerburg)",
         "1966–1987",
-        "50.564167",
-        "7.903333",
+        "50.75",
+        "7.75",
     ),
 ]
 SITE_ART = {
@@ -2309,23 +2306,22 @@ for btl, bty, town, kas, yrs, la, lo in DE_NIKE:
 
 # --- Netherlands Nike groups in the FRG (1 GGW 1959/62-1975, 2 GGW 1963-1975) ---
 NL_NIKE = [
-    ("118 Sqn / 1 GGW", "Vörden", "52.516667", "8.066667", "nuclear; also group operations centre"),
-    ("119 Sqn / 1 GGW", "Münster-Handorf", "51.988889", "7.705556", "nuclear"),
-    ("120 Sqn / 1 GGW", "Borgholzhausen", "52.1", "8.3", "nuclear"),
-    ("121 Sqn / 1 GGW", "Bad Essen", "52.321389", "8.34", "conventional"),
-    ("220 Sqn / 2 GGW", "Schöppingen", "52.1", "7.233056", "nuclear; also group operations centre"),
-    ("221 Sqn / 2 GGW", "Erle (Raesfeld)", "51.746111", "6.865556", "nuclear"),
-    ("223 Sqn / 2 GGW", "Hopsten", "52.380556", "7.6", "nuclear"),
+    ("118 Sqn / 1 GGW", "Vörden", "52.75", "8.25", "nuclear; also group operations centre"),
+    ("119 Sqn / 1 GGW", "Münster-Handorf", "51.75", "7.75", "nuclear"),
+    ("120 Sqn / 1 GGW", "Borgholzhausen", "52.25", "8.25", "nuclear"),
+    ("121 Sqn / 1 GGW", "Bad Essen", "52.25", "8.25", "conventional"),
+    ("220 Sqn / 2 GGW", "Schöppingen", "52.25", "7.25", "nuclear; also group operations centre"),
+    ("221 Sqn / 2 GGW", "Erle (Raesfeld)", "51.75", "6.75", "nuclear"),
+    ("223 Sqn / 2 GGW", "Hopsten", "52.25", "7.75", "nuclear"),
 ]
 for sq, town, la, lo, nuc in NL_NIKE:
-    q = f"long={lo}| lat={la}"
     r(
         f"Nike site {town} ({sq})",
         "nike_site",
         f"{sq}, Royal Netherlands Air Force Nike Hercules ({nuc})",
         "DE",
         town,
-        (float(la), float(lo), NIKE, q),
+        pk(NIKE, la, lo),
         1962 if "1 GGW" in sq else 1963,
         1975,
         True,
@@ -2379,54 +2375,54 @@ for sq, town, q, at, fr in BE_NIKE:
 
 # --- US Army Nike Hercules battalions (de Nike table; battalion designations as given there) ---
 US_NIKE = [
-    ("A/4-6 ADA", "Hontheim", "50.068669", "1961", "1983"),
-    ("B/4-6 ADA", "Welschbillig", "49.855833", "1961", "1971"),
-    ("C/4-6 ADA", "Brimingen", "49.961944", "1961", "1971"),
-    ("D/4-6 ADA", "Balesfeld", "50.104167", "1961", "1971"),
-    ("A/2-1 ADA", "Wackernheim", "49.974167", "1961", "1983"),
-    ("B/2-1 ADA", "Dexheim", "49.847222", "1961", "1983"),
-    ("C/2-1 ADA", "Quirnheim", "49.584444", "1961", "1994"),
-    ("D/2-1 ADA", "Dichtelbach", "50.010833", "1961", "1982"),
-    ("A/1-67 ADA", "Darmstadt-Griesheim", "49.859444", "1961", "1992"),
-    ("B/1-67 ADA", "Mainbullau", "49.690864", "1961", "1971"),
-    ("C/1-67 ADA", "Hardheim", "49.610556", "1961", "1971"),
-    ("D/1-67 ADA", "Dallau", "49.385833", "1961", "1971"),
-    ("A/2-56 ADA", "Geinsheim", "49.304444", "1961", "1994"),
-    ("B/2-56 ADA", "Landau", "49.199444", "1961", "1984"),
-    ("C/2-56 ADA", "Lemberg", "49.1703", "1961", "1992"),
-    ("D/2-56 ADA", "Oberauerbach", "49.274722", "1961", "1991"),
-    ("A/5-6 ADA", "Schönborn", "49.641859", "1961", "1992"),
-    ("B/5-6 ADA", "Wüschheim", "50.013056", "1961", "1966"),
-    ("C/5-6 ADA", "Baumholder", "49.615556", "1961", "1993"),
-    ("D/5-6 ADA", "Reitscheid", "49.528889", "1961", "1983"),
-    ("B/3-71 ADA", "Sachsenheim", "48.96", "1961", "1990"),
-    ("C/3-71 ADA", "Kleingartach", "49.100278", "1961", "1977"),
-    ("D/3-71 ADA", "Wurmberg", "48.871111", "1961", "1984"),
+    ("A/4-6 ADA", "Hontheim", "50.25", "1961", "1983"),
+    ("B/4-6 ADA", "Welschbillig", "49.75", "1961", "1971"),
+    ("C/4-6 ADA", "Brimingen", "49.75", "1961", "1971"),
+    ("D/4-6 ADA", "Balesfeld", "50.25", "1961", "1971"),
+    ("A/2-1 ADA", "Wackernheim", "49.75", "1961", "1983"),
+    ("B/2-1 ADA", "Dexheim", "49.75", "1961", "1983"),
+    ("C/2-1 ADA", "Quirnheim", "49.75", "1961", "1994"),
+    ("D/2-1 ADA", "Dichtelbach", "50.25", "1961", "1982"),
+    ("A/1-67 ADA", "Darmstadt-Griesheim", "49.75", "1961", "1992"),
+    ("B/1-67 ADA", "Mainbullau", "49.75", "1961", "1971"),
+    ("C/1-67 ADA", "Hardheim", "49.75", "1961", "1971"),
+    ("D/1-67 ADA", "Dallau", "49.25", "1961", "1971"),
+    ("A/2-56 ADA", "Geinsheim", "49.25", "1961", "1994"),
+    ("B/2-56 ADA", "Landau", "49.25", "1961", "1984"),
+    ("C/2-56 ADA", "Lemberg", "49.25", "1961", "1992"),
+    ("D/2-56 ADA", "Oberauerbach", "49.25", "1961", "1991"),
+    ("A/5-6 ADA", "Schönborn", "49.75", "1961", "1992"),
+    ("B/5-6 ADA", "Wüschheim", "50.25", "1961", "1966"),
+    ("C/5-6 ADA", "Baumholder", "49.75", "1961", "1993"),
+    ("D/5-6 ADA", "Reitscheid", "49.75", "1961", "1983"),
+    ("B/3-71 ADA", "Sachsenheim", "48.75", "1961", "1990"),
+    ("C/3-71 ADA", "Kleingartach", "49.25", "1961", "1977"),
+    ("D/3-71 ADA", "Wurmberg", "48.75", "1961", "1984"),
 ]
 _lon = {
-    "Hontheim": "6.991892",
-    "Welschbillig": "6.5675",
-    "Brimingen": "6.375",
-    "Balesfeld": "6.530833",
-    "Wackernheim": "8.116667",
-    "Dexheim": "8.316667",
-    "Quirnheim": "8.126389",
-    "Dichtelbach": "7.695278",
-    "Darmstadt-Griesheim": "8.5525",
-    "Mainbullau": "9.186426",
-    "Hardheim": "9.473889",
-    "Dallau": "9.190278",
-    "Geinsheim": "8.256111",
-    "Landau": "8.123056",
-    "Lemberg": "7.65109",
-    "Oberauerbach": "7.422222",
-    "Schönborn": "7.773889",
-    "Wüschheim": "7.423333",
-    "Baumholder": "7.336667",
-    "Reitscheid": "7.219444",
-    "Sachsenheim": "9.064722",
-    "Kleingartach": "8.972778",
-    "Wurmberg": "8.818333",
+    "Hontheim": "6.75",
+    "Welschbillig": "6.75",
+    "Brimingen": "6.25",
+    "Balesfeld": "6.75",
+    "Wackernheim": "8.25",
+    "Dexheim": "8.25",
+    "Quirnheim": "8.25",
+    "Dichtelbach": "7.75",
+    "Darmstadt-Griesheim": "8.75",
+    "Mainbullau": "9.25",
+    "Hardheim": "9.25",
+    "Dallau": "9.25",
+    "Geinsheim": "8.25",
+    "Landau": "8.25",
+    "Lemberg": "7.75",
+    "Oberauerbach": "7.25",
+    "Schönborn": "7.75",
+    "Wüschheim": "7.25",
+    "Baumholder": "7.25",
+    "Reitscheid": "7.25",
+    "Sachsenheim": "9.25",
+    "Kleingartach": "8.75",
+    "Wurmberg": "8.75",
 }
 for bty, town, la, fr, un in US_NIKE:
     note = "US Army Nike Hercules battery (nuclear); point from the location map of the Nike belt (approximate). Designation as in the source (e.g. 2-1 ADA was 5-1 until 1972)."
@@ -2460,7 +2456,7 @@ r(
     "Brigade d'Engins Nucléaires 520 (French Nike Hercules; US Team B/357th USAAD)",
     "DE",
     "Stetten am kalten Markt",
-    pk(NIKE, "48.123056", "9.077778"),
+    pk(NIKE, "48.25", "9.25"),
     1961,
     1966,
     True,
@@ -2475,7 +2471,7 @@ r(
     "Brigade d'Engins Nucléaires 521 (French Nike Hercules; US Team C/357th USAAD)",
     "DE",
     "Friedrichshafen",
-    pk(NIKE, "47.654167", "9.479167"),
+    pk(NIKE, "47.75", "9.25"),
     1961,
     1966,
     True,
@@ -2513,7 +2509,7 @@ r(
     "HQ Danish Nike group (Avedøre camp)",
     "DK",
     "Hvidovre",
-    dms(NIKE_EN, "grid 55°37'59\"N 12°26'55\"E"),
+    dms(NIKE_EN, (55.75, 12.25)),
     1959,
     1981,
     True,
@@ -2525,17 +2521,17 @@ r(
 
 # --- Italian Nike (1ª Aerobrigata Intercettori Teleguidati, Padua; US custodial teams 1963-1977) ---
 IT_NIKE = [
-    ("72º Gruppo / 17º Reparto", "Bovolone", "grid 45°16'12\"N 11°8'29\"E"),
-    ("57º Gruppo / 16º Reparto", "Ceggia", "grid 45°40'22\"N 12°40'15\"E"),
-    ("81º Gruppo / 17º Reparto", "Chioggia", "grid 45°10'1\"N 12°13'43\"E"),
-    ("80º Gruppo / 17º Reparto", "Conselve (Bagnoli di Sopra)", "grid 45°9'35\"N 11°54'49\"E"),
-    ("58º Gruppo / 16º Reparto", "Cordovado", "grid 45°49'36\"N 12°54'46\"E"),
-    ("56º Gruppo / 16º Reparto", "Ca' Tron", "grid 45°34'48\"N 12°27'29\"E"),
-    ("79º Gruppo / 17º Reparto", "Zelo", "grid 45°2'2\"N 11°23'43\"E"),
-    ("65º Gruppo / 7º Reparto", "Montichiari", "grid 45°25'27\"N 10°20'43\"E"),
-    ("66º Gruppo / 7º Reparto", "Monte Toraro (Tonezza)", "grid 45°52'18\"N 11°13'57\"E"),
-    ("67º Gruppo / 7º Reparto", "Monte Calvarina (Roncà)", "grid 45°30'34\"N 11°16'53\"E"),
-    ("59º Gruppo / 16º Reparto", "Monte Pizzoc (Vittorio Veneto)", "grid 46°2'30\"N 12°20'43\"E"),
+    ("72º Gruppo / 17º Reparto", "Bovolone", (45.25, 11.25)),
+    ("57º Gruppo / 16º Reparto", "Ceggia", (45.75, 12.75)),
+    ("81º Gruppo / 17º Reparto", "Chioggia", (45.25, 12.25)),
+    ("80º Gruppo / 17º Reparto", "Conselve (Bagnoli di Sopra)", (45.25, 11.75)),
+    ("58º Gruppo / 16º Reparto", "Cordovado", (45.75, 12.75)),
+    ("56º Gruppo / 16º Reparto", "Ca' Tron", (45.75, 12.25)),
+    ("79º Gruppo / 17º Reparto", "Zelo", (45.25, 11.25)),
+    ("65º Gruppo / 7º Reparto", "Montichiari", (45.25, 10.25)),
+    ("66º Gruppo / 7º Reparto", "Monte Toraro (Tonezza)", (45.75, 11.25)),
+    ("67º Gruppo / 7º Reparto", "Monte Calvarina (Roncà)", (45.75, 11.25)),
+    ("59º Gruppo / 16º Reparto", "Monte Pizzoc (Vittorio Veneto)", (46.25, 12.25)),
 ]
 for gr, town, q in IT_NIKE:
     r(
@@ -2559,7 +2555,7 @@ r(
     "64º Gruppo / 7º Reparto (Nike)",
     "IT",
     "Bassano del Grappa",
-    pk(NIKE, "45.766667", "11.733333"),
+    pk(NIKE, "45.75", "11.75"),
     1959,
     1977,
     True,

@@ -368,17 +368,17 @@ for k, u, t, hc, y, q in (
         "15iap",
         "15th Fighter Aviation Regiment (Bulgaria)",
         "Ravnets",
-        [42.5264, 27.2639],
+        [42.75, 27.25],
         1952,
-        "Ravnets, Bulgaria, 8.52 - 1992 [42 31 35N, 27 15 50E]",
+        "Ravnets, Bulgaria, 8.52 - 1992",
     ),
     (
         "18iap",
         "18th Fighter Aviation Regiment (Bulgaria)",
         "Dobroslavtsi",
-        [42.8139, 23.2997],
+        [42.75, 23.25],
         1952,
-        "Dobroslavtsi, Bulgaria, 20.4.52 - 1992 [42 48 50N, 23 17 59E]",
+        "Dobroslavtsi, Bulgaria, 20.4.52 - 1992",
     ),
 ):
     H(

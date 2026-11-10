@@ -12,6 +12,8 @@ depends on running them, and the table cannot be rebuilt from this repository al
   this repository's path on the build machine); those paths now come from `paths.py`, `fetch.py` now asks
   robots.txt before each page, and nothing else in them was changed. Three scripts that only printed pages for reading (`an1.py`, `show.py`, `show_pvo.py`)
   were removed; they are in the git history.
+- The two hand points in `hand.py` (Ravnets and Dobroslavtsi) hold the centres of their 0.5-degree cells and
+  their quoted coordinates are cut, as every row of the table does (`configs/protocol_amendment_20.yaml`).
 - The folder is excluded from ruff (`extend-exclude` in `pyproject.toml`), and neither the Makefile
   nor the tests run it.
 

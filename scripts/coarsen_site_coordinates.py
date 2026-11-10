@@ -1,12 +1,12 @@
-"""Hold every site that may be in use today at the centre of its 0.5-degree cell (nineteenth amendment).
+"""Hold every site row at the centre of its 0.5-degree cell (nineteenth and twentieth amendments).
 
     uv run python scripts/coarsen_site_coordinates.py           # rewrite the site tables in place
     uv run python scripts/coarsen_site_coordinates.py --check   # exit 1 if any table still needs it
 
-A row with no recorded end year is taken to be possibly in use today; every SAC base row is, since its end year is
-that of the SAC role. Its coordinate becomes floor(2x)/2 + 0.25 in latitude and longitude, and coordinate text and
-remarks on what the site holds today are taken out of its other cells. Rows with a recorded end year keep their
-cited coordinates. Running it twice changes nothing.
+The nineteenth amendment did this for rows with no recorded end year. The twentieth does it for every row: an end
+year dates the role at the table's date, not the facility, which may be in use today. A coordinate becomes
+floor(2x)/2 + 0.25 in latitude and longitude, and coordinate text and remarks on what a site holds today are taken
+out of the row's text cells. Running it twice changes nothing.
 """
 
 import argparse
@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 FEATURES = Path(__file__).resolve().parents[1] / "data" / "curated" / "features"
-# table -> (latitude, longitude, end-year column or None for every row, text columns to clean)
+# table -> (latitude, longitude, end-year column (kept for what reads it; every row is held), text columns to clean)
 TABLES = {
     "military_sites_1956.csv": ("lat", "lon", "until_year", ("note", "source")),
     "bloc_air_defence_1956.csv": ("lat", "lon", "until_year", ("note", "source")),
@@ -56,10 +56,6 @@ def cell_centre(x: float) -> float:
     return math.floor(2 * x) / 2 + 0.25
 
 
-def possibly_today(row: dict, end: str | None) -> bool:
-    return end is None or not str(row.get(end, "")).strip()
-
-
 def clean(text: str) -> str:
     for pat in COORD:
         text = pat.sub("", text)
@@ -77,7 +73,7 @@ def coarsen(
     rows = list(reader)
     changed = 0
     for row in rows:
-        if not possibly_today(row, end) or not row[lat].strip():
+        if not row[lat].strip():
             continue
         new = dict(row)
         new[lat] = f"{cell_centre(float(row[lat])):.2f}"

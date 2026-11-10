@@ -1652,6 +1652,7 @@ FITTED_RUN = OUT / "sealed" / "fitted_run"
 
 BEFORE_17 = OUT / "before_amendment_17"
 BEFORE_19 = OUT / "before_amendment_19"
+BEFORE_20 = OUT / "before_amendment_20"
 
 
 def _moved(was_dir, now_dir) -> tuple[pd.DataFrame, int, list[str]]:
@@ -1686,14 +1687,17 @@ HELD_SITE_TABLES = {
 }
 
 
-def _held_sites() -> tuple[int, float]:
-    """Rows held at a cell centre by the nineteenth amendment, and the most such a row can have moved: the distance
-    from its cell's centre to the cell's farthest corner, largest for the cell nearest the equator."""
+def _held_sites(ended: bool = False) -> tuple[int, float]:
+    """Rows held at a cell centre by the nineteenth amendment (no recorded end year; every SAC base), or with `ended`
+    by the twentieth (the rest), and the most such a row can have moved: the distance from its cell's centre to the
+    cell's farthest corner, largest for the cell nearest the equator."""
     n, worst = 0, 0.0
     for name, end in HELD_SITE_TABLES.items():
         d = pd.read_csv(CURATED / "features" / name)
         if end is not None:
-            d = d[d[end].isna()]
+            d = d[d[end].notna()] if ended else d[d[end].isna()]
+        elif ended:
+            continue
         d = d.dropna(subset=["lat", "lon"])
         n += len(d)
         lat = np.floor(2 * d["lat"].to_numpy()) / 2 + 0.25
@@ -1711,7 +1715,8 @@ def _held_sites() -> tuple[int, float]:
 
 def _unscored_after_19() -> list[str]:
     """Documents scored before the nineteenth amendment and not after it, from the two runs' lists.csv."""
-    was, now = BEFORE_19 / "lists.csv", OUT / "lists.csv"
+    was = BEFORE_19 / "lists.csv"
+    now = (BEFORE_20 if (BEFORE_20 / "lists.csv").exists() else OUT) / "lists.csv"
     if not was.exists():
         return []
     ids = lambda f: set(pd.read_csv(f, usecols=["plan_id"])["plan_id"])  # noqa: E731
@@ -1738,10 +1743,18 @@ CORRECTIONS = [
     (
         19,
         "BEFORE_19",
-        None,
+        "BEFORE_20",
         "Dutch 1960 towns withdrawn (their census volume came through a path robots.txt disallows); sites possibly "
         "in use today held at their 0.5-degree cell centres; two headquarters rows whose only source refuses this "
         "project's agents dropped",
+    ),
+    (
+        20,
+        "BEFORE_20",
+        None,
+        "every other site row held at its 0.5-degree cell centre (an end year dates the role, not the facility); "
+        "three hand-checked label links placed at the resolution their documents print, not at air bases or an "
+        "airport",
     ),
 ]
 
@@ -1783,6 +1796,13 @@ def _corrections() -> str:
         if any(r.startswith("| 19 ") for r in rows)
         else ""
     )
+    held20, km20 = _held_sites(ended=True)
+    twentieth = (
+        f" The twentieth holds the other {held20} site rows, those with a recorded end year, at their cell centres "
+        f"too (at most {km20:.0f} km), so no site table gives a point finer than the map's cell."
+        if any(r.startswith("| 20 ") for r in rows)
+        else ""
+    )
     moved_text = (
         "Primary rows whose verdict moved, each difference followed by its interval by blocks:\n\n"
         + "\n".join(moved_lines)
@@ -1807,7 +1827,7 @@ each scope's selected candidate against population plus country, by holdout and 
 The seventeenth also gave reasons for two Lato-67 rows left unlinked: row 17 (КЕЛЬ, read by its note as probably
 Kiel) and row 57 ("west of Lingen"), so Kiel is not credited. Before the seventeenth was written, the committed held-out scores had been rescored (no model refitted) with five
 Lato-67 towns made positive, one more than the links it adopted credit, and Lato-67's PR-AUC had been seen to rise; a
-verdict it moves is not of a reading fixed before its result was seen.{nineteenth}
+verdict it moves is not of a reading fixed before its result was seen.{nineteenth}{twentieth}
 """
 
 
