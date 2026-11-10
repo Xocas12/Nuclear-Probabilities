@@ -2,15 +2,18 @@
 
 What made a place a nuclear target, as far as declassified target lists can show? And given a stated stockpile, how
 likely is it that an area is struck? This is historical analysis on public sources. Towns are described, as far as the
-sources allow, as they stood at a document's date (several inputs are later; see Data), and labelled from the target
-lists of 26 documents in the project's register, each recorded with its type: 19 of US, Soviet or other Warsaw Pact
-attackers (1945-1979, two of them reconstructions by journalists that are excluded) and 7 with no attacker, which are
-NATO's guesses at Warsaw Pact targets and civil-defence lists of the US, Canada and Britain (1955-1987). Three are war
-plans, all Warsaw Pact: one, Czechoslovak, was read at source and names no town that could be
-matched; the two Polish ones are known only from a scholar's table and paraphrase. The largest list, the US Strategic
-Air Command's (SAC) 1956 study, is a requirements study (an estimate of the weapons needed against a list of targets,
-not an order to strike them). The searches recorded in `data/notes/` found no declassified Soviet war plan naming
-places.
+sources allow, as they stood at a document's date (several inputs are later; see Data), and labelled from the 26
+target lists in the project's register. They come from 21 documents or exercises, since one document can give several
+lists (SAC's 1956 study gives three). Each list is recorded with its type: 19 lists, from 16 documents, have US,
+Soviet or other Warsaw Pact attackers (1945-1979; two of these documents are reconstructions by journalists and are
+excluded), and 7 lists, from 6 documents, have no attacker: NATO's guesses at Warsaw Pact targets and civil-defence
+lists of the US, Canada and Britain (1955-1987). One exercise, the Hungarian war game of 1965, is counted in both
+groups: it gives an attacker list and NATO's mirror of it. Three lists are war plans, all Warsaw Pact: one,
+Czechoslovak, was read at source, but its rows that state nuclear weapons give no place and its sentences that name
+places state no weapon; the two Polish ones are known only from a scholar's table and paraphrase. The largest list,
+the US Strategic Air Command's (SAC) 1956 study, is a requirements study (an estimate of the weapons needed against a
+list of targets, not an order to strike them). The searches recorded in `data/notes/` found no declassified Soviet war
+plan naming places.
 
 The full results are in **[REPORT.md](REPORT.md)**. [PLAN.md](PLAN.md) is the design as first written, kept as
 history; [PROGRESS.md](PROGRESS.md) is the dated work log.
@@ -38,8 +41,8 @@ list PR-AUC understates precision. **Spatial cross-validation** scores each town
 km square it lies in (5 folds, on three shifted grids, scores averaged). Intervals are 95% paired bootstrap intervals,
 resampling towns and, "by blocks", 300 km squares; a difference is a **gain** or a loss only if both exclude zero, and
 otherwise **neither**. Differences have two decimals, since between bootstrap seeds a bound typically moves by 0.006
-(median over comparisons), and by up to 0.02 for one in ten (`runs/classifier/seed_check.csv`); one printed +0.00 or
--0.00 lies within 0.005 of zero on that side.
+(median over comparisons); one in ten moves by more than 0.024, 6 of 168 by more than 0.05, and the largest by 0.126
+(`runs/classifier/seed_check.csv`); one printed +0.00 or -0.00 lies within 0.005 of zero on that side.
 
 ### Short answers
 
@@ -47,23 +50,28 @@ otherwise **neither**. Differences have two decimals, since between bootstrap se
 large list, SAC's 1956 study of the Soviet bloc, a listed town stood out mostly by its size. Under spatial
 cross-validation, ranking towns by population alone (the population rule) gives a PR-AUC of 0.77 (base rate 0.49);
 population plus a term for each country gives 0.82, and the selected model (LightGBM, all permitted) 0.84: +0.02
-[+0.01, +0.03] over population plus country, by blocks [+0.00, +0.04]. No family of town traits adds more than 0.04
-(table below). Of the families that describe the towns as of 1956, military sites, geography and air and missile
-defence sites gain on all countries, and administrative status on Soviet towns only. The defence sites are known
-mostly from post-Soviet sources: they record what existed in 1956, not what SAC knew. Transport adds the most but
-rests largely on today's data. Without the columns flagged as today's data, the selected model's gain over population
-and country is +0.00 [-0.00, +0.01], by blocks [-0.01, +0.02], and also without the defence tables +0.01 [-0.00,
-+0.02], by blocks [-0.01, +0.03]. In both, at least one interval reaches zero, so it cannot be told from no
-difference. Several inputs still postdate 1956 (REPORT, "Inputs later than the document"), and the analysis is not
-blind: earlier results had been read. Nothing here has been shown to carry over to a document the models did not see.
-On the one blind test, places no run had scored, no model beat population plus country.
+[+0.01, +0.03] over population plus country, by blocks [+0.00, +0.04]. LightGBM was selected over the logistic
+candidate by 0.0001 of PR-AUC under spatial blocks, less than the 0.006 a bound typically moves between bootstrap
+seeds, so the two are tied. The most any family of town traits adds is 0.041 (table below). Of the families that
+describe the towns as of 1956, military sites, geography and air and missile defence sites gain on all countries, and
+administrative status on Soviet towns only. The defence sites are known mostly from post-Soviet sources: they record
+what existed in 1956, not what SAC knew. Transport adds the most but rests largely on today's data. Without the
+columns flagged as later data (power-station capacity, airfields, railways, ports and the distance to nuclear-complex
+sites), the selected model's gain over population and country is +0.00 [-0.00, +0.01], by blocks [-0.01, +0.02], and
+also without the defence tables +0.01 [-0.00, +0.02], by blocks [-0.01, +0.03]. In both, at least one interval reaches
+zero, so it cannot be told from no difference. Several inputs still postdate 1956 (REPORT, "Inputs later than the
+document"), and the analysis is not blind: earlier results had been read. Nothing here has been shown to carry over to
+a document the models did not see. On the one blind test, places no run had scored, no model beat population plus
+country.
 
 **How likely is an area to be struck?** Only under stated assumptions, and only as a historical illustration. If the
 cited US stockpile of 1956 were sent against the Soviet bloc and each delivered warhead fell on a town in proportion
 to the map's score, 600 [440, 740] of 1370 half-degree cells would have a probability over one half of receiving at
 least one warhead; with the 1950 stockpile, 6 [3, 9] of 1370. The brackets are the 5th to 95th percentiles of 200
-draws, so 90% intervals. Most of the width comes from the stockpile and from the share of each force assumed sent to
-the theatre, which has no source. With spatial blocks held out, the 1956 map ranks the cells holding a town on SAC's
+draws, so 90% intervals. The share of the force assumed sent to the theatre, which has no source, explains 17% of the
+variance of the warheads delivered with the 1956 stockpile and 41% with the 1950 one; the rest comes from the other
+inputs drawn with it (the stockpile estimate, reliability and any stated losses to defences), and the model's draws
+widen the cell intervals further. With spatial blocks held out, the 1956 map ranks the cells holding a town on SAC's
 list at PR-AUC 0.84 where 58% of cells hold one, and its mean cell probability is 0.48: agreement with the list it was
 fitted on, not a test. Present-day scenarios apply lists of 1945-1977 to today's towns and are extrapolation.
 
@@ -143,12 +151,13 @@ fitted on, not a test. Present-day scenarios apply lists of 1945-1977 to today's
   specification `data/curated/gazetteer/TOWNS_INSTRUCTIONS.md`, each with a card of its source and checks), with
   population, rank, distances to coast, capital and other towns, and, where a source exists for that date, military
   sites, air and missile defences and the Correlates of War project's (COW) National Material Capabilities. Some
-  inputs postdate their document: railways, ports and airfields from today's data are flagged and the results repeated
-  without them. Other late inputs are not flagged and stay in those repeats: the 1959 Soviet census for the 1956 list,
-  Hungary's and the Czech lands' towns interpolated with 1960 and 1961 censuses, East Germany's and Poland's with
-  end-1956 figures and Slovakia's with 1958 ones, North Korean, North Vietnamese and Mongolian towns chosen by their
-  size today, Kurchatov's 1990 figure, and others listed in REPORT ("Inputs later than the document"). Every site is
-  held at the centre of its 0.5-degree cell, since an end year dates a role, not the facility.
+  inputs postdate their document and are flagged, and the results are repeated without them: railways, ports,
+  airfields and power-station capacity from today's data, and the distance to nuclear-complex sites, known from
+  post-Soviet sources. Other late inputs are not flagged and stay in those repeats: the 1959 Soviet census for the
+  1956 list, Hungary's and the Czech lands' towns interpolated with 1960 and 1961 censuses, East Germany's and
+  Poland's with end-1956 figures and Slovakia's with 1958 ones, North Korean, North Vietnamese and Mongolian towns
+  chosen by their size today, Kurchatov's 1990 figure, and others listed in REPORT ("Inputs later than the document").
+  Every site is held at the centre of its 0.5-degree cell, since an end year dates a role, not the facility.
 - **Stockpiles.** `data/curated/stockpiles/`: inventories by state and year from the Federation of American Scientists
   (FAS), the Natural Resources Defense Council (NRDC) and Our World in Data (OWID), and rounded 2026 shares by
   delivery from the Stockholm International Peace Research Institute (SIPRI). The Bulletin of the Atomic Scientists'

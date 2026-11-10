@@ -19,11 +19,12 @@ interval resamples single towns. Verdicts use the unrounded bounds.
 
 **How numbers are rounded.** Scores (PR-AUC, probabilities, shares) have two decimals; one that is not zero but would
 print as 0.00 takes a third (0.003), so that 0.00 means zero. A difference between two scores and its interval bounds
-have two decimals as well: between bootstrap seeds a bound typically moves by 0.006 (median over comparisons), and by
-up to 0.02 for one in ten (`runs/classifier/seed_check.csv`) ("Bootstrap seed"), so a third decimal would be noise. A
-difference within 0.005 of zero prints as +0.00 or -0.00: the sign gives the side of zero on which the unrounded value
-lies, and verdicts use the unrounded bounds, so a gain whose lower bound prints +0.00 is a gain by less than 0.005 and
-may not survive another seed. An exact zero prints as 0.00. An estimate within 0.005 of a bound may print equal to it.
+have two decimals as well: between bootstrap seeds a bound typically moves by 0.006 (median over comparisons); one in
+ten moves by more than 0.024, 6 of 168 by more than 0.05, and the largest by 0.126 (`runs/classifier/seed_check.csv`)
+("Bootstrap seed"), so a third decimal would be noise. A difference within 0.005 of zero prints as +0.00 or -0.00: the
+sign gives the side of zero on which the unrounded value lies, and verdicts use the unrounded bounds, so a gain whose
+lower bound prints +0.00 is a gain by less than 0.005 and may not survive another seed. An exact zero prints as 0.00.
+An estimate within 0.005 of a bound may print equal to it.
 
 A comparison whose two scores never differ on its rows is shown as "constant". Where the positives lie in fewer than 5
 blocks, resampling blocks measures nothing, and the block interval is shown as "n/a" with the count. In the tables,
@@ -47,8 +48,9 @@ logistic regression on log population. The **state gate** is the rule deciding w
 list covers: a town outside it is not a negative of that list. The **sealed set** is the towns of the 300 km blocks in
 `data/curated/splits/sealed_blocks.csv`, kept out of every fit and scored once at the end; its **blind places** are
 those no committed run had scored before then (Method). **Burza** is the Polish front exercise of 1961 whose list is
-`wp_1961_burza`. A **theatre share** is the stated share of an attacker's inventory assumed to be aimed at a
-scenario's countries. A **folded** ROC-AUC is the larger of the ROC-AUC and one minus it, so that 0.5 means no
+`wp_1961_burza`, and **Lato-67** the Warsaw Pact exercise of May 1967, known from a Polish Coastal Front directive,
+whose list is `wp_1967_lato67`. A **theatre share** is the stated share of an attacker's inventory assumed to be aimed
+at a scenario's countries. A **folded** ROC-AUC is the larger of the ROC-AUC and one minus it, so that 0.5 means no
 separation whichever way a feature points. **Pick-freeze** is the estimator of a first-order Sobol index: the share of
 a quantity's variance that one input explains alone, from pairs of draws sharing that input. "Plan" alone means a
 document of a type the protocol counts as a plan (war plan, target selection, requirements or policy study); "war
@@ -73,11 +75,14 @@ see.
   sealed scores are of the fit made before the corrections of the data ("Corrections made after results were read").
 
 - **Inside SAC's 1956 study**, under spatial cross-validation, LightGBM, all permitted scores 0.84 against 0.82 for
-  population plus a country term: +0.02 [+0.01, +0.03], by blocks [+0.00, +0.04]. Without the features flagged as
-  today's data the difference is +0.00 [-0.00, +0.01], by blocks [-0.01, +0.02]: at least one interval reaches zero,
-  so it cannot be told from no difference. Also without the defence tables, +0.01 [-0.00, +0.02], by blocks [-0.01,
-  +0.03]: at least one interval reaches zero, so it cannot be told from no difference. These repeats remove flagged
-  columns, not every late input: see "Inputs later than the document" under Data.
+  population plus a country term: +0.02 [+0.01, +0.03], by blocks [+0.00, +0.04]. LightGBM was selected over the
+  logistic candidate by 0.0001 of PR-AUC under spatial blocks, less than the 0.006 a bound typically moves between
+  bootstrap seeds, so the two are tied. Without the features flagged as later data (power-station capacity, airfields,
+  railways, ports and the distance to nuclear-complex sites) the difference is +0.00 [-0.00, +0.01], by blocks [-0.01,
+  +0.02]: at least one interval reaches zero, so it cannot be told from no difference. Also without the defence
+  tables, +0.01 [-0.00, +0.02], by blocks [-0.01, +0.03]: at least one interval reaches zero, so it cannot be told
+  from no difference. These repeats remove flagged columns, not every late input: see "Inputs later than the document"
+  under Data.
 - **On a document the model has not seen**, fitted on the other documents with that document's towns removed,
   LightGBM, all permitted against the rule that ranks towns by population: -0.14 [-0.17, -0.12], by blocks [-0.18,
   -0.10] over all lists, which SAC dominates, and +0.02 [-0.03, +0.07], by blocks [-0.10, +0.09] on lists other than
@@ -110,9 +115,10 @@ up to 1977: stale, not later.
 **Military and defence sites of 1965.** The West European site table
 (`data/curated/features/weurope_military_sites_1965.md`) had 29 rows whose fact rested on general knowledge. Each was
 cited from a Wikipedia page fetched through a path robots.txt allows, corrected to what that page states, or dropped
-(15 cited, 6 corrected, 8 dropped; 323 rows remain). Six fed features: the NATO air-defence Control and Reporting
-Centre (CRC) at Glons is dated 1972 by its source and leaves 1965, CRC Semmerzake and the Belgian naval base at Ostend
-are dropped, and Aviano is an air base, not a strike base, because no page found dates a strike role there in 1965.
+(21 kept with a citation, some of them corrected, and 8 dropped; the card lists which; 323 rows remain). Four rows
+that feed features changed: the NATO air-defence Control and Reporting Centre (CRC) at Glons is dated 1972 by its
+source and leaves 1965, CRC Semmerzake and the Belgian naval base at Ostend are dropped, and Aviano is an air base,
+not a strike base, because no page found dates a strike role there in 1965.
 
 **Inputs later than the document.** Removing the flagged columns does not remove all of these. The 1959 Soviet census
 is in every population column. For the June 1956 document Hungary's towns are interpolated from the 1949 and 1960
@@ -139,7 +145,7 @@ two independent passes of vision-language models (Claude agents), with disagreem
 (`data/curated/sac1956/README.md`). A blind audit of a random 5% of rows, 743 lines, found 0 errors in the final
 reading (95% interval 0 to 0.51%), by auditors whose own error rate was 1.3%, so the audit's reading is itself
 uncertain. Of the 270 airfield rows that can be compared with a second printing, 216 lie on the low-resolution (about
-200 dpi) Part II pages, and on those the confirmed misread rate was 3 in 216, well above that bound.
+200 dpi) Part II pages, and on those the confirmed misread rate was 3 in 216, above that bound.
 
 **Links** lose entries too: 318 of SAC's 1,215 complex entries link to no town of the universe (326 of its 873
 subcomplex entries; `runs/classifier/link_audit_coverage_subcomplex.csv`), and the share varies by country: China 40
@@ -330,8 +336,8 @@ Against population plus country the selected candidate gains in 2 of 4 scopes ('
 (neither). The pooled Warsaw Pact model ranks these places worse than population does (-0.13); the town interval calls
 that a loss and the block interval does not, so by the rule it is neither. It was trained on towns in six Western
 countries (Austria, Belgium, Denmark, FRG, Italy, Netherlands) and is applied here to Eastern bloc places. The gains
-are a few hundredths of PR-AUC on a base rate above one half. Only SAC 1956 has sealed rows, so this tests the models
-on that list's places, the source of most of every global model's training positives, and says nothing about the other
+are +0.03 to +0.04 of PR-AUC, on a base rate of 0.56. Only SAC 1956 has sealed rows, so this tests the models on that
+list's places, the source of most of every global model's training positives, and says nothing about the other
 documents. A sealed block is not free of training data: 16 scored places lie in sealed blocks, 11 of them SAC 1956
 towns the early check had scored before corrected coordinates moved them there (`data/curated/splits/README.md`) and 5
 towns of other lists. A training town in a neighbouring block may also be close. In 'Warsaw Pact, pooled,
@@ -406,7 +412,8 @@ towns and positives it had before.
 ### What the gains rest on
 
 Each scope's selected candidate against population plus country under spatial blocks, with columns removed. "None
-flagged" removes today's data standing in for the past. "Strict as-of" also removes the defence tables, mostly
+flagged" removes the columns flagged as later data standing in for the past: power-station capacity, airfields,
+railways, ports and the distance to nuclear-complex sites. "Strict as-of" also removes the defence tables, mostly
 post-Soviet knowledge. "No national power" removes COW's values, which take one value per country and year and so were
 suspected of marking a document. "No source markers" also removes the defence and military columns, which are blank or
 filled according to the table a row came from. From the columns alone, with folds grouped by place, a gradient-boosted
@@ -578,7 +585,7 @@ base rate. The **Brier score** is the mean squared difference between a town's s
 0 is perfect, and giving every town the list's base rate 0.49 scores 0.25. The **expected calibration error** (ECE)
 sorts towns into bins by score and averages, weighted by bin size, the gap between a bin's mean score and its share of
 listed towns, so 0.03 means scores are off by about three points on average. Brier runs from 0.16 (logistic, all
-permitted) to 0.20 (population rule); every ECE is 0.04 or less, and the isotonic remapping changes no model's Brier
+permitted) to 0.20 (population rule); every ECE is 0.043 or less, and the isotonic remapping changes no model's Brier
 by more than 0.003. On SAC's list, then, the raw scores already lie close to observed shares.
 
 | model | kind | brier | ECE |

@@ -15,8 +15,9 @@
 
 Limits that bear on any reading:
 
-- **Anachronism.** The COMMON set carries the flags of `data/FEATURES.md`: railways, ports and
-  airfields are today's data standing in for the document's date. Protocol: results are to be
+- **Anachronism.** The COMMON set carries the flags of `data/FEATURES.md`: railways, ports,
+  airfields and power-station capacity are today's data, and the distance to nuclear-complex sites is
+  post-Soviet knowledge, standing in for the document's date. Protocol: results are to be
   repeated without them. That repeat is the `none flagged` and `strict as-of` rows of
   `runs/classifier/sensitivity.csv`, read in REPORT.md under "What the gains rest on".
 - **The annual COW figure** for the document's year covers months after the document.

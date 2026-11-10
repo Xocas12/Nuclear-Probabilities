@@ -12,7 +12,8 @@ import pandas as pd
 
 from nucprob.paths import RAW, RUNS
 from nucprob.probmap.counts import count
-from nucprob.probmap.run import mapped_scenarios
+from nucprob.probmap.modern import PORTABLE
+from nucprob.probmap.run import GLOBAL, mapped_scenarios
 
 OUT = RUNS / "probmap"
 LAND = RAW / "naturalearth" / "ne_50m_land.geojson"
@@ -56,7 +57,10 @@ def withdrawn_1965() -> str:
     """The viewer's sentence on the countries the 1965 map lacks, from the scenario's targets."""
     sc = next(s for s in mapped_scenarios() if s["id"] == "ussr_1965_on_west")
     targets = [t for a in sc["attackers"] for t in a["targets"]]
-    gone = ["United Kingdom"] + ([] if "Netherlands" in targets else ["Netherlands"])
+    # The two countries whose census tables were withdrawn (data/sources.yaml, `withdrawn`).
+    gone = [c for c in ("United Kingdom", "Netherlands") if c not in targets]
+    if not gone:
+        return ""
     one = len(gone) == 1
     names = ", ".join(targets[:-1]) + " and " + targets[-1]
     return (
@@ -64,6 +68,64 @@ def withdrawn_1965() -> str:
         f"{'its only census table was' if one else 'their census tables were'} withdrawn because the path "
         f"{'it' if one else 'each'} came through is disallowed by the site's robots.txt, so the stated share falls on "
         f"{names}."
+    )
+
+
+# How the score's fitting scope reads in the page; a scope not listed here fails the build rather than misdescribe it.
+FITTED_ON = {GLOBAL: "on all attacker documents together, exercises included"}
+
+
+def unseen_document_sentence() -> str:
+    """Whether any classifier has beaten the population rule on a left-out document, from comparison.csv."""
+    from nucprob.classifier.report import RULE, verdict
+
+    comp = pd.read_csv(RUNS / "classifier" / "comparison.csv")
+    lopo = comp[(comp["holdout"] == "leave one document out") & (comp["against"] == RULE)]
+    gains = lopo[lopo.apply(verdict, axis=1) == "gain"]
+    if gains.empty:
+        return "no score has been shown to beat population on a document it has not seen."
+    named = "; ".join(sorted({f"{r.scope}, {r.model}, {r.lists}" for r in gains.itertuples()}))
+    return f"on a document it has not seen, these beat the population rule: {named}."
+
+
+def method_text() -> str:
+    """The page's account of the method. Each claim about the score or the results is read from the outputs."""
+    manifest = json.loads((OUT / "manifest.json").read_text())
+    spread = pd.read_csv(OUT / "score_spread.csv")
+    score, features = manifest["score"], manifest["features"]
+    widest_score, narrowest_pop = spread["score_ratio"].max(), spread["population_ratio"].min()
+    if widest_score * 10 <= narrowest_pop:
+        share = (
+            f"a score whose median moves over at most a {widest_score:.1f}-fold range in any scenario, where "
+            f"population moves over at least a {narrowest_pop:.0f}-fold range, so a cell's probability depends on "
+            "how many towns it holds as well as on its people"
+        )
+    else:
+        share = "its score"
+    reads = (
+        " The score reads population and nothing else: what a town produced, housed or defended plays no part."
+        if features == ["log_pop"]
+        else " The score reads only population, its spread around the town, distances to the capital, a coast and a "
+        "town of 100,000, and capital status: what a town produced, housed or defended plays no part."
+        if set(features) <= set(PORTABLE)
+        else ""
+    )
+    withdrawn = withdrawn_1965()
+    return (
+        "A cell's value is the probability that at least one delivered warhead falls on a town in that cell. "
+        f"The score here is the {score}: each delivered warhead falls on a town with chance in proportion to {share} "
+        f"(the spread for the scenario shown is under the map).{reads} The score is fitted {FITTED_ON[GLOBAL]}, and "
+        "is no single state's model: every map is hypothetical, since no document sends a whole stockpile against "
+        'towns in proportion to a score. "Hypothetical" in the scenario list means the stockpile and a target list '
+        "are of that year, not that the score is that attacker's or that the use happened or was planned; "
+        '"Counterfactual" puts a stockpile of another year on those towns.\n'
+        "These are consequences of stated assumptions, not forecasts. Theatre shares have no source.\n"
+        "On the 1956 towns the sealed set's towns draw no warheads, so delivered warheads are cut by the "
+        "share of people living in the scored towns (shown in the table), a stand-in for the share of score they hold."
+        f"{' ' + withdrawn if withdrawn else ''}\n"
+        "The interval runs from the 5th to the 95th percentile of draws of the model and the stockpile; it holds the "
+        "allocation rule, who fires on whom and the list of towns fixed, so it is narrower than what is unknown. "
+        f"See REPORT.md: {unseen_document_sentence()}"
     )
 
 
@@ -111,7 +173,7 @@ def payload() -> dict:
             }
         )
     return {
-        "withdrawn_1965": withdrawn_1965(),
+        "method": method_text(),
         "scenarios": items,
         "land": land_paths(),
         "shift": pd.read_csv(OUT / "domain_shift.csv").round(2).to_dict("records")[:1],
@@ -157,7 +219,7 @@ details{margin:12px 0}
 <div id="tip" role="status"></div>
 </main><script>
 const D=__DATA__;
-document.getElementById("method").textContent=`A cell's value is the probability that at least one delivered warhead falls on a town in that cell. The score here is the ${D.score}: each delivered warhead falls on a town with chance in proportion to a score that moves only a few times over the range of population, so a cell's probability depends on how many towns it holds as well as on its people (the spread for the scenario shown is under the map). What a town produced, housed or defended plays no part. The score is fitted on all attacker documents together, exercises included, and is no single state's model: every map is hypothetical, since no document sends a whole stockpile against towns in proportion to a score. "Hypothetical" in the scenario list means the stockpile and a target list are of that year, not that the score is that attacker's or that the use happened or was planned; "Counterfactual" puts a stockpile of another year on those towns.\nThese are consequences of stated assumptions, not forecasts. Theatre shares have no source.\nOn the 1956 towns the sealed set's towns draw no warheads, so delivered warheads are cut by the share of people living in the scored towns (shown in the table), a stand-in for the share of score they hold. ${D.withdrawn_1965}\nThe interval runs from the 5th to the 95th percentile of draws of the model and the stockpile; it holds the allocation rule, who fires on whom and the list of towns fixed, so it is narrower than what is unknown. See REPORT.md: no score has been shown to beat population on a document it has not seen.`;
+document.getElementById("method").textContent=D.method;
 const stops=[[205,226,251],[158,197,244],[109,167,236],[57,135,229],[28,92,171],[13,54,107]];
 function col(p){const x=Math.min(.9999,Math.max(0,p))*(stops.length-1),i=Math.floor(x),f=x-i,a=stops[i],b=stops[i+1];return `rgb(${a.map((v,k)=>Math.round(v+(b[k]-v)*f)).join(",")})`}
 const map=document.getElementById("map"),g=map.getContext("2d"),sel=document.getElementById("sc"),band=document.getElementById("band"),tip=document.getElementById("tip");
