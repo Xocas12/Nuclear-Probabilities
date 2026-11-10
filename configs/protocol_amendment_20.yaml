@@ -1,0 +1,59 @@
+# Twentieth amendment, in its own file like the fifth to nineteenth. Committed and pushed before the refit it
+# governs is run. Every value is a folded block scalar, as in the twelfth. What had been read: every result
+# committed at 7bbd5b0 (the nineteenth amendment's refit) and the review of 1bf6e6a, which found the faults below.
+# Nothing the refit computes had been computed when this was written.
+date: >-
+  2026-11-10
+reasons: >-
+  (1) The nineteenth amendment held a site at its 0.5-degree cell centre only if its row had no recorded end year.
+  But until_year records when the role of the table's date ended, not when the facility closed, so rows of
+  facilities in use today kept their cited coordinates: in weurope_military_sites_1965.csv the 4 ATAF / Seventeenth
+  Air Force HQ row at Ramstein (which undid the coarsening of the Ramstein air base row), Patch and Kelley Barracks,
+  Manching and Geilenkirchen; in bloc_air_defence_1956.csv air bases such as Krymsk, Machulishchi and Kramatorsk.
+  The project's limits allow no coordinates of present-day facilities beyond what the area map needs, and whether a
+  facility of 1956 or 1965 is in use today cannot be told from these tables. (2) Two hand-checked links of
+  Lato-67 (data/curated/gazetteer/transfer_target_links.csv) place a target at the exact point of a present-day air
+  base, finer than the document prints: row 36 at Karup air base where the document prints "20 km SW of Viborg",
+  and row 44 at Eindhoven air base where the name is partly illegible and read as probably Eindhoven. A third,
+  Square Leg row 64 (a list withdrawn by the tenth amendment), sits at Gatwick airport's own point.
+changes:
+  site_coordinates: >-
+    In every site table in the tree (military_sites_1956, bloc_air_defence_1956, weurope_military_sites_1965,
+    sac_bases_1956) every row's coordinate is replaced by the centre of the 0.5-degree cell that holds it
+    (latitude and longitude each floor(2x)/2 + 0.25), whatever its end year, and coordinate text and remarks on
+    what a site holds today are removed from every row (scripts/coarsen_site_coordinates.py, now applied to all
+    rows). The row specifications that the tables are built from (scripts/weurope_military_1965_spec.py,
+    scripts/bloc_air_defence_1956/hand.py) hold cell centres too. Distances and counts within 50 km are computed
+    from the cell centres; the error is at most about 39 km, as under the nineteenth.
+  label_links: >-
+    Lato-67 row 36 is placed at its printed offset, 20 km south-west of GeoNames' point of Viborg, as the
+    seventeenth amendment places every printed offset. Lato-67 row 44 is placed at GeoNames' point of the town of
+    Eindhoven, the name the list note reads (the Netherlands has no universe since the nineteenth, so it links to
+    no town either way). Square Leg row 64 is placed at GeoNames' point of Crawley, the district the row names (the
+    list is not scored). No other link changes.
+  refit: >-
+    make places, labels, features, dataset and transfer, nucprob.classifier.table and make classifier in full
+    (run, seed_check, sensitivity, identification, identification_fit, divergence, extended, defence_targets,
+    link_audit), then make probmap, with every rule of the protocol and of the earlier amendments unchanged.
+    runs/m4-transfer-check is rewritten and its pinned hashes updated, as under the sixteenth, seventeenth and
+    nineteenth. Their outputs replace the earlier ones.
+  before: >-
+    runs/classifier/comparison.csv, selection.csv, manifest.json and lists.csv of the run before this amendment
+    are kept as runs/classifier/before_amendment_20/ for the comparison under reporting.
+  sealed: >-
+    The sealed set is not scored again (its lock forbids it). Its scores and the blind reading stay those of the
+    fit named in runs/classifier/sealed/fitted_run/.
+  pinned_records: >-
+    The pinned early runs (runs/m1-slice, runs/m2-check, runs/m4-us-check) are records of their date and are not
+    rerun.
+reporting: >-
+  Until the refit is committed, the data change is held in a commit that is not on the pushed branch, so the pushed
+  results stay of one table. After it, REPORT states the change under "Corrections made after results were read"
+  and lists every primary-comparison row whose verdict differs from the run before this amendment, whichever way it
+  moves.
+not_done: >-
+  Earlier commits of the site tables, and of us_military_sites_1985.csv, hold the exact coordinates in this
+  branch's published history. Removing them needs a rewrite of published history, which only the owner can do.
+unchanged: >-
+  Labels as transcribed, every other link, holdouts, models, the selection rule, the gate thresholds, seeds and
+  every scenario.
