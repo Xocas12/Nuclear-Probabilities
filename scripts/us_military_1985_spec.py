@@ -1534,10 +1534,10 @@ r(
     "",
     True,
     "",
-    "Coordinates from the rendered article (Wikidata via the coordinates template).",
+    "Coordinates: centre of the 0.5-degree cell that holds the rendered article's point.",
     r"tritium",
     [],
-    (33.25, -81.65),
+    (33.25, -81.75),
 )
 r(
     "Hanford Site",

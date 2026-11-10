@@ -80,3 +80,13 @@ def test_no_hand_checked_link_sits_at_an_air_base_or_airport():
     assert rows
     for row in rows:
         assert not re.search(r"air ?base|airport|airfield", row["located_as"], re.I), row
+
+
+def test_the_1985_specification_gives_only_cell_centres():
+    """Review 23, finding 2: the one coordinate typed into the 1985 specification (Savannah River Plant) was
+    finer than a cell."""
+    spec = (ROOT / "scripts" / "us_military_1985_spec.py").read_text(encoding="utf-8")
+    pairs = re.findall(r"\(\s*(-?\d+(?:\.\d+)?),\s*(-?\d+(?:\.\d+)?)\s*\)", spec)
+    assert pairs
+    for lat, lon in pairs:
+        assert _on_centre(lat) and _on_centre(lon), (lat, lon)

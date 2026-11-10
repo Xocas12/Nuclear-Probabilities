@@ -1,0 +1,45 @@
+# Sources registered after the last classifier refit, in the same form as data/sources.yaml. Every classifier run
+# records the hash of data/sources.yaml, so an entry that changes no input waits here until a refit folds it in.
+# The fetcher, the robots check and the provenance tests read this file with the others.
+# Nothing here is read by a model.
+sources:
+- id: census_jp_1940_029
+  url: https://www.e-stat.go.jp/stat-search/file-download?statInfId=000007914029&fileKind=2
+  path: japan/s15_7914029.pdf
+  licence: e-Stat (Statistics Bureau of Japan), government terms of use
+  use: 'Japan 1940 transfer universe: cities and towns of 10,000+ (towns_jp_1940.csv); Table 1 volume
+    statInfId 000007914029, All Japan to 11 Saitama'
+  role: universe
+  retrieved: '2026-11-10'
+  sha256: 57dc042b048efdf0465ca99d2ddb32f2f6e7fb8d2469a4bad71c9e55d86b6310
+  note: 'data/sources.yaml''s census_jp_1940 gives this volume''s URL with the path japan/s15_7914028.pdf and the
+    hash of volume 028 (the area list, f7a037a7...); the file held under that path is this volume (same bytes as
+    here). Downloads on 2026-10-10 and 2026-11-10 gave the same bytes. The entry in data/sources.yaml is corrected
+    when a refit next records that file.'
+- id: census_jp_1940_030
+  url: https://www.e-stat.go.jp/stat-search/file-download?statInfId=000007914030&fileKind=2
+  path: japan/s15_7914030.pdf
+  licence: e-Stat (Statistics Bureau of Japan), government terms of use
+  use: 'Japan 1940 transfer universe: cities and towns of 10,000+ (towns_jp_1940.csv); Table 1 volume
+    statInfId 000007914030, 12 Chiba to 23 Aichi'
+  role: universe
+  retrieved: '2026-11-10'
+  sha256: db3d6e5ea34b709db14fe49dfdf655b8a664d4efd8da9b8fbc728f58f5dbfcb3
+- id: census_jp_1940_031
+  url: https://www.e-stat.go.jp/stat-search/file-download?statInfId=000007914031&fileKind=2
+  path: japan/s15_7914031.pdf
+  licence: e-Stat (Statistics Bureau of Japan), government terms of use
+  use: 'Japan 1940 transfer universe: cities and towns of 10,000+ (towns_jp_1940.csv); Table 1 volume
+    statInfId 000007914031, 24 Mie to 35 Yamaguchi'
+  role: universe
+  retrieved: '2026-11-10'
+  sha256: 05262bd7ae0f12143c00cc7a367dc01e8377ba75dc045bb4983738d5272a5e65
+- id: census_jp_1940_032
+  url: https://www.e-stat.go.jp/stat-search/file-download?statInfId=000007914032&fileKind=2
+  path: japan/s15_7914032.pdf
+  licence: e-Stat (Statistics Bureau of Japan), government terms of use
+  use: 'Japan 1940 transfer universe: cities and towns of 10,000+ (towns_jp_1940.csv); Table 1 volume
+    statInfId 000007914032, 36 Tokushima to 47 Okinawa'
+  role: universe
+  retrieved: '2026-11-10'
+  sha256: dde17fac9fa49abb6320512d9425b1517894eca021a69780e5bd29aa93963853

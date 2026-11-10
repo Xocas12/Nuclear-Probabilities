@@ -14,10 +14,14 @@ Shi, Ku, Machi and Mura (all persons including military personnel)". Scanned vol
 | s15_7914030.pdf | ...statInfId=000007914030&fileKind=2 | 12 Chiba to 23 Aichi |
 | s15_7914031.pdf | ...statInfId=000007914031&fileKind=2 | 24 Mie to 35 Yamaguchi |
 | s15_7914032.pdf | ...statInfId=000007914032&fileKind=2 | 36 Tokushima to 47 Okinawa |
-| s15_7914024/025/026/028.pdf | statInfId 000007914024, -025, -026, -028 | survey outline, notes, prefecture totals, area list |
 
-The listing pages are saved too (`estat_*.html`). `source_page` gives the statInfId and the PDF page,
-which is a two-page scan spread.
+The four Table 1 volumes are registered in `data/sources_late.yaml` (ids `census_jp_1940_029` to
+`census_jp_1940_032`) with retrieval date and sha256; all four were downloaded on 2026-11-10. The older entry
+`census_jp_1940` in `data/sources.yaml` gives volume 029's URL with the path and hash of volume 028, and the file held
+under that path is volume 029; `data/sources_late.yaml` says so, and the older entry is corrected at the next refit
+(every classifier run records the hash of `data/sources.yaml`). The survey outline, notes, prefecture totals and area list (statInfId 000007914024, -025, -026,
+-028) and the e-Stat listing pages are not held or registered; no row
+cites them. `source_page` gives the statInfId and the PDF page, which is a two-page scan spread.
 
 ## What the table covers
 - All 47 prefectures of 1940, including Okinawa and Hokkaido. Korea, Taiwan and Karafuto are excluded

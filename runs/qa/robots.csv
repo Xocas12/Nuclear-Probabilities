@@ -186,6 +186,10 @@ naturalearth_10m_populated_places,raw.githubusercontent.com,no_rule_http_404,Tru
 cow_alliances_v41,correlatesofwar.org,rules,True,,features,2026-11-01,True,url,rules,True
 owid_political_regime,ourworldindata.org,rules,True,,features,2026-11-01,True,url,rules,True
 owid_maddison_gdp_pc,ourworldindata.org,rules,True,,features,2026-11-01,True,url,rules,True
+census_jp_1940_029,www.e-stat.go.jp,rules,True,,universe,2026-11-10,True,url,rules,True
+census_jp_1940_030,www.e-stat.go.jp,rules,True,,universe,2026-11-10,True,url,rules,True
+census_jp_1940_031,www.e-stat.go.jp,rules,True,,universe,2026-11-10,True,url,rules,True
+census_jp_1940_032,www.e-stat.go.jp,rules,True,,universe,2026-11-10,True,url,rules,True
 script:weurope_military_1965_fetch,en.wikipedia.org,rules,True,,script,,False,url,rules,True
 past:wikipedia_index_raw,en.wikipedia.org,rules,False,project; *; ClaudeBot; anthropic-ai,past_route,,False,url,rules,False
 past:wikipedia_special_export,en.wikipedia.org,rules,False,project; *; ClaudeBot; anthropic-ai,past_route,,False,url,rules,False
