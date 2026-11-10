@@ -24,7 +24,13 @@ from nucprob.paths import PROCESSED, RUNS
 OUT = RUNS / "classifier"
 SAC = "us_1956_sac_complexes"
 SAC_SCOPE = "single document: SAC 1956 (not a state model)"
-MODELS = ["population rule", "population + country", "logistic, all permitted"]
+# Both candidates, so the report can read whichever selection.csv selects for SAC.
+MODELS = [
+    "population rule",
+    "population + country",
+    "logistic, all permitted",
+    "LightGBM, all permitted",
+]
 
 
 def coverage(links: pd.DataFrame, universe: set[str], level: str = "complex") -> pd.DataFrame:

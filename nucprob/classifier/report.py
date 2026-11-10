@@ -1665,8 +1665,12 @@ def _moved(was_dir, now_dir) -> tuple[pd.DataFrame, int, list[str]]:
     both = now.merge(was, on=["Scope", "Holdout", "Lists"], suffixes=("", "_was"))
     pick = lambda s: s[s["selected"]].set_index("scope")["model"]  # noqa: E731
     sel_now, sel_was = pick(now_sel), pick(was_sel)
+    score = now_sel.set_index(["scope", "model"])["weighted_pr_auc"]
     changed = [
-        f"{s} ({sel_was.get(s)} before, {sel_now[s]} now)"
+        f"{s} ({sel_was.get(s)} before, {sel_now[s]} now; now {score[(s, sel_now[s])]:.4f} against "
+        f"{score[(s, sel_was.get(s))]:.4f}, four decimals because the two print alike at two)"
+        if round(score[(s, sel_now[s])], 2) == round(score[(s, sel_was.get(s))], 2)
+        else f"{s} ({sel_was.get(s)} before, {sel_now[s]} now)"
         for s in sel_now.index
         if sel_was.get(s) != sel_now[s]
     ]
@@ -1994,6 +1998,7 @@ def _report_text() -> str:
     sac_rate = float(sac_sp["base_rate"])
     coverage = pd.read_csv(OUT / "link_audit_coverage.csv").set_index("country_1956")
     dgz = pd.read_csv(OUT / "link_audit_dgz.csv").set_index("model")
+    sac_best = _best(pd.read_csv(OUT / "selection.csv"), SAC_SCOPE)
     temporal_mix = pd.read_csv(OUT / "link_audit_temporal.csv")
     later = temporal_mix[temporal_mix["holdout"] == "scored by a fit before the cut"]
     later_pact = int(later.loc[later["side"] != "US", "positives"].sum())
@@ -2262,7 +2267,7 @@ exclude zero. The intervals are in `runs/classifier/TABLES.md` ("What the gains 
 **SAC's negatives beside its own airfields.** SAC's town list is complete, but it lists airfields apart, so a town off it may lie beside a
 listed airfield. {int(air_all["negatives_within_5km"])} of its {int(air_all["negatives"])} negatives lie within 5 km of one and {int(air_all["negatives_within_10km"])} within 10 km. Without those within 10 km the SAC gain above is {both(air_less)}, against {both(air_all)} with them.
 
-**SAC's negatives holding an aim point.** {int(dgz.loc["logistic, all permitted", "negatives_with_a_dgz_point"])} unsealed negatives have a designated ground zero point, a printed aim point of the study, as their nearest entry, so "complete" overstates how cleanly the town list marks what SAC would strike. Counting them as positive changes PR-AUC, without refitting, by {signed(dgz.loc["logistic, all permitted", "pr_auc_counted_positive"] - dgz.loc["logistic, all permitted", "pr_auc_as_labelled"])} for the logistic ({dgz.loc["logistic, all permitted", "pr_auc_as_labelled"]:.2f} as labelled) and by {signed(dgz.loc["population + country", "pr_auc_counted_positive"] - dgz.loc["population + country", "pr_auc_as_labelled"])} for population plus country ({dgz.loc["population + country", "pr_auc_as_labelled"]:.2f}) (`runs/classifier/link_audit_dgz.csv`). They stay negatives: the document lists them under no town entry.
+**SAC's negatives holding an aim point.** {int(dgz.loc[sac_best, "negatives_with_a_dgz_point"])} unsealed negatives have a designated ground zero point, a printed aim point of the study, as their nearest entry, so "complete" overstates how cleanly the town list marks what SAC would strike. Counting them as positive changes PR-AUC, without refitting, by {signed(dgz.loc[sac_best, "pr_auc_counted_positive"] - dgz.loc[sac_best, "pr_auc_as_labelled"])} for SAC's selected model, {sac_best} ({dgz.loc[sac_best, "pr_auc_as_labelled"]:.2f} as labelled) and by {signed(dgz.loc["population + country", "pr_auc_counted_positive"] - dgz.loc["population + country", "pr_auc_as_labelled"])} for population plus country ({dgz.loc["population + country", "pr_auc_as_labelled"]:.2f}) (`runs/classifier/link_audit_dgz.csv`). They stay negatives: the document lists them under no town entry.
 
 **Soviet population.** The USSR's rows use the 1959 census, later than the June 1956 document, in every baseline too. Repeating
 Soviet towns on the 1939 census, earlier than the document and missing for towns founded after it, gives:
