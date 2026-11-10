@@ -118,7 +118,10 @@ def test_report_and_readme_say_what_the_check_found():
     assert (
         f"{len(summary) - len(moved)} of {len(summary)} keep their verdict under all 20" in readme
     )
-    assert f'The {len(moved)} that do not are listed in REPORT ("Bootstrap seed")' in readme
+    if len(moved):
+        assert f'The {len(moved)} that do not are listed in REPORT ("Bootstrap seed")' in readme
+    else:
+        assert "that do not are listed" not in readme
     assert "Seeds 1-20" in rep
 
 

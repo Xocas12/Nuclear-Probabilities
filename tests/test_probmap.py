@@ -749,3 +749,18 @@ def test_changing_the_cited_inventory_changes_what_a_scenario_delivers():
     full, half = delivered(table), delivered(halved)
     assert np.median(full) > 100
     assert half == pytest.approx(full / 2)
+
+
+def test_text_about_the_map_refuses_a_config_the_map_was_not_run_on(tmp_path):
+    """REPORT and the viewer read the scenarios through mapped_scenarios: a manifest recording another
+    configs/scenarios.yaml stops them, and the committed one lets them through."""
+    manifest = tmp_path / "manifest.json"
+    manifest.write_text(json.dumps({"scenarios_sha256": "0" * 64}), encoding="utf-8")
+    with pytest.raises(SystemExit, match="rerun `make probmap`"):
+        rn.mapped_scenarios(manifest)
+    committed = RUNS / "probmap" / "manifest.json"
+    if not committed.exists():
+        pytest.skip("no committed map")
+    assert [s["id"] for s in rn.mapped_scenarios(committed)] == [
+        s["id"] for s in rn.load_scenarios()
+    ]

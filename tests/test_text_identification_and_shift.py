@@ -105,5 +105,11 @@ def test_report_figures_once_typed_in_the_generator_match_the_data():
     italy = len(pd.read_csv(CURATED / "gazetteer" / "towns_it_1961.csv"))
     text = _text(ROOT / "REPORT.md")
     if "It was trained on towns in" in text:
-        assert f"Western countries ({', '.join(countries)})" in text
+        # The sealed set was scored once, by the fit its lock names; when the table has changed since, that fit's
+        # countries are read from the lock's commit.
+        from nucprob.classifier.report import _sealed_fit_countries
+
+        sealed = _sealed_fit_countries()
+        assert f"Western countries ({', '.join(sealed)})" in text
+        assert set(countries) <= set(sealed)
     assert f"`census_it_1961` ({italy} of the Western towns)" in text

@@ -1,5 +1,5 @@
 columns,splits,min,median,max
-all permitted,10,0.6013,0.7214,0.8725
-no national power,10,0.5185,0.6758,0.7432
-no source markers,10,0.5164,0.6408,0.7445
-population only,10,0.4045,0.4396,0.4432
+all permitted,10,0.5834,0.7325,0.8224
+no national power,10,0.5983,0.6952,0.7476
+no source markers,10,0.5556,0.6598,0.7502
+population only,10,0.4666,0.4890,0.4916

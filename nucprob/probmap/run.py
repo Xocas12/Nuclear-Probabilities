@@ -68,6 +68,20 @@ def load_scenarios(path=SCENARIOS) -> list[dict]:
     return yaml.safe_load(path.read_text(encoding="utf-8"))["scenarios"]
 
 
+def mapped_scenarios(manifest=None) -> list[dict]:
+    """The scenarios the committed map was run on. Text that describes the map (REPORT, the viewer) reads them
+    here, so it cannot describe a config the cells were not computed from: if configs/scenarios.yaml differs from
+    the one runs/probmap/manifest.json records, this refuses until the map is rerun."""
+    manifest = manifest or (RUNS / "probmap" / "manifest.json")
+    recorded = json.loads(manifest.read_text(encoding="utf-8"))["scenarios_sha256"]
+    if sha256(SCENARIOS) != recorded:
+        raise SystemExit(
+            f"configs/scenarios.yaml (sha256 {sha256(SCENARIOS)[:12]}) is not the config the committed map was run "
+            f"on ({recorded[:12]}); rerun `make probmap` before writing text about the map"
+        )
+    return load_scenarios()
+
+
 def choose_model(train: pd.DataFrame, bags: int) -> tuple[Spec, pd.DataFrame]:
     """The rule of the protocol: highest weighted PR-AUC on a left-out document, towns removed. Spatial
     blocks are read beside it and choose nothing."""

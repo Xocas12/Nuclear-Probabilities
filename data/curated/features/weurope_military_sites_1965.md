@@ -13,6 +13,10 @@
     unknown, or the role continued past 1991.
   - The scope is Italy north of the Po and the Venetian plain: Lombardy, Veneto,
     Friuli–Venezia Giulia, Trentino–Alto Adige and Novara. Turin-based units are left out.
+- **Coordinates.** A row with no recorded end year may be a site in use today, so it is held at the centre of
+  its 0.5-degree cell, up to about 39 km from the site, and its coordinate text is removed
+  (`configs/protocol_amendment_19.yaml`, `scripts/coarsen_site_coordinates.py`). Earlier commits of this
+  table in git history still hold the exact points; see the features README, "Site coordinates".
 - **How it was built.** Every row cites Wikipedia articles, and their URLs are in `source`:
   - de, en, nl, da and it articles on bases, units, towns and lists;
   - mainly *Kernwaffen in Deutschland* (its table of FRG nuclear sites), *Nike (Rakete)* (the
@@ -176,4 +180,4 @@ document changes. `configs/protocol_amendment_16.yaml` refits the classifier on 
   was used instead. This applies, for example, to 1. Panzerdivision (Oldenburg today, Hannover
   in 1965) and 10. Panzerdivision.
 
-**Provenance.** The pages this table cites are in `cited_pages.csv` in this folder: for each, the licence, retrieval date, status and sha256, with `python -m nucprob.sources.cited_pages` to fill in what is missing. Each is the page as fetched on that date, not as first read: the table was made from earlier copies, and nothing shows the two agree. Licences: Wikipedia CC BY-SA 4.0; ww2.dk states no open licence, so its pages are cited and not kept; the few others were not assessed. sha256 of this table: `2137b174ea39135f1924bd841423a0614ec40e7c87faa6e1f1d3afd369c31e2c`.
+**Provenance.** The pages this table cites are in `cited_pages.csv` in this folder: for each, the licence, retrieval date, status and sha256, with `python -m nucprob.sources.cited_pages` to fill in what is missing. Each is the page as fetched on that date, not as first read: the table was made from earlier copies, and nothing shows the two agree. Licences: Wikipedia CC BY-SA 4.0; ww2.dk states no open licence, so its pages are cited and not kept; the few others were not assessed. sha256 of this table: `c305cf5a9ffb74500b3d0457bb888951dc83924e3ef1362d56fdb119f3ae5b81`.

@@ -229,7 +229,7 @@ def test_the_report_states_what_earlier_reviews_found_it_withholding():
     assert "The theatre shares have no source" in text
     assert "share of people living in scored towns" in text
     # Great Britain was withdrawn (tenth amendment): the report says so and cites no withdrawn reading.
-    assert "No United Kingdom in 1965" in text and "unit_sensitivity.csv" not in text
+    assert "**No United Kingdom" in text and "unit_sensitivity.csv" not in text
     assert "The temporal rows also change attacker" in text
     # A gain named in prose is one in the table, whatever the data say.
     assert "Those gains are over LightGBM" not in text
@@ -496,7 +496,7 @@ def test_the_condensed_map_and_extended_tables_keep_every_figure():
         assert row in tables, row
     theatre = report._theatre_table()
     stated = sum(len(a.split(", ")) for a in theatre["attackers"])
-    assert stated == sum(len(sc["attackers"]) for sc in report.load_scenarios())
+    assert stated == sum(len(sc["attackers"]) for sc in report.mapped_scenarios())
     shift = pd.read_csv(m / "domain_shift.csv")
     shift["feature"] = shift["comparison"].str.split(": ").str[-1]
     per = shift[shift["measure"].isin(report.SHIFT_COLUMNS)]

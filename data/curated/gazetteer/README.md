@@ -178,5 +178,5 @@ with a `region` holds for that census region only, since Russia has many a Lenin
 ## Transfer regions
 
 The place universes of the smaller target lists (census town tables of Japan 1940, the US 1950,
-Canada 1956, Denmark, the Netherlands, Belgium, Austria and Italy around 1961, and the UK 1981)
+Canada 1956, Denmark, Belgium, Austria, Italy and the FRG around 1961; the Dutch and UK tables were withdrawn)
 are described in [TRANSFER.md](TRANSFER.md).

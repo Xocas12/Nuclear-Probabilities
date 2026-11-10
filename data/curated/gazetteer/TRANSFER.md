@@ -25,7 +25,6 @@ war plan.
 | Region (`nucprob/transfer/regions.py`) | Lists | Country: table | Places | Located |
 |---|---|---|---|---|
 | `wp_west_1965` (feature year 1965) | Warsaw Pact exercises and plans 1961-1977 | Denmark: census 1960 (Statistisk Årbog 1961) | 55 | 55 |
-| | | Netherlands: census 1960 (CBS, municipalities) | 220 | 220 |
 | | | Belgium: census 1961 (INS, communes) | 172 | 172 |
 | | | Austria: census 1961 (pop-stat; the 1961 Land seats from `POPSTAT_SEATS` in `places.py`) | 50 | 50 |
 | | | Italy: census 1961 (ISTAT, comuni) | 814 | 814 |
@@ -51,7 +50,8 @@ with no hit in its unit stays unplaced, never on a same-named place elsewhere; t
 them. A fuzzy match (ratio 90+) must lie in the town's own unit. Hand-checked points take
 precedence; a row with blank `lat` records why a town could not be placed:
 - `transfer_links.csv` covers towns GeoNames does not know by their old name or places wrongly:
-  Dutch rural municipalities placed at their seat, Canadian towns later merged, US unincorporated
+  Dutch rural municipalities placed at their seat (18 rows, unused since the nineteenth amendment withdrew
+  the Dutch towns), Canadian towns later merged, US unincorporated
   places, Japanese towns later merged (approximate centres) and one Italian comune; the
   `admin1` column tells apart towns of one name.
 - `uk_districts_1981_seats.csv`, the council seats of the 1981 districts, was removed from the tree:
@@ -87,7 +87,7 @@ removed after the tenth amendment withdrew that list (git history holds it). The
   including Turin, Genoa, La Spezia, Rome, Naples and Taranto, is blank, so 630 of the 814
   Italian comuni have no military distances.
 
-Denmark, the Netherlands, Belgium, Austria and the UK are covered whole. A covered town near
+Denmark, Belgium and Austria are covered whole. A covered town near
 the edge of the Italian scope is still measured only to the sites in the table, although an
 uncovered site (La Spezia, say) may be closer. The leakage guard (`tests/test_leakage.py`)
 covers this code.
@@ -102,7 +102,6 @@ Differences from the bloc:
 - the tables stop at 10,000, so neighbour sums run a little lower than the bloc's (which
   count down to 5,000 in most countries). `pop_rank_pct` is not affected: it is ranked among
   towns of 10,000 or more in the bloc and here alike;
-- the UK rows are districts, not towns;
 - airfields, rail, ports and rivers are today's data, as for the bloc.
 
 ## Linking targets
@@ -125,9 +124,9 @@ which states a nuclear weapon, list no town. Counts are of the tables rebuilt at
 | Canada target areas 1956 | 13 | 13 | 13 | 13 / 137 |
 | Operation Alert 1955 (full) | 53 | 53 | 52 | 51 / 1,262 |
 | Target Committee 1945 | 42 | 40 | 40 | 6 / 549 |
-| Lato-67 (FRG, DK, NL, BE) | 57 | 54 | 51 | 46 / 1,029 |
+| Lato-67 (FRG, DK, BE) | 48 | 45 | 42 | 37 / 809 |
 | Hungarian war game 1965 (AT, IT, FRG) | 19 | 12 | 12 | 12 / 1,446 |
-| Burza 1961 (FRG, DK, NL) | 15 | 8 | 7 | 6 / 857 |
+| Burza 1961 (FRG, DK) | 14 | 8 | 7 | 6 / 637 |
 | Czechoslovak plan 1964 (FRG) | 21 | 14 | 7 | 0 / 576 |
 | General Staff Academy lesson 1977 (FRG) | 5 | 4 | 3 | 3 / 582 |
 | NATO mirror, Poland 1962 | 70 | 69 | 54 | 27 / 126 |
@@ -153,7 +152,7 @@ the number of towns listed.
 | Canada target areas 1956 | 13 / 137 | 0.85 / 0.81 | -0.04 [-0.12, +0.04] | 0.77 / 0.77 | 0.00 [-0.15, 0.00] | 0.96 / 0.97 | +0.01 [-0.03, +0.06] |
 | Operation Alert 1955 (full) | 51 / 1,262 | 0.70 / 0.32 | -0.37 [-0.45, -0.26] | 0.59 / 0.31 | -0.27 [-0.39, -0.12] | 0.98 / 0.95 | -0.03 [-0.04, -0.02] |
 | Target Committee 1945 | 6 / 549 | 0.55 / 0.14 | -0.42 [-0.82, -0.11] | 0.67 / 0.00 | -0.67 [-1.00, -0.17] | 0.99 / 0.95 | -0.04 [-0.08, -0.01] |
-| Lato-67 | 46 / 1,029 | 0.13 / 0.12 | 0.00 [-0.08, +0.06] | 0.15 / 0.20 | +0.04 [-0.09, +0.17] | 0.70 / 0.70 | 0.00 [-0.05, +0.04] |
+| Lato-67 | 37 / 809 | 0.10 / 0.12 | +0.02 [-0.02, +0.08] | 0.11 / 0.16 | +0.05 [-0.05, +0.22] | 0.70 / 0.68 | -0.01 [-0.07, +0.04] |
 | NATO mirror, Poland 1962 | 27 / 126 | 0.44 / 0.59 | +0.14 [+0.07, +0.21] | 0.44 / 0.52 | +0.07 [0.00, +0.22] | 0.68 / 0.74 | +0.06 [-0.01, +0.13] |
 | NATO mirror, Hungary 1965 | 13 / 120 | 0.41 / 0.28 | -0.13 [-0.24, +0.04] | 0.38 / 0.38 | 0.00 [-0.08, +0.15] | 0.69 / 0.68 | -0.02 [-0.09, +0.05] |
 | Hungarian war game 1965 (AT, IT, FRG) | 12 / 1,446 | 0.09 / 0.21 | +0.12 [-0.03, +0.35] | 0.17 / 0.25 | +0.08 [-0.17, +0.33] | 0.79 / 0.83 | +0.04 [-0.01, +0.11] |
@@ -170,9 +169,9 @@ the number of towns listed.
 - ROC-AUC differences are small on every list, which is why the ROC table alone read the city
   lists as "adds nothing".
 
-Burza shows no gain: 6 linked towns of 857 (this card reads whole countries; the classifier reads its sector), PR-AUC 0.03 for the rule and 0.04 for LightGBM
-on the common features, a difference of 0.00 [-0.04, +0.04], which includes zero. 0 of
-Burza's intervals exclude zero. `paired.csv` holds 120 intervals (the military model has no row on a
+Burza shows no gain: 6 linked towns of 637 (this card reads whole countries; the classifier reads its sector), PR-AUC 0.04 for the rule and 0.04 for LightGBM
+on the common features, a difference of 0.00 [-0.06, +0.03], which includes zero. 0 of
+Burza's intervals exclude zero. `paired.csv` holds 111 intervals (the military model has no row on a
 list with any town outside its table's scope), so at 95% a few will exclude zero by chance.
 
 This is a check that the pipeline joins end to end, not a result: it was read before the protocol (`configs/protocol.yaml`) was frozen. The classifier run is in `REPORT.md`.
@@ -182,6 +181,9 @@ This is a check that the pipeline joins end to end, not a result: it was read be
 - **FRG added 1 November 2026.** The official table of all 583 towns of 10,000+ could be fetched
   (`towns_frg_1961.md`), so the FRG is in the Western European universe and the plans and exercises
   that aim there are scored. The earlier Wikipedia table is kept as `frg_1961_wikipedia.csv`.
+- **No Netherlands universe.** The Dutch census volume of 1960 came through a path of `ssh.datastations.nl`
+  that robots.txt disallows and no allowed copy was found, so the Dutch towns were withdrawn
+  (`configs/protocol_amendment_19.yaml`). Lato-67 and Burza are scored on their other countries.
 - **No UK universe.** Square Leg 1980 (95 targets) is no longer scored (tenth amendment). Its universe was Great
   Britain's 1981 districts, whose totals came through a Nomis path that robots.txt disallows; no allowed copy was
   found (`towns_uk_1981.md`). Until 46021d7 it scored 73 linked districts of 476, PR-AUC 0.38 for the rule and 0.41

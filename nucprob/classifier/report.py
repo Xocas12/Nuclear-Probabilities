@@ -21,7 +21,7 @@ from nucprob.classifier.identification_fit import DIVERGED_DROP
 from nucprob.paths import CURATED, ROOT, RUNS
 from nucprob.plans import protocol
 from nucprob.probmap.counts import count
-from nucprob.probmap.run import N_DRAWS, load_scenarios
+from nucprob.probmap.run import N_DRAWS, mapped_scenarios
 from nucprob.probmap.viewer import shift_label
 
 OUT = RUNS / "classifier"
@@ -60,7 +60,8 @@ DIFF_DIGITS = 2
 def signed(v: float) -> str:
     """A difference or a bound: two decimals, with its sign. A value within 0.005 of zero prints as +0.00 or -0.00,
     the sign giving its side of zero, which decides a verdict; an exact zero prints as 0.00. Two decimals because a
-    bound moves by about 0.005 between bootstrap seeds (runs/classifier/seed_check.csv): a third would be noise."""
+    bound moves by about that much between bootstrap seeds (seed_movement, runs/classifier/seed_check.csv): a third
+    would be noise."""
     if v == 0 and not np.signbit(v):
         return "0." + "0" * DIFF_DIGITS
     return f"{v:+.{DIFF_DIGITS}f}"
@@ -424,6 +425,25 @@ def seed_summary() -> pd.DataFrame | None:
     return pd.read_csv(SEED_SUMMARY)
 
 
+def seed_movement() -> str:
+    """How far an interval bound moves between bootstrap seeds, from runs/classifier/seed_check.csv: for each
+    comparison and bound, the range over seeds 1 to 20; the median and the 90th percentile of those ranges."""
+    path = SEED_SUMMARY.with_name("seed_check.csv")
+    if not path.exists():
+        return "a bound moves between bootstrap seeds (the seed check has not been run on these outputs)"
+    d = pd.read_csv(path)
+    key = ["scope", "holdout", "lists", "against"]
+    spans = (
+        d.groupby(key)[["low", "high", "block_low", "block_high"]]
+        .agg(lambda x: x.max() - x.min())
+        .stack()
+    )
+    return (
+        f"between bootstrap seeds a bound typically moves by {spans.median():.3f} (median over comparisons), "
+        f"and by up to {spans.quantile(0.9):.2f} for one in ten (`runs/classifier/seed_check.csv`)"
+    )
+
+
 def seed_distinct(s: pd.DataFrame) -> pd.DataFrame:
     """The check's comparisons counted once: where no SAC row is held out, a "lists other than SAC" row repeats its
     "all lists" row (as in `comparison`), and is dropped here as it is from the primary table."""
@@ -567,7 +587,7 @@ def _theatre_table() -> pd.DataFrame:
     """Every theatre share as configs/scenarios.yaml states it, one row per scenario and range. None
     has a source."""
     rows = []
-    for sc in load_scenarios():
+    for sc in mapped_scenarios():
         for a in sc["attackers"]:
             low, mode, high = a["theatre_share"]
             rows.append({"scenario": sc["id"], "attacker": a["state"], "range": (low, mode, high)})
@@ -666,7 +686,7 @@ def _map_section() -> str:
     pop_alone = float(alone.loc[alone["feature"] == "log_pop", "value"].iloc[0])
     variance = pd.read_csv(MAP / "share_variance.csv")
     universe = pd.read_csv(MAP / "modern_universe.csv").set_index("step")["places"]
-    by_id = {sc["id"]: sc for sc in load_scenarios()}
+    by_id = {sc["id"]: sc for sc in mapped_scenarios()}
     scen = s.assign(
         viewer_label=s["scenario"].map(lambda i: shift_label(by_id[i])),
         cells_over_half=s.apply(
@@ -1032,14 +1052,17 @@ def _calibration_terms(cal: pd.DataFrame, base: float) -> str:
         "gap between a bin's mean score and its share of listed towns, so 0.03 means scores are off by about three "
         f"points on average. Brier runs from {lo:.2f} ({models(lo)}) to {hi:.2f} ({models(hi)}); every ECE is "
         f"{cal['expected_calibration_error'].max():.2f} or less, and the isotonic remapping changes no model's Brier by "
-        f"more than {change:.3f}. On SAC's list, then, the raw scores already lie close to observed shares."
+        f"more than {change:.3f}."
+        + (
+            " On SAC's list, then, the raw scores already lie close to observed shares."
+            if cal["expected_calibration_error"].max() <= 0.05 and change <= 0.01
+            else ""
+        )
     )
 
 
 def _targets_1965() -> list[str]:
-    from nucprob.probmap.run import load_scenarios
-
-    sc = next(s for s in load_scenarios() if s["id"] == "ussr_1965_on_west")
+    sc = next(s for s in mapped_scenarios() if s["id"] == "ussr_1965_on_west")
     return [t for a in sc["attackers"] for t in a["targets"]]
 
 
@@ -1239,11 +1262,14 @@ NUMBER_WORDS = "zero one two three four five six seven eight nine ten".split()
 
 
 @functools.cache
-def _pooled_countries() -> list[str]:
+def _pooled_countries(path=None) -> list[str]:
     """Countries of the towns the pooled Warsaw Pact scope was fitted and scored on, read from the place ids
     of its spatial-block scores (`wp_west_1965:<country>:<n>`)."""
-    path = OUT / "held_out_scores.csv.gz"
-    h = pd.read_csv(path, usecols=["scope", "holdout", "place_id"])
+    h = pd.read_csv(
+        path or OUT / "held_out_scores.csv.gz",
+        usecols=["scope", "holdout", "place_id"],
+        compression="gzip",
+    )
     ids = h.loc[
         h["scope"].str.startswith("Warsaw Pact, pooled") & (h["holdout"] == "spatial blocks"),
         "place_id",
@@ -1268,13 +1294,22 @@ def _pooled_sealed(prim: pd.DataFrame) -> str:
 
 def _sealed_fit_countries() -> list[str]:
     """The pooled scope's countries in the fit the sealed set was scored with. The sealed set is scored once; a later
-    refit on a table without the Dutch towns (the nineteenth amendment) does not change what that fit was trained on."""
-    countries = _pooled_countries()
+    refit (the nineteenth amendment took the Dutch towns out) does not change what that fit was trained on. If the
+    lock's table is not the current one, the scores are read from the commit the lock names."""
     lock = json.loads((OUT / "sealed" / "LOCK.json").read_text())
     current = json.loads((OUT / "manifest.json").read_text())["table_sha256"]
-    if lock["table_sha256"] != current and "Netherlands" not in countries:
-        countries = sorted([*countries, "Netherlands"])
-    return countries
+    if lock["table_sha256"] == current:
+        return _pooled_countries()
+    import io
+    import subprocess
+
+    blob = subprocess.run(
+        ["git", "show", f"{lock['git_commit']}:runs/classifier/held_out_scores.csv.gz"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+    ).stdout
+    return _pooled_countries(io.BytesIO(blob))
 
 
 def _count_word(n: int) -> str:
@@ -1391,20 +1426,6 @@ def _rule_note(scope: str, against: str = PLUS) -> str:
     return " (here population plus country ranks every place as the population rule does: this scope's lists hold no town of these countries)"
 
 
-def _blind_line(r, auc: bool = True) -> str:
-    blocks = (
-        f"[{signed(r['block_low'])}, {signed(r['block_high'])}]"
-        if r["block_measured"]
-        else f"n/a: positives in {int(r['positive_blocks'])} blocks"
-    )
-    scores = f"{r['a_pr_auc']:.2f} against {r['b_pr_auc']:.2f}, " if auc else ""
-    return (
-        f"{r['scope']}, {r['model']}: {scores}"
-        f"{interval(r)}, by blocks {blocks}: {r['verdict']}"
-        f"{_rule_note(r['scope'], r['against'])}"
-    )
-
-
 DIVERGENCE = OUT / "divergence"
 
 
@@ -1463,9 +1484,15 @@ def _main_divergence() -> str:
 
 def _main_lead() -> str:
     """The report's first sentences, which follow the blind reading where one exists."""
+    plus = _sac_rule(PLUS)
+    if plus["low"] > 0 and plus["block_low"] > 0:
+        than = f"better than population and a country term do ({point(plus['delta'])})"
+    elif plus["high"] < 0 and plus["block_high"] < 0:
+        than = f"worse than population and a country term do ({point(plus['delta'])})"
+    else:
+        than = "no better than population and a country term do"
     inside = (
-        "Under cross-validation inside SAC's 1956 study, the models describe that list a little better than "
-        "population and a country term do."
+        f"Under cross-validation inside SAC's 1956 study, the models describe that list {than}."
     )
     if not BLIND.exists():
         return inside + " That gain has not been shown to reach other documents."
@@ -1723,7 +1750,7 @@ def _corrections() -> str:
     """One section for every correction of the data adopted after results had been read: what it changed, and
     every primary row (each scope's selected candidate against population plus country, by holdout and list set)
     whose verdict it moved, whichever way."""
-    rows, moved_lines, selections = [], [], []
+    rows, moved_lines = [], []
     for number, was_name, now_name in ((c[0], c[1], c[2]) for c in CORRECTIONS):
         was_dir = globals()[was_name]
         now_dir = globals()[now_name] if now_name is not None else OUT
@@ -1741,7 +1768,6 @@ def _corrections() -> str:
             f"{r['Verdict']} after ({r['Difference, country']}, by blocks {r['By blocks']})"
             for _, r in moved.iterrows()
         ]
-        selections += changed
     if not rows:
         return ""
     held, km = _held_sites()
@@ -1815,36 +1841,9 @@ def _cannot_pooled() -> str:
 TABLE_BEFORE_17 = "2aaafd623c1668e3464067d24346ea766e7a375033eb658fd1a31e5b5e152c41"
 
 
-def _pending_17() -> str:
-    """While the outputs are of the links before `configs/protocol_amendment_17.yaml`, say which links were wrong."""
-    if json.loads((OUT / "manifest.json").read_text())["table_sha256"] != TABLE_BEFORE_17:
-        return ""
-    return """
-**Known link errors in these results.** Every result here is of links that broke the rule stated for the smaller
-lists. Lato-67's German offset rows ("5 km NW of Münster" and four more) were not placed and linked to no town,
-while its Danish ones were; placed, they credit Walsrode, Münster, Kevelaer and Lobberich. Two Burza rows that print a
-direction with no distance ("south of Schleswig", "north of Hamburg") were linked to those towns, though the same rule
-left "south of Utrecht" unlinked. So Lato-67 lacks four positives and Burza has two it should not.
-`configs/protocol_amendment_17.yaml`, committed before any refit, corrects them and fixes how the refit is read; the
-refit is not yet committed."""
-
-
 # The classifier table of every run before the nineteenth amendment (Dutch towns withdrawn, site coordinates of
 # sites possibly in use today held at their 0.5-degree cell centres).
 TABLE_BEFORE_19 = "2376ae4cda66262f164010ba12cf06e4ce578fdb205b313022f71d25c23fd2b3"
-
-
-def _pending_19() -> str:
-    """While the outputs are of the table before `configs/protocol_amendment_19.yaml`, say what it changes."""
-    if json.loads((OUT / "manifest.json").read_text())["table_sha256"] != TABLE_BEFORE_19:
-        return ""
-    return """
-**These results are of the table before the nineteenth amendment.** Its Dutch towns came from a census volume fetched
-through a path the host's robots.txt disallows, and its site distances were computed from cited coordinates of sites
-that may be in use today. `configs/protocol_amendment_19.yaml`, committed before any refit, withdraws the Dutch towns
-(and the Netherlands from the 1965 map), holds every site with no recorded end year at the centre of its 0.5-degree
-cell, drops two site rows whose only source refuses this project's agents, and fixes how the refit is read. The refit
-is not yet committed."""
 
 
 def _last_amendment() -> int:
@@ -2040,8 +2039,8 @@ the map's (section "Probability map") are the 5th to 95th percentiles of its dra
 300 km squares of towns; the other interval resamples single towns. Verdicts use the unrounded bounds.
 
 **How numbers are rounded.** Scores (PR-AUC, probabilities, shares) have two decimals; one that is not zero but would print as 0.00 takes a third (0.003), so that 0.00 means zero. A difference between two
-scores and its interval bounds have two decimals as well: between bootstrap seeds a bound moves by about 0.005
-("Bootstrap seed"), so a third decimal would be noise. A difference within 0.005 of zero prints as +0.00 or -0.00: the
+scores and its interval bounds have two decimals as well: {seed_movement()} ("Bootstrap seed"), so a third decimal
+would be noise. A difference within 0.005 of zero prints as +0.00 or -0.00: the
 sign gives the side of zero on which the unrounded value lies, and verdicts use the unrounded bounds, so a gain whose
 lower bound prints +0.00 is a gain by less than 0.005 and may not survive another seed. An exact zero prints as 0.00.
 An estimate within 0.005 of a bound may print equal to it.
@@ -2131,7 +2130,6 @@ by auditors whose own error rate was 1.3%, so the audit's reading is itself unce
 Part II pages, and on those the confirmed misread rate was 3 in 216, well above that bound.
 
 **Links** lose entries too: {int(every["unlinked"])} of SAC's {int(every["entries"]):,} complex entries link to no town of the universe ({int(sub["unlinked"])} of its {int(sub["entries"])} subcomplex entries; `runs/classifier/link_audit_coverage_subcomplex.csv`), and the share varies by country: China {int(coverage.loc["China", "unlinked"])} of {int(coverage.loc["China", "entries"])}, North Korea {int(coverage.loc["North Korea", "unlinked"])} of {int(coverage.loc["North Korea", "entries"])}, North Vietnam {int(coverage.loc["North Vietnam", "unlinked"])} of {int(coverage.loc["North Vietnam", "entries"])}, Albania {int(coverage.loc["Albania", "unlinked"])} of {int(coverage.loc["Albania", "entries"])} (`runs/classifier/link_audit_coverage.csv`). These count entries, not towns. An entry whose cover name stands for a town and its closed city (Kapustin Yar and Znamensk, for example) links to both, so linked complex entries give {int(every["towns_linked"] - every["linked"])} more towns than their number, {_subcomplex_extra(int(sub["towns_linked"] - sub["linked"]))}
-{_pending_17()}{_pending_19()}
 
 **Documents.** `data/curated/labels/PLANS.yaml` records each list's attacker, author, date, type and evidence
 grade. The grades: A, a primary document or its published translation read here; B, a primary document read here that names only part of the
@@ -2471,8 +2469,20 @@ def _readme_short() -> str:
         "defence": "air and missile defence sites",
         "administration": "administrative status",
     }
-    named = [words.get(f, f) for f in FAMILY_WORDS if f in set(dated["family"])]
-    named_text = ", ".join(named[:-1]) + " and " + named[-1] if len(named) > 1 else "".join(named)
+
+    def listing(names: list[str]) -> str:
+        return ", ".join(names[:-1]) + " and " + names[-1] if len(names) > 1 else "".join(names)
+
+    on_all = set(dated.loc[dated["rows"] == "all countries", "family"])
+    soviet_only = set(dated.loc[dated["rows"] == "USSR", "family"]) - on_all
+    named_text = (
+        listing([words.get(f, f) for f in FAMILY_WORDS if f in on_all]) + " gain on all countries"
+    )
+    if soviet_only:
+        named_text += ", and " + listing(
+            [words.get(f, f) for f in FAMILY_WORDS if f in soviet_only]
+        )
+        named_text += " on Soviet towns only"
     sens = pd.read_csv(OUT / "sensitivity.csv")
     clean = sens[(sens["scope"] == SAC_SCOPE) & (sens["variant"] == "none flagged")].iloc[0]
     strict = sens[(sens["scope"] == SAC_SCOPE) & (sens["variant"] == "strict as-of")].iloc[0]
@@ -2485,6 +2495,20 @@ def _readme_short() -> str:
     scen = pd.read_csv(MAP / "scenarios.csv").set_index("scenario")
     val = pd.read_csv(MAP / "validation.csv").set_index("reading").loc["spatial blocks held out"]
     best = _best(pd.read_csv(OUT / "selection.csv"), SAC_SCOPE)
+    # Size "mostly" if population alone lifts PR-AUC above the base rate by more than everything else adds to it.
+    by_size = rule["b_pr_auc"] - _sac_base_rate()
+    size_text = (
+        "a listed town stood out mostly by its size"
+        if by_size > plus["a_pr_auc"] - rule["b_pr_auc"]
+        else "a listed town stood out by more than its size"
+    )
+    on_all = fam[(fam["rows"] == "all countries") & fam["base"].eq("base")]
+    top = on_all.loc[on_all["delta"].idxmax()]
+    top_text = (
+        "Transport adds the most but rests largely on today's data. "
+        if top["family"] == "transport" and top["verdict"] == "gain"
+        else ""
+    )
 
     def over(name: str) -> str:
         r = scen.loc[name]
@@ -2496,10 +2520,10 @@ def _readme_short() -> str:
     return f"""### Short answers
 
 **What made a place a target?** The lists show what listed towns had in common, not why they were chosen. On the
-one large list, SAC's 1956 study of the Soviet bloc, a listed town stood out mostly by its size. Under spatial
+one large list, SAC's 1956 study of the Soviet bloc, {size_text}. Under spatial
 cross-validation, ranking towns by population alone (the population rule) gives a PR-AUC of {rule["b_pr_auc"]:.2f} (base rate {_sac_base_rate():.2f});
 population plus a term for each country gives {plus["b_pr_auc"]:.2f}, and the selected model ({best}) {plus["a_pr_auc"]:.2f}: {interval(plus)} over population plus country,
-by blocks {block_interval(plus)}.{seed_note(plus)} No family of town traits adds more than {gains["delta"].max():.2f} (table below). Of the families that describe the towns as of 1956, {named_text} gain. The defence sites are known mostly from post-Soviet sources: they record what existed in 1956, not what SAC knew. Transport adds the most but rests largely on today's data. {_short_repeats(clean, strict)} Several inputs still postdate 1956 (REPORT, "Inputs later than the document"), and the
+by blocks {block_interval(plus)}.{seed_note(plus)} No family of town traits adds more than {gains["delta"].max():.2f} (table below). Of the families that describe the towns as of 1956, {named_text}. The defence sites are known mostly from post-Soviet sources: they record what existed in 1956, not what SAC knew. {top_text}{_short_repeats(clean, strict)} Several inputs still postdate 1956 (REPORT, "Inputs later than the document"), and the
 analysis is not blind: earlier results had been read. Nothing here has been shown to carry over to a document the
 models did not see.{blind_text}
 
@@ -2515,16 +2539,6 @@ scenarios apply lists of 1945-1977 to today's towns and are extrapolation.
 ### Results in brief
 
 """
-
-
-def _readme_pending_19() -> str:
-    if not _pending_19():
-        return ""
-    return (
-        "**Pending refit.** Every figure below is of the table before `configs/protocol_amendment_19.yaml`, which "
-        "withdraws the Dutch towns (their census volume came through a path robots.txt disallows) and holds sites "
-        "possibly in use today at their 0.5-degree cell centres. REPORT, Data, says more.\n\n"
-    )
 
 
 def readme_results() -> str:
@@ -2576,11 +2590,11 @@ ranking with no information scores the list's **base rate**: {float(sac["base_ra
 incomplete list PR-AUC understates precision. **Spatial cross-validation** scores each town with a model fitted
 without the 300 km square it lies in (5 folds, on three shifted grids, scores averaged). Intervals are 95% paired
 bootstrap intervals, resampling towns and, "by blocks", 300 km squares; a difference is a **gain** or a loss only if
-both exclude zero, and otherwise **neither**. Differences have two decimals, as a bound moves by about 0.005 between
-bootstrap seeds; one printed +0.00 or -0.00 lies within 0.005 of zero on that side.
+both exclude zero, and otherwise **neither**. Differences have two decimals, since {seed_movement()}; one
+printed +0.00 or -0.00 lies within 0.005 of zero on that side.
 """
     short = _readme_short()
-    text = f"""{_readme_pending_19()}{terms}
+    text = f"""{terms}
 {short}{_readme_blind()}{_readme_families()}- **On lists other than SAC's**, under spatial cross-validation, the global model on all attacker documents
   (exercises included) against population plus country is {interval(other)}, by blocks {block_interval(other)}: {claim(other)}.{seed_note(other)} {_other_lists_basis(lists, other, g_best)} The held-out blocks' documents are also in training, so this is not a
   reading on an unseen document.
@@ -2672,13 +2686,6 @@ def _other_lists_basis(lists: pd.DataFrame, other, model: str) -> str:
                 '(REPORT, "Corrections made after results were read").'
             )
     return text
-
-
-def _shift_features(shift: pd.DataFrame) -> int:
-    """The features the domain-shift classifier reads: those domain_shift.csv gives a percentile share for."""
-    prefix = "modern towns outside the 1st-99th percentile of training: "
-    rows = shift["comparison"][shift["comparison"].str.startswith(prefix)]
-    return rows.str.removeprefix(prefix).nunique()
 
 
 def _readme_blind() -> str:

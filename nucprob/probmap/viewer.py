@@ -12,7 +12,7 @@ import pandas as pd
 
 from nucprob.paths import RAW, RUNS
 from nucprob.probmap.counts import count
-from nucprob.probmap.run import load_scenarios
+from nucprob.probmap.run import mapped_scenarios
 
 OUT = RUNS / "probmap"
 LAND = RAW / "naturalearth" / "ne_50m_land.geojson"
@@ -54,7 +54,7 @@ def shift_label(sc: dict) -> str:
 
 def withdrawn_1965() -> str:
     """The viewer's sentence on the countries the 1965 map lacks, from the scenario's targets."""
-    sc = next(s for s in load_scenarios() if s["id"] == "ussr_1965_on_west")
+    sc = next(s for s in mapped_scenarios() if s["id"] == "ussr_1965_on_west")
     targets = [t for a in sc["attackers"] for t in a["targets"]]
     gone = ["United Kingdom"] + ([] if "Netherlands" in targets else ["Netherlands"])
     one = len(gone) == 1
@@ -72,7 +72,7 @@ def payload() -> dict:
     spread = pd.read_csv(OUT / "score_spread.csv").set_index("scenario")
     delivered = pd.read_csv(OUT / "delivered.csv")
     items = []
-    for sc in load_scenarios():
+    for sc in mapped_scenarios():
         c = pd.read_csv(OUT / "cells" / f"{sc['id']}.csv.gz")
         columns = ["cell_lat", "cell_lon", "p_median", "p_low", "p_high", "holds_sealed_town"]
         s = summary.loc[sc["id"]]

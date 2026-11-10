@@ -22,17 +22,26 @@ FEATURES = Path(__file__).resolve().parents[1] / "data" / "curated" / "features"
 TABLES = {
     "military_sites_1956.csv": ("lat", "lon", "until_year", ("note", "source")),
     "bloc_air_defence_1956.csv": ("lat", "lon", "until_year", ("note", "source")),
-    "weurope_military_sites_1965.csv": ("lat", "lon", "until_year", ("note", "coord_source", "source")),
+    "weurope_military_sites_1965.csv": (
+        "lat",
+        "lon",
+        "until_year",
+        ("note", "coord_source", "source"),
+    ),
     "sac_bases_1956.csv": ("lat", "lon", None, ("role", "basis")),
 }
 # Coordinate text as the tables cite it: {{Coord|...}} templates, "lat=..., lon=..." pairs, decimal pairs.
 COORD = [
     re.compile(r":?\s*\{\{\s*[Cc]oord\s*\|[^}]*\}\}"),
     re.compile(r":?\s*lat\s*=\s*-?[\d.]+[^)]*?lon\w*\s*=\s*-?[\d.]+"),
-    re.compile(r":?\s*(?:long?\s*=\s*-?[\d.]+\s*\|?\s*)?lat\s*=\s*-?[\d.]+(?:\s*\|?\s*long?\s*=\s*-?[\d.]+)?"),
+    re.compile(
+        r":?\s*(?:long?\s*=\s*-?[\d.]+\s*\|?\s*)?lat\s*=\s*-?[\d.]+(?:\s*\|?\s*long?\s*=\s*-?[\d.]+)?"
+    ),
     re.compile(r"-?\d{1,3}\.\d{2,}\s*[,/ ]\s*-?\d{1,3}\.\d{2,}"),
     # degrees, minutes and seconds: "[46 53 10N, 142 43 09E]", "46°53′10″N 142°43′09″E"
-    re.compile(r"\s*\[?\d{1,3}[° ]\s?\d{1,2}[′' ]\s?(?:\d{1,2}(?:\.\d+)?[″\"]?\s?)?[NS],?\s*\d{1,3}[° ]\s?\d{1,2}[′' ]\s?(?:\d{1,2}(?:\.\d+)?[″\"]?\s?)?[EW]\]?"),
+    re.compile(
+        r"\s*\[?\d{1,3}[° ]\s?\d{1,2}[′' ]\s?(?:\d{1,2}(?:\.\d+)?[″\"]?\s?)?[NS],?\s*\d{1,3}[° ]\s?\d{1,2}[′' ]\s?(?:\d{1,2}(?:\.\d+)?[″\"]?\s?)?[EW]\]?"
+    ),
 ]
 # Remarks on what a site holds or is today, which the 1956 and 1965 features do not need. A date range ending
 # "today" stays: it says how long a site served, not what it holds.
@@ -60,7 +69,9 @@ def clean(text: str) -> str:
     return text.strip(" ;,")
 
 
-def coarsen(path: Path, lat: str, lon: str, end: str | None, texts: tuple[str, ...]) -> tuple[str, int]:
+def coarsen(
+    path: Path, lat: str, lon: str, end: str | None, texts: tuple[str, ...]
+) -> tuple[str, int]:
     raw = path.read_bytes().decode("utf-8")
     reader = csv.DictReader(io.StringIO(raw, newline=""))
     rows = list(reader)

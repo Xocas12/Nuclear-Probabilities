@@ -1,8 +1,8 @@
 scenario,population_ratio,score_ratio,p_correlation_with_towns_in_cell,p_correlation_with_log_people_in_cell
-us_1956_on_bloc,620.0697,6.7942,0.5227,0.9369
-us_1950_stock_on_bloc,620.0697,6.7942,0.8439,0.8025
-ussr_1965_on_west,219.7387,6.6444,0.6203,0.8959
-modern_us_russia,1904.0000,6.8596,0.4269,0.6483
-modern_us_russia_half,1904.0000,6.8596,0.5268,0.6601
-modern_us_china,1904.0000,6.8596,0.3134,0.7882
-modern_india_pakistan,1775.6362,6.4875,0.4541,0.3457
+us_1956_on_bloc,620.0697,6.4515,0.5313,0.9319
+us_1950_stock_on_bloc,620.0697,6.4515,0.8506,0.7950
+ussr_1965_on_west,219.7387,6.3157,0.5816,0.8816
+modern_us_russia,1904.0000,6.5106,0.4302,0.6425
+modern_us_russia_half,1904.0000,6.5106,0.5289,0.6510
+modern_us_china,1904.0000,6.5106,0.3120,0.7833
+modern_india_pakistan,1775.6362,6.1734,0.4533,0.3403

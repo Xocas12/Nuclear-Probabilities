@@ -115,7 +115,7 @@ geonames_us,huggingface.co,rules,True,,universe,2026-11-01,True,obtained_from,ru
 popstat_austria,pop-stat.mashke.org,no_rule_http_404,True,,universe,2026-10-10,True,url,no_rule_http_404,True
 census_ca_1956,archive.org,rules,True,,universe,2026-10-10,True,url,rules,True
 census_dk_1960,www.dst.dk,rules,True,,universe,2026-10-10,True,url,rules,True
-census_nl_1960,doi.org,no_rule_http_404,True,,universe,2026-10-10,True,url,no_rule_http_404,True
+census_nl_1960,ssh.datastations.nl,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-10-10,False,obtained_from,no_rule_http_404,True
 census_be_1961,doc.statbel.fgov.be,no_rule_http_400,True,,universe,2026-10-10,True,url,no_rule_http_400,True
 census_it_1961,ebiblio.istat.it,no_rule_http_404,True,,universe,2026-10-10,False,url,no_rule_http_404,True
 census_uk_1981_nomis,www.nomisweb.co.uk,rules,False,project; *; ClaudeBot; anthropic-ai,universe,2026-10-10,False,url,rules,False

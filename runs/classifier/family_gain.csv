@@ -4,14 +4,14 @@ all countries,administration,base,0.8114,0.8135,0.0021,-0.0022,0.0065,False,-0.0
 all countries,geography,base,0.8114,0.8216,0.0103,0.0030,0.0173,True,0.0022,0.0188,True,gain
 all countries,industry,base,0.8114,0.8140,0.0026,0.0003,0.0050,True,-0.0001,0.0051,False,neither
 all countries,transport,base,0.8114,0.8349,0.0235,0.0140,0.0335,True,0.0104,0.0379,True,gain
-all countries,military,base,0.8114,0.8264,0.0150,0.0082,0.0218,True,0.0074,0.0238,True,gain
-all countries,defence,base,0.8114,0.8205,0.0091,0.0036,0.0145,True,0.0024,0.0167,True,gain
+all countries,military,base,0.8114,0.8281,0.0167,0.0096,0.0236,True,0.0091,0.0257,True,gain
+all countries,defence,base,0.8114,0.8212,0.0098,0.0041,0.0152,True,0.0030,0.0174,True,gain
 all countries,national_power,base,0.8114,0.8135,0.0021,-0.0000,0.0043,False,-0.0010,0.0052,False,neither
 USSR,national_power over population,population only,0.7692,0.7692,0.0000,0.0000,0.0000,False,0.0000,0.0000,False,neither
 USSR,administration,base,0.7692,0.7811,0.0119,0.0040,0.0196,True,0.0032,0.0211,True,gain
 USSR,geography,base,0.7692,0.7839,0.0148,0.0034,0.0256,True,0.0037,0.0262,True,gain
 USSR,industry,base,0.7692,0.7719,0.0027,-0.0009,0.0061,False,-0.0016,0.0066,False,neither
 USSR,transport,base,0.7692,0.8105,0.0414,0.0259,0.0563,True,0.0257,0.0563,True,gain
-USSR,military,base,0.7692,0.7893,0.0201,0.0080,0.0320,True,0.0070,0.0341,True,gain
-USSR,defence,base,0.7692,0.7838,0.0146,0.0042,0.0255,True,0.0018,0.0296,True,gain
+USSR,military,base,0.7692,0.7893,0.0202,0.0083,0.0317,True,0.0072,0.0343,True,gain
+USSR,defence,base,0.7692,0.7848,0.0156,0.0054,0.0264,True,0.0032,0.0305,True,gain
 USSR,national_power,base,0.7692,0.7692,0.0000,0.0000,0.0000,False,0.0000,0.0000,False,neither

@@ -58,8 +58,13 @@ def test_transfer_pop_rank_pct_uses_the_common_floor():
 def test_every_transfer_town_table_reaches_the_floor():
     """Every town table of the transfer regions holds only towns at or above the floor, so the
     floor, not the table, decides what a transfer town is ranked against."""
+    from nucprob.transfer.regions import REGIONS
+
     csvs = sorted(CURATED.glob("gazetteer/towns_*.csv"))
-    assert len(csvs) >= 9
+    # Every table a region reads is among them (towns_nl_1960 was withdrawn by the nineteenth amendment, so 8 remain).
+    read = {t[2] for r in REGIONS.values() for t in r.countries if t[2].startswith("towns_")}
+    assert read and read <= {p.stem for p in csvs}
+    assert len(csvs) >= 8
     for path in csvs:
         pop = pd.to_numeric(pd.read_csv(path)["pop"], errors="coerce").dropna()
         assert pop.min() >= RANK_FLOOR, path.name

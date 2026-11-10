@@ -127,7 +127,7 @@ def test_extended_sentence_says_the_best_is_taken_per_list_set():
     assert glob["comparison"].nunique() == 6
 
 
-def test_link_errors_are_stated_while_the_results_are_of_the_earlier_links():
+def test_no_text_says_the_results_are_of_the_earlier_links():
     import json
 
     from nucprob.classifier.report import TABLE_BEFORE_17
@@ -139,10 +139,11 @@ def test_link_errors_are_stated_while_the_results_are_of_the_earlier_links():
     assert {"links", "changes", "reporting"} <= set(amendment)
     report, readme = _flat(ROOT / "REPORT.md"), _flat(ROOT / "README.md")
     history = _flat(ROOT / "configs" / "HISTORY.md")
-    pending = manifest["table_sha256"] == TABLE_BEFORE_17
-    assert ("Known link errors in these results." in report) == pending
-    assert ("its refit is not yet committed" in readme) == pending
-    assert ("results in README and REPORT are of the earlier links" in history) == pending
+    # The refit of the corrected links is committed: no output is of the earlier table, and no text says one is.
+    assert manifest["table_sha256"] != TABLE_BEFORE_17
+    assert "Known link errors in these results." not in report
+    assert "its refit is not yet committed" not in readme
+    assert "results in README and REPORT are of the earlier links" not in history
 
 
 def test_the_seventeenth_amendment_row_appears_only_after_its_refit(tmp_path, monkeypatch):

@@ -9,6 +9,10 @@
     the role continued past 1991.
   - `note` quotes the dating evidence. `decision` explains every `uncertain` and `no` row. `source`
     gives the pages used, then the coordinate source after `coords:`.
+- **Coordinates.** A row with no recorded end year may be a site in use today, so it is held at the centre of
+  its 0.5-degree cell, up to about 39 km from the site, and its coordinate text is removed
+  (`configs/protocol_amendment_19.yaml`, `scripts/coarsen_site_coordinates.py`). Earlier commits of this
+  table in git history still hold the exact points; see the features README, "Site coordinates".
 - **Independence.** Nothing under `data/curated/sac1956`, `data/curated/labels` or `data/processed`
   was read. Rows were selected by rule from the unit pages (below), never by place. One provenance
   caveat applies to the S-25 points; see "Anachronism and provenance".
@@ -184,4 +188,4 @@ may measure Holm's coverage in part.
 - **Overlap.** `military_sites_1956.csv` already has three `air_defence` rows (S-25 at Balashikha,
   Moscow and Baku districts); they agree on place. Combining the tables would double count them.
 
-**Provenance.** The pages this table cites are in `cited_pages.csv` in this folder: for each, the licence, retrieval date, status and sha256, with `python -m nucprob.sources.cited_pages` to fill in what is missing. Each is the page as fetched on that date, not as first read: the table was made from earlier copies, and nothing shows the two agree. Licences: Wikipedia CC BY-SA 4.0; ww2.dk states no open licence, so its pages are cited and not kept; the few others were not assessed. sha256 of this table: `f49e4e30cccc5a49394bdb13841f59f4e7672aedd5974c16d6ecda97dd2caa3f`.
+**Provenance.** The pages this table cites are in `cited_pages.csv` in this folder: for each, the licence, retrieval date, status and sha256, with `python -m nucprob.sources.cited_pages` to fill in what is missing. Each is the page as fetched on that date, not as first read: the table was made from earlier copies, and nothing shows the two agree. Licences: Wikipedia CC BY-SA 4.0; ww2.dk states no open licence, so its pages are cited and not kept; the few others were not assessed. sha256 of this table: `e8a92d54a0734c2d18404ad8a4c142b37025bb8d510c655b0f3e8018b49bd7c1`.

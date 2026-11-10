@@ -91,12 +91,18 @@ def test_generated_and_written_prose_is_wrapped():
     s = report.seed_distinct(report.seed_summary())
     moved = _moved()
     assert f"{len(s) - len(moved)} of {len(s)} keep their verdict under all 20" in seeds
-    assert f'The {len(moved)} that do not are listed in REPORT ("Bootstrap seed")' in seeds
+    if len(moved):
+        assert f'The {len(moved)} that do not are listed in REPORT ("Bootstrap seed")' in seeds
+    else:
+        assert "that do not are listed" not in seeds
     assert "the number 1956 (not the document year)" in seeds
     # REPORT lists every seed-dependent comparison, one table row each
     rep = (ROOT / "REPORT.md").read_text(encoding="utf-8")
     section = rep[rep.index("**Bootstrap seed.**") :]
-    assert f"These {len(moved)} are seed-dependent" in " ".join(section.split())
+    flat = " ".join(section.split())
+    assert (
+        f"These {len(moved)} are seed-dependent" if len(moved) else "None is seed-dependent."
+    ) in flat
 
 
 def _moved() -> pd.DataFrame:
@@ -125,13 +131,17 @@ def test_no_reader_facing_text_leans_on_the_review_history():
 
 
 def test_lato67_and_burza_are_defined_where_readme_first_names_them():
+    """Wherever README names the two lists (its results name them only when a verdict turns on their links), the first
+    mention says what they are."""
     readme = _flat(ROOT / "README.md")
-    first = readme.index("Lato-67")
-    assert readme[first : first + 60].startswith(
-        ("Lato-67, a Polish exercise of 1967", "Lato-67 (the Coastal Front directive")
-    )
-    first = readme.index("Burza")
-    assert readme[first : first + 50].startswith("Burza (the Maritime Front exercise of 1961)")
+    if "Lato-67" in readme:
+        first = readme.index("Lato-67")
+        assert readme[first : first + 60].startswith(
+            ("Lato-67, a Polish exercise of 1967", "Lato-67 (the Coastal Front directive")
+        )
+    if "Burza" in readme:
+        first = readme.index("Burza")
+        assert readme[first : first + 50].startswith("Burza (the Maritime Front exercise of 1961)")
 
 
 def test_the_corrected_links_are_described_whole():
@@ -160,7 +170,7 @@ def test_a_negative_bound_rounded_to_zero_in_the_csv_keeps_its_sign():
 
 
 def test_every_printed_difference_and_bound_has_two_decimals():
-    """Differences and their bounds print at two decimals everywhere: a bound moves by about 0.005 between bootstrap
+    """Differences and their bounds print at two decimals everywhere: a bound typically moves by about 0.005 between bootstrap
     seeds, so a third decimal would print noise. A signed zero is a value within 0.005 of zero, on the sign's side."""
     for name in ("README.md", "REPORT.md", "runs/classifier/TABLES.md"):
         text = (ROOT / name).read_text(encoding="utf-8")

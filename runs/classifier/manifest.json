@@ -1,11 +1,11 @@
 {
-  "created": "2026-11-05T07:51:49+00:00",
-  "git_commit": "31d0ab3c6bc5917a79bbe694da59ab92a5ebec5d",
+  "created": "2026-11-05T22:01:28+00:00",
+  "git_commit": "1244f614e589843140c93af1d6c145ff773b517e",
   "git_dirty": false,
   "protocol_sha256": "cc14e52ef3cce2f0562ea24195872a3cfa10a30571a0e13fb5dcb130914794f8",
-  "table_sha256": "2376ae4cda66262f164010ba12cf06e4ce578fdb205b313022f71d25c23fd2b3",
+  "table_sha256": "7dcbcb8cfdda7f3da17a713cd9aa064e7c0d36e6b8cc6083703c09b5a763fe09",
   "inputs_sha256": {
-    "data/sources.yaml": "664ca44c13dd82c3c79af68fb057b000249a1fe613f396ed8c75d0121ae753fd",
+    "data/sources.yaml": "9f8c46f28fd13a7b4157ce16a48e573f40725248aae07e5b7c9fbe15db7a2b71",
     "data/curated/labels/CATALOGUE.yaml": "9221dd472c587b8b405f3e7af4160364c68ea165bf6a0ecec9b0798faca900f1",
     "data/curated/labels/PLANS.yaml": "a8701b3a91e081b8770c8e008319b8563471abff361b6c27b85213f280b3f522",
     "data/curated/labels/SCHEMA.md": "4d5d5841a58a87b111a6f97aef4eac72ffd4a434ca2c27fffed32452ce3bf6e5",
@@ -84,14 +84,14 @@
   "sealed_rows_excluded": 463,
   "quick": false,
   "outputs": {
-    "runs/classifier/calibration.csv": "0e6d07ec41d2a9cad3ddcfbedc8f5d49f4d257a50210380e0657346c57a30044",
-    "runs/classifier/comparison.csv": "9550f8fe9638417c8f8d332b3d9649ba2a060aefc7e3d2816549f060e4916bb5",
-    "runs/classifier/defence.csv": "62f5daaa3b70bdde1af3a72fd7cb13701d16c65ff9acfc76f693b7d93fcb1dc8",
-    "runs/classifier/family_gain.csv": "11db565e945098785b8b9be2dc896cdf190d8ec8cc12f5d6601e94c2d32fee6d",
-    "runs/classifier/held_out_scores.csv.gz": "0e7ebbcad84f375bec6318efdaf52484b4718f20f5badc751c3863d50503a2fa",
-    "runs/classifier/lists.csv": "c745447683c9558a0d06c7b653b7db49973a4c03ac8f2a96adc8203249ae3477",
-    "runs/classifier/scopes.csv": "d7bf4ca5c626b4754b7abb2d1609d6d60ed39bd7c5df3cde350e7f5caf9ee963",
-    "runs/classifier/selection.csv": "3e90d4c676600dcd3fcaec5363b43e7fa591c1c31bf5d75e5487d324a92abc42",
-    "runs/classifier/state_gate.csv": "13e778ab9b9ef144f71d6fd19a037dac91fd9f3ad39347749a275a9b2244272a"
+    "runs/classifier/calibration.csv": "3f1fdcf8069d5155aaa46e1c67f0cd0b05ebebeaa934cd32f1ab718f5aca73d2",
+    "runs/classifier/comparison.csv": "3635771729233d0627a594f2bd5a004cbd6e7a4b2cad500b35513a0d1eab3562",
+    "runs/classifier/defence.csv": "db145bb3912c82096b0f9be4a3eadc9e2042c970fa07e96028272408031c40c3",
+    "runs/classifier/family_gain.csv": "03a4805068dc84623731dbf620ef36fcd4f3cb337e2eedb0528ae8c795a8f827",
+    "runs/classifier/held_out_scores.csv.gz": "bd1d1e1c99d86842597e102943d84a746de97ba15b10c15757b053de42466bee",
+    "runs/classifier/lists.csv": "e6c9d7019da8718d4c09a10e16d08b6bc35a47c1ef49fe585308a3268590f236",
+    "runs/classifier/scopes.csv": "c7cf9a0e40034c9de9b8b2e3b34e9d31a337d23015244133f97d050e9c18b26d",
+    "runs/classifier/selection.csv": "908a6a3bd4c5690100c3ddeed0f6b799455e5afe686f03d0b6f1b858e8f999db",
+    "runs/classifier/state_gate.csv": "1a5d3eba96bebf5aab68ad1c122e67d5fe85f8eb821f73a98b6f46d56c8eac78"
   }
 }

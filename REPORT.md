@@ -19,11 +19,11 @@ interval resamples single towns. Verdicts use the unrounded bounds.
 
 **How numbers are rounded.** Scores (PR-AUC, probabilities, shares) have two decimals; one that is not zero but would
 print as 0.00 takes a third (0.003), so that 0.00 means zero. A difference between two scores and its interval bounds
-have two decimals as well: between bootstrap seeds a bound moves by about 0.005 ("Bootstrap seed"), so a third decimal
-would be noise. A difference within 0.005 of zero prints as +0.00 or -0.00: the sign gives the side of zero on which
-the unrounded value lies, and verdicts use the unrounded bounds, so a gain whose lower bound prints +0.00 is a gain by
-less than 0.005 and may not survive another seed. An exact zero prints as 0.00. An estimate within 0.005 of a bound
-may print equal to it.
+have two decimals as well: between bootstrap seeds a bound typically moves by 0.005 (median over comparisons), and by
+up to 0.02 for one in ten (`runs/classifier/seed_check.csv`) ("Bootstrap seed"), so a third decimal would be noise. A
+difference within 0.005 of zero prints as +0.00 or -0.00: the sign gives the side of zero on which the unrounded value
+lies, and verdicts use the unrounded bounds, so a gain whose lower bound prints +0.00 is a gain by less than 0.005 and
+may not survive another seed. An exact zero prints as 0.00. An estimate within 0.005 of a bound may print equal to it.
 
 A comparison whose two scores never differ on its rows is shown as "constant". Where the positives lie in fewer than 5
 blocks, resampling blocks measures nothing, and the block interval is shown as "n/a" with the count. In the tables,
@@ -56,8 +56,8 @@ plan" means that type only.
 
 ## Main result
 
-Under cross-validation inside SAC's 1956 study, the models describe that list a little better than population and a
-country term do. On the only blind test, 149 places of the sealed set that no run had scored, that gain is not seen:
+Under cross-validation inside SAC's 1956 study, the models describe that list better than population and a country
+term do (+0.02). On the only blind test, 149 places of the sealed set that no run had scored, that gain is not seen:
 no selected model beats population plus country there. No gain has been shown to reach a document the models did not
 see.
 
@@ -74,19 +74,19 @@ see.
 
 - **Inside SAC's 1956 study**, under spatial cross-validation, logistic, all permitted scores 0.85 against 0.82 for
   population plus a country term: +0.02 [+0.01, +0.03], by blocks [+0.01, +0.04]. Without the features flagged as
-  today's data, and equally without the defence tables as well, the difference is +0.01 [+0.01, +0.02], by blocks
+  today's data, and equally without the defence tables as well, the difference is +0.01 [+0.00, +0.02], by blocks
   [-0.00, +0.03]: at least one interval reaches zero, so it cannot be told from no difference. These repeats remove
   flagged columns, not every late input: see "Inputs later than the document" under Data.
 - **On a document the model has not seen**, fitted on the other documents with that document's towns removed,
-  LightGBM, all permitted against the rule that ranks towns by population: -0.13 [-0.16, -0.11], by blocks [-0.17,
-  -0.09] over all lists, which SAC dominates, and +0.02 [-0.03, +0.06], by blocks [-0.09, +0.06] on lists other than
+  LightGBM, all permitted against the rule that ranks towns by population: -0.14 [-0.16, -0.11], by blocks [-0.18,
+  -0.09] over all lists, which SAC dominates, and +0.02 [-0.03, +0.07], by blocks [-0.11, +0.09] on lists other than
   SAC: at least one interval reaches zero, so it cannot be told from no difference.
 - **Fitted on documents after 1956 and scoring earlier ones**: -0.15 [-0.17, -0.12], by blocks [-0.19, -0.10] against
   the population rule.
-- **Verdicts in the primary table, against population plus country:** 5 gain, 2 lose, 6 cannot be told apart, 4 are
-  not readings. A gain or a loss needs both intervals to exclude zero. Gains appear under "spatial blocks"; losses
-  under "fit after 1956, score earlier" and "leave one document out". A row with under 30 positives in training, or a
-  constant score, is not a reading.
+- **Verdicts in the primary table, against population plus country:** 4 gain, 2 lose, 7 cannot be told apart, 4 are
+  not readings. A gain or a loss needs both intervals to exclude zero. Gains appear under "fit to 1956, score later"
+  and "spatial blocks"; losses under "fit after 1956, score earlier" and "leave one document out". A row with under 30
+  positives in training, or a constant score, is not a reading.
 - **No state has its own model.** The US has 1299 linked positives, but only 7 outside the SAC study, and the state
   gate asks 15.
 
@@ -147,13 +147,6 @@ count entries, not towns. An entry whose cover name stands for a town and its cl
 for example) links to both, so linked complex entries give 2 more towns than their number, while linked subcomplex
 entries give exactly as many towns as entries.
 
-**These results are of the table before the nineteenth amendment.** Its Dutch towns came from a census volume fetched
-through a path the host's robots.txt disallows, and its site distances were computed from cited coordinates of sites
-that may be in use today. `configs/protocol_amendment_19.yaml`, committed before any refit, withdraws the Dutch towns
-(and the Netherlands from the 1965 map), holds every site with no recorded end year at the centre of its 0.5-degree
-cell, drops two site rows whose only source refuses this project's agents, and fixes how the refit is read. The refit
-is not yet committed.
-
 **Documents.** `data/curated/labels/PLANS.yaml` records each list's attacker, author, date, type and evidence grade.
 The grades: A, a primary document or its published translation read here; B, a primary document read here that names
 only part of the targets it counts, or a later classified history quoting one; C, a scholar's table or paraphrase of
@@ -167,7 +160,7 @@ what a defender expected, never train a model, and are scored apart.
 **How much evidence there is, by side.** The US has 1299 linked positives, of which 1292 come from one document, and
 no document of type war plan. Of SAC's, 250 lie in the sealed blocks and are held out of every fit, which leaves the
 1042 positives of the SAC rows in the tables below. For the USSR the registry holds **no war-plan document**: 89 rows,
-88 of them from General Staff Academy lessons on one fictional scenario, giving 50 linked town-list pairs, and one
+88 of them from General Staff Academy lessons on one fictional scenario, giving 35 linked town-list pairs, and one
 news report. Czechoslovakia has 0 linked positives and Poland 6. The registry holds 3 war-plan documents with 36 rows
 between them, all Warsaw Pact, with 6 linked positives. **Only one was read at source**, the Czechoslovak plan of 1964
 (grade A), and it has 0 linked positives: its rows that state nuclear weapons name units and give no place, and the
@@ -208,19 +201,19 @@ secret. It has been scored once; see below.
 - **Holdouts.** Leave one document out (a document's lists and towns leave together); spatial blocks of 300 km in 5
   folds on three shifted grids; temporal, in both directions around 1956, splitting documents by date only, so a town
   listed in both periods is in both the fit and the scored rows (`configs/protocol.yaml`, holdouts). Spatial folds
-  have no buffer: on the first grid 15% of held-out rows have a training town within 25 km and 36% within 50 km
+  have no buffer: on the first grid 13% of held-out rows have a training town within 25 km and 33% within 50 km
   (`runs/classifier/block_neighbours.csv`).
 - **Reading.** Mean per-list PR-AUC, weighted by positives, on lists with 2 or more. Neither interval includes the
   variance of refitting a model.
 - **Fit checks.** The document identification classifier (Results, "What the gains rest on") diverged, so an amendment
   fixed before it was run (`configs/protocol_amendment_15.yaml`) refitted the primary models to see whether they do
   too: every bag of the four models on each scope's whole rows, the five folds of the first spatial grid, each
-  left-out document and both temporal directions, 8,832 bag fits in all. A test checks that the refitting code draws
-  and fits bags exactly as the primary run's code does. Of the 8,832, 0 were called diverged. A LightGBM fit is called
+  left-out document and both temporal directions, 8,432 bag fits in all. A test checks that the refitting code draws
+  and fits bags exactly as the primary run's code does. Of the 8,432, 0 were called diverged. A LightGBM fit is called
   diverged if its training log loss ends more than 0.01 above its lowest value or a raw score passes 50; a logistic
   fit if its solver stops at its iteration cap or a decision value passes 50. LightGBM's training loss never ended
-  above its lowest value, and its largest raw score was 8.8; no logistic solver stopped at its cap of 5,000
-  iterations, and the largest decision value was 25.6 (`runs/classifier/divergence/summary.csv`). This shows whether
+  above its lowest value, and its largest raw score was 9.1; no logistic solver stopped at its cap of 5,000
+  iterations, and the largest decision value was 17.0 (`runs/classifier/divergence/summary.csv`). This shows whether
   the fits converged, not that the models are right. The grids shifted by 100 and 200 km and the fits that keep a
   left-out document's towns were not refitted.
 - **Which model.** Each scope's candidate was chosen on spatial blocks alone, and the spatial differences below are
@@ -235,29 +228,29 @@ secret. It has been scored once; see below.
 The selected candidate of each scope. "Trained on" is the smallest number of positives in any fit behind the row, over
 every grid and fold. "Difference, country" is the model against population plus country; "Difference, rule" against
 the population rule. Rows marked "not a reading" are shown and not counted. "Seeds 1-20" gives the verdicts against
-population plus country under twenty other bootstrap seeds (below). **The temporal rows also change attacker:** 125 of
-the 126 positives dated after 1956 are on Warsaw Pact or Soviet-lesson lists, and the rest on lists too small to score
+population plus country under twenty other bootstrap seeds (below). **The temporal rows also change attacker:** 99 of
+the 100 positives dated after 1956 are on Warsaw Pact or Soviet-lesson lists, and the rest on lists too small to score
 (`us_1958_taiwan_strait` with 1), so "fit to 1956, score later" tests a US study against the other side's lists, and
 era and attacker cannot be told apart (`runs/classifier/link_audit_temporal.csv`).
 
 | Scope | Selected | Holdout | Lists | Positives | Trained on | Base rate | Model | Pop. + country | Difference, country | By blocks | Verdict | Seeds 1-20 | Pop. rule | Difference, rule |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Global, all attacker documents (exercises included) | LightGBM, all permitted | Spatial blocks | all lists | 1174 | 939 | 0.44 | 0.79 | 0.75 | +0.03 [+0.02, +0.04] | [+0.01, +0.06] | gain | 20 gain | 0.71 | +0.08 [+0.06, +0.10] |
-| Global, all attacker documents (exercises included) | LightGBM, all permitted | Spatial blocks | lists other than SAC | 132 | 939 | 0.07 | 0.29 | 0.19 | +0.11 [+0.05, +0.15] | [+0.02, +0.15] | gain | 20 gain | 0.21 | +0.08 [+0.03, +0.13] |
-| Global, all attacker documents (exercises included) | LightGBM, all permitted | Leave one document out | all lists | 1174 | 131 | 0.44 | 0.58 | 0.71 | -0.13 [-0.16, -0.11] | [-0.17, -0.09] | loss | 20 loss | 0.71 | -0.13 [-0.16, -0.11] |
-| Global, all attacker documents (exercises included) | LightGBM, all permitted | Leave one document out | lists other than SAC | 132 | 1061 | 0.07 | 0.24 | 0.22 | +0.03 [-0.02, +0.08] | [-0.09, +0.08] | neither | 20 neither | 0.22 | +0.02 [-0.03, +0.06] |
-| Global, all attacker documents (exercises included) | LightGBM, all permitted | Fit to 1956, score later | all lists | 126 | 1048 | 0.07 | 0.26 | 0.21 | +0.05 [+0.01, +0.09] | [-0.00, +0.08] | neither | 16 gain, 4 neither | 0.21 | +0.05 [+0.01, +0.09] |
-| Global, all attacker documents (exercises included) | LightGBM, all permitted | Fit after 1956, score earlier | all lists | 1048 | 126 | 0.48 | 0.62 | 0.75 | -0.13 [-0.16, -0.11] | [-0.18, -0.08] | loss | 20 loss | 0.77 | -0.15 [-0.17, -0.12] |
-| Global, all attacker documents (exercises included) | LightGBM, all permitted | Fit after 1956, score earlier | lists other than SAC | 6 | 126 | 0.01 | 0.16 | 0.55 | -0.40 [-0.86, +0.13] | n/a: positives in 4 blocks | neither | 20 neither | 0.55 | -0.40 [-0.86, +0.13] |
+| Global, all attacker documents (exercises included) | LightGBM, all permitted | Spatial blocks | all lists | 1148 | 918 | 0.45 | 0.79 | 0.76 | +0.03 [+0.02, +0.04] | [+0.01, +0.06] | gain | 20 gain | 0.72 | +0.08 [+0.06, +0.09] |
+| Global, all attacker documents (exercises included) | LightGBM, all permitted | Spatial blocks | lists other than SAC | 106 | 918 | 0.07 | 0.26 | 0.19 | +0.07 [+0.03, +0.14] | [-0.03, +0.16] | neither | 20 neither | 0.20 | +0.06 [+0.01, +0.12] |
+| Global, all attacker documents (exercises included) | LightGBM, all permitted | Leave one document out | all lists | 1148 | 105 | 0.45 | 0.58 | 0.72 | -0.13 [-0.16, -0.11] | [-0.17, -0.09] | loss | 20 loss | 0.72 | -0.14 [-0.16, -0.11] |
+| Global, all attacker documents (exercises included) | LightGBM, all permitted | Leave one document out | lists other than SAC | 106 | 1061 | 0.07 | 0.23 | 0.19 | +0.04 [-0.01, +0.10] | [-0.10, +0.10] | neither | 20 neither | 0.21 | +0.02 [-0.03, +0.07] |
+| Global, all attacker documents (exercises included) | LightGBM, all permitted | Fit to 1956, score later | all lists | 100 | 1048 | 0.08 | 0.26 | 0.19 | +0.07 [+0.04, +0.11] | [+0.01, +0.14] | gain | 20 gain | 0.19 | +0.07 [+0.04, +0.11] |
+| Global, all attacker documents (exercises included) | LightGBM, all permitted | Fit after 1956, score earlier | all lists | 1048 | 100 | 0.48 | 0.62 | 0.75 | -0.13 [-0.16, -0.10] | [-0.17, -0.07] | loss | 20 loss | 0.77 | -0.15 [-0.17, -0.12] |
+| Global, all attacker documents (exercises included) | LightGBM, all permitted | Fit after 1956, score earlier | lists other than SAC | 6 | 100 | 0.01 | 0.11 | 0.55 | -0.44 [-0.88, -0.01] | n/a: positives in 4 blocks | neither | 20 neither | 0.55 | -0.44 [-0.88, -0.01] |
 | Global, plan documents only | LightGBM, all permitted | Spatial blocks | all lists | 1055 | 844 | 0.48 | 0.84 | 0.82 | +0.02 [+0.01, +0.03] | [+0.01, +0.04] | gain | 20 gain | 0.76 | +0.08 [+0.06, +0.10] |
-| Global, plan documents only | LightGBM, all permitted | Spatial blocks | lists other than SAC | 13 | 844 | 0.06 | 0.28 | 0.31 | -0.04 [-0.16, +0.09] | [-0.22, +0.03] | neither | 20 neither | 0.35 | -0.07 [-0.21, +0.07] |
+| Global, plan documents only | LightGBM, all permitted | Spatial blocks | lists other than SAC | 13 | 844 | 0.06 | 0.27 | 0.31 | -0.04 [-0.16, +0.08] | [-0.23, +0.02] | neither | 20 neither | 0.35 | -0.08 [-0.22, +0.05] |
 | Global, plan documents only | LightGBM, all permitted | Leave one document out | all lists | 1055 | 12 | 0.48 | 0.64 | 0.77 | -0.13 [-0.15, -0.10] | [-0.18, -0.07] | not a reading | 20 not a reading | 0.77 | -0.13 [-0.15, -0.10] |
-| Global, plan documents only | LightGBM, all permitted | Leave one document out | lists other than SAC | 13 | 1049 | 0.06 | 0.17 | 0.36 | -0.19 [-0.41, +0.00] | [-0.63, +0.00] | neither | 20 neither | 0.36 | -0.19 [-0.41, +0.00] |
-| Global, plan documents only | LightGBM, all permitted | Fit to 1956, score later | all lists | 7 | 1048 | 0.11 | 0.17 | 0.17 | -0.00 [-0.11, +0.14] | n/a: positives in 2 blocks | neither | 20 neither | 0.17 | -0.00 [-0.11, +0.14] |
+| Global, plan documents only | LightGBM, all permitted | Leave one document out | lists other than SAC | 13 | 1049 | 0.06 | 0.17 | 0.36 | -0.19 [-0.41, -0.00] | [-0.64, +0.00] | neither | 20 neither | 0.36 | -0.19 [-0.41, -0.00] |
+| Global, plan documents only | LightGBM, all permitted | Fit to 1956, score later | all lists | 7 | 1048 | 0.11 | 0.18 | 0.17 | +0.01 [-0.08, +0.14] | n/a: positives in 2 blocks | neither | 20 neither | 0.17 | +0.01 [-0.08, +0.14] |
 | Global, plan documents only | LightGBM, all permitted | Fit after 1956, score earlier | all lists | 1048 | 7 | 0.48 | 0.48 | 0.78 | -0.30 [-0.32, -0.28] | [-0.34, -0.26] | not a reading | 20 not a reading | 0.77 | -0.29 [-0.31, -0.27] |
 | Global, plan documents only | LightGBM, all permitted | Fit after 1956, score earlier | lists other than SAC | 6 | 7 | 0.01 | 0.01 | 0.55 | -0.54 [-0.99, -0.30] | n/a: positives in 4 blocks | not a reading | 20 not a reading | 0.55 | -0.54 [-0.99, -0.30] |
-| Warsaw Pact, pooled (exercise-based, not a war-plan model) | LightGBM, all permitted | Spatial blocks | all lists | 125 | 68 | 0.07 | 0.27 | 0.17 | +0.10 [+0.05, +0.16] | [+0.00, +0.15] | gain | 11 gain, 9 neither | 0.18 | +0.09 [+0.04, +0.16] |
-| Warsaw Pact, pooled (exercise-based, not a war-plan model) | LightGBM, all permitted | Leave one document out | all lists | 125 | 12 | 0.07 | 0.19 | 0.20 | -0.01 [-0.06, +0.05] | [-0.09, +0.08] | not a reading | 20 not a reading | 0.21 | -0.02 [-0.07, +0.04] |
+| Warsaw Pact, pooled (exercise-based, not a war-plan model) | LightGBM, all permitted | Spatial blocks | all lists | 99 | 53 | 0.08 | 0.23 | 0.15 | +0.09 [+0.03, +0.16] | [-0.04, +0.15] | neither | 20 neither | 0.15 | +0.08 [+0.02, +0.16] |
+| Warsaw Pact, pooled (exercise-based, not a war-plan model) | LightGBM, all permitted | Leave one document out | all lists | 99 | 12 | 0.08 | 0.18 | 0.17 | +0.01 [-0.04, +0.07] | [-0.08, +0.06] | not a reading | 20 not a reading | 0.19 | -0.00 [-0.05, +0.05] |
 | SAC 1956 alone | logistic, all permitted | Spatial blocks | all lists | 1042 | 833 | 0.49 | 0.85 | 0.82 | +0.02 [+0.01, +0.03] | [+0.01, +0.04] | gain | 20 gain | 0.77 | +0.08 [+0.06, +0.10] |
 
 **Bootstrap seed.** The protocol fixes one seed for its 2,000 resamples: the number 1956, not the document year. After
@@ -265,30 +258,22 @@ the results had been read, one verdict of this table was found to turn on that s
 `configs/protocol_amendment_18.yaml` then fixed a repeat of every comparison of this table, against both baselines,
 under seeds 1 to 20 with nothing refitted (`runs/classifier/seed_check_summary.csv`, one row per comparison;
 `seed_check.csv`, one per seed). That file has 42 rows; where no SAC row is held out a "lists other than SAC" row
-repeats its "all lists" row, and is counted once here, as in the primary table. Of 34 comparisons, 30 give the
-seed-1956 verdict under all 20 seeds. These 4 are seed-dependent:
+repeats its "all lists" row, and is counted once here, as in the primary table. Of 34 comparisons, 34 give the
+seed-1956 verdict under all 20 seeds. None is seed-dependent. The protocol's verdict stays seed 1956's. A
+seed-dependent verdict is read as neither a finding nor its absence: a gain that some seeds do not give is a gain only
+under the committed draws, and a "neither" that most seeds call a gain is not a gain by the protocol. The
+feature-family comparisons and the sealed readings rest on seed 1956 alone: the family fits' scores are not kept, and
+the sealed set's lock allows one reading. So a verdict there whose bound lies within 0.005 of zero may not survive
+another seed.
 
-| Scope | Holdout | Lists | Against | Seed 1956 | Seeds 1-20 |
-|---|---|---|---|---|---|
-| Global, all attacker documents (exercises included) | Spatial blocks | lists other than SAC | population rule | gain | 18 gain, 2 neither |
-| Global, all attacker documents (exercises included) | Fit to 1956, score later | all lists | population rule | neither | 16 gain, 4 neither |
-| Global, all attacker documents (exercises included) | Fit to 1956, score later | all lists | population + country | neither | 16 gain, 4 neither |
-| Warsaw Pact, pooled (exercise-based, not a war-plan model) | Spatial blocks | all lists | population + country | gain | 11 gain, 9 neither |
-
-The protocol's verdict stays seed 1956's. A seed-dependent verdict is read as neither a finding nor its absence: a
-gain that some seeds do not give is a gain only under the committed draws, and a "neither" that most seeds call a gain
-is not a gain by the protocol. The feature-family comparisons and the sealed readings rest on seed 1956 alone: the
-family fits' scores are not kept, and the sealed set's lock allows one reading. So a verdict there whose bound lies
-within 0.005 of zero may not survive another seed.
-
-- **The pooled Warsaw Pact model** has 125 positives across 10 lists, mostly exercises and lessons; it is never a
+- **The pooled Warsaw Pact model** has 99 positives across 9 lists, mostly exercises and lessons; it is never a
   war-plan model.
 - **Keeping a left-out document's towns in training**, as the earlier run did, lets a town bring its label from
-  another document into the fit. For the pooled Warsaw Pact model it gives +0.00 [-0.06, +0.08], by blocks [-0.08,
-  +0.08], against the -0.01 [-0.06, +0.05], by blocks [-0.09, +0.08] in the table with them removed.
+  another document into the fit. For the pooled Warsaw Pact model it gives +0.06 [-0.00, +0.15], by blocks [-0.07,
+  +0.13], against the +0.01 [-0.04, +0.07], by blocks [-0.08, +0.06] in the table with them removed.
 - **SAC itself**, left out of the global model: 0.62 under LightGBM, all permitted, 0.77 for the population rule, on a
   base rate of 0.49.
-- **Target Committee of 1945**, its designated cities, left out: 0.11 under LightGBM, all permitted, 0.55 for the
+- **Target Committee of 1945**, its designated cities, left out: 0.10 under LightGBM, all permitted, 0.55 for the
   population rule.
 
 ### The sealed set on blind places
@@ -368,7 +353,7 @@ bloc's and China's) is in that scope's lists, so none has an intercept of its ow
 
 Every model's metrics on both populations, with a PR-AUC interval each, are in `runs/classifier/sealed/metrics.csv`.
 One gain rests on a lower bound within 0.005 of zero: SAC 1956 alone, all sealed, against population + country
-(+0.00). It was not repeated under other bootstrap seeds, and under the 20 seeds of the primary check 4 of 34 verdicts
+(+0.00). It was not repeated under other bootstrap seeds, and under the 20 seeds of the primary check 0 of 34 verdicts
 moved ("Bootstrap seed", under "Models against baselines").
 
 ### Corrections made after results were read
@@ -383,6 +368,7 @@ each scope's selected candidate against population plus country, by holdout and 
 |---|---|---|---|
 | 16 | 29 West European site rows that had no cited text; four distance and count columns change on rows of Lato-67, the 1977 staff-academy lessons and the 1965 Hungarian war game | 0 of 17 | none |
 | 17 | links of two Polish exercise lists: Lato-67's five German offset rows placed at their offsets (crediting four towns: Walsrode, Münster, Kevelaer and Lobberich), Burza's two direction-only rows unlinked (Hamburg, Schleswig) | 2 of 17 | none |
+| 19 | Dutch 1960 towns withdrawn (their census volume came through a path robots.txt disallows); sites possibly in use today held at their 0.5-degree cell centres; two headquarters rows whose only source refuses this project's agents dropped | 3 of 17 | none |
 
 Primary rows whose verdict moved, each difference followed by its interval by blocks:
 
@@ -390,12 +376,19 @@ Primary rows whose verdict moved, each difference followed by its interval by bl
   before (+0.08 [+0.03, +0.13], by blocks [-0.02, +0.12]), gain after (+0.11 [+0.05, +0.15], by blocks [+0.02, +0.15])
 - Amendment 17: Warsaw Pact, pooled (exercise-based, not a war-plan model), spatial blocks, all lists: neither before
   (+0.11 [+0.06, +0.18], by blocks [-0.01, +0.16]), gain after (+0.10 [+0.05, +0.16], by blocks [+0.00, +0.15])
+- Amendment 19: Global, all attacker documents (exercises included), spatial blocks, lists other than SAC: gain before
+  (+0.11 [+0.05, +0.15], by blocks [+0.02, +0.15]), neither after (+0.07 [+0.03, +0.14], by blocks [-0.03, +0.16])
+- Amendment 19: Global, all attacker documents (exercises included), fit to 1956, score later, all lists: neither
+  before (+0.05 [+0.01, +0.09], by blocks [-0.00, +0.08]), gain after (+0.07 [+0.04, +0.11], by blocks [+0.01, +0.14])
+- Amendment 19: Warsaw Pact, pooled (exercise-based, not a war-plan model), spatial blocks, all lists: gain before
+  (+0.10 [+0.05, +0.16], by blocks [+0.00, +0.15]), neither after (+0.09 [+0.03, +0.16], by blocks [-0.04, +0.15])
 
 The seventeenth also gave reasons for two Lato-67 rows left unlinked: row 17 (КЕЛЬ, read by its note as probably Kiel)
 and row 57 ("west of Lingen"), so Kiel is not credited. Before the seventeenth was written, the committed held-out
 scores had been rescored (no model refitted) with five Lato-67 towns made positive, one more than the links it adopted
 credit, and Lato-67's PR-AUC had been seen to rise; a verdict it moves is not of a reading fixed before its result was
-seen.
+seen. The nineteenth holds 299 site rows at cell centres, which moves each by at most 39 km, and with them the
+distance and count features. Documents no longer scored, every linked row of which was Dutch: `wp_1975_soyuz75`.
 
 ### What the gains rest on
 
@@ -404,24 +397,23 @@ flagged" removes today's data standing in for the past. "Strict as-of" also remo
 post-Soviet knowledge. "No national power" removes COW's values, which take one value per country and year and so were
 suspected of marking a document. "No source markers" also removes the defence and military columns, which are blank or
 filled according to the table a row came from. From the columns alone, with folds grouped by place, a gradient-boosted
-classifier with L2 regularisation 1.0 names a row's document 98.1% [97.7%, 98.5%] on all columns, 84.0% [82.9%, 85.3%]
-without national power, 76.7% [75.4%, 78.1%] with no source markers as well, 44.2% [42.6%, 45.9%] on population alone,
-against 44.4% for always naming the largest document. The intervals resample places, keeping a place's rows together
+classifier with L2 regularisation 1.0 names a row's document 98.0% [97.6%, 98.4%] on all columns, 87.0% [85.8%, 88.2%]
+without national power, 80.0% [78.6%, 81.4%] with no source markers as well, 49.2% [47.4%, 50.9%] on population alone,
+against 49.2% for always naming the largest document. The intervals resample places, keeping a place's rows together
 (2,000 resamples; `runs/classifier/identification/regularised.csv`). On those intervals "all permitted", "no national
-power", "no source markers" name documents better than that; population alone does worse than that, by 0.17 points
-[0.04, 0.31]: it learns nothing usable about documents and loses a little by sometimes naming another. Removing
-national power lowers accuracy by 14.1 points [12.9, 15.2], so those columns do help name the document. The columns
+power", "no source markers" name documents better than that; "population only" cannot be told apart from it. Removing
+national power lowers accuracy by 10.9 points [9.8, 12.1], so those columns do help name the document. The columns
 name a row's document almost always. In a pooled scope a model can learn each document's base rate from them, and a
 pooled gain under spatial blocks cannot be told from that. Single-document and leave-one-document-out readings do not
 rest on this check.
 
 This reading is post hoc (`configs/protocol_amendment_14.yaml`; one regularisation value was tried). The version fixed
-in advance had none: 8 of its 16 fits (four column sets, four folds) diverged, against 0 of 16 here
+in advance had none: 7 of its 16 fits (four column sets, four folds) diverged, against 0 of 16 here
 (`runs/classifier/identification/divergence.csv`). By the rule fixed for this check in
 `configs/protocol_amendment_14.yaml`, a fit diverged if its final training accuracy is more than 5 points below its
 best; this is not the raw-score and log-loss rule used for the primary models under "Fit checks". By that rule's raw
-score above 50, 9 of the 16 would be called diverged: the extra fit is "all permitted" fold 2 (raw score 3,356,
-training accuracy steady at 98.3%). So the intervals of the version fixed in advance, 69.3% to 72.3% on all columns
+score above 50, 8 of the 16 would be called diverged: the extra fit is "no source markers" fold 0 (raw score 61,
+training accuracy steady at 82.0%). So the intervals of the version fixed in advance, 50.1% to 53.5% on all columns
 (`runs/classifier/identification/intervals.csv`), measured a failed fit; it is withdrawn.
 
 Each cell is the difference in PR-AUC and its verdict: a gain or a loss needs both intervals, spatial and by blocks,
@@ -429,14 +421,14 @@ to exclude zero. The intervals are in `runs/classifier/TABLES.md` ("What the gai
 
 | scope | all permitted | none flagged | strict as-of | no national power | no source markers |
 |---|---|---|---|---|---|
-| Warsaw Pact, pooled, exercise-based | +0.10 gain | +0.11 neither | +0.10 neither | +0.06 neither | +0.03 neither |
+| Warsaw Pact, pooled, exercise-based | +0.09 neither | +0.10 neither | +0.10 neither | +0.03 neither | +0.02 neither |
 | SAC 1956 alone | +0.02 gain | +0.01 neither | +0.01 neither | +0.02 neither | +0.01 neither |
 | global, plan documents only | +0.02 gain | +0.01 neither | +0.01 neither | +0.02 gain | +0.01 neither |
-| global, all attacker documents | +0.03 gain | +0.02 neither | +0.01 neither | +0.03 gain | +0.00 neither |
+| global, all attacker documents | +0.03 gain | +0.01 neither | +0.01 neither | +0.03 gain | +0.00 neither |
 
 **SAC's negatives beside its own airfields.** SAC's town list is complete, but it lists airfields apart, so a town off
 it may lie beside a listed airfield. 88 of its 1103 negatives lie within 5 km of one and 174 within 10 km. Without
-those within 10 km the SAC gain above is +0.02 [+0.02, +0.03], by blocks [+0.01, +0.04], against +0.02 [+0.01, +0.03],
+those within 10 km the SAC gain above is +0.02 [+0.01, +0.03], by blocks [+0.01, +0.04], against +0.02 [+0.01, +0.03],
 by blocks [+0.01, +0.04] with them.
 
 **SAC's negatives holding an aim point.** 46 unsealed negatives have a designated ground zero point, a printed aim
@@ -469,8 +461,8 @@ the intervals are in `runs/classifier/TABLES.md` ("Feature families, US 1956 com
 | geography | +0.01 gain | +0.01 gain |
 | industry | +0.00 neither | +0.00 neither |
 | transport | +0.02 gain | +0.04 gain |
-| military | +0.01 gain | +0.02 gain |
-| defence | +0.01 gain | +0.01 gain |
+| military | +0.02 gain | +0.02 gain |
+| defence | +0.01 gain | +0.02 gain |
 | national_power | +0.00 neither | constant |
 
 ### Economic and political data
@@ -482,20 +474,19 @@ defence-industry counts on Soviet towns. None of them enters the primary model o
 to exclude zero.
 
 Of 37 rows (`runs/classifier/extended.csv` has 49: the Warsaw Pact scope has no SAC rows, so its "other than SAC" rows
-repeat its "all lists" rows and are counted once): 8 gain, 1 lose, 22 cannot be told apart, 6 are not readings. On a
-left-out document, the reading that matters here, 3 of 12 rows gain, and 0 of the 6 on lists other than SAC. The
-gains: political over population in the global, all attacker documents scope on all lists, 0.66 against 0.63; economic
-over population in the global, all attacker documents scope on all lists, 0.66 against 0.63; economic over primary in
-the global, all attacker documents scope on all lists, 0.66 against 0.58. A comparison named "over primary" is against
-LightGBM on all permitted features, and one named "over population" against LightGBM on the population family, not
-against the plain population rule. In the global scope the highest of its six models (population plus the political,
-economic, national-power or all three columns; the primary model plus the political or economic columns), picked after
-the fact for each list set, scores 0.66 over all lists against 0.71 for the plain population rule, and 0.24 on lists
-other than SAC against 0.22; no paired interval against the population rule was fixed in advance, so the second gap is
-not a finding. The all-lists rows also rest on the fit with SAC left out, which trains on few positives. Each
-country-level column has one value per country and year, so within one list it can do no more than a country term, and
-in a pooled list it can identify a document: a gain under spatial blocks may be just that. "Model" and "against" are
-PR-AUC with and without the columns.
+repeat its "all lists" rows and are counted once): 7 gain, 0 lose, 24 cannot be told apart, 6 are not readings. On a
+left-out document, the reading that matters here, 2 of 12 rows gain, and 0 of the 6 on lists other than SAC. The
+gains: economic over population in the global, all attacker documents scope on all lists, 0.66 against 0.64; economic
+over primary in the global, all attacker documents scope on all lists, 0.67 against 0.58. A comparison named "over
+primary" is against LightGBM on all permitted features, and one named "over population" against LightGBM on the
+population family, not against the plain population rule. In the global scope the highest of its six models
+(population plus the political, economic, national-power or all three columns; the primary model plus the political or
+economic columns), picked after the fact for each list set, scores 0.67 over all lists against 0.72 for the plain
+population rule, and 0.24 on lists other than SAC against 0.21; no paired interval against the population rule was
+fixed in advance, so the second gap is not a finding. The all-lists rows also rest on the fit with SAC left out, which
+trains on few positives. Each country-level column has one value per country and year, so within one list it can do no
+more than a country term, and in a pooled list it can identify a document: a gain under spatial blocks may be just
+that. "Model" and "against" are PR-AUC with and without the columns.
 
 Counts of Soviet defence plants add +0.00 [-0.01, +0.01] (by blocks [-0.01, +0.01]) to population on Soviet towns of
 the SAC list, PR-AUC 0.77 against 0.77: no detectable gain. The counts are later knowledge of what existed, not what
@@ -506,24 +497,23 @@ defence-industry row; all 37 rows are in `runs/classifier/TABLES.md`.
 
 | scope | comparison | holdout | lists | positives | train_positives | model | against | difference | by_blocks | verdict |
 |---|---|---|---|---|---|---|---|---|---|---|
-| global, all attacker documents | political over population | leave one document out | all lists | 1174 | 131 | 0.66 | 0.63 | +0.02 [+0.01, +0.04] | [+0.00, +0.05] | gain |
-| global, all attacker documents | political over population | leave one document out | other than SAC | 132 | 1061 | 0.24 | 0.23 | +0.01 [-0.03, +0.05] | [-0.02, +0.09] | neither |
-| global, all attacker documents | economic over population | leave one document out | all lists | 1174 | 131 | 0.66 | 0.63 | +0.03 [+0.01, +0.04] | [+0.00, +0.05] | gain |
-| global, all attacker documents | economic over population | leave one document out | other than SAC | 132 | 1061 | 0.24 | 0.23 | +0.01 [-0.02, +0.04] | [-0.02, +0.07] | neither |
-| global, all attacker documents | national power over population | leave one document out | all lists | 1174 | 131 | 0.59 | 0.63 | -0.04 [-0.06, -0.02] | [-0.07, -0.00] | loss |
-| global, all attacker documents | national power over population | leave one document out | other than SAC | 132 | 1061 | 0.20 | 0.23 | -0.02 [-0.06, +0.02] | [-0.06, +0.04] | neither |
-| global, all attacker documents | all three over population | leave one document out | all lists | 1174 | 131 | 0.64 | 0.63 | +0.01 [-0.01, +0.03] | [-0.03, +0.05] | neither |
-| global, all attacker documents | all three over population | leave one document out | other than SAC | 132 | 1061 | 0.23 | 0.23 | +0.00 [-0.03, +0.05] | [-0.02, +0.06] | neither |
-| global, all attacker documents | political over primary | leave one document out | all lists | 1174 | 131 | 0.58 | 0.58 | +0.00 [-0.00, +0.01] | [-0.00, +0.01] | neither |
-| global, all attacker documents | political over primary | leave one document out | other than SAC | 132 | 1061 | 0.23 | 0.24 | -0.01 [-0.04, +0.02] | [-0.04, +0.03] | neither |
-| global, all attacker documents | economic over primary | leave one document out | all lists | 1174 | 131 | 0.66 | 0.58 | +0.08 [+0.07, +0.09] | [+0.06, +0.10] | gain |
-| global, all attacker documents | economic over primary | leave one document out | other than SAC | 132 | 1061 | 0.24 | 0.24 | -0.00 [-0.02, +0.01] | [-0.02, +0.01] | neither |
+| global, all attacker documents | political over population | leave one document out | all lists | 1148 | 105 | 0.66 | 0.64 | +0.02 [+0.00, +0.04] | [-0.00, +0.05] | neither |
+| global, all attacker documents | political over population | leave one document out | other than SAC | 106 | 1061 | 0.23 | 0.22 | +0.01 [-0.03, +0.05] | [-0.03, +0.07] | neither |
+| global, all attacker documents | economic over population | leave one document out | all lists | 1148 | 105 | 0.66 | 0.64 | +0.03 [+0.01, +0.04] | [+0.00, +0.05] | gain |
+| global, all attacker documents | economic over population | leave one document out | other than SAC | 106 | 1061 | 0.24 | 0.22 | +0.01 [-0.02, +0.05] | [-0.02, +0.07] | neither |
+| global, all attacker documents | national power over population | leave one document out | all lists | 1148 | 105 | 0.60 | 0.64 | -0.04 [-0.06, -0.02] | [-0.07, +0.00] | neither |
+| global, all attacker documents | national power over population | leave one document out | other than SAC | 106 | 1061 | 0.22 | 0.22 | -0.00 [-0.04, +0.03] | [-0.04, +0.08] | neither |
+| global, all attacker documents | all three over population | leave one document out | all lists | 1148 | 105 | 0.64 | 0.64 | +0.00 [-0.02, +0.02] | [-0.03, +0.04] | neither |
+| global, all attacker documents | all three over population | leave one document out | other than SAC | 106 | 1061 | 0.21 | 0.22 | -0.01 [-0.05, +0.03] | [-0.04, +0.05] | neither |
+| global, all attacker documents | political over primary | leave one document out | all lists | 1148 | 105 | 0.59 | 0.58 | +0.00 [-0.00, +0.01] | [-0.00, +0.01] | neither |
+| global, all attacker documents | political over primary | leave one document out | other than SAC | 106 | 1061 | 0.22 | 0.23 | -0.01 [-0.05, +0.02] | [-0.04, +0.05] | neither |
+| global, all attacker documents | economic over primary | leave one document out | all lists | 1148 | 105 | 0.67 | 0.58 | +0.09 [+0.08, +0.10] | [+0.07, +0.11] | gain |
+| global, all attacker documents | economic over primary | leave one document out | other than SAC | 106 | 1061 | 0.22 | 0.23 | -0.01 [-0.03, +0.01] | [-0.02, +0.01] | neither |
 | SAC 1956, Soviet towns | defence industry over population | spatial blocks | all lists | 566 | 452 | 0.77 | 0.77 | +0.00 [-0.01, +0.01] | [-0.01, +0.01] | neither |
 
-3 gains rest on a lower bound within 0.005 of zero: global, all attacker documents, national power over population,
-spatial blocks, other than SAC (+0.00); global, all attacker documents, political over population, leave one document
-out, all lists (+0.00); global, all attacker documents, economic over population, leave one document out, all lists
-(+0.00). They were not repeated under other bootstrap seeds, and under the 20 seeds of the primary check 4 of 34
+2 gains rest on a lower bound within 0.005 of zero: global, all attacker documents, economic over primary, spatial
+blocks, all lists (+0.00); global, all attacker documents, economic over population, leave one document out, all lists
+(+0.00). They were not repeated under other bootstrap seeds, and under the 20 seeds of the primary check 0 of 34
 verdicts moved ("Bootstrap seed", under "Models against baselines").
 
 ### Defences
@@ -531,15 +521,15 @@ verdicts moved ("Bootstrap seed", under "Models against baselines").
 These are associations in the lists, not findings about intent. Odds ratios are per tenfold increase in the feature,
 controlling log population and an intercept per list and country; intervals bootstrap places.
 
-- **Soviet towns on the SAC list.** Adding the defence family gives +0.01 [+0.00, +0.03], by blocks [+0.00, +0.03]:
-  gain. Sites within 50 km: 0.33 [0.19, 0.50]. Distance to an S-25 Moscow-ring missile site: 1.31 [1.03, 1.71].
-  Distance to any defence site: 1.12 [0.93, 1.42], and without the S-25 points 1.12 [0.93, 1.41].
+- **Soviet towns on the SAC list.** Adding the defence family gives +0.02 [+0.01, +0.03], by blocks [+0.00, +0.03]:
+  gain. Sites within 50 km: 0.33 [0.19, 0.51]. Distance to an S-25 Moscow-ring missile site: 1.31 [1.03, 1.71].
+  Distance to any defence site: 1.13 [0.93, 1.43], and without the S-25 points 1.12 [0.93, 1.42].
 - **This does not show that SAC avoided defended places.** The S-25 ring surrounds Moscow, so nearby small towns may
   be absorbed into its complex entry rather than listed by name, and air-defence sites may follow large cities. The
   table is not what SAC knew: the S-25 points, from Michael Holm's web pages on Soviet units, carry US designations,
   while the rest is post-Soviet knowledge.
-- **Warsaw Pact documents, NATO Europe.** Sites within 50 km 0.68 [0.31, 1.51], distance to a US surface-to-air
-  missile site (Nike, HAWK) 1.46 [0.81, 2.86].
+- **Warsaw Pact documents, NATO Europe.** Sites within 50 km 0.69 [0.31, 1.60], distance to a US surface-to-air
+  missile site (Nike, HAWK) 1.55 [0.82, 3.33].
 - **Defences as targets in themselves.** Some documents name them. Counts of rows or complexes, from the documents'
   own words (`runs/classifier/defence_targets.csv`); the plans' order of strikes is not read here. The Warsaw Pact
   documents' shares are a finding about those few lists. In SAC's study 7 of the 2,087 complex and subcomplex entries
@@ -580,9 +570,9 @@ by more than 0.003. On SAC's list, then, the raw scores already lie close to obs
 
 | model | kind | brier | ECE |
 |---|---|---|---|
-| LightGBM, all permitted | isotonic | 0.17 | 0.03 |
+| LightGBM, all permitted | isotonic | 0.17 | 0.02 |
 | LightGBM, all permitted | raw | 0.17 | 0.04 |
-| logistic, all permitted | isotonic | 0.16 | 0.02 |
+| logistic, all permitted | isotonic | 0.17 | 0.01 |
 | logistic, all permitted | raw | 0.16 | 0.02 |
 | population + country | isotonic | 0.18 | 0.04 |
 | population + country | raw | 0.18 | 0.02 |
@@ -597,9 +587,9 @@ NATO's targets. A high score says only that defenders expected large towns to be
 
 | plan_id | doc_type | towns | positives | base_rate | population rule | LightGBM, all permitted |
 |---|---|---|---|---|---|---|
-| cd_1955_operation_alert_full | civil_defence | 1262 | 51 | 0.04 | 0.70 | 0.46 |
+| cd_1955_operation_alert_full | civil_defence | 1262 | 51 | 0.04 | 0.70 | 0.44 |
 | nato_1962_pl_exercise_mirror | mirror | 126 | 27 | 0.21 | 0.44 | 0.51 |
-| nato_1965_hu_wargame_mirror | mirror | 120 | 13 | 0.11 | 0.41 | 0.40 |
+| nato_1965_hu_wargame_mirror | mirror | 120 | 13 | 0.11 | 0.41 | 0.37 |
 
 ### Other metrics
 
@@ -643,15 +633,16 @@ Earth's populated places: a map-label set of 7,342 places, not a census, thinner
 which 6,091 are kept: towns with 10,000 or more people, without France's territories outside Europe
 (`runs/probmap/modern_universe.csv`). The 1965 scenario's towns carry populations of about 1961.
 
-**No United Kingdom in 1965.** The only UK table held, Great Britain's 1981 districts, came through a path of
-`www.nomisweb.co.uk` that robots.txt disallows, and was withdrawn (`configs/protocol_amendment_10.yaml`). So the 1965
-map covers Denmark, the FRG, Netherlands, Belgium and Italy, and its unsourced theatre share falls on them alone, so
-its continental cells read higher than they would if the UK were among the targets. Warheads are shared out per row,
-so how a country's towns are cut into rows also moves the map: the rows are municipalities, and how much that matters
-was not measured.
+**No United Kingdom or Netherlands in 1965.** The only UK table held, Great Britain's 1981 districts, came through a
+path of `www.nomisweb.co.uk` that robots.txt disallows, and was withdrawn (`configs/protocol_amendment_10.yaml`). The
+Dutch census volume of 1960 came through a path of `ssh.datastations.nl` that robots.txt disallows, and was withdrawn
+too (`configs/protocol_amendment_19.yaml`). So the 1965 map covers Denmark, the FRG, Belgium and Italy, and its
+unsourced theatre share falls on them alone, so their cells read higher than they would if the two were among the
+targets. Warheads are shared out per row, so how a country's towns are cut into rows also moves the map: the rows are
+municipalities, and how much that matters was not measured.
 
 **Score.** The selection rule in `configs/protocol.yaml` selected **the population rule**, by highest PR-AUC on a
-left-out document (0.71). The candidates ("portable" in the table) use only features that exist in every era without
+left-out document (0.72). The candidates ("portable" in the table) use only features that exist in every era without
 any present-day facility data: population, its rank within the country, population within 25, 50 and 100 km, distance
 to a town of 100,000, distance to the capital, distance to a coast, and whether it is the national capital or a
 regional centre (ten features). So the map's score holds no defence, military or national-power term. It is fitted on
@@ -665,14 +656,14 @@ and how far those values move with population was not tested by that choice.
 
 | model | left_out_document_pr_auc | left_out_document_without_sac | spatial_pr_auc | selected |
 |---|---|---|---|---|
-| population rule | 0.71 | 0.22 | 0.71 | True |
-| portable logistic | 0.67 | 0.19 | 0.68 | False |
-| portable LightGBM | 0.65 | 0.19 | 0.72 | False |
+| population rule | 0.72 | 0.21 | 0.72 | True |
+| portable logistic | 0.69 | 0.18 | 0.70 | False |
+| portable LightGBM | 0.66 | 0.18 | 0.73 | False |
 
-**What that score does.** On the 1956 towns population runs over a 620-fold range and the median score over a 6.8-fold
+**What that score does.** On the 1956 towns population runs over a 620-fold range and the median score over a 6.5-fold
 range, and a town's share of warheads is its share of the score. So a large town gets only a few times the warheads of
 a small one, and a cell's probability depends on how many towns it holds as well as on how many people live there.
-Across 1956 cells the probability correlates 0.52 with the count of towns and 0.94 with log people. In 5 of 7
+Across 1956 cells the probability correlates 0.53 with the count of towns and 0.93 with log people. In 5 of 7
 scenarios it correlates more with log people than with the count of towns; in `us_1950_stock_on_bloc` and
 `modern_india_pakistan` it correlates more with the count of towns (`runs/probmap/score_spread.csv`).
 
@@ -681,7 +672,7 @@ stockpile. They hold fixed the allocation rule, who fires on whom and the list o
 what is actually unknown. "Mean width" is the mean over cells of that interval; the two columns before it hold the
 stockpile at its median, then the model at its median. Cells over one half are counted within each draw. Cells
 saturate because warheads can outnumber cells while not outnumbering towns: `ussr_1965_on_west` has 1050 median
-delivered warheads, 1843 towns and 355 cells, and a cell of several towns passes one half before each of its towns
+delivered warheads, 1623 towns and 334 cells, and a cell of several towns passes one half before each of its towns
 would. Where most cells are over one half the map says little beyond that. Sealed towns are not scored, so a 1956 cell
 holding only sealed towns is absent from the map. In all 7 scenarios the mean width with the model held at its median
 is larger than with the stockpile held at its median: the stockpile draws, not the model, make most of the width.
@@ -705,11 +696,11 @@ interval's width.
 |---|---|---|---|---|---|---|---|---|---|
 | us_1956_on_bloc | historical | Hypothetical | 0.50 | 2145 | 1370 | 600 [440, 740] | 0.04 | 0.13 | 0.14 |
 | us_1950_stock_on_bloc | historical | Counterfactual | 0.50 | 2145 | 1370 | 6 [3, 9] | 0.01 | 0.02 | 0.02 |
-| ussr_1965_on_west | historical | Illustration | 0.50 | 1843 | 355 | 290 [200, 330] | 0.02 | 0.31 | 0.31 |
-| modern_us_russia | modern | Extrapolation | 1.00 | 1630 | 1170 | 1120 [1040, 1150] | 0.03 | 0.15 | 0.15 |
-| modern_us_russia_half | modern | Extrapolation | 1.00 | 1630 | 1170 | 910 [660, 1060] | 0.03 | 0.22 | 0.22 |
+| ussr_1965_on_west | historical | Illustration | 0.50 | 1623 | 334 | 280 [200, 330] | 0.02 | 0.31 | 0.31 |
+| modern_us_russia | modern | Extrapolation | 1.00 | 1630 | 1170 | 1120 [1050, 1150] | 0.03 | 0.15 | 0.15 |
+| modern_us_russia_half | modern | Extrapolation | 1.00 | 1630 | 1170 | 920 [660, 1060] | 0.03 | 0.22 | 0.22 |
 | modern_us_china | modern | Extrapolation | 1.00 | 1008 | 715 | 360 [280, 450] | 0.03 | 0.34 | 0.34 |
-| modern_india_pakistan | modern | Extrapolation | 1.00 | 255 | 182 | 36 [16, 68] | 0.02 | 0.36 | 0.36 |
+| modern_india_pakistan | modern | Extrapolation | 1.00 | 255 | 182 | 35 [16, 68] | 0.01 | 0.36 | 0.36 |
 
 | scenario | attacker | delivered | on_scored_towns | delivered_shares_at_mode |
 |---|---|---|---|---|
@@ -753,27 +744,27 @@ reliability table:
 
 | reading | bin | n | mean_score | observed |
 |---|---|---|---|---|
-| spatial blocks held out | 0 | 274 | 0.23 | 0.22 |
-| spatial blocks held out | 1 | 274 | 0.31 | 0.41 |
-| spatial blocks held out | 2 | 274 | 0.45 | 0.62 |
+| spatial blocks held out | 0 | 274 | 0.24 | 0.22 |
+| spatial blocks held out | 1 | 274 | 0.32 | 0.40 |
+| spatial blocks held out | 2 | 274 | 0.45 | 0.63 |
 | spatial blocks held out | 3 | 274 | 0.60 | 0.76 |
 | spatial blocks held out | 4 | 274 | 0.80 | 0.90 |
-| SAC list left out | 0 | 274 | 0.20 | 0.20 |
-| SAC list left out | 1 | 274 | 0.27 | 0.42 |
-| SAC list left out | 2 | 274 | 0.40 | 0.61 |
-| SAC list left out | 3 | 274 | 0.57 | 0.76 |
-| SAC list left out | 4 | 274 | 0.83 | 0.92 |
+| SAC list left out | 0 | 274 | 0.22 | 0.20 |
+| SAC list left out | 1 | 274 | 0.28 | 0.42 |
+| SAC list left out | 2 | 274 | 0.41 | 0.62 |
+| SAC list left out | 3 | 274 | 0.58 | 0.75 |
+| SAC list left out | 4 | 274 | 0.82 | 0.91 |
 
-**Domain shift.** A classifier told the 3,686 training towns from the 2,276 modern towns in the countries the modern
+**Domain shift.** A classifier told the 3,466 training towns from the 2,276 modern towns in the countries the modern
 scenarios target (of the 6,091 kept worldwide) at ROC-AUC 0.97, where 0.5 would mean no shift. For scale, it told
-SAC's towns from the other training towns at 0.89. 18% of modern towns lie outside the training's 1st-99th percentile
+SAC's towns from the other training towns at 0.88. 18% of modern towns lie outside the training's 1st-99th percentile
 on `log_pop`, the worst feature. There are no modern labels, so performance on modern towns cannot be measured at all.
 Every modern row is an **extrapolation**: it applies lists of 1945-1977 to towns of today, on a selective set of named
 places. The ROC-AUC is measured on all 10 portable features, of which the map's score uses one, `log_pop`, the worst
 feature named above. Feature by feature: on its own, `log_pop` separates the two sets at a folded ROC-AUC of 0.87 (0.5
 is no separation); the single features run from 0.50 (`pop_rank_pct`) to 0.87 (`log_pop`), so the one feature the
 score reads is the one that separates the sets most. With one feature left out, the classifier's ROC-AUC stays between
-0.92 (without `log_pop`) and 0.97: leaving out `log_pop` lowers it by 0.05, the most of any feature. That measures the
+0.90 (without `log_pop`) and 0.97: leaving out `log_pop` lowers it by 0.06, the most of any feature. That measures the
 shift; it does not show the score valid there.
 
 Every feature's three figures are in `runs/classifier/TABLES.md` ("Probability map: domain shift").
@@ -790,8 +781,8 @@ Every feature's three figures are in `runs/classifier/TABLES.md` ("Probability m
 - **Prediction for a plan not in the data.** See the main result. The map's score carries this limit into every cell.
 - **A blind gain over population plus country.** On the only blind places, 149 towns of SAC's list, no selected model
   beat it by both intervals (Results, "The sealed set on blind places").
-- **A pooled gain as more than each document's base rate.** The columns name a row's document 98.1% of the time
-  against 44.4% for naming the largest, so a model fitted on pooled lists can learn which document a row belongs to
+- **A pooled gain as more than each document's base rate.** The columns name a row's document 98.0% of the time
+  against 49.2% for naming the largest, so a model fitted on pooled lists can learn which document a row belongs to
   (Results, "What the gains rest on").
 - **Causes.** These are associations between a town's traits and its presence on a list. No design here separates one
   trait's effect from another's or from the planners' reasons.
@@ -811,7 +802,7 @@ war-plan model, so it can show 0 independent plans and still meet its rule.
 | US | 3 | 1299 | 7 | False | 7 positives outside its largest plan, needs 15 |
 | USSR | 0 | 0 | 0 | False | 0 independent plans, needs 2; 0 linked positives, needs 50; 0 positives outside its largest plan, needs 15 |
 | Warsaw Pact | 0 | 0 | 0 | False | 0 independent plans, needs 2; 0 linked positives, needs 50; 0 positives outside its largest plan, needs 15 |
-| Warsaw Pact, pooled, exercise-based | 0 | 125 | 75 | True | meets the rule; never a war-plan model |
+| Warsaw Pact, pooled, exercise-based | 0 | 99 | 62 | True | meets the rule; never a war-plan model |
 
 "Independent plans" counts separate documents of a plan type at grade C or better with at least one linked positive:
 the US's come to policy and requirements studies and a target selection, none a war plan. `linked_positives` and
@@ -820,8 +811,8 @@ town-list pairs come from staff-academy lessons, which the gate does not count a
 
 ## Not done
 
-- `census_it_1961` (814 of the Western towns) and the Dutch census volume are not held: `towns_it_1961.csv` and
-  `towns_nl_1960.csv` stand as their records (`data/sources.yaml`, `held`).
+- `census_it_1961` (814 of the Western towns) is not held: `towns_it_1961.csv` stands as its record
+  (`data/sources.yaml`, `held`).
 - Rows of the 1970 Coastal Front map beyond the four kept (`data/notes/soviet_search_2026-11.md`), and 69 mirror
   candidates from a 1963 Polish exercise and one lesson, 65 of them map symbols with no text to quote, are not labels
   (`data/notes/second_read_2026-11b.md`). Of the 27 lesson candidates in the same search, which found no new war plan

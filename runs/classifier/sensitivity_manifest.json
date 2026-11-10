@@ -1,13 +1,13 @@
 {
-  "created": "2026-11-05T08:58:33+00:00",
-  "git_commit": "31d0ab3c6bc5917a79bbe694da59ab92a5ebec5d",
+  "created": "2026-11-05T23:50:28+00:00",
+  "git_commit": "1244f614e589843140c93af1d6c145ff773b517e",
   "git_dirty": false,
-  "table_sha256": "2376ae4cda66262f164010ba12cf06e4ce578fdb205b313022f71d25c23fd2b3",
+  "table_sha256": "7dcbcb8cfdda7f3da17a713cd9aa064e7c0d36e6b8cc6083703c09b5a763fe09",
   "outputs": {
-    "runs/classifier/airfield_negatives.csv": "a6c492dd05c608cfb21027b7b14853d712cde8dd4e11398b3e99f201db295fad",
-    "runs/classifier/block_neighbours.csv": "61d823507fd11857bb48bac0de751cd1621cadbd6efa5b8c73f9fc98c6cd7000",
-    "runs/classifier/document_identification.csv": "d47798e56ecf0527e8f9f36326111617004c5182c523daeb2e63e7c8ee006e28",
-    "runs/classifier/sensitivity.csv": "f21957b490926283b8c0f30940a25f1ef43d6c76e437f36960a7ba36787f5e1d",
-    "runs/classifier/ussr_population.csv": "a293440cec14f317a15f8534af351618a030794028c4c2c68b2dce3f8f597a2a"
+    "runs/classifier/airfield_negatives.csv": "67641142e0e36476c2b569e8d2e48fa831688e2746f9259a4693ed23c44a39c7",
+    "runs/classifier/block_neighbours.csv": "09f136df736119f6a1c9cf6511ccbea32a8fcd14c4be4103b2e91c3793592f1f",
+    "runs/classifier/document_identification.csv": "b64a0bee9cf65298512ce3b3ee9cc7d5ca9c3997427c77d1dbf866c6eb2faee5",
+    "runs/classifier/sensitivity.csv": "dc211ef2915d6c8fcd59fce67a5dbf819ea61a5c54a7636321f99927e8db7f5d",
+    "runs/classifier/ussr_population.csv": "fcc64d2f9b0574419c0012b9491ec1c1ee791d9b81edb67c949555ae00208251"
   }
 }

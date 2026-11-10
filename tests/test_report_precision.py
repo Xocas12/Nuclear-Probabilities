@@ -1,4 +1,4 @@
-"""The report's precision rule for differences: two decimals for an estimate and its bounds alike (a bound moves by
+"""The report's precision rule for differences: two decimals for an estimate and its bounds alike (a bound typically moves by
 about 0.005 between bootstrap seeds), and a sign that always gives the side of zero. An estimate within 0.005 of a
 bound may print equal to it."""
 
@@ -26,7 +26,7 @@ def test_an_exact_zero_has_no_sign():
 
 
 def test_an_estimate_and_its_bounds_keep_two_decimals_even_where_they_print_alike():
-    # No extra decimal where an estimate and a bound round alike: a bound moves by about 0.005 between seeds, so
+    # No extra decimal where an estimate and a bound round alike: a bound typically moves by about 0.005 between seeds, so
     # a third decimal would show noise. The verdict is read from the unrounded bounds.
     assert estimate_interval(0.0121, 0.0098, 0.03) == ("+0.01", "+0.01", "+0.03")
     assert estimate_interval(0.0101, 0.0098, 0.03) == ("+0.01", "+0.01", "+0.03")

@@ -1,33 +1,33 @@
 columns,fold,l2_regularization,max_abs_raw_score,train_accuracy_best,train_accuracy_final,test_accuracy,diverged
-all permitted,0,0.0000,109259.2170,0.9788,0.6567,0.6543,True
-all permitted,0,1.0000,8.1659,0.9837,0.9837,0.9785,False
-all permitted,1,0.0000,110869.7492,0.9757,0.6527,0.6523,True
-all permitted,1,1.0000,8.1120,0.9826,0.9826,0.9834,False
-all permitted,2,0.0000,3356.4378,0.9832,0.9832,0.9710,False
-all permitted,2,1.0000,8.2086,0.9832,0.9832,0.9810,False
-all permitted,3,0.0000,77309.6823,0.9630,0.5457,0.5563,True
-all permitted,3,1.0000,8.2065,0.9826,0.9826,0.9818,False
-no national power,0,0.0000,56050.4435,0.8430,0.5762,0.5914,True
-no national power,0,1.0000,9.0392,0.8634,0.8631,0.8329,False
-no national power,1,0.0000,105030.7694,0.8466,0.5228,0.5331,True
-no national power,1,1.0000,8.9893,0.8673,0.8670,0.8435,False
-no national power,2,0.0000,23.0650,0.8676,0.8676,0.8386,False
-no national power,2,1.0000,8.7400,0.8637,0.8634,0.8402,False
-no national power,3,0.0000,177526.0437,0.8119,0.4110,0.4098,True
-no national power,3,1.0000,8.6960,0.8640,0.8640,0.8452,False
-no source markers,0,0.0000,82625.8693,0.7792,0.5941,0.5476,True
-no source markers,0,1.0000,8.6160,0.7859,0.7859,0.7626,False
-no source markers,1,0.0000,10.4360,0.7843,0.7843,0.7707,False
-no source markers,1,1.0000,8.6557,0.7834,0.7834,0.7732,False
-no source markers,2,0.0000,27678.5354,0.7724,0.5683,0.5406,True
-no source markers,2,1.0000,8.6292,0.7868,0.7868,0.7649,False
-no source markers,3,0.0000,10.3577,0.7862,0.7862,0.7690,False
-no source markers,3,1.0000,8.9056,0.7854,0.7854,0.7690,False
-population only,0,0.0000,9.5899,0.4451,0.4451,0.4392,False
-population only,0,1.0000,5.6323,0.4443,0.4443,0.4425,False
-population only,1,0.0000,9.8266,0.4439,0.4439,0.4437,False
-population only,1,1.0000,5.6715,0.4439,0.4439,0.4437,False
-population only,2,0.0000,9.1923,0.4458,0.4458,0.4354,False
-population only,2,1.0000,5.5288,0.4447,0.4447,0.4379,False
-population only,3,0.0000,9.8195,0.4436,0.4436,0.4445,False
-population only,3,1.0000,5.6272,0.4436,0.4436,0.4445,False
+all permitted,0,0.0000,69464.0528,0.9777,0.3117,0.3229,True
+all permitted,0,1.0000,8.0200,0.9813,0.9813,0.9780,False
+all permitted,1,0.0000,87911.8167,0.9761,0.5249,0.5229,True
+all permitted,1,1.0000,7.9968,0.9804,0.9804,0.9826,False
+all permitted,2,0.0000,48401.2005,0.9768,0.5344,0.5266,True
+all permitted,2,1.0000,8.0179,0.9820,0.9820,0.9761,False
+all permitted,3,0.0000,73160.6910,0.9801,0.6951,0.6997,True
+all permitted,3,1.0000,8.0214,0.9810,0.9810,0.9816,False
+no national power,0,0.0000,39110.5006,0.8568,0.7057,0.6734,True
+no national power,0,1.0000,8.2069,0.8945,0.8945,0.8670,False
+no national power,1,0.0000,28.0699,0.8942,0.8942,0.8697,False
+no national power,1,1.0000,8.1871,0.8929,0.8929,0.8716,False
+no national power,2,0.0000,76988.1269,0.8691,0.6097,0.5972,True
+no national power,2,1.0000,8.2697,0.8966,0.8966,0.8606,False
+no national power,3,0.0000,92158.8161,0.8572,0.4813,0.5023,True
+no national power,3,1.0000,8.4693,0.8930,0.8930,0.8815,False
+no source markers,0,0.0000,61.3897,0.8204,0.8204,0.8028,False
+no source markers,0,1.0000,8.6924,0.8192,0.8192,0.7991,False
+no source markers,1,0.0000,10.5848,0.8195,0.8195,0.8018,False
+no source markers,1,1.0000,8.3955,0.8192,0.8192,0.8028,False
+no source markers,2,0.0000,11.9243,0.8229,0.8229,0.7899,False
+no source markers,2,1.0000,8.3657,0.8223,0.8223,0.7899,False
+no source markers,3,0.0000,10.5965,0.8180,0.8180,0.8044,False
+no source markers,3,1.0000,8.5502,0.8174,0.8174,0.8090,False
+population only,0,0.0000,9.5901,0.4922,0.4922,0.4917,False
+population only,0,1.0000,5.6230,0.4922,0.4922,0.4917,False
+population only,1,0.0000,9.8128,0.4919,0.4919,0.4927,False
+population only,1,1.0000,5.6594,0.4919,0.4919,0.4927,False
+population only,2,0.0000,9.2214,0.4922,0.4922,0.4881,False
+population only,2,1.0000,5.5468,0.4922,0.4916,0.4908,False
+population only,3,0.0000,9.8923,0.4920,0.4920,0.4922,False
+population only,3,1.0000,5.6574,0.4920,0.4920,0.4922,False

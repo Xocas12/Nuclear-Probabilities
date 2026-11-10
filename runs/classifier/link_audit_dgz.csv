@@ -1,4 +1,4 @@
 model,negatives_with_a_dgz_point,pr_auc_as_labelled,pr_auc_counted_positive
 population rule,46,0.7680,0.7716
 population + country,46,0.8241,0.8261
-"logistic, all permitted",46,0.8475,0.8462
+"logistic, all permitted",46,0.8467,0.8457
