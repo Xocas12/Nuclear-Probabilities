@@ -1,12 +1,12 @@
 {
-  "created": "2026-11-06T01:46:28+00:00",
-  "git_commit": "1244f614e589843140c93af1d6c145ff773b517e",
+  "created": "2026-11-10T06:04:26+00:00",
+  "git_commit": "a25b39a03e90c00c98a536772ce28ec038f83a10",
   "git_dirty": false,
   "protocol_sha256": "cc14e52ef3cce2f0562ea24195872a3cfa10a30571a0e13fb5dcb130914794f8",
   "scenarios_sha256": "680c1c2e125791a28cc8d383c04eebf366c53161ccd13d8b206ef07d259173dc",
   "stockpiles_sha256": "3bf14fcf852b646261150fe895ee3c49f82b18e28dd26e948f82c77733ae5f41",
   "delivery_mix_sha256": "4cf794f52c9c99da34b94120e53daff74d6df78f74acc8aa1933d4147959424e",
-  "table_sha256": "7dcbcb8cfdda7f3da17a713cd9aa064e7c0d36e6b8cc6083703c09b5a763fe09",
+  "table_sha256": "ce26ef17326e7055f8ef1284e0a875bf1db898d22a2886100f2b62bd9856bbb4",
   "draws": 200,
   "score": "population rule",
   "features": [

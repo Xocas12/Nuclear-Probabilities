@@ -1,43 +1,43 @@
 scope,holdout,lists,against,model,verdict_seed_1956,seeds,seeds_gain,seeds_loss,seeds_neither,seeds_not_a_reading,seed_stable,min_low,max_high,min_block_low,max_block_high
-"global, all attacker documents",spatial blocks,all lists,population rule,"LightGBM, all permitted",gain,20,20,0,0,0,True,0.0605,0.0954,0.0504,0.1046
-"global, all attacker documents",spatial blocks,all lists,population + country,"LightGBM, all permitted",gain,20,20,0,0,0,True,0.0178,0.0431,0.0062,0.0575
-"global, all attacker documents",spatial blocks,lists other than SAC,population rule,"LightGBM, all permitted",neither,20,0,0,20,0,True,0.0029,0.1192,-0.0542,0.1406
-"global, all attacker documents",spatial blocks,lists other than SAC,population + country,"LightGBM, all permitted",neither,20,0,0,20,0,True,0.0217,0.1452,-0.0474,0.1699
-"global, all attacker documents",leave one document out,all lists,population rule,"LightGBM, all permitted",loss,20,0,20,0,0,True,-0.1624,-0.1096,-0.1792,-0.0860
-"global, all attacker documents",leave one document out,all lists,population + country,"LightGBM, all permitted",loss,20,0,20,0,0,True,-0.1601,-0.1079,-0.1780,-0.0827
-"global, all attacker documents",leave one document out,lists other than SAC,population rule,"LightGBM, all permitted",neither,20,0,0,20,0,True,-0.0333,0.0752,-0.1230,0.0900
-"global, all attacker documents",leave one document out,lists other than SAC,population + country,"LightGBM, all permitted",neither,20,0,0,20,0,True,-0.0155,0.1014,-0.1131,0.1043
-"global, all attacker documents","temporal: fit up to 1956, score later",all lists,population rule,"LightGBM, all permitted",gain,20,20,0,0,0,True,0.0330,0.1124,0.0075,0.1414
-"global, all attacker documents","temporal: fit up to 1956, score later",all lists,population + country,"LightGBM, all permitted",gain,20,20,0,0,0,True,0.0330,0.1124,0.0075,0.1414
-"global, all attacker documents","temporal: fit up to 1956, score later",lists other than SAC,population rule,"LightGBM, all permitted",gain,20,20,0,0,0,True,0.0330,0.1124,0.0075,0.1414
-"global, all attacker documents","temporal: fit up to 1956, score later",lists other than SAC,population + country,"LightGBM, all permitted",gain,20,20,0,0,0,True,0.0330,0.1124,0.0075,0.1414
-"global, all attacker documents","temporal reversed: fit after 1956, score earlier",all lists,population rule,"LightGBM, all permitted",loss,20,0,20,0,0,True,-0.1743,-0.1204,-0.1911,-0.0936
-"global, all attacker documents","temporal reversed: fit after 1956, score earlier",all lists,population + country,"LightGBM, all permitted",loss,20,0,20,0,0,True,-0.1566,-0.0970,-0.1736,-0.0688
-"global, all attacker documents","temporal reversed: fit after 1956, score earlier",lists other than SAC,population rule,"LightGBM, all permitted",neither,20,0,0,20,0,True,-0.8965,-0.0084,-0.8179,0.1776
-"global, all attacker documents","temporal reversed: fit after 1956, score earlier",lists other than SAC,population + country,"LightGBM, all permitted",neither,20,0,0,20,0,True,-0.8965,-0.0084,-0.8179,0.1776
-"global, plan documents only",spatial blocks,all lists,population rule,"LightGBM, all permitted",gain,20,20,0,0,0,True,0.0617,0.0967,0.0544,0.1032
-"global, plan documents only",spatial blocks,all lists,population + country,"LightGBM, all permitted",gain,20,20,0,0,0,True,0.0102,0.0340,0.0040,0.0439
-"global, plan documents only",spatial blocks,lists other than SAC,population rule,"LightGBM, all permitted",neither,20,0,0,20,0,True,-0.2268,0.0602,-0.3499,0.0174
-"global, plan documents only",spatial blocks,lists other than SAC,population + country,"LightGBM, all permitted",neither,20,0,0,20,0,True,-0.1667,0.0881,-0.2363,0.0265
-"global, plan documents only",leave one document out,all lists,population rule,"LightGBM, all permitted",not a reading,20,0,0,0,20,True,-0.1514,-0.0999,-0.1790,-0.0712
-"global, plan documents only",leave one document out,all lists,population + country,"LightGBM, all permitted",not a reading,20,0,0,0,20,True,-0.1514,-0.0999,-0.1790,-0.0712
-"global, plan documents only",leave one document out,lists other than SAC,population rule,"LightGBM, all permitted",neither,20,0,0,20,0,True,-0.4183,0.0223,-0.6484,0.0031
-"global, plan documents only",leave one document out,lists other than SAC,population + country,"LightGBM, all permitted",neither,20,0,0,20,0,True,-0.4183,0.0223,-0.6484,0.0031
-"global, plan documents only","temporal: fit up to 1956, score later",all lists,population rule,"LightGBM, all permitted",neither,20,0,0,20,0,True,-0.0919,0.1452,0.0000,0.0090
-"global, plan documents only","temporal: fit up to 1956, score later",all lists,population + country,"LightGBM, all permitted",neither,20,0,0,20,0,True,-0.0919,0.1452,0.0000,0.0090
-"global, plan documents only","temporal: fit up to 1956, score later",lists other than SAC,population rule,"LightGBM, all permitted",neither,20,0,0,20,0,True,-0.0919,0.1452,0.0000,0.0090
-"global, plan documents only","temporal: fit up to 1956, score later",lists other than SAC,population + country,"LightGBM, all permitted",neither,20,0,0,20,0,True,-0.0919,0.1452,0.0000,0.0090
+"global, all attacker documents",spatial blocks,all lists,population rule,"LightGBM, all permitted",gain,20,20,0,0,0,True,0.0607,0.0957,0.0504,0.1045
+"global, all attacker documents",spatial blocks,all lists,population + country,"LightGBM, all permitted",gain,20,20,0,0,0,True,0.0175,0.0430,0.0066,0.0565
+"global, all attacker documents",spatial blocks,lists other than SAC,population rule,"LightGBM, all permitted",neither,20,0,0,20,0,True,0.0032,0.1183,-0.0537,0.1256
+"global, all attacker documents",spatial blocks,lists other than SAC,population + country,"LightGBM, all permitted",neither,20,0,0,20,0,True,0.0205,0.1426,-0.0473,0.1529
+"global, all attacker documents",leave one document out,all lists,population rule,"LightGBM, all permitted",loss,20,0,20,0,0,True,-0.1698,-0.1172,-0.1859,-0.0929
+"global, all attacker documents",leave one document out,all lists,population + country,"LightGBM, all permitted",loss,20,0,20,0,0,True,-0.1676,-0.1146,-0.1857,-0.0897
+"global, all attacker documents",leave one document out,lists other than SAC,population rule,"LightGBM, all permitted",neither,20,0,0,20,0,True,-0.0352,0.0741,-0.1157,0.0888
+"global, all attacker documents",leave one document out,lists other than SAC,population + country,"LightGBM, all permitted",neither,20,0,0,20,0,True,-0.0173,0.1004,-0.1029,0.1039
+"global, all attacker documents","temporal: fit up to 1956, score later",all lists,population rule,"LightGBM, all permitted",neither,20,2,0,18,0,False,0.0267,0.1057,-0.0082,0.1212
+"global, all attacker documents","temporal: fit up to 1956, score later",all lists,population + country,"LightGBM, all permitted",neither,20,2,0,18,0,False,0.0267,0.1057,-0.0082,0.1212
+"global, all attacker documents","temporal: fit up to 1956, score later",lists other than SAC,population rule,"LightGBM, all permitted",neither,20,2,0,18,0,False,0.0267,0.1057,-0.0082,0.1212
+"global, all attacker documents","temporal: fit up to 1956, score later",lists other than SAC,population + country,"LightGBM, all permitted",neither,20,2,0,18,0,False,0.0267,0.1057,-0.0082,0.1212
+"global, all attacker documents","temporal reversed: fit after 1956, score earlier",all lists,population rule,"LightGBM, all permitted",loss,20,0,20,0,0,True,-0.1821,-0.1269,-0.1973,-0.1005
+"global, all attacker documents","temporal reversed: fit after 1956, score earlier",all lists,population + country,"LightGBM, all permitted",loss,20,0,20,0,0,True,-0.1635,-0.1034,-0.1804,-0.0758
+"global, all attacker documents","temporal reversed: fit after 1956, score earlier",lists other than SAC,population rule,"LightGBM, all permitted",neither,20,0,0,20,0,True,-0.8954,-0.0042,-0.8241,0.1759
+"global, all attacker documents","temporal reversed: fit after 1956, score earlier",lists other than SAC,population + country,"LightGBM, all permitted",neither,20,0,0,20,0,True,-0.8954,-0.0042,-0.8241,0.1759
+"global, plan documents only",spatial blocks,all lists,population rule,"LightGBM, all permitted",gain,20,20,0,0,0,True,0.0617,0.0967,0.0547,0.1029
+"global, plan documents only",spatial blocks,all lists,population + country,"LightGBM, all permitted",gain,20,20,0,0,0,True,0.0106,0.0339,0.0045,0.0431
+"global, plan documents only",spatial blocks,lists other than SAC,population rule,"LightGBM, all permitted",neither,20,0,0,20,0,True,-0.2153,0.0724,-0.3499,0.0286
+"global, plan documents only",spatial blocks,lists other than SAC,population + country,"LightGBM, all permitted",neither,20,0,0,20,0,True,-0.1525,0.1010,-0.2348,0.0394
+"global, plan documents only",leave one document out,all lists,population rule,"LightGBM, all permitted",not a reading,20,0,0,0,20,True,-0.1514,-0.0998,-0.1789,-0.0712
+"global, plan documents only",leave one document out,all lists,population + country,"LightGBM, all permitted",not a reading,20,0,0,0,20,True,-0.1514,-0.0998,-0.1789,-0.0712
+"global, plan documents only",leave one document out,lists other than SAC,population rule,"LightGBM, all permitted",neither,20,0,0,20,0,True,-0.4123,0.0246,-0.6478,0.0111
+"global, plan documents only",leave one document out,lists other than SAC,population + country,"LightGBM, all permitted",neither,20,0,0,20,0,True,-0.4123,0.0246,-0.6478,0.0111
+"global, plan documents only","temporal: fit up to 1956, score later",all lists,population rule,"LightGBM, all permitted",neither,20,0,0,20,0,True,-0.0861,0.1233,0.0000,0.0072
+"global, plan documents only","temporal: fit up to 1956, score later",all lists,population + country,"LightGBM, all permitted",neither,20,0,0,20,0,True,-0.0861,0.1233,0.0000,0.0072
+"global, plan documents only","temporal: fit up to 1956, score later",lists other than SAC,population rule,"LightGBM, all permitted",neither,20,0,0,20,0,True,-0.0861,0.1233,0.0000,0.0072
+"global, plan documents only","temporal: fit up to 1956, score later",lists other than SAC,population + country,"LightGBM, all permitted",neither,20,0,0,20,0,True,-0.0861,0.1233,0.0000,0.0072
 "global, plan documents only","temporal reversed: fit after 1956, score earlier",all lists,population rule,"LightGBM, all permitted",not a reading,20,0,0,0,20,True,-0.3095,-0.2650,-0.3311,-0.2480
 "global, plan documents only","temporal reversed: fit after 1956, score earlier",all lists,population + country,"LightGBM, all permitted",not a reading,20,0,0,0,20,True,-0.3213,-0.2790,-0.3427,-0.2609
 "global, plan documents only","temporal reversed: fit after 1956, score earlier",lists other than SAC,population rule,"LightGBM, all permitted",not a reading,20,0,0,0,20,True,-0.9891,-0.2946,-0.8849,-0.2936
 "global, plan documents only","temporal reversed: fit after 1956, score earlier",lists other than SAC,population + country,"LightGBM, all permitted",not a reading,20,0,0,0,20,True,-0.9891,-0.2946,-0.8849,-0.2936
-"Warsaw Pact, pooled, exercise-based",spatial blocks,all lists,population rule,"LightGBM, all permitted",neither,20,0,0,20,0,True,0.0220,0.1592,-0.0898,0.1489
-"Warsaw Pact, pooled, exercise-based",spatial blocks,all lists,population + country,"LightGBM, all permitted",neither,20,0,0,20,0,True,0.0309,0.1633,-0.0587,0.1551
-"Warsaw Pact, pooled, exercise-based",spatial blocks,lists other than SAC,population rule,"LightGBM, all permitted",neither,20,0,0,20,0,True,0.0220,0.1592,-0.0898,0.1489
-"Warsaw Pact, pooled, exercise-based",spatial blocks,lists other than SAC,population + country,"LightGBM, all permitted",neither,20,0,0,20,0,True,0.0309,0.1633,-0.0587,0.1551
-"Warsaw Pact, pooled, exercise-based",leave one document out,all lists,population rule,"LightGBM, all permitted",not a reading,20,0,0,0,20,True,-0.0598,0.0635,-0.1195,0.0461
-"Warsaw Pact, pooled, exercise-based",leave one document out,all lists,population + country,"LightGBM, all permitted",not a reading,20,0,0,0,20,True,-0.0459,0.0801,-0.1011,0.0659
-"Warsaw Pact, pooled, exercise-based",leave one document out,lists other than SAC,population rule,"LightGBM, all permitted",not a reading,20,0,0,0,20,True,-0.0598,0.0635,-0.1195,0.0461
-"Warsaw Pact, pooled, exercise-based",leave one document out,lists other than SAC,population + country,"LightGBM, all permitted",not a reading,20,0,0,0,20,True,-0.0459,0.0801,-0.1011,0.0659
-single document: SAC 1956 (not a state model),spatial blocks,all lists,population rule,"logistic, all permitted",gain,20,20,0,0,0,True,0.0611,0.0965,0.0508,0.1049
-single document: SAC 1956 (not a state model),spatial blocks,all lists,population + country,"logistic, all permitted",gain,20,20,0,0,0,True,0.0123,0.0330,0.0055,0.0442
+"Warsaw Pact, pooled, exercise-based",spatial blocks,all lists,population rule,"LightGBM, all permitted",neither,20,0,0,20,0,True,0.0214,0.1590,-0.0868,0.1496
+"Warsaw Pact, pooled, exercise-based",spatial blocks,all lists,population + country,"LightGBM, all permitted",neither,20,0,0,20,0,True,0.0299,0.1651,-0.0505,0.1516
+"Warsaw Pact, pooled, exercise-based",spatial blocks,lists other than SAC,population rule,"LightGBM, all permitted",neither,20,0,0,20,0,True,0.0214,0.1590,-0.0868,0.1496
+"Warsaw Pact, pooled, exercise-based",spatial blocks,lists other than SAC,population + country,"LightGBM, all permitted",neither,20,0,0,20,0,True,0.0299,0.1651,-0.0505,0.1516
+"Warsaw Pact, pooled, exercise-based",leave one document out,all lists,population rule,"LightGBM, all permitted",not a reading,20,0,0,0,20,True,-0.0577,0.0755,-0.1199,0.0510
+"Warsaw Pact, pooled, exercise-based",leave one document out,all lists,population + country,"LightGBM, all permitted",not a reading,20,0,0,0,20,True,-0.0423,0.0925,-0.0991,0.0702
+"Warsaw Pact, pooled, exercise-based",leave one document out,lists other than SAC,population rule,"LightGBM, all permitted",not a reading,20,0,0,0,20,True,-0.0577,0.0755,-0.1199,0.0510
+"Warsaw Pact, pooled, exercise-based",leave one document out,lists other than SAC,population + country,"LightGBM, all permitted",not a reading,20,0,0,0,20,True,-0.0423,0.0925,-0.0991,0.0702
+single document: SAC 1956 (not a state model),spatial blocks,all lists,population rule,"LightGBM, all permitted",gain,20,20,0,0,0,True,0.0590,0.0951,0.0509,0.1027
+single document: SAC 1956 (not a state model),spatial blocks,all lists,population + country,"LightGBM, all permitted",gain,20,20,0,0,0,True,0.0094,0.0328,0.0021,0.0439

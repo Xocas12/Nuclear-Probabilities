@@ -1,3 +1,3 @@
 max_iter,all_permitted,no_source_markers,difference,difference_lo,difference_hi,excludes_zero,call
-60,0.5180,0.7997,0.2817,0.2672,0.2970,True,not explained
-300,0.5180,0.8032,0.2852,0.2706,0.3005,True,not explained
+60,0.6121,0.7997,0.1877,0.1732,0.2026,True,not explained
+300,0.6121,0.8032,0.1911,0.1763,0.2061,True,not explained

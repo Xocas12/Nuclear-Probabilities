@@ -37,7 +37,7 @@ ranking with no information scores the list's **base rate**: 0.49 for SAC, 0.07 
 list PR-AUC understates precision. **Spatial cross-validation** scores each town with a model fitted without the 300
 km square it lies in (5 folds, on three shifted grids, scores averaged). Intervals are 95% paired bootstrap intervals,
 resampling towns and, "by blocks", 300 km squares; a difference is a **gain** or a loss only if both exclude zero, and
-otherwise **neither**. Differences have two decimals, since between bootstrap seeds a bound typically moves by 0.005
+otherwise **neither**. Differences have two decimals, since between bootstrap seeds a bound typically moves by 0.006
 (median over comparisons), and by up to 0.02 for one in ten (`runs/classifier/seed_check.csv`); one printed +0.00 or
 -0.00 lies within 0.005 of zero on that side.
 
@@ -46,17 +46,17 @@ otherwise **neither**. Differences have two decimals, since between bootstrap se
 **What made a place a target?** The lists show what listed towns had in common, not why they were chosen. On the one
 large list, SAC's 1956 study of the Soviet bloc, a listed town stood out mostly by its size. Under spatial
 cross-validation, ranking towns by population alone (the population rule) gives a PR-AUC of 0.77 (base rate 0.49);
-population plus a term for each country gives 0.82, and the selected model (logistic, all permitted) 0.85: +0.02
-[+0.01, +0.03] over population plus country, by blocks [+0.01, +0.04]. No family of town traits adds more than 0.04
+population plus a term for each country gives 0.82, and the selected model (LightGBM, all permitted) 0.84: +0.02
+[+0.01, +0.03] over population plus country, by blocks [+0.00, +0.04]. No family of town traits adds more than 0.04
 (table below). Of the families that describe the towns as of 1956, military sites, geography and air and missile
 defence sites gain on all countries, and administrative status on Soviet towns only. The defence sites are known
 mostly from post-Soviet sources: they record what existed in 1956, not what SAC knew. Transport adds the most but
 rests largely on today's data. Without the columns flagged as today's data, the selected model's gain over population
-and country is, with or without the defence tables, +0.01 [+0.00, +0.02], by blocks [-0.00, +0.03]: at least one
-interval reaches zero, so it cannot be told from no difference. Several inputs still postdate 1956 (REPORT, "Inputs
-later than the document"), and the analysis is not blind: earlier results had been read. Nothing here has been shown
-to carry over to a document the models did not see. On the one blind test, places no run had scored, no model beat
-population plus country.
+and country is +0.00 [-0.00, +0.01], by blocks [-0.01, +0.02], and also without the defence tables +0.01 [-0.00,
++0.02], by blocks [-0.01, +0.03]. In both, at least one interval reaches zero, so it cannot be told from no
+difference. Several inputs still postdate 1956 (REPORT, "Inputs later than the document"), and the analysis is not
+blind: earlier results had been read. Nothing here has been shown to carry over to a document the models did not see.
+On the one blind test, places no run had scored, no model beat population plus country.
 
 **How likely is an area to be struck?** Only under stated assumptions, and only as a historical illustration. If the
 cited US stockpile of 1956 were sent against the Soviet bloc and each delivered warhead fell on a town in proportion
@@ -82,9 +82,9 @@ fitted on, not a test. Present-day scenarios apply lists of 1945-1977 to today's
 
 | Family added | All countries | Soviet towns only |
 |---|---|---|
-| military sites of the document's date | +0.02 [+0.01, +0.02]; blocks [+0.01, +0.03]: gain | +0.02 [+0.01, +0.03]; blocks [+0.01, +0.03]: gain |
+| military sites of the document's date | +0.02 [+0.01, +0.02]; blocks [+0.01, +0.02]: gain | +0.02 [+0.01, +0.03]; blocks [+0.01, +0.04]: gain |
 | geography (elevation, relief, distance to the coast) | +0.01 [+0.00, +0.02]; blocks [+0.00, +0.02]: gain | +0.01 [+0.00, +0.03]; blocks [+0.00, +0.03]: gain |
-| air and missile defence sites of the document's date | +0.01 [+0.00, +0.02]; blocks [+0.00, +0.02]: gain | +0.02 [+0.01, +0.03]; blocks [+0.00, +0.03]: gain |
+| air and missile defence sites of the document's date | +0.01 [+0.00, +0.01]; blocks [+0.00, +0.02]: gain | +0.01 [+0.00, +0.02]; blocks [+0.00, +0.03]: gain |
 | administrative status (capital, regional centre, distance to the capital) | +0.00 [-0.00, +0.01]; blocks [-0.00, +0.01]: neither | +0.01 [+0.00, +0.02]; blocks [+0.00, +0.02]: gain |
 | national power (the Correlates of War project's (COW) National Material Capabilities), over population alone | +0.02 [+0.02, +0.03]; blocks [+0.01, +0.03]: gain | constant on these towns |
 | national power (COW), over population and country | +0.00 [-0.00, +0.00]; blocks [-0.00, +0.01]: neither | constant on these towns |
@@ -94,19 +94,20 @@ fitted on, not a test. Present-day scenarios apply lists of 1945-1977 to today's
   Each gain is an association within one requirements study, not a cause, and says nothing of its direction. 5 of the
   10 gains have a block lower bound under 0.005, and the family fits were not repeated under other bootstrap seeds.
   Listed Soviet towns had fewer defence sites within 50 km than population and country predict (odds ratio per tenfold
-  0.33 [0.19, 0.51]); REPORT, "Defences", gives why that does not show SAC avoided defended places.
+  0.33 [0.18, 0.52]); REPORT, "Defences", gives why that does not show SAC avoided defended places.
 - **On lists other than SAC's**, under spatial cross-validation, the global model on all attacker documents (exercises
-  included) against population plus country is +0.07 [+0.03, +0.14], by blocks [-0.03, +0.16]: at least one interval
+  included) against population plus country is +0.07 [+0.03, +0.14], by blocks [-0.03, +0.15]: at least one interval
   reaches zero, so it cannot be told from no difference. Of its 106 positives, 93 come from Warsaw Pact exercises
   (43), staff-academy lessons (35), a war game (12) and the disputed 1970 map (3); 6 come from documents registered as
   war plans and 7 from US studies: it is mostly a reading on exercises and lessons. The held-out blocks' documents are
   also in training, so this is not a reading on an unseen document.
 - **On a document the model has not seen**, left out one at a time, documents are ranked worse by the selected model
-  than by the population rule over all lists (-0.14 [-0.16, -0.11], by blocks [-0.18, -0.09]), and on lists other than
-  SAC's the two cannot be told apart (+0.02 [-0.03, +0.07], by blocks [-0.11, +0.09]). No model has been shown to beat
+  than by the population rule over all lists (-0.14 [-0.17, -0.12], by blocks [-0.18, -0.10]), and on lists other than
+  SAC's the two cannot be told apart (+0.02 [-0.03, +0.07], by blocks [-0.10, +0.09]). No model has been shown to beat
   population on an unseen document.
 - **Bootstrap seed.** The resamples are drawn with one fixed seed, the number 1956 (not the document year). Every
-  primary comparison was repeated under seeds 1 to 20 with nothing refitted: 34 of 34 keep their verdict under all 20.
+  primary comparison was repeated under seeds 1 to 20 with nothing refitted: 32 of 34 keep their verdict under all 20.
+  The 2 that do not are listed in REPORT ("Bootstrap seed") and are read as neither a finding nor its absence.
 - **No state gets its own model.** The gate fixed in advance asks for 2 independent plans, 50 positives and 15 outside
   the largest plan. The US has 1299 linked positives but only 7 outside SAC's study. The USSR has none in a document
   registered as a war plan; its 35 town-list pairs are staff-academy lessons. A pooled Warsaw Pact model, labelled

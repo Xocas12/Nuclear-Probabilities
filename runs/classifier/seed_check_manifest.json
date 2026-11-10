@@ -1,6 +1,6 @@
 {
-  "created": "2026-11-05T22:47:50+00:00",
-  "git_commit": "1244f614e589843140c93af1d6c145ff773b517e",
+  "created": "2026-11-10T03:12:20+00:00",
+  "git_commit": "a25b39a03e90c00c98a536772ce28ec038f83a10",
   "git_dirty": false,
   "amendment": "configs/protocol_amendment_18.yaml",
   "seeds": [
@@ -27,12 +27,12 @@
   ],
   "bootstrap": 2000,
   "inputs": {
-    "runs/classifier/comparison.csv": "3635771729233d0627a594f2bd5a004cbd6e7a4b2cad500b35513a0d1eab3562",
-    "runs/classifier/held_out_scores.csv.gz": "bd1d1e1c99d86842597e102943d84a746de97ba15b10c15757b053de42466bee",
-    "runs/classifier/selection.csv": "908a6a3bd4c5690100c3ddeed0f6b799455e5afe686f03d0b6f1b858e8f999db"
+    "runs/classifier/comparison.csv": "9eb32baa68f1441aab8c427f680f98c6f7192083c4f7b776f730dda863f37bf0",
+    "runs/classifier/held_out_scores.csv.gz": "da6d87867aa52c6e2b503b4129aefe0f9502241e2dcf98c3f4eaebeea71e3181",
+    "runs/classifier/selection.csv": "2bd9bb7d700f78d96d7b8879cd3b298e4751507029663aaabc5194474f99dab7"
   },
   "outputs": {
-    "runs/classifier/seed_check.csv": "cdb506ef54419b99da2b342057637e01fb7e5b3241ee514f6a5d8c8ff335648d",
-    "runs/classifier/seed_check_summary.csv": "4eeecbf0437156efce27ab448eaeb8c4da3771ca8d5367371b7fb3d915f3a8f3"
+    "runs/classifier/seed_check.csv": "3207f44f5712d39927a04c361b1ecbfdd7f3b68b0b6a0359e661634e9eec3201",
+    "runs/classifier/seed_check_summary.csv": "9c6a7b0301b3343e46d58e3592251ebdfca56c96ce93d4ef52d591db8f70aa9f"
   }
 }
