@@ -1713,6 +1713,22 @@ def _held_sites(ended: bool = False) -> tuple[int, float]:
     return n, worst
 
 
+def _same_positives(was_dir, now_dir) -> bool:
+    """Whether every list has the same towns and positives in two runs (lists.csv, one row per holdout and list)."""
+    if not (was_dir / "lists.csv").exists():
+        return False
+    cols = ["holdout", "plan_id", "scope", "towns", "positives"]
+    was, now = (
+        pd.read_csv(d / "lists.csv", usecols=cols).drop_duplicates() for d in (was_dir, now_dir)
+    )
+    key = cols[:3]
+    return (
+        was.sort_values(key)
+        .reset_index(drop=True)
+        .equals(now.sort_values(key).reset_index(drop=True))
+    )
+
+
 def _unscored_after_19() -> list[str]:
     """Documents scored before the nineteenth amendment and not after it, from the two runs' lists.csv."""
     was = BEFORE_19 / "lists.csv"
@@ -1797,9 +1813,15 @@ def _corrections() -> str:
         else ""
     )
     held20, km20 = _held_sites(ended=True)
+    same20 = _same_positives(BEFORE_20, OUT)
     twentieth = (
         f" The twentieth holds the other {held20} site rows, those with a recorded end year, at their cell centres "
         f"too (at most {km20:.0f} km), so no site table gives a point finer than the map's cell."
+        + (
+            " Its three moved links credit no other town: every list has the towns and positives it had before."
+            if same20
+            else " Its three moved links changed which towns some lists credit (`runs/classifier/lists.csv`)."
+        )
         if any(r.startswith("| 20 ") for r in rows)
         else ""
     )
