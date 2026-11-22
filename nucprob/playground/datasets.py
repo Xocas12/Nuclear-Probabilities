@@ -170,6 +170,7 @@ def _ussr1959():
             "id": d["place_id"],
             "name": d["name_1956"],
             "country": d["republic"],
+            "nation": "USSR",
             "lat": d["lat"],
             "lon": d["lon"],
             "year": 1959,
@@ -194,6 +195,7 @@ def _napb90(target: str):
         frame = pd.DataFrame(
             {
                 "id": d["fips"],
+                "nation": "USA",
                 "name": d["census_name"] + ", " + d["state"],
                 "country": d["state"],
                 "lat": d["lat"],
@@ -334,6 +336,8 @@ def load(name: str, include_sealed: bool = False) -> Data:
         raise KeyError(f"unknown dataset {name}; known: {names()}")
     frame, feats = loader()
     frame["y"] = frame["y"].astype(int)
+    if "nation" not in frame:
+        frame["nation"] = frame["country"]
     if not include_sealed:
         frame = frame[~frame["sealed"]].reset_index(drop=True)
     frame["year"] = pd.to_numeric(frame["year"], errors="coerce").fillna(-1).astype(int)

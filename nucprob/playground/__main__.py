@@ -11,6 +11,10 @@ from nucprob.playground.evaluate import evaluate, explain, run_dir, transfer
 
 def _data(args, name=None):
     d = load(name or args.dataset, include_sealed=getattr(args, "include_sealed", False))
+    if getattr(args, "extras", False):
+        from nucprob.playground.extras import add_extras
+
+        d = add_extras(d)
     if args.features or args.drop:
         d = d.select(args.features, args.drop)
     return d
@@ -27,6 +31,11 @@ def main(argv=None) -> None:
             "-f", "--features", help="families or columns to keep, e.g. population,military"
         )
         sp.add_argument("--drop", help="families or columns to leave out")
+        sp.add_argument(
+            "--extras",
+            action="store_true",
+            help="add HYDE population, Wikidata facility and country-year features",
+        )
 
     r = sub.add_parser("run", help="cross-validate algorithms on a dataset")
     r.add_argument("-d", "--dataset", required=True)
@@ -50,6 +59,7 @@ def main(argv=None) -> None:
     e.add_argument("-a", "--algo", default="lgbm")
     e.add_argument("-f", "--features")
     e.add_argument("--drop")
+    e.add_argument("--extras", action="store_true")
 
     args = p.parse_args(argv)
     pd.set_option("display.width", 200)
