@@ -1517,3 +1517,45 @@ sources:
   role: labels
   retrieved: '2026-11-22'
   sha256: b1c8938b98c9f465a9e35a09379cbe3a0593ec2e7ec8aa6bf8c1135a06f951ac
+- id: early_western_valero_2000
+  url: https://www.cia.gov/resources/csi/static/american-joint-intel-committee.pdf
+  path: early_western/valero_2000_jic.pdf
+  licence: US government work (CIA, Studies in Intelligence), public domain
+  use: label rows us_1945_jic329 (JIC 329, 3 Nov 1945, 20 cities, as summarised by Valero)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: cc1af98dad732be50a1994c99dd17c439664970bf8dfe5a3373e418fa5e91b57
+- id: early_western_aaf_map_1945
+  url: https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/1945_Russian_and_Manchurian_Strategic_Urban_Areas.jpg/1920px-1945_Russian_and_Manchurian_Strategic_Urban_Areas.jpg
+  path: early_western/map_1945_russian_manchurian_urban_areas_1920px.jpg
+  licence: US Army work, public domain (Wikimedia Commons)
+  use: label rows us_1945_aaf_15cities, us_1945_aaf_25cities (bar-chart city lists on the AAF map of 31
+    Aug 1945)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: f8af647b503121301ac896b0248ce1de30797fd4fc7b94856e5efa4a45776274
+- id: early_western_condit_1996
+  url: https://archive.org/download/DTIC_ADA323796/DTIC_ADA323796.pdf
+  path: early_western/condit_1996_jcs_vol2_DTIC_ADA323796.pdf
+  licence: US government work (JCS Office of Joint History), public domain
+  use: 'label rows us_1949_trojan (TROJAN: Moscow 8, Leningrad 7 bombs; book p158)'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 1456bcf52a18fbcdd66dddebe9f24603bedac7564236a6de13cee54016e8bdf1
+- id: early_western_harmon_1949
+  url: https://nsarchive.gwu.edu/sites/default/files/documents/reuyy0-k92to/01.pdf
+  path: early_western/nsa_2022_casualties/doc01_harmon_1949.pdf
+  licence: US government record (declassified), via National Security Archive
+  use: 'context only: Harmon report (JCS 1953/1, 12 May 1949); its city annex is missing from this copy'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: ca870d49121ce6bfae572c22910891d236ccdc1fa5e939d65f5881f272c8549b
+- id: early_western_norstad_1945_pages
+  url: https://michelchossudovsky.substack.com/p/us-war-department-september-1945-plan-nuclear-war-ussr
+  path: early_western/substack_chossudovsky/
+  licence: article (c) author; embedded images are scans of US government records (public domain)
+  use: 'context only: page images of Norstad to Groves 15 Sep 1945 (cover, p1, summary para 18) and Groves
+    reply 26 Sep 1945; give totals (15 first-priority targets, 66 cities, 204 bombs), no city names'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 1ce92c6357fbe53c8b2c56706fae6bac6563d854862e22824a5a0741796ccc36

@@ -601,3 +601,57 @@ lists:
     caveats: documents reported, not seen; FT original paywalled, rows come from outlets quoting it; conventional
       (Kh-101) strike planning, not nuclear; the named sites are the civilian examples the FT chose to cite,
       a biased sample
+
+  - file: us_1945_aaf_15cities.csv
+    title: AAF map 'Russian & Manchurian Strategic Urban Areas' (31 Aug 1945), chart '15 Selected Soviet
+      Cities'
+    planner: US (Army Air Forces, AC/AS-5 staff)
+    targets: USSR
+    year: 1945
+    provenance: study
+    selection: judgment
+    use: transfer-test
+    completeness: all 15 cities of the chart
+    card: data/notes/early_western.md (2)
+    caveats: read from a 1920 px copy; the chart gives no per-city priority or bombs; that it is Norstad's
+      '15 first priority targets' is inferred
+
+  - file: us_1945_aaf_25cities.csv
+    title: AAF map 'Russian & Manchurian Strategic Urban Areas' (31 Aug 1945), chart '25 Selected Soviet
+      Cities'
+    planner: US (Army Air Forces, AC/AS-5 staff)
+    targets: USSR
+    year: 1945
+    provenance: study
+    selection: judgment
+    use: transfer-test
+    completeness: all 25 cities of the chart; the ~66 selected centres on the map itself not transcribed
+    card: data/notes/early_western.md (2)
+    caveats: read from a 1920 px copy; purpose of the 25-city set is not stated on the map; overlaps the
+      15-city chart
+
+  - file: us_1945_jic329.csv
+    title: JIC 329, 'Strategic Vulnerability of the U.S.S.R. to a Limited Air Attack' (3 Nov 1945), 20 cities
+      as given by Valero (2000)
+    planner: US (Joint Intelligence Committee)
+    targets: USSR
+    year: 1945
+    provenance: study
+    selection: judgment
+    use: transfer-test
+    completeness: all 20 cities (secondary, from Valero's summary)
+    card: data/notes/early_western.md (1)
+    caveats: secondary (the JIC paper itself is not online); the order is Valero's and may not be a priority
+      order; two typos kept as printed
+
+  - file: us_1949_trojan.csv
+    title: TROJAN joint emergency war plan (JCS, 28 Jan 1949), the cities named in the official JCS history
+    planner: US (Joint Chiefs of Staff)
+    targets: USSR
+    year: 1949
+    provenance: plan
+    selection: judgment
+    use: audit
+    completeness: 2 of 70 cities (Moscow 8 bombs, Leningrad 7)
+    card: data/notes/early_western.md (3)
+    caveats: secondary (Condit 1996); the atomic annex and the Harmon report's city annex are not online
