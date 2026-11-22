@@ -1,0 +1,83 @@
+# The analysis protocol (PLAN section 5.1, milestone M5). Frozen before the main model runs:
+# its sha256 is recorded in configs/protocol.sha256 and checked by tests/test_protocol.py, and
+# every run in runs/ records it. Changing anything here is a new protocol version: bump
+# `version`, say why under `changes`, and re-record the hash
+# (python -m nucprob.protocol --record).
+version: 1
+frozen: '2026-11-22'
+changes:
+  - '1: first frozen protocol (after milestone M4: labels and feature bases complete)'
+
+universes:
+  bloc_1956:
+    rule: every settlement of 10,000+ people near June 1956 in the countries of the SAC 1956 list,
+      with coordinates (nucprob/places.py; census or yearbook figures nearest the date)
+    complete_requires: [demoscope (Uzbekistan 1959), GDR Statistisches Jahrbuch 1956]
+    note: a build with NUCPROB_SKIP_MISSING=1 is incomplete and never used for reported results
+  us_1985: every US county of the 1990 boundaries with its July 1985 estimate (nucprob/us1985)
+  transfer: census town tables of 10,000+ at each list's date (data/curated/gazetteer/TRANSFER.md);
+    post-1990 regions use GeoNames towns of 10,000+
+
+labels:
+  T1:
+    name: targeted
+    bloc_1956: listed (a Part I complex or sub-complex links to the place); variant has_dgz
+    us_1985: very_high (NAPB-90 blast band >= 10 psi); variant medium_plus (>= 2 psi)
+    transfer: listed in the list (selected != 0), target linked to a town within 15 km
+  T2:
+    name: how hard
+    bloc_1956: n_dgz and n_installations on targeted places (hurdle model)
+  T3:
+    name: rank
+    bloc_1956: complex priority as an ordinal outcome over priority_tier, targeted places
+  T4:
+    name: kept under scarcity
+    bloc_1956: part2_has_dgz, where known (feasible only where Part II is known)
+  T5:
+    name: airfield priority
+    airfields: Part II priority number (needs an airfield universe; not yet built)
+  not_labels: [napb90 fallout bands (a consequence of targeting)]
+
+features:
+  bloc_1956: every feature of nucprob/features/registry.py (FEATURES)
+  us_1985: every feature of nucprob/us1985/features.py (FEATURES)
+  transfer: nucprob/transfer/features.py COMMON plus its three military distances
+  extras: nucprob/playground/extras.py (HYDE, Wikidata facilities, country-year), reported as a
+    separate comparison, never mixed into the primary result
+  anachronisms: features flagged anachronism=True are dropped in a reported robustness run
+  guard: tests/test_leakage.py (no feature reads a label source)
+
+splits:
+  block_km: 300
+  sealed_share: 0.2
+  sealed_seed: 1956
+  sealed_rule: blocks assigned greedily to 5 groups balanced on T1; group 0 is sealed
+    (nucprob/model/splits.py); scored once, at milestone M8
+  cv: {k: 5, scheme: spatial blocks, shifts_km: [0, 100, 200], seeds: [0, 1, 2]}
+  also_reported: [random 5-fold, leave-one-country-out, plan transfer]
+
+models:
+  zoo: [population rule, logit, logit_l1, spline_logit, ebm, rf, extratrees, hgb, lgbm, xgb,
+    catboost, knn, svm, mlp]
+  tuning: none in version 1 (library defaults as set in nucprob/playground/algos.py)
+  levels:
+    G: every labelled place of all plans, with planner, year, provenance and regime as context
+    C: one target country; fitted only with >= 30 targeted and >= 30 untargeted places
+    R: one regime group at the plan's date
+    H: partial pooling place -> country -> regime (later milestone)
+  refit_at_levels: the top two zoo algorithms by T1 PR-AUC, plus logit
+
+regime:
+  source: data/processed/country_year.parquet (nucprob/sources/country_year.py)
+  primary: V-Dem Regimes of the World (vdem_regime) of the targeted state at the plan's year,
+    grouped as closed autocracy (0), electoral autocracy (1), democracy (2-3)
+  robustness: [polity2 >= 6 vs < 6, Boix-Miller-Rosato democracy]
+  alignment: NATO, Warsaw Pact or other, from the alliance flags of the same table
+
+metrics:
+  primary: PR-AUC of T1 under spatial-block CV
+  also: [ROC-AUC, Brier, log-loss, precision@k with k the true number of targets]
+  T2: [Poisson deviance, Spearman]
+  T3_T5: [NDCG@k, Kendall tau]
+  uncertainty: fold-to-fold spread; bootstrap CI on the sealed test
+  primary_comparison: best zoo model vs the population rule, T1, bloc_1956, spatial CV
