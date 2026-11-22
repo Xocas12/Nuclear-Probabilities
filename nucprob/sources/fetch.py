@@ -77,6 +77,7 @@ def main(argv: list[str] | None = None) -> int:
     manifest = load_manifest()
     wanted = set(args.ids)
     changed = problems = 0
+    failed: list[str] = []
     for src in manifest["sources"]:
         if wanted and src["id"] not in wanted:
             continue
@@ -98,14 +99,28 @@ def main(argv: list[str] | None = None) -> int:
             problems += 1
             continue
         print(f"{src['id']}: downloading {src['url']}")
-        download(src["url"], dest)
-        src["retrieved"] = dt.datetime.now(dt.UTC).date().isoformat()
-        src["sha256"] = sha256(dest)
-        changed += 1
+        try:
+            download(src["url"], dest)
+        except requests.RequestException as err:
+            print(f"{src['id']}: FAILED ({err})")
+            failed.append(src["id"])
+            continue
+        digest = sha256(dest)
+        if src.get("sha256") and src["sha256"] != digest and not args.refresh:
+            # A fresh copy of a recorded source: keep the record, report the change.
+            print(f"{src['id']}: downloaded again, but its sha256 differs from the recorded one")
+            problems += 1
+            continue
+        if not src.get("sha256") or args.refresh:
+            src["retrieved"] = dt.datetime.now(dt.UTC).date().isoformat()
+            src["sha256"] = digest
+            changed += 1
     if changed:
         save_manifest(manifest)
-    print(f"{changed} entries recorded; {problems} problems")
-    return 1 if problems else 0
+    print(f"{changed} entries recorded; {problems} problems; {len(failed)} failed downloads")
+    if failed:
+        print("failed:", " ".join(failed))
+    return 1 if problems or failed else 0
 
 
 if __name__ == "__main__":

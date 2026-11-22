@@ -33,6 +33,17 @@ labels = [
     "pdfplumber>=0.11",
     "scipy>=1.11",
 ]
+playground = [
+    "catboost>=1.2.10",
+    "interpret-core>=0.7.8",
+    "ipykernel>=7.4.0",
+    "jupyterlab>=4.6.6",
+    "matplotlib>=3.11.2",
+    "nbformat>=5.11.1",
+    "scipy>=1.18.1",
+    "shap>=0.54.1",
+    "xgboost>=3.4.1",
+]
 
 [dependency-groups]
 dev = [
