@@ -47,3 +47,4 @@ data/interim/napb90_b/*
 !data/interim/napb90_b/chunks/
 catboost_info/
 runs/playground/
+runs/incomplete/

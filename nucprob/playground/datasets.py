@@ -335,6 +335,7 @@ def load(name: str, include_sealed: bool = False) -> Data:
     else:
         raise KeyError(f"unknown dataset {name}; known: {names()}")
     frame, feats = loader()
+    frame = frame[frame["y"].notna()].reset_index(drop=True)  # unknown labels
     frame["y"] = frame["y"].astype(int)
     if "nation" not in frame:
         frame["nation"] = frame["country"]
