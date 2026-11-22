@@ -704,3 +704,74 @@ lists:
     caveats: three scenario variants of the same 1977 lesson set, each with its own target numbering; not
       one plan; Wrohm and Bad Münder repeat sites of wp_1977_gsa_front_lesson; several areas are given as
       three-place triangles; yields given for only 4 rows
+
+  - file: cd_1962_canada_target_areas.csv
+    title: Canada's sixteen designated possible target areas, 1962 (Army Target Area Headquarters; EMO "likely
+      target areas")
+    planner: Canada (EMO / Army, federal)
+    targets: Canada
+    year: 1962
+    provenance: defender
+    selection: judgment
+    use: transfer-test
+    completeness: all 16 cities named in two independent federal documents (EMO National Digest June 1962;
+      Blueprint for Survival No. 5, 1962), which agree exactly
+    card: data/notes/civil_defence.md (8)
+    caveats: extends the 1956 list of 13 (adds Calgary, London, St. John's; Ottawa-Hull becomes Ottawa);
+      cities only, no military sites; TAHQ type by population band is a sizing rule, not a selection rule
+
+  - file: cd_1963_uk_dispersal_areas.csv
+    title: UK dispersal areas for the priority-class evacuation scheme, England and Wales (Hansard written
+      answer, 28 March 1963)
+    planner: UK (Ministry of Housing and Local Government, home defence)
+    targets: UK
+    year: 1963
+    provenance: defender
+    selection: unknown
+    use: transfer-test
+    completeness: all 19 dispersal areas of England and Wales; Scotland not covered
+    card: data/notes/civil_defence.md (9)
+    caveats: an area to be evacuated is an expectation of danger, not a named aim point; boundaries not
+      given; selection criterion not stated (largely the biggest conurbations plus naval ports)
+
+  - file: cd_1968_nsw_target_zones.csv
+    title: New South Wales civil-defence assumed target zones (Sydney, Newcastle, Wollongong), reported
+      1968
+    planner: Australia, New South Wales (State Director of Civil Defence)
+    targets: Australia
+    year: 1968
+    provenance: defender
+    selection: judgment
+    use: transfer-test
+    completeness: all 3 zones for NSW; no other Australian state names target areas in the source
+    card: data/notes/civil_defence.md (10)
+    caveats: one state only; assumption dates from 1955 planning; Commonwealth view was that Australia was
+      unlikely to be a primary target
+
+  - file: cd_1982_hard_rock_partial.csv
+    title: Exercise Hard Rock 1982, sites named by Campbell as hit (3) or as not attacked (9)
+    planner: UK (Home Office/MoD exercise)
+    targets: UK
+    year: 1982
+    provenance: exercise
+    selection: judgment
+    use: reference
+    completeness: 3 of 54 weapons named; the full bomb plot printed in the New Statesman is not in the author's
+      online PDF
+    card: data/notes/civil_defence.md (11)
+    caveats: secondary; politically edited scenario (major cities and US/Polaris bases removed); selected=0
+      rows are cities not attacked, not proven candidates
+
+  - file: cd_2021_china_key_cad_cities.csv
+    title: China's national key civil-air-defence cities, class stated by official sources (partial)
+    planner: China (State Council/CMC; city self-description)
+    targets: China
+    year: 2021
+    provenance: defender
+    selection: unknown
+    use: reference
+    completeness: 4 cities (Nanjing, Yantai, Weihai class 1; Quanzhou class 2) of an unpublished national
+      list; source dates 2004-2021
+    card: data/notes/civil_defence.md (12)
+    caveats: very partial; classes assigned at unknown dates; several other official pages (Chongqing, Hangzhou,
+      Xinxiang) state a class but could not be opened from this container

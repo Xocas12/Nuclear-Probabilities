@@ -869,7 +869,8 @@ sources:
   url: https://www2.census.gov/programs-surveys/popest/tables/1980-1990/counties/totals/e8089co.txt
   path: census/e8089co.txt
   licence: US government work, public domain
-  use: US county universe and population features (1980 census, 1985 estimate); check of NAPB-90's printed populations
+  use: US county universe and population features (1980 census, 1985 estimate); check of NAPB-90's printed
+    populations
   role: universe
   retrieved: '2026-10-10'
   sha256: 0385ddcf6a5a4325897a870ea82b74d06b65bdf4a5f1dc6a65bc3b3877917a8c
@@ -885,8 +886,8 @@ sources:
   url: https://archive.org/details/nuclearattackplanningbase1990finalreport504pg
   path: civil_defence/FEMA_1990_Nuclear_attack_planning_base_(NAPB-90).pdf
   licence: US government record released under FOIA (27 Apr 2005), public domain
-  use: Annex A county tables of direct-effects risk and Annex B county tables of fallout risk,
-    transcribed in full (data/curated/napb90/)
+  use: Annex A county tables of direct-effects risk and Annex B county tables of fallout risk, transcribed
+    in full (data/curated/napb90/)
   role: labels
   retrieved: '2026-10-03'
   sha256: 3e884fd89adc43025d2c19f51e52f1a55b52402605ad267588de06113b836bb0
@@ -1030,7 +1031,8 @@ sources:
   url: https://www.e-stat.go.jp/stat-search/file-download?statInfId=000007914029&fileKind=2
   path: japan/s15_7914028.pdf
   licence: e-Stat (Statistics Bureau of Japan), government terms of use
-  use: 'Japan 1940 transfer universe: cities and towns of 10,000+ (towns_jp_1940.csv); one of the four Table 1 volumes'
+  use: 'Japan 1940 transfer universe: cities and towns of 10,000+ (towns_jp_1940.csv); one of the four
+    Table 1 volumes'
   role: universe
   retrieved: '2026-10-10'
   sha256: f7a037a764122525125877c1c38ec13ab35436844bbbaf7c3d5e2176fdbe2d7e
@@ -2238,3 +2240,219 @@ sources:
   role: features
   retrieved: '2026-11-22'
   sha256: ef59a45f6066d7f87165fb0801f41d0806c2cc9ea69141c3372b935463f82085
+- id: geonames_kr
+  url: https://download.geonames.org/export/dump/KR.zip
+  path: geonames/KR.zip
+  licence: CC BY 4.0 (GeoNames)
+  use: today's towns of South Korea for the post-1990 transfer universe (nucprob/transfer/places.py)
+  role: universe
+  retrieved: '2026-11-22'
+  sha256: 509af5c41d39682a8b21fe10e99e7520793496389ed7c471de63036bb13ddc43
+- id: geonames_fr
+  url: https://download.geonames.org/export/dump/FR.zip
+  path: geonames/FR.zip
+  licence: CC BY 4.0 (GeoNames)
+  use: today's towns of France for the post-1990 transfer universe (nucprob/transfer/places.py)
+  role: universe
+  retrieved: '2026-11-22'
+  sha256: fcd7593ad5cf8f0fadb6ca8bdc97df34d62761277006785deab1374fc0deb845
+- id: geonames_no
+  url: https://download.geonames.org/export/dump/NO.zip
+  path: geonames/NO.zip
+  licence: CC BY 4.0 (GeoNames)
+  use: today's towns of Norway for the post-1990 transfer universe (nucprob/transfer/places.py)
+  role: universe
+  retrieved: '2026-11-22'
+  sha256: de7e99006c94af721d0b9171cab1ba6bd7b69708be7378518d3b87588e383d8b
+- id: geonames_tr
+  url: https://download.geonames.org/export/dump/TR.zip
+  path: geonames/TR.zip
+  licence: CC BY 4.0 (GeoNames)
+  use: today's towns of Turkey for the post-1990 transfer universe (nucprob/transfer/places.py)
+  role: universe
+  retrieved: '2026-11-22'
+  sha256: 6c55264e6dba50c7f61ca891e57b9a74ec581e5a310cae8423f0e359625d1498
+- id: geonames_il
+  url: https://download.geonames.org/export/dump/IL.zip
+  path: geonames/IL.zip
+  licence: CC BY 4.0 (GeoNames)
+  use: today's towns of Israel for the post-1990 transfer universe (nucprob/transfer/places.py)
+  role: universe
+  retrieved: '2026-11-22'
+  sha256: 667c32a5c8c4d72da81a69224840854d7f26d511063b330ec360e4c79e44eb1a
+- id: cd_emo_digest_1962_2_3
+  url: https://www.publicsafety.gc.ca/lbrr/archives/emo%202-3-1962-eng.pdf
+  path: civil_defence/p2/psc/emo_2-3-1962-eng.pdf
+  licence: Crown copyright (Canada), archived public document
+  use: label extraction
+  role: labels
+  retrieved: 2026-11-22
+  sha256: 134e232e41fd75b46e21247758c130b7217c00af8fa1637d28669eaf70b3a97f
+- id: cd_emo_digest_1968_8_6
+  url: https://publicsafety.gc.ca/lbrr/archives/emo%208-6-1968-69-eng.pdf
+  path: civil_defence/p2/psc/emo_8-6-1968-69-eng.pdf
+  licence: Crown copyright (Canada), archived public document
+  use: label extraction
+  role: labels
+  retrieved: 2026-11-22
+  sha256: acfa9339a638c918aa45404905b82163b1fbfb93748b6e6386b5035762f3e706
+- id: cd_emo_digest_1961_1_4
+  url: https://www.publicsafety.gc.ca/lbrr/archives/emo%201-4-1961-eng.pdf
+  path: civil_defence/p2/psc/emo_1-4-1961-eng.pdf
+  licence: Crown copyright (Canada), archived public document
+  use: label extraction
+  role: labels
+  retrieved: 2026-11-22
+  sha256: a69a6882692e7e0cb30263817d1740b2e151f5c0f1449a97742e2719633a8d17
+- id: cd_emo_blueprint_5_1962
+  url: https://archive.org/download/31761117081935/31761117081935.pdf
+  path: civil_defence/p2/EMO_Blueprint_for_Survival_5.pdf
+  licence: Crown copyright (Canada); digitised by University of Toronto / Internet Archive
+  use: label extraction
+  role: labels
+  retrieved: 2026-11-22
+  sha256: aa50fd1a48eb57bd2ed942acca4d4e9288dc9284130fc43e8834b3c24f12a348
+- id: cd_hansard_uk_1963_03_28
+  url: https://api.parliament.uk/historic-hansard/written-answers/1963/mar/28/civil-defence-evacuation
+  path: civil_defence/p2/uk/written-answers_1963_mar_28_civil-defence-evacuation.html
+  licence: Open Parliament Licence
+  use: label extraction
+  role: labels
+  retrieved: 2026-11-22
+  sha256: d29cd993a6653b3a78c854d160af3e145dd953f72c5de7afbf5a998255fb0066
+- id: cd_hansard_uk_1963_05_02
+  url: https://api.parliament.uk/historic-hansard/commons/1963/may/02/civil-defence
+  path: civil_defence/p2/uk/commons_1963_may_02_civil-defence.html
+  licence: Open Parliament Licence
+  use: label extraction
+  role: labels
+  retrieved: 2026-11-22
+  sha256: f95e8350b09c821ba586e27d50dc0fd8bea586eb59326f6971e4f6f2a9807764
+- id: cd_ns_1982_hard_rock
+  url: https://www.duncancampbell.org/menu/journalism/newstatesman/newstatesman-1982/hard%20rock.pdf
+  path: civil_defence/p2/Campbell_1982_NS_Bad_day_at_Hard_Rock.pdf
+  licence: copyright New Statesman / D. Campbell; quoted for research
+  use: label extraction
+  role: labels
+  retrieved: 2026-11-22
+  sha256: aa06d8ee421060094bd1f7025256bb25a26b68a38d8b95215c12c6d09a2ad566
+- id: cd_ns_1982_armageddon_postponed
+  url: https://www.duncancampbell.org/menu/journalism/newstatesman/newstatesman-1982/armageddon%20postponed.pdf
+  path: civil_defence/p2/Campbell_1982_NS_Armageddon_postponed.pdf
+  licence: copyright New Statesman / D. Campbell; quoted for research
+  use: context
+  role: labels
+  retrieved: 2026-11-22
+  sha256: 9ccbbde49157eafa4f5977de78c2b8fd43818b3e9a87112adcde7a808e64e9d9
+- id: cd_cn_mod_nanjing_2021
+  url: http://www.mod.gov.cn/gfbw/gfdy/rmfk/4886656.html
+  path: civil_defence/p2/cn/da11b263.html
+  licence: PRC government website; quoted for research
+  use: label extraction
+  role: labels
+  retrieved: 2026-11-22
+  sha256: 8d6febd16e03177d91bd374a8488e39d693a0cd450b8c20c5ba07a9fbbdd9df6
+- id: cd_cn_yantai_2004
+  url: http://rfb.yantai.gov.cn/art/2004/1/1/art_2411_280999.html
+  path: civil_defence/p2/cn/bad08979.html
+  licence: PRC government website; quoted for research
+  use: label extraction
+  role: labels
+  retrieved: 2026-11-22
+  sha256: b618af27a58f8c7ce2e824d973e843afac4e18e656c24726cfd8df88f2e46341
+- id: cd_cn_weihai_2014
+  url: https://rfb.weihai.gov.cn/art/2014/8/11/art_9265_370994.html
+  path: civil_defence/p2/cn/2423570961.html
+  licence: PRC government website; quoted for research
+  use: label extraction
+  role: labels
+  retrieved: 2026-11-22
+  sha256: 5e97aeaa2545a6ca1a2a82189820c12d6159b6d48c79f2cdf74bc9efde93d160
+- id: cd_cn_quanzhou_2018
+  url: https://www.quanzhou.gov.cn/zfb/xxgk/zfxxgkzl/qzdt/qzyw/201809/t20180921_736081.htm
+  path: civil_defence/p2/cn/5d99a2d5a8.html
+  licence: PRC government website; quoted for research
+  use: label extraction
+  role: labels
+  retrieved: 2026-11-22
+  sha256: e82b930d07cf85c97021dbea9325d7908cf97213a5879912ca5102056aa2da1e
+- id: cd_fcda_ar_1956
+  url: https://archive.org/download/fcda1956annualreportfor1956/FCDA%20-%201956%20-%20Annual%20Report%20for%201956.pdf
+  path: civil_defence/p2/FCDA_1956_annual_report.pdf
+  licence: US government work (public domain)
+  use: context (rule-based CTA list, not extracted)
+  role: labels
+  retrieved: 2026-11-22
+  sha256: cd4fea135a691af647eb7a439cf1012fa7ed5d451b45729d79997fd4ec605835
+- id: cd_fcda_ar_1957
+  url: https://archive.org/download/fcda1957annualreportfor1957/FCDA%20-%201957%20-%20Annual%20Report%20for%201957.pdf
+  path: civil_defence/p2/FCDA_1957_annual_report.pdf
+  licence: US government work (public domain)
+  use: context (rule-based CTA list, not extracted)
+  role: labels
+  retrieved: 2026-11-22
+  sha256: d57a00fee1aed03fe979c5c99fd629d3fcc655115dca8d17df485b3a184cd5df
+- id: cd_fcda_ar_1958
+  url: https://archive.org/download/fcda1958annualreportfor1958/FCDA%20-%201958%20-%20Annual%20Report%20for%201958.pdf
+  path: civil_defence/p2/FCDA_1958_annual_report.pdf
+  licence: US government work (public domain)
+  use: context (rule-based CTA list, not extracted)
+  role: labels
+  retrieved: 2026-11-22
+  sha256: 8e03f22f171563ea08e93714aa5ffec4033add2db682ebeabe385ee9f23fca24
+- id: cd_canada_hoc_1962_01_29_p301
+  url: https://image-tor.canadiana.ca/iiif/2/69429%2Fc08s4jp57v9b/full/1600,/0/default.jpg
+  path: civil_defence/p2/hansard_ca/oop.debates_HOC2405_01_303.jpg
+  licence: Library of Parliament / Canadiana; public record
+  use: context (Tocsin B totals)
+  role: labels
+  retrieved: 2026-11-22
+  sha256: 3288a8f54c8202ea2cba4c2be583600e027dafabe58a12de53341d4afbd622c5
+- id: cd_canada_hoc_1962_03_23_p2126
+  url: https://image-tor.canadiana.ca/iiif/2/69429%2Fc0nv9982ht71/full/1600,/0/default.jpg
+  path: civil_defence/p2/hansard_ca/oop.debates_HOC2405_03_80.jpg
+  licence: Library of Parliament / Canadiana; public record
+  use: context (Tocsin B totals)
+  role: labels
+  retrieved: 2026-11-22
+  sha256: 1e57637f150889731f8da7c66db2b1627b586a807264b16a650bdcbcf4987df1
+- id: cd_canada_hoc_1962_03_23_p2137
+  url: https://image-tor.canadiana.ca/iiif/2/69429%2Fc07p8td4359n/full/1600,/0/default.jpg
+  path: civil_defence/p2/hansard_ca/oop.debates_HOC2405_03_91.jpg
+  licence: Library of Parliament / Canadiana; public record
+  use: context (Tocsin B totals)
+  role: labels
+  retrieved: 2026-11-22
+  sha256: 443f59bd97a1be945530655156add4f4e388acccc6aa2fa4736e5fe136c2bebc
+- id: cd_dtic_ada067231
+  url: https://archive.org/download/DTIC_ADA067231/DTIC_ADA067231.pdf
+  path: civil_defence/p2/DTIC_ADA067231.pdf
+  licence: US government work (public domain)
+  use: context (no named list)
+  role: labels
+  retrieved: 2026-11-22
+  sha256: 7b297d40a1da6e79bc21a2903ad0ed14926493c5f8d1f6ec3ba6e0902fed6de4
+- id: cd_loc_milford_1956_07_20
+  url: https://www.loc.gov/resource/sn87062224/1956-07-20/ed-1/?sp=1
+  path: civil_defence/p2/loc/sn87062224_1956-07-20_p1.txt
+  licence: public domain (Chronicling America OCR)
+  use: context (Operation Alert totals)
+  role: labels
+  retrieved: 2026-11-22
+  sha256: 39117cfdaa00148a2112d3b2834d519373bba7d5c2699568beb4c58cc2dbeaef
+- id: cd_loc_keywest_1956_07_20
+  url: https://www.loc.gov/resource/sn83016244/1956-07-20/ed-1/?sp=1
+  path: civil_defence/p2/loc/sn83016244_1956-07-20_p1.txt
+  licence: public domain (Chronicling America OCR)
+  use: context (Operation Alert totals)
+  role: labels
+  retrieved: 2026-11-22
+  sha256: 30954616520837fcf2a5f61601ac416d21f47e7310e6c04dec53d7a15a80a794
+- id: cd_loc_nome_1957_07_15
+  url: https://www.loc.gov/resource/sn84020662/1957-07-15/ed-1/?sp=1
+  path: civil_defence/p2/loc/sn84020662_1957-07-15_p1.txt
+  licence: public domain (Chronicling America OCR)
+  use: context (Operation Alert totals)
+  role: labels
+  retrieved: 2026-11-22
+  sha256: cc748d343f28cbefdffb9b03aa8321c95ddca818bc55ce95a4e787fde976b608

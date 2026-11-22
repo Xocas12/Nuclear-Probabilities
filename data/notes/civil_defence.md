@@ -268,3 +268,112 @@ Provenance in the label CSVs is `defender` for government or exercise assumption
 - `wikipedia_Square_Leg.json` `082ba536…815a`; `wikipedia_Hard_Rock_(exercise).json` `8d3aa254…a5d25e`
 - `OSTI_biblio_7361159.html` `ee8cfa68…98067`
 - FEMA-196 PDF `9ddf7911…2828`: not used in this pass.
+
+---
+
+# Second pass (2026-11-22): defenders' lists
+
+Raw files are in `data/raw/civil_defence/p2/`; SHA-256 of each file used is in
+`data/sources.d/civil_defence.yaml`. Lat/lon are always blank.
+
+## 8. Canada 1962: sixteen designated possible target areas (`cd_1962_canada_target_areas.csv`, 16 rows)
+
+- **Primary source:** Lt.-Col. B. W. Lee, "The Organization and Role of the Target Area Headquarters",
+  *EMO National Digest* 2(3), June 1962, PDF p.12 (printed p.9),
+  https://www.publicsafety.gc.ca/lbrr/archives/emo%202-3-1962-eng.pdf. "One has been established in the
+  vicinity of each of the sixteen Canadian cities which have been designated as possible target areas",
+  then a list of city—interim TAHQ location (St. John's—Holyrood ... Victoria—Duncan). The same article
+  says DSO&P assumed "an all out nuclear attack on Canada would affect at least sixteen of our
+  large populated centers".
+- **Corroboration:** EMO *Blueprint for Survival No. 5, Survival in Likely Target Areas* (Queen's Printer,
+  1962, Cat. No. S83-1/6), PDF p.5 (checked on the page image): the same 16 cities, "the more likely target
+  areas". https://archive.org/download/31761117081935/31761117081935.pdf. Hansard 23 Mar 1962 p.2137
+  (canadiana `oop.debates_HOC2405_03`, image 91) confirms the booklet was issued that month.
+- **Extraction:** one row per city in the Digest's order; Blueprint spelling in `notes`.
+- **Doubts:** the TAHQ A/B/C size bands (≥750k / 250–750k / <250k) are a sizing rule, not a selection rule;
+  the per-city type is not printed. Compared with 1956 (13 areas) the list adds Calgary, London, St. John's.
+
+## Exercise Tocsin B (Canada, 13–14 Nov 1961): no list found
+
+- Hansard 29 Jan 1962 p.301 (image 303 of `oop.debates_HOC2405_01`): Mr Pitman's Question No. 35 asks
+  "What centres in Canada were supposedly hit by bombs?"; it was **passed as an order for return**, so the
+  answer is a sessional paper, not in the Debates. Not found online.
+- Hansard 23 Mar 1962 p.2126 (image 80 of `oop.debates_HOC2405_03`), Pitman: "there were only 17 weapons
+  dropped with a total megatonnage of some 75. All the bombs were from one to five megatons or only one
+  was of 10 megatons"; "Only six bombs were delivered by I.C.B.M.'s"; "only 350 individual aircraft
+  attacking". Totals only, not by place, so no validation table.
+- Hansard 29 Jan 1962 p.291: of 828 federal buildings, "281 in areas listed as possible target areas";
+  214 "destroyed under the circumstances assumed in exercise Tocsin B".
+- *EMO National Digest* 1(6), Dec 1961 (Tocsin B issue) has photos and the PM's address, no target list.
+- Canadiana gives page-level search (`/search/page?q0.0=…&pkey=…`) but no OCR text, so pages were read from
+  IIIF images.
+
+## 9. UK 1963: dispersal areas (`cd_1963_uk_dispersal_areas.csv`, 19 rows)
+
+- **Source:** HC Deb 28 March 1963 vol 674 cc179-80W (Corfield to Noel-Baker),
+  https://api.parliament.uk/historic-hansard/written-answers/1963/mar/28/civil-defence-evacuation:
+  "a list of the 19 areas from which dispersal would take place if the scheme were put into effect.
+  Dispersal Areas (Named mostly after the main Town or City they contain)", followed by the 19 names.
+- **Context:** the scheme was for about 9½ million people in the priority classes "from certain towns in
+  England and Wales" (HC Deb 2 May 1963 cc1299-300), under the MHLG circular of 16 Oct 1962 (Circular
+  15/62 of 28 Mar 1962 is also cited). Earlier answers (1957–61) speak of 12 million and a review.
+- **Doubts:** an evacuation area is a danger expectation, not an aim point. Scotland (Glasgow, Clyde,
+  Edinburgh, etc.) was planned separately and is not in the list. Selection criterion not stated.
+
+## 10. New South Wales 1968: assumed target zones (`cd_1968_nsw_target_zones.csv`, 3 rows)
+
+- **Source:** R. Bale (Director of Civil Defence, Canberra), "Civil Defence in Australia", *EMO National
+  Digest* 8(6), Dec 1968–Jan 1969, PDF p.16 (printed p.13),
+  https://publicsafety.gc.ca/lbrr/archives/emo%208-6-1968-69-eng.pdf: "Planning was to proceed on the
+  assumption of three possible target zones - the cities of Sydney, Newcastle and Wollongong"; "The zones
+  are the assumed target areas of Sydney, Newcastle and Wollongong".
+- The same article (PDF pp.14–20) names no target areas for Victoria, Queensland, SA, WA, Tasmania, NT or
+  ACT, and quotes the 1959 Commonwealth policy that "it is unlikely that Australia would be a primary target".
+
+## 11. Exercise Hard Rock 1982 (`cd_1982_hard_rock_partial.csv`, 12 rows: 3 hit, 9 not attacked)
+
+- **Source:** D. Campbell, "Bad day at Hard Rock", *New Statesman* 17 Sep 1982 (author's 1-page PDF),
+  https://www.duncancampbell.org/menu/journalism/newstatesman/newstatesman-1982/hard%20rock.pdf.
+  Planning (June 1981) began with 105 targets; after deletions the attack was "scaled down to only 54
+  weapons, delivering about 48 Megatons". Named hits: Mallaig, Builth Wells, "near Bideford". Not
+  attacked: London, Manchester, Edinburgh, Liverpool, Bristol, Cardiff, Sheffield; Holy Loch and Faslane.
+- "Armageddon postponed" (NS, Sep 1982) gives "Fifty nuclear targets".
+- **Not obtained:** the "complete 'bomb plots' ... shown overleaf" were printed on the following magazine
+  pages, which are not in the author's PDF. Campbell's *War Plan UK* (1982/83) is not publicly online: the
+  archive.org item `WarPlanUK` is a compilation of other government files despite its name, and
+  `warplanuk0000camp` is a lending-library copy (not used).
+- `use: reference` because the rows are a fragment and the selected=0 rows are scenario omissions.
+
+## 12. China: national key civil-air-defence cities (`cd_2021_china_key_cad_cities.csv`, 4 rows)
+
+- The national classification (国家一类/二类/三类人民防空重点城市, set by the State Council and CMC under
+  人民防空法 art. 11) is not published. Rows are cities whose own official pages state a class:
+  - Nanjing, class 1: 解放军报 article on mod.gov.cn, 2021-06-02.
+  - Yantai, class 1: Yantai civil-air-defence office page dated 2004-01-01.
+  - Weihai, class 1: Weihai defence-mobilisation office glossary, 2014-08-11.
+  - Quanzhou, class 2: Quanzhou government news, 2018-09-21.
+- **Found in search but could not be opened** (503/404/empty from this container): Chongqing (class 1,
+  cq.gov.cn 2020-11-02 and 2023-06-05), Hangzhou (class 1, rf.hangzhou.gov.cn 2022-06-15), Xinxiang
+  (class 3, rfb.xinxiang.gov.cn/lylb/info/16288). A Baidu Q&A list of all three classes exists but is
+  unsourced and contradicts official pages (e.g. Chongqing, Nanjing, Yantai); not used.
+- Doubts: the date of each designation is unknown; classes may have changed. Very partial.
+
+## 13. Noted, not extracted
+
+- **FCDA Critical Target Areas (1956–58 annual reports):** 72 CTAs and 116 other Target Areas. Rule-based:
+  "Critical Target Areas are those Standard Metropolitan Areas having 40,000 or more manufacturing
+  employees" plus Washington DC; Target Areas = all SMAs and state capitals (FCDA Annual Report 1957,
+  pp.7-8). Not extracted (rule). The 1957 report also prints FCDA's eight target categories (pp.4-5).
+- **Operation Alert 1956–1961:** no per-city list reached. FCDA annual reports for 1956–58 give no
+  attack pattern. Newspapers (Chronicling America): 1956, "76 U.S cities" (*Milford Chronicle* 20 Jul
+  1956 p.1) or "73 areas in the United States and 25 in Canada" (*Key West Citizen* 20 Jul 1956 p.1,
+  AP; names only Tampa/MacDill and Tallahassee); 1957, "166 H-bombs were dropped on 155 targets", "191
+  vital U.S. targets" (*Nome Nugget* 15 Jul 1957 p.1). CIA Reading Room items on archive.org (OA 1956
+  briefing, OA 1957 report, OA 1959 concept) are agency-participation memos without target lists (one
+  says the 1956 pattern embraced "over 70 critical target areas").
+- **DCPA TR-82 / high-risk areas:** DTIC ADA067231 (SPC 409, 1979, full PDF from archive.org) gives the
+  counterforce set by type (six Minuteman fields, three Titan, 36 SAC bases, two SSBN bases) and county
+  CRP status for missile fields, but no national named list. TR-82 itself not found on OSTI or archive.org.
+- **Sweden / Norway:** Prop. 1956:185 discusses *utrymningsorter* but no named list was found in what
+  search returned; Norwegian evacuation lists not found. Netherlands, FRG, Switzerland, Japan, New
+  Zealand: not found in the time available.
