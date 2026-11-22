@@ -38,6 +38,28 @@ The other side's lists of targets **in the bloc** are scored on the bloc's own 1
 - NATO's mirror lists from Polish (1962) and Hungarian (1965) exercises;
 - the US lists for China (1958, 1963, 1964).
 
+### Added in November 2026
+
+- **More lists on the existing universes:**
+  - Canada 1962 and Hard Rock 1982 (partial) join `canada_1956` and `uk_1980`.
+  - The Duszyński report (1961) and two 1977 General Staff Academy tables join `wp_west_1965`.
+    Their FRG rows wait for the FRG table.
+  - The early US lists against the USSR (JIC 329 and the AAF's 15 and 25 cities, 1945;
+    TROJAN, 1949) and the US lists for Korea, China and the Taiwan Strait (1950-58) are scored
+    on the bloc's 1956 universe. For the 1945-49 lists that universe is about ten years late.
+- **Two post-1990 regions, on GeoNames towns of 10,000+** (`geonames:<code>` in
+  `regions.py`). There are no census town tables for them, so GeoNames' recent populations
+  stand in.
+  - `russia_2001` (1,409 towns) is for NRDC's 2001 reconstruction (184 attacked targets).
+  - `modern_2020` (the US, Japan, South Korea, the UK, France, Norway, Estonia, Romania,
+    Turkey and Israel; about 8,900 towns) is for the 2024 leaked Russian target lists as
+    reported, and for the targets North Korea, Russian state TV and Iran named.
+  - These lists are mostly facilities (tunnels, radars, steelworks, bases), so few link to a
+    town within 15 km.
+- **Rejected candidates no longer count as targets.** Rows with `selected` = 0 are skipped:
+  Kyoto and the other cities the 1945 committee dropped, and the towns Hard Rock left
+  untouched.
+
 ## How places get coordinates
 
 `nucprob/transfer/places.py` looks each town up by name in its country's GeoNames dump: the

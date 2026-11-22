@@ -619,6 +619,41 @@ nuclear-probabilities/
 
 Phases 1 and 2 run side by side. Transcribing the labels is the long pole, so it starts first.
 
+**Progress (22 Nov 2026).** The collection is broadened, the protocol is frozen (M5), and the
+machinery for M6-M9 is in place.
+- **Target lists:** 27 new lists from public sources, each with a card and a source note:
+  - US 1945-68: JIC 329, the AAF's 1945 city lists, TROJAN, Korea 1950-53, the Taiwan Strait
+    1955 and 1958, Dien Bien Phu and Khe Sanh;
+  - Warsaw Pact: the 1977 General Staff Academy initial-strike table and its variants, and
+    the Duszyński report of 1961;
+  - defenders: Canada 1962, the UK's 1963 dispersal areas, New South Wales 1968, Hard Rock
+    1982 (partial), and China's key civil-air-defence cities;
+  - post-1990: the 2024 leaked Russian target lists as reported, state statements from 2013
+    to 2025, and NRDC 2001 with 232 named targets.
+  A new provenance, `statement`, covers targets an adversary named in public. Blocked and
+  print-only sources are listed in `data/BLOCKED.md`.
+- **Feature data:**
+  - HYDE 3.2.1 population grids, 1930-2017;
+  - historical city lists;
+  - 158,648 dated facilities from Wikidata;
+  - a 1940-2025 country-year panel (V-Dem, Polity5, Maddison, COW, SIPRI, alliances, nuclear
+    status, US troops) with a country crosswalk.
+  `nucprob/playground/extras.py` adds them to any dataset.
+- **ML playground** (`nucprob/playground/`, `notebooks/playground.ipynb`):
+  - 16 algorithms and every dataset;
+  - spatial, random and leave-country-out CV;
+  - transfer between datasets, and explanations.
+- **M5:** `configs/protocol.yaml` is frozen, with its hash in `configs/protocol.sha256`, and a
+  test keeps it so.
+- **M6/M7/M9 machinery:**
+  - `nucprob/model/levels.py` covers the zoo across datasets, levels G/C/R and the transfer
+    matrix;
+  - `nucprob/viz/atlas.py` builds the atlas page.
+- **Blocked:** this container cannot reach Demoscope or the Mannheim scans of the GDR
+  yearbook. Until they are fetched, the 1956 universe can only be built incomplete
+  (`NUCPROB_SKIP_MISSING=1`). The M6-M8 bloc results and the sealed-test scoring wait for the
+  complete build. Runs on an incomplete build go to `runs/incomplete/` (git-ignored).
+
 **Progress (10 Oct 2026, evening).** M4 is done.
 - **NAPB-90 Annex B** (fallout risk by county, `data/curated/napb90/fallout_counties.csv`).
   It covers 3,139 counties. Every county's population and area matches Annex A except six,
