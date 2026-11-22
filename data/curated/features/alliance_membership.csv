@@ -1,0 +1,179 @@
+cow_code,country,bloc,alliance_id,bilateral,start_date,end_date,right_censored,source
+2,United States of America,nato,227,0,1949-04-04,,1,COW alliances v4.1
+20,Canada,nato,227,0,1949-04-04,,1,COW alliances v4.1
+200,United Kingdom,nato,227,0,1949-04-04,,1,COW alliances v4.1
+210,Netherlands,nato,227,0,1949-04-04,,1,COW alliances v4.1
+211,Belgium,nato,227,0,1949-04-04,,1,COW alliances v4.1
+212,Luxembourg,nato,227,0,1949-04-04,,1,COW alliances v4.1
+220,France,nato,227,0,1949-04-04,,1,COW alliances v4.1
+230,Spain,nato,227,0,1981-12-10,,1,COW alliances v4.1
+235,Portugal,nato,227,0,1949-04-04,,1,COW alliances v4.1
+255,Germany,nato,227,0,1990-10-03,,1,COW alliances v4.1
+260,German Federal Republic,nato,227,0,1954-10-23,1990-10-02,0,COW alliances v4.1
+290,Poland,nato,227,0,1999-03-12,,1,COW alliances v4.1
+310,Hungary,nato,227,0,1999-03-12,,1,COW alliances v4.1
+316,Czech Republic,nato,227,0,1999-03-12,,1,COW alliances v4.1
+317,Slovakia,nato,227,0,2004,,1,nato.int member countries
+325,Italy,nato,227,0,1949-04-04,,1,COW alliances v4.1
+339,Albania,nato,227,0,2009,,1,nato.int member countries
+341,Montenegro,nato,227,0,2017-06-05,,1,nato.int member countries
+343,North Macedonia,nato,227,0,2020,,1,nato.int member countries
+344,Croatia,nato,227,0,2009,,1,nato.int member countries
+349,Slovenia,nato,227,0,2004,,1,nato.int member countries
+350,Greece,nato,227,0,1951-10-22,,1,COW alliances v4.1
+355,Bulgaria,nato,227,0,2004,,1,nato.int member countries
+360,Romania,nato,227,0,2004,,1,nato.int member countries
+366,Estonia,nato,227,0,2004,,1,nato.int member countries
+367,Latvia,nato,227,0,2004,,1,nato.int member countries
+368,Lithuania,nato,227,0,2004,,1,nato.int member countries
+375,Finland,nato,227,0,2023-04-04,,1,nato.int member countries
+380,Sweden,nato,227,0,2024-03-07,,1,nato.int member countries
+385,Norway,nato,227,0,1949-04-04,,1,COW alliances v4.1
+390,Denmark,nato,227,0,1949-04-04,,1,COW alliances v4.1
+395,Iceland,nato,227,0,1949-04-04,,1,COW alliances v4.1
+640,Turkey,nato,227,0,1951-10-22,,1,COW alliances v4.1
+20,Canada,us_defense,227,0,1949-04-04,,1,COW alliances v4.1
+20,Canada,us_defense,252,1,1958-05-12,,1,COW alliances v4.1
+20,Canada,us_defense,210,0,1989-11-13,,1,COW alliances v4.1
+31,Bahamas,us_defense,210,0,1982-03-03,,1,COW alliances v4.1
+40,Cuba,us_defense,198,0,1945-03-06,1947-09-02,0,COW alliances v4.1
+40,Cuba,us_defense,210,0,1947-09-02,1962-01-22,0,COW alliances v4.1
+41,Haiti,us_defense,198,0,1945-03-06,1947-09-02,0,COW alliances v4.1
+41,Haiti,us_defense,210,0,1947-09-02,,1,COW alliances v4.1
+42,Dominican Republic,us_defense,198,0,1945-03-06,1947-09-02,0,COW alliances v4.1
+42,Dominican Republic,us_defense,210,0,1947-09-02,,1,COW alliances v4.1
+51,Jamaica,us_defense,210,0,1969-06-27,,1,COW alliances v4.1
+52,Trinidad and Tobago,us_defense,210,0,1967-03-13,,1,COW alliances v4.1
+53,Barbados,us_defense,210,0,1967-10-09,,1,COW alliances v4.1
+54,Dominica,us_defense,210,0,1979-05-22,,1,COW alliances v4.1
+55,Grenada,us_defense,210,0,1975-05-13,,1,COW alliances v4.1
+56,St. Lucia,us_defense,210,0,1979-05-22,,1,COW alliances v4.1
+57,St. Vincent and the Grenadines,us_defense,210,0,1981-12-03,,1,COW alliances v4.1
+58,Antigua & Barbuda,us_defense,210,0,1981-12-03,,1,COW alliances v4.1
+60,St. Kitts and Nevis,us_defense,210,0,1984-03-12,,1,COW alliances v4.1
+70,Mexico,us_defense,198,0,1945-03-06,1947-09-02,0,COW alliances v4.1
+70,Mexico,us_defense,210,0,1947-09-02,,1,COW alliances v4.1
+80,Belize,us_defense,210,0,1991-01-08,,1,COW alliances v4.1
+90,Guatemala,us_defense,198,0,1945-03-06,1947-09-02,0,COW alliances v4.1
+90,Guatemala,us_defense,210,0,1947-09-02,,1,COW alliances v4.1
+91,Honduras,us_defense,198,0,1945-03-06,1947-09-02,0,COW alliances v4.1
+91,Honduras,us_defense,210,0,1947-09-02,,1,COW alliances v4.1
+92,El Salvador,us_defense,210,0,1947-09-02,,1,COW alliances v4.1
+93,Nicaragua,us_defense,198,0,1945-03-06,1947-09-02,0,COW alliances v4.1
+93,Nicaragua,us_defense,210,0,1947-09-02,,1,COW alliances v4.1
+94,Costa Rica,us_defense,198,0,1945-03-06,1947-09-02,0,COW alliances v4.1
+94,Costa Rica,us_defense,210,0,1947-09-02,,1,COW alliances v4.1
+95,Panama,us_defense,198,0,1945-03-06,1947-09-02,0,COW alliances v4.1
+95,Panama,us_defense,210,0,1947-09-02,,1,COW alliances v4.1
+100,Colombia,us_defense,198,0,1945-03-06,1947-09-02,0,COW alliances v4.1
+100,Colombia,us_defense,210,0,1947-09-02,,1,COW alliances v4.1
+101,Venezuela,us_defense,198,0,1945-03-06,1947-09-02,0,COW alliances v4.1
+101,Venezuela,us_defense,210,0,1947-09-02,,1,COW alliances v4.1
+110,Guyana,us_defense,210,0,1991-01-08,,1,COW alliances v4.1
+115,Suriname,us_defense,210,0,1977-02-22,,1,COW alliances v4.1
+130,Ecuador,us_defense,198,0,1945-03-06,1947-09-02,0,COW alliances v4.1
+130,Ecuador,us_defense,210,0,1947-09-02,,1,COW alliances v4.1
+135,Peru,us_defense,198,0,1945-03-06,1947-09-02,0,COW alliances v4.1
+135,Peru,us_defense,210,0,1947-09-02,,1,COW alliances v4.1
+140,Brazil,us_defense,198,0,1945-03-06,1947-09-02,0,COW alliances v4.1
+140,Brazil,us_defense,210,0,1947-09-02,,1,COW alliances v4.1
+145,Bolivia,us_defense,198,0,1945-03-06,1947-09-02,0,COW alliances v4.1
+145,Bolivia,us_defense,210,0,1947-09-02,,1,COW alliances v4.1
+150,Paraguay,us_defense,198,0,1945-03-06,1947-09-02,0,COW alliances v4.1
+150,Paraguay,us_defense,210,0,1947-09-02,,1,COW alliances v4.1
+155,Chile,us_defense,198,0,1945-03-06,1947-09-02,0,COW alliances v4.1
+155,Chile,us_defense,210,0,1947-09-02,,1,COW alliances v4.1
+160,Argentina,us_defense,198,0,1945-03-06,1947-09-02,0,COW alliances v4.1
+160,Argentina,us_defense,210,0,1947-09-02,,1,COW alliances v4.1
+165,Uruguay,us_defense,198,0,1945-03-06,1947-09-02,0,COW alliances v4.1
+165,Uruguay,us_defense,210,0,1947-09-02,,1,COW alliances v4.1
+200,United Kingdom,us_defense,227,0,1949-04-04,,1,COW alliances v4.1
+210,Netherlands,us_defense,227,0,1949-04-04,,1,COW alliances v4.1
+211,Belgium,us_defense,227,0,1949-04-04,,1,COW alliances v4.1
+212,Luxembourg,us_defense,227,0,1949-04-04,,1,COW alliances v4.1
+220,France,us_defense,227,0,1949-04-04,,1,COW alliances v4.1
+230,Spain,us_defense,227,0,1981-12-10,,1,COW alliances v4.1
+235,Portugal,us_defense,227,0,1949-04-04,,1,COW alliances v4.1
+255,Germany,us_defense,227,0,1990-10-03,,1,COW alliances v4.1
+260,German Federal Republic,us_defense,227,0,1954-10-23,1990-10-02,0,COW alliances v4.1
+290,Poland,us_defense,227,0,1999-03-12,,1,COW alliances v4.1
+310,Hungary,us_defense,227,0,1999-03-12,,1,COW alliances v4.1
+316,Czech Republic,us_defense,227,0,1999-03-12,,1,COW alliances v4.1
+325,Italy,us_defense,227,0,1949-04-04,,1,COW alliances v4.1
+350,Greece,us_defense,227,0,1951-10-22,,1,COW alliances v4.1
+385,Norway,us_defense,227,0,1949-04-04,,1,COW alliances v4.1
+390,Denmark,us_defense,227,0,1949-04-04,,1,COW alliances v4.1
+395,Iceland,us_defense,227,0,1949-04-04,,1,COW alliances v4.1
+640,Turkey,us_defense,227,0,1951-10-22,,1,COW alliances v4.1
+640,Turkey,us_defense,255,1,1959-03-05,,1,COW alliances v4.1
+713,Taiwan,us_defense,240,1,1954-12-02,1980-01-01,0,COW alliances v4.1
+732,South Korea,us_defense,236,1,1953-10-01,,1,COW alliances v4.1
+740,Japan,us_defense,233,1,1951-09-08,,1,COW alliances v4.1
+770,Pakistan,us_defense,254,1,1959-03-05,,1,COW alliances v4.1
+840,Philippines,us_defense,231,1,1951-08-30,,1,COW alliances v4.1
+900,Australia,us_defense,232,0,1951-09-01,,1,COW alliances v4.1
+920,New Zealand,us_defense,232,0,1951-09-01,1986-08-12,0,COW alliances v4.1
+200,United Kingdom,ussr_defense,193,1,1941-07-12,1955-05-07,0,COW alliances v4.1
+200,United Kingdom,ussr_defense,195,0,1942-01-29,1946-03-19,0,COW alliances v4.1
+220,France,ussr_defense,197,1,1944-12-10,1955-05-07,0,COW alliances v4.1
+265,German Democratic Republic,ussr_defense,243,0,1955-05-14,1989-11-07,0,COW alliances v4.1
+265,German Democratic Republic,ussr_defense,272,1,1964-06-12,1989-11-07,0,COW alliances v4.1
+290,Poland,ussr_defense,201,1,1945-04-21,1989-08-07,0,COW alliances v4.1
+290,Poland,ussr_defense,243,0,1955-05-14,1989-08-07,0,COW alliances v4.1
+310,Hungary,ussr_defense,217,1,1948-02-18,1989-10-07,0,COW alliances v4.1
+310,Hungary,ussr_defense,243,0,1955-05-14,1956-11-15,0,COW alliances v4.1
+315,Czechoslovakia,ussr_defense,160,1,1945-05-10,1989-12-10,0,COW alliances v4.1
+315,Czechoslovakia,ussr_defense,243,0,1955-05-14,1989-12-10,0,COW alliances v4.1
+339,Albania,ussr_defense,243,0,1955-05-14,1968-08-20,0,COW alliances v4.1
+345,Yugoslavia,ussr_defense,200,1,1945-04-11,1949-09-28,0,COW alliances v4.1
+355,Bulgaria,ussr_defense,219,1,1948-03-18,1989-11-10,0,COW alliances v4.1
+355,Bulgaria,ussr_defense,243,0,1955-05-14,1989-11-10,0,COW alliances v4.1
+359,Moldova,ussr_defense,349,0,1995-02-10,,1,COW alliances v4.1
+360,Romania,ussr_defense,216,1,1948-02-04,1989-12-12,0,COW alliances v4.1
+360,Romania,ussr_defense,243,0,1955-05-14,1989-12-12,0,COW alliances v4.1
+366,Estonia,ussr_defense,181,1,1939-09-28,1940-06-16,0,COW alliances v4.1
+367,Latvia,ussr_defense,182,1,1939-10-05,1940-06-16,0,COW alliances v4.1
+368,Lithuania,ussr_defense,183,1,1939-10-10,1940-06-14,0,COW alliances v4.1
+369,Ukraine,ussr_defense,349,0,1995-02-10,,1,COW alliances v4.1
+370,Belarus,ussr_defense,350,0,1992-05-15,,1,COW alliances v4.1
+370,Belarus,ussr_defense,349,0,1993-12-31,,1,COW alliances v4.1
+370,Belarus,ussr_defense,393,1,1997-04-02,,1,COW alliances v4.1
+370,Belarus,ussr_defense,410,1,2009-02-03,,1,COW alliances v4.1
+371,Armenia,ussr_defense,350,0,1992-05-15,,1,COW alliances v4.1
+371,Armenia,ussr_defense,349,0,1995-02-10,,1,COW alliances v4.1
+371,Armenia,ussr_defense,411,1,2010-08-20,,1,COW alliances v4.1
+372,Georgia,ussr_defense,350,0,1992-05-15,,1,COW alliances v4.1
+372,Georgia,ussr_defense,349,0,1993-12-09,,1,COW alliances v4.1
+373,Azerbaijan,ussr_defense,350,0,1992-05-15,,1,COW alliances v4.1
+373,Azerbaijan,ussr_defense,349,0,1993-09-24,,1,COW alliances v4.1
+375,Finland,ussr_defense,220,1,1948-04-06,1991-12-25,0,COW alliances v4.1
+630,Iran,ussr_defense,105,1,1921-02-26,1941-08-25,0,COW alliances v4.1
+630,Iran,ussr_defense,195,0,1942-01-29,1946-03-19,0,COW alliances v4.1
+701,Turkmenistan,ussr_defense,363,1,1992-07-31,2002-07-31,0,COW alliances v4.1
+701,Turkmenistan,ussr_defense,349,0,1995-02-10,,1,COW alliances v4.1
+702,Tajikistan,ussr_defense,350,0,1992-05-15,,1,COW alliances v4.1
+702,Tajikistan,ussr_defense,371,1,1993-05-25,,1,COW alliances v4.1
+702,Tajikistan,ussr_defense,349,0,1995-02-10,,1,COW alliances v4.1
+703,Kyrgyzstan,ussr_defense,350,0,1992-05-15,,1,COW alliances v4.1
+703,Kyrgyzstan,ussr_defense,357,1,1992-06-10,,1,COW alliances v4.1
+703,Kyrgyzstan,ussr_defense,349,0,1995-02-10,,1,COW alliances v4.1
+704,Uzbekistan,ussr_defense,350,0,1992-05-15,,1,COW alliances v4.1
+704,Uzbekistan,ussr_defense,355,1,1992-05-30,,1,COW alliances v4.1
+704,Uzbekistan,ussr_defense,349,0,1995-02-10,,1,COW alliances v4.1
+704,Uzbekistan,ussr_defense,405,1,2005-11-14,,1,COW alliances v4.1
+705,Kazakhstan,ussr_defense,350,0,1992-05-15,,1,COW alliances v4.1
+705,Kazakhstan,ussr_defense,353,1,1992-05-25,,1,COW alliances v4.1
+705,Kazakhstan,ussr_defense,349,0,1995-02-10,,1,COW alliances v4.1
+710,China,ussr_defense,202,1,1945-08-14,1949-10-01,0,COW alliances v4.1
+710,China,ussr_defense,229,1,1950-02-14,1980-02-14,0,COW alliances v4.1
+712,Mongolia,ussr_defense,161,1,1936-03-12,1991-12-25,0,COW alliances v4.1
+731,North Korea,ussr_defense,264,1,1961-07-06,1995-09-07,0,COW alliances v4.1
+265,German Democratic Republic,warsaw_pact,243,0,1955-05-14,1989-11-07,0,COW alliances v4.1
+290,Poland,warsaw_pact,243,0,1955-05-14,1989-08-07,0,COW alliances v4.1
+310,Hungary,warsaw_pact,243,0,1955-05-14,1956-11-15,0,COW alliances v4.1
+310,Hungary,warsaw_pact,243,0,1956-11-15,1989,0,hand correction (withdrawal of Nov 1956 reversed)
+315,Czechoslovakia,warsaw_pact,243,0,1955-05-14,1989-12-10,0,COW alliances v4.1
+339,Albania,warsaw_pact,243,0,1955-05-14,1968-08-20,0,COW alliances v4.1
+355,Bulgaria,warsaw_pact,243,0,1955-05-14,1989-11-10,0,COW alliances v4.1
+360,Romania,warsaw_pact,243,0,1955-05-14,1989-12-12,0,COW alliances v4.1
+365,Russia,warsaw_pact,243,0,1955-05-14,1991-07-01,0,COW alliances v4.1

@@ -1,0 +1,53 @@
+country,cow_code,role,what,start_date,end_date,start_year,end_year,precision,source,quote,note
+United States of America,2,first_test,Trinity,1945-07-16,,1945,,day,WP-LIST,"It tested the first nuclear weapon on 16 July 1945 (""Trinity"")",
+United States of America,2,arsenal,own weapons,1945-07-16,,1945,,day,WP-LIST,"It tested the first nuclear weapon on 16 July 1945",arsenal from the first test; continuing
+USSR,365,first_test,RDS-1,,,1949,,year,WP-LIST,"The Soviet Union tested its first nuclear weapon (""RDS-1"") in 1949.",
+USSR,365,arsenal,own weapons (Russia from 1992),,,1949,,year,WP-LIST,"After its dissolution in 1991, the Soviet weapons entered officially into the possession of its successor state, the Russian Federation.",COW 365 covers the USSR and Russia; continuing
+United Kingdom,200,first_test,Hurricane,,,1952,,year,WP-LIST,"The United Kingdom tested its first nuclear weapon (""Hurricane"") in 1952.",
+United Kingdom,200,arsenal,own weapons,,,1952,,year,WP-LIST,"The United Kingdom tested its first nuclear weapon (""Hurricane"") in 1952.",arsenal from the first test year (first deliverable weapons came later); continuing
+France,220,first_test,Gerboise Bleue,,,1960,,year,WP-LIST,"France tested its first nuclear weapon in 1960 (""Gerboise Bleue"")",
+France,220,arsenal,own weapons,,,1960,,year,WP-LIST,"France tested its first nuclear weapon in 1960",arsenal from the first test year; continuing
+China,710,first_test,596,,,1964,,year,WP-LIST,"China tested its first nuclear weapon device (""596"") in 1964 at the Lop Nur test site.",
+China,710,arsenal,own weapons,,,1966,,approx,WP-LIST,"Two years later, China had a fission bomb capable of being put onto a nuclear missile.",
+India,750,first_test,Smiling Buddha (declared peaceful),,,1974,,year,WP-LIST,"The country tested what is called a ""peaceful nuclear explosive"" in 1974",
+India,750,arsenal,own weapons,,,1988,,approx,WP-LIST,"between 1988 and 1990 it apparently weaponized two dozen nuclear weapons for delivery by air",
+Israel,666,arsenal,own weapons (undeclared),,,1966,,approx,WP-LIST,"It had ""rudimentary, but deliverable,"" nuclear weapons available as early as 1966.",never tested (officially)
+South Africa,560,arsenal,six weapons,,,1982,1991,approx,WP-LIST,"South Africa produced six nuclear weapons, obtaining its first in 1982, but dismantled them in the early 1990s.",end year approximate: dismantled in the early 1990s; acceded to the NPT in 1991
+Pakistan,770,arsenal,own weapons,,,1985,,approx,WP-LIST,It is believed that Pakistan has possessed nuclear weapons since the mid-1980s.,start approximate (mid-1980s)
+Pakistan,770,first_test,Chagai-I,,,1998,,year,WP-LIST,"In 1998, Pakistan conducted its first six nuclear tests at the Ras Koh Hills",
+North Korea,731,first_test,first test,2006-10-09,,2006,,day,WP-LIST,North Korea reported a successful nuclear test on 9 October 2006,
+North Korea,731,arsenal,own weapons,2006-10-09,,2006,,day,WP-LIST,North Korea reported a successful nuclear test on 9 October 2006,arsenal from the first test (claimed in February 2005); continuing
+Ukraine,369,inherited,Soviet weapons on its territory,1991-12-26,,1991,1996,year,WP-LIST,The warheads were removed from Ukraine by 1996 and disassembled in Russia.,physical possession without operational control
+Kazakhstan,705,inherited,Soviet weapons on its territory,1991-12-26,,1991,1995,year,WP-LIST,"Kazakhstan had 1,400 Soviet-era nuclear weapons on its territory and transferred them all to Russia by 1995",physical possession without operational control
+Belarus,370,inherited,Soviet weapons on its territory,1991-12-26,,1991,,unknown_end,WP-LIST,"all three countries where Soviet nuclear weapons were based (Kazakhstan, Ukraine, and Belarus)",end year not given in the sources opened
+Morocco,600,host_us,non-nuclear components (French Morocco),1953-07,,1953,1965,approx,NAB1999,Appendix B shows that non-nuclear components actually arrived in July 1953 and were there for 12 years.,French protectorate until 1956 (COW state from 1956)
+Morocco,600,host_us,complete weapons (French Morocco),1954-05,,1954,,unknown_end,NAB1999,"In May 1954, complete nuclear bombs were deployed in Morocco",end not given
+United Kingdom,200,host_us,non-nuclear components,1950-07,,1950,,month,NAB1999,By the end of July these first non-nuclear components were in place.,
+United Kingdom,200,host_us,complete weapons,1954-09,,1954,2008,month,NAB1999; WP-SHARING,"other nuclear weapons were introduced in Britain in September 1954",end: WP-SHARING says weapons returned to Lakenheath in 2025 'for the first time since 2008'
+United Kingdom,200,host_us,complete weapons (reported return),2025-07,,2025,,reported,WP-SHARING,"In July 2025, experts concluded that between 25 and 30 United States nuclear weapons had been redeployed to RAF Lakenheath",disputed: an October 2025 FAS report argued they may not be present
+German Federal Republic,260,host_us,complete weapons,1955-03,1990-10-02,1955,1990,month,NAB1999,"West Germany, March 1955",continues as Germany (255)
+Germany,255,host_us,complete weapons,1990-10-03,,1990,,day,NAB1999; WP-SHARING,"21 different types of U.S. warheads having been deployed on its soil from 1955 to the present",continuing (WP-SHARING: hosting as of 2025)
+Italy,325,host_us,complete weapons,1957-04,,1957,,month,NAB1999; WP-SHARING,"Italy, April 1957",continuing (WP-SHARING: hosting as of 2025)
+France,220,host_us,non-nuclear components and weapons,1958-08,,1958,,unknown_end,NAB1999,"France, August 1958",end not given in the sources opened
+Turkey,640,host_us,complete weapons,1959-02,,1959,,month,NAB1999; WP-SHARING,"Turkey, February 1959",continuing (WP-SHARING: hosting as of 2025)
+Netherlands,210,host_us,complete weapons,1960-04,,1960,,month,NAB1999; WP-SHARING,"Netherlands, April 1960",continuing (WP-SHARING: hosting as of 2025)
+Greece,350,host_us,complete weapons,1960-10,,1960,2001,month,NAB1999; WP-LIST,"Greece, October 1960",end: WP-LIST 'The US stationed nuclear weapons in Greece until they were removed in 2001.'
+Belgium,211,host_us,complete weapons,1963-11,,1963,,month,NAB1999; WP-SHARING,"and Belgium, November 1963.",continuing (WP-SHARING: hosting as of 2025)
+Canada,20,host_us,non-nuclear components (Goose Bay),1950-08-26,1950-11,1950,1950,month,NAB1999,The first of these arrived on August 26.,assemblies remained until November 1950
+Canada,20,host_us,complete weapons,,,1964,1984,year,WP-LIST,The US stationed nuclear weapons at CFB Goose Bay in Labrador between 1964 and 1984.,WP-SHARING: Canada hosted weapons under NORAD until 1984
+Iceland,395,host_us,non-nuclear components (Keflavik),1956-02,1966-06,1956,1966,month,NAB1999,"Non-nuclear components were stored at the American base at Keflavik for a decade, from February 1956 to June 1966",
+Iceland,395,host_us,complete weapons (Keflavik),1956-09,1959-12,1956,1959,month,NAB1999,complete nuclear bombs were deployed there from September 1956 to September-December 1959.,
+Denmark,390,host_us,complete weapons (Thule; Greenland only),,,1958,1965,year,NAB1999,from 1958 to 1965 the United States kept nuclear weapons at Thule Air Base in Greenland.,Greenland only; Denmark proper had no US weapons
+Japan,740,host_us,non-nuclear components (mainland),1954-12,1965-06,1954,1965,month,NAB1999,non-nuclear components remained in Japan until June 1965,transfer approved December 1954; Okinawa listed separately
+Japan,740,host_us_territory,complete weapons (Okinawa under US administration),1954-12,,1954,1972,month,NAB1999,Complete nuclear weapons were deployed to Okinawa in December 1954.,"Okinawa was US-administered until 1972; withdrawn 'soon after it reverted to Japan in 1972'; not counted in host_us_nukes"
+South Korea,732,host_us,complete weapons,1958,,1958,1991,year,NAB1999; WP-LIST,The U.S. kept nuclear weapons in South Korea from 1958 until 1991,
+Taiwan,713,host_us,complete weapons,1958-01,1974-07,1958,1974,month,NAB1999,Matador cruise missiles were first deployed on Taiwan in January 1958,last bombs removed July 1974
+Philippines,840,host_us,complete weapons,,,1957,1977,approx,NAB1999,"From 1957 to 1958, South Korea, Taiwan, and the Philippines became new locations",end approximate: 'the Philippines was denuclearized' in 1974-77
+Spain,230,host_us,weapons (dates not given),,,,,unknown,NAB1999,[Spain],named on the article's map; years not given in the sources opened; not used for flags
+Cuba,40,host_ussr,Soviet missiles and warheads,1962-10,,1962,1962,approx,WP-LIST,"Soviet deployments of nuclear missiles in Cuba",October 1962 (crisis 16-28 October 1962)
+German Democratic Republic,265,host_ussr,Soviet weapons (dates not given),,,,,unknown,WP-SHARING,"It stationed nuclear weapons in East Germany, Czechoslovakia, Hungary, Poland, and Mongolia",years not given in the sources opened; flag is NA in 1955-1991
+Czechoslovakia,315,host_ussr,Soviet weapons (dates not given),,,,,unknown,WP-SHARING,"It stationed nuclear weapons in East Germany, Czechoslovakia, Hungary, Poland, and Mongolia",years not given in the sources opened; flag is NA in 1955-1991
+Hungary,310,host_ussr,Soviet weapons (dates not given),,,,,unknown,WP-SHARING,"It stationed nuclear weapons in East Germany, Czechoslovakia, Hungary, Poland, and Mongolia",years not given in the sources opened; flag is NA in 1955-1991
+Poland,290,host_ussr,Soviet weapons (dates not given),,,,,unknown,WP-SHARING,"It stationed nuclear weapons in East Germany, Czechoslovakia, Hungary, Poland, and Mongolia",years not given in the sources opened; flag is NA in 1955-1991
+Mongolia,712,host_ussr,Soviet weapons (dates not given),,,,,unknown,WP-SHARING,"It stationed nuclear weapons in East Germany, Czechoslovakia, Hungary, Poland, and Mongolia",years not given in the sources opened; flag is NA in 1955-1991
+Belarus,370,host_ussr,Russian weapons (claimed),2023-06-16,,2023,,reported,WP-SHARING,President Putin announcing the first delivery of warheads occurring as of 16 June 2023,WP-SHARING: no conclusive open-source evidence as of 2025

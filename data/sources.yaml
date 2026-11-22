@@ -2081,3 +2081,160 @@ sources:
   role: labels
   retrieved: '2026-11-22'
   sha256: 1c5067497dc6baf5bb766004f7334cefc5f11bb1154eb258718552084c50d88c
+- id: country_year_vdem_v16_core
+  url: https://v-dem.net/media/datasets/V-Dem-CY-Core-v16_csv.zip
+  path: country_year/vdem/V-Dem-CY-Core-v16_csv.zip
+  licence: CC BY-SA 4.0 (V-Dem Institute); cite Coppedge et al. 2026, V-Dem Country-Year Dataset v16
+  use: v2x_polyarchy, v2x_libdem, v2x_regime (Regimes of the World) by COW code and year
+  role: features
+  retrieved: '2026-11-22'
+  sha256: 9055455c4adacd1ad9e78f1a7f3ac0768bdf26992e7651c0602a43ca7bdd4506
+- id: country_year_polity5
+  url: https://www.systemicpeace.org/inscr/p5v2018.xls
+  path: country_year/polity5/p5v2018.xls
+  licence: Center for Systemic Peace, free for non-commercial research with citation (Marshall and Gurr
+    2020)
+  use: polity2, 1800-2018, Polity codes mapped to COW
+  role: features
+  retrieved: '2026-11-22'
+  sha256: f81248561cb4fd884b0a439c7c0af298bc7f81b993bcd42e006988cb6d37a71c
+- id: country_year_bmr_v4
+  url: https://dataverse.harvard.edu/api/access/datafile/5707005
+  path: country_year/bmr/democracy-v4.0.txt
+  licence: CC0 1.0 (Harvard Dataverse doi:10.7910/DVN/FENWWR); cite Boix, Miller and Rosato 2013/2022
+  use: dichotomous democracy 1800-2020
+  role: features
+  retrieved: '2026-11-22'
+  sha256: 8ff163f319f6806fe6ff7e90925cbdde44b8f90db3134d67b322d76344c7d784
+- id: country_year_lied_v52
+  url: https://dataverse.harvard.edu/api/access/datafile/3786687?format=original
+  path: country_year/lied/lied_v5.2.xls
+  licence: CC0 1.0 (Harvard Dataverse doi:10.7910/DVN/29106); cite Skaaning, Gerring and Bartusevicius
+    2015
+  use: lexical_index (0-6), 1789-2019
+  role: features
+  retrieved: '2026-11-22'
+  sha256: 76cdaf3cf508d83f75b64ddbe7084806ba2945ad6c7b81365109ec93e9a5d2c8
+- id: country_year_maddison_2023
+  url: https://dataverse.nl/api/access/datafile/421302
+  path: country_year/maddison/mpd2023_web.xlsx
+  licence: CC BY 4.0; cite Bolt and van Zanden 2024, Maddison Project Database 2023
+  use: GDP per capita (2011 int. $) and population, to 2022
+  role: features
+  retrieved: '2026-11-22'
+  sha256: ecc5916ca12789b983fc4be437f8a354bbf4291323605324ac3e0aea4c57cbb6
+- id: country_year_cow_nmc_v7
+  url: https://correlatesofwar.org/wp-content/uploads/NMCv7.zip
+  path: country_year/cow_nmc/NMCv7.zip
+  licence: Correlates of War, free to use with citation (Singer, Bremer and Stuckey 1972; NMC v7 2026)
+  use: milex, milper, irst, pec, tpop, upop, cinc, 1816-2022 (v7 supersedes v6; same variables)
+  role: features
+  retrieved: '2026-11-22'
+  sha256: 07b7396cbf0a06a3a57d97dfb56e316c5720b6feeab06db4578bcb6447be51a9
+- id: country_year_cow_nmc_v6
+  url: https://correlatesofwar.org/wp-content/uploads/NMC_Documentation-6.0.zip
+  path: country_year/cow_nmc/NMC_Documentation-6.0.zip
+  licence: Correlates of War, free to use with citation
+  use: NMC v6 (1816-2016), kept for reference; the loader uses v7
+  role: features
+  retrieved: '2026-11-22'
+  sha256: eba43e2fa0d10624f9f3dcf68a8851547993b2c325b78b4443156f4d11c4f89f
+- id: country_year_cow_alliances_v41
+  url: https://correlatesofwar.org/wp-content/uploads/version4.1_csv.zip
+  path: country_year/cow_alliance/version4.1_csv.zip
+  licence: Correlates of War, free to use with citation (Gibler 2009)
+  use: member-level defence pacts 1816-2012 -> alliance_membership.csv (NATO, Warsaw Pact, US and Soviet
+    pacts)
+  role: features
+  retrieved: '2026-11-22'
+  sha256: a2422bb361dcc4b0ab5ff0e46f65a7ab2b4c6eafa97bdd9910302dac75e786b6
+- id: country_year_cow_states_2024
+  url: https://correlatesofwar.org/wp-content/uploads/States2024.zip
+  path: country_year/cow_states/States2024.zip
+  licence: Correlates of War, free to use with citation
+  use: state-system membership periods (the panel's universe, crosswalk names)
+  role: features
+  retrieved: '2026-11-22'
+  sha256: c11689e8c0aa70ede855f6b605c4dd71c7b04122b71d5827dab5ba06b32e2015
+- id: country_year_cow_country_codes
+  url: https://correlatesofwar.org/wp-content/uploads/COW-country-codes.csv
+  path: country_year/cow_states/COW-country-codes.csv
+  licence: Correlates of War, free to use with citation
+  use: reference only (codes and abbreviations; not read by the loader)
+  role: features
+  retrieved: '2026-11-22'
+  sha256: 9b66dad6b9c0db83bc3c15c501b033164348bd8bd82aa14974067684c4d28bc5
+- id: country_year_sipri_milex
+  url: https://www.sipri.org/sites/default/files/SIPRI-Milex-data-1949-2025.xlsx
+  path: country_year/sipri/SIPRI-Milex-data-1949-2025.xlsx
+  licence: SIPRI, free for non-commercial use with attribution (SIPRI Military Expenditure Database 2026)
+  use: constant 2024 US$, current US$ and share of GDP, 1949-2025
+  role: features
+  retrieved: '2026-11-22'
+  sha256: 7361a66ee2d426b96b327b35a754877f4eb489123b84ad00706c2771f06fbe59
+- id: country_year_troopdata
+  url: https://raw.githubusercontent.com/meflynn/troopdata/972d0c7f0799f134a9a7ed5925e7055082b40c1e/data-raw/troopdata-rebuild-country-year.csv
+  path: country_year/troopdata/troopdata-rebuild-country-year.csv
+  licence: GPL-3 (troopdata R package); cite Allen, Flynn and Machain 2021 and Kane 2004
+  use: US active-duty troops by host country and year, 1950-2024 (rebuilt Kane/DMDC series)
+  role: features
+  retrieved: '2026-11-22'
+  sha256: 875aa5c712506950786d791feb2a01b030c61e9afbc6df37baee5f453ce5fe5e
+- id: country_year_nato_members
+  url: https://www.nato.int/cps/en/natohq/topics_52044.htm
+  path: country_year/nato/nato_member_countries.html
+  licence: NATO public web page, cited
+  use: NATO accessions after 2012 (Montenegro 2017, North Macedonia 2020, Finland 2023, Sweden 2024);
+    check of the 32 members
+  role: features
+  retrieved: '2026-11-22'
+  sha256: 007820cde6a47a14eaabbb6ab700b5ce6b6ec85227afb87faee00b263c292be6
+- id: country_year_where_they_were_1999
+  url: https://nautilus.org/wp-content/uploads/2015/04/where-they-were.pdf
+  path: country_year/nuclear/norris_arkin_burr_1999_where_they_were.pdf
+  licence: Bulletin of the Atomic Scientists article (Norris, Arkin and Burr, Nov/Dec 1999), copyrighted;
+    cited, short quotes only
+  use: dates of US nuclear deployments abroad (nuclear_status.csv, source NAB1999)
+  role: features
+  retrieved: '2026-11-22'
+  sha256: ff573963716b01b840490d8816d029368507320ea49e8509aefe19d79c840d40
+- id: country_year_nsa_ebb20_index
+  url: https://nsarchive2.gwu.edu/news/19991020/
+  path: country_year/nuclear/nsa_19991020_index.html
+  licence: National Security Archive web page, cited
+  use: context for NAB1999 (press release)
+  role: features
+  retrieved: '2026-11-22'
+  sha256: 048110fa21d87931be1013cc8b4b45588865a22619b5bb44c6ca863b4aab897b
+- id: country_year_nsa_ebb20_appendix_b
+  url: https://nsarchive2.gwu.edu/news/19991020/appendix-B.pdf
+  path: country_year/nuclear/nsa_19991020_appendix-B.pdf
+  licence: US government record, public domain
+  use: OSD custody history, Appendix B (scan, no text layer); not transcribed, kept for a later check
+  role: features
+  retrieved: '2026-11-22'
+  sha256: 08fafeba86bada8e448093285d250daa7a0d26dab41c1302c3189c93441cd5e1
+- id: country_year_nautilus_deployments
+  url: https://nautilus.org/projects/nuclear-policy/u-s-nuclear-weapons-deployments-disclosed/
+  path: country_year/nuclear/nautilus_deployments.html
+  licence: Nautilus Institute web page, cited
+  use: link to the NAB1999 PDF; Greenland context
+  role: features
+  retrieved: '2026-11-22'
+  sha256: 997aa068c3197c6bb845c36989cc394d93b8304e44ba25dbc51abc09007c2b57
+- id: country_year_wp_states_with_nuclear_weapons
+  url: https://en.wikipedia.org/w/api.php?action=query&prop=extracts|revisions&rvprop=ids|timestamp&explaintext=1&format=json&titles=List_of_states_with_nuclear_weapons
+  path: country_year/nuclear/wp_List_of_states_with_nuclear_weapons.json
+  licence: CC BY-SA 4.0 (Wikipedia, revision 1386301986)
+  use: first tests, arsenals, former holders and host end years (nuclear_status.csv, source WP-LIST)
+  role: features
+  retrieved: '2026-11-22'
+  sha256: c14e302c48ec378c79a0c5bdf7132647a40957c0a75c97cb92281f4c62726930
+- id: country_year_wp_nuclear_sharing
+  url: https://en.wikipedia.org/w/api.php?action=query&prop=extracts|revisions&rvprop=ids|timestamp&explaintext=1&format=json&titles=Nuclear_sharing
+  path: country_year/nuclear/wp_Nuclear_sharing.json
+  licence: CC BY-SA 4.0 (Wikipedia, revision 1385978401)
+  use: current hosts, UK 2008/2025, Greece 2001, Soviet hosts (nuclear_status.csv, source WP-SHARING)
+  role: features
+  retrieved: '2026-11-22'
+  sha256: ef59a45f6066d7f87165fb0801f41d0806c2cc9ea69141c3372b935463f82085
