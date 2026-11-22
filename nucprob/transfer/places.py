@@ -54,7 +54,35 @@ def variants(*names: str) -> list[str]:
     return [k for k in dict.fromkeys(key(v) for v in out) if k]
 
 
+# GeoNames feature codes that are not towns of their own (sections, historical, abandoned).
+NOT_TOWNS = {"PPLX", "PPLH", "PPLQ", "PPLW", "PPLCH"}
+
+
+def geonames_table(code: str, min_pop: int = 10_000) -> pd.DataFrame:
+    """Today's towns of a country from GeoNames, for the post-1990 regions, which have no
+    census town table: populated places of `min_pop` or more by GeoNames' (recent) figures,
+    with their own coordinates."""
+    g = Gazetteer(code).g
+    g = g[~g["feature_code"].isin(NOT_TOWNS) & (g["population"] >= min_pop)]
+    return pd.DataFrame(
+        {
+            "name": g["name"],
+            "name_today": "",
+            "admin1": g["admin1_name"],
+            "pop": g["population"].astype(int),
+            "pop_date": "GeoNames (recent)",
+            "capital": (g["feature_code"] == "PPLC").astype(int),
+            "admin1_seat": (g["feature_code"] == "PPLA").astype(int),
+            "source": f"GeoNames {code}",
+            "lat": g["lat"],
+            "lon": g["lon"],
+        }
+    ).reset_index(drop=True)
+
+
 def load_table(spec: str) -> pd.DataFrame:
+    if spec.startswith("geonames:"):
+        return geonames_table(spec.split(":", 1)[1])
     if spec.startswith("popstat:"):
         _, page, col = spec.split(":", 2)
         d = popstat.parse(RAW / "popstat" / f"{page}-cities.htm", page)
@@ -159,7 +187,10 @@ def build() -> pd.DataFrame:
     parts = []
     for region_id, region in REGIONS.items():
         for country, code, spec in region.countries:
-            if not spec.startswith("popstat:") and not (GAZ / f"{spec}.csv").exists():
+            if (
+                not spec.startswith(("popstat:", "geonames:"))
+                and not (GAZ / f"{spec}.csv").exists()
+            ):
                 print(f"{region_id}: {spec} missing, skipped")
                 continue
             towns = load_table(spec)
@@ -175,13 +206,21 @@ def build() -> pd.DataFrame:
             gaz = Gazetteer(code)
             links = manual_links(country)
             found = []
+            if spec.startswith("geonames:"):
+                found = [
+                    ({"lat": la, "lon": lo, "gn": n}, "geonames row")
+                    for n, la, lo in zip(towns["name"], towns["lat"], towns["lon"], strict=True)
+                ]
+                towns = towns.drop(columns=["lat", "lon"])
             for n, t, a in zip(towns["name"], towns["name_today"], towns["admin1"], strict=True):
+                if spec.startswith("geonames:"):
+                    break
                 found.append(links[n] if n in links else gaz.find(n, t, admin1=str(a)))
             g = gaz.g
 
             def coord(hit, col, g=g):
                 i, method = hit
-                if method in ("manual", "district seat"):
+                if method in ("manual", "district seat", "geonames row"):
                     return i[col]
                 return (
                     g.at[i, {"lat": "lat", "lon": "lon", "gn": "name"}[col]]

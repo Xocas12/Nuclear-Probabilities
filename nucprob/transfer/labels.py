@@ -14,6 +14,9 @@ or missile site in the country), stays unlinked; the link report lists both.
 The other side's lists of targets in the bloc (BLOC_LISTS) are linked the same way to the bloc's
 1956 universe, leaving out the places of the sealed test.
 
+Rows with `selected` = 0 (candidates considered and rejected, e.g. Kyoto in 1945, or towns a
+scenario left untouched) are skipped, so they count as untargeted.
+
 Writes data/processed/transfer_links.csv (one row per target in a region) and
 data/processed/labels_transfer.parquet (one row per place and list: n_targets, listed).
 """
@@ -42,11 +45,24 @@ BLOC_LISTS_COUNTRIES = {
     "Poland": ("PL", "Poland"),
     "Hungary": ("HU", "Hungary"),
     "PRC": ("CN", "China"),
+    "North Korea": ("KP", "North Korea"),
+    # The USSR's towns span 15 GeoNames dumps; names not found among the bloc's own towns
+    # are looked up in Russia's, where every target of the 1945-49 lists lies.
+    "USSR": ("RU", "USSR"),
 }
 BLOC_LISTS = (
     "nato_1962_pl_exercise_mirror",
     "nato_1965_hu_wargame_mirror",
+    "us_1945_jic329",
+    "us_1945_aaf_15cities",
+    "us_1945_aaf_25cities",
+    "us_1949_trojan",
+    "us_1950_korea_atomic_options",
+    "us_1951_oro_fec_tactical",
+    "us_1953_korea_nsc_jcs",
+    "us_1955_taiwan_strait_cincpac",
     "us_1958_taiwan_strait",
+    "us_1958_taiwan_strait_jcs_contingency",
     "us_1963_jcs_china_vulnerability",
     "us_1964_china_nuclear",
 )
@@ -55,6 +71,9 @@ COUNTRY = {
     "USA (Territory of Alaska)": "",
     "USA (Territory of Hawaii)": "",
     "USA (Puerto Rico)": "",
+    "PRC (Soviet-garrisoned naval base)": "PRC",
+    "USA (Guam)": "",
+    "Romania/Bulgaria": "Romania",
 }
 
 
@@ -121,6 +140,10 @@ def link() -> pd.DataFrame:
             for _, t in lst.iterrows():
                 country = COUNTRY.get(t["target_country"], t["target_country"])
                 if country not in codes:
+                    continue
+                # Candidates the source says were considered and rejected (selected = 0) are
+                # not targets.
+                if str(t.get("selected", "")).strip() == "0":
                     continue
                 code = codes[country]
                 own = towns[towns["country"] == country]
