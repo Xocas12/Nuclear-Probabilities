@@ -2456,3 +2456,615 @@ sources:
   role: labels
   retrieved: 2026-11-22
   sha256: cc748d343f28cbefdffb9b03aa8321c95ddca818bc55ce95a4e787fde976b608
+- id: wikidata_facilities_capitals_p1376
+  url: https://query.wikidata.org/sparql
+  path: wikidata/capitals/p1376.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (capitals/p1376); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: a53bc5e9d9af4c859a2d9b328c03162467cb79949a8197473fba94d36998b6de
+- id: wikidata_facilities_capitals_p36
+  url: https://query.wikidata.org/sparql
+  path: wikidata/capitals/p36.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (capitals/p36); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 0bb420d0566a4ebf2bf57fae198f272e1a38c4dfb9c3e9d90137a3d1677483d6
+- id: wikidata_facilities_capitals_polities
+  url: https://query.wikidata.org/sparql
+  path: wikidata/capitals/polities.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (capitals/polities); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: a413652d05966ed336ac8ac3172e55649eb47c5f2cdaa1342050c31f06b6ee28
+- id: wikidata_facilities_capitals_polity_details
+  url: https://query.wikidata.org/sparql
+  path: wikidata/capitals/polity_details.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (capitals/polity_details); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 71f6af5ba023dd6f3d956477335c1d83d3ca24d3b5448698d9a8fed94dd11b11
+- id: wikidata_facilities_classes_air_base
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/air_base.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/air_base); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 4ce3a6a7e18c1519445d9e22e90b07a82ff6b905e284eb734fb1f550e5df9b02
+- id: wikidata_facilities_classes_airport
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/airport.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/airport); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: e40630597734cb1be16c5797ccdfc9ab06e29d4d26413b857b3e2edadb3d0d84
+- id: wikidata_facilities_classes_aluminium_smelter
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/aluminium_smelter.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/aluminium_smelter); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 63060db5cfc428cb82bfaf386e87a59ff48370c1cb0470a704e1da13a4a64438
+- id: wikidata_facilities_classes_arsenal
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/arsenal.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/arsenal); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: c35f6a0438a83b756ebec4e9da51fd5c2919230048bfe15ef4a91cf008e74ae2
+- id: wikidata_facilities_classes_bunker
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/bunker.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/bunker); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 660caca1899509b64674b14a7ad332821a85fba4bf858895ca6dc59b122ff702
+- id: wikidata_facilities_classes_chemical_plant
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/chemical_plant.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/chemical_plant); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 83ddbd8fb308d7bc008f81f5d2bef15e789d7c52e4f096f82a0a7752c90bd367
+- id: wikidata_facilities_classes_factory
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/factory.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/factory); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: a7515af7f940ba1586a6990a8d85d8cabae330f992685dc998067dc4466fac3e
+- id: wikidata_facilities_classes_government_seat
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/government_seat.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/government_seat); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 620ce88169c60e4b96f18da93d66c9053794e3d80fa7251a78f2d38d46daa057
+- id: wikidata_facilities_classes_hydroelectric
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/hydroelectric.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/hydroelectric); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 0af787d93ea31a76b543108848a585887e09191e38abe97155151a59d2a7d7d2
+- id: wikidata_facilities_classes_launch_site
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/launch_site.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/launch_site); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 5470a4eeba94530a94bf854be4ee83fa6bb366ad61c04d660ccb2b424769b2c2
+- id: wikidata_facilities_classes_military_academy
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/military_academy.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/military_academy); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: f241bf6041e6165f16cf88c4b836f28e3c2c261afc9403e6ff1076002705fdd6
+- id: wikidata_facilities_classes_military_base
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/military_base.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/military_base); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 992a7afeabbc9376da93804ffe3b794f977d10042f284eda8adf332418d7e510
+- id: wikidata_facilities_classes_military_hq
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/military_hq.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/military_hq); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: ad43cc2c57fd385c10c657da89b5608a9ebb2f710a6df878ad3d5310f9990e7b
+- id: wikidata_facilities_classes_mine
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/mine.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/mine); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: f42888dad44a3e3d78e18962882b41907ad063c18dbd26e7e923b78b192266b7
+- id: wikidata_facilities_classes_missile_site
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/missile_site.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/missile_site); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: ee94a6f246e5e751937b27e83b83561fe0a5d6ca77ea1823b18e1e7e3082a6ca
+- id: wikidata_facilities_classes_naval_base
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/naval_base.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/naval_base); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: e875cbffdbc7b84d2423f5507530027f253f53626ef80303b7a5518909915873
+- id: wikidata_facilities_classes_nuclear_facility
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/nuclear_facility.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/nuclear_facility); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 6d080db5ef20b296356a2d2e73658e162d42f2282e40e793dacf21bb83ce2c19
+- id: wikidata_facilities_classes_nuclear_power_plant
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/nuclear_power_plant.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/nuclear_power_plant); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 4652ee2ffd24082f596a0b4f60813b8a32f607dabe36c97f96a958c6ee0ed983
+- id: wikidata_facilities_classes_nuclear_test_site
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/nuclear_test_site.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/nuclear_test_site); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 6552d508af9a2642e7a3b0866b794aaa07ae3931b43f0792a2783442250374c8
+- id: wikidata_facilities_classes_oil_refinery
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/oil_refinery.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/oil_refinery); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: a996270405297e449bb6fcefb8a3eb0eee2e2d3423cc9da03bda959f2df195e7
+- id: wikidata_facilities_classes_parliament
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/parliament.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/parliament); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 10cbda8dd220c0d00fd74e6c71e60759ffbb8865afe9a4f3c6922cc751afd1ce
+- id: wikidata_facilities_classes_port
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/port.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/port); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 01c4593667b8792822143fd91445c84a0fb639c44c4601223283b8e2174237ee
+- id: wikidata_facilities_classes_power_station
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/power_station.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/power_station); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 744bf720bf9520a0b7bf09a59d4d14cc42d5a71fda2566fe1a270e97c23b476b
+- id: wikidata_facilities_classes_radar_station
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/radar_station.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/radar_station); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 0bfb6c64aa7c43be9c0281f95feba533e7aa5aa441155e6791424a277768accb
+- id: wikidata_facilities_classes_rail_junction
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/rail_junction.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/rail_junction); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: cd515fd8677323d96d76e0840e9ec50eb741b6855212e96ef2ef7c8bedd77cec
+- id: wikidata_facilities_classes_research_institute
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/research_institute.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/research_institute); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 7c70a5b7575bbf97d34c038c7a422e213c2d618286adad5589b2ad8e4025aca2
+- id: wikidata_facilities_classes_shipyard
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/shipyard.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/shipyard); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 7c7669e1fa504bce811bf47c5e643da4b9e52c1dea3e487c6ce4e6285f815694
+- id: wikidata_facilities_classes_steelworks
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/steelworks.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/steelworks); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 1b2b6defa21fcb16addb1a5bc262a95add03ca13a0294f35d35e5c9275b59530
+- id: wikidata_facilities_classes_weapons_storage
+  url: https://query.wikidata.org/sparql
+  path: wikidata/classes/weapons_storage.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (classes/weapons_storage); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: f308a8d25fb53dba83d01639c0c7d30454bedd0e1063987680fe661736a68172
+- id: wikidata_facilities_details_attributes
+  url: https://query.wikidata.org/sparql
+  path: wikidata/details/attributes.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (details/attributes); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 0f8fe4743cc5f1af1108cfb68f6078b727604cd587330b0980e923d846424f93
+- id: wikidata_facilities_details_country
+  url: https://query.wikidata.org/sparql
+  path: wikidata/details/country.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (details/country); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: dfcd70447d5d7c5e8ed403c4b7fa215a97a0d1af22390c2f81e75d17e4252120
+- id: wikidata_facilities_details_dates
+  url: https://query.wikidata.org/sparql
+  path: wikidata/details/dates.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (details/dates); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: d3282008a15ae6dae772365649fc0ddff8b527332345b05bad972bd85b9c1c99
+- id: wikidata_facilities_details_labels
+  url: https://query.wikidata.org/sparql
+  path: wikidata/details/labels.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (details/labels); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 8ecbd9c335b628a50831c5781d3dec59c729d8d310b45db9bbd35e69a9f15be9
+- id: wikidata_facilities_details_languages
+  url: https://query.wikidata.org/sparql
+  path: wikidata/details/languages.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (details/languages); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 4c2fe31bed365b58b5326882886916c1f0dda56edc80e602a5438c04fdfb51dc
+- id: wikidata_facilities_details_local_labels
+  url: https://query.wikidata.org/sparql
+  path: wikidata/details/local_labels.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (details/local_labels); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 35729b6319df00cdfe29b26d1853c8e2402ce179879cfcbcb3b82bc7cc204366
+- id: wikidata_facilities_members_air_base
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/air_base.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/air_base); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: a04b69e47832ea81619d259a1ba0820c8516cf4f93334f845a9f758096d13323
+- id: wikidata_facilities_members_airport
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/airport.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/airport); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 33cb7a2f0c1f9ad672aac744a5e10cb6ce0d842e902dd8ed030bef555eba3a8e
+- id: wikidata_facilities_members_aluminium_smelter
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/aluminium_smelter.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/aluminium_smelter); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 48fc5d8e33a79e940b18490112b0fa5ef3ce0ce050eb4d448f4062673ea8ca86
+- id: wikidata_facilities_members_arsenal
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/arsenal.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/arsenal); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: a7138a111f85ffa94f303f088d73327f23bce1f31b32bbc4599371a8bb032c4a
+- id: wikidata_facilities_members_bunker
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/bunker.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/bunker); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: c5397375301334386a94d3829dabad6b93c90feef6583e49f15edc969e6392c8
+- id: wikidata_facilities_members_chemical_plant
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/chemical_plant.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/chemical_plant); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: a4b44e1741a0328fb227d9fbb8fcb181179ddae7971f50f79c52e5416f934c69
+- id: wikidata_facilities_members_factory
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/factory.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/factory); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 87b42701f0c489d3740be859fd649156ff7406bb24f726f43806469b5143e486
+- id: wikidata_facilities_members_government_seat
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/government_seat.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/government_seat); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 392b4fb00461e226c34cdda9b3a77dc11d76c0d2e40cd7c9b45f4dc883619052
+- id: wikidata_facilities_members_hydroelectric
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/hydroelectric.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/hydroelectric); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: d8e67fbc737b8ab9ee0f850b3996cacf5205a65c144911f8a1fbce1fc3861f64
+- id: wikidata_facilities_members_launch_site
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/launch_site.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/launch_site); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 9b6041c5b172610e72789ff844edfe863fae26723610578667463e0dc1bc27df
+- id: wikidata_facilities_members_military_academy
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/military_academy.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/military_academy); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: cdaab0d43b143e02909825b3fa1247eede354860ece9db1d35d210a8e0c8d335
+- id: wikidata_facilities_members_military_base
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/military_base.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/military_base); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: f0a02c101a4a84c20c5fe102219bd28d0b8a24ba0bca563f798b1b17af83a9a4
+- id: wikidata_facilities_members_military_hq
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/military_hq.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/military_hq); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 7081322e5ccf66c658153bac530305d61784f191efb55bf0e8ab6fc1f0e4be83
+- id: wikidata_facilities_members_mine
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/mine.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/mine); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 5f48185e6deefc6da1e82bdd724f3c5f844b3cfe5600b4b74c291d3e947603eb
+- id: wikidata_facilities_members_missile_site
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/missile_site.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/missile_site); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 8bf48a64dbab4a4b6bcf27fc9ca48557d813daf68e8d6facccedc62caf445181
+- id: wikidata_facilities_members_naval_base
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/naval_base.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/naval_base); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 891238fc868806691db446885f715de67800472c26ae8d3ac17f00a5252cda20
+- id: wikidata_facilities_members_nuclear_facility
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/nuclear_facility.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/nuclear_facility); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 6d70ab8442b0cf1be2d9eb92d4d9db76d9eadf6a41b60535001a53fbf9562bbd
+- id: wikidata_facilities_members_nuclear_power_plant
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/nuclear_power_plant.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/nuclear_power_plant); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: aa2535858778a21bbc8c91ba2d2fe1bb9470f622ccc595f71953a9e7bf5f0c99
+- id: wikidata_facilities_members_nuclear_test_site
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/nuclear_test_site.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/nuclear_test_site); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 1004eda602e8a7453beeb591c2a041a0fb0bfbced7d7f78cceaf57b6fdc4c95a
+- id: wikidata_facilities_members_oil_refinery
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/oil_refinery.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/oil_refinery); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 48815cad6cf474dc135f5b9b21c61fee515a9b42a8b632871ea8259bab732a7a
+- id: wikidata_facilities_members_parliament
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/parliament.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/parliament); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 749e8e5d44a7a370bd9916aa8f1c5917154256b55936d0a66e309337b5f689df
+- id: wikidata_facilities_members_port
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/port.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/port); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: d22fd456a9a91dc24fa79aaed99c645f2810934bdd3e5da15ba7444acdd62831
+- id: wikidata_facilities_members_power_station
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/power_station.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/power_station); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 623e4b5e09c13e141314ca9a7bd471bcaf34f175c0edce383627c7c7246aa6fa
+- id: wikidata_facilities_members_radar_station
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/radar_station.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/radar_station); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: fb2898fa3c9791630aae98ff387ed968fde0c5c047fdf6549794e82c3001aa8b
+- id: wikidata_facilities_members_rail_junction
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/rail_junction.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/rail_junction); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 1b3d8d3ac9602ee19471a071223fb1d4bc9f25b25974f228167373ced1c132dc
+- id: wikidata_facilities_members_research_institute
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/research_institute.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/research_institute); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 3a85f3433a360d590f48adf185eb5146133eec3657e265cd265bcef0a1608576
+- id: wikidata_facilities_members_shipyard
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/shipyard.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/shipyard); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 224fd211817f3adbd0033a8068095ade74aa489b6d5ce9f505d4475c7b3ca7b0
+- id: wikidata_facilities_members_steelworks
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/steelworks.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/steelworks); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: f51e1599fc08db0052167901f94c99638376b26de407f44a1e07667410bcb3b4
+- id: wikidata_facilities_members_weapons_storage
+  url: https://query.wikidata.org/sparql
+  path: wikidata/members/weapons_storage.json.gz
+  licence: CC0 1.0 (Wikidata)
+  use: Wikidata SPARQL results (members/weapons_storage); queries stored in the file
+  role: features
+  fetch: nucprob.sources.wikidata_facilities
+  retrieved: '2026-11-22'
+  sha256: 59e77db15e1400997980cecc11e61aac64061952f34c1f3fbc85800c404724f0
