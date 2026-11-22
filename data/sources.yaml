@@ -1559,3 +1559,53 @@ sources:
   role: labels
   retrieved: '2026-11-22'
   sha256: 1ce92c6357fbe53c8b2c56706fae6bac6563d854862e22824a5a0741796ccc36
+- id: hyde321_baseline_population
+  url: https://archaeology.datastations.nl/api/access/datafile/5490328
+  path: population_grids/hyde/
+  licence: CC0 1.0 on the DANS data station (doi:10.17026/DANS-25G-GEZ3); the HYDE 3.2.1 readme says CC
+    BY 3.0, so cite Klein Goldewijk et al. (2017), ESSD 9, 927-953
+  use: 'population features: people and urban share within r km of a place at any date 1930-2017 (popc,
+    urbc, rurc, 5 arc-min, 1930-2010 by decade and 2017)'
+  role: features
+  fetch: nucprob.sources.hyde
+  retrieved: '2026-11-22'
+  sha256: 91906ead2c8e990d3fc19ec0070dc03fa317e3efa4d7daf13c2a737d11e14662
+  note: HYDE3_2_1-baseline.zip (5.34 GB, SHA-1 0d0e4ff97deb59664ce6c34dfdeeafa08e487d20) is not downloaded
+    whole; the module reads 30 members (baseline/asc/<year>AD_pop/{popc,urbc,rurc}_<year>AD.asc) by HTTP
+    range and stores each as float32 .npy. sha256 is that of hyde/members.json, which logs each member's
+    CRC32, sizes and world total.
+- id: reba2016_chandler
+  url: https://ndownloader.figshare.com/files/5407640
+  path: population_grids/reba/chandlerV2.csv
+  licence: CC BY 4.0 (Reba, Reitsma & Seto 2016, doi:10.6084/m9.figshare.2059494)
+  use: 'historical city list with coordinates: Chandler city populations 2250 BC-AD 1975 (430 cities in
+    1950, 393 in 1975)'
+  role: features
+  retrieved: '2026-11-22'
+  sha256: 5b8df64e46988b216988eef18b46ebc2cba57ecc1adc8a5c2e1e6d5b78068031
+- id: reba2016_modelski_ancient
+  url: https://ndownloader.figshare.com/files/5356132
+  path: population_grids/reba/modelskiAncientV2.csv
+  licence: CC BY 4.0 (Reba, Reitsma & Seto 2016, doi:10.6084/m9.figshare.2059497)
+  use: historical city list, Modelski ancient cities 3700 BC-AD 1000 (completeness of the table only)
+  role: features
+  retrieved: '2026-11-22'
+  sha256: 71beafaacbdeb8d8fc156951521e9a14e20d6704b0d77be5528511c52fad3e1d
+- id: reba2016_modelski_modern
+  url: https://ndownloader.figshare.com/files/5407637
+  path: population_grids/reba/modelskiModernV2.csv
+  licence: CC BY 4.0 (Reba, Reitsma & Seto 2016, doi:10.6084/m9.figshare.2059500)
+  use: historical city list, Modelski's 293 cities of a million or more in AD 2000
+  role: features
+  retrieved: '2026-11-22'
+  sha256: 927ee6a9122be6aded1a2f71ff5bb6f36312aae6a778574af47f4e8c65265726
+- id: wup2018_excel_files
+  url: https://population.un.org/wup/assets/Download/Archive/WUP2018-Excel-files.zip
+  path: population_grids/wup/WUP2018-Excel-files.zip
+  licence: CC BY 3.0 IGO (United Nations, DESA, Population Division 2018)
+  use: urban agglomerations of 300,000+ (2018) with coordinates, 1950-2035 every 5 years (file F12, extracted
+    to WUP2018-F12-Cities_Over_300K.xls, sha256 2c41178220168224d301197dacf58e76fed0b9555c78a72953acd462fc625aac);
+    F22 (annual) also extracted, unused
+  role: features
+  retrieved: '2026-11-22'
+  sha256: 80eb71bbabb46cb2e1599b51b16133bf28b0a99a541d72de20a1248ec6170a75
