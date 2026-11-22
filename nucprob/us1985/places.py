@@ -11,6 +11,8 @@ towns there is no population threshold, since the label (NAPB-90's risk band) co
 Writes data/processed/us_counties_1985.parquet.
 """
 
+import zipfile
+
 import numpy as np
 import pandas as pd
 import shapefile
@@ -27,6 +29,9 @@ EARTH_R_KM = 6371.0088
 
 def geometries() -> pd.DataFrame:
     """One row per county FIPS code: its (multi)polygon, merged over the file's parts."""
+    if not SHP.with_suffix(".shp").exists():
+        with zipfile.ZipFile(census_us.DIR / "co99_d90_shp.zip") as z:
+            z.extractall(SHP.parent)
     reader = shapefile.Reader(str(SHP), encoding="latin-1")
     fields = [f[0] for f in reader.fields[1:]]
     parts: dict[str, list] = {}

@@ -655,3 +655,52 @@ lists:
     completeness: 2 of 70 cities (Moscow 8 bombs, Leningrad 7)
     card: data/notes/early_western.md (3)
     caveats: secondary (Condit 1996); the atomic annex and the Harmon report's city annex are not online
+
+  - file: wp_1961_duszynski_report.csv
+    title: Polish Front commander Gen. Duszyński's report, proposed nuclear strikes, 1961
+    planner: Poland (Polish Front commander)
+    targets: FRG, Denmark
+    year: 1961
+    provenance: plan
+    selection: judgment
+    use: transfer-test
+    completeness: the six towns named in the quoted fragment; the full report is not available
+    card: data/notes/warsaw_pact.md (13)
+    caveats: 'SECONDARY: a fragment quoted in a 2002 Wprost article (Piotrowski, IPN), archive reference
+      not given; a recommendation (''it is advisable to consider'') aimed at panic and political collapse,
+      not a weapons allocation, so it could be classed as a study; likely origin of the Esbjerg/Roskilde
+      claim in wp_1979_seven_days'
+
+  - file: wp_1977_gsa_initial_strike_table.csv
+    title: Soviet General Staff Academy lessons, Coastal Front initial nuclear strike plan (target table),
+      1977
+    planner: USSR (General Staff Academy; Coastal Front, with Combined Baltic Fleet tasks)
+    targets: FRG
+    year: 1977
+    provenance: exercise
+    selection: judgment
+    use: transfer-test
+    completeness: 'all place-named targets of the core scenario variant: 14 airfields and 5 control-and-warning
+      centres with yields and striking units (Lesson 19 table), 2 HQ areas (Lesson 2), 3 nuclear depots
+      (Lesson 1e), 8 Baltic Fleet targets (Lesson 2); 17 depots in the table have redacted names; unit targets
+      without places not extracted'
+    card: data/notes/warsaw_pact.md (12)
+    caveats: a training lesson with colour-coded NATO nations, partly notional geography (airfields at Marne,
+      Vegesack, Bremen, Berger); the 5 control-and-warning-centre rows OVERLAP wp_1977_gsa_front_lesson
+      (same scenario, Lesson 1f) and add only yields; quotes from archive.org OCR, the key pages checked
+      against the scans
+
+  - file: wp_1977_gsa_lesson_variants.csv
+    title: Soviet General Staff Academy lessons 24b, 20b and 26b, alternative nuclear strike variants, 1977
+    planner: USSR (General Staff Academy; Coastal Front)
+    targets: FRG, Netherlands
+    year: 1977
+    provenance: exercise
+    selection: judgment
+    use: transfer-test
+    completeness: every place-named nuclear target in Lessons 24b (8), 20b (8) and 26b (6); unit targets
+      without places not extracted
+    card: data/notes/warsaw_pact.md (12)
+    caveats: three scenario variants of the same 1977 lesson set, each with its own target numbering; not
+      one plan; Wrohm and Bad Münder repeat sites of wp_1977_gsa_front_lesson; several areas are given as
+      three-place triangles; yields given for only 4 rows

@@ -273,3 +273,83 @@ Collection page: https://phpisn.ethz.ch/lory1.ethz.ch/collections/colltopic4241.
 8. **Seven Days 1979** primary (IPN 2005 release; map images): not located. The Guardian/Telegraph 2005 articles were not opened.
 9. **CIA lesson series**: 27 more lessons to scan (e.g. 0001197591, 0001197581). Some may name places like 0001197534 does.
 10. Further PHP items noticed but not processed: "List of Nuclear Strikes" companion annexes; 1971 Siwicki/Hannover message; Balló's "Die Ungarische Volksarmee im Warschauer Pakt" (German PDF on the PHP mirror); and the Hungarian collection's other 1965 documents (arbitrator reports).
+
+---
+
+# Second pass, 2026-11-22 (Warsaw Pact stream)
+
+New raw files are in `data/raw/warsaw_pact/` (download log `urls.log`; sha256 in `data/sources.d/warsaw_pact.yaml`). The first-pass raw files are no longer in this container. New label files: `wp_1977_gsa_initial_strike_table.csv` (32 rows), `wp_1977_gsa_lesson_variants.csv` (22), `wp_1961_duszynski_report.csv` (6). Catalogue fragments are in `data/curated/labels/catalogue.d/`. No row repeats an existing file except where it is flagged `OVERLAP`.
+
+Method: crawled the PHP mirror (`phpisn.ethz.ch/lory1.ethz.ch/collections/`; 750 pages, ~840 document links) and archive.org's mirror of the CIA reading room (`ciareadingroom` collection, 116 "General Staff Academy" items). Scanned PDFs were OCR'd locally with tesseract (ces/pol/rus/deu). I read every quoted row against the archive.org OCR text, and checked the key pages against the page images (listed below).
+
+## 12. CIA: USSR General Staff Academy lessons (1977 lesson set), further lessons
+Same lesson set as source 9: a Coastal Front offensive against NORTHAG in northern FRG, with NATO nations colour-coded (Brown = FRG, Blue = UK, Green = US, Lilac = Belgium). Each lesson is a separate CIA translation (FIRDB series, 1980–81).
+
+- **Lesson 19**, 0001197541 (FIRDB-312/01599-80): "Preparation and Critique of the Plan for the Front Offensive Operation". https://archive.org/download/cia-readingroom-document-0001197541/0001197541.pdf. **PDF pp.21–22 is a full target table of the initial nuclear strike**, giving target, missiles/bombs × yield, and the unit that strikes:
+  - 14 airfields by number and name: 13 × 100 kt missile, and BERGER 1 × 200 kt bomb.
+  - 5 control-and-warning centres, with yields.
+  - NORTHAG CP and 2ATAF CP: 2 × 200 kt bombs each.
+  - 6 corps CPs.
+  - 17 nuclear-weapons depots: yields given, but the names are **redacted** (HR70-14).
+  - SAM battalions.
+  - Totals (p.20): 376 munitions, 30,542 kt (90 OTR, 86 TR, 200 bombs).
+  - Page images checked: pp.20–22.
+- **Lesson 2**, 0001197532 (FIRDB-312/00680-80): "Plan of the Initial Nuclear Strike".
+  - p.15: the same 14 airfields (image checked).
+  - p.17: combat-alert allocations, e.g. Oldenburg and Vegesack with 100 kt missiles (image checked).
+  - p.21 names:
+    - the NORTHAG forward CP and the 2ATAF CP "in the areas of BRAMSCHE and IBBENBUREN";
+    - Combined Baltic Fleet aviation targets: airfields Rendsburg, Eggebek, Jagel and Friedrichsort; mine depots at Flensburg, Eckernförde and Kiel; the naval CP at Holtenau. These are the fleet's tasks, recorded in the front plan.
+- **Lesson 1e**, 0001197557 (FIRDB-312/02229-80): each army's share of the initial strike. Names three nuclear warhead depots: ITZEHOE (p.13), and KLOPPENBURG and QUAKENBRUCK (p.14). Also gives per-army missile and bomb allotments by yield. The airborne landing (Emmerich–Xanten) and the Kiel landing get 10 and 6 nuclear munitions, with no aim points.
+- → `wp_1977_gsa_initial_strike_table.csv` (32 rows). The 5 control-and-warning-centre rows overlap `wp_1977_gsa_front_lesson` (Lesson 1f) and add only yields. I did not re-extract units that have no place.
+- **Variants** → `wp_1977_gsa_lesson_variants.csv` (22 rows). Each variant has its own target numbering, so they are not the same plan:
+  - Lesson 24b, 0001197581 (FIRDB-312/00726-81): control-and-warning centres 28 km E of Aurich (No.167, 100 kt), Vechta (No.166, 100 kt), Wrohm and Bad Münder; airfields Borger (No.64, 100 kt) and Ahlhorn (No.65, 100 kt); corps CPs 10 km S of Rothenburg and 1 km W of Schöningen, with Soviet grid coordinates (not converted). Images checked: pp.12, 16, 22.
+  - Lesson 20b, 0001197576 (FIRDB-312/00036-81, a pre-emptive initial strike): the Hamdorf centre; a depot S of Harsefeld; Pershing squadrons at Ochtrup, Oldenburg, Emsdetten and Billerbeck; posts at Springe and Vechta. Image checked: p.14.
+  - Lesson 26b, 0001197563 (FIRDB-312/02709-80, day 3, second echelon): Pershing squadron in the area Rijssen–Lochem–Vegdam (NL); Lance regiment in the area Alferde–Eschershausen–Einbeck; airfields near Apeldoorn and Rheine; centres at Lingen and Enschede. Image checked: p.15.
+- Lessons scanned with **no place-named nuclear targets**:
+  - 0001197533 (1c) and 0001197537 (7a): only axes and lines.
+  - 0001197544 (air operation): named airfields, but conventional strikes.
+  - 0001197545, 0001197552, 0001197562 (1a): 0001197562 repeats the Lesson 2/19 names.
+  - 0001197595: repeats.
+  - 0001197565: reconnaissance.
+  - the remaining lessons of the series by keyword scan.
+- Doubts:
+  - BERGER/BORGER is unidentified.
+  - Several "airfields" (Marne, Vegesack, Bremen, Cloppenburg) are not real NATO air bases, so the scenario geography is partly notional.
+  - EYTIN (Eutin?) and BAD MUNDEN (Bad Münder?) are left without a modern name.
+
+## 13. Duszyński 1961 report, quoted in Wprost (2002)
+- PHP collection "Polish Exercises", press item. Polish scan: https://phpisn.ethz.ch/lory1.ethz.ch/collections/coll_polex/documents/wprost.pdf. Danish translation: https://phpisn.ethz.ch/lory1.ethz.ch/collections/coll_polex/documents/piotrowski_dk.pdf.
+- Boxed quotation on Wprost p.84 (PDF p.3, image checked): "Fragment referatu dowódcy Frontu Polskiego gen. Zygmunta Duszyńskiego z 1961 r." It recommends atomic strikes on Hanower, Brunszwik, Kilonia and Brema, to cause panic and collapse. To knock Denmark out quickly, it recommends strikes on Esbjerg and Roskilde.
+- → `wp_1961_duszynski_report.csv` (6 rows, SECONDARY).
+- This is the probable origin of the Esbjerg/Roskilde "known targets" in `wp_1979_seven_days`.
+- The same article says that about 100 nuclear charges were planned over the FRG alone, and 30–40 OTR, 50–60 TR and 6–15 air nuclear strikes per army. These are counts only.
+
+## 14. Documents opened that give no named WP target (counts or none)
+- **PHP Hungarian collection**:
+  - 1963–71 exercise reports: 630311, 630605, 630606, 631029, 660222, 670623, 691030, 700131, 7103. The 630606 report is about 25 strategic NATO strikes on Hungary: a mirror, with no names extracted.
+  - 650612 Plan Southern Army; 6505 Plan (130/125 weapon totals); 650608.
+  - 8109 Zapad-81 SS-20 briefing (DE + EN).
+  - Annotations; 1958–60 war-game summaries.
+- **Siwicki message, 28 Apr 1971 ("Bizon 71")**: about the capitulation of the Hannover garrison and civil administration, not nuclear.
+- **"Cardboard Castle" items**:
+  - 09 Konev 1959 analysis (RU) and 10 ČSLA 1959 exercise (CS): doctrine and counts only.
+  - 23 Polish CPX of 14 Jun 1963: axes Wittstock–Nienburg–Enschede–Brussels and Schwerin–Neumünster–Flensburg–Ålborg, and lines; it mentions "składy atomowe" (atomic depots) as objectives to seize, but no strikes are named.
+  - 22a Mazowsze, Apr 1963 (PL): WP retaliatory strike totals only. p.12: "218 uderzeń ... ponad 188 MT, z czego na NRF, Danię, Holandię i Wielką Brytanię 190 uderzeń o łącznej mocy 8290 KT, a na Stany Zjednoczone 86 uderzeń o łącznej mocy 180 MT". The counts are internally inconsistent; the rest of the document covers NATO's 55 strikes on Poland. These are country-group counts, so no validation table was made.
+  - 79 Soyuz-77; 81 Ogarkov Zapad-77; 099a Soyuz-83 (190 charges in the first strike, axes Plzeň–Roth and Strakonice–München, no aim points); 110 Granit-86; 120 ČSLA CPX 1987 (only a NATO strike on Jaslovské Bohunice: a mirror); 143 Vltava-89.
+  - 28 (1965 intelligence); 15, 61 (ČSLA studies); 43 (GDR analysis).
+- **Other PHP items**:
+  - 62_10 Romanian maneuver of 1962 (anti-landing in Dobrogea, no foreign targets).
+  - Czech and Polish generals' oral histories.
+  - 11 East German description of "DECO II".
+- **csla.cz**: "Ve válce, která nebyla" parts 01–03 have no targets. The earlier plany001–003 finding stands.
+
+## 15. Blocked or not found (for the coordinator)
+- Wilson Center Digital Archive: the proxy returns 502 on CONNECT for digitalarchive.wilsoncenter.org (e.g. https://digitalarchive.wilsoncenter.org/collection/91/warsaw-pact).
+- digitalarchive.umd.edu (apparently a Wilson Center mirror) returns 403: https://digitalarchive.umd.edu/document/89847/download and https://digitalarchive.umd.edu/document/92175/download (found by a search on Bulgarian war plans; content unseen).
+- CIA reading room date-named PDFs render as HTML here:
+  - https://www.cia.gov/readingroom/docs/1975-06-13.pdf. A search snippet says it is a Soviet text on a Budapest war game of Soviet, Bulgarian and Hungarian staffs against NATO in Turkey, Greece, Austria and N Italy. This is the best lead for the southern theatre.
+  - https://www.cia.gov/readingroom/docs/1975-08-26.pdf.
+- Lautsch, Military Power Revue 2/2014: not found online (e-periodica's ASMZ pages render by script).
+- Bulgarian plans against Greece and Turkey: no open document found.
+- Andersen 2026 (Danish), Luňák 2007, and the IPN files on Polish plans against Denmark: print or archive only; nothing new online.

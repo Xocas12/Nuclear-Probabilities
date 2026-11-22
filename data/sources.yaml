@@ -1609,3 +1609,475 @@ sources:
   role: features
   retrieved: '2026-11-22'
   sha256: 80eb71bbabb46cb2e1599b51b16133bf28b0a99a541d72de20a1248ec6170a75
+- id: wp2_cia_0001197532
+  url: https://archive.org/download/cia-readingroom-document-0001197532/0001197532.pdf
+  path: warsaw_pact/cia_0001197532.pdf
+  licence: public domain (US government, declassified)
+  use: labels (rows extracted)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 49088799426e1f9303e6e39875d5c5465f6062c475e64d7f8a5c30175d7d40f9
+- id: wp2_cia_0001197532_djvu
+  url: https://archive.org/download/cia-readingroom-document-0001197532/0001197532_djvu.txt
+  path: warsaw_pact/cia_0001197532_djvu.txt
+  licence: public domain (US government, declassified)
+  use: labels (rows extracted)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: a052c25867ec3c918954c0d9d3b6a5ba6658f7bb0ee3821b7ae8cec330160fbb
+- id: wp2_cia_0001197533
+  url: https://archive.org/download/cia-readingroom-document-0001197533/0001197533.pdf
+  path: warsaw_pact/cia_0001197533.pdf
+  licence: public domain (US government, declassified)
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: bfe397d65b687bf099110fd326afb3331ca0f8b4c29a0d365b5e0fee0d2b11b1
+- id: wp2_cia_0001197537
+  url: https://archive.org/download/cia-readingroom-document-0001197537/0001197537.pdf
+  path: warsaw_pact/cia_0001197537.pdf
+  licence: public domain (US government, declassified)
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: efcf47766c9e9ea62fe16051e658e998be7d831799c65c1a70be84c86b7c85bb
+- id: wp2_cia_0001197541
+  url: https://archive.org/download/cia-readingroom-document-0001197541/0001197541.pdf
+  path: warsaw_pact/cia_0001197541.pdf
+  licence: public domain (US government, declassified)
+  use: labels (rows extracted)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: b2f2df1c82a0b0e7addde0a7e7de4a548de78e733f3b0fc8562401151819851c
+- id: wp2_cia_0001197541_djvu
+  url: https://archive.org/download/cia-readingroom-document-0001197541/0001197541_djvu.txt
+  path: warsaw_pact/cia_0001197541_djvu.txt
+  licence: public domain (US government, declassified)
+  use: labels (rows extracted)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 7a47248f20c4f9a7993523a2cd92a7b6c02c7d04a832cd5a829da725fe97a788
+- id: wp2_cia_0001197557
+  url: https://archive.org/download/cia-readingroom-document-0001197557/0001197557.pdf
+  path: warsaw_pact/cia_0001197557.pdf
+  licence: public domain (US government, declassified)
+  use: labels (rows extracted)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 4d6b8a47e1d84f7a5f583886046151ae8e3cae2e84a232193cd75ba4f745890d
+- id: wp2_cia_0001197557_djvu
+  url: https://archive.org/download/cia-readingroom-document-0001197557/0001197557_djvu.txt
+  path: warsaw_pact/cia_0001197557_djvu.txt
+  licence: public domain (US government, declassified)
+  use: labels (rows extracted)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 944dde1b1032959c94d9a32f9afe4f6c2b4ce2e1ebdcbf7f1f8285181473e5c7
+- id: wp2_cia_0001197563
+  url: https://archive.org/download/cia-readingroom-document-0001197563/0001197563.pdf
+  path: warsaw_pact/cia_0001197563.pdf
+  licence: public domain (US government, declassified)
+  use: labels (rows extracted)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 403d6d9faf46b8495a53107f667333cf39acc8dc94fc0a855fc6e5ee48a8fe67
+- id: wp2_cia_0001197563_djvu
+  url: https://archive.org/download/cia-readingroom-document-0001197563/0001197563_djvu.txt
+  path: warsaw_pact/cia_0001197563_djvu.txt
+  licence: public domain (US government, declassified)
+  use: labels (rows extracted)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: a57b666e9c5f257466d2ea434aa8cc9fbae8321acaf53858dcaa84025845fcc4
+- id: wp2_cia_0001197576
+  url: https://archive.org/download/cia-readingroom-document-0001197576/0001197576.pdf
+  path: warsaw_pact/cia_0001197576.pdf
+  licence: public domain (US government, declassified)
+  use: labels (rows extracted)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: efd5cc020eec4ef4aa7b095d056acab4fd1aac4007760e52bb191a2184564d41
+- id: wp2_cia_0001197576_djvu
+  url: https://archive.org/download/cia-readingroom-document-0001197576/0001197576_djvu.txt
+  path: warsaw_pact/cia_0001197576_djvu.txt
+  licence: public domain (US government, declassified)
+  use: labels (rows extracted)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 9a96170fc0f2c45a857cb461d5cf0c0e2a97b336d2f5c706102ef2ab9a6927bc
+- id: wp2_cia_0001197581
+  url: https://archive.org/download/cia-readingroom-document-0001197581/0001197581.pdf
+  path: warsaw_pact/cia_0001197581.pdf
+  licence: public domain (US government, declassified)
+  use: labels (rows extracted)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 6525d59e33ac1e7b5f6c474dadccf4c80a8f0de3701620ca0a04882dba458a0a
+- id: wp2_cia_0001197581_djvu
+  url: https://archive.org/download/cia-readingroom-document-0001197581/0001197581_djvu.txt
+  path: warsaw_pact/cia_0001197581_djvu.txt
+  licence: public domain (US government, declassified)
+  use: labels (rows extracted)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: cbbd9fc448e11df9d8ed23fdc7a1967f637a1af7268e28146b317cde4225c5a4
+- id: wp2_csla_vevalcekteranebyla01
+  url: https://www.csla.cz/armada/taktika/vevalcekteranebyla01.htm
+  path: warsaw_pact/csla_vevalcekteranebyla01.htm
+  licence: copyright, research use
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 4d45f9ba2b84b61a2ba452991681da64bcc83ecbe749f0a6b68ed220fb9395fe
+- id: wp2_csla_vevalcekteranebyla02
+  url: https://www.csla.cz/armada/taktika/vevalcekteranebyla02.htm
+  path: warsaw_pact/csla_vevalcekteranebyla02.htm
+  licence: copyright, research use
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 9d5626d80b45d3024fc191aa2a1b4f5875594dc03164b4123427935451522c63
+- id: wp2_csla_vevalcekteranebyla03
+  url: https://www.csla.cz/armada/taktika/vevalcekteranebyla03.htm
+  path: warsaw_pact/csla_vevalcekteranebyla03.htm
+  licence: copyright, research use
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 4adcf6d08effcc1b5f15ca8c8558079fffc6981a860644813fa086e44d77fa3e
+- id: wp2_php_16248_640828_soviet_2bstudy_e
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/16248/ipublicationdocument_singledocument/bccf80b2-436f-4922-9861-23c4c48ef61c/en/640828_soviet%2bstudy_E.pdf
+  path: warsaw_pact/php_16248_640828_soviet%2bstudy_E.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 86314f5ade9f0c508749288350a24be5ce674f764edfc1c09b0381ad7210c329
+- id: wp2_php_19633_650612_plan_southern_army_e
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/19633/ipublicationdocument_singledocument/6217e875-3297-4f69-b3e8-60c1c3425a3f/en/650612_Plan_Southern_Army_E.pdf
+  path: warsaw_pact/php_19633_650612_Plan_Southern_Army_E.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: fb074b0c9b68bf12a1849f5132a95f6c4dd1c19b5bf9ddae32f7caac75bfc833
+- id: wp2_php_19634_650608_command_e
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/19634/ipublicationdocument_singledocument/3f6dc10c-4de1-4062-bb67-8ef1154f3fcf/en/650608_Command_E.pdf
+  path: warsaw_pact/php_19634_650608_Command_E.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: c9d6f86cd16a1e4964d1505f2045eb12380bf7a889c72ca9dac1dae0d0861d1a
+- id: wp2_php_19635_6505_plan_e
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/19635/ipublicationdocument_singledocument/0e169cd9-75ef-493a-8b64-035b470ae241/en/6505_Plan_E.pdf
+  path: warsaw_pact/php_19635_6505_Plan_E.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 2bac35a45ffe2cece71321977fa03f9ddb6e99a90915b9d67af63ba6cf2013f1
+- id: wp2_php_19934_571212_e_annotation
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/19934/ipublicationdocument_singledocument/f1b2d511-76a0-4e9a-b938-4ac3e35820bc/en/571212_E_Annotation.pdf
+  path: warsaw_pact/php_19934_571212_E_Annotation.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: badf61da380c9b73c331c3f3331f2f7edd0accc0b2a4ffd25f712dceb7bef89a
+- id: wp2_php_19955_630606_e_translation
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/19955/ipublicationdocument_singledocument/c1aec56c-78cd-43e9-8d44-bf0adca292cb/en/630606_E_Translation.pdf
+  path: warsaw_pact/php_19955_630606_E_Translation.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 8a472ccb4e8b2c31fd268d914882305f65e7500c968c9d7308e8edcdc594902f
+- id: wp2_php_19959_630605_e_translation
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/19959/ipublicationdocument_singledocument/f3c7f853-3ca3-4924-8a4f-874b89657ec2/en/630605_E_Translation.pdf
+  path: warsaw_pact/php_19959_630605_E_Translation.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 1c52615bb077263a794dce190e366e0e48c2e83db082bdb254528a99ddfac66f
+- id: wp2_php_19965_630311_e_translation
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/19965/ipublicationdocument_singledocument/92b3758a-712d-4cf5-8058-da661d038d6c/en/630311_E_Translation.pdf
+  path: warsaw_pact/php_19965_630311_E_Translation.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 7b5dbfa23f246d9e5e1fa23bc988adb7741b7828ff0a27235344091b5c616707
+- id: wp2_php_19972_631227_e_annotation
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/19972/ipublicationdocument_singledocument/c93b8f0f-0613-44f5-b48c-e1d7c32d8fa2/en/631227_E_Annotation.pdf
+  path: warsaw_pact/php_19972_631227_E_Annotation.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: d6efdd61492659133e453bd2e7bb13f51b105ca06fcde4720fe7aaa3eb632c2e
+- id: wp2_php_19981_631029_e_translation
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/19981/ipublicationdocument_singledocument/8d3f2b10-3510-4798-a008-916c6eceb474/en/631029_E_Translation.pdf
+  path: warsaw_pact/php_19981_631029_E_Translation.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 0692698234d02f5220e68db1bcc3ba9fc4d914d4eb3fe352022bfe70c2d61977
+- id: wp2_php_19983_670623_e_translation
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/19983/ipublicationdocument_singledocument/3cc10c79-bed6-4a68-b9cc-e111765cb016/en/670623_E_Translation.pdf
+  path: warsaw_pact/php_19983_670623_E_Translation.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 1076f46a17b5317788b6bbc5d301dbb7ea4aff243bdccb7cffed57388a3b4ade
+- id: wp2_php_19985_660222_e_translation
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/19985/ipublicationdocument_singledocument/85a2b17a-894c-4d44-a64a-4a98854d5a74/en/660222_E_Translation.pdf
+  path: warsaw_pact/php_19985_660222_E_Translation.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 087816351a08dc2ec242bd663bc24f2e6258a1ba5e96db592b0d4d59251092b5
+- id: wp2_php_19997_691030_e_translation
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/19997/ipublicationdocument_singledocument/c96de103-8603-4205-b6fc-22c2a6c07de8/en/691030_E_Translation.pdf
+  path: warsaw_pact/php_19997_691030_E_Translation.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: ef34fe427012b30277ddd0487390ffd272cef098c666b515a6a13a8c6d4b4a97
+- id: wp2_php_20001_7103_e_translation
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/20001/ipublicationdocument_singledocument/9d1f5907-df36-48ed-b5fc-718336457d67/en/7103_E_Translation.pdf
+  path: warsaw_pact/php_20001_7103_E_Translation.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: ed4c5625746f759b2ea2b5d2a3e5a01e742f9b3cf8441b2c7037a1b9a8884197
+- id: wp2_php_20004_700131_e_translation
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/20004/ipublicationdocument_singledocument/c322bb57-2695-4e43-a7ed-e3e7a4d0e72a/en/700131_E_Translation.pdf
+  path: warsaw_pact/php_20004_700131_E_Translation.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 95a0016ad9c8ced7bfa47abed30df1bbd0e93e0205b9280328c479c1e124c52b
+- id: wp2_php_20007_8109_e_translation
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/20007/ipublicationdocument_singledocument/40867d93-4524-4fb8-8c98-ef492e875df5/en/8109_E_Translation.pdf
+  path: warsaw_pact/php_20007_8109_E_Translation.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: f2a8f5191f6596ca90ebb5493f0da13c45e4d2dee64172ff8f3d3fd0c2ceed23
+- id: wp2_php_20007_8109_zapad
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/20007/ipublicationdocument_singledocument/63d03475-8a00-43a2-a602-359d5fdeb096/de/8109_Zapad.pdf
+  path: warsaw_pact/php_20007_8109_Zapad.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 34bce09746e85f7c2e9bad22c8613cfb2b6a0a90e2c294d637ce12183cdbed9b
+- id: wp2_php_20319_siwickimessage_280471
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/20319/ipublicationdocument_singledocument/4a6cb9b4-c9fe-4826-b2c4-885e485ec316/pl/SiwickiMessage_280471.pdf
+  path: warsaw_pact/php_20319_SiwickiMessage_280471.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 4247ac04c49f65483edc5aced22541ff77e93dca0fe7d6efa4d3c6b9333ff731
+- id: wp2_php_20415_selection_eng
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/20415/ipublicationdocument_singledocument/9fa1f386-647d-4d5a-a4c5-329e0f42adf9/en/selection_eng.pdf
+  path: warsaw_pact/php_20415_selection_eng.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: e17fce9b1087cf41592b5323c6cc0ac099fc297f962c627d8dd28c633a02f8d2
+- id: wp2_php_20636_excerpts_english
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/20636/ipublicationdocument_singledocument/9c4b905d-9c95-41ce-80ff-7182ab66e72a/en/excerpts_english.pdf
+  path: warsaw_pact/php_20636_excerpts_english.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 87ba8d1ba9d6ef085abc722f18223299a1810d7d249a2174c013eff74fefd2ad
+- id: wp2_php_20900_28_warsaw_pact_intelligence_000065
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/20900/ipublicationdocument_singledocument/6f00218b-0939-42ca-9d65-64c2e6c61c60/cs/28_Warsaw_Pact_Intelligence_000065.pdf
+  path: warsaw_pact/php_20900_28_Warsaw_Pact_Intelligence_000065.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: b584044b1f8af244601afe0ea6bc07f83f63b0b4a36eb1155780d33aafc672fe
+- id: wp2_php_20908_23_polish_command_post_exercise_140663
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/20908/ipublicationdocument_singledocument/f7bcfd63-9861-4198-aab7-5326340f0902/pl/23_Polish_Command_Post_Exercise_140663.pdf
+  path: warsaw_pact/php_20908_23_Polish_Command_Post_Exercise_140663.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 1354109d391e2845f11a875b45f4c315e4d0f9629a0979d2abf5fd4362dfcc48
+- id: wp2_php_20909_22a_mazowsze_exercise_230463
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/20909/ipublicationdocument_singledocument/549cb499-1616-46ac-b6af-b5229c1e009d/pl/22a_Mazowsze_Exercise_230463.pdf
+  path: warsaw_pact/php_20909_22a_Mazowsze_Exercise_230463.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: a01279943601084e3c2fa5ac3610ee9035509c9cf3506a7f2a41ba6a769964a2
+- id: wp2_php_20920_15_cz_strategic_position_000461
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/20920/ipublicationdocument_singledocument/e836ba78-cfbe-4e89-801a-7a66ea407ee0/cs/15_CZ_Strategic_Position_000461.pdf
+  path: warsaw_pact/php_20920_15_CZ_Strategic_Position_000461.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: dcc0151f48eb38fdd6c1c9df7e8ecfba5ecf43c0459a2015b0379adfa0990d45
+- id: wp2_php_20927_11_east_german_description_290759
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/20927/ipublicationdocument_singledocument/ccf2fdbd-ffbc-46a5-99a5-8bcc53f11f5e/de/11_East%2bGerman%2bDescription_290759.pdf
+  path: warsaw_pact/php_20927_11_East_German_Description_290759.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: ba94e7115f669cd4e11e6ecc994e9d6894b62610315550a6a9c0f759ac06bf45
+- id: wp2_php_20929_10_operational_exercise_310359
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/20929/ipublicationdocument_singledocument/8c044e7d-76a2-45b6-8161-acd567c85e5d/cs/10_Operational_Exercise_310359.pdf
+  path: warsaw_pact/php_20929_10_Operational_Exercise_310359.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: bd902b5e35f736377f1a8b25e64fbe8a5415d4c88db3c7f36749d72e80bf5ed0
+- id: wp2_php_20930_09_konev_analysis_310359
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/20930/ipublicationdocument_singledocument/07d0cdbd-5cc2-431e-87ae-ce6c0881b81a/ru/09_Konev_Analysis_310359.pdf
+  path: warsaw_pact/php_20930_09_Konev_Analysis_310359.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 69fdb5bf098f7b7cf420cdd86105f34c9275ced27fd759a3b064f5a7c891a9cb
+- id: wp2_php_21083_61_cz_general_staff_study_211268
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/21083/ipublicationdocument_singledocument/bab620b5-42db-4ed5-a4a2-384f6be3407c/cs/61_CZ_General_Staff_Study_211268.pdf
+  path: warsaw_pact/php_21083_61_CZ_General_Staff_Study_211268.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 6f201ba97041f2df945bd625202f34bd0d12221cc39ad13116eab47d4766f2e2
+- id: wp2_php_21105_43_east_german_analysis_000067
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/21105/ipublicationdocument_singledocument/82dd2fb7-c4ed-4773-a3f7-e8b9f4fd3bc0/de/43_East_German_Analysis_000067.pdf
+  path: warsaw_pact/php_21105_43_East_German_Analysis_000067.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 9db30ce9be235d2e4165dbb2566fc9cfa297e369ae978f311163785eb2b72c52
+- id: wp2_php_21200_81_ogarkov_analysis_zapad_exercise_300577
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/21200/ipublicationdocument_singledocument/14fd1ef2-a002-4577-ab5e-1dc3d5787728/ru/81_Ogarkov_Analysis_Zapad_Exercise_300577.pdf
+  path: warsaw_pact/php_21200_81_Ogarkov_Analysis_Zapad_Exercise_300577.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 17d515e9df04d971fe2b9142899123e6040f1af74cbff6058bd92d56c43130e3
+- id: wp2_php_21203_79_cz_analysis_soiuz_exercise_210377
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/21203/ipublicationdocument_singledocument/417c2a8f-98db-4feb-8eb2-49786111333c/cs/79_CZ_Analysis_Soiuz_Exercise_210377.pdf
+  path: warsaw_pact/php_21203_79_CZ_Analysis_Soiuz_Exercise_210377.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: b9fb4c5f256c216eb71546316e0afce74c8b8b0e6d5398f2149cd7bfafecef88
+- id: wp2_php_21247_143_cz_description_vltava_230589
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/21247/ipublicationdocument_singledocument/606af6ed-411e-44bf-9c68-d98033d2ae30/ru/143_CZ_Description_Vltava_230589.pdf
+  path: warsaw_pact/php_21247_143_CZ_Description_Vltava_230589.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 1763ade07cbdfbd8de9a757ad654436f62fe150662f01505830bb9ec3f116766
+- id: wp2_php_21269_120_cz_command_post_exercise_270187
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/21269/ipublicationdocument_singledocument/2a4885d8-c807-4728-97d1-b7192569157f/cs/120_CZ_Command_Post_Exercise_270187.pdf
+  path: warsaw_pact/php_21269_120_CZ_Command_Post_Exercise_270187.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 5c80dcbc1a02604d49168783f01adf0becc60478cab748527697ba3649796bf6
+- id: wp2_php_21277_110_scenario_granit_exercise_231285
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/21277/ipublicationdocument_singledocument/8f116cc5-536a-4fdf-b104-dcf1568f2556/ru/110_Scenario_Granit_Exercise_231285.pdf
+  path: warsaw_pact/php_21277_110_Scenario_Granit_Exercise_231285.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 6418dfb3575b31181dfcd11cff1502d4d3ecb18876afbb5581e6f74dd75c7c31
+- id: wp2_php_21287_099a_analysis_soiuz_exercise_090683
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/21287/ipublicationdocument_singledocument/ab77aa0b-da00-4975-8097-f096dc64b525/cs/099a_Analysis_Soiuz_Exercise_090683.pdf
+  path: warsaw_pact/php_21287_099a_Analysis_Soiuz_Exercise_090683.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 06cef6fbbfc4c408f100ad422118da3a27a900393e7313299b2b135c11bc9216
+- id: wp2_php_22832_62_10_maneuvers_romanian_version
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/22832/ipublicationdocument_singledocument/e4128488-6fd0-45a5-a891-36b3f8f2a265/ro/62_10_Maneuvers_Romanian_Version.pdf
+  path: warsaw_pact/php_22832_62_10_Maneuvers_Romanian_Version.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 372cc9172f406f67879dbcebdf1283448ad8d194702421bbc2384e58c6bf120e
+- id: wp2_php_22833_62_10_appendix_english
+  url: https://phpisn.ethz.ch/kms2.isn.ethz.ch/serviceengine/Files/PHP/22833/ipublicationdocument_singledocument/9dbc104f-c402-4ca8-9417-d5abab532a2d/en/62_10_Appendix_English.pdf
+  path: warsaw_pact/php_22833_62_10_Appendix_English.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 608b6436c9986b1f464f59c3704beba353c88913c1182a701a9d58f8d6af1bdd
+- id: wp2_php_wargame_111258_e
+  url: https://phpisn.ethz.ch/lory1.ethz.ch/collections/coll_wargame/documents/111258_E_Translation.pdf
+  path: warsaw_pact/php_wargame_111258_E.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: e7637997e431e7fbfbdf0e4340353e1964db3ce3863c4ecef7f22cfd01f1e5d2
+- id: wp2_php_wargame_1159_e
+  url: https://phpisn.ethz.ch/lory1.ethz.ch/collections/coll_wargame/documents/1159_E_Translation.pdf
+  path: warsaw_pact/php_wargame_1159_E.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 4f4684ad141065fc082ea8a792679370ffca9ada61a169695da4bc076d87ded6
+- id: wp2_php_wargame_1260_e
+  url: https://phpisn.ethz.ch/lory1.ethz.ch/collections/coll_wargame/documents/1260_E_Translation.pdf
+  path: warsaw_pact/php_wargame_1260_E.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: searched; no named nuclear targets
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: dc9663850dccbfb364bf7b13b81fd3cde4caa8df5ec83991d1b93975362675c3
+- id: wp2_php_x_piotrowski_dk
+  url: https://phpisn.ethz.ch/lory1.ethz.ch/collections/coll_polex/documents/piotrowski_dk.pdf
+  path: warsaw_pact/php_x_piotrowski_dk.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: labels (rows extracted)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: ccb13887ca1cabece5ad174ba8cc07409b60ccd932d09f0c62f253c6ce12d894
+- id: wp2_php_x_wprost
+  url: https://phpisn.ethz.ch/lory1.ethz.ch/collections/coll_polex/documents/wprost.pdf
+  path: warsaw_pact/php_x_wprost.pdf
+  licence: 'PHP/ETH Zurich: free for research with acknowledgement'
+  use: labels (rows extracted)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 1c5067497dc6baf5bb766004f7334cefc5f11bb1154eb258718552084c50d88c
