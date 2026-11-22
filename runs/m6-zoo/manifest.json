@@ -1,0 +1,24 @@
+{
+  "created": "2026-11-22T10:46:42+00:00",
+  "git_commit": "e5b4ed0bd311f620f766ce5be03d79e2b822a91a",
+  "protocol_sha256": "e2a86d938ccb16504a9b1b4177337670af8ad84cd0294fd8f810e8616a3aa804",
+  "datasets": [
+    "napb90:very_high",
+    "napb90:medium_plus"
+  ],
+  "algorithms": "all",
+  "cv": {
+    "k": 5,
+    "scheme": "spatial blocks",
+    "shifts_km": [
+      0,
+      100,
+      200
+    ],
+    "seeds": [
+      0,
+      1,
+      2
+    ]
+  }
+}
