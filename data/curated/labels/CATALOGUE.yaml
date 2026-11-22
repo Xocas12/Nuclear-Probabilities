@@ -3,7 +3,8 @@
 # tags are from the vocabularies below, and that the provenance agrees with the file's own
 # provenance column. scripts/inventory.py renders the cards into data/INVENTORY.md.
 #
-# provenance (PLAN section 4.5): plan | study | exercise | defender | reconstruction, or
+# provenance (PLAN section 4.5): plan | study | exercise | defender | reconstruction |
+#   statement (targets an adversary publicly named), or
 #   reference for files that are not target lists (code lists, pilots, class counts).
 # selection: how the targets were chosen, as far as the source says: judgment | rule | mixed |
 #   unknown | n/a.
@@ -384,3 +385,99 @@ lists:
     completeness: 60 of about 60 cities; 44 names come only from 1955 newspapers; yields for 5 cities
     card: data/notes/operation_alert_1955.md
     caveats: rows 17-60 secondary (AP list of cities told in advance); 2-3 mainland symbols still unnamed
+
+  - file: us_1950_korea_atomic_options.csv
+    title: State Department papers on atomic use against China and North Korea (Nitze, Clubb), Nov-Dec 1950
+    planner: US (State Department Policy Planning Staff; Office of Chinese Affairs)
+    targets: PRC (Manchuria), North Korea
+    year: 1950
+    provenance: study
+    selection: judgment
+    use: transfer-test
+    completeness: every place named as a possible atomic target in FRUS 1950 vol. VII (5 Manchurian cities,
+      the Yalu dam, plus one unnamed class row)
+    card: data/notes/asia.md (1)
+    caveats: policy memos that argue for or against options, not staff target lists; selected is blank throughout;
+      row 7 is a class without a name
+
+  - file: us_1951_oro_fec_tactical.csv
+    title: ORO-R-2 (FEC) "Tactical Employment of Atomic Weapons", Far East Command, 1951
+    planner: US (Far East Command, Operations Research Office)
+    targets: North Korea, South Korea (enemy forces)
+    year: 1951
+    provenance: study
+    selection: judgment
+    use: transfer-test
+    completeness: the four worked target cases of the summary (15 weapons, 40 kt each); appendices give
+      aiming-point schemes but no further named targets were extracted
+    card: data/notes/asia.md (2)
+    caveats: hindsight case studies of Nov 1950-Jan 1951 battlefield situations, not forward targeting;
+      troop concentrations, so places are approximate areas
+
+  - file: us_1953_korea_nsc_jcs.csv
+    title: Korea 1953, atomic targets named in NSC and JCS papers (Eisenhower, Dulles, JCS NSC 170 planning
+      assumptions)
+    planner: US (President, Secretary of State, JCS)
+    targets: North Korea, PRC (Port Arthur-Dairen), USSR (Vladivostok)
+    year: 1953
+    provenance: plan
+    selection: judgment
+    use: transfer-test
+    completeness: every place named as an atomic target in FRUS 1952-54 vol. XV; the JCS papers otherwise
+      name only regions (China, Manchuria, Korea) and target classes
+    card: data/notes/asia.md (3)
+    caveats: mixed provenance per row (1 plan, 3 study); Vladivostok and Port Arthur come from deterrent
+      remarks by Dulles; the JCS had "not laid out their target system" (Radford, 3 Dec 1953)
+
+  - file: us_1954_dien_bien_phu.csv
+    title: JCS advanced study group estimate on atomic use at Dien Bien Phu ("Vulture"), April 1954
+    planner: US (JCS Joint Advanced Study Committee)
+    targets: Indochina (Vietnam)
+    year: 1954
+    provenance: study
+    selection: judgment
+    use: transfer-test
+    completeness: the single area named (three tactical weapons)
+    card: data/notes/asia.md (4)
+    caveats: second-hand (Radford's aide to the State Counselor); the name Vulture comes from Nixon's memoir
+      quoted in a FRUS footnote
+
+  - file: us_1955_taiwan_strait_cincpac.csv
+    title: CINCPAC (Stump) atomic retaliation targets, Taiwan Strait crisis, April 1955
+    planner: US (CINCPAC, Adm. Stump)
+    targets: PRC
+    year: 1955
+    provenance: study
+    selection: judgment
+    use: transfer-test
+    completeness: all six places named in the telegram (3 airfields first, 3 air complexes as extension)
+    card: data/notes/asia.md (5)
+    caveats: a commander's estimate in a telegram, not an approved plan; the CINCPAC OPLAN 51-Z-55 atomic
+      annex is not reproduced in FRUS
+
+  - file: us_1958_taiwan_strait_jcs_contingency.csv
+    title: JCS contingency planning for Quemoy-Matsu as reported by State Policy Planning (G. Smith), Sep
+      1958
+    planner: US (JCS, reported by State Department Policy Planning)
+    targets: PRC
+    year: 1958
+    provenance: plan
+    selection: judgment
+    use: transfer-test
+    completeness: the three areas named ("Shanghai, Nanking, and Canton areas"); the rest of the 500-mile
+      radius is unnamed
+    card: data/notes/asia.md (6)
+    caveats: second-hand description of contingency plans; areas not aim points; Shanghai overlaps us_1958_taiwan_strait
+
+  - file: us_1968_khe_sanh.csv
+    title: Contingency planning for nuclear strikes at Khe Sanh, February 1968
+    planner: US (JCS, CINCPAC, COMUSMACV)
+    targets: South Vietnam
+    year: 1968
+    provenance: study
+    selection: judgment
+    use: transfer-test
+    completeness: one place; the planning documents themselves were not obtained
+    card: data/notes/asia.md (7)
+    caveats: named only in a FRUS editorial footnote; planning terminated by the President on 11 Feb 1968
+      (selected=0)

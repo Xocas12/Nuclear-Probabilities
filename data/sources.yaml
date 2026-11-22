@@ -1042,3 +1042,83 @@ sources:
   role: universe
   retrieved: '2026-10-10'
   sha256: 67d94727a10dcc41e81023dc8dcdd5986725d9f907b017be3381c4d0227fdfc9
+- id: asia_frus1950v07
+  url: https://raw.githubusercontent.com/HistoryAtState/frus/master/volumes/frus1950v07.xml
+  path: asia/frus/frus1950v07.xml
+  licence: US government work, public domain (Office of the Historian TEI edition)
+  use: label extraction (FRUS documents cited per row)
+  role: labels
+  retrieved: 2026-11-22
+  sha256: c702411a1924f1752327354ea21b235fbbd4c6920a5969d363dce6ca86e5eb9d
+- id: asia_frus1952_54v15p1
+  url: https://raw.githubusercontent.com/HistoryAtState/frus/master/volumes/frus1952-54v15p1.xml
+  path: asia/frus/frus1952-54v15p1.xml
+  licence: US government work, public domain (Office of the Historian TEI edition)
+  use: label extraction (FRUS documents cited per row)
+  role: labels
+  retrieved: 2026-11-22
+  sha256: cd5d3a5d8da25c7e3dbc634556882a583d0fc77304d7c7e51d421d8f73f82247
+- id: asia_frus1952_54v15p2
+  url: https://raw.githubusercontent.com/HistoryAtState/frus/master/volumes/frus1952-54v15p2.xml
+  path: asia/frus/frus1952-54v15p2.xml
+  licence: US government work, public domain (Office of the Historian TEI edition)
+  use: label extraction (FRUS documents cited per row)
+  role: labels
+  retrieved: 2026-11-22
+  sha256: 9cfd1b74ea419b3eccb3b4b714e9cef78dc20e78190bd313db8b0682489ba3a6
+- id: asia_frus1952_54v13p1
+  url: https://raw.githubusercontent.com/HistoryAtState/frus/master/volumes/frus1952-54v13p1.xml
+  path: asia/frus/frus1952-54v13p1.xml
+  licence: US government work, public domain (Office of the Historian TEI edition)
+  use: label extraction (FRUS documents cited per row)
+  role: labels
+  retrieved: 2026-11-22
+  sha256: f2e810dbbc35c37f40150ca1416a5eee2d01c7dd33ac78128b87899446348b9f
+- id: asia_frus1955_57v02
+  url: https://raw.githubusercontent.com/HistoryAtState/frus/master/volumes/frus1955-57v02.xml
+  path: asia/frus/frus1955-57v02.xml
+  licence: US government work, public domain (Office of the Historian TEI edition)
+  use: label extraction (FRUS documents cited per row)
+  role: labels
+  retrieved: 2026-11-22
+  sha256: 684a63d4fa4f9a2ad66693ac2e1090f9f64bf1c9731500998187ff130bdb1438
+- id: asia_frus1958_60v19
+  url: https://raw.githubusercontent.com/HistoryAtState/frus/master/volumes/frus1958-60v19.xml
+  path: asia/frus/frus1958-60v19.xml
+  licence: US government work, public domain (Office of the Historian TEI edition)
+  use: label extraction (FRUS documents cited per row)
+  role: labels
+  retrieved: 2026-11-22
+  sha256: e6065f3cc2f7479952b596919db0fb6882c80d8fb3f49c76792ff1c939bf84b0
+- id: asia_frus1964_68v06
+  url: https://raw.githubusercontent.com/HistoryAtState/frus/master/volumes/frus1964-68v06.xml
+  path: asia/frus/frus1964-68v06.xml
+  licence: US government work, public domain (Office of the Historian TEI edition)
+  use: label extraction (FRUS documents cited per row)
+  role: labels
+  retrieved: 2026-11-22
+  sha256: 1e35e075b66f86519a82c8d6dce529f42b45d34c3b122660812cef57689346d0
+- id: asia_oro_r2_fec_1951
+  url: https://archive.org/download/DnaEm1CapabilitiesOfNuclearWeapons/1951%20proposal%20for%20use%20of%20tactical%20nuclear%20weapons%20to%20end%20Korean%20War.pdf
+  path: asia/korea/tactical_1951.pdf
+  licence: US government work, declassified, public domain
+  use: label extraction (us_1951_oro_fec_tactical)
+  role: labels
+  retrieved: 2026-11-22
+  sha256: 468849a08d2cbb80df2906e7ecd5e3af3df22d8bce282c93509c4e1c4143bfae
+- id: asia_halperin_rm4900_released_text
+  url: https://archive.org/download/The1958TaiwanStraitsCrisisADocumentedHistory_201712/1958-Taiwan-Straits-Crisis-Halperin_text.pdf
+  path: asia/halperin/halperin_text.pdf
+  licence: RAND study released under FOIA / Ellsberg 2017 posting; research use
+  use: checked for named targets; none beyond us_1958_taiwan_strait
+  role: labels
+  retrieved: 2026-11-22
+  sha256: c8dd709af9a8f9518a57b6d622e7b9b742a66be1e2537bd949504dcd7622d487
+- id: asia_halperin_rm4900_released_djvu_txt
+  url: https://archive.org/download/The1958TaiwanStraitsCrisisADocumentedHistory_201712/1958-Taiwan-Straits-Crisis-Halperin_djvu.txt
+  path: asia/halperin/halperin_djvu.txt
+  licence: as above
+  use: OCR text of the released 691-page version, searched for place names
+  role: labels
+  retrieved: 2026-11-22
+  sha256: 53bf13dbbd057f0311d913d4030f49a673fc8eb12e1d99a1fa3e7d19e1523206
