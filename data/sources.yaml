@@ -1122,3 +1122,398 @@ sources:
   role: labels
   retrieved: 2026-11-22
   sha256: 53bf13dbbd057f0311d913d4030f49a673fc8eb12e1d99a1fa3e7d19e1523206
+- id: modern_arabnews_445606
+  url: https://arabnews.pk/news/445606
+  path: modern/arabnews_445606.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: Arab News (AFP), ''N. Korea threatens US bases in Japan'', 22 Mar 2013 (KCNA,
+    KPA Supreme Command spokesman, 21 Mar 2013)'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: d503f6519f6a2cfbc07474f5c374ca174ff56b6b7b2c1c15d0650415d2aacac9
+- id: modern_armscontrol_2020_plan_a
+  url: https://www.armscontrol.org/act/2020-07/features/plan-how-nuclear-war-could-progress
+  path: modern/armscontrol_2020_plan_a.html
+  licence: news/analysis article, (c) publisher; not redistributed
+  use: context only (corroboration; not cited in rows)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 9e3de0bd9400d0032bbfce27ac81ec78df5ddbab678801004a532c3778fe6dbb
+- id: modern_asiae_2023081007490470016
+  url: https://www.asiae.co.kr/en/article/2023081007490470016
+  path: modern/asiae_2023081007490470016.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: Asia Business Daily (Asiae), ''Kim Jong-un Points to "This Place" in South
+    Korea...'', 10 Aug 2023 (KCNA/Yonhap photos)'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 8a07ad42f3882560622d290f71cb3849b5f99f38e2a2b00d72e63e16cdb24b42
+- id: modern_asiae_2025010110292579447
+  url: https://www.asiae.co.kr/en/article/2025010110292579447
+  path: modern/asiae_2025010110292579447.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: Asia Business Daily (Asiae), ''Russia Planned to Attack Pohang Steelworks
+    and Busan Chemical Plant...'', 1 Jan 2025 (repor'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 27a9324252ad823bcb2f899ad5c2400060282977fbb123afd74ba618c67a46e1
+- id: modern_b92_32_targets
+  url: https://www.b92.net/english/world/170471/putin-planned-a-nuclear-attack-32-targets-in-europe/vest
+  path: modern/b92_32_targets.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: B92, ''Putin planned a nuclear attack: 32 targets in Europe'', 8 Oct 2025
+    (reporting the FT of Aug 2024)'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: bdc8f3c751a3affba93aa1a1a0f98f530656e75895600cedded387c7eac2ece7
+- id: modern_babel_109839
+  url: https://babel.ua/en/news/109839-financial-times-russia-has-been-practicing-nuclear-strikes-on-targets-in-europe
+  path: modern/babel_109839.html
+  licence: news/analysis article, (c) publisher; not redistributed
+  use: context only (corroboration; not cited in rows)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 9d20055f72d159e67683bf2ab974bc65af5cbd42767fe924f4d1464cf5a15bae
+- id: modern_balticsentinel_8077264
+  url: https://balticsentinel.eu/8077264/misguided-exposure-security-analysts-question-financial-times-decision-to-publish-outdated-russian-map
+  path: modern/balticsentinel_8077264.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: Baltic Sentinel, ''Misguided exposure: security analysts question Financial
+    Times decision to publish outdated Russian ma'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 689436f144d667d5c1f8a6149ee29425b56cf783b61193b0d5b24e21ef431b52
+- id: modern_bulletin_what_would_russia_nuke
+  url: https://thebulletin.org/2019/03/what-would-russia-nuke/
+  path: modern/bulletin_what_would_russia_nuke.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: Bulletin of the Atomic Scientists, ''What would Russia nuke?'', 4 Mar 2019'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 8953d306dd499b43c3c19e9335e12633f610b2ed7df33674ffb3c062a9861ccb
+- id: modern_cbs_guam_20170809
+  url: https://www.cbsnews.com/news/north-korea-threatens-attack-guam/
+  path: modern/cbs_guam_20170809.html
+  licence: news/analysis article, (c) publisher; not redistributed
+  use: context only (corroboration; not cited in rows)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 9f54eafe81e72cf74a45905fc8356298e208d8cd260d7860db5b761a8e69fcc3
+- id: modern_colombia_59807
+  url: https://www.colombia.com/actualidad/internacionales/sdi/59807/corea-del-norte-amenaza-con-atacar-principales-ciudades-de-japon
+  path: modern/colombia_59807.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: Colombia.com (agency report), ''Corea del Norte amenaza con atacar principales
+    ciudades de Japón'', 10 Apr 2013 (Rodong Si'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: db932c15a2723c4e2d61318b99abe43a6750742ece4c2a7aab61b29edf83418c
+- id: modern_csmonitor_20130321
+  url: https://www.csmonitor.com/USA/Politics/DC-Decoder/2013/0321/Could-North-Korean-missiles-really-hit-US-military-bases
+  path: modern/csmonitor_20130321.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: Christian Science Monitor, ''Could North Korean missiles really hit US military
+    bases?'', 21 Mar 2013 (quoting KCNA)'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: d13009870d80a5572f3de6f9f8dd4e4b78efe8a2061b724442585695df7ee2f8
+- id: modern_fakti_1006065
+  url: https://fakti.bg/en/bulgaria/1006065-financial-times-dunav-most-e-sred-adrenite-celi-na-rusia
+  path: modern/fakti_1006065.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: Fakti.bg, ''Financial Times: Danube Bridge Among Russia''s Nuclear Targets'',
+    9 Oct 2025 (reporting the FT of Aug 2024)'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: aded2fe23a0dbb6718ae0ae0d84e4def689e4f1e8bc2158b6be281d44a2f0bb4
+- id: modern_fp_244580
+  url: https://foreignpolicy.com/?p=244580
+  path: modern/fp_244580.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: Foreign Policy, ''Battle of the maps...'', 29 Mar 2013 (analysis of KCNA
+    photo)'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: b2f0ab0c98f4512613ead3b6cd15d32fe53de83acf7e1482f358b761e4009e46
+- id: modern_g4media_894504
+  url: https://www.g4media.ro/?p=894504
+  path: modern/g4media_894504.html
+  licence: news/analysis article, (c) publisher; not redistributed
+  use: context only (corroboration; not cited in rows)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 265d4d593fd8c031fefbc74ba0352a63cb46f4851829ccb2869226c74a5cffd2
+- id: modern_gmapsmania_china
+  url: https://googlemapsmania.blogspot.com/2024/08/russias-secret-nuclear-targets-in-china.html
+  path: modern/gmapsmania_china.html
+  licence: news/analysis article, (c) publisher; not redistributed
+  use: context only (corroboration; not cited in rows)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 236027dbe51c46e7295513a08e58495debb2210f67069e831f3bca2da4362079
+- id: modern_hankyung_202501010355b
+  url: https://magazine.hankyung.com/business/article/202501010355b
+  path: modern/hankyung_202501010355b.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: Hankyung Magazine, ''"포항제철소 등 공격"...러시아, 기밀 문서 유출'', 1 Jan 2025 (reporting
+    the FT)'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 1ad2c6a521584d39f2b912020f79ed21c1db5952e64c777cbfe1a703894dbe2d
+- id: modern_ibtimes_2352
+  url: https://www.ibtimes.co.uk/north-korea-military-threatens-u-s-bases-saying-they-are-within-target-2352
+  path: modern/ibtimes_2352.html
+  licence: news/analysis article, (c) publisher; not redistributed
+  use: context only (corroboration; not cited in rows)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: fa2a32dd8094fe395e401376b8f07fe5d7e0f652c38b3e3799b3090e295ead82
+- id: modern_iprima_444983
+  url: https://cnn.iprima.cz/rusky-jaderny-plan-moskva-muze-utocit-v-evrope-i-asii-v-ohrozeni-i-spojenci-kremlu-444983
+  path: modern/iprima_444983.html
+  licence: news/analysis article, (c) publisher; not redistributed
+  use: context only (corroboration; not cited in rows)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: ee7ff5e6a84f9c377dfc6ca5637fd0a38af0350268922c56c2b0230804111573
+- id: modern_japantimes_20170810
+  url: https://www.japantimes.co.jp/news/2017/08/10/national/politics-diplomacy/north-makes-detailed-threat-fire-missiles-near-guam-tokyo-condemns-provocation/
+  path: modern/japantimes_20170810.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: Japan Times, ''North makes detailed threat to fire missiles near Guam...'',
+    10 Aug 2017 (KCNA, Gen. Kim Rak Gyom statement'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 7b8f4e1d766864de595950aec6671c2e2ac7fba901854952125852ef2c6e19e9
+- id: modern_jpost_594813
+  url: https://www.jpost.com/middle-east/tehran-imam-suggests-missile-attack-on-dimona-nuclear-power-plant-594813
+  path: modern/jpost_594813.html
+  licence: news/analysis article, (c) publisher; not redistributed
+  use: context only (corroboration; not cited in rows)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 8cd35c7437c1e5ff45d7cd67c597228aca87c446e5156382edaa6710837d9c53
+- id: modern_jpost_816333
+  url: https://www.jpost.com/international/internationalrussia-ukraine-war/article-816333
+  path: modern/jpost_816333.html
+  licence: news/analysis article, (c) publisher; not redistributed
+  use: context only (corroboration; not cited in rows)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: ae99645bb1f436de6e50151eace90074fc1762df806b64d6888a40350ea4c3f2
+- id: modern_koreadaily_26816
+  url: https://en.koreadaily.com/?p=26816
+  path: modern/koreadaily_26816.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: Korea JoongAng Daily (Yonhap photo), ''North practices striking, occupying
+    South in command post exercise'', 31 Aug 2023 ('
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: e218fed802253a86e22a154fefdc51c483ec6ae7427792f268b9c09679033e96
+- id: modern_koreatimes_20170809
+  url: https://www.koreatimes.co.kr/foreignaffairs/northkorea/20170809/n-korea-threatens-missile-strike-at-guam
+  path: modern/koreatimes_20170809.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: Korea Times (Yonhap), ''N. Korea threatens missile strike at Guam'', 9 Aug
+    2017 (KCNA, KPA Strategic Force statement)'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 041cb8e6395b2f247b7c6d6008a841875e75ee5bafa7e958aeba8c91dd07c846
+- id: modern_kyivindependent_jk
+  url: https://kyivindependent.com/russian-officers-trained-for-attack-on-japan-south-korea-in-potential-nato-war-ft-reports
+  path: modern/kyivindependent_jk.html
+  licence: news/analysis article, (c) publisher; not redistributed
+  use: context only (corroboration; not cited in rows)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 98b8ca239f1ccf792fb43b13635243796f8ecd6cc3f173253ae23bae54d1de80
+- id: modern_kyivindependent_navy
+  url: https://kyivindependent.com/russian-navy-trained-strikes-on-europe/
+  path: modern/kyivindependent_navy.html
+  licence: news/analysis article, (c) publisher; not redistributed
+  use: context only (corroboration; not cited in rows)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 489ebd762b4a4d35407f6159396ff33e7d7bafa088bcb30053bb390057674e4d
+- id: modern_kyivpost_44725
+  url: https://www.kyivpost.com/post/44725
+  path: modern/kyivpost_44725.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: Kyiv Post, ''Moscow''s War Plans Against Japan, South Korea Leaked'', 31
+    Dec 2024 (reporting the FT, 31 Dec 2024)'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 4c93f4e594d1af796eba394488fb9491b6c8df4a18196bd08c666266cca61695
+- id: modern_lb_ua_629273
+  url: https://lb.ua/society/2024/08/13/629273_rosiyskiy_flot_trenuvali_zavdavati.html
+  path: modern/lb_ua_629273.html
+  licence: news/analysis article, (c) publisher; not redistributed
+  use: context only (corroboration; not cited in rows)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 7f6c41ae8403a5e12429bb3a93a49ee3bd873f0e24216ebe7b3d294036e9edbb
+- id: modern_lbc_uk_targets
+  url: https://www.lbc.co.uk/article/putins-secret-files-reveal-russias-top-targets-for-nuclear-strikes-on-uk-5HjcpcF_2/
+  path: modern/lbc_uk_targets.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: LBC, ''Putin''s secret files reveal Russia''s top targets for nuclear strikes
+    on UK'', 15 Aug 2024 (reporting the FT)'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 1459a65b0ddd0a5191aec300603b0490bfa0ef1b7213b46d589c1b6c377b91cc
+- id: modern_lepetitjournal_391156
+  url: https://lepetitjournal.com/bucarest/actualites/ft-la-flotte-russe-sentraine-attaquer-la-roumanie-avec-des-missiles-nucleaires-391156
+  path: modern/lepetitjournal_391156.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: Lepetitjournal.com Bucarest, ''FT: la flotte russe s''entraîne à attaquer
+    la Roumanie avec des missiles nucléaires'', 13 Au'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: f857d16462c9d6b6194564a821890f5a609e24b41c6bb2bc5fed0f3f8220ef9e
+- id: modern_meduza_20241231
+  url: https://meduza.io/en/news/2024/12/31/secret-military-files-from-2013-2014-show-moscow-s-planning-for-potential-war-with-japan-and-south-korea-on-russia-s-eastern-flank
+  path: modern/meduza_20241231.html
+  licence: news/analysis article, (c) publisher; not redistributed
+  use: context only (corroboration; not cited in rows)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 3a05b9d854be028f4234479eb5fbb96de1cdb266aa0a0a3535b63771558c6066
+- id: modern_militarytimes_20190225
+  url: https://www.militarytimes.com/news/your-military/2019/02/25/these-us-bases-are-at-the-top-of-a-russian-nuke-hit-list/
+  path: modern/militarytimes_20190225.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: Military Times, ''These US bases are at the top of a Russian nuke hit list'',
+    25 Feb 2019 (reporting Reuters on Rossiya-1 '
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 5c878324d1a26964ec613d28a018f0ef0358d181358acd600a46b4ae17d359d1
+- id: modern_nknews_187144
+  url: https://www.nknews.org/?p=187144
+  path: modern/nknews_187144.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: NK News, ''North Korean Photo Reveals "U.S. Mainland Strike Plan"'', 29 Mar
+    2013 (analysis of KCNA photo of 29 Mar 2013)'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: f043ae86d095a9219df4d374a8ab927bb26d9d8d0746ecc8bdd64ba6eb3833f6
+- id: modern_novayagazeta_20241231
+  url: https://novayagazeta.eu/articles/2024/12/31/ft-rossiia-gotovilas-atakovat-aes-iaponii-i-zavody-iuzhnoi-korei-v-sluchae-voiny-na-dalnem-vostoke-news
+  path: modern/novayagazeta_20241231.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: Novaya Gazeta Europe, ''FT: Россия готовилась атаковать АЭС Японии и заводы
+    Южной Кореи...'', 31 Dec 2024 (reporting the F'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 48ff841619c06968b7bee271f238897e4d392c852e7e1026508b866438f506eb
+- id: modern_nrdc_2001_us_nuclear_war_plan
+  url: https://www.nrdc.org/sites/default/files/us-nuclear-war-plan-report.pdf
+  path: modern/nrdc_2001_us_nuclear_war_plan.pdf
+  licence: NRDC report, (c) NRDC; facts extracted, short quotes
+  use: NRDC 2001 MAO-NF named targets (Tables 4.9-4.17 and text)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: fe4ede1eb13cc6e9d6f0669a29198f666e6f2ce520d67e2d7b4f5649b40ab9f9
+- id: modern_pbs_guam_20170809
+  url: https://www.pbs.org/newshour/world/north-korea-says-studying-plan-attack-guam
+  path: modern/pbs_guam_20170809.html
+  licence: news/analysis article, (c) publisher; not redistributed
+  use: context only (corroboration; not cited in rows)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: c0d07ffa8b4dd7e6c0039898ee9e6122d52a7d48ab7beef4312e88e693328edb
+- id: modern_polskieradio_3414023
+  url: https://polskieradio.pl/395/7785/artykul/3414023,financial-times-russian-navy-trained-to-target-european-sites-with-nuclear-missiles
+  path: modern/polskieradio_3414023.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: Polskie Radio English Section, ''Financial Times: Russian navy trained to
+    target European sites with nuclear missiles'', 1'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: a1fc573d1a7dc85e6d3ce40aab495a23ec6e1ad91c0c843c809d41b435c99471
+- id: modern_rferl_ro_33077121
+  url: https://romania.europalibera.org/a/documente-secrete-marina-rusa-se-antreneaza-sa-tinteasca-obiective-din-europa-cu-rachete-cu-capacitate-nucleara-financial-times-/33077121.html
+  path: modern/rferl_ro_33077121.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: Europa Liberă România (RFE/RL), ''Documente secrete. Marina rusă se antrenează
+    să țintească obiective din Europa, inclusi'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: ee9e6d1be36a1442d45c596511e501fa0c3e8760e85d50095f7f5efbc179407b
+- id: modern_shafaq_dimona
+  url: https://shafaq.com/en/Middle-East/Iran-threatens-Israeli-Dimona-reactor-if-US-tries-regime-change
+  path: modern/shafaq_dimona.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: Shafaq News, ''Iran threatens Israeli Dimona reactor if US tries regime change'',
+    4 Mar 2026'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 75144d65cf7fe50305cdbb28a3b81696c4ee2991f4f85f0e833dbae591173a5e
+- id: modern_theaviationist_20130329
+  url: https://theaviationist.com/2013/03/29/nk-us-attack-plan/
+  path: modern/theaviationist_20130329.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: The Aviationist, ''Photo shows targets of (impossible) North Korean attack
+    plan on the US...'', 29 Mar 2013 (analysis of K'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 6975aa3444f9ec991d856cc495adecf1dff5306fb1d2f6f59c0ac9a7f72d954e
+- id: modern_turkishminute_20240813
+  url: https://turkishminute.com/2024/08/13/5-sites-in-turkey-among-possible-russian-target-in-a-nuclear-conflict-with-nato-report/
+  path: modern/turkishminute_20240813.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: Turkish Minute, ''5 sites in Turkey among possible Russian target in a nuclear
+    conflict with NATO: report'', 13 Aug 2024 ('
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 53fd6dff6feebb104b72bcdd62d1077a4f6c6c115ea9cfcdb19bd50003e6a888
+- id: modern_turkiyetoday_39610
+  url: https://www.turkiyetoday.com/world/russian-navy-targets-europe-turkiye-with-nukes-reports-financial-times-39610
+  path: modern/turkiyetoday_39610.html
+  licence: news/analysis article, (c) publisher; not redistributed
+  use: context only (corroboration; not cited in rows)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: f8cd385461e50b88635bd979bd34131f6cbf247889a539e10d8b08281997f86e
+- id: modern_tv4_norge
+  url: https://www.tv4.se/artikel/7L0d8bnV9h492zonTH86o/laeckta-dokument-visar-sa-oevade-ryska-flottan-pa-attack-mot-norge
+  path: modern/tv4_norge.html
+  licence: news/analysis article, (c) publisher; not redistributed
+  use: context only (corroboration; not cited in rows)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: 21ab7e3be852aa15b79e92cddf36a26481b80488d69901a71c7960d7abcc7a80
+- id: modern_united24_1718
+  url: https://united24media.com/latest-news/leaked-files-reveal-russian-naval-forces-train-for-potential-nuclear-attacks-across-europe-1718
+  path: modern/united24_1718.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: United24 Media, ''Leaked files reveal Russian naval forces train for potential
+    nuclear attacks across Europe'', 13 Aug 202'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: f7e0fa8b2c1a7bae1f36d30013789df7bfb98a4acc31f54740a7d75b971e543a
+- id: modern_yahoo_guam_kim
+  url: https://www.yahoo.com/news/north-korea-apos-kim-jong-101808050.html
+  path: modern/yahoo_guam_kim.html
+  licence: news/analysis article, (c) publisher; not redistributed
+  use: context only (corroboration; not cited in rows)
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: b75104e591d3267abf8f9ea80ac899c8d106e18e82629a9869d9369db3955f47
+- id: modern_ynet_srpdrx2hq
+  url: https://www.ynetnews.com/article/srpdrx2hq
+  path: modern/ynet_srpdrx2hq.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: Ynet News, ''Senior Iranian official: Dimona reactor could become a target'',
+    21 Jun 2025 (Al Jazeera interview)'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: e3f4f4277faaa81f43350e198937001e66c2ecf102e1e68072cf2e768de15fde
+- id: modern_zona_20241231
+  url: https://zona.media/news/2024/12/31/japan-sk
+  path: modern/zona_20241231.html
+  licence: news article, (c) publisher; facts extracted, short quotes
+  use: 'cited in label rows: Mediazona, ''Financial Times: Россия планировала атаки по АЭС Японии и заводам
+    Южной Кореи...'', 31 Dec 2024 (reporting th'
+  role: labels
+  retrieved: '2026-11-22'
+  sha256: b1c8938b98c9f465a9e35a09379cbe3a0593ec2e7ec8aa6bf8c1135a06f951ac

@@ -481,3 +481,123 @@ lists:
     card: data/notes/asia.md (7)
     caveats: named only in a FRUS editorial footnote; planning terminated by the President on 11 Feb 1968
       (selected=0)
+
+  - file: ir_2025_dimona_threats.csv
+    title: Iranian officials' threats to strike the Dimona reactor, 2025-2026
+    planner: Iran (anonymous senior officials, via Al Jazeera and Iran Nuances)
+    targets: Israel
+    year: 2025
+    provenance: statement
+    selection: judgment
+    use: audit
+    completeness: 2 rows (same target, two statements); not a systematic search of Iranian statements
+    card: data/notes/modern.md (7)
+    caveats: anonymous, conditional threats with conventional ballistic missiles; plan_year differs by row
+      (2025, 2026)
+
+  - file: kp_2013_threats.csv
+    title: North Korean public threats of 2013 - 'U.S. Mainland Strike Plan' map (KCNA photo, 29 Mar), KPA
+      statement on bases (21 Mar), Rodong Sinmun on Japanese cities (10 Apr)
+    planner: DPRK (KCNA / KPA Supreme Command / Rodong Sinmun)
+    targets: USA, Japan
+    year: 2013
+    provenance: statement
+    selection: judgment
+    use: transfer-test
+    completeness: 10 rows; the map's four targets are analysts' readings of a blurry photo; two rows are
+      unnamed naval-base groups
+    card: data/notes/modern.md (4)
+    caveats: propaganda without capability in 2013; map possibly doctored (AP); San Diego vs Los Angeles
+      disputed; Japanese city threat conditional and seen only via a Spanish agency report
+
+  - file: kp_2017_guam_plan.csv
+    title: North Korea's August 2017 'enveloping fire' plan against Guam (KPA Strategic Force statements,
+      KCNA 9-10 Aug 2017)
+    planner: DPRK (KPA Strategic Force)
+    targets: USA (Guam)
+    year: 2017
+    provenance: statement
+    selection: judgment
+    use: transfer-test
+    completeness: complete for named targets (1 row)
+    card: data/notes/modern.md (5)
+    caveats: stated aim points were sea areas 30-40 km off Guam; Andersen AFB is named as what the plan
+      is meant to 'contain'
+
+  - file: kp_2023_published_maps.csv
+    title: Places in South Korea read by the press from maps in KCNA photos of Kim Jong Un, Aug 2023
+    planner: DPRK (KCNA photos)
+    targets: South Korea
+    year: 2023
+    provenance: statement
+    selection: unknown
+    use: audit
+    completeness: 2 rows; press readings of map areas, not targets named by KCNA
+    card: data/notes/modern.md (6)
+    caveats: identification by journalists from photos; KCNA text names only target classes (command nodes,
+      airfields)
+
+  - file: rec_2001_nrdc_maonf_targets.csv
+    title: NRDC 2001, The U.S. Nuclear War Plan - named targets of the reconstructed Major Attack Option
+      against Russian nuclear forces (MAO-NF)
+    planner: NRDC (McKinzie, Cochran, Norris, Arkin), reconstructing US SIOP logic
+    targets: Russia
+    year: 2001
+    provenance: reconstruction
+    selection: mixed
+    use: training
+    completeness: 232 named entries (184 attacked, 48 listed but not attacked); silo fields, SS-25 and SS-24
+      bases, naval bases (Tables 4.9-4.10), aviation (4.11), warhead storage (4.13), design/production (4.15),
+      satellite earth stations (4.17); other L-C3 entries (early-warning radars, VLF stations, leadership)
+      are not named in the report
+    card: data/notes/modern.md (8)
+    caveats: an analysts' reconstruction, not the SIOP; storage rows not among the 17 attacked national-level
+      sites have selected=0; earth stations have no warhead allocation; aimpoint counts for naval targets,
+      warhead counts for aviation
+
+  - file: ru_2019_kiselyov.csv
+    title: US targets named on Russian state television (Rossiya-1 'Vesti Nedeli', Dmitry Kiselyov), 24
+      Feb 2019
+    planner: Russia (state TV presenter; Kremlin disclaimed editorial control)
+    targets: USA
+    year: 2019
+    provenance: statement
+    selection: judgment
+    use: transfer-test
+    completeness: complete (5 sites named in the broadcast as reported by Reuters)
+    card: data/notes/modern.md (3)
+    caveats: propaganda; two sites closed (Fort Ritchie 1998, McClellan 2001); broadcast seen only through
+      press reports
+
+  - file: ru_2024_ft_europe.csv
+    title: Leaked Russian Navy training maps (2008-14) with a sample of 32 NATO targets in Europe, as reported
+      by the Financial Times, 13 Aug 2024
+    planner: Russia (Navy; officer training presentation; documents not seen, reported by the FT)
+    targets: Norway, UK, Estonia, Romania, Bulgaria, Turkey, France
+    year: 2014
+    provenance: plan
+    selection: unknown
+    use: transfer-test
+    completeness: 12 of 32 targets named in press reproductions (Germany's 5 and most others unnamed); one
+      row is a region (west coast of France)
+    card: data/notes/modern.md (2)
+    caveats: documents reported, not seen; maps 'for presentation rather than operational use' (FT); several
+      identifications are journalists' readings of the FT map; nuclear-capable missiles, conventional or
+      nuclear warheads
+
+  - file: ru_2024_ft_japan_korea.csv
+    title: Leaked Russian military files (2013-14) with ~160 targets in Japan and South Korea, as reported
+      by the Financial Times, 31 Dec 2024
+    planner: Russia (officer training presentation on Kh-101 strikes; documents not seen, reported by the
+      FT)
+    targets: Japan, South Korea
+    year: 2014
+    provenance: plan
+    selection: unknown
+    use: transfer-test
+    completeness: 5 of ~160 targets; only the sites named in press reproductions of the FT story (82 military
+      targets not named)
+    card: data/notes/modern.md (1)
+    caveats: documents reported, not seen; FT original paywalled, rows come from outlets quoting it; conventional
+      (Kh-101) strike planning, not nuclear; the named sites are the civilian examples the FT chose to cite,
+      a biased sample
