@@ -82,7 +82,13 @@ def _catboost():
     from catboost import CatBoostClassifier
 
     return CatBoostClassifier(
-        iterations=400, depth=5, learning_rate=0.05, random_seed=SEED, verbose=False, thread_count=1, allow_writing_files=False
+        iterations=400,
+        depth=5,
+        learning_rate=0.05,
+        random_seed=SEED,
+        verbose=False,
+        thread_count=1,
+        allow_writing_files=False,
     )
 
 

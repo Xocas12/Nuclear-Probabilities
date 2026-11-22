@@ -16,6 +16,7 @@ Build the processed tables first (`make check`, `python -m nucprob.us1985.datase
 four `nucprob.transfer` steps); a dataset whose table is missing says which command builds it.
 """
 
+import warnings
 from collections.abc import Callable
 from dataclasses import dataclass, field
 
@@ -338,4 +339,9 @@ def load(name: str, include_sealed: bool = False) -> Data:
     frame["year"] = pd.to_numeric(frame["year"], errors="coerce").fillna(-1).astype(int)
     feats = [c for c in feats if frame[c].notna().any() and frame[c].nunique() > 1]
     frame[feats] = frame[feats].astype(float).replace([np.inf, -np.inf], np.nan)
-    return Data(name, description, frame, feats, families(feats))
+    note = ""
+    flag = PROCESSED / "INCOMPLETE_BUILD.txt"
+    if flag.exists() and not name.startswith("napb90"):
+        note = flag.read_text().strip()
+        warnings.warn(f"incomplete build: {note}", stacklevel=2)
+    return Data(name, description, frame, feats, families(feats), note)

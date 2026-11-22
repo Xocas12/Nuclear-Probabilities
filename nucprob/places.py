@@ -15,6 +15,8 @@ universe proper is >= 10,000; 5,000 and 20,000 are the sensitivity thresholds), 
 data/processed/places_1956_unmatched.csv for review.
 """
 
+import os
+
 import numpy as np
 import pandas as pd
 
@@ -231,12 +233,39 @@ def located(
     return matched
 
 
+# Sources left out of this build because their raw file is missing (only with
+# NUCPROB_SKIP_MISSING=1). A build with any is incomplete and says so in its outputs.
+SKIPPED: list[str] = []
+
+
+def optional(name: str, build, path):
+    """build() if the raw file at `path` is present. Otherwise stop, or, with
+    NUCPROB_SKIP_MISSING=1, warn and record the source as skipped."""
+    if path.exists():
+        return build()
+    if os.environ.get("NUCPROB_SKIP_MISSING") != "1":
+        raise FileNotFoundError(
+            f"{path} is missing (source: {name}). Download it (make data), or set "
+            "NUCPROB_SKIP_MISSING=1 to build an incomplete universe without it."
+        )
+    print(f"WARNING: {name} skipped, {path} missing; the universe is incomplete")
+    SKIPPED.append(name)
+    return None
+
+
 def ussr() -> pd.DataFrame:
     parts = []
     for page, country in [*REPUBLICS.items(), ("uzbekistan", "UZ")]:
-        settlements = (
-            from_demoscope("Узбек", page, country) if page == "uzbekistan" else from_popstat(page)
-        )
+        if page == "uzbekistan":
+            settlements = optional(
+                "demoscope (Uzbekistan 1959)",
+                lambda: from_demoscope("Узбек", "uzbekistan", "UZ"),
+                RAW / "demoscope" / "ussr59_reg2.html",
+            )
+            if settlements is None:
+                continue
+        else:
+            settlements = from_popstat(page)
         parts.append(located(settlements, country, page))
     places = pd.concat(parts, ignore_index=True)
     if CLOSED.exists():
@@ -300,7 +329,13 @@ def eastern_europe() -> pd.DataFrame:
         located(from_popstat_eastern(page), spec["geonames"], page)
         for page, spec in EASTERN_PAGES.items()
     ]
-    parts.append(located(places_bloc.east_germany(), "DE", "east germany", EAST_GERMAN_LAENDER))
+    gdr = optional(
+        "GDR Statistisches Jahrbuch 1956",
+        places_bloc.east_germany,
+        RAW / "ddr" / "514402644_0041.pdf",
+    )
+    if gdr is not None:
+        parts.append(located(gdr, "DE", "east germany", EAST_GERMAN_LAENDER))
     parts.append(located(places_bloc.poland(), "PL", "poland"))
     parts.append(located(places_bloc.hungary().query("pop >= @MIN_KEEP"), "HU", "hungary"))
     parts.append(located(places_bloc.slovakia(), "SK", "slovakia"))
@@ -350,6 +385,12 @@ def main() -> None:
             f"{c['has_coords'].sum()} with coordinates"
         )
     print(f"unmatched in the universe: {(~u['has_coords']).sum()} (places_1956_unmatched.csv)")
+    incomplete = PROCESSED / "INCOMPLETE_BUILD.txt"
+    if SKIPPED:
+        incomplete.write_text("places_1956 built without: " + "; ".join(SKIPPED) + "\n")
+        print(f"INCOMPLETE BUILD, skipped: {'; '.join(SKIPPED)} (recorded in {incomplete})")
+    elif incomplete.exists():
+        incomplete.unlink()
 
 
 if __name__ == "__main__":
