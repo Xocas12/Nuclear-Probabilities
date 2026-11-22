@@ -1,0 +1,9 @@
+{
+  "created": "2026-11-22T10:37:27+00:00",
+  "git_commit": "5b2470f4bda18ccf668c80ff466a203c64808c45",
+  "protocol_sha256": "e2a86d938ccb16504a9b1b4177337670af8ad84cd0294fd8f810e8616a3aa804",
+  "datasets": [
+    "napb90:very_high"
+  ],
+  "algorithm": "lgbm"
+}

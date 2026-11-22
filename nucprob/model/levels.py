@@ -40,12 +40,16 @@ LEVEL_ALGOS = ["logit", "lgbm", "rf"]
 MIN_CLASS = 30  # PLAN 5.3: a country gets its own model with >= 30 targeted and untargeted
 
 
-def out_dir(name: str) -> Path:
+def out_dir(name: str, datasets=()) -> Path:
+    """runs/<name>, or runs/incomplete/<name> when the build is incomplete and any of the
+    datasets uses the bloc's 1956 universe (the US datasets do not)."""
     flag = PROCESSED / "INCOMPLETE_BUILD.txt"
-    base = RUNS / "incomplete" if flag.exists() else RUNS
-    if flag.exists():
+    uses_bloc = not datasets or any(not str(d).startswith("napb90") for d in datasets)
+    if flag.exists() and uses_bloc:
+        base = RUNS / "incomplete"
         print(f"incomplete build ({flag.read_text().strip()}): writing to {base / name}")
-    return base / name
+        return base / name
+    return RUNS / name
 
 
 def manifest(extra: dict) -> dict:
@@ -99,7 +103,7 @@ def zoo(datasets: list[str], algos: str) -> pd.DataFrame:
         rand.get((a, b), np.nan) for a, b in zip(board["dataset"], board["algorithm"], strict=True)
     ]
     board = board.sort_values(["dataset", "pr_auc"], ascending=[True, False])
-    out = out_dir("m6-zoo")
+    out = out_dir("m6-zoo", datasets)
     out.mkdir(parents=True, exist_ok=True)
     df.to_csv(out / "runs.csv", index=False, float_format="%.4f")
     board.to_csv(out / "leaderboard.csv", index=False, float_format="%.4f")
@@ -177,7 +181,7 @@ def levels(dataset: str = "pooled", algos=LEVEL_ALGOS, k: int = 5) -> dict:
             p = _fit_score(tr, te, cols, "lgbm")
             if p is not None:
                 mat.at[i, j] = (metrics(te["y"].to_numpy(), p) or {}).get("roc_auc", np.nan)
-    out = out_dir("m7-levels")
+    out = out_dir("m7-levels", [dataset])
     out.mkdir(parents=True, exist_ok=True)
     gains.to_csv(out / "specialisation.csv", index=False, float_format="%.4f")
     mat.to_csv(out / "transfer_matrix.csv", float_format="%.3f")
